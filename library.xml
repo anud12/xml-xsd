@@ -16,6 +16,9 @@
         </item>
     </items>
     <quests>
-        <quest type=""/>
+        <quest type="escort">
+            <next type="assassination" quantity="2"/>
+        </quest>
+        <quest type="assassination"/>
     </quests>
 </World>

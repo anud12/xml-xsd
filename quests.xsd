@@ -2,14 +2,33 @@
 
     <xs:element name="quest">
         <xs:complexType>
+            <xs:sequence>
+                <xs:element name="next" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:attribute name="type" use="required"/>
+                        <xs:attribute name="quantity" type="xs:int"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
             <xs:attribute name="type"/>
         </xs:complexType>
     </xs:element>
+
     <xs:element name="quests">
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="quest" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
+
+        <xs:key name="K_quest_type">
+            <xs:selector xpath="quest"/>
+            <xs:field xpath="@type"/>
+        </xs:key>
+        <xs:keyref name="FK_quest_next_type" refer="K_quest_type">
+            <xs:selector xpath="quest/next"/>
+            <xs:field xpath="@type"/>
+        </xs:keyref>
+
     </xs:element>
 </xs:schema>
