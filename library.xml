@@ -1,0 +1,21 @@
+<World xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="schema.xsd">
+    <people>
+        <person name="Billy">
+            <relations with="Bob" />
+            <inventory>
+                <item-ref type="Long sword" equipped="hand"/>
+            </inventory>
+        </person>
+        <person name="Bob" />
+    </people>
+    <items>
+        <item name="Long sword">
+            <weight-kg value="2" />
+            <wearable slot="hand" />
+        </item>
+    </items>
+    <quests>
+        <quest type=""/>
+    </quests>
+</World>

@@ -1,0 +1,15 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="quest">
+        <xs:complexType>
+            <xs:attribute name="type"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="quests">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="quest" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

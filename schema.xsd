@@ -1,0 +1,24 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:include schemaLocation="people.xsd"/>
+    <xs:include schemaLocation="items.xsd"/>
+    <xs:include schemaLocation="quests.xsd"/>
+
+    <xs:element name="World">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="people"/>
+                <xs:element ref="items"/>
+                <xs:element ref="quests"/>
+            </xs:sequence>
+        </xs:complexType>
+        <xs:key name="K_item">
+            <xs:selector xpath="items/item"/>
+            <xs:field xpath="@name"/>
+        </xs:key>
+        <xs:keyref name="FK_item-ref_item" refer="K_item">
+            <xs:selector xpath="people/person/inventory/item-ref"/>
+            <xs:field xpath="@type"/>
+        </xs:keyref>
+    </xs:element>
+</xs:schema>
