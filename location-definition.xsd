@@ -1,0 +1,89 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:complexType name="range">
+        <xs:attribute name="min" type="xs:int" use="required"/>
+        <xs:attribute name="max" type="xs:int" use="required"/>
+    </xs:complexType>
+
+    <xs:element name="area">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="length" type="range"/>
+                <xs:element name="width" type="range"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="location-ref">
+        <xs:complexType>
+            <xs:attribute name="type" use="required"/>
+            <xs:attribute name="quantity" type="xs:int"/>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:element name="children">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="location-ref" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="cell" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="location-ref" minOccurs="0" maxOccurs="unbounded"/>
+                            <xs:element ref="children" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                        <xs:attribute name="column" use="required" type="xs:int" default="1"/>
+                        <xs:attribute name="row" use="required" type="xs:int" default="1"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="columns" type="xs:int" use="required" default="1"/>
+            <xs:attribute name="rows" type="xs:int" use="required" default="1"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="neighbour">
+        <xs:sequence>
+            <xs:element ref="location-ref" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="cell" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="location-ref"/>
+                    </xs:sequence>
+                    <xs:attribute name="position" type="xs:int" use="required"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="cells" type="xs:int"/>
+
+    </xs:complexType>
+
+    <xs:element name="location">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="area"/>
+                <xs:element ref="children" minOccurs="0"/>
+                <xs:element name="neighbour">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="top" type="neighbour" minOccurs="0"/>
+                            <xs:element name="right" type="neighbour" minOccurs="0"/>
+                            <xs:element name="bottom" type="neighbour" minOccurs="0"/>
+                            <xs:element name="left" type="neighbour" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+            </xs:sequence>
+            <xs:attribute name="type"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="locations-definition">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="location" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

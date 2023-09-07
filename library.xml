@@ -1,20 +1,44 @@
 <World xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="schema.xsd">
+       xsi:noNamespaceSchemaLocation="schema.xsd">
     <people>
         <person name="Billy">
-            <relations with="Bob" />
+            <relations with="Bob"/>
             <inventory>
                 <item-ref type="Long sword" equipped="hand"/>
             </inventory>
         </person>
-        <person name="Bob" />
+        <person name="Bob"/>
     </people>
-    <items>
+    <items-definition>
         <item name="Long sword">
-            <weight-kg value="2" />
-            <wearable slot="hand" />
+            <weight-kg value="2"/>
+            <wearable slot="hand"/>
         </item>
-    </items>
+    </items-definition>
+    <locations-definition>
+        <location type="farm">
+            <area>
+                <length min="200" max="200"/>
+                <width min="200" max="200"/>
+            </area>
+            <children rows="1" columns="3">
+                <location-ref type="grass"/>
+                <cell row="1" column="2">
+                    <children columns="3" rows="1">
+                        <location-ref type="cabin"/>
+                    </children>
+                </cell>
+            </children>
+            <neighbour>
+                <bottom cells="2">
+                    <location-ref type=""/>
+                    <cell position="1">
+                        <location-ref type="qwe"/>
+                    </cell>
+                </bottom>
+            </neighbour>
+        </location>
+    </locations-definition>
     <quests>
         <quest type="escort">
             <next type="assassination" quantity="2"/>
