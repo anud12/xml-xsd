@@ -66,6 +66,7 @@
                 <xs:element name="neighbour">
                     <xs:complexType>
                         <xs:sequence>
+                            <xs:element ref="location-ref" minOccurs="0" maxOccurs="unbounded"/>
                             <xs:element name="top" type="neighbour" minOccurs="0"/>
                             <xs:element name="right" type="neighbour" minOccurs="0"/>
                             <xs:element name="bottom" type="neighbour" minOccurs="0"/>

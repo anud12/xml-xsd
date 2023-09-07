@@ -30,6 +30,7 @@
                 </cell>
             </children>
             <neighbour>
+                <location-ref type="grass"/>
                 <bottom cells="2">
                     <location-ref type=""/>
                     <cell position="1">
