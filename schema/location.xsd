@@ -1,0 +1,27 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="location">
+        <xs:complexType>
+            <xs:attribute name="type" use="required"/>
+            <xs:attribute name="x" use="required"/>
+            <xs:attribute name="y" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="grid">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="location" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="type" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="locations">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="location" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element ref="grid" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,6 +1,14 @@
+<?xml version="1.0" standalone="no" ?>
 <World xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:noNamespaceSchemaLocation="schema.xsd">
-    <people>
+       xsi:noNamespaceSchemaLocation="./schema/schema.xsd">
+    <locations>
+        <location type="grass" x="0" y="0"/>
+        <grid type="underdark">
+            <location type="grass" x="0" y="0"/>
+        </grid>
+    </locations>
+    <people xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="./schema/people.xsd">
         <person name="Billy">
             <relations with="Bob"/>
             <inventory>
@@ -14,31 +22,17 @@
             <weight-kg value="2"/>
             <wearable slot="hand"/>
         </item>
+        <item name="dress">
+            <weight-kg value="1"/>
+            <wearable slot="chest"/>
+            <wearable slot="legs"/>
+        </item>
     </items-definition>
     <locations-definition>
-        <location type="farm">
-            <area>
-                <length min="200" max="200"/>
-                <width min="200" max="200"/>
-            </area>
-            <children rows="1" columns="3">
-                <location-ref type="grass"/>
-                <cell row="1" column="2">
-                    <children columns="3" rows="1">
-                        <location-ref type="cabin"/>
-                    </children>
-                </cell>
-            </children>
-            <neighbour>
-                <location-ref type="grass"/>
-                <bottom cells="2">
-                    <location-ref type=""/>
-                    <cell position="1">
-                        <location-ref type="qwe"/>
-                    </cell>
-                </bottom>
-            </neighbour>
-        </location>
+        <location-definition type="grass">
+            <tag name="outdoor"/>
+            <sibling tag="outdoor"/>
+        </location-definition>
     </locations-definition>
     <quests>
         <quest type="escort">

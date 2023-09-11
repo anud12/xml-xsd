@@ -1,0 +1,39 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:include schemaLocation="people.xsd"/>
+    <xs:include schemaLocation="items-definition.xsd"/>
+    <xs:include schemaLocation="quests.xsd"/>
+    <xs:include schemaLocation="location-definition.xsd"/>
+    <xs:include schemaLocation="location.xsd"/>
+
+    <xs:element name="World">
+
+        <xs:complexType>
+            <xs:all>
+                <xs:element ref="locations"/>
+                <xs:element ref="people" maxOccurs="unbounded"/>
+                <xs:element ref="items-definition" maxOccurs="unbounded"/>
+                <xs:element ref="locations-definition" maxOccurs="unbounded"/>
+                <xs:element ref="quests" maxOccurs="unbounded"/>
+            </xs:all>
+        </xs:complexType>
+
+        <xs:key name="K_item">
+            <xs:selector xpath="items-definition/item"/>
+            <xs:field xpath="@name"/>
+        </xs:key>
+        <xs:keyref name="FK_item-ref_item" refer="K_item">
+            <xs:selector xpath="people/person/inventory/item-ref"/>
+            <xs:field xpath="@type"/>
+        </xs:keyref>
+        <xs:key name="K_location-type">
+            <xs:selector xpath="location-definition/location"/>
+            <xs:field xpath="@type"/>
+        </xs:key>
+        <xs:keyref name="FK_locations_location" >
+            <xs:selector xpath="locations/location"/>
+            <xs:field xpath="@type"/>
+        </xs:keyref>
+
+    </xs:element>
+</xs:schema>

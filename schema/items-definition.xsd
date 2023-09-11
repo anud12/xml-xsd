@@ -11,6 +11,7 @@
         <xs:restriction>
             <xs:enumeration value="hand"/>
             <xs:enumeration value="chest"/>
+            <xs:enumeration value="legs"/>
         </xs:restriction>
     </xs:simpleType>
 
