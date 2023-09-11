@@ -1,14 +1,17 @@
 <?xml version="1.0" standalone="no" ?>
 <World xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="./schema/schema.xsd">
+
+    <seed>10</seed>
+
     <locations>
         <location type="grass" x="0" y="0"/>
         <grid type="underdark">
             <location type="grass" x="0" y="0"/>
         </grid>
     </locations>
-    <people xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:noNamespaceSchemaLocation="./schema/people.xsd">
+
+    <people>
         <person name="Billy">
             <relations with="Bob"/>
             <inventory>
@@ -17,6 +20,7 @@
         </person>
         <person name="Bob"/>
     </people>
+
     <items-definition>
         <item name="Long sword">
             <weight-kg value="2"/>
@@ -28,12 +32,14 @@
             <wearable slot="legs"/>
         </item>
     </items-definition>
+
     <locations-definition>
         <location-definition type="grass">
             <tag name="outdoor"/>
             <sibling tag="outdoor"/>
         </location-definition>
     </locations-definition>
+
     <quests>
         <quest type="escort">
             <next type="assassination" quantity="2"/>

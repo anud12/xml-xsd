@@ -10,6 +10,7 @@
 
         <xs:complexType>
             <xs:all>
+                <xs:element name="seed" type="xs:string"/>
                 <xs:element ref="locations"/>
                 <xs:element ref="people" maxOccurs="unbounded"/>
                 <xs:element ref="items-definition" maxOccurs="unbounded"/>
