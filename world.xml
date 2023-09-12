@@ -1,0 +1,53 @@
+<?xml version="1.0" standalone="no"?>
+<World xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:xi="http://www.w3.org/2001/XInclude"
+       xsi:noNamespaceSchemaLocation="./schema/schema.xsd">
+
+    <seed>10</seed>
+
+    <status-definitions>
+        <property-definition name="strength" max-value="10"/>
+        <property-definition name="constitution" max-value="10"/>
+    </status-definitions>
+
+    <xi:include href="items-definition.xml"/>
+
+    <xi:include href="location-definition.xml"/>
+
+    <people>
+        <person name="Billy">
+            <relations with="Bob"/>
+            <inventory>
+                <item-ref type="Long sword" equipped="hand"/>
+            </inventory>
+        </person>
+        <person name="Bob"/>
+    </people>
+
+    <locations>
+        <location type="grass" x="0" y="0"/>
+        <grid type="underdark">
+            <location type="grass" x="0" y="0"/>
+        </grid>
+    </locations>
+
+
+
+    <quests>
+        <quest type="escort">
+            <next type="assassination"/>
+            <complete-condition>
+            </complete-condition>
+        </quest>
+        <quest type="assassination">
+            <next type="escort"/>
+            <complete-condition>
+                <person>
+                    <inventory>
+                        <item-ref type=""/>
+                    </inventory>
+                </person>
+            </complete-condition>
+        </quest>
+    </quests>
+</World>

@@ -1,4 +1,19 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:include schemaLocation="people.xsd"/>
+
+    <xs:element name="complete-condition">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="person" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="inventory" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
     <xs:element name="quest">
         <xs:complexType>
@@ -6,9 +21,10 @@
                 <xs:element name="next" minOccurs="0" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:attribute name="type" use="required"/>
-                        <xs:attribute name="quantity" type="xs:int"/>
+                        <xs:attribute name="quantity" type="xs:int" default="1"/>
                     </xs:complexType>
                 </xs:element>
+                <xs:element ref="complete-condition"/>
             </xs:sequence>
             <xs:attribute name="type"/>
         </xs:complexType>
@@ -25,8 +41,8 @@
             <xs:selector xpath="quest"/>
             <xs:field xpath="@type"/>
         </xs:key>
-        <xs:keyref name="FK_quest_next_type" refer="K_quest_type">
-            <xs:selector xpath="quest/next"/>
+        <xs:keyref name="FK_quest_complete-condition_next__type" refer="K_quest_type">
+            <xs:selector xpath="quest/complete-condition/next"/>
             <xs:field xpath="@type"/>
         </xs:keyref>
 

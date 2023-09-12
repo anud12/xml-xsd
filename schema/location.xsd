@@ -1,9 +1,21 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:simpleType name="direction">
+        <xs:restriction>
+            <xs:enumeration value="north"/>
+            <xs:enumeration value="east"/>
+            <xs:enumeration value="south"/>
+            <xs:enumeration value="west"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
     <xs:element name="location">
         <xs:complexType>
             <xs:attribute name="type" use="required"/>
             <xs:attribute name="x" use="required"/>
             <xs:attribute name="y" use="required"/>
+            <xs:attribute name="rotation" type="direction" default="north"/>
         </xs:complexType>
     </xs:element>
 
