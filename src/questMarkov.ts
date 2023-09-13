@@ -1,27 +1,7 @@
-import {XMLParser} from "fast-xml-parser";
 import {markovNext} from "./markov";
 
-(async () => {
-  const data = await new Promise<string>((res) => {
-    process.stdin.setEncoding('utf8');
-    process.stdin.on('data', function (data) {
-      res(String(data));
-    });
-  })
-  const json = new XMLParser({
-    attributeNamePrefix: "$",
-    ignoreAttributes: false,
-    attributesGroupName: false,
-    isArray: () => true
 
-  }).parse(data, {})
-
-  questMarkov(json)
-
-})()
-
-
-const questMarkov = (json) => {
+export const questMarkov = (json) => {
   const questMatrix = json.world_step[0].quests_markov_chain[0].quest_markov_link.reduce((previous, quest) => {
     const next = quest.next
       ?.flatMap(e => {
@@ -36,7 +16,6 @@ const questMarkov = (json) => {
       [quest.$type]: next ?? []
     }
   }, {})
-  console.log("questMatrix", JSON.stringify(questMatrix));
   const d = new Array(10).fill("").reduce(([value, ...rest]) => {
     return [markovNext(questMatrix[value]), value, ...rest]
   }, ['talk-to'])

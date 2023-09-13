@@ -1,6 +1,6 @@
 <?xml version="1.0" standalone="no"?>
 <world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:noNamespaceSchemaLocation="schema/world_step.xsd">
+            xsi:noNamespaceSchemaLocation="schema/world_step/world_step.xsd">
 
     <world_metadata>
         <next_world_step>world1</next_world_step>
@@ -26,8 +26,17 @@
 
     <locations_markov_chain>
         <location_markov_link type="grass">
-            <tag name="outdoor"/>
-            <sibling tag="outdoor"/>
+            <sibling type="grass" position="left" quantity="10"/>
+            <sibling type="dry-grass" position="left" quantity="5"/>
+        </location_markov_link>
+        <location_markov_link type="dry-grass">
+            <sibling type="dry-grass" position="left" quantity="10"/>
+            <sibling type="desert" position="left" quantity="2"/>
+            <sibling type="grass" position="left" quantity="1"/>
+        </location_markov_link>
+        <location_markov_link type="desert">
+            <sibling type="dry-grass" position="left" quantity="1"/>
+            <sibling type="desert" position="left" quantity="3"/>
         </location_markov_link>
     </locations_markov_chain>
 

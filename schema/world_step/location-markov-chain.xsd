@@ -41,20 +41,20 @@
         </xs:complexType>
 
         <xs:key name="K_location_type">
-            <xs:selector xpath="location"/>
+            <xs:selector xpath="location_markov_link"/>
             <xs:field xpath="@type"/>
         </xs:key>
         <xs:keyref name="FK_sibling_type" refer="K_location_type">
-            <xs:selector xpath="location/sibling"/>
+            <xs:selector xpath="location_markov_link/sibling"/>
             <xs:field xpath="@type"/>
         </xs:keyref>
 
         <xs:key name="K_location_tag">
-            <xs:selector xpath="location/tag"/>
+            <xs:selector xpath="location_markov_link/tag"/>
             <xs:field xpath="@name"/>
         </xs:key>
         <xs:keyref name="FK_sibling_tag" refer="K_location_tag">
-            <xs:selector xpath="location/sibling"/>
+            <xs:selector xpath="location_markov_link/sibling"/>
             <xs:field xpath="@tag"/>
         </xs:keyref>
 
