@@ -1,18 +1,33 @@
 <?xml version="1.0" standalone="no"?>
-<World xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<world xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:xi="http://www.w3.org/2001/XInclude"
        xsi:noNamespaceSchemaLocation="./schema/schema.xsd">
 
     <seed>10</seed>
 
     <status-definitions>
-        <property-definition name="strength" max-value="10"/>
-        <property-definition name="constitution" max-value="10"/>
+        <property-definition name="strength" min-value="8" max-value="20"/>
+        <property-definition name="constitution" min-value="8" max-value="20"/>
     </status-definitions>
 
-    <xi:include href="items-definition.xml"/>
+    <items-definition>
+        <item name="Long sword">
+            <weight-kg value="2"/>
+            <wearable slot="hand"/>
+        </item>
+        <item name="dress">
+            <weight-kg value="1"/>
+            <wearable slot="chest"/>
+            <wearable slot="legs"/>
+        </item>
+    </items-definition>
 
-    <xi:include href="location-definition.xml"/>
+    <locations_markov_chain>
+        <location_markov_link type="grass">
+            <tag name="outdoor"/>
+            <sibling tag="outdoor"/>
+        </location_markov_link>
+    </locations_markov_chain>
 
     <people>
         <person name="Billy">
@@ -31,23 +46,30 @@
         </grid>
     </locations>
 
-
-
-    <quests>
-        <quest type="escort">
+    <quests_markov_chain>
+        <quest_markov_link type="talk-to">
+            <next type="talk-to" quantity="4"/>
+            <next type="escort" quantity="2"/>
             <next type="assassination"/>
-            <complete-condition>
-            </complete-condition>
-        </quest>
-        <quest type="assassination">
-            <next type="escort"/>
-            <complete-condition>
+            <complete_condition>
+
+            </complete_condition>
+        </quest_markov_link>
+        <quest_markov_link type="escort">
+            <next type="assassination" quantity="4"/>
+            <next type="talk-to"/>
+            <complete_condition>
+            </complete_condition>
+        </quest_markov_link>
+        <quest_markov_link type="assassination">
+            <next type="talk-to" quantity="4"/>
+            <complete_condition>
                 <person>
                     <inventory>
                         <item-ref type=""/>
                     </inventory>
                 </person>
-            </complete-condition>
-        </quest>
-    </quests>
-</World>
+            </complete_condition>
+        </quest_markov_link>
+    </quests_markov_chain>
+</world>

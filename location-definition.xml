@@ -1,7 +1,0 @@
-<locations-definition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                      xsi:noNamespaceSchemaLocation="./schema/location-definition.xsd">
-    <location-definition type="grass">
-        <tag name="outdoor"/>
-        <sibling tag="outdoor"/>
-    </location-definition>
-</locations-definition>

@@ -19,7 +19,7 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="location-definition">
+    <xs:element name="location_markov_link">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="tag" minOccurs="0" maxOccurs="unbounded">
@@ -33,10 +33,10 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="locations-definition">
+    <xs:element name="locations_markov_chain">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="location-definition" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element ref="location_markov_link" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
 

@@ -3,21 +3,18 @@
     <xs:element name="property-definition">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="property-threshold" minOccurs="0">
+                <xs:element name="property-threshold" minOccurs="0" maxOccurs="unbounded">
                     <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="threshold-definition" maxOccurs="unbounded">
-                                <xs:complexType>
-                                    <xs:attribute name="min-value"/>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
+                        <xs:attribute name="name" type="xs:string" use="required"/>
+                        <xs:attribute name="min-value-inclusive" type="xs:int"/>
+                        <xs:attribute name="max-value-inclusive" type="xs:int"/>
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
             <xs:attribute name="name" use="required"/>
             <xs:attribute name="min-value" default="0"/>
             <xs:attribute name="max-value" use="required"/>
+            <xs:attribute name="units"/>
         </xs:complexType>
     </xs:element>
 
@@ -28,4 +25,6 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+
+
 </xs:schema>
