@@ -12,7 +12,7 @@ import {markovNext} from "./markov";
     attributeNamePrefix: "$",
     ignoreAttributes: false,
     attributesGroupName: false,
-    isArray: tagName => true
+    isArray: () => true
 
   }).parse(data, {})
 

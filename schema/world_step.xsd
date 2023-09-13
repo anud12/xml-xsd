@@ -8,17 +8,28 @@
 
     <xs:include schemaLocation="location.xsd"/>
 
-    <xs:element name="world">
-
+    <xs:element name="world_metadata">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="seed" type="xs:string"/>
+                <xs:element name="previous_world_step" type="xs:anyURI" minOccurs="0"/>
+                <xs:element name="next_world_step" type="xs:anyURI"/>
+                <xs:element name="action_step" type="xs:anyURI"/>
+            </xs:sequence>
+        </xs:complexType>
+
+    </xs:element>
+
+    <xs:element name="world_step">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="world_metadata"/>
                 <xs:element ref="status-definitions" maxOccurs="unbounded"/>
                 <xs:element ref="items-definition" maxOccurs="unbounded"/>
                 <xs:element ref="locations_markov_chain" maxOccurs="unbounded"/>
+                <xs:element ref="quests_markov_chain" maxOccurs="unbounded"/>
                 <xs:element ref="people" maxOccurs="unbounded"/>
                 <xs:element ref="locations" maxOccurs="unbounded"/>
-                <xs:element ref="quests_markov_chain" maxOccurs="unbounded"/>
+
             </xs:sequence>
         </xs:complexType>
 

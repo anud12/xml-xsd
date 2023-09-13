@@ -1,9 +1,11 @@
 <?xml version="1.0" standalone="no"?>
-<world xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:xi="http://www.w3.org/2001/XInclude"
-       xsi:noNamespaceSchemaLocation="./schema/schema.xsd">
+<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="schema/world_step.xsd">
 
-    <seed>10</seed>
+    <world_metadata>
+        <next_world_step>world1</next_world_step>
+        <action_step>world_action</action_step>
+    </world_metadata>
 
     <status-definitions>
         <property-definition name="strength" min-value="8" max-value="20"/>
@@ -28,23 +30,6 @@
             <sibling tag="outdoor"/>
         </location_markov_link>
     </locations_markov_chain>
-
-    <people>
-        <person name="Billy">
-            <relations with="Bob"/>
-            <inventory>
-                <item-ref type="Long sword" equipped="hand"/>
-            </inventory>
-        </person>
-        <person name="Bob"/>
-    </people>
-
-    <locations>
-        <location type="grass" x="0" y="0"/>
-        <grid type="underdark">
-            <location type="grass" x="0" y="0"/>
-        </grid>
-    </locations>
 
     <quests_markov_chain>
         <quest_markov_link type="talk-to">
@@ -72,4 +57,22 @@
             </complete_condition>
         </quest_markov_link>
     </quests_markov_chain>
-</world>
+
+    <people>
+        <person name="Billy">
+            <relations with="Bob"/>
+            <inventory>
+                <item-ref type="Long sword" equipped="hand"/>
+            </inventory>
+        </person>
+        <person name="Bob"/>
+    </people>
+
+    <locations>
+        <location type="grass" x="0" y="0"/>
+        <grid type="underdark">
+            <location type="grass" x="0" y="0"/>
+        </grid>
+    </locations>
+
+</world_step>
