@@ -9,6 +9,7 @@
     <status-definitions>
         <property-definition name="strength" min-value="8" max-value="20"/>
         <property-definition name="constitution" min-value="8" max-value="20"/>
+        <property-definition name="vision" max-value="20"/>
     </status-definitions>
 
     <items-definition>
