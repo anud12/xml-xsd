@@ -25,17 +25,26 @@
     </items-definition>
 
     <locations_markov_chain>
+        <location_markov_link type="plains">
+            <sibling type="plains" position="fill"/>
+        </location_markov_link>
         <location_markov_link type="grass">
-            <sibling type="grass" position="left" quantity="10"/>
-            <sibling type="dry-grass" position="left" quantity="5"/>
+            <sibling type="plains" position="all"/>
+            <sibling type="dry-grass" position="bottom"/>
+            <sibling type="dry-grass" position="top"/>
+
+<!--            <sibling type="grass" position="left" quantity="10"/>-->
+<!--            <sibling type="dry-grass" position="left" quantity="5"/>-->
         </location_markov_link>
         <location_markov_link type="dry-grass">
+            <sibling type="plains" position="fill"/>
             <sibling type="dry-grass" position="left" quantity="10"/>
             <sibling type="desert" position="left" quantity="2"/>
-            <sibling type="grass" position="left" quantity="1"/>
+            <sibling type="grass" position="left"/>
         </location_markov_link>
         <location_markov_link type="desert">
-            <sibling type="dry-grass" position="left" quantity="1"/>
+            <sibling type="plains" position="fill"/>
+            <sibling type="dry-grass" position="left"/>
             <sibling type="desert" position="left" quantity="3"/>
         </location_markov_link>
     </locations_markov_chain>
@@ -78,7 +87,16 @@
     </people>
 
     <locations>
-        <location type="grass" x="0" y="0"/>
+        <location type="grass" x="-1" y="-1"/>
+        <location type="grass" x="-1" y="0"/>
+        <location type="grass" x="-1" y="1"/>
+
+        <location type="grass" x="0" y="1"/>
+        <location type="grass" x="0" y="-1"/>
+
+        <location type="grass" x="1" y="-1"/>
+        <location type="grass" x="1" y="0"/>
+        <location type="grass" x="1" y="1"/>
         <grid type="underdark">
             <location type="grass" x="0" y="0"/>
         </grid>

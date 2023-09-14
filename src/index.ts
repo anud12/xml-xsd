@@ -1,5 +1,5 @@
 import {XMLParser} from "fast-xml-parser";
-import {locationMarkov} from "./locationMarkov";
+import {newLocation} from "./newLocation";
 
 (async () => {
   const data = await new Promise<string>((res) => {
@@ -16,6 +16,6 @@ import {locationMarkov} from "./locationMarkov";
 
   }).parse(data, {})
 
-  locationMarkov(json, "left");
+  console.log(newLocation(json, 0, 0));
 
 })()

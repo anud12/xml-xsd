@@ -2,13 +2,13 @@
 
     <xs:element name="sibling">
         <xs:complexType>
-            <xs:attribute name="type"/>
-            <xs:attribute name="tag"/>
+            <xs:attribute name="type" use="required"/>
             <xs:attribute name="quantity" type="xs:int" default="1"/>
             <xs:attribute name="position" default="all">
                 <xs:simpleType>
                     <xs:restriction>
                         <xs:enumeration value="all"/>
+                        <xs:enumeration value="fill"/>
                         <xs:enumeration value="top"/>
                         <xs:enumeration value="right"/>
                         <xs:enumeration value="bottom"/>
