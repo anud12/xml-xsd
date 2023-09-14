@@ -13,7 +13,6 @@
             <xs:sequence>
                 <xs:element name="previous_world_step" type="xs:anyURI" minOccurs="0"/>
                 <xs:element name="next_world_step" type="xs:anyURI"/>
-                <xs:element name="action_step" type="xs:anyURI"/>
             </xs:sequence>
         </xs:complexType>
 

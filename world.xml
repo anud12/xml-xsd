@@ -3,8 +3,7 @@
             xsi:noNamespaceSchemaLocation="schema/world_step/world_step.xsd">
 
     <world_metadata>
-        <next_world_step>world1</next_world_step>
-        <action_step>world_action</action_step>
+        <next_world_step>./world_1</next_world_step>
     </world_metadata>
 
     <status-definitions>

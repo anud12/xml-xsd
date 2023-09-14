@@ -1,5 +1,6 @@
 import {XMLBuilder, XMLParser} from "fast-xml-parser";
 import {newLocation} from "./newLocation";
+import * as fs from "fs";
 
 (async () => {
   const data = await new Promise<string>((res) => {
@@ -16,6 +17,9 @@ import {newLocation} from "./newLocation";
 
   }).parse(data, {})
 
+  const next_world_step = json.world_step[0].world_metadata[0].next_world_step[0];
+  const iter = Number(next_world_step.split("_")?.[1] ?? 0)
+  json.world_step[0].world_metadata[0].next_world_step[0] = `world_${iter + 1}`
   const location = newLocation(json, 0, 0);
 
   json.world_step[0].locations[0].location.push(location);
@@ -25,9 +29,10 @@ import {newLocation} from "./newLocation";
     attributesGroupName: "$",
     format: true,
     ignoreAttributes: false,
+    suppressEmptyNode: true,
   })
 
   const result = xmlBuilder.build(json);
-  console.log(result);
+  fs.writeFileSync(`${next_world_step}.xml`, result)
 
 })()
