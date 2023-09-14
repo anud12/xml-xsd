@@ -1,4 +1,4 @@
-import {XMLParser} from "fast-xml-parser";
+import {XMLBuilder, XMLParser} from "fast-xml-parser";
 import {newLocation} from "./newLocation";
 
 (async () => {
@@ -9,13 +9,25 @@ import {newLocation} from "./newLocation";
     });
   })
   const json = new XMLParser({
-    attributeNamePrefix: "$",
+    attributeNamePrefix: "",
+    attributesGroupName: "$",
     ignoreAttributes: false,
-    attributesGroupName: false,
-    isArray: () => true
+    isArray: (tagName, jPath, isLeafNode, isAttribute) => !isAttribute
 
   }).parse(data, {})
 
-  console.log(newLocation(json, 0, 0));
+  const location = newLocation(json, 0, 0);
+
+  json.world_step[0].locations[0].location.push(location);
+
+  const xmlBuilder = new XMLBuilder({
+    attributeNamePrefix: "",
+    attributesGroupName: "$",
+    format: true,
+    ignoreAttributes: false,
+  })
+
+  const result = xmlBuilder.build(json);
+  console.log(result);
 
 })()

@@ -5,8 +5,8 @@ export const questMarkov = (json) => {
   const questMatrix = json.world_step[0].quests_markov_chain[0].quest_markov_link.reduce((previous, quest) => {
     const next = quest.next
       ?.flatMap(e => {
-          const slots = new Array(Number(e.$quantity?.[0] ?? 1));
-          return slots.fill(e.$type[0]);
+          const slots = new Array(Number(e.$.quantity?.[0] ?? 1));
+          return slots.fill(e.$.type[0]);
         }
       );
 
