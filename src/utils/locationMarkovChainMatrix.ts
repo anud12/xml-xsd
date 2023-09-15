@@ -1,8 +1,9 @@
-import {Transition} from "./markov";
+import {Transition} from "./markovNext";
+import {JsonSchema} from "./JsonSchema";
 
 export type LocationMatrix = Record<string, Transition<string>>;
 
-export const locationMarkovChainMatrix = (json, direction):LocationMatrix => {
+export const locationMarkovChainMatrix = (json:JsonSchema, direction):LocationMatrix => {
   const matrix = json.world_step[0].locations_markov_chain[0].location_markov_link.reduce((previous, link) => {
     let next = link.sibling
       ?.filter(e => e.$.position === direction || e.$.position === "all")
@@ -25,7 +26,6 @@ export const locationMarkovChainMatrix = (json, direction):LocationMatrix => {
       ...previous,
       [link.$.type]: next ?? []
     }
-  }, {});
-
+  }, {} as any);
   return matrix;
 }

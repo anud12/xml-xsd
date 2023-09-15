@@ -1,7 +1,8 @@
-import {markovNext} from "./markov";
+import {markovNext} from "./markovNext";
+import {JsonSchema} from "./JsonSchema";
 
 
-export const questMarkov = (json) => {
+export const questMarkov = (json:JsonSchema) => {
   const questMatrix = json.world_step[0].quests_markov_chain[0].quest_markov_link.reduce((previous, quest) => {
     const next = quest.next
       ?.flatMap(e => {
@@ -13,7 +14,7 @@ export const questMarkov = (json) => {
 
     return {
       ...previous,
-      [quest.$type]: next ?? []
+      [quest.$.type]: next ?? []
     }
   }, {})
   const d = new Array(10).fill("").reduce(([value, ...rest]) => {

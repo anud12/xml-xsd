@@ -1,5 +1,5 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <xs:element name="items-definition">
+    <xs:element name="items_definition">
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="item" minOccurs="0" maxOccurs="unbounded"/>
@@ -35,7 +35,7 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="item-ref">
+    <xs:element name="item_ref">
         <xs:complexType>
             <xs:attribute name="type" use="required"/>
             <xs:attribute name="equipped" type="item-slot"/>

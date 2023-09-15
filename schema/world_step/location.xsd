@@ -9,8 +9,13 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:complexType name="cell_ref_type">
+        <xs:attribute name="layer"/>
+        <xs:attribute name="x" use="required" type="xs:integer"/>
+        <xs:attribute name="y" use="required" type="xs:integer"/>
+    </xs:complexType>
 
-    <xs:element name="location">
+    <xs:element name="cell">
         <xs:complexType>
             <xs:attribute name="type" use="required"/>
             <xs:attribute name="x" use="required"/>
@@ -19,10 +24,10 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="grid">
+    <xs:element name="layer">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="location" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element ref="cell" minOccurs="1" maxOccurs="unbounded"/>
             </xs:sequence>
             <xs:attribute name="type" use="required"/>
         </xs:complexType>
@@ -31,8 +36,8 @@
     <xs:element name="locations">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="location" minOccurs="0" maxOccurs="unbounded"/>
-                <xs:element ref="grid" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element ref="cell" minOccurs="1" maxOccurs="unbounded"/>
+                <xs:element ref="layer" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

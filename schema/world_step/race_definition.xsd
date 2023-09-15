@@ -1,0 +1,12 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+
+    <xs:element name="race">
+
+    </xs:element>
+
+
+    <xs:element name="race_definitions">
+
+    </xs:element>
+</xs:schema>

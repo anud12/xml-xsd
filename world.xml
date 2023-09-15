@@ -6,13 +6,13 @@
         <next_world_step>./world_1</next_world_step>
     </world_metadata>
 
-    <status-definitions>
-        <property-definition name="strength" min-value="8" max-value="20"/>
-        <property-definition name="constitution" min-value="8" max-value="20"/>
-        <property-definition name="vision" max-value="20"/>
-    </status-definitions>
+    <status_definitions>
+        <property_definition name="strength" min="8" max="20"/>
+        <property_definition name="constitution" min="8" max="20"/>
+        <property_definition name="vision" max="20"/>
+    </status_definitions>
 
-    <items-definition>
+    <items_definition>
         <item name="Long sword">
             <weight-kg value="2"/>
             <wearable slot="hand"/>
@@ -22,30 +22,23 @@
             <wearable slot="chest"/>
             <wearable slot="legs"/>
         </item>
-    </items-definition>
+    </items_definition>
 
     <locations_markov_chain>
         <location_markov_link type="plains">
-            <sibling type="plains" position="fill"/>
+            <sibling type="plains" quantity="20" position="all"/>
+            <sibling type="forest"  position="all"/>
         </location_markov_link>
-        <location_markov_link type="grass">
-            <sibling type="plains" position="all"/>
-            <sibling type="dry-grass" position="bottom"/>
-            <sibling type="dry-grass" position="top"/>
 
-<!--            <sibling type="grass" position="left" quantity="10"/>-->
-<!--            <sibling type="dry-grass" position="left" quantity="5"/>-->
+        <location_markov_link type="forest">
+            <sibling type="forest" quantity="20"  position="all"/>
+            <sibling type="plains"  position="all"/>
+            <sibling type="hills"  position="all"/>
         </location_markov_link>
-        <location_markov_link type="dry-grass">
-            <sibling type="plains" position="fill"/>
-            <sibling type="dry-grass" position="left" quantity="10"/>
-            <sibling type="desert" position="left" quantity="2"/>
-            <sibling type="grass" position="left"/>
-        </location_markov_link>
-        <location_markov_link type="desert">
-            <sibling type="plains" position="fill"/>
-            <sibling type="dry-grass" position="left"/>
-            <sibling type="desert" position="left" quantity="3"/>
+
+        <location_markov_link type="hills">
+            <sibling type="hills" quantity="20"  position="all"/>
+            <sibling type="forest"  position="all"/>
         </location_markov_link>
     </locations_markov_chain>
 
@@ -69,7 +62,7 @@
             <complete_condition>
                 <person>
                     <inventory>
-                        <item-ref type=""/>
+                        <item_ref type=""/>
                     </inventory>
                 </person>
             </complete_condition>
@@ -78,28 +71,33 @@
 
     <people>
         <person name="Billy">
+            <location x="1" y="1"/>
             <relations with="Bob"/>
             <inventory>
-                <item-ref type="Long sword" equipped="hand"/>
+                <item_ref type="Long sword" equipped="hand"/>
             </inventory>
         </person>
-        <person name="Bob"/>
+        <person name="Bob">
+            <location x="-1" y="-1"/>
+        </person>
     </people>
 
     <locations>
-        <location type="grass" x="-1" y="-1"/>
-        <location type="grass" x="-1" y="0"/>
-        <location type="grass" x="-1" y="1"/>
+        <cell type="plains" x="0" y="0"/>
+        <cell type="plains" x="0" y="1"/>
+        <cell type="plains" x="0" y="-1"/>
 
-        <location type="grass" x="0" y="1"/>
-        <location type="grass" x="0" y="-1"/>
+        <cell type="plains" x="1" y="0"/>
+        <cell type="plains" x="1" y="1"/>
+        <cell type="plains" x="1" y="-1"/>
 
-        <location type="grass" x="1" y="-1"/>
-        <location type="grass" x="1" y="0"/>
-        <location type="grass" x="1" y="1"/>
-        <grid type="underdark">
-            <location type="grass" x="0" y="0"/>
-        </grid>
+        <cell type="plains" x="-1" y="0"/>
+        <cell type="plains" x="-1" y="1"/>
+        <cell type="plains" x="-1" y="-1"/>
+
+        <layer type="underdark">
+            <cell type="grass" x="0" y="0"/>
+        </layer>
     </locations>
 
 </world_step>

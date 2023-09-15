@@ -22,8 +22,8 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="world_metadata"/>
-                <xs:element ref="status-definitions" maxOccurs="unbounded"/>
-                <xs:element ref="items-definition" maxOccurs="unbounded"/>
+                <xs:element ref="status_definitions" maxOccurs="unbounded"/>
+                <xs:element ref="items_definition" maxOccurs="unbounded"/>
                 <xs:element ref="locations_markov_chain" maxOccurs="unbounded"/>
                 <xs:element ref="quests_markov_chain" maxOccurs="unbounded"/>
                 <xs:element ref="people" maxOccurs="unbounded"/>
@@ -33,7 +33,7 @@
         </xs:complexType>
 
         <xs:key name="K_item">
-            <xs:selector xpath="items-definition/item"/>
+            <xs:selector xpath="items_definition/item"/>
             <xs:field xpath="@name"/>
         </xs:key>
         <xs:keyref name="FK_item-ref_item" refer="K_item">
@@ -41,7 +41,7 @@
             <xs:field xpath="@type"/>
         </xs:keyref>
         <xs:key name="K_location-type">
-            <xs:selector xpath="location-definition/location"/>
+            <xs:selector xpath="location_definition/location"/>
             <xs:field xpath="@type"/>
         </xs:key>
 
