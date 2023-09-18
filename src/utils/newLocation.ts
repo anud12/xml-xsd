@@ -3,80 +3,10 @@ import {markovNext, Transition} from "./markovNext";
 import {JsonSchema} from "./JsonSchema";
 import {Middleware} from "./middleware";
 import {JsonUtil} from "./index";
+import {findClosestPoint} from "./findClosestPoint";
 
 type Cell = JsonSchema["world_step"][number]["locations"][number]["cell"][number];
 
-const findClosestFrom = (json: JsonUtil, x: number, y: number): Cell => {
-  const grid = json.locationGrid();
-  let range = 0;
-  let element = undefined;
-  let tempElement = grid?.[x]?.[y];
-  // origin
-  if (tempElement) {
-    element = tempElement;
-    return element;
-  }
-  while (true) {
-    console.log(`Range ${range}`)
-    range = range + 1;
-    // top
-    tempElement = grid?.[x]?.[y - range];
-    if (tempElement) {
-      element = tempElement;
-      break;
-    }
-
-    // right
-    tempElement = grid?.[x + range]?.[y];
-    if (tempElement) {
-      element = tempElement;
-      break;
-    }
-
-    // bottom
-    tempElement = grid?.[x]?.[y + range];
-    if (tempElement) {
-      element = tempElement;
-      break;
-    }
-
-    // left
-    tempElement = grid?.[x - range]?.[y];
-    if (tempElement) {
-      element = tempElement;
-      break;
-    }
-
-    // top-right
-    tempElement = grid?.[x + range]?.[y - range];
-    if (tempElement) {
-      element = tempElement;
-      break;
-    }
-
-    // bottom-right
-    tempElement = grid?.[x + range]?.[y + range];
-    if (tempElement) {
-      element = tempElement;
-      break;
-    }
-
-    // bottom-left
-    tempElement = grid?.[x - range]?.[y + range];
-    if (tempElement) {
-      element = tempElement;
-      break;
-    }
-
-    // top-left
-    tempElement = grid?.[x - range]?.[y - range];
-    if (tempElement) {
-      element = tempElement;
-      break;
-    }
-  }
-  return element;
-}
 
 const getTransitionFromNeighbours = (json: JsonUtil, cell: Cell): Transition<string> => {
   const x = Number(cell.$.x)
@@ -216,18 +146,16 @@ const fillNeighbours = (writeJson: JsonUtil, originalCell: Cell) => {
 }
 
 export const newLocation = (x: number, y: number): Middleware => {
-  return readJson => async (writeJson) => {
-    let grid = locationGrid(readJson)
-    if (grid?.[x]?.[y]) {
-      return;
-    }
-    let cell = findClosestFrom(new JsonUtil(writeJson), x, y);
-    while (cell.$.x !== `${x}` && cell.$.y !== `${y}`) {
-      console.log("newLocation", cell.$)
-      cell = findClosestFrom(new JsonUtil(writeJson), x, y)
-      fillNeighbours(new JsonUtil(writeJson), cell);
+  return () => async (writeJson) => {
+    const utils = new JsonUtil(writeJson);
+    let grid = utils.locationGrid()
+    let cell = findClosestPoint(grid, x, y);
+    do  {
+      const utils = new JsonUtil(writeJson);
+      cell = findClosestPoint(utils.locationGrid(), x, y);
+      fillNeighbours(utils, cell);
+    } while(Number(cell.$.y) !== y || Number(cell.$.x) !== x)
 
-    }
 
   }
 }
