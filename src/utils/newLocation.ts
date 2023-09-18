@@ -1,14 +1,13 @@
 import {locationGrid} from "./locationGrid";
-import {locationMarkovChainMatrix} from "./locationMarkovChainMatrix";
 import {markovNext, Transition} from "./markovNext";
 import {JsonSchema} from "./JsonSchema";
 import {Middleware} from "./middleware";
-import {type} from "os";
+import {JsonUtil} from "./index";
 
 type Cell = JsonSchema["world_step"][number]["locations"][number]["cell"][number];
 
-const findClosestFrom = (json: JsonSchema, x: number, y: number): Cell => {
-  const grid = locationGrid(json);
+const findClosestFrom = (json: JsonUtil, x: number, y: number): Cell => {
+  const grid = json.locationGrid();
   let range = 0;
   let element = undefined;
   let tempElement = grid?.[x]?.[y];
@@ -18,6 +17,7 @@ const findClosestFrom = (json: JsonSchema, x: number, y: number): Cell => {
     return element;
   }
   while (true) {
+    console.log(`Range ${range}`)
     range = range + 1;
     // top
     tempElement = grid?.[x]?.[y - range];
@@ -78,23 +78,23 @@ const findClosestFrom = (json: JsonSchema, x: number, y: number): Cell => {
   return element;
 }
 
-const getTransitionFromNeighbours = (json: JsonSchema, cell: Cell):Transition<string> => {
+const getTransitionFromNeighbours = (json: JsonUtil, cell: Cell): Transition<string> => {
   const x = Number(cell.$.x)
   const y = Number(cell.$.y)
-  const grid = locationGrid(json);
+  const grid = json.locationGrid();
   let transition = undefined;
 
   let element = grid?.[x]?.[y + 1];
   if (element) {
     const type = element.$.type;
-    transition = locationMarkovChainMatrix(json, "bottom")[type] ?? []
+    transition = json.locationMarkovChainMatrix("bottom")[type] ?? []
   }
 
   element = grid?.[x + 1]?.[y];
   if (element) {
     const type = element.$.type;
-    const typeList = locationMarkovChainMatrix(json, "left")[type]
-    if(transition) {
+    const typeList = json.locationMarkovChainMatrix("left")[type]
+    if (transition) {
       transition = transition.filter(e => typeList.includes(e))
     } else {
       transition = typeList
@@ -105,8 +105,8 @@ const getTransitionFromNeighbours = (json: JsonSchema, cell: Cell):Transition<st
   element = grid?.[x]?.[y - 1];
   if (element) {
     const type = element.$.type;
-    const typeList = locationMarkovChainMatrix(json, "top")[type]
-    if(transition) {
+    const typeList = json.locationMarkovChainMatrix("top")[type]
+    if (transition) {
       transition = transition.filter(e => typeList.includes(e))
     } else {
       transition = typeList
@@ -116,22 +116,22 @@ const getTransitionFromNeighbours = (json: JsonSchema, cell: Cell):Transition<st
   element = grid?.[x - 1]?.[y];
   if (element) {
     const type = element.$.type;
-    const typeList = locationMarkovChainMatrix(json, "right")[type]
-    if(transition) {
+    const typeList = json.locationMarkovChainMatrix("right")[type]
+    if (transition) {
       transition = transition.filter(e => typeList.includes(e))
     } else {
       transition = typeList
     }
   }
-  if(!transition) {
-    transition = locationMarkovChainMatrix(json, "all")[cell.$.type]
+  if (!transition) {
+    transition = json.locationMarkovChainMatrix("all")[cell.$.type]
   }
   return transition;
 }
 
-const fillNeighbours = (writeJson: JsonSchema, originalCell: Cell) => {
+const fillNeighbours = (writeJson: JsonUtil, originalCell: Cell) => {
   const grid = locationGrid(writeJson);
-  const newCells = writeJson.world_step[0].locations[0].cell;
+  const newCells = writeJson.jsonSchema.world_step[0].locations[0].cell;
   const x = Number(originalCell.$.x);
   const y = Number(originalCell.$.y);
   let cell = grid?.[x + 1]?.[y];
@@ -216,15 +216,16 @@ const fillNeighbours = (writeJson: JsonSchema, originalCell: Cell) => {
 }
 
 export const newLocation = (x: number, y: number): Middleware => {
-  return async (readJson, writeJson) => {
+  return readJson => async (writeJson) => {
     let grid = locationGrid(readJson)
     if (grid?.[x]?.[y]) {
       return;
     }
-    let cell = findClosestFrom(writeJson, x, y);
+    let cell = findClosestFrom(new JsonUtil(writeJson), x, y);
     while (cell.$.x !== `${x}` && cell.$.y !== `${y}`) {
-      cell = findClosestFrom(writeJson, x, y)
-      fillNeighbours(writeJson, cell);
+      console.log("newLocation", cell.$)
+      cell = findClosestFrom(new JsonUtil(writeJson), x, y)
+      fillNeighbours(new JsonUtil(writeJson), cell);
 
     }
 

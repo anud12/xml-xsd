@@ -1,6 +1,6 @@
 import {XMLBuilder, XMLParser} from "fast-xml-parser";
 import * as fs from "fs";
-import {utils} from "./utils";
+import {JsonUtil, utils} from "./utils";
 import {JsonSchema} from "./utils/JsonSchema";
 
 
@@ -17,7 +17,11 @@ import {JsonSchema} from "./utils/JsonSchema";
 
 
   const writeJson = JSON.parse(JSON.stringify(readJson));
-  await utils.newLocation(1000,1000)(readJson, writeJson);
+  // await utils.newLocation(100, 100)(new JsonUtil(readJson))(writeJson);
+  //
+  // await utils.newLocation(100, 200)(new JsonUtil(readJson))(writeJson);
+
+  await utils.newLocation(200, 100)(new JsonUtil(readJson))(writeJson);
 
   const xmlBuilder = new XMLBuilder({
     attributeNamePrefix: "",
