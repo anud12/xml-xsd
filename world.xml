@@ -9,7 +9,7 @@
     <status_definitions>
         <property_definition name="strength" min="8" max="20"/>
         <property_definition name="constitution" min="8" max="20"/>
-        <property_definition name="vision" max="20"/>
+        <property_definition name="vision" max="5"/>
     </status_definitions>
 
     <items_definition>
@@ -71,15 +71,15 @@
 
     <people>
         <person name="Billy">
-            <location x="1" y="1"/>
-            <relations with="Bob"/>
+            <location x="10" y="10"/>
+<!--            <relations with="Bob"/>-->
             <inventory>
                 <item_ref type="Long sword" equipped="hand"/>
             </inventory>
         </person>
-        <person name="Bob">
-            <location x="-1" y="-1"/>
-        </person>
+<!--        <person name="Bob">-->
+<!--            <location x="-50" y="-50"/>-->
+<!--        </person>-->
     </people>
 
     <locations>

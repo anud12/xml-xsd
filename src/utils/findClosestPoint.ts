@@ -1,5 +1,5 @@
 // Function to find the coordinates of a line between two points
-import {Cell, LocationGrid} from "./locationGrid";
+import {Cell, LocationGrid} from "./location/locationGrid";
 
 export function findClosestPoint(locationGrid: LocationGrid, x: number, y: number): Cell | null {
   let closestPoint: Cell | null = null;

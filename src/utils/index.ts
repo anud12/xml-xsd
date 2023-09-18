@@ -1,7 +1,7 @@
-import {locationGrid} from "./locationGrid";
-import {locationMarkovChainMatrix} from "./locationMarkovChainMatrix";
+import {locationGrid} from "./location/locationGrid";
+import {locationMarkovChainMatrix} from "./location/locationMarkovChainMatrix";
 import {markovNext} from "./markovNext";
-import {newLocation} from "./newLocation";
+import {create} from "./location/create";
 import {questMarkov} from "./questMarkov";
 import {JsonSchema} from "./JsonSchema";
 
@@ -21,25 +21,27 @@ export const utils = {
   locationGrid: locationGrid,
   locationMarkovChainMatrix: locationMarkovChainMatrix,
   markov: markovNext,
-  newLocation: newLocation,
+  newLocation: create,
   questMarkov: questMarkov,
 }
 
 export class JsonUtil {
   constructor(public jsonSchema: JsonSchema) {
   }
+  location = {
+    grid: memoizeFunction(() => {
+      return locationGrid(this)
+    }),
 
-  locationGrid = memoizeFunction(() => {
-    return locationGrid(this)
-  })
-  locationMarkovChainMatrix = memoizeFunction((direction: string) => {
-    return locationMarkovChainMatrix(this, direction)
-  })
+    markovChainMatrix: memoizeFunction((direction: string) => {
+      return locationMarkovChainMatrix(this, direction)
+    }),
+
+    create: memoizeFunction((x: number, y: number) => {
+      return create(x, y)(this)
+    })
+  }
   markov = markovNext
-
-  newLocation = memoizeFunction((x: number, y: number) => {
-    return newLocation(x, y)(this)
-  })
 
   questMarkov = memoizeFunction(() => {
     questMarkov(this)

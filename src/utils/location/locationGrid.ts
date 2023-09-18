@@ -1,5 +1,5 @@
-import {JsonSchema} from "./JsonSchema";
-import {JsonUtil} from "./index";
+import {JsonSchema} from "../JsonSchema";
+import {JsonUtil} from "../index";
 
 export type Cell = JsonSchema["world_step"][number]["locations"][number]["cell"][number]
 export type LocationGrid = Record<number, Record<number, Cell>> & {

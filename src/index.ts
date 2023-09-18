@@ -2,6 +2,7 @@ import {XMLBuilder, XMLParser} from "fast-xml-parser";
 import * as fs from "fs";
 import {JsonUtil, utils} from "./utils";
 import {JsonSchema} from "./utils/JsonSchema";
+import {personVision} from "./middleware/personVision";
 
 
 (async () => {
@@ -17,14 +18,15 @@ import {JsonSchema} from "./utils/JsonSchema";
 
 
   const writeJson = JSON.parse(JSON.stringify(readJson));
-  await utils.newLocation(100, 100)(new JsonUtil(readJson))(writeJson);
+  // await utils.newLocation(100, 100)(new JsonUtil(readJson))(writeJson);
   //
-  await utils.newLocation(100, 200)(new JsonUtil(readJson))(writeJson);
+  // await utils.newLocation(100, 200)(new JsonUtil(readJson))(writeJson);
+  const readJsonUtil = new JsonUtil(readJson);
+  // await utils.newLocation(10, 10)(readJsonUtil)(writeJson);
+  await personVision(readJsonUtil)(writeJson);
 
-  await utils.newLocation(10, 10)(new JsonUtil(readJson))(writeJson);
 
-
-  await utils.newLocation(300, 200)(new JsonUtil(readJson))(writeJson);
+  // await utils.newLocation(300, 2000)(new JsonUtil(readJson))(writeJson);
   const xmlBuilder = new XMLBuilder({
     attributeNamePrefix: "",
     attributesGroupName: "$",

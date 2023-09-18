@@ -1,7 +1,7 @@
 import {JsonSchema} from "./JsonSchema";
 import {JsonUtil} from "./index";
 
-export type Middleware = (writeJson: JsonUtil) => (writeJson: JsonSchema) => Promise<void>
+export type Middleware = (readJson: JsonUtil) => (writeJson: JsonSchema) => Promise<void>
 
 export type Attribute<T> = {
   $?: Partial<Record<keyof T, string>>,
