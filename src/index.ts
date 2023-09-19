@@ -16,17 +16,10 @@ import {personVision} from "./middleware/personVision";
   }).parse(data, {})
   fs.writeFileSync(`world.json`, JSON.stringify(readJson))
 
-
   const writeJson = JSON.parse(JSON.stringify(readJson));
-  // await utils.newLocation(100, 100)(new JsonUtil(readJson))(writeJson);
-  //
-  // await utils.newLocation(100, 200)(new JsonUtil(readJson))(writeJson);
   const readJsonUtil = new JsonUtil(readJson);
-  // await utils.newLocation(10, 10)(readJsonUtil)(writeJson);
   await personVision(readJsonUtil)(writeJson);
 
-
-  // await utils.newLocation(300, 2000)(new JsonUtil(readJson))(writeJson);
   const xmlBuilder = new XMLBuilder({
     attributeNamePrefix: "",
     attributesGroupName: "$",

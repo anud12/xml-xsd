@@ -1,6 +1,6 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-    <xs:simpleType name="direction">
+    <xs:simpleType name="type_direction">
         <xs:restriction>
             <xs:enumeration value="north"/>
             <xs:enumeration value="east"/>
@@ -9,7 +9,7 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:complexType name="cell_ref_type">
+    <xs:complexType name="type_cell_ref">
         <xs:attribute name="layer"/>
         <xs:attribute name="x" use="required" type="xs:integer"/>
         <xs:attribute name="y" use="required" type="xs:integer"/>
@@ -20,7 +20,7 @@
             <xs:attribute name="type" use="required"/>
             <xs:attribute name="x" use="required"/>
             <xs:attribute name="y" use="required"/>
-            <xs:attribute name="rotation" type="direction" default="north"/>
+            <xs:attribute name="rotation" type="type_direction" default="north"/>
         </xs:complexType>
     </xs:element>
 

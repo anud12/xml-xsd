@@ -2,6 +2,7 @@
 
     <xs:include schemaLocation="location-markov-chain.xsd"/>
     <xs:include schemaLocation="items-definition.xsd"/>
+    <xs:include schemaLocation="race_definition.xsd"/>
     <xs:include schemaLocation="status.xsd"/>
     <xs:include schemaLocation="people.xsd"/>
     <xs:include schemaLocation="quests.xsd"/>
@@ -23,6 +24,7 @@
             <xs:sequence>
                 <xs:element ref="world_metadata"/>
                 <xs:element ref="status_definitions" maxOccurs="unbounded"/>
+                <xs:element ref="race_definitions" maxOccurs="unbounded"/>
                 <xs:element ref="items_definition" maxOccurs="unbounded"/>
                 <xs:element ref="locations_markov_chain" maxOccurs="unbounded"/>
                 <xs:element ref="quests_markov_chain" maxOccurs="unbounded"/>

@@ -12,7 +12,7 @@
     <xs:element name="person">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="location" type="cell_ref_type"/>
+                <xs:element name="location" type="type_cell_ref"/>
                 <xs:element ref="relations" minOccurs="0" maxOccurs="unbounded"/>
                 <xs:element ref="inventory" minOccurs="0"/>
             </xs:sequence>

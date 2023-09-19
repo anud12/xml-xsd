@@ -12,6 +12,12 @@
         <property_definition name="vision" max="5"/>
     </status_definitions>
 
+    <race_definitions>
+        <race_defintion name="human">
+            <property default_value="12"/>
+        </race_defintion>
+    </race_definitions>
+
     <items_definition>
         <item name="Long sword">
             <weight-kg value="2"/>
