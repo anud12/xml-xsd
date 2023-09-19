@@ -1,0 +1,15 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:simpleType name="type_dice_face">
+        <xs:restriction>
+            <xs:enumeration value="4d"/>
+            <xs:enumeration value="6d"/>
+            <xs:enumeration value="10d"/>
+            <xs:enumeration value="12d"/>
+            <xs:enumeration value="20d"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="type_dice">
+        <xs:attribute name="face" type="type_dice_face"/>
+    </xs:complexType>
+</xs:schema>

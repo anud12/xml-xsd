@@ -14,7 +14,9 @@
 
     <race_definitions>
         <race_defintion name="human">
-            <property default_value="12"/>
+            <property name="strength">
+                <dice face="4d"/>
+            </property>
         </race_defintion>
     </race_definitions>
 
@@ -33,18 +35,18 @@
     <locations_markov_chain>
         <location_markov_link type="plains">
             <sibling type="plains" quantity="20" position="all"/>
-            <sibling type="forest"  position="all"/>
+            <sibling type="forest" position="all"/>
         </location_markov_link>
 
         <location_markov_link type="forest">
-            <sibling type="forest" quantity="20"  position="all"/>
-            <sibling type="plains"  position="all"/>
-            <sibling type="hills"  position="all"/>
+            <sibling type="forest" quantity="20" position="all"/>
+            <sibling type="plains" position="all"/>
+            <sibling type="hills" position="all"/>
         </location_markov_link>
 
         <location_markov_link type="hills">
-            <sibling type="hills" quantity="20"  position="all"/>
-            <sibling type="forest"  position="all"/>
+            <sibling type="hills" quantity="20" position="all"/>
+            <sibling type="forest" position="all"/>
         </location_markov_link>
     </locations_markov_chain>
 
@@ -78,14 +80,14 @@
     <people>
         <person name="Billy">
             <location x="10" y="10"/>
-<!--            <relations with="Bob"/>-->
+            <!--            <relations with="Bob"/>-->
             <inventory>
                 <item_ref type="Long sword" equipped="hand"/>
             </inventory>
         </person>
-<!--        <person name="Bob">-->
-<!--            <location x="-50" y="-50"/>-->
-<!--        </person>-->
+        <!--        <person name="Bob">-->
+        <!--            <location x="-50" y="-50"/>-->
+        <!--        </person>-->
     </people>
 
     <locations>

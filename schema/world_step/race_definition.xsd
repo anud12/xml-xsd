@@ -1,8 +1,12 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:include schemaLocation="dice.type.xsd"/>
 
 
     <xs:complexType name="type_race_property">
-        <xs:attribute name="default_value"/>
+        <xs:sequence>
+            <xs:element name="dice" type="type_dice"/>
+        </xs:sequence>
+        <xs:attribute name="name"/>
     </xs:complexType>
     <xs:element name="race_defintion">
         <xs:complexType>
