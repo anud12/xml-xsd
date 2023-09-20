@@ -30,7 +30,6 @@
                 <xs:element ref="quests_markov_chain" maxOccurs="unbounded"/>
                 <xs:element ref="people" maxOccurs="unbounded"/>
                 <xs:element ref="locations" maxOccurs="unbounded"/>
-
             </xs:sequence>
         </xs:complexType>
 
@@ -39,13 +38,19 @@
             <xs:field xpath="@name"/>
         </xs:key>
         <xs:keyref name="FK_item-ref_item" refer="K_item">
-            <xs:selector xpath="people/person/inventory/item-ref"/>
+            <xs:selector xpath="people/person/inventory/item_ref"/>
             <xs:field xpath="@type"/>
         </xs:keyref>
-        <xs:key name="K_location-type">
-            <xs:selector xpath="location_definition/location"/>
-            <xs:field xpath="@type"/>
+
+        <xs:key name="K_status_definitions_property_definition">
+            <xs:selector xpath="status_definitions/property_definition"/>
+            <xs:field xpath="@name"/>
         </xs:key>
+        <xs:keyref name="FK_race_definition_property" refer="K_status_definitions_property_definition">
+            <xs:selector xpath="race_definitions/race_definition/property"/>
+            <xs:field xpath="@name"/>
+        </xs:keyref>
+
 
     </xs:element>
 </xs:schema>

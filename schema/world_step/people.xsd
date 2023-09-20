@@ -12,6 +12,11 @@
     <xs:element name="person">
         <xs:complexType>
             <xs:sequence>
+                <xs:element name="race">
+                    <xs:complexType>
+                        <xs:attribute name="name" use="required"/>
+                    </xs:complexType>
+                </xs:element>
                 <xs:element name="location" type="type_cell_ref"/>
                 <xs:element ref="relations" minOccurs="0" maxOccurs="unbounded"/>
                 <xs:element ref="inventory" minOccurs="0"/>

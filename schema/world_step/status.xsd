@@ -1,4 +1,5 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:include schemaLocation="range.type.xsd"/>
 
     <xs:element name="property_definition">
         <xs:complexType>
@@ -12,8 +13,7 @@
                 </xs:element>
             </xs:sequence>
             <xs:attribute name="name" use="required"/>
-            <xs:attribute name="min" default="0"/>
-            <xs:attribute name="max" use="required"/>
+            <xs:attributeGroup ref="attributeGroup_range"/>
             <xs:attribute name="units"/>
         </xs:complexType>
     </xs:element>

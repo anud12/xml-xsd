@@ -10,9 +10,15 @@ export type JsonSchema = Body<{
     }>,
 
     status_definitions: Body<{
-      property_definition: Attribute<{ name, min, max }>
+      property_definition: Attribute<{ name, value, delta }>
     }>,
-
+    race_definitions: Body<{
+      race_definition: Attribute<{name}> & Body<{
+        vision: Attribute<{ value }>
+        movement: Attribute<{ value }>
+        property: Attribute<{ name, value, delta }>
+      }>
+    }>
     item_definitions: Body<{
       item: Body<{
         weight_kg: Attribute<{ value }>,
@@ -35,6 +41,7 @@ export type JsonSchema = Body<{
 
     people: Body<{
       person: Attribute<{ name }> & Body<{
+        race: Attribute<{ name }>,
         location: Attribute<{ x, y }>
         relations: Attribute<{ with }>,
         inventory: Body<{

@@ -61,17 +61,18 @@ export const fillNeighbours = (writeJson: JsonUtil, originalCell: Cell, radius =
     for (let i = -radius; i <= radius; i++) {
         for (let j = -radius; j <= radius; j++) {
             const cell = grid?.[x + i]?.[y + j];
-            console.log(i, j);
             if (!cell) {
                 const transition = getTransitionFromNeighbours(writeJson, originalCell)
                 const type = markovNext(transition);
-                newCells.push({
+                const cell = {
                     $: {
                         type: type,
                         y: String(x + i),
                         x: String(y + j)
                     }
-                })
+                };
+                console.log(`Created cell: ${JSON.stringify(cell)}`)
+                newCells.push(cell)
             }
         }
     }
