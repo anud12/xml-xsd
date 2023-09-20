@@ -15,7 +15,7 @@
         <race_definition name="human">
             <vision value="20"/>
             <movement value="5"/>
-            <property name="strength" value="10" delta="4"/>
+            <property type="strength" value="10"/>
         </race_definition>
     </race_definitions>
 

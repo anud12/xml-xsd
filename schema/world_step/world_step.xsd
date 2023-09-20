@@ -7,8 +7,6 @@
     <xs:include schemaLocation="people.xsd"/>
     <xs:include schemaLocation="quests.xsd"/>
 
-    <xs:include schemaLocation="location.xsd"/>
-
     <xs:element name="world_metadata">
         <xs:complexType>
             <xs:sequence>
@@ -47,7 +45,7 @@
             <xs:field xpath="@name"/>
         </xs:key>
         <xs:keyref name="FK_race_definition_property" refer="K_status_definitions_property_definition">
-            <xs:selector xpath="race_definitions/race_definition/property"/>
+            <xs:selector xpath="race_definitions/race_definition/type"/>
             <xs:field xpath="@name"/>
         </xs:keyref>
 
