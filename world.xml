@@ -7,15 +7,17 @@
     </world_metadata>
 
     <status_definitions>
-        <property_definition name="strength" value="8" delta="12"/>
-        <property_definition name="constitution" value="8" delta="12"/>
+        <property_definition name="athletics" default="0"/>
+        <property_definition_range name="strength" default="10" value="8" max_value="20"/>
+        <property_definition_range name="constitution" default="10" value="8" max_value="20"/>
     </status_definitions>
 
     <race_definitions>
         <race_definition name="human">
             <vision value="20"/>
             <movement value="5"/>
-            <property type="strength" value="10"/>
+            <property_bonus type="strength" value="0" max_value="2"/>
+            <property_bonus type="constitution" value="3"/>
         </race_definition>
     </race_definitions>
 

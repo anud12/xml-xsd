@@ -10,13 +10,14 @@ export type JsonSchema = Body<{
     }>,
 
     status_definitions: Body<{
-      property_definition: Attribute<{ name, value, delta }>
+      property_definition: Attribute<{ name, default }>
+      property_definition_range: Attribute<{ name, default, value, max_value }>
     }>,
     race_definitions: Body<{
       race_definition: Attribute<{name}> & Body<{
         vision: Attribute<{ value }>
         movement: Attribute<{ value }>
-        property: Attribute<{ name, value, delta }>
+        property: Attribute<{ name, value, max_value }>
       }>
     }>
     item_definitions: Body<{

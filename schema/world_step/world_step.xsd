@@ -41,12 +41,12 @@
         </xs:keyref>
 
         <xs:key name="K_status_definitions_property_definition">
-            <xs:selector xpath="status_definitions/property_definition"/>
+            <xs:selector xpath="status_definitions/*"/>
             <xs:field xpath="@name"/>
         </xs:key>
         <xs:keyref name="FK_race_definition_property" refer="K_status_definitions_property_definition">
-            <xs:selector xpath="race_definitions/race_definition/type"/>
-            <xs:field xpath="@name"/>
+            <xs:selector xpath="race_definitions/race_definition/*"/>
+            <xs:field xpath="@type"/>
         </xs:keyref>
 
 

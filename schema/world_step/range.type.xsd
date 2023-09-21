@@ -1,7 +1,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <xs:attributeGroup name="attributeGroup_range">
         <xs:attribute name="value" use="required" type="xs:integer"/>
-        <xs:attribute name="delta" type="xs:integer"/>
+        <xs:attribute name="max_value" type="xs:integer"/>
         <xs:attribute name="inclusive" default="true" type="xs:boolean"/>
     </xs:attributeGroup>
     <xs:complexType name="type_range">

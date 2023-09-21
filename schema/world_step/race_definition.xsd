@@ -7,7 +7,7 @@
             <xs:sequence>
                 <xs:element name="vision" type="type_range"/>
                 <xs:element name="movement" type="type_range"/>
-                <xs:element name="property" maxOccurs="unbounded">
+                <xs:element name="property_bonus" minOccurs="0" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:attribute name="type"/>
                         <xs:attributeGroup ref="attributeGroup_range"/>
