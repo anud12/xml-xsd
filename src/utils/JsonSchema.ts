@@ -9,15 +9,14 @@ export type JsonSchema = Body<{
       next_world_step: string
     }>,
 
-    status_definitions: Body<{
-      property_definition: Attribute<{ name, default }>
-      property_definition_range: Attribute<{ name, default, value, max_value }>
+    property_metadata: Body<{
+      entry: Attribute<{ name, default, value, max_value }>
     }>,
-    race_definitions: Body<{
-      race_definition: Attribute<{name}> & Body<{
+    race_metadata: Body<{
+      entry: Attribute<{name}> & Body<{
         vision: Attribute<{ value }>
         movement: Attribute<{ value }>
-        property: Attribute<{ name, value, max_value }>
+        property_bonus: Attribute<{ name, value, max_value }>
       }>
     }>
     item_definitions: Body<{
@@ -46,7 +45,7 @@ export type JsonSchema = Body<{
         location: Attribute<{ x, y }>
         relations: Attribute<{ with }>,
         inventory: Body<{
-          item_ref: Attribute<{ type, equipped }>
+          item: Attribute<{ ref, equipped }>
         }>
       }>
     }>;

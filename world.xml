@@ -1,37 +1,37 @@
 <?xml version="1.0" standalone="no"?>
 <world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:noNamespaceSchemaLocation="schema/world_step/world_step.xsd">
-
+            xsi:noNamespaceSchemaLocation="schema/world_step/world_step.xsd"
+>
     <world_metadata>
         <next_world_step>./world_1</next_world_step>
     </world_metadata>
 
-    <status_definitions>
-        <property_definition name="athletics" default="0"/>
-        <property_definition_range name="strength" default="10" value="8" max_value="20"/>
-        <property_definition_range name="constitution" default="10" value="8" max_value="20"/>
-    </status_definitions>
+    <property_metadata>
+        <entry name="athletics" default="0" value="0" max_value="5"/>
+        <entry name="strength" default="10" value="8" max_value="20"/>
+        <entry name="constitution" default="10" value="8" max_value="20"/>
+    </property_metadata>
 
-    <race_definitions>
-        <race_definition name="human">
+    <race_metadata>
+        <entry name="human">
             <vision value="20"/>
             <movement value="5"/>
             <property_bonus type="strength" value="0" max_value="2"/>
             <property_bonus type="constitution" value="3"/>
-        </race_definition>
-    </race_definitions>
+        </entry>
+    </race_metadata>
 
-    <items_definition>
-        <item name="Long sword">
+    <item_metadata>
+        <entry name="Long sword">
             <weight-kg value="2"/>
             <wearable slot="hand"/>
-        </item>
-        <item name="dress">
+        </entry>
+        <entry name="dress">
             <weight-kg value="1"/>
             <wearable slot="chest"/>
             <wearable slot="legs"/>
-        </item>
-    </items_definition>
+        </entry>
+    </item_metadata>
 
     <locations_markov_chain>
         <location_markov_link type="plains">
@@ -71,7 +71,7 @@
             <complete_condition>
                 <person>
                     <inventory>
-                        <item_ref type=""/>
+                        <item ref=""/>
                     </inventory>
                 </person>
             </complete_condition>
@@ -84,7 +84,7 @@
             <location x="10" y="10"/>
             <!--            <relations with="Bob"/>-->
             <inventory>
-                <item_ref type="Long sword" equipped="hand"/>
+                <item ref="Long sword" equipped="hand"/>
             </inventory>
         </person>
         <!--        <person name="Bob">-->

@@ -11,8 +11,8 @@ export const personVision: Middleware = (readJson) => async (writeJson) => {
 
     const radius = readJson.jsonSchema
       .world_step[0]
-      .race_definitions[0]
-      .race_definition
+      .race_metadata[0]
+      .entry
       .filter(e => e.$.name === race)?.[0]
       .vision[0]
 

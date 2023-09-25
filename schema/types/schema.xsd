@@ -1,0 +1,5 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="/types">
+    <xs:include schemaLocation="dice_face.type.xsd"/>
+    <xs:include schemaLocation="dice.type.xsd"/>
+    <xs:include schemaLocation="range.type.xsd"/>
+</xs:schema>

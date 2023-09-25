@@ -1,29 +1,27 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <xs:include schemaLocation="dice.type.xsd"/>
-    <xs:include schemaLocation="range.type.xsd"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="/world_step/race_metadata"
+           xmlns:types="/types"
+>
+    <xs:import schemaLocation="../types/schema.xsd" namespace="/types"/>
+    <xs:complexType name="entry">
+        <xs:sequence>
+            <xs:element name="vision" type="types:type_range"/>
+            <xs:element name="movement" type="types:type_range"/>
+            <xs:element name="property_bonus" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:attribute name="type"/>
+                    <xs:attributeGroup ref="types:attributeGroup_range"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+    </xs:complexType>
 
-    <xs:element name="race_definition">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="vision" type="type_range"/>
-                <xs:element name="movement" type="type_range"/>
-                <xs:element name="property_bonus" minOccurs="0" maxOccurs="unbounded">
-                    <xs:complexType>
-                        <xs:attribute name="type"/>
-                        <xs:attributeGroup ref="attributeGroup_range"/>
-                    </xs:complexType>
-                </xs:element>
-            </xs:sequence>
-            <xs:attribute name="name" type="xs:string" use="required"/>
-        </xs:complexType>
-    </xs:element>
 
+    <xs:complexType name="metadata">
+        <xs:sequence>
+            <xs:element name="entry" type="entry" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
 
-    <xs:element name="race_definitions">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="race_definition" maxOccurs="unbounded"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
 </xs:schema>

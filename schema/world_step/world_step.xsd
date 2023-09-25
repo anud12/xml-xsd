@@ -1,9 +1,15 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:property="/world_step/property_metadata"
+           xmlns:race="/world_step/race_metadata"
+           xmlns:item="/world_step/item_metadata"
+>
 
-    <xs:include schemaLocation="location-markov-chain.xsd"/>
-    <xs:include schemaLocation="items-definition.xsd"/>
-    <xs:include schemaLocation="race_definition.xsd"/>
-    <xs:include schemaLocation="status.xsd"/>
+    <xs:import schemaLocation="property_metadata.xsd" namespace="/world_step/property_metadata"/>
+    <xs:import schemaLocation="race_definition.xsd" namespace="/world_step/race_metadata"/>
+    <xs:import schemaLocation="item_metadata.xsd" namespace="/world_step/item_metadata"/>
+
+    <xs:include schemaLocation="location_markov_chain.xsd"/>
+
     <xs:include schemaLocation="people.xsd"/>
     <xs:include schemaLocation="quests.xsd"/>
 
@@ -21,9 +27,9 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="world_metadata"/>
-                <xs:element ref="status_definitions" maxOccurs="unbounded"/>
-                <xs:element ref="race_definitions" maxOccurs="unbounded"/>
-                <xs:element ref="items_definition" maxOccurs="unbounded"/>
+                <xs:element name="property_metadata" type="property:metadata" maxOccurs="unbounded"/>
+                <xs:element name="race_metadata" type="race:metadata" maxOccurs="unbounded"/>
+                <xs:element name="item_metadata" type="item:metadata" maxOccurs="unbounded"/>
                 <xs:element ref="locations_markov_chain" maxOccurs="unbounded"/>
                 <xs:element ref="quests_markov_chain" maxOccurs="unbounded"/>
                 <xs:element ref="people" maxOccurs="unbounded"/>
@@ -31,21 +37,21 @@
             </xs:sequence>
         </xs:complexType>
 
-        <xs:key name="K_item">
-            <xs:selector xpath="items_definition/item"/>
+        <xs:key name="K_item_metadata">
+            <xs:selector xpath="item_metadata/entry"/>
             <xs:field xpath="@name"/>
         </xs:key>
-        <xs:keyref name="FK_item-ref_item" refer="K_item">
-            <xs:selector xpath="people/person/inventory/item_ref"/>
-            <xs:field xpath="@type"/>
+        <xs:keyref name="FK_item-ref_item" refer="K_item_metadata">
+            <xs:selector xpath="people/person/inventory/item"/>
+            <xs:field xpath="@ref"/>
         </xs:keyref>
 
         <xs:key name="K_status_definitions_property_definition">
-            <xs:selector xpath="status_definitions/*"/>
+            <xs:selector xpath="property_metadata/entry"/>
             <xs:field xpath="@name"/>
         </xs:key>
-        <xs:keyref name="FK_race_definition_property" refer="K_status_definitions_property_definition">
-            <xs:selector xpath="race_definitions/race_definition/*"/>
+        <xs:keyref name="FK_race_metadata_entry_property_bonus" refer="K_status_definitions_property_definition">
+            <xs:selector xpath="race_metadata/entry/property_bonus"/>
             <xs:field xpath="@type"/>
         </xs:keyref>
 

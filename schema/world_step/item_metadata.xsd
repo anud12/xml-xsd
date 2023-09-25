@@ -1,0 +1,40 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="/world_step/item_metadata"
+>
+    <xs:complexType name="metadata">
+        <xs:sequence>
+            <xs:element name="entry" type="item" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="item-slot">
+        <xs:restriction>
+            <xs:enumeration value="hand"/>
+            <xs:enumeration value="chest"/>
+            <xs:enumeration value="legs"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="wearable">
+        <xs:complexType>
+            <xs:attribute name="slot" type="item-slot"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="item">
+        <xs:sequence>
+            <xs:element name="weight-kg" minOccurs="0">
+                <xs:complexType>
+                    <xs:attribute name="value"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element ref="wearable" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="name" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="ref">
+        <xs:attribute name="ref" use="required"/>
+        <xs:attribute name="equipped" type="item-slot"/>
+    </xs:complexType>
+</xs:schema>
