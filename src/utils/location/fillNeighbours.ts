@@ -54,7 +54,7 @@ const getTransitionFromNeighbours = (json: JsonUtil, cell: Cell): Transition<str
 }
 export const fillNeighbours = (writeJson: JsonUtil, originalCell: Cell, radius = 1) => {
     const grid = locationGrid(writeJson);
-    const newCells = writeJson.jsonSchema.world_step[0].locations[0].cell;
+    const newCells = writeJson.jsonSchema.world_step[0].location_layer[0].cell;
     const x = Number(originalCell.$.x);
     const y = Number(originalCell.$.y);
 

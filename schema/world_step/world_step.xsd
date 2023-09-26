@@ -1,39 +1,271 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:property="/world_step/property_metadata"
-           xmlns:race="/world_step/race_metadata"
-           xmlns:item="/world_step/item_metadata"
 >
 
-    <xs:import schemaLocation="property_metadata.xsd" namespace="/world_step/property_metadata"/>
-    <xs:import schemaLocation="race_definition.xsd" namespace="/world_step/race_metadata"/>
-    <xs:import schemaLocation="item_metadata.xsd" namespace="/world_step/item_metadata"/>
+    <xs:include schemaLocation="../types/schema.xsd"/>
 
-    <xs:include schemaLocation="location_markov_chain.xsd"/>
+    <xs:simpleType name="item_slot">
+        <xs:restriction>
+            <xs:enumeration value="hand"/>
+            <xs:enumeration value="chest"/>
+            <xs:enumeration value="legs"/>
+        </xs:restriction>
+    </xs:simpleType>
 
-    <xs:include schemaLocation="people.xsd"/>
-    <xs:include schemaLocation="quests.xsd"/>
+    <xs:complexType name="item_ref">
+        <xs:attribute name="ref" use="required"/>
+        <xs:attribute name="equipped" type="item_slot"/>
+    </xs:complexType>
 
-    <xs:element name="world_metadata">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="previous_world_step" type="xs:anyURI" minOccurs="0"/>
-                <xs:element name="next_world_step" type="xs:anyURI"/>
-            </xs:sequence>
-        </xs:complexType>
-
-    </xs:element>
+    <xs:simpleType name="type_direction">
+        <xs:restriction>
+            <xs:enumeration value="north"/>
+            <xs:enumeration value="east"/>
+            <xs:enumeration value="south"/>
+            <xs:enumeration value="west"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="type_cell_ref">
+        <xs:attribute name="layer"/>
+        <xs:attribute name="x" use="required" type="xs:integer"/>
+        <xs:attribute name="y" use="required" type="xs:integer"/>
+    </xs:complexType>
 
     <xs:element name="world_step">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="world_metadata"/>
-                <xs:element name="property_metadata" type="property:metadata" maxOccurs="unbounded"/>
-                <xs:element name="race_metadata" type="race:metadata" maxOccurs="unbounded"/>
-                <xs:element name="item_metadata" type="item:metadata" maxOccurs="unbounded"/>
-                <xs:element ref="locations_markov_chain" maxOccurs="unbounded"/>
-                <xs:element ref="quests_markov_chain" maxOccurs="unbounded"/>
-                <xs:element ref="people" maxOccurs="unbounded"/>
-                <xs:element ref="locations" maxOccurs="unbounded"/>
+
+
+                <xs:element name="world_metadata">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="previous_world_step" type="xs:anyURI" minOccurs="0"/>
+                            <xs:element name="next_world_step" type="xs:anyURI"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+
+                <xs:element name="property_metadata" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="property-threshold" minOccurs="0" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:attribute name="name" type="xs:string" use="required"/>
+                                                <xs:attribute name="min-value-inclusive" type="xs:int"/>
+                                                <xs:attribute name="max-value-inclusive" type="xs:int"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute name="name" use="required"/>
+                                    <xs:attribute name="default" use="required"/>
+                                    <xs:attributeGroup ref="attributeGroup_range"/>
+                                    <xs:attribute name="units"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+
+                <xs:element name="race_metadata" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="entry" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="vision" type="type_range"/>
+                                        <xs:element name="movement" type="type_range"/>
+                                        <xs:element name="property_bonus" minOccurs="0" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:attribute name="type"/>
+                                                <xs:attributeGroup ref="attributeGroup_range"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute name="name" type="xs:string" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+
+                <xs:element name="item_metadata" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="entry" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="weight-kg" minOccurs="0">
+                                            <xs:complexType>
+                                                <xs:attribute name="value"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="wearable" minOccurs="0" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:attribute name="slot" type="item_slot"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute name="name" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+
+                <xs:element name="locations_markov_chain" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="location_markov_link" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="tag" minOccurs="0" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:attribute name="name" use="required"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="sibling" minOccurs="0" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:attribute name="type" use="required"/>
+                                                <xs:attribute name="quantity" type="xs:int" default="1"/>
+                                                <xs:attribute name="position" default="all">
+                                                    <xs:simpleType>
+                                                        <xs:restriction>
+                                                            <xs:enumeration value="all"/>
+                                                            <xs:enumeration value="fill"/>
+                                                            <xs:enumeration value="top"/>
+                                                            <xs:enumeration value="right"/>
+                                                            <xs:enumeration value="bottom"/>
+                                                            <xs:enumeration value="left"/>
+                                                        </xs:restriction>
+                                                    </xs:simpleType>
+                                                </xs:attribute>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute name="type" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                    <xs:key name="K_location_type">
+                        <xs:selector xpath="location_markov_link"/>
+                        <xs:field xpath="@type"/>
+                    </xs:key>
+                    <xs:keyref name="FK_sibling_type" refer="K_location_type">
+                        <xs:selector xpath="location_markov_link/sibling"/>
+                        <xs:field xpath="@type"/>
+                    </xs:keyref>
+
+                    <xs:key name="K_location_tag">
+                        <xs:selector xpath="location_markov_link/tag"/>
+                        <xs:field xpath="@name"/>
+                    </xs:key>
+                    <xs:keyref name="FK_sibling_tag" refer="K_location_tag">
+                        <xs:selector xpath="location_markov_link/sibling"/>
+                        <xs:field xpath="@tag"/>
+                    </xs:keyref>
+                </xs:element>
+
+
+                <xs:element name="quests_markov_chain" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="quest_markov_link" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="next" minOccurs="0" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:attribute name="type" use="required"/>
+                                                <xs:attribute name="quantity" type="xs:int" default="1"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="complete_condition">
+                                        </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute name="type"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                    <xs:key name="K_quest_type">
+                        <xs:selector xpath="quest_markov_link"/>
+                        <xs:field xpath="@type"/>
+                    </xs:key>
+                    <xs:keyref name="FK_quest_complete-condition_next__type" refer="K_quest_type">
+                        <xs:selector xpath="quest_markov_link/next"/>
+                        <xs:field xpath="@type"/>
+                    </xs:keyref>
+                </xs:element>
+
+
+                <xs:element name="people" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="person" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="race">
+                                            <xs:complexType>
+                                                <xs:attribute name="name" use="required"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="location" type="type_cell_ref"/>
+                                        <xs:element name="relations" minOccurs="0" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:attribute name="with" use="required"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="inventory" minOccurs="0">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="item">
+                                                        <xs:complexType>
+                                                            <xs:attribute name="ref"/>
+                                                            <xs:attribute name="equipped" type="item_slot"/>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute name="name" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+
+                    <xs:key name="K_personName">
+                        <xs:selector xpath="person"/>
+                        <xs:field xpath="@name"/>
+                    </xs:key>
+                    <xs:keyref name="FK_friendName" refer="K_personName">
+                        <xs:selector xpath="person/relations"/>
+                        <xs:field xpath="@with"/>
+                    </xs:keyref>
+                </xs:element>
+
+
+                <xs:element name="location_layer" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="cell" minOccurs="1" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:attribute name="type" use="required"/>
+                                    <xs:attribute name="x" use="required"/>
+                                    <xs:attribute name="y" use="required"/>
+                                    <xs:attribute name="rotation" type="type_direction" default="north"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="name" default="default"/>
+                    </xs:complexType>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
 

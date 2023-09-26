@@ -35,19 +35,19 @@
 
     <locations_markov_chain>
         <location_markov_link type="plains">
-            <sibling type="plains" quantity="20" position="all"/>
-            <sibling type="forest" position="all"/>
+            <sibling type="plains" quantity="20"/>
+            <sibling type="forest"/>
         </location_markov_link>
 
         <location_markov_link type="forest">
-            <sibling type="forest" quantity="20" position="all"/>
-            <sibling type="plains" position="all"/>
-            <sibling type="hills" position="all"/>
+            <sibling type="forest" quantity="20"/>
+            <sibling type="plains"/>
+            <sibling type="hills"/>
         </location_markov_link>
 
         <location_markov_link type="hills">
-            <sibling type="hills" quantity="20" position="all"/>
-            <sibling type="forest" position="all"/>
+            <sibling type="hills" quantity="20"/>
+            <sibling type="forest"/>
         </location_markov_link>
     </locations_markov_chain>
 
@@ -68,13 +68,7 @@
         </quest_markov_link>
         <quest_markov_link type="assassination">
             <next type="talk-to" quantity="4"/>
-            <complete_condition>
-                <person>
-                    <inventory>
-                        <item ref=""/>
-                    </inventory>
-                </person>
-            </complete_condition>
+            <complete_condition/>
         </quest_markov_link>
     </quests_markov_chain>
 
@@ -92,7 +86,7 @@
         <!--        </person>-->
     </people>
 
-    <locations>
+    <location_layer>
         <cell type="plains" x="0" y="0"/>
         <cell type="plains" x="0" y="1"/>
         <cell type="plains" x="0" y="-1"/>
@@ -104,10 +98,6 @@
         <cell type="plains" x="-1" y="0"/>
         <cell type="plains" x="-1" y="1"/>
         <cell type="plains" x="-1" y="-1"/>
-
-        <layer type="underdark">
-            <cell type="grass" x="0" y="0"/>
-        </layer>
-    </locations>
+    </location_layer>
 
 </world_step>
