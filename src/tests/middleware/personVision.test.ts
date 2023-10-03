@@ -1,6 +1,6 @@
-import {personVision} from "./personVision";
-import {JsonSchema} from "../utils/JsonSchema";
-import {JsonUtil} from "../utils";
+import {JsonSchema} from "../../utils/JsonSchema";
+import {personVision} from "../../middleware/personVision";
+import {JsonUtil} from "../../utils";
 
 const json: JsonSchema = {
   world_step: [{

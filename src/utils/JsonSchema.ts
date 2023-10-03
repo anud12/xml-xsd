@@ -16,6 +16,21 @@ export type JsonSchema = JsonBody<{
       entry: JsonAttribute<"name" | "default" | "value" | "max_value">
     }>,
 
+    command_metadata: JsonBody<{
+      entry: JsonAttribute<"name"> & JsonBody<{
+        mutate_property: JsonAttribute<"name"> & JsonBody<{
+          add_property_value: JsonAttribute<"name">,
+          add: JsonAttribute<"value">,
+          multiply_dice: JsonAttribute<"value">,
+          multiply: JsonAttribute<"value">,
+          divide_dice: JsonAttribute<"value">,
+          divide: JsonAttribute<"value">,
+          modulo_dice: JsonAttribute<"value">,
+          modulo: JsonAttribute<"value">,
+        }>
+      }>
+    }>
+
     race_metadata: JsonBody<{
       entry: JsonAttribute<"name"> & JsonBody<{
         vision: JsonAttribute<"value">
