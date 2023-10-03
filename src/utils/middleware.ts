@@ -9,3 +9,16 @@ export type JsonAttribute<T extends string> = {
 export type JsonBody<T> = {
   [P in keyof T]?: Array<T[P] | undefined>
 }
+
+
+export type Temp<T> = keyof T extends string ? {
+  [P in keyof T as `${P}_other`]?: () => T[P]
+} : never
+
+const D: Temp<{
+  demo: "3",
+  value: "1"
+}> = {
+  demo_other: () => "3",
+  value_other: () => "1"
+}
