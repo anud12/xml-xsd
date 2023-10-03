@@ -40,6 +40,17 @@
                         <xs:sequence>
                             <xs:element name="previous_world_step" type="xs:anyURI" minOccurs="0"/>
                             <xs:element name="next_world_step" type="xs:anyURI"/>
+                            <xs:element name="randomization_table">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="entry" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:attribute name="value" type="xs:int"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -193,11 +204,11 @@
                             </xs:element>
                         </xs:sequence>
                     </xs:complexType>
-                    <xs:key name="K_quest_type">
+                    <xs:key name="K__quest_markov_link.type">
                         <xs:selector xpath="quest_markov_link"/>
                         <xs:field xpath="@type"/>
                     </xs:key>
-                    <xs:keyref name="FK_quest_complete-condition_next__type" refer="K_quest_type">
+                    <xs:keyref name="FK__quest_markov_link__next.type" refer="K__quest_markov_link.type">
                         <xs:selector xpath="quest_markov_link/next"/>
                         <xs:field xpath="@type"/>
                     </xs:keyref>
@@ -240,11 +251,11 @@
                         </xs:sequence>
                     </xs:complexType>
 
-                    <xs:key name="K_personName">
+                    <xs:key name="K__person.name">
                         <xs:selector xpath="person"/>
                         <xs:field xpath="@name"/>
                     </xs:key>
-                    <xs:keyref name="FK_friendName" refer="K_personName">
+                    <xs:keyref name="FK__person__relations.with" refer="K__person.name">
                         <xs:selector xpath="person/relations"/>
                         <xs:field xpath="@with"/>
                     </xs:keyref>
@@ -269,20 +280,20 @@
             </xs:sequence>
         </xs:complexType>
 
-        <xs:key name="K_item_metadata">
+        <xs:key name="K__item_metadata__entry.name">
             <xs:selector xpath="item_metadata/entry"/>
             <xs:field xpath="@name"/>
         </xs:key>
-        <xs:keyref name="FK_item-ref_item" refer="K_item_metadata">
+        <xs:keyref name="FK__people__person__inventory__item.ref" refer="K__item_metadata__entry.name">
             <xs:selector xpath="people/person/inventory/item"/>
             <xs:field xpath="@ref"/>
         </xs:keyref>
 
-        <xs:key name="K_status_definitions_property_definition">
+        <xs:key name="K__property_metadata__entry.name">
             <xs:selector xpath="property_metadata/entry"/>
             <xs:field xpath="@name"/>
         </xs:key>
-        <xs:keyref name="FK_race_metadata_entry_property_bonus" refer="K_status_definitions_property_definition">
+        <xs:keyref name="FK__race_metadata__entry__property_bonus.type" refer="K__property_metadata__entry.name">
             <xs:selector xpath="race_metadata/entry/property_bonus"/>
             <xs:field xpath="@type"/>
         </xs:keyref>

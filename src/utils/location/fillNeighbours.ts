@@ -52,8 +52,8 @@ const getTransitionFromNeighbours = (json: JsonUtil, cell: Cell): Transition<str
     }
     return transition;
 }
-export const fillNeighbours = (writeJson: JsonUtil, originalCell: Cell, radius = 1) => {
-    const grid = locationGrid(writeJson);
+export const fillNeighbours = (readJson:JsonUtil, writeJson: JsonUtil, originalCell: Cell, radius = 1) => {
+    const grid = writeJson.location.grid();
     const newCells = writeJson.jsonSchema.world_step[0].location_layer[0].cell;
     const x = Number(originalCell.$.x);
     const y = Number(originalCell.$.y);
@@ -63,7 +63,7 @@ export const fillNeighbours = (writeJson: JsonUtil, originalCell: Cell, radius =
             const cell = grid?.[x + i]?.[y + j];
             if (!cell) {
                 const transition = getTransitionFromNeighbours(writeJson, originalCell)
-                const type = markovNext(transition);
+                const type = markovNext(transition, readJson.random);
                 const cell = {
                     $: {
                         type: type,
@@ -71,7 +71,7 @@ export const fillNeighbours = (writeJson: JsonUtil, originalCell: Cell, radius =
                         x: String(y + j)
                     }
                 };
-                console.log(`Created cell: ${JSON.stringify(cell)}`)
+                console.log(`Created cell: ${JSON.stringify(cell)}, ${type}`)
                 newCells.push(cell)
             }
         }

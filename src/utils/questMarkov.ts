@@ -18,7 +18,7 @@ export const questMarkov = (json: JsonUtil) => {
     }
   }, {})
   const d = new Array(10).fill("").reduce(([value, ...rest]) => {
-    return [markovNext(questMatrix[value]), value, ...rest]
+    return [markovNext(questMatrix[value], json.random), value, ...rest]
   }, ['talk-to'])
   console.log(d.reverse().join("->"));
 }

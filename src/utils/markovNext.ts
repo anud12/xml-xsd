@@ -2,7 +2,8 @@ type Element = string | number | symbol
 
 export type Transition<E extends Element = Element> = E[];
 
-export const markovNext = <E extends Element>(transition: Transition<E>): E => {
+export const markovNext = <E extends Element>(transition: Transition<E> = [], nextRandom:() => number): E => {
+
 
   const options = transition.reduce<Map<E, number>>((map, key) => {
     const nextValue = (map.get(key) ?? 0) + 1
@@ -14,7 +15,7 @@ export const markovNext = <E extends Element>(transition: Transition<E>): E => {
     previousValue.set(key, value / transition.length);
     return previousValue;
   }, new Map());
-  const randomValue = Math.random();
+  const randomValue = nextRandom();
   let cumulativeProbability = 0;
   const keys = [...normalizedOptions.keys()];
 
