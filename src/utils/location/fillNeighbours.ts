@@ -67,11 +67,11 @@ export const fillNeighbours = (readJson:JsonUtil, writeJson: JsonUtil, originalC
                 const cell = {
                     $: {
                         type: type,
+                        x: String(y + j),
                         y: String(x + i),
-                        x: String(y + j)
                     }
                 };
-                console.log(`Created cell: ${JSON.stringify(cell)}, ${type}`)
+                console.log(`Created cell: ${JSON.stringify(cell)}`)
                 newCells.push(cell)
             }
         }

@@ -21,9 +21,7 @@ const json: JsonSchema = {
     }],
     race_metadata: [{
       entry: [{
-        $: {
-          name: "race_definition"
-        },
+        $: {name: "race_definition"},
         vision: [{
           $: {value: "1"}
         }]
@@ -32,44 +30,24 @@ const json: JsonSchema = {
     people: [{
       person: [{
         race: [{
-          $: {
-            name: "race_definition"
-          }
+          $: {name: "race_definition"}
         }],
         location: [{
-          $: {y: "4", x: "4"}
+          $: {x: "4", y: "4"}
         }]
       }]
     }],
     location_layer: [{
       cell: [
-        {
-          $: {y: "-1", type: "type", x: "-1"},
-        },
-        {
-          $: {y: "-1", type: "type", x: "0"},
-        },
-        {
-          $: {y: "-1", type: "type", x: "1"},
-        },
-        {
-          $: {y: "0", type: "type", x: "-1"},
-        },
-        {
-          $: {y: "0", type: "type", x: "0"},
-        },
-        {
-          $: {y: "0", type: "type", x: "1"},
-        },
-        {
-          $: {y: "1", type: "type", x: "-1"},
-        },
-        {
-          $: {y: "1", type: "type", x: "0"},
-        },
-        {
-          $: {y: "1", type: "type", x: "1"},
-        },
+        {$: {type: "type", x: "-1", y: "-1"}},
+        {$: {type: "type", x: "-1", y: "0"}},
+        {$: {type: "type", x: "-1", y: "1"}},
+        {$: {type: "type", x: "0", y: "-1"}},
+        {$: {type: "type", x: "0", y: "0"}},
+        {$: {type: "type", x: "0", y: "1",}},
+        {$: {type: "type", x: "1", y: "-1"}},
+        {$: {type: "type", x: "1", y: "0"}},
+        {$: {type: "type", x: "1", y: "1"}},
       ]
     }]
   }]
@@ -100,39 +78,39 @@ const expectedResult = `
   <people>
     <person>
       <race name="race_definition"/>
-      <location y="4" x="4"/>
+      <location x="4" y="4"/>
     </person>
   </people>
   <location_layer>
-    <cell y="-1" type="type" x="-1"/>
-    <cell y="-1" type="type" x="0"/>
-    <cell y="-1" type="type" x="1"/>
-    <cell y="0" type="type" x="-1"/>
-    <cell y="0" type="type" x="0"/>
-    <cell y="0" type="type" x="1"/>
-    <cell y="1" type="type" x="-1"/>
-    <cell y="1" type="type" x="0"/>
-    <cell y="1" type="type" x="1"/>
-    <cell type="type" y="0" x="2"/>
-    <cell type="type" y="1" x="2"/>
-    <cell type="type" y="2" x="0"/>
-    <cell type="type" y="2" x="1"/>
-    <cell type="type" y="2" x="2"/>
-    <cell type="type" y="1" x="3"/>
-    <cell type="type" y="2" x="3"/>
-    <cell type="type" y="3" x="1"/>
-    <cell type="type" y="3" x="2"/>
-    <cell type="type" y="3" x="3"/>
-    <cell type="type" y="2" x="4"/>
-    <cell type="type" y="3" x="4"/>
-    <cell type="type" y="4" x="2"/>
-    <cell type="type" y="4" x="3"/>
-    <cell type="type" y="4" x="4"/>
-    <cell type="type" y="3" x="5"/>
-    <cell type="type" y="4" x="5"/>
-    <cell type="type" y="5" x="3"/>
-    <cell type="type" y="5" x="4"/>
-    <cell type="type" y="5" x="5"/>
+    <cell type="type" x="-1" y="-1"/>
+    <cell type="type" x="-1" y="0"/>
+    <cell type="type" x="-1" y="1"/>
+    <cell type="type" x="0" y="-1"/>
+    <cell type="type" x="0" y="0"/>
+    <cell type="type" x="0" y="1"/>
+    <cell type="type" x="1" y="-1"/>
+    <cell type="type" x="1" y="0"/>
+    <cell type="type" x="1" y="1"/>
+    <cell type="type" x="2" y="0"/>
+    <cell type="type" x="2" y="1"/>
+    <cell type="type" x="0" y="2"/>
+    <cell type="type" x="1" y="2"/>
+    <cell type="type" x="2" y="2"/>
+    <cell type="type" x="3" y="1"/>
+    <cell type="type" x="3" y="2"/>
+    <cell type="type" x="1" y="3"/>
+    <cell type="type" x="2" y="3"/>
+    <cell type="type" x="3" y="3"/>
+    <cell type="type" x="4" y="2"/>
+    <cell type="type" x="4" y="3"/>
+    <cell type="type" x="2" y="4"/>
+    <cell type="type" x="3" y="4"/>
+    <cell type="type" x="4" y="4"/>
+    <cell type="type" x="5" y="3"/>
+    <cell type="type" x="5" y="4"/>
+    <cell type="type" x="3" y="5"/>
+    <cell type="type" x="4" y="5"/>
+    <cell type="type" x="5" y="5"/>
   </location_layer>
 </world_step>
 `.split("\n").filter((_, index) => index !== 0).join("\n")
