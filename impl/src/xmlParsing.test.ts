@@ -37,8 +37,8 @@ describe("xml query", () => {
     });
     const query = newJsonQuery<Schema>(dom)
     const body = query
-      .world_metadata[0]
-      .next_world_step[0];
+      .world_metadata
+      .next_world_step;
     expect(body.getBody()).toBe("./world_1");
   })
 
@@ -48,9 +48,9 @@ describe("xml query", () => {
     });
     const query = newJsonQuery<Schema>(dom)
     const navigation = query
-      .world_metadata[0]
-      .randomization_table[0]
-      .entry[0];
+      .world_metadata
+      .randomization_table
+      .entry;
     const body = navigation.getAttribute("value");
     expect(body).toBe("first");
   })
@@ -62,9 +62,9 @@ describe("xml query", () => {
     });
     const query = newJsonQuery<Schema>(dom)
     const navigation = query
-      .world_metadata[0]
-      .randomization_table[0]
-      .entry;
+      .world_metadata
+      .randomization_table
+      .entry._all;
     const body = navigation.map(e => e.getAttribute("value")).join(", ");
     expect(body).toBe("first, second");
   })
@@ -75,8 +75,8 @@ describe("xml query", () => {
     });
     const query = newJsonQuery<Schema>(dom)
     const navigation = query
-      .world_metadata[0]
-      .randomization_table[0]
+      .world_metadata
+      .randomization_table
       .getChildren();
     const body = navigation.map(e => e.getAttribute("value")).join(", ");
     expect(body).toBe("first, default_value, second");
@@ -104,12 +104,12 @@ describe("xml query", () => {
       contentType: "application/xhtml+xml"
     });
     const query = newJsonQuery<Schema>(dom);
-    const element = query
-      .world_metadata[0]
-      .next_world_step[0];
 
+    const element = query
+      .world_metadata
+      .next_world_step;
     element.setBody("other")
-    expect(query.world_metadata[0].serialize()).toBe(`<world_metadata>
+    expect(query.world_metadata.serialize()).toBe(`<world_metadata>
     <next_world_step>other</next_world_step>
     <randomization_table>
       <entry value="first"/>
@@ -125,12 +125,12 @@ describe("xml query", () => {
     });
     const query = newJsonQuery<Schema>(dom)
     query
-      .world_metadata[0]
-      .next_world_step[0]
+      .world_metadata
+      .next_world_step
       .setAttribute("name" as never, "value");
     expect(query
-      .world_metadata[0]
-      .next_world_step[0]
+      .world_metadata
+      .next_world_step
       .serialize()
     ).toBe(`<next_world_step name="value">./world_1</next_world_step>`)
   })
@@ -139,9 +139,11 @@ describe("xml query", () => {
     const dom = new jsdom.JSDOM(file, {
       contentType: "application/xhtml+xml"
     });
-    const query = newJsonQuery<any>(dom)
+    const query = newJsonQuery<JsonQueryType<never, {
+      other: JsonQueryType
+    }>>(dom)
     const body = query.other
-    expect(body).toStrictEqual([]);
+    expect(body.getTagName()).toBe(undefined);
   })
 
   test("getTagName", () => {
@@ -149,7 +151,7 @@ describe("xml query", () => {
       contentType: "application/xhtml+xml"
     });
     const query = newJsonQuery<Schema>(dom)
-    const element = query.world_metadata[0]
+    const element = query.world_metadata
     const tagList = element.getTagName();
     expect(tagList).toBe("world_metadata")
 
