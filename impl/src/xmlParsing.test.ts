@@ -1,6 +1,6 @@
 import * as jsdom from "jsdom";
 import {describe, test} from "@jest/globals";
-import {JSONQuery, JsonQueryType} from "./JSONQuery";
+import {JsonQueryType, newJsonQuery} from "./JSONQuery";
 
 const file = `<?xml version="1.0" standalone="no"?>
 <world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -19,11 +19,11 @@ const file = `<?xml version="1.0" standalone="no"?>
 
 type Schema = JsonQueryType<never, {
   world_metadata: JsonQueryType<never, {
-    next_world_step: string,
+    next_world_step: JsonQueryType,
     randomization_table: JsonQueryType<never, {
       entry: JsonQueryType<"value">,
       default: JsonQueryType<"value", {
-        add: string
+        add: JsonQueryType
       }>
     }>
   }>
@@ -31,24 +31,14 @@ type Schema = JsonQueryType<never, {
 
 describe("xml query", () => {
 
-  test("invalid child", () => {
-    const dom = new jsdom.JSDOM(file, {
-      contentType: "application/xhtml+xml"
-    });
-    const query = new JSONQuery(dom) as Schema
-    const body = query
-      .query("other" as any)
-    expect(body).toBe(undefined);
-  })
-
   test("value of child of child", () => {
     const dom = new jsdom.JSDOM(file, {
       contentType: "application/xhtml+xml"
     });
-    const query = new JSONQuery(dom) as Schema
+    const query = newJsonQuery<Schema>(dom)
     const body = query
-      .query("world_metadata")
-      .query("next_world_step");
+      .world_metadata[0]
+      .next_world_step[0];
     expect(body.getBody()).toBe("./world_1");
   })
 
@@ -56,11 +46,11 @@ describe("xml query", () => {
     const dom = new jsdom.JSDOM(file, {
       contentType: "application/xhtml+xml"
     });
-    const query = new JSONQuery(dom) as Schema
+    const query = newJsonQuery<Schema>(dom)
     const navigation = query
-      .query("world_metadata")
-      .query("randomization_table")
-      .query("entry");
+      .world_metadata[0]
+      .randomization_table[0]
+      .entry[0];
     const body = navigation.getAttribute("value");
     expect(body).toBe("first");
   })
@@ -70,11 +60,11 @@ describe("xml query", () => {
     const dom = new jsdom.JSDOM(file, {
       contentType: "application/xhtml+xml"
     });
-    const query = new JSONQuery(dom) as Schema
+    const query = newJsonQuery<Schema>(dom)
     const navigation = query
-      .query("world_metadata")
-      .query("randomization_table")
-      .queryAll("entry");
+      .world_metadata[0]
+      .randomization_table[0]
+      .entry;
     const body = navigation.map(e => e.getAttribute("value")).join(", ");
     expect(body).toBe("first, second");
   })
@@ -83,11 +73,11 @@ describe("xml query", () => {
     const dom = new jsdom.JSDOM(file, {
       contentType: "application/xhtml+xml"
     });
-    const query = new JSONQuery(dom) as Schema
+    const query = newJsonQuery<Schema>(dom)
     const navigation = query
-      .query("world_metadata")
-      .query("randomization_table")
-      .children();
+      .world_metadata[0]
+      .randomization_table[0]
+      .getChildren();
     const body = navigation.map(e => e.getAttribute("value")).join(", ");
     expect(body).toBe("first, default_value, second");
   })
@@ -96,7 +86,7 @@ describe("xml query", () => {
     const dom = new jsdom.JSDOM(file, {
       contentType: "application/xhtml+xml"
     });
-    const query = new JSONQuery(dom) as Schema;
+    const query = newJsonQuery<Schema>(dom)
     expect(query.serialize()).toBe(`<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/world_step/world_step.xsd">
   <world_metadata>
     <next_world_step>./world_1</next_world_step>
@@ -113,11 +103,13 @@ describe("xml query", () => {
     const dom = new jsdom.JSDOM(file, {
       contentType: "application/xhtml+xml"
     });
-    const query = new JSONQuery(dom) as Schema;
-    const element = query.query("world_metadata")
-      .query("next_world_step");
+    const query = newJsonQuery<Schema>(dom);
+    const element = query
+      .world_metadata[0]
+      .next_world_step[0];
+
     element.setBody("other")
-    expect(query.query("world_metadata").serialize()).toBe(`<world_metadata>
+    expect(query.world_metadata[0].serialize()).toBe(`<world_metadata>
     <next_world_step>other</next_world_step>
     <randomization_table>
       <entry value="first"/>
@@ -131,8 +123,25 @@ describe("xml query", () => {
     const dom = new jsdom.JSDOM(file, {
       contentType: "application/xhtml+xml"
     });
-    const query = new JSONQuery(dom) as Schema;
-    query.query("world_metadata").query("next_world_step").setAttribute("name", "value");
-    expect(query.query("world_metadata").query("next_world_step").serialize()).toBe(`<next_world_step name="value">./world_1</next_world_step>`)
+    const query = newJsonQuery<Schema>(dom)
+    query
+      .world_metadata[0]
+      .next_world_step[0]
+      .setAttribute("name" as never, "value");
+    expect(query
+      .world_metadata[0]
+      .next_world_step[0]
+      .serialize()
+    ).toBe(`<next_world_step name="value">./world_1</next_world_step>`)
   })
+
+  test("invalid child", () => {
+    const dom = new jsdom.JSDOM(file, {
+      contentType: "application/xhtml+xml"
+    });
+    const query = newJsonQuery<any>(dom)
+    const body = query.other
+    expect(body).toStrictEqual([]);
+  })
+
 })
