@@ -24,7 +24,7 @@ export const newJsonQuery = <T>(
   element: Element = root.window.document.documentElement
 ): T => {
   return new Proxy({}, {
-    get(target: {}, p: string | symbol, receiver: any): any {
+    get(_: {}, p: string | symbol, __: any): any {
       if (p === "getBody") {
         return () => element.textContent;
       }
