@@ -1,65 +1,98 @@
 import * as jsdom from "jsdom";
 
-export type JsonNode<A extends string | never = string> = {
-  getBody: () => string,
-  setBody: (string: string) => void;
-  serialize: () => string,
-  getAttribute: (attr: A) => string,
-  setAttribute: (key: A, value: string) => void;
-  getTagName: () => string;
+export type JsonNode<A extends string> = {
+  _serialize?: () => string,
+  _getTagName?: () => string;
+  _addSibling?: (body: string, attributes?: { [P in A as `${P}`]?: string }) => void,
+} & {
+  [P in A as `$${P}`]?: string
 }
 
 export type JsonQueryType<
-  A extends string | never = never,
-  B extends Record<string, JsonNode | JsonQueryType<any, any>> | JsonNode = JsonNode
+  A extends string = string,
+  B extends Record<string, JsonNode<string> | JsonQueryType<any, any>> | JsonNode<string> = JsonNode<string>
 > = JsonNode<A> & {
-  getChildren: () => Array<B[keyof B]>;
-  _all: Array<B>
+  getChildren?: () => Array<B[keyof B]>;
+  _all?: Array<JsonQueryType<A, B>>
 } & {
-  [P in keyof B]: B[P];
+  [P in keyof B]?: B[P];
 }
 
+const customInspectSymbol = Symbol.for('nodejs.util.inspect.custom');
 
 export const newJsonQuery = <T>(
   root: jsdom.JSDOM,
   element: Element | undefined = root.window.document.documentElement,
 ): T => {
   return new Proxy({}, {
+    set(target: {}, p: string | symbol, newValue: any, receiver: any): boolean {
+      if (typeof p !== "string") {
+        return false;
+      }
+      if (p.startsWith("$")) {
+        element.setAttribute(p.replace("$", ""), newValue);
+        return true;
+      }
+      let child = element.querySelector(p);
+      if (!child) {
+        child = root.window.document.createElementNS("",p);
+        [...child.getAttributeNames()].map(e => child.setAttribute(e, ""))
+        element.appendChild(child)
+      }
+      child.innerHTML = newValue;
+      return true;
+    },
     get(_: {}, p: string | symbol, __: any): any {
+      if (p === customInspectSymbol || p === "toString" || p === "valueOf" || p === "inspect") {
+        return () => {
+          let cloneElement = element.cloneNode(true);
+          [...cloneElement.childNodes]
+            .filter(e => e.parentElement === cloneElement)
+            .filter(e => e.nodeType !== element.TEXT_NODE)
+            .map((element: ChildNode) => {
+              cloneElement.removeChild(element)
+            })
+          return cloneElement.textContent;
+        }
+      }
+      if (typeof p !== "string") {
+        return (element?.textContent ?? "")?.[p];
+      }
 
-      if (p === "getBody") {
-        return () => element?.textContent;
-      }
-      if (p === "setBody") {
-        return (string: string) => {
-          if (!element) {
-            return
-          }
-          element.textContent = string
-        };
-      }
-      if (p === "serialize") {
+      const functions: keyof JsonQueryType = p as any;
+
+      if (functions === "_serialize") {
         return () => element?.outerHTML
       }
-      if (p === "getAttribute") {
-        return (key: string) => element?.getAttribute(key)
-      }
-      if (p === "setAttribute") {
-        return (key: string, value: string) => element?.setAttribute(key, value)
+      if (functions === "_addSibling") {
+        return (body: string, attributes: Record<string, string>) => {
+          const child = root.window.document.createElementNS("",element.tagName);
+          element.parentElement.appendChild(child)
+          child.textContent = body;
+          Object.entries(attributes ?? {}).forEach(([key, value]) => child.setAttribute(key, value))
+        }
       }
 
-      if (p === "getChildren") {
+      if (functions === "getChildren") {
         return () => [...(element?.children ?? [])].map(element => newJsonQuery(root, element ?? null))
       }
-      if (p === "getTagName") {
+      if (functions === "_getTagName") {
         return () => element?.tagName
       }
-      if (p === "_all") {
+      if (functions === "_all") {
         const elementList = element?.parentElement.querySelectorAll(element.tagName)
         return [...elementList].map(element => newJsonQuery(root, element ?? null));
       }
-      const childElement = element?.querySelector(p as string) ?? undefined
-      return newJsonQuery(root, childElement ?? null);
+      if (p.startsWith("$")) {
+        return element.getAttribute(p.replace("$", ""))
+      }
+      try {
+        const childElement = element?.querySelector(p as string) ?? undefined
+        return newJsonQuery(root, childElement ?? null);
+      } catch (e) {
+        return newJsonQuery(root, null);
+      }
+
     },
 
   }) as T
