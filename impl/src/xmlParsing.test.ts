@@ -144,4 +144,14 @@ describe("xml query", () => {
     expect(body).toStrictEqual([]);
   })
 
+  test("getTagName", () => {
+    const dom = new jsdom.JSDOM(file, {
+      contentType: "application/xhtml+xml"
+    });
+    const query = newJsonQuery<Schema>(dom)
+    const element = query.world_metadata[0]
+    const tagList = element.getTagName();
+    expect(tagList).toBe("world_metadata")
+
+  });
 })

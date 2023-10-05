@@ -6,6 +6,7 @@ export type JsonNode<A extends string | never = string> = {
   serialize: () => string,
   getAttribute: (attr: A) => string,
   setAttribute: (key: A, value: string) => void;
+  getTagName: () => string;
 
 }
 
@@ -42,7 +43,10 @@ export const newJsonQuery = <T>(
       }
 
       if (p === "getChildren") {
-        return () => [...element.children]
+        return () => [...element.children].map(e => newJsonQuery(root, e))
+      }
+      if (p === "getTagName") {
+        return () => element.tagName
       }
 
       const elementList = element.querySelectorAll(p as string)
