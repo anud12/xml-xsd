@@ -87,26 +87,5 @@ const expectedResult = `
     <cell type="type" x="1" y="-1"/>
     <cell type="type" x="1" y="0"/>
     <cell type="type" x="1" y="1"/>
-    <cell type="type" x="2" y="0"/>
-    <cell type="type" x="2" y="1"/>
-    <cell type="type" x="0" y="2"/>
-    <cell type="type" x="1" y="2"/>
-    <cell type="type" x="2" y="2"/>
-    <cell type="type" x="3" y="1"/>
-    <cell type="type" x="3" y="2"/>
-    <cell type="type" x="1" y="3"/>
-    <cell type="type" x="2" y="3"/>
-    <cell type="type" x="3" y="3"/>
-    <cell type="type" x="4" y="2"/>
-    <cell type="type" x="4" y="3"/>
-    <cell type="type" x="2" y="4"/>
-    <cell type="type" x="3" y="4"/>
-    <cell type="type" x="4" y="4"/>
-    <cell type="type" x="5" y="3"/>
-    <cell type="type" x="5" y="4"/>
-    <cell type="type" x="3" y="5"/>
-    <cell type="type" x="4" y="5"/>
-    <cell type="type" x="5" y="5"/>
-  </location_layer>
-</world_step>
-`.split("\n").filter((_, index) => index !== 0).join("\n")
+  <cell type="type" x="2" y="0"/><cell type="type" x="2" y="1"/><cell type="type" x="0" y="2"/><cell type="type" x="1" y="2"/><cell type="type" x="2" y="2"/><cell type="type" x="3" y="1"/><cell type="type" x="3" y="2"/><cell type="type" x="1" y="3"/><cell type="type" x="2" y="3"/><cell type="type" x="3" y="3"/><cell type="type" x="4" y="2"/><cell type="type" x="4" y="3"/><cell type="type" x="2" y="4"/><cell type="type" x="3" y="4"/><cell type="type" x="4" y="4"/><cell type="type" x="5" y="3"/><cell type="type" x="5" y="4"/><cell type="type" x="3" y="5"/><cell type="type" x="4" y="5"/><cell type="type" x="5" y="5"/><cell type="type" x="5" y="3"/><cell type="type" x="5" y="4"/><cell type="type" x="3" y="5"/><cell type="type" x="4" y="5"/><cell type="type" x="5" y="5"/></location_layer>
+</world_step>`.split("\n").filter((_, index) => index !== 0).join("\n")
