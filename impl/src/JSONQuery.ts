@@ -94,19 +94,31 @@ export const newJsonQuery = <T extends JsonQueryType>(
             const children = this?.[key] ?? {
                 _all: []
             };
-            let node = {
-                ...attributes,
-                [nodeType]: key,
-                [nodeToString]: body,
-                _all: [],
-            }
+            const childElement = root.window.document.createElementNS("", key);
+            element.appendChild(childElement);
+            let node;
+
             if (typeof body !== "string") {
+                Object.keys(body).forEach(([key, value]) => {
+                    childElement.setAttribute(key.replace("$", ""), value)
+                })
                 node = {
                     ...body,
                     [nodeType]: key,
                     [nodeToString]: "",
                     _all: [],
                 };
+            } else {
+                childElement.textContent = body;
+                Object.entries(attributes).forEach(([key, value]) => {
+                    childElement.setAttribute(key.replace("$", ""), value)
+                })
+                node = {
+                    ...attributes,
+                    [nodeType]: key,
+                    [nodeToString]: body,
+                    _all: [],
+                }
             }
             node._all = children._all;
             node._all.push(node);

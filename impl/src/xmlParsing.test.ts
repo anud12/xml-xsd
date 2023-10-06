@@ -1,5 +1,13 @@
 import * as jsdom from "jsdom";
-import {JsonQueryType, newJsonQuery, nodeAddChild, nodeToString, nodeType, serialize} from "./JSONQuery";
+import {
+    JsonQueryType,
+    newJsonQuery,
+    nodeAddChild,
+    nodeAddSibling,
+    nodeToString,
+    nodeType,
+    serialize
+} from "./JSONQuery";
 
 const file = `<?xml version="1.0" standalone="no"?>
 <world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -211,12 +219,18 @@ describe("xml query", () => {
         const query = newJsonQuery<JsonQueryType<any>>(dom);
         query.world_metadata.randomization_table[nodeAddChild]("child", "body", {$name: "value"} as any);
 
-        expect(serialize(dom, query)).toBe(`<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/world_step/world_step.xsd">
+        expect(serialize(dom, query)).toBe(`<world_step
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="schema/world_step/world_step.xsd"
+>
   <world_metadata>
     <next_world_step>./world_1</next_world_step>
-    <randomization_table name="value">helloWorld</randomization_table>
-  <child name="value">body</child></world_metadata>
-</world_step>`);
+    <randomization_table name="value">
+      helloWorld<child name="value">body</child>
+    </randomization_table>
+  </world_metadata>
+</world_step>
+`);
     })
 
     test("createElementToList", () => {
@@ -230,7 +244,7 @@ describe("xml query", () => {
         });
         const query = newJsonQuery<any>(dom);
         query.world_metadata.child = "body";
-        query.world_metadata.child._addSibling("secondBody");
+        query.world_metadata.child[nodeAddSibling]("secondBody", {$name:"value"});
         expect(query._serialize()).toBe(`<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/world_step/world_step.xsd">
   <world_metadata>
     <next_world_step>./world_1</next_world_step>
