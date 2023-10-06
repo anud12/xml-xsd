@@ -3,8 +3,10 @@ import * as jsdom from "jsdom";
 export type JsonNode<A extends string> = {
   _serialize?: () => string,
   _getTagName?: () => string;
-  _addSibling?: (body: string, attributes?: { [P in A as `${P}`]?: string }) => void,
-} & {
+  _addSibling?: (body: string | JsonNodeAttribute<A>, attributes?: JsonNodeAttribute<A>) => void,
+} & JsonNodeAttribute<A>
+
+export type JsonNodeAttribute<A extends string> = {
   [P in A as `$${P}`]?: string
 }
 
@@ -25,7 +27,7 @@ export const newJsonQuery = <T>(
   element: Element | undefined = root.window.document.documentElement,
 ): T => {
   return new Proxy({}, {
-    set(target: {}, p: string | symbol, newValue: any, receiver: any): boolean {
+    set: (target: {}, p: string | symbol, newValue: any, receiver: any): boolean => {
       if (typeof p !== "string") {
         return false;
       }
@@ -35,14 +37,15 @@ export const newJsonQuery = <T>(
       }
       let child = element.querySelector(p);
       if (!child) {
-        child = root.window.document.createElementNS("",p);
+        child = root.window.document.createElementNS("", p);
         [...child.getAttributeNames()].map(e => child.setAttribute(e, ""))
         element.appendChild(child)
       }
       child.innerHTML = newValue;
       return true;
     },
-    get(_: {}, p: string | symbol, __: any): any {
+    get: (_: {}, p: string | symbol, __: any): any => {
+
       if (p === customInspectSymbol || p === "toString" || p === "valueOf" || p === "inspect") {
         return () => {
           let cloneElement = element.cloneNode(true);
@@ -65,11 +68,15 @@ export const newJsonQuery = <T>(
         return () => element?.outerHTML
       }
       if (functions === "_addSibling") {
-        return (body: string, attributes: Record<string, string>) => {
-          const child = root.window.document.createElementNS("",element.tagName);
+        return (body: string | JsonNodeAttribute<string>, attributes: JsonNodeAttribute<string>) => {
+          const child = root.window.document.createElementNS("", element.tagName);
           element.parentElement.appendChild(child)
-          child.textContent = body;
-          Object.entries(attributes ?? {}).forEach(([key, value]) => child.setAttribute(key, value))
+          if (typeof body === "string") {
+            child.textContent = body;
+            Object.entries(attributes ?? {}).forEach(([key, value]) => child.setAttribute(key.replace("$", ""), value))
+            return
+          }
+          Object.entries(body ?? {}).forEach(([key, value]) => child.setAttribute(key.replace("$", ""), value));
         }
       }
 
@@ -80,8 +87,8 @@ export const newJsonQuery = <T>(
         return () => element?.tagName
       }
       if (functions === "_all") {
-        const elementList = element?.parentElement.querySelectorAll(element.tagName)
-        return [...elementList].map(element => newJsonQuery(root, element ?? null));
+        const elementList = element?.parentElement.querySelectorAll(element.tagName);
+        return [...(elementList ?? [])].map(element => newJsonQuery(root, element ?? null));
       }
       if (p.startsWith("$")) {
         return element.getAttribute(p.replace("$", ""))

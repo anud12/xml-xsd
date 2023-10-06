@@ -1,77 +1,77 @@
-import {JsonAttribute, JsonBody} from "./middleware";
+import {JsonQueryType} from "../JSONQuery";
 
-export type JsonSchema = JsonBody<{
-  "?xml": JsonAttribute<"version" | "standalone">,
+export type JsonSchema = JsonQueryType<never, {
+  "?xml": JsonQueryType<"version" | "standalone">,
 
-  world_step: JsonBody<{
+  world_step: JsonQueryType<never, {
 
-    world_metadata: JsonBody<{
-      next_world_step: string,
-      randomization_table: JsonBody<{
-        entry: JsonAttribute<"value">
+    world_metadata: JsonQueryType<never, {
+      next_world_step: JsonQueryType,
+      randomization_table: JsonQueryType<never, {
+        entry: JsonQueryType<"value">
       }>
     }>,
 
-    property_metadata: JsonBody<{
-      entry: JsonAttribute<"name" | "default" | "value" | "max_value">
+    property_metadata: JsonQueryType<never, {
+      entry: JsonQueryType<"name" | "default" | "value" | "max_value">
     }>,
 
-    command_metadata: JsonBody<{
-      entry: JsonAttribute<"name"> & JsonBody<{
-        mutate_property: JsonAttribute<"name"> & JsonBody<{
-          add_property_value: JsonAttribute<"name">,
-          add: JsonAttribute<"value">,
-          multiply_dice: JsonAttribute<"value">,
-          multiply: JsonAttribute<"value">,
-          divide_dice: JsonAttribute<"value">,
-          divide: JsonAttribute<"value">,
-          modulo_dice: JsonAttribute<"value">,
-          modulo: JsonAttribute<"value">,
+    command_metadata: JsonQueryType<never, {
+      entry: JsonQueryType<"name", {
+        mutate_property: JsonQueryType<"name", {
+          add_property_value: JsonQueryType<"name">,
+          add: JsonQueryType<"value">,
+          multiply_dice: JsonQueryType<"value">,
+          multiply: JsonQueryType<"value">,
+          divide_dice: JsonQueryType<"value">,
+          divide: JsonQueryType<"value">,
+          modulo_dice: JsonQueryType<"value">,
+          modulo: JsonQueryType<"value">,
         }>
       }>
     }>
 
-    race_metadata: JsonBody<{
-      entry: JsonAttribute<"name"> & JsonBody<{
-        vision: JsonAttribute<"value">
-        movement: JsonAttribute<"value">
-        property_bonus: JsonAttribute<"name" | "value" | "max_value ">
+    race_metadata: JsonQueryType<never, {
+      entry: JsonQueryType<"name", {
+        vision: JsonQueryType<"value">
+        movement: JsonQueryType<"value">
+        property_bonus: JsonQueryType<"name" | "value" | "max_value ">
       }>
     }>,
 
-    item_metadata: JsonBody<{
-      entry: JsonAttribute<"name"> & JsonBody<{
-        weight_kg: JsonAttribute<"value">,
-        wearable: JsonAttribute<"slot">,
+    item_metadata: JsonQueryType<never, {
+      entry: JsonQueryType<"name"> & JsonQueryType<never, {
+        weight_kg: JsonQueryType<"value">,
+        wearable: JsonQueryType<"slot">,
       }>
     }>,
 
-    locations_markov_chain: JsonBody<{
-      location_markov_link: JsonAttribute<"type"> & JsonBody<{
-        sibling: JsonAttribute<"type" | "position" | "quantity">
+    locations_markov_chain: JsonQueryType<never, {
+      location_markov_link: JsonQueryType<"type", {
+        sibling: JsonQueryType<"type" | "position" | "quantity">
       }>
     }>,
 
-    quests_markov_chain: JsonBody<{
-      quest_markov_link: JsonAttribute<"type"> & JsonBody<{
-        next: JsonAttribute<"type" | "quantity">
+    quests_markov_chain: JsonQueryType<never, {
+      quest_markov_link: JsonQueryType<"type", {
+        next: JsonQueryType<"type" | "quantity">
         completeCondition: unknown
       }>
     }>,
 
-    people: JsonBody<{
-      person: JsonAttribute<"name"> & JsonBody<{
-        race: JsonAttribute<"name">,
-        location: JsonAttribute<"x" | "y">
-        relations: JsonAttribute<"with">,
-        inventory: JsonBody<{
-          item: JsonAttribute<"ref" | "equipped">
+    people: JsonQueryType<never, {
+      person: JsonQueryType<"name", {
+        race: JsonQueryType<"name">,
+        location: JsonQueryType<"x" | "y">
+        relations: JsonQueryType<"with">,
+        inventory: JsonQueryType<never, {
+          item: JsonQueryType<"ref" | "equipped">
         }>
       }>
     }>;
 
-    location_layer: JsonAttribute<"name"> & JsonBody<{
-      cell: JsonAttribute<"type" | "x" | "y">,
+    location_layer: JsonQueryType<"name", {
+      cell: JsonQueryType<"type" | "x" | "y">,
     }>,
   }>,
 }>

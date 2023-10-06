@@ -1,28 +1,24 @@
 import {Middleware} from "../utils/middleware";
 import {fillNeighbours} from "../utils/location/fillNeighbours";
-import {JsonUtil} from "../utils";
 
 export const personVision: Middleware = (readJson) => async (writeJson) => {
+  const json = readJson.json;
 
-  const persons = readJson.jsonSchema.world_step.flatMap(e => e.people.flatMap(e => e.person));
+  const persons = readJson.json.people._all.flatMap(e => e.person._all);
 
   await Promise.all(persons.map(async e => {
-    const location = e.location[0].$;
+    const location = e.location;
 
-    const {x, y} = location;
-    const race = e.race[0].$.name;
+    const {$x, $y} = location;
+    const race = e.race.$name;
 
-    const radius = readJson.jsonSchema
-      .world_step[0]
-      .race_metadata[0]
-      .entry
-      .filter(e => e.$.name === race)?.[0]
-      .vision[0]
-
-    let writeJsonUtil = new JsonUtil(writeJson);
-    await writeJsonUtil.location.create(Number(x), Number(y))(writeJson);
-    writeJsonUtil = new JsonUtil(writeJson);
-    fillNeighbours(readJson, writeJsonUtil, writeJsonUtil.location.grid()[x][y], Number(radius.$.value));
+    const radius = readJson.json
+      .race_metadata
+      .entry._all
+      .filter(e => e.$name === race)?.[0]
+      .vision
+    await writeJson.util.location.create(Number($x), Number($y))(writeJson);
+    fillNeighbours(readJson, writeJson, writeJson.util.location.grid()[Number($x)][Number($y)], Number(radius.$value));
 
   }))
 }

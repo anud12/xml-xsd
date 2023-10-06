@@ -1,25 +1,26 @@
 import {JsonSchema} from "../JsonSchema";
 import {JsonUtil} from "../index";
 
-export type Cell = JsonSchema["world_step"][number]["location_layer"][number]["cell"][number]
+export type Cell = JsonSchema["world_step"]["location_layer"]["cell"]
 export type LocationGrid = Record<number, Record<number, Cell>> & {
   maxX: number,
   maxY: number
 }
 export const locationGrid = (json: JsonUtil): LocationGrid => {
-  const location = json.jsonSchema.world_step[0].location_layer[0].cell;
+
+  const location = json.jsonQuery.location_layer.cell._all;
   let maxX = 0;
   let maxY = 0;
   const xLocation = location.reduce((acc, e) => {
-    const xObj = acc[Number(e.$.x)] ?? {};
+    const xObj = acc[Number(e.$x)] ?? {};
 
-    maxX = Math.abs(Number(e.$.x)) > maxX ? Math.abs(Number(e.$.x)) : maxX
+    maxX = Math.abs(Number(e.$x)) > maxX ? Math.abs(Number(e.$x)) : maxX
 
-    maxY = Math.abs(Number(e.$.y)) > maxY ? Math.abs(Number(e.$.y)) : maxY
+    maxY = Math.abs(Number(e.$y)) > maxY ? Math.abs(Number(e.$y)) : maxY
 
-    acc[Number(e.$.x)] = {
+    acc[Number(e.$x)] = {
       ...xObj,
-      [Number(e.$.y)]: e
+      [Number(e.$y)]: e
     }
     return acc;
   }, {});

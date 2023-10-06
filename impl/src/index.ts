@@ -18,7 +18,7 @@ import {personVision} from "./middleware/personVision";
 
   const writeJson = JSON.parse(JSON.stringify(readJson));
   const readJsonUtil = new JsonUtil(readJson);
-  await personVision(readJsonUtil)(writeJson);
+  // await personVision({util: readJsonUtil, json})(writeJson);
 
   const xmlBuilder = new XMLBuilder({
     attributeNamePrefix: "",

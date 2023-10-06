@@ -2,7 +2,7 @@ type Element = string | number | symbol
 
 export type Transition<E extends Element = Element> = E[];
 
-export const markovNext = <E extends Element>(transition: Transition<E> = [], nextRandom:() => number): E => {
+export const markovNext = <E extends Element>(transition: Transition<E> = [], nextRandom: () => number): E => {
 
 
   const options = transition.reduce<Map<E, number>>((map, key) => {

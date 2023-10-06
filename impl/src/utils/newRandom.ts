@@ -1,12 +1,11 @@
 import {JsonSchema} from "./JsonSchema";
+import {JsonUtil} from "./index";
 
-export const newRandom = (worldSchema: JsonSchema) => {
+export const newRandom = (worldSchema: JsonUtil) => {
   let counter = 0;
   return () => {
-    const entries = worldSchema.world_step.flatMap(value => value.world_metadata)
-      .flatMap(value => value.randomization_table)
-      .flatMap(value => value.entry)
-      .map(value => Number(value.$.value));
+    const entries = worldSchema.jsonQuery.world_metadata.randomization_table.entry._all
+      .map(value => Number(value.$value));
     const max = entries.reduce((previousValue, currentValue) => {
       return previousValue > currentValue
         ? previousValue

@@ -1,61 +1,57 @@
-import {JsonSchema} from "../../utils/JsonSchema";
 import {personVision} from "../../middleware/personVision";
 import {JsonUtil} from "../../utils";
+import * as jsdom from "jsdom";
+import {newJsonQuery} from "../../JSONQuery";
+import {JsonSchema} from "../../utils/JsonSchema";
 
-const json: JsonSchema = {
-  world_step: [{
-    world_metadata: [{
-      randomization_table: [{
-        entry: [{
-          $: {value: "2"}
-        }]
-      }]
-    }],
-    locations_markov_chain: [{
-      location_markov_link: [{
-        $: {type: "type"},
-        sibling: [
-          {$: {type: "type", position: "all"}}
-        ]
-      }]
-    }],
-    race_metadata: [{
-      entry: [{
-        $: {name: "race_definition"},
-        vision: [{
-          $: {value: "1"}
-        }]
-      }]
-    }],
-    people: [{
-      person: [{
-        race: [{
-          $: {name: "race_definition"}
-        }],
-        location: [{
-          $: {x: "4", y: "4"}
-        }]
-      }]
-    }],
-    location_layer: [{
-      cell: [
-        {$: {type: "type", x: "-1", y: "-1"}},
-        {$: {type: "type", x: "-1", y: "0"}},
-        {$: {type: "type", x: "-1", y: "1"}},
-        {$: {type: "type", x: "0", y: "-1"}},
-        {$: {type: "type", x: "0", y: "0"}},
-        {$: {type: "type", x: "0", y: "1",}},
-        {$: {type: "type", x: "1", y: "-1"}},
-        {$: {type: "type", x: "1", y: "0"}},
-        {$: {type: "type", x: "1", y: "1"}},
-      ]
-    }]
-  }]
-};
+const file = `<world_step>
+  <world_metadata>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <locations_markov_chain>
+    <location_markov_link type="type">
+      <sibling type="type" position="all"/>
+    </location_markov_link>
+  </locations_markov_chain>
+  <race_metadata>
+    <entry name="race_definition">
+      <vision value="1"/>
+    </entry>
+  </race_metadata>
+  <people>
+    <person>
+      <race name="race_definition"/>
+      <location x="4" y="4"/>
+    </person>
+  </people>
+  <location_layer>
+    <cell type="type" x="-1" y="-1"/>
+    <cell type="type" x="-1" y="0"/>
+    <cell type="type" x="-1" y="1"/>
+    <cell type="type" x="0" y="-1"/>
+    <cell type="type" x="0" y="0"/>
+    <cell type="type" x="0" y="1"/>
+    <cell type="type" x="1" y="-1"/>
+    <cell type="type" x="1" y="0"/>
+    <cell type="type" x="1" y="1"/>
+  </location_layer>
+</world_step>`;
 it("create cells based on vision and location", async () => {
-  let result = json;
-  await personVision(new JsonUtil(json))(result);
-  expect(new JsonUtil(result).writeToString()).toBe(expectedResult);
+  const dom = new jsdom.JSDOM(file, {
+    contentType: "application/xhtml+xml"
+  });
+  const query = newJsonQuery<JsonSchema["world_step"]>(dom);
+  let result = query;
+  await personVision({
+    util: new JsonUtil(query),
+    json: query
+  })({
+    util: new JsonUtil(query),
+    json: query
+  });
+  expect(dom.serialize()).toBe(expectedResult);
 })
 
 const expectedResult = `
