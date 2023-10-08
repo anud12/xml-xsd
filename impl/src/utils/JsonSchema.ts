@@ -55,7 +55,7 @@ export type JsonSchema = JsonQueryType<never, {
     quests_markov_chain: JsonQueryType<never, {
       quest_markov_link: JsonQueryType<"type", {
         next: JsonQueryType<"type" | "quantity">
-        completeCondition: unknown
+        completeCondition: JsonQueryType
       }>
     }>,
 
