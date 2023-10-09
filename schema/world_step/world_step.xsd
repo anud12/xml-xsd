@@ -175,7 +175,7 @@
                     </xs:complexType>
                 </xs:element>
 
-                <xs:element name="command_metadata">
+                <xs:element name="action_metadata">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="entry">

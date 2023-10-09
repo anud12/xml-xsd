@@ -15,9 +15,18 @@
         <entry name="strength" default="10" value="8" max_value="20"/>
         <entry name="constitution" default="10" value="8" max_value="20"/>
     </property_metadata>
+    <!--
+    <entry name="meleeAttack">
+        <test/>
+        <property_mutation/>
+        <location_mutation/
 
-    <command_metadata>
+
+    </person_action>
+    -->
+    <action_metadata>
         <entry name="meleeAttack">
+
             <mutate_target_property name="health">
                 <operation>
                     <add_dice value="6d"/>
@@ -37,7 +46,7 @@
                 </operation>
             </mutate_target_property>
         </entry>
-    </command_metadata>
+    </action_metadata>
 
     <race_metadata>
         <entry name="human">
