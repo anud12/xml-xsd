@@ -21,8 +21,8 @@ export type JsonNodeAttribute<A extends string> = {
 export const nodeBodyType = Symbol()
 export const nodeAttributes = Symbol()
 export type JsonQueryType<
-    A extends string = string,
-    B extends Record<string, JsonQueryType<string, any>> = Record<string, JsonQueryType<string, any>>
+    A extends string = never,
+    B extends Record<string, JsonQueryType<string, any>> = never
 > = JsonElement<A>
     & {
     children: Array<B[keyof B]>;
@@ -32,7 +32,7 @@ export type JsonQueryType<
     serialize: () => string
 } & {
     [nodeBodyType]: {
-        [P in keyof B]: B[P] extends JsonQueryType ? B[P] : never
+        [P in keyof B]: B[P] extends JsonQueryType<any, any> ? B[P] : never
     }
 }
     & {
@@ -65,11 +65,11 @@ export class JsonQuery<A extends JsonQueryType> implements A {
         return new JsonQuery(root, root.window.document.querySelector("*")) as unknown as A
     }
 
-    [nodeBodyType]: any;
-    [nodeAttributes]: any;
+    [nodeBodyType]: never;
+    [nodeAttributes]: never;
 
     body: string;
-    children: Array<Record<string, JsonQueryType<string, any>>[keyof Record<string, JsonQueryType<string, any>>]>;
+    children: any;
     tag: string;
 
     constructor(private root: jsdom.JSDOM, element: Element) {
@@ -77,7 +77,6 @@ export class JsonQuery<A extends JsonQueryType> implements A {
 
         const children = [...element.children ?? []].map((e) => {
             const jsonQuery = new JsonQuery(root, e);
-            // @ts-ignore
             jsonQuery.children = [...e.children].map(value => new JsonQuery(root, value))
             return jsonQuery;
         });
@@ -96,7 +95,7 @@ export class JsonQuery<A extends JsonQueryType> implements A {
         this.body = cloneElement.textContent.trim();
     }
 
-    appendChild = <U extends string>(key: string, body: string | JsonNodeAttribute<string>, attributesArg?: JsonNodeAttribute<string>): void => {
+    appendChild = (key: string, body: string | JsonNodeAttribute<string>, attributesArg?: JsonNodeAttribute<string>): void => {
         let attributes = attributesArg;
         let element = this.root.window.document.createElementNS("", key);
 
@@ -110,10 +109,10 @@ export class JsonQuery<A extends JsonQueryType> implements A {
         })
         this.children.push(new JsonQuery(this.root, element) as unknown as JsonQueryType);
     }
-    query = <P extends string>(p: P): JsonQueryType<string, any> => {
+    query = <P extends any>(p: P): any => {
         return this.queryAll(p)?.[0];
     }
-    queryAll = <P extends string>(p: P): any[] => {
+    queryAll = <P extends any>(p: P): any[] => {
         return this.children.filter(e => e.tag === p)
     }
 

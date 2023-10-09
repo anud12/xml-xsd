@@ -16,14 +16,16 @@ export type JsonSchema = JsonQueryType<never, {
   command_metadata: JsonQueryType<never, {
     entry: JsonQueryType<"name", {
       mutate_property: JsonQueryType<"name", {
-        add_property_value: JsonQueryType<"name">,
-        add: JsonQueryType<"value">,
-        multiply_dice: JsonQueryType<"value">,
-        multiply: JsonQueryType<"value">,
-        divide_dice: JsonQueryType<"value">,
-        divide: JsonQueryType<"value">,
-        modulo_dice: JsonQueryType<"value">,
-        modulo: JsonQueryType<"value">,
+        operation: JsonQueryType<never, {
+          add_property_value: JsonQueryType<"name">,
+          add: JsonQueryType<"value">,
+          multiply_dice: JsonQueryType<"value">,
+          multiply: JsonQueryType<"value">,
+          divide_dice: JsonQueryType<"value">,
+          divide: JsonQueryType<"value">,
+          modulo_dice: JsonQueryType<"value">,
+          modulo: JsonQueryType<"value">,
+        }>
       }>
     }>
   }>

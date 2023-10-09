@@ -16,38 +16,21 @@
         <entry name="constitution" default="10" value="8" max_value="20"/>
     </property_metadata>
 
-
-    <!--
-        <command_metatada>
-            <entry name="move" type="target_person">
-                <requirement type=""/>
-                <mutate_property name="health">
-                    <group>
-                        <property name=""/>
-                    </group>
-                    <property name=""/>
-                    <add value="3"/>
-                    <negate/>
-                    <add value="1"/>
-
-                </mutate_property>
-            </entry>
-        </command_metadata>
-    -->
-
-
     <command_metadata>
         <entry name="demo">
             <mutate_property name="">
-                <add_property_value name="strength"/>
-                <modulo_dice value="12d"/>
-                <add value="3"/>
-                <modulo_dice value="4d"/>
-                <group></group>
-                <max_between>
-                    <group></group>
-                    <group></group>
-                </max_between>
+                <operation>
+                    <add value="3"/>
+                </operation>
+                <operation>
+                    <add_property_value name="strength"/>
+                </operation>
+                <operation>
+                    <modulo_dice value="12d"/>
+                </operation>
+                <operation>
+                    <add value="3"/>
+                </operation>
             </mutate_property>
         </entry>
     </command_metadata>
