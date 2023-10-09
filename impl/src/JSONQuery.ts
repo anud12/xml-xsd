@@ -72,7 +72,7 @@ export class JsonQuery<A extends JsonQueryType> implements A {
     children: Array<Record<string, JsonQueryType<string, any>>[keyof Record<string, JsonQueryType<string, any>>]>;
     tag: string;
 
-    constructor(private root: jsdom.JSDOM, private element: Element) {
+    constructor(private root: jsdom.JSDOM, element: Element) {
         this.tag = element.tagName;
 
         const children = [...element.children ?? []].map((e) => {

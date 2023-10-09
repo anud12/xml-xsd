@@ -2,7 +2,6 @@ import {Middleware} from "../utils/middleware";
 import {fillNeighbours} from "../utils/location/fillNeighbours";
 
 export const personVision: Middleware = (readJson) => async (writeJson) => {
-    const json = readJson.json;
 
     const persons = readJson.json.query("people").queryAll("person");
 
