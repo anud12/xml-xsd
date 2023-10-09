@@ -31,92 +31,98 @@
     </xs:complexType>
 
     <xs:group name="type_math_operations">
-        <xs:choice>
-            <xs:element name="add" minOccurs="0">
+        <xs:sequence>
+            <xs:element name="operation" maxOccurs="unbounded">
                 <xs:complexType>
-                    <xs:attribute name="value" type="xs:int"/>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="add_dice" minOccurs="0">
-                <xs:complexType>
-                    <xs:attribute name="value" type="type_dice_face"/>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="multiply" minOccurs="0">
-                <xs:complexType>
-                    <xs:attribute name="value" type="xs:int"/>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="multiply_dice" minOccurs="0">
-                <xs:complexType>
-                    <xs:attribute name="value" type="type_dice_face"/>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="divide" minOccurs="0">
-                <xs:complexType>
-                    <xs:attribute name="value" type="xs:int"/>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="divide_dice" minOccurs="0">
-                <xs:complexType>
-                    <xs:attribute name="value" type="type_dice_face"/>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="modulo" minOccurs="0">
-                <xs:complexType>
-                    <xs:attribute name="value" type="xs:int"/>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="modulo_dice" minOccurs="0">
-                <xs:complexType>
-                    <xs:attribute name="value" type="type_dice_face"/>
-                </xs:complexType>
-            </xs:element>
+                    <xs:choice>
+                        <xs:element name="add" minOccurs="0">
+                            <xs:complexType>
+                                <xs:attribute name="value" type="xs:int"/>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="add_dice" minOccurs="0">
+                            <xs:complexType>
+                                <xs:attribute name="value" type="type_dice_face"/>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="multiply" minOccurs="0">
+                            <xs:complexType>
+                                <xs:attribute name="value" type="xs:int"/>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="multiply_dice" minOccurs="0">
+                            <xs:complexType>
+                                <xs:attribute name="value" type="type_dice_face"/>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="divide" minOccurs="0">
+                            <xs:complexType>
+                                <xs:attribute name="value" type="xs:int"/>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="divide_dice" minOccurs="0">
+                            <xs:complexType>
+                                <xs:attribute name="value" type="type_dice_face"/>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="modulo" minOccurs="0">
+                            <xs:complexType>
+                                <xs:attribute name="value" type="xs:int"/>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="modulo_dice" minOccurs="0">
+                            <xs:complexType>
+                                <xs:attribute name="value" type="type_dice_face"/>
+                            </xs:complexType>
+                        </xs:element>
 
 
-            <xs:element name="add_property_value" minOccurs="0">
-                <xs:complexType>
-                    <xs:attribute name="name"/>
-                </xs:complexType>
-            </xs:element>
+                        <xs:element name="add_property_value" minOccurs="0">
+                            <xs:complexType>
+                                <xs:attribute name="name"/>
+                            </xs:complexType>
+                        </xs:element>
 
-            <xs:element name="group" minOccurs="0">
-                <xs:complexType>
-                    <xs:group ref="type_math_operations"/>
-                </xs:complexType>
-            </xs:element>
-
-            <xs:element name="equipped_item_tag" minOccurs="0">
-                <xs:complexType>
-                    <xs:attribute name="name"/>
-                    <xs:attribute name="if_present_value" type="xs:int"/>
-                    <xs:attribute name="if_missing_value" type="xs:int"/>
-                </xs:complexType>
-            </xs:element>
-
-            <xs:element name="max_between" minOccurs="0">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name="group" minOccurs="2" maxOccurs="unbounded">
+                        <xs:element name="group" minOccurs="0">
                             <xs:complexType>
                                 <xs:group ref="type_math_operations"/>
                             </xs:complexType>
                         </xs:element>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="min" minOccurs="0">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name="group" minOccurs="2" maxOccurs="unbounded">
+
+                        <xs:element name="equipped_item_tag" minOccurs="0">
                             <xs:complexType>
-                                <xs:group ref="type_math_operations"/>
+                                <xs:attribute name="name"/>
+                                <xs:attribute name="if_present_value" type="xs:int"/>
+                                <xs:attribute name="if_missing_value" type="xs:int"/>
                             </xs:complexType>
                         </xs:element>
-                    </xs:sequence>
+
+                        <xs:element name="max_between" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="group" minOccurs="2" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                            <xs:group ref="type_math_operations"/>
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="min" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="group" minOccurs="2" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                            <xs:group ref="type_math_operations"/>
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:choice>
                 </xs:complexType>
             </xs:element>
-        </xs:choice>
+        </xs:sequence>
     </xs:group>
 
     <xs:element name="world_step">
@@ -175,15 +181,9 @@
                             <xs:element name="entry">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="mutate_property" minOccurs="0">
+                                        <xs:element name="mutate_target_property" minOccurs="0">
                                             <xs:complexType>
-                                                <x:sequence>
-                                                    <xs:element name="operation" maxOccurs="unbounded">
-                                                        <xs:complexType>
-                                                            <xs:group ref="type_math_operations"/>
-                                                        </xs:complexType>
-                                                    </xs:element>
-                                                </x:sequence>
+                                                <xs:group ref="type_math_operations"/>
                                                 <xs:attribute name="name"/>
                                             </xs:complexType>
                                         </xs:element>

@@ -17,21 +17,25 @@
     </property_metadata>
 
     <command_metadata>
-        <entry name="demo">
-            <mutate_property name="">
+        <entry name="meleeAttack">
+            <mutate_target_property name="health">
                 <operation>
-                    <add value="3"/>
+                    <add_dice value="6d"/>
                 </operation>
                 <operation>
-                    <add_property_value name="strength"/>
+                    <group>
+                        <operation>
+                            <add_property_value name="strength"/>
+                        </operation>
+                        <operation>
+                            <add value="-10"/>
+                        </operation>
+                        <operation>
+                            <divide value="2"/>
+                        </operation>
+                    </group>
                 </operation>
-                <operation>
-                    <modulo_dice value="12d"/>
-                </operation>
-                <operation>
-                    <add value="3"/>
-                </operation>
-            </mutate_property>
+            </mutate_target_property>
         </entry>
     </command_metadata>
 
