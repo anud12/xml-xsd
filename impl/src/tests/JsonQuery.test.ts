@@ -2,7 +2,7 @@ import * as jsdom from "jsdom";
 import {
   JsonQuery,
   JsonQueryType,
-} from "./JSONQuery";
+} from "../JSONQuery";
 
 const file = `<?xml version="1.0" standalone="no"?>
 <world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

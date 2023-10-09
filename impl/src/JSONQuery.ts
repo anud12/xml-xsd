@@ -22,7 +22,7 @@ export const nodeBodyType = Symbol()
 export const nodeAttributes = Symbol()
 export type JsonQueryType<
     A extends string = string,
-    B extends Record<string, JsonQueryType<string, any> | JsonElement<string>> = Record<string, JsonQueryType<string, any>>
+    B extends Record<string, JsonQueryType<string, any>> = Record<string, JsonQueryType<string, any>>
 > = JsonElement<A>
     & {
     children: Array<B[keyof B]>;
@@ -32,7 +32,7 @@ export type JsonQueryType<
     serialize: () => string
 } & {
     [nodeBodyType]: {
-        [P in keyof B]: B[P]
+        [P in keyof B]: B[P] extends JsonQueryType ? B[P] : never
     }
 }
     & {
@@ -56,7 +56,7 @@ const innerSerialize = (dom: jsdom.JSDOM, query: JsonQueryType<any, any>): Eleme
     return rootElement
 }
 
-//@ts-ignore TS2420
+// @ts-ignore TS2420
 export class JsonQuery<A extends JsonQueryType> implements A {
     static fromText = <A>(file: string): A => {
         const root = new jsdom.JSDOM(file, {
