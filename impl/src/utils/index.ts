@@ -5,9 +5,7 @@ import {create} from "./location/create";
 import {questMarkov} from "./questMarkov";
 import {JsonSchema} from "./JsonSchema";
 import {newRandom} from "./newRandom";
-import {XMLBuilder} from "fast-xml-parser";
-import {Middleware, Unit} from "./middleware";
-import {JsonQueryType} from "../JSONQuery";
+import {Unit} from "./middleware";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -30,7 +28,7 @@ export const utils = {
 }
 
 export class JsonUtil {
-  constructor(public jsonQuery: JsonSchema["world_step"]) {
+  constructor(public jsonQuery: JsonSchema) {
     this.invalidate();
   }
 
@@ -38,7 +36,7 @@ export class JsonUtil {
   location: {
     grid: () => LocationGrid,
     markovChainMatrix: (direction: string) => LocationMatrix,
-    create: (x: number, y: number) => (writeUnit:Unit) => Promise<void>,
+    create: (x: number, y: number) => (writeUnit: Unit) => Promise<void>,
   }
   questMarkov: () => void;
 

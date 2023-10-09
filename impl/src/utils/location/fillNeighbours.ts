@@ -1,6 +1,7 @@
 import {markovNext, Transition} from "../markovNext";
 import {Cell} from "./locationGrid";
 import {Unit} from "../middleware";
+import {nodeAttributes} from "../../JSONQuery";
 
 const getTransitionFromNeighbours = (json: Unit, cell: Cell): Transition<string> => {
   const x = Number(cell.$x)
@@ -54,7 +55,7 @@ const getTransitionFromNeighbours = (json: Unit, cell: Cell): Transition<string>
 }
 export const fillNeighbours = (readJson: Unit, writeJson: Unit, originalCell: Cell, radius = 1) => {
   const grid = writeJson.util.location.grid();
-  const newCells = writeJson.json.location_layer.cell;
+  const locationLayer = writeJson.json.query("location_layer");
   const x = Number(originalCell.$x);
   const y = Number(originalCell.$y);
 
@@ -64,13 +65,13 @@ export const fillNeighbours = (readJson: Unit, writeJson: Unit, originalCell: Ce
       if (!cell) {
         const transition = getTransitionFromNeighbours(writeJson, originalCell)
         const type = markovNext(transition, readJson.util.random);
-        const cell: Parameters<typeof newCells._addSibling>[0] = {
+        const cell: Cell[typeof nodeAttributes] = {
           $type: type,
           $x: String(x + j),
           $y: String(y + i),
         };
         console.log(`Created cell: ${JSON.stringify(cell)}`)
-        newCells._addSibling(cell)
+        locationLayer.appendChild("cell", cell)
       }
     }
   }

@@ -1,7 +1,7 @@
 import {personVision} from "../../middleware/personVision";
 import {JsonUtil} from "../../utils";
 import * as jsdom from "jsdom";
-import {newJsonQuery} from "../../JSONQuery";
+import {JsonQuery} from "../../JSONQuery";
 import {JsonSchema} from "../../utils/JsonSchema";
 
 const file = `<world_step>
@@ -39,10 +39,7 @@ const file = `<world_step>
   </location_layer>
 </world_step>`;
 it("create cells based on vision and location", async () => {
-  const dom = new jsdom.JSDOM(file, {
-    contentType: "application/xhtml+xml"
-  });
-  const query = newJsonQuery<JsonSchema["world_step"]>(dom);
+  const query = JsonQuery.fromText<JsonSchema>(file);
   let result = query;
   await personVision({
     util: new JsonUtil(query),
@@ -51,41 +48,67 @@ it("create cells based on vision and location", async () => {
     util: new JsonUtil(query),
     json: query
   });
-  expect(dom.serialize()).toBe(expectedResult);
+  expect(query.serialize()).toBe(expectedResult);
 })
 
 const expectedResult = `
 <world_step>
   <world_metadata>
     <randomization_table>
-      <entry value="2"/>
+      <entry value="2" />
     </randomization_table>
   </world_metadata>
   <locations_markov_chain>
     <location_markov_link type="type">
-      <sibling type="type" position="all"/>
+      <sibling type="type" position="all" />
     </location_markov_link>
   </locations_markov_chain>
   <race_metadata>
     <entry name="race_definition">
-      <vision value="1"/>
+      <vision value="1" />
     </entry>
   </race_metadata>
   <people>
     <person>
-      <race name="race_definition"/>
-      <location x="4" y="4"/>
+      <race name="race_definition" />
+      <location x="4" y="4" />
     </person>
   </people>
   <location_layer>
-    <cell type="type" x="-1" y="-1"/>
-    <cell type="type" x="-1" y="0"/>
-    <cell type="type" x="-1" y="1"/>
-    <cell type="type" x="0" y="-1"/>
-    <cell type="type" x="0" y="0"/>
-    <cell type="type" x="0" y="1"/>
-    <cell type="type" x="1" y="-1"/>
-    <cell type="type" x="1" y="0"/>
-    <cell type="type" x="1" y="1"/>
-  <cell type="type" x="2" y="0"/><cell type="type" x="2" y="1"/><cell type="type" x="0" y="2"/><cell type="type" x="1" y="2"/><cell type="type" x="2" y="2"/><cell type="type" x="3" y="1"/><cell type="type" x="3" y="2"/><cell type="type" x="1" y="3"/><cell type="type" x="2" y="3"/><cell type="type" x="3" y="3"/><cell type="type" x="4" y="2"/><cell type="type" x="4" y="3"/><cell type="type" x="2" y="4"/><cell type="type" x="3" y="4"/><cell type="type" x="4" y="4"/><cell type="type" x="5" y="3"/><cell type="type" x="5" y="4"/><cell type="type" x="3" y="5"/><cell type="type" x="4" y="5"/><cell type="type" x="5" y="5"/><cell type="type" x="5" y="3"/><cell type="type" x="5" y="4"/><cell type="type" x="3" y="5"/><cell type="type" x="4" y="5"/><cell type="type" x="5" y="5"/></location_layer>
-</world_step>`.split("\n").filter((_, index) => index !== 0).join("\n")
+    <cell type="type" x="-1" y="-1" />
+    <cell type="type" x="-1" y="0" />
+    <cell type="type" x="-1" y="1" />
+    <cell type="type" x="0" y="-1" />
+    <cell type="type" x="0" y="0" />
+    <cell type="type" x="0" y="1" />
+    <cell type="type" x="1" y="-1" />
+    <cell type="type" x="1" y="0" />
+    <cell type="type" x="1" y="1" />
+    <cell type="type" x="2" y="0" />
+    <cell type="type" x="2" y="1" />
+    <cell type="type" x="0" y="2" />
+    <cell type="type" x="1" y="2" />
+    <cell type="type" x="2" y="2" />
+    <cell type="type" x="3" y="1" />
+    <cell type="type" x="3" y="2" />
+    <cell type="type" x="1" y="3" />
+    <cell type="type" x="2" y="3" />
+    <cell type="type" x="3" y="3" />
+    <cell type="type" x="4" y="2" />
+    <cell type="type" x="4" y="3" />
+    <cell type="type" x="2" y="4" />
+    <cell type="type" x="3" y="4" />
+    <cell type="type" x="4" y="4" />
+    <cell type="type" x="5" y="3" />
+    <cell type="type" x="5" y="4" />
+    <cell type="type" x="3" y="5" />
+    <cell type="type" x="4" y="5" />
+    <cell type="type" x="5" y="5" />
+    <cell type="type" x="5" y="3" />
+    <cell type="type" x="5" y="4" />
+    <cell type="type" x="3" y="5" />
+    <cell type="type" x="4" y="5" />
+    <cell type="type" x="5" y="5" />
+  </location_layer>
+</world_step>
+`.split("\n").filter((_, index) => index !== 0).join("\n")

@@ -2,7 +2,7 @@ import {JsonSchema} from "./JsonSchema";
 import {JsonUtil} from "./index";
 
 export type Unit = {
-  json: JsonSchema["world_step"],
+  json: JsonSchema,
   util: JsonUtil,
 }
 

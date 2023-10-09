@@ -1,14 +1,16 @@
 import {JsonSchema} from "../JsonSchema";
 import {JsonUtil} from "../index";
+import {nodeBodyType} from "../../JSONQuery";
 
-export type Cell = JsonSchema["world_step"]["location_layer"]["cell"]
+export type Cell = JsonSchema[typeof nodeBodyType]["location_layer"][typeof nodeBodyType]["cell"]
+
 export type LocationGrid = Record<number, Record<number, Cell>> & {
   maxX: number,
   maxY: number
 }
 export const locationGrid = (json: JsonUtil): LocationGrid => {
 
-  const location = json.jsonQuery.location_layer.cell._all;
+  const location = json.jsonQuery.query("location_layer").queryAll("cell");
   let maxX = 0;
   let maxY = 0;
   const xLocation = location.reduce((acc, e) => {
