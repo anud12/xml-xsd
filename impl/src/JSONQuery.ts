@@ -1,4 +1,5 @@
 import * as jsdom from "jsdom";
+import {JsonSchema} from "./utils/JsonSchema";
 
 const prettier = require("prettier");
 
@@ -21,7 +22,7 @@ export const nodeBodyType = Symbol()
 export const nodeAttributes = Symbol()
 export type JsonQueryType<
     A extends string = string,
-    B extends Record<string, JsonQueryType<string, any>> = Record<string, JsonQueryType<string, any>>
+    B extends Record<string, JsonQueryType<string, any> | JsonElement<string>> = Record<string, JsonQueryType<string, any>>
 > = JsonElement<A>
     & {
     children: Array<B[keyof B]>;

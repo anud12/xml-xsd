@@ -67,12 +67,14 @@ export const fillNeighbours = (readJson: Unit, writeJson: Unit, originalCell: Ce
         const type = markovNext(transition, readJson.util.random);
         const cell: Cell[typeof nodeAttributes] = {
           $type: type,
-          $x: String(x + j),
-          $y: String(y + i),
+          $x: String(x + i),
+          $y: String(y + j),
         };
         console.log(`Created cell: ${JSON.stringify(cell)}`)
         locationLayer.appendChild("cell", cell)
+        writeJson.util.invalidate()
       }
     }
   }
+
 }
