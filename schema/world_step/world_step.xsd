@@ -1,4 +1,4 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:x="http://www.w3.org/2001/XMLSchema"
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 >
 
     <xs:include schemaLocation="../types/schema.xsd"/>
@@ -29,6 +29,12 @@
         <xs:attribute name="x" use="required" type="xs:integer"/>
         <xs:attribute name="y" use="required" type="xs:integer"/>
     </xs:complexType>
+    <xs:simpleType name="type_person_target">
+        <xs:restriction>
+            <xs:enumeration value="self"/>
+            <xs:enumeration value="target"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:group name="type_math_operations">
         <xs:sequence>
@@ -37,49 +43,49 @@
                     <xs:choice>
                         <xs:element name="add" minOccurs="0">
                             <xs:complexType>
-                                <xs:attribute name="value" type="xs:int"/>
+                                <xs:attribute name="value" type="xs:int" use="required"/>
                             </xs:complexType>
                         </xs:element>
                         <xs:element name="add_dice" minOccurs="0">
                             <xs:complexType>
-                                <xs:attribute name="value" type="type_dice_face"/>
+                                <xs:attribute name="value" type="type_dice_face" use="required"/>
                             </xs:complexType>
                         </xs:element>
                         <xs:element name="multiply" minOccurs="0">
                             <xs:complexType>
-                                <xs:attribute name="value" type="xs:int"/>
+                                <xs:attribute name="value" type="xs:int" use="required"/>
                             </xs:complexType>
                         </xs:element>
                         <xs:element name="multiply_dice" minOccurs="0">
                             <xs:complexType>
-                                <xs:attribute name="value" type="type_dice_face"/>
+                                <xs:attribute name="value" type="type_dice_face" use="required"/>
                             </xs:complexType>
                         </xs:element>
                         <xs:element name="divide" minOccurs="0">
                             <xs:complexType>
-                                <xs:attribute name="value" type="xs:int"/>
+                                <xs:attribute name="value" type="xs:int" use="required"/>
                             </xs:complexType>
                         </xs:element>
                         <xs:element name="divide_dice" minOccurs="0">
                             <xs:complexType>
-                                <xs:attribute name="value" type="type_dice_face"/>
+                                <xs:attribute name="value" type="type_dice_face" use="required"/>
                             </xs:complexType>
                         </xs:element>
                         <xs:element name="modulo" minOccurs="0">
                             <xs:complexType>
-                                <xs:attribute name="value" type="xs:int"/>
+                                <xs:attribute name="value" type="xs:int" use="required"/>
                             </xs:complexType>
                         </xs:element>
                         <xs:element name="modulo_dice" minOccurs="0">
                             <xs:complexType>
-                                <xs:attribute name="value" type="type_dice_face"/>
+                                <xs:attribute name="value" type="type_dice_face" use="required"/>
                             </xs:complexType>
                         </xs:element>
 
 
                         <xs:element name="add_property_value" minOccurs="0">
                             <xs:complexType>
-                                <xs:attribute name="name"/>
+                                <xs:attribute name="name" use="required"/>
                             </xs:complexType>
                         </xs:element>
 
@@ -92,8 +98,8 @@
                         <xs:element name="equipped_item_tag" minOccurs="0">
                             <xs:complexType>
                                 <xs:attribute name="name"/>
-                                <xs:attribute name="if_present_value" type="xs:int"/>
-                                <xs:attribute name="if_missing_value" type="xs:int"/>
+                                <xs:attribute name="if_present_value" type="xs:int" use="required"/>
+                                <xs:attribute name="if_missing_value" type="xs:int" use="required"/>
                             </xs:complexType>
                         </xs:element>
 
@@ -178,25 +184,46 @@
                 <xs:element name="action_metadata">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="entry">
+                            <xs:element name="person_entry">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="mutate_target_property" minOccurs="0">
+                                        <xs:element name="test">
                                             <xs:complexType>
-                                                <xs:group ref="type_math_operations"/>
-                                                <xs:attribute name="name"/>
+                                                <xs:sequence>
+                                                    <xs:element name="value">
+                                                        <xs:complexType>
+                                                            <xs:group ref="type_math_operations"/>
+                                                            <xs:attribute name="target" type="type_person_target" use="required"/>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                    <xs:element name="expected">
+                                                        <xs:complexType>
+                                                            <xs:group ref="type_math_operations"/>
+                                                            <xs:attribute name="target" type="type_person_target" use="required"/>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>
-                                        <xs:element name="mutate_location" minOccurs="0">
+                                        <xs:element name="property_mutation" minOccurs="0">
                                             <xs:complexType>
                                                 <xs:group ref="type_math_operations"/>
                                                 <xs:attribute name="name"/>
+                                                <xs:attribute name="target" type="type_person_target" use="required"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="location_mutation" minOccurs="0">
+                                            <xs:complexType>
+                                                <xs:group ref="type_math_operations"/>
+                                                <xs:attribute name="name"/>
+                                                <xs:attribute name="target" type="type_person_target" use="required"/>
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
                                     <xs:attribute name="name"/>
                                 </xs:complexType>
                             </xs:element>
+
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>

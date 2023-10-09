@@ -17,17 +17,34 @@
     </property_metadata>
     <!--
     <entry name="meleeAttack">
-        <test/>
+        <test>
+            <value/>
+            <expected/>
+        </test>
+        <test onFail="fumble">
+            <value/>
+            <expected/>
+        </test>
         <property_mutation/>
-        <location_mutation/
-
-
+        <location_mutation/>
     </person_action>
     -->
     <action_metadata>
-        <entry name="meleeAttack">
+        <person_entry name="meleeAttack">
+            <test>
+                <value target="self">
+                    <operation>
+                        <add value="3"/>
+                    </operation>
+                </value>
+                <expected target="target">
+                    <operation>
+                        <add value="3"/>
+                    </operation>
+                </expected>
+            </test>
 
-            <mutate_target_property name="health">
+            <property_mutation name="health" target="target">
                 <operation>
                     <add_dice value="6d"/>
                 </operation>
@@ -44,8 +61,8 @@
                         </operation>
                     </group>
                 </operation>
-            </mutate_target_property>
-        </entry>
+            </property_mutation>
+        </person_entry>
     </action_metadata>
 
     <race_metadata>
