@@ -1,5 +1,18 @@
 import {JsonQueryType} from "../JSONQuery";
 
+export type OperationQueryType = JsonQueryType<never, {
+  add_property_value: JsonQueryType<"name">,
+  add: JsonQueryType<"value">,
+  add_dice: JsonQueryType<"value">,
+  multiply_dice: JsonQueryType<"value">,
+  multiply: JsonQueryType<"value">,
+  divide_dice: JsonQueryType<"value">,
+  divide: JsonQueryType<"value">,
+  modulo_dice: JsonQueryType<"value">,
+  modulo: JsonQueryType<"value">,
+  group: OperationQueryType,
+}>
+
 export type JsonSchema = JsonQueryType<never, {
 
   world_metadata: JsonQueryType<never, {
@@ -13,19 +26,19 @@ export type JsonSchema = JsonQueryType<never, {
     entry: JsonQueryType<"name" | "default" | "value" | "max_value">
   }>,
 
-  command_metadata: JsonQueryType<never, {
-    entry: JsonQueryType<"name", {
-      mutate_property: JsonQueryType<"name", {
-        operation: JsonQueryType<never, {
-          add_property_value: JsonQueryType<"name">,
-          add: JsonQueryType<"value">,
-          multiply_dice: JsonQueryType<"value">,
-          multiply: JsonQueryType<"value">,
-          divide_dice: JsonQueryType<"value">,
-          divide: JsonQueryType<"value">,
-          modulo_dice: JsonQueryType<"value">,
-          modulo: JsonQueryType<"value">,
+  action_metadata: JsonQueryType<never, {
+    person_entry: JsonQueryType<"name", {
+      range: JsonQueryType<"value" | "inclusive">,
+      test: JsonQueryType<never, {
+        value: JsonQueryType<"target", {
+          operation: OperationQueryType,
+        }>,
+        expected: JsonQueryType<"target", {
+          operation: OperationQueryType,
         }>
+      }>,
+      property_mutation: JsonQueryType<"name" | "target", {
+        operation: OperationQueryType
       }>
     }>
   }>
@@ -72,4 +85,8 @@ export type JsonSchema = JsonQueryType<never, {
   location_layer: JsonQueryType<"name", {
     cell: JsonQueryType<"type" | "x" | "y">,
   }>,
+
+  action: JsonQueryType<never, {
+    person_action: JsonQueryType<"ref" | "name" | "target_name">
+  }>
 }>

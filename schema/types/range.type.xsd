@@ -2,7 +2,7 @@
     <xs:attributeGroup name="attributeGroup_range">
         <xs:attribute name="value" use="required" type="xs:integer"/>
         <xs:attribute name="max_value" type="xs:integer"/>
-        <xs:attribute name="inclusive" default="true" type="xs:boolean"/>
+        <xs:attribute name="inclusive" default="true" type="xs:boolean" use="required"/>
     </xs:attributeGroup>
     <xs:complexType name="type_range">
         <xs:attributeGroup ref="attributeGroup_range"/>

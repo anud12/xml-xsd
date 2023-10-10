@@ -187,6 +187,11 @@
                             <xs:element name="person_entry">
                                 <xs:complexType>
                                     <xs:sequence>
+                                        <xs:element name="range">
+                                            <xs:complexType>
+                                                <xs:attributeGroup ref="attributeGroup_range"/>
+                                            </xs:complexType>
+                                        </xs:element>
                                         <xs:element name="test">
                                             <xs:complexType>
                                                 <xs:sequence>
@@ -423,6 +428,19 @@
                             </xs:element>
                         </xs:sequence>
                         <xs:attribute name="name" default="default"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="action">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="person_action" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:attribute name="ref" type="xs:string" use="required"/>
+                                    <xs:attribute name="name" type="xs:string" use="required"/>
+                                    <xs:attribute name="target_name" type="xs:string" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>

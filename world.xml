@@ -11,26 +11,13 @@
 
 
     <property_metadata>
-        <entry name="athletics" default="0" value="0" max_value="5"/>
-        <entry name="strength" default="10" value="8" max_value="20"/>
-        <entry name="constitution" default="10" value="8" max_value="20"/>
+        <entry name="athletics" default="0" value="0" max_value="5" inclusive="true"/>
+        <entry name="strength" default="10" value="8" max_value="20" inclusive="true"/>
+        <entry name="constitution" default="10" value="8" max_value="20" inclusive="true"/>
     </property_metadata>
-    <!--
-    <entry name="meleeAttack">
-        <test>
-            <value/>
-            <expected/>
-        </test>
-        <test onFail="fumble">
-            <value/>
-            <expected/>
-        </test>
-        <property_mutation/>
-        <location_mutation/>
-    </person_action>
-    -->
     <action_metadata>
         <person_entry name="meleeAttack">
+            <range value="1" inclusive="true"/>
             <test>
                 <value target="self">
                     <operation>
@@ -67,10 +54,10 @@
 
     <race_metadata>
         <entry name="human">
-            <vision value="20"/>
-            <movement value="5"/>
-            <property_bonus type="strength" value="0" max_value="2"/>
-            <property_bonus type="constitution" value="3"/>
+            <vision value="20" inclusive="true"/>
+            <movement value="5" inclusive="true"/>
+            <property_bonus type="strength" value="0" max_value="2" inclusive="true"/>
+            <property_bonus type="constitution" value="3" inclusive="true"/>
         </entry>
     </race_metadata>
 
@@ -135,9 +122,11 @@
             </inventory>
             <command/>
         </person>
-        <!--        <person name="Bob">-->
-        <!--            <location x="-50" y="-50"/>-->
-        <!--        </person>-->
+        <person name="Bob">
+            <race name="human"/>
+            <location x="10" y="10"/>
+            <command></command>
+        </person>
     </people>
     <location_layer>
         <cell type="plains" x="0" y="0"/>
@@ -152,5 +141,7 @@
         <cell type="plains" x="-1" y="1"/>
         <cell type="plains" x="-1" y="-1"/>
     </location_layer>
-
+    <action>
+        <person_action ref="meleeAttack" name="Billy" target_name="Bob"/>
+    </action>
 </world_step>
