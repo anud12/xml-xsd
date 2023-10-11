@@ -1,4 +1,3 @@
-import {personVision} from "../../middleware/personVision";
 import {JsonUtil} from "../../utils";
 import {JsonQuery} from "../../JSONQuery";
 import {JsonSchema} from "../../utils/JsonSchema";
@@ -18,17 +17,58 @@ describe("personAction" , () => {
     </world_metadata>
     
     <property_metadata>
-        <entry name="athletics" default="0" value="0" max_value="5" inclusive="true"/>
-        <entry name="strength" default="10" value="8" max_value="20" inclusive="true"/>
-        <entry name="constitution" default="10" value="8" max_value="20" inclusive="true"/>
+        <entry name="athletics" units="points">
+            <default>
+                <operation>
+                    <add_dice value="6"/>
+                </operation>
+                <operation>
+                    <add value="-1"/>
+                </operation>
+            </default>
+        </entry>
+        <entry name="strength" units="points">
+            <default>
+                <operation>
+                    <add_dice value="12"/>
+                </operation>
+                <operation>
+                    <add value="8"/>
+                </operation>
+            </default>
+        </entry>
+        <entry name="constitution" units="points">
+            <default>
+                <operation>
+                    <add_dice value="12"/>
+                </operation>
+                <operation>
+                    <add value="8"/>
+                </operation>
+            </default>
+        </entry>
     </property_metadata>
     
     <race_metadata>
         <entry name="human">
             <vision value="20" inclusive="true"/>
             <movement value="5" inclusive="true"/>
-            <property_bonus type="strength" value="0" max_value="2" inclusive="true"/>
-            <property_bonus type="constitution" value="3" inclusive="true"/>
+            <property_bonus ref="strength">
+                <operation>
+                    <add_dice value="3"/>
+                </operation>
+                <operation>
+                    <add value="-1"/>
+                </operation>
+            </property_bonus>
+            <property_bonus ref="constitution">
+                <operation>
+                    <add_dice value="3"/>
+                </operation>
+                <operation>
+                    <add value="-1"/>
+                </operation>
+            </property_bonus>
         </entry>
     </race_metadata>
     
@@ -50,7 +90,7 @@ describe("personAction" , () => {
 
             <property_mutation name="health" target="target">
                 <operation>
-                    <add_dice value="d6"/>
+                    <add_dice value="6"/>
                 </operation>
                 <operation>
                     <add value="6"/>

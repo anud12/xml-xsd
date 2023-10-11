@@ -6,6 +6,7 @@
             <xs:enumeration value="10d"/>
             <xs:enumeration value="12d"/>
             <xs:enumeration value="20d"/>
+            <xs:enumeration value="100d"/>
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

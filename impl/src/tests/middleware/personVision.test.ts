@@ -4,9 +4,9 @@ import {JsonQuery} from "../../JSONQuery";
 import {JsonSchema} from "../../utils/JsonSchema";
 import {describe} from "@jest/globals";
 
-describe("personVision" , () => {
-    it("create cells based on vision and location manhattan distance", async () => {
-        const query = JsonQuery.fromText<JsonSchema>(`<world_step>
+describe("personVision", () => {
+  it("create cells based on vision and location manhattan distance", async () => {
+    const query = JsonQuery.fromText<JsonSchema>(`<world_step>
   <world_metadata>
     <randomization_table>
       <entry value="2"/>
@@ -41,14 +41,14 @@ describe("personVision" , () => {
   </location_layer>
 </world_step>`);
 
-        await personVision({
-            util: new JsonUtil(query),
-            json: query
-        })({
-            util: new JsonUtil(query),
-            json: query
-        });
-        expect(query.serialize()).toBe(`
+    await personVision({
+      util: new JsonUtil(query),
+      json: query
+    })({
+      util: new JsonUtil(query),
+      json: query
+    });
+    expect(query.serialize()).toBe(`
 <world_step>
   <world_metadata>
     <randomization_table>
@@ -104,11 +104,11 @@ describe("personVision" , () => {
   </location_layer>
 </world_step>
 `.split("\n").filter((_, index) => index !== 0).join("\n"));
-    })
+  })
 
 
-    it("create cells based on vision and location at 45 degree angle", async () => {
-        const query = JsonQuery.fromText<JsonSchema>(`<world_step>
+  it("create cells based on vision and location at 45 degree angle", async () => {
+    const query = JsonQuery.fromText<JsonSchema>(`<world_step>
   <world_metadata>
     <randomization_table>
       <entry value="2"/>
@@ -143,14 +143,14 @@ describe("personVision" , () => {
   </location_layer>
 </world_step>`);
 
-        await personVision({
-            util: new JsonUtil(query),
-            json: query
-        })({
-            util: new JsonUtil(query),
-            json: query
-        });
-        expect(query.serialize()).toBe(`
+    await personVision({
+      util: new JsonUtil(query),
+      json: query
+    })({
+      util: new JsonUtil(query),
+      json: query
+    });
+    expect(query.serialize()).toBe(`
 <world_step>
   <world_metadata>
     <randomization_table>
@@ -218,5 +218,5 @@ describe("personVision" , () => {
   </location_layer>
 </world_step>
 `.split("\n").filter((_, index) => index !== 0).join("\n"));
-    })
+  })
 })

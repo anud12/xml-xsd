@@ -3,9 +3,10 @@ import {locationMarkovChainMatrix, LocationMatrix} from "./location/locationMark
 import {markovNext} from "./markovNext";
 import {create} from "./location/create";
 import {questMarkov} from "./questMarkov";
-import {JsonSchema} from "./JsonSchema";
+import {JsonSchema, OperationQueryType} from "./JsonSchema";
 import {newRandom} from "./newRandom";
 import {Unit} from "./middleware";
+import {computeOperation} from "./operation/computeOperation";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -36,10 +37,15 @@ export class JsonUtil {
   location: {
     grid: () => LocationGrid,
     markovChainMatrix: (direction: string) => LocationMatrix,
-    create: (x: number, y: number) => (writeUnit: Unit) => Promise<void>,
+    create: (x: number, y: number) => void,
   }
   questMarkov: () => void;
-
+  computeOperation = (operationQueryType:OperationQueryType) => {
+    return computeOperation({
+      util:this,
+      json: this.jsonQuery
+    }, operationQueryType)
+  }
   invalidate = () => {
     this.random = newRandom(this);
     this.location = {
@@ -52,10 +58,10 @@ export class JsonUtil {
       }),
 
       create: memoizeFunction((x: number, y: number) => {
-        return create(x, y)({
+        return create({
           util: this,
           json: this.jsonQuery
-        })
+        },x, y)
       })
     }
     this.questMarkov = memoizeFunction(() => {

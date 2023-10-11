@@ -118,7 +118,8 @@ export class JsonQuery<A extends JsonQueryType> implements A {
 
     serialize = () => {
         return prettier.format(innerSerialize(this.root, this as unknown as JsonQueryType).outerHTML, {
-            parser: "babel"
+            parser: "babel",
+            singleAttributePerLine: false,
         }).replaceAll("__namespace__", ":").split(";")[0] + "\n";
     }
 }

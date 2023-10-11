@@ -23,7 +23,11 @@ export type JsonSchema = JsonQueryType<never, {
   }>,
 
   property_metadata: JsonQueryType<never, {
-    entry: JsonQueryType<"name" | "default" | "value" | "max_value">
+    entry: JsonQueryType<"name" | "default" | "value" | "max_value" , {
+      default: JsonQueryType<never, {
+        operation:OperationQueryType
+      }>
+    }>
   }>,
 
   action_metadata: JsonQueryType<never, {
@@ -47,7 +51,9 @@ export type JsonSchema = JsonQueryType<never, {
     entry: JsonQueryType<"name", {
       vision: JsonQueryType<"value">
       movement: JsonQueryType<"value">
-      property_bonus: JsonQueryType<"name" | "value" | "max_value ">
+      property_bonus: JsonQueryType<"ref" | "value" | "max_value ", {
+        operation: OperationQueryType
+      }>
     }>
   }>,
 
@@ -76,6 +82,9 @@ export type JsonSchema = JsonQueryType<never, {
       race: JsonQueryType<"name">,
       location: JsonQueryType<"x" | "y">
       relations: JsonQueryType<"with">,
+      properties: JsonQueryType<never, {
+        property: JsonQueryType<"ref" | "value">
+      }>,
       inventory: JsonQueryType<never, {
         item: JsonQueryType<"ref" | "equipped">
       }>

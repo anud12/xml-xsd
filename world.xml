@@ -11,10 +11,64 @@
 
 
     <property_metadata>
-        <entry name="athletics" default="0" value="0" max_value="5" inclusive="true"/>
-        <entry name="strength" default="10" value="8" max_value="20" inclusive="true"/>
-        <entry name="constitution" default="10" value="8" max_value="20" inclusive="true"/>
+        <entry name="athletics" units="points">
+            <default>
+                <operation>
+                    <add_dice value="6"/>
+                </operation>
+                <operation>
+                    <add value="-1"/>
+                </operation>
+            </default>
+        </entry>
+        <entry name="strength" units="points">
+            <default>
+                <operation>
+                    <add_dice value="12"/>
+                </operation>
+                <operation>
+                    <add value="8"/>
+                </operation>
+            </default>
+        </entry>
+        <entry name="constitution" units="points">
+            <default>
+                <operation>
+                    <add_dice value="12"/>
+                </operation>
+                <operation>
+                    <add value="8"/>
+                </operation>
+            </default>
+        </entry>
     </property_metadata>
+
+    <race_metadata>
+        <entry name="human">
+            <vision value="20" inclusive="true"/>
+            <movement value="5" inclusive="true"/>
+            <property_bonus ref="strength">
+                <operation>
+                    <add_dice value="3"/>
+                </operation>
+                <operation>
+                    <add value="-1"/>
+                </operation>
+            </property_bonus>
+            <property_bonus ref="constitution">
+                <operation>
+                    <add_dice value="3"/>
+                </operation>
+                <operation>
+                    <add value="-1"/>
+                </operation>
+                <operation>
+
+                </operation>
+            </property_bonus>
+        </entry>
+    </race_metadata>
+
     <action_metadata>
         <person_entry name="meleeAttack">
             <range value="1" inclusive="true"/>
@@ -33,7 +87,7 @@
 
             <property_mutation name="health" target="target">
                 <operation>
-                    <add_dice value="6d"/>
+                    <add_dice value="6"/>
                 </operation>
                 <operation>
                     <group>
@@ -51,15 +105,6 @@
             </property_mutation>
         </person_entry>
     </action_metadata>
-
-    <race_metadata>
-        <entry name="human">
-            <vision value="20" inclusive="true"/>
-            <movement value="5" inclusive="true"/>
-            <property_bonus type="strength" value="0" max_value="2" inclusive="true"/>
-            <property_bonus type="constitution" value="3" inclusive="true"/>
-        </entry>
-    </race_metadata>
 
     <item_metadata>
         <entry name="Long sword">
@@ -117,6 +162,9 @@
             <race name="human"/>
             <location x="10" y="10"/>
             <!--            <relations with="Bob"/>-->
+            <properties>
+                <property ref="strength" value="3"/>
+            </properties>
             <inventory>
                 <item ref="Long sword" equipped="hand"/>
             </inventory>
@@ -125,6 +173,7 @@
         <person name="Bob">
             <race name="human"/>
             <location x="10" y="10"/>
+            <properties/>
             <command></command>
         </person>
     </people>
