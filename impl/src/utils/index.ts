@@ -40,11 +40,11 @@ export class JsonUtil {
     create: (x: number, y: number) => void,
   }
   questMarkov: () => void;
-  computeOperation = (operationQueryType:OperationQueryType) => {
+  computeOperation = (operationQueryType:OperationQueryType, getExternalProperty?: (string:string) => string) => {
     return computeOperation({
       util:this,
       json: this.jsonQuery
-    }, operationQueryType)
+    }, operationQueryType, getExternalProperty)
   }
   invalidate = () => {
     this.random = newRandom(this);

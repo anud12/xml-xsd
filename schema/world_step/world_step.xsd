@@ -95,14 +95,6 @@
                             </xs:complexType>
                         </xs:element>
 
-                        <xs:element name="equipped_item_tag" minOccurs="0">
-                            <xs:complexType>
-                                <xs:attribute name="name"/>
-                                <xs:attribute name="if_present_value" type="xs:int" use="required"/>
-                                <xs:attribute name="if_missing_value" type="xs:int" use="required"/>
-                            </xs:complexType>
-                        </xs:element>
-
                         <xs:element name="max_between" minOccurs="0">
                             <xs:complexType>
                                 <xs:sequence>

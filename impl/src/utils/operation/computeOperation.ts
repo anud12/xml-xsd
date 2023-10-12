@@ -1,9 +1,9 @@
-import {InferJsonNodeBody, JsonQueryType} from "../../JSONQuery";
+import {InferJsonNodeBody, JsonQueryType, nodeBodyType} from "../../JSONQuery";
 import {OperationQueryType} from "../JsonSchema";
 import {Unit} from "../middleware";
 
 type OperationTags = keyof InferJsonNodeBody<OperationQueryType>
-type Operation = JsonQueryType<"value", {
+type Operation = JsonQueryType<"value" | "name", {
   group: JsonQueryType<never, {
     operation: Operation
   }>
@@ -11,7 +11,8 @@ type Operation = JsonQueryType<"value", {
 
 export const computeOperation = (
   readJson: Unit,
-  operationArg: OperationQueryType
+  operationArg: OperationQueryType,
+  getExternalProperty: (key:string) => string = () => "0"
 ): (value: string) => string => {
   const operationValue: Operation = operationArg as any;
   switch (operationValue.tag as OperationTags) {
@@ -62,8 +63,13 @@ export const computeOperation = (
     case "group" :
       return value => {
         console.log(`${value} ${operationValue.tag} with ${operationValue.$value}`)
-        return operationArg.children.reduce((acc, e) => computeOperation(readJson, e.children[0])(acc), value)
+        return operationArg.children.reduce((acc, e) => computeOperation(readJson, e.children[0], getExternalProperty)(acc), value)
       }
+    case "add_property_value": return value => {
+      const newValue = getExternalProperty(operationValue.$name);
+      console.log(`${value} ${operationValue.tag} with ${newValue}`)
+      return String(Number(value) + Math.floor(Number(newValue)));
+    }
     default:
       return (value) => {
         console.log(`${value} ${operationValue.tag} with ${operationValue.$value}`)

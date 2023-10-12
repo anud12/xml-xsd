@@ -5,7 +5,7 @@ import {getProperty} from "../../../utils/person/getProperty";
 import {JsonUtil} from "../../../utils";
 
 describe("getProperty", () => {
-  it("add unset property", async () => {
+  it("add unset property that depends on another property", async () => {
     const query = JsonQuery.fromText<JsonSchema>(`<world_step>
   <world_metadata>
     <randomization_table>
@@ -38,7 +38,7 @@ describe("getProperty", () => {
                     <add_property_value name="constitution"/>
                 </operation>
                 <operation>
-                    <divide value="2"/>
+                    <multiply value="2"/>
                 </operation>
             </property_bonus>
         </entry>
@@ -63,7 +63,7 @@ describe("getProperty", () => {
       query.query("people").query("person"),
       "health"
     );
-    expect(value).toBe("5");
+    expect(value).toBe("20");
     expect(query.serialize()).toBe(`
 <world_step>
   <world_metadata>
@@ -92,6 +92,14 @@ describe("getProperty", () => {
           <add value="-1" />
         </operation>
       </property_bonus>
+      <property_bonus ref="health">
+        <operation>
+          <add_property_value name="constitution" />
+        </operation>
+        <operation>
+          <multiply value="2" />
+        </operation>
+      </property_bonus>
     </entry>
   </race_metadata>
   <people>
@@ -100,6 +108,7 @@ describe("getProperty", () => {
       <location x="10" y="10" />
       <properties>
         <property ref="constitution" value="10" />
+        <property ref="health" value="20" />
       </properties>
       <inventory>
         <item ref="Long sword" equipped="hand" />
