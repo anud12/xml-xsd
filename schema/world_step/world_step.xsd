@@ -235,9 +235,16 @@
                                         </xs:element>
                                         <xs:element name="property_mutation" minOccurs="0">
                                             <xs:complexType>
-                                                <xs:group ref="type_math_operations"/>
+                                                <xs:sequence>
+                                                    <xs:element name="from" maxOccurs="unbounded">
+                                                        <xs:complexType>
+                                                            <xs:group ref="type_math_operations"/>
+                                                            <xs:attribute name="participant" type="type_person_target" use="required"/>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
                                                 <xs:attribute name="name"/>
-                                                <xs:attribute name="target" type="type_person_target" use="required"/>
+                                                <xs:attribute name="on" type="type_person_target" use="required"/>
                                             </xs:complexType>
                                         </xs:element>
                                         <xs:element name="location_mutation" minOccurs="0">

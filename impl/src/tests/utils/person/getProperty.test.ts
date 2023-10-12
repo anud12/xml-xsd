@@ -6,7 +6,10 @@ import {JsonUtil} from "../../../utils";
 
 describe("getProperty", () => {
   it("add unset property that depends on another property", async () => {
-    const query = JsonQuery.fromText<JsonSchema>(`<world_step>
+    const query = JsonQuery.fromText<JsonSchema>(`<world_step
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../schema/world_step/world_step.xsd"
+>
   <world_metadata>
     <randomization_table>
       <entry value="2"/>
@@ -65,7 +68,10 @@ describe("getProperty", () => {
     );
     expect(value).toBe("20");
     expect(query.serialize()).toBe(`
-<world_step>
+<world_step
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../schema/world_step/world_step.xsd"
+>
   <world_metadata>
     <randomization_table>
       <entry value="2" />

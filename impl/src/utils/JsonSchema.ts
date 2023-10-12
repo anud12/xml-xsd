@@ -41,8 +41,10 @@ export type JsonSchema = JsonQueryType<never, {
           operation: OperationQueryType,
         }>
       }>,
-      property_mutation: JsonQueryType<"name" | "target", {
-        operation: OperationQueryType
+      property_mutation: JsonQueryType<"name" | "on", {
+        from:JsonQueryType<"partaker", {
+          operation: OperationQueryType
+        }>
       }>
     }>
   }>

@@ -6,7 +6,9 @@ import {describe} from "@jest/globals";
 
 describe("personVision", () => {
   it("create cells based on vision and location manhattan distance", async () => {
-    const query = JsonQuery.fromText<JsonSchema>(`<world_step>
+    const query = JsonQuery.fromText<JsonSchema>(`<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="../../../../schema/world_step/world_step.xsd"
+>
   <world_metadata>
     <randomization_table>
       <entry value="2"/>
@@ -49,7 +51,10 @@ describe("personVision", () => {
       json: query
     });
     expect(query.serialize()).toBe(`
-<world_step>
+<world_step
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../schema/world_step/world_step.xsd"
+>
   <world_metadata>
     <randomization_table>
       <entry value="2" />
@@ -108,7 +113,9 @@ describe("personVision", () => {
 
 
   it("create cells based on vision and location at 45 degree angle", async () => {
-    const query = JsonQuery.fromText<JsonSchema>(`<world_step>
+    const query = JsonQuery.fromText<JsonSchema>(`<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="../../../../schema/world_step/world_step.xsd"
+>
   <world_metadata>
     <randomization_table>
       <entry value="2"/>
@@ -151,7 +158,10 @@ describe("personVision", () => {
       json: query
     });
     expect(query.serialize()).toBe(`
-<world_step>
+<world_step
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../schema/world_step/world_step.xsd"
+>
   <world_metadata>
     <randomization_table>
       <entry value="2" />

@@ -7,7 +7,7 @@ import {personAction} from "../../middleware/personAction";
 describe("personAction" , () => {
   it("create cells based on vision and location manhattan distance", async () => {
     const query = JsonQuery.fromText<JsonSchema>(`<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:noNamespaceSchemaLocation="schema/world_step/world_step.xsd"
+            xsi:noNamespaceSchemaLocation="../../../../schema/world_step/world_step.xsd"
 >
     <world_metadata>
         <next_world_step>./world_1</next_world_step>
@@ -17,33 +17,17 @@ describe("personAction" , () => {
     </world_metadata>
     
     <property_metadata>
-        <entry name="athletics" units="points">
-            <default>
-                <operation>
-                    <add_dice value="6"/>
-                </operation>
-                <operation>
-                    <add value="-1"/>
-                </operation>
-            </default>
-        </entry>
         <entry name="strength" units="points">
             <default>
                 <operation>
-                    <add_dice value="12"/>
-                </operation>
-                <operation>
-                    <add value="8"/>
+                    <add value="10"/>
                 </operation>
             </default>
         </entry>
-        <entry name="constitution" units="points">
+        <entry name="health" units="points">
             <default>
                 <operation>
-                    <add_dice value="12"/>
-                </operation>
-                <operation>
-                    <add value="8"/>
+                    <add value="10"/>
                 </operation>
             </default>
         </entry>
@@ -52,23 +36,7 @@ describe("personAction" , () => {
     <race_metadata>
         <entry name="human">
             <vision value="20" inclusive="true"/>
-            <movement value="5" inclusive="true"/>
-            <property_bonus ref="strength">
-                <operation>
-                    <add_dice value="3"/>
-                </operation>
-                <operation>
-                    <add value="-1"/>
-                </operation>
-            </property_bonus>
-            <property_bonus ref="constitution">
-                <operation>
-                    <add_dice value="3"/>
-                </operation>
-                <operation>
-                    <add value="-1"/>
-                </operation>
-            </property_bonus>
+            <movement value="5" inclusive="true"/>            
         </entry>
     </race_metadata>
     
@@ -89,6 +57,9 @@ describe("personAction" , () => {
             </test>
 
             <property_mutation name="health" target="target">
+                <from person="target">
+                
+                </from>
                 <operation>
                     <add_dice value="6"/>
                 </operation>
@@ -98,10 +69,7 @@ describe("personAction" , () => {
                 <operation>
                     <group>
                         <operation>
-                            <add_property_value name="strength"/>
-                        </operation>
-                        <operation>
-                            <add value="-10"/>
+                            <add_property_value name="str ength"/>
                         </operation>
                         <operation>
                             <divide value="2"/>

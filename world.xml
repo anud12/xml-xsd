@@ -85,23 +85,26 @@
                 </expected>
             </test>
 
-            <property_mutation name="health" target="target">
-                <operation>
-                    <add_dice value="6"/>
-                </operation>
-                <operation>
-                    <group>
-                        <operation>
-                            <add_property_value name="strength"/>
-                        </operation>
-                        <operation>
-                            <add value="-10"/>
-                        </operation>
-                        <operation>
-                            <divide value="2"/>
-                        </operation>
-                    </group>
-                </operation>
+            <property_mutation name="health" on="target">
+                <from participant="target">
+                    <operation>
+                        <add_dice value="6"/>
+                    </operation>
+                    <operation>
+                        <group>
+                            <operation>
+                                <add_property_value name="strength"/>
+                            </operation>
+                            <operation>
+                                <add value="-10"/>
+                            </operation>
+                            <operation>
+                                <divide value="2"/>
+                            </operation>
+                        </group>
+                    </operation>
+                </from>
+
             </property_mutation>
         </person_entry>
     </action_metadata>
