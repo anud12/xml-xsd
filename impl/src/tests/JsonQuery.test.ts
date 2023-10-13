@@ -206,4 +206,26 @@ describe("xml query", () => {
 </world_step>
 `);
   })
+
+
+  test("should preserve comments", () => {
+    const query = JsonQuery.fromText<any>(`<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/world_step/world_step.xsd">
+  <world_metadata>
+    <next_world_step>./world_1</next_world_step>
+    <!-- Should be preserved -->
+    <randomization_table name="value"/>
+  </world_metadata>
+</world_step>`);
+    expect(query.serialize()).toBe(`<world_step
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="schema/world_step/world_step.xsd"
+>
+  <world_metadata>
+    <next_world_step>./world_1</next_world_step>
+    <!-- Should be preserved -->
+    <randomization_table name="value" />
+  </world_metadata>
+</world_step>
+`);
+  })
 })
