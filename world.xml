@@ -104,7 +104,6 @@
                         </group>
                     </operation>
                 </from>
-
             </property_mutation>
         </person_entry>
     </action_metadata>
@@ -194,6 +193,7 @@
         <cell type="plains" x="-1" y="-1"/>
     </location_layer>
     <action>
+        <person_move name="Billy" x="3" y="3"/>
         <person_action ref="meleeAttack" name="Billy" target_name="Bob"/>
     </action>
 </world_step>
