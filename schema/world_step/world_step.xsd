@@ -482,7 +482,7 @@
                                                 <xs:attribute name="to" use="required"/>
                                             </xs:complexType>
                                         </xs:element>
-                                        <xs:element name="move">
+                                        <xs:element name="move_towards">
                                             <xs:complexType>
                                                 <xs:attribute name="layer" type="xs:string"/>
                                                 <xs:attribute name="x" type="xs:int" use="required"/>

@@ -194,7 +194,7 @@
             <do action="meleeAttack" to="Bobu"/>
         </by>
         <by name="Billy">
-            <move x="3" y="3"/>
+            <move_towards x="3" y="3"/>
         </by>
     </actions>
 </world_step>
