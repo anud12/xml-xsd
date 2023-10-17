@@ -31,7 +31,7 @@ export type JsonSchema = JsonQueryType<never, {
   }>,
 
   action_metadata: JsonQueryType<never, {
-    person_entry: JsonQueryType<"name", {
+    person_to_person: JsonQueryType<"name", {
       range: JsonQueryType<"value" | "inclusive">,
       test: JsonQueryType<never, {
         value: JsonQueryType<"target", {
@@ -97,7 +97,9 @@ export type JsonSchema = JsonQueryType<never, {
     cell: JsonQueryType<"type" | "x" | "y">,
   }>,
 
-  action: JsonQueryType<never, {
-    person_action: JsonQueryType<"ref" | "name" | "target_name">
+  actions: JsonQueryType<never, {
+    by:JsonQueryType<"name", {
+      do: JsonQueryType<"action" | "to">
+    }>
   }>
 }>

@@ -5,7 +5,7 @@ import {describe} from "@jest/globals";
 import {personAction} from "../../middleware/personAction";
 
 describe("personAction" , () => {
-  it("create cells based on vision and location manhattan distance", async () => {
+  it("should initialize values from property metadata and compute", async () => {
     const query = JsonQuery.fromText<JsonSchema>(`<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:noNamespaceSchemaLocation="../../../../schema/world_step/world_step.xsd"
 >
@@ -41,7 +41,7 @@ describe("personAction" , () => {
     </race_metadata>
     
     <action_metadata>
-        <person_entry name="meleeAttack">
+        <person_to_person name="meleeAttack">
             <range value="1" inclusive="true"/>
             <test>
                 <value target="self">
@@ -66,7 +66,7 @@ describe("personAction" , () => {
                     </operation>
                 </from>
             </property_mutation>
-        </person_entry>
+        </person_to_person>
     </action_metadata>
     <people>
         <person name="Billy">
@@ -83,9 +83,11 @@ describe("personAction" , () => {
             <command></command>
         </person>
     </people>
-    <action>
-        <person_action ref="meleeAttack" name="Billy" target_name="Bob"/>
-    </action>
+    <actions>
+        <by name="Billy">
+            <do action="meleeAttack" to="Bob" />
+        </by>
+    </actions>
 </world_step>`);
 
     await personAction({
@@ -129,7 +131,7 @@ describe("personAction" , () => {
     </entry>
   </race_metadata>
   <action_metadata>
-    <person_entry name="meleeAttack">
+    <person_to_person name="meleeAttack">
       <range value="1" inclusive="true" />
       <test>
         <value target="self">
@@ -153,7 +155,7 @@ describe("personAction" , () => {
           </operation>
         </from>
       </property_mutation>
-    </person_entry>
+    </person_to_person>
   </action_metadata>
   <people>
     <person name="Billy">
@@ -174,9 +176,11 @@ describe("personAction" , () => {
       <command />
     </person>
   </people>
-  <action>
-    <person_action ref="meleeAttack" name="Billy" target_name="Bob" />
-  </action>
+  <actions>
+    <by name="Billy">
+      <do action="meleeAttack" to="Bob" />
+    </by>
+  </actions>
 </world_step>
 `.split("\n").filter((_, index) => index !== 0).join("\n"));
   })
