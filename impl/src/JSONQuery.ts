@@ -1,6 +1,6 @@
 import * as jsdom from "jsdom";
 
-import prettier from "prettier";
+const prettier = require("prettier")
 
 const CommentJsonTag = "CommentJsonTag"
 const UnknownJsonTag = "UnknownJsonTag"
@@ -47,7 +47,7 @@ export type JsonQueryType<
 const innerSerialize = (dom: jsdom.JSDOM, query: JsonQueryType<any, any>): Element | Comment | undefined => {
   if (query.tag === CommentJsonTag) {
     const element = dom.window.document.createElementNS("", "COMMENT_TO_BE_REPLACED");
-    element.innerHTML = query.body
+    element.innerHTML = query.body ?? ""
     return element;
   }
   if (query.tag === UnknownJsonTag) {

@@ -1,103 +1,107 @@
-<?xml version="1.0" standalone="no"?>
-<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:noNamespaceSchemaLocation="schema/world_step/world_step.xsd"
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="schema/world_step/world_step.xsd"
 >
     <world_metadata>
         <next_world_step>./world_1</next_world_step>
         <randomization_table>
-            <entry value="2"/>
+            <entry value="2" />
         </randomization_table>
     </world_metadata>
+    <!--_-->
+    <!--Property metadata-->
+    <!--_-->
     <property_metadata>
         <entry name="athletics" units="points">
             <default>
                 <operation>
-                    <add_dice value="6"/>
+                    <add_dice value="6" />
                 </operation>
                 <operation>
-                    <add value="-1"/>
+                    <add value="-1" />
                 </operation>
             </default>
         </entry>
         <entry name="strength" units="points">
             <default>
                 <operation>
-                    <add_dice value="12"/>
+                    <add_dice value="12" />
                 </operation>
                 <operation>
-                    <add value="8"/>
+                    <add value="8" />
                 </operation>
             </default>
         </entry>
         <entry name="constitution" units="points">
             <default>
                 <operation>
-                    <add_dice value="12"/>
+                    <add_dice value="12" />
                 </operation>
                 <operation>
-                    <add value="8"/>
+                    <add value="8" />
                 </operation>
             </default>
         </entry>
     </property_metadata>
-
+    <!--_-->
+    <!--Race metadata-->
+    <!--_-->
     <race_metadata>
         <entry name="human">
-            <vision value="20" inclusive="true"/>
-            <movement value="5" inclusive="true"/>
+            <vision value="20" inclusive="true" />
+            <movement value="5" inclusive="true" />
             <property_bonus ref="strength">
                 <operation>
-                    <add_dice value="3"/>
+                    <add_dice value="3" />
                 </operation>
                 <operation>
-                    <add value="-1"/>
+                    <add value="-1" />
                 </operation>
             </property_bonus>
             <property_bonus ref="constitution">
                 <operation>
-                    <add_dice value="3"/>
+                    <add_dice value="3" />
                 </operation>
                 <operation>
-                    <add value="-1"/>
+                    <add value="-1" />
                 </operation>
-                <operation>
-
-                </operation>
+                <operation />
             </property_bonus>
         </entry>
     </race_metadata>
-
+    <!--_-->
+    <!--Action metadata-->
+    <!--_-->
     <action_metadata>
         <person_to_person name="meleeAttack">
-            <range value="1" inclusive="true"/>
+            <range value="1" inclusive="true" />
             <test>
                 <value target="self">
                     <operation>
-                        <add value="3"/>
+                        <add value="3" />
                     </operation>
                 </value>
                 <expected target="target">
                     <operation>
-                        <add value="3"/>
+                        <add value="3" />
                     </operation>
                 </expected>
             </test>
-
             <property_mutation name="health" on="target">
                 <from participant="target">
                     <operation>
-                        <add_dice value="6"/>
+                        <add_dice value="6" />
                     </operation>
                     <operation>
                         <group>
                             <operation>
-                                <add_property_value name="strength"/>
+                                <add_property_value name="strength" />
                             </operation>
                             <operation>
-                                <add value="-10"/>
+                                <add value="-10" />
                             </operation>
                             <operation>
-                                <divide value="2"/>
+                                <divide value="2" />
                             </operation>
                         </group>
                     </operation>
@@ -105,96 +109,96 @@
             </property_mutation>
         </person_to_person>
     </action_metadata>
-
+    <!--_-->
+    <!--Item metadata-->
+    <!--_-->
     <item_metadata>
         <entry name="Long sword">
-            <weight-kg value="2"/>
-            <wearable slot="hand"/>
+            <weight-kg value="2" />
+            <wearable slot="hand" />
         </entry>
         <entry name="dress">
-            <weight-kg value="1"/>
-            <wearable slot="chest"/>
-            <wearable slot="legs"/>
+            <weight-kg value="1" />
+            <wearable slot="chest" />
+            <wearable slot="legs" />
         </entry>
     </item_metadata>
-
+    <!--_-->
+    <!--Locations markov chain-->
+    <!--_-->
     <locations_markov_chain>
         <location_markov_link type="plains">
-            <sibling type="plains" quantity="20"/>
-            <sibling type="forest"/>
+            <sibling type="plains" quantity="20" position="all"/>
+            <sibling type="forest" position="all"/>
         </location_markov_link>
-
         <location_markov_link type="forest">
-            <sibling type="forest" quantity="20"/>
-            <sibling type="plains"/>
-            <sibling type="hills"/>
+            <sibling type="forest" quantity="20" position="all"/>
+            <sibling type="plains" position="all"/>
+            <sibling type="hills" position="all"/>
         </location_markov_link>
-
         <location_markov_link type="hills">
-            <sibling type="hills" quantity="20"/>
-            <sibling type="forest"/>
+            <sibling type="hills" quantity="20" position="all"/>
+            <sibling type="forest" position="all"/>
         </location_markov_link>
     </locations_markov_chain>
-
+    <!--_-->
+    <!--Quests Markov chain-->
+    <!--_-->
     <quests_markov_chain>
         <quest_markov_link type="talk-to">
-            <next type="talk-to" quantity="4"/>
-            <next type="escort" quantity="2"/>
-            <next type="assassination"/>
-            <complete_condition>
-
-            </complete_condition>
+            <next type="talk-to" quantity="4" />
+            <next type="escort" quantity="2" />
+            <next type="assassination" />
+            <complete_condition />
         </quest_markov_link>
         <quest_markov_link type="escort">
-            <next type="assassination" quantity="4"/>
-            <next type="talk-to"/>
-            <complete_condition>
-            </complete_condition>
+            <next type="assassination" quantity="4" />
+            <next type="talk-to" />
+            <complete_condition />
         </quest_markov_link>
         <quest_markov_link type="assassination">
-            <next type="talk-to" quantity="4"/>
-            <complete_condition/>
+            <next type="talk-to" quantity="4" />
+            <complete_condition />
         </quest_markov_link>
     </quests_markov_chain>
-
+    <!--_-->
+    <!--People-->
+    <!--_-->
     <people>
         <person name="Billy">
-            <race name="human"/>
-            <location x="10" y="10"/>
+            <race name="human" />
+            <location x="10" y="10" />
             <properties>
-                <property ref="strength" value="3"/>
+                <property ref="strength" value="3" />
             </properties>
             <inventory>
-                <item ref="Long sword" equipped="hand"/>
+                <item ref="Long sword" equipped="hand" />
             </inventory>
-            <command/>
+            <command />
         </person>
         <person name="Bobu">
-            <race name="human"/>
-            <location x="10" y="10"/>
-            <properties/>
-            <command></command>
+            <race name="human" />
+            <location x="10" y="10" />
+            <properties />
+            <command />
         </person>
     </people>
+    <!--_-->
+    <!--Location layer-->
+    <!--_-->
     <location_layer>
-        <cell type="plains" x="0" y="0"/>
-        <cell type="plains" x="0" y="1"/>
-        <cell type="plains" x="0" y="-1"/>
-
-        <cell type="plains" x="1" y="0"/>
-        <cell type="plains" x="1" y="1"/>
-        <cell type="plains" x="1" y="-1"/>
-
-        <cell type="plains" x="-1" y="0"/>
-        <cell type="plains" x="-1" y="1"/>
-        <cell type="plains" x="-1" y="-1"/>
+        <cell type="plains" x="0" y="0" />
+        <cell type="plains" x="0" y="1" />
+        <cell type="plains" x="0" y="-1" />
+        <cell type="plains" x="1" y="0" />
+        <cell type="plains" x="1" y="1" />
+        <cell type="plains" x="1" y="-1" />
+        <cell type="plains" x="-1" y="0" />
+        <cell type="plains" x="-1" y="1" />
+        <cell type="plains" x="-1" y="-1" />
     </location_layer>
-    <actions>
-        <by name="Billy">
-            <do action="meleeAttack" to="Bobu"/>
-        </by>
-        <by name="Billy">
-            <move_towards x="3" y="3"/>
-        </by>
-    </actions>
+    <!--_-->
+    <!--Actions-->
+    <!--_-->
+    <actions />
 </world_step>

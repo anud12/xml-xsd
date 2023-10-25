@@ -1,39 +1,38 @@
-import {XMLBuilder, XMLParser} from "fast-xml-parser";
 import * as fs from "fs";
-import {JsonUtil, utils} from "./utils";
+import {JsonUtil} from "./utils";
 import {JsonSchema} from "./utils/JsonSchema";
 import {personVision} from "./middleware/personVision";
+import {personMoveTowards} from "./middleware/personMoveTowards";
+import {Unit} from "./utils/middleware";
+import {personAction} from "./middleware/personAction";
+import {JsonQuery} from "./JSONQuery";
 
 
 (async () => {
   const data = fs.readFileSync("../world.xml")
-  const readJson: JsonSchema = new XMLParser({
-    attributeNamePrefix: "",
-    attributesGroupName: "$",
-    ignoreAttributes: false,
-    isArray: (tagName, jPath, isLeafNode, isAttribute) => !isAttribute
+  const readJson = JsonQuery.fromText<JsonSchema>(data.toString());
 
-  }).parse(data, {})
-  fs.writeFileSync(`world.json`, JSON.stringify(readJson))
+  fs.writeFileSync(`world.xml`, readJson.serialize())
 
-  const writeJson = JSON.parse(JSON.stringify(readJson));
   const readJsonUtil = new JsonUtil(readJson);
-  // await personVision({util: readJsonUtil, json})(writeJson);
+  const unit:Unit = {
+    json: readJson,
+    util: readJsonUtil
+  }
 
-  const xmlBuilder = new XMLBuilder({
-    attributeNamePrefix: "",
-    attributesGroupName: "$",
-    format: true,
-    ignoreAttributes: false,
-    suppressEmptyNode: true,
-  })
+  const personVisionResult = personVision(unit);
+  const personMoveTowardsResult = personMoveTowards(unit);
+  const personActionResult = personAction(unit);
 
-  const result = xmlBuilder.build(writeJson);
+  await personVisionResult(readJson);
+  await personMoveTowardsResult(readJson);
+  await personActionResult(readJson);
 
-  const next_world_step = readJson.world_step[0].world_metadata[0].next_world_step[0];
-  const iter = Number(next_world_step.split("_")?.[1] ?? 0)
-  readJson.world_step[0].world_metadata[0].next_world_step[0] = `world_${iter + 1}`
+  const writeWorldMetadata = readJson.query("world_metadata");
+  const iter = Number(writeWorldMetadata.query("next_world_step").body.split("_")?.[1] ?? 0);
+  const writeNextWorldStep = readJson.query("world_metadata").query("next_world_step")
+  writeNextWorldStep.body = `world_${iter + 1}`
 
-  fs.writeFileSync(`${next_world_step}.xml`, result)
+  fs.writeFileSync(`${writeNextWorldStep.body}.xml`, readJson.serialize())
 
 })()

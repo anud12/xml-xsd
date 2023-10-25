@@ -325,7 +325,7 @@
                                             <xs:complexType>
                                                 <xs:attribute name="type" use="required"/>
                                                 <xs:attribute name="quantity" type="xs:int" default="1"/>
-                                                <xs:attribute name="position" default="all">
+                                                <xs:attribute name="position" default="all" use="required">
                                                     <xs:simpleType>
                                                         <xs:restriction>
                                                             <xs:enumeration value="all"/>
@@ -473,7 +473,7 @@
                 <xs:element name="actions">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="by" maxOccurs="unbounded">
+                            <xs:element name="by" maxOccurs="unbounded" minOccurs="0">
                                 <xs:complexType>
                                     <xs:choice>
                                         <xs:element name="do">

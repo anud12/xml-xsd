@@ -93,10 +93,7 @@ describe("personAction" , () => {
     await personAction({
       util: new JsonUtil(query),
       json: query
-    })({
-      util: new JsonUtil(query),
-      json: query
-    });
+    })(query);
     expect(query.serialize()).toBe(`
 <world_step
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

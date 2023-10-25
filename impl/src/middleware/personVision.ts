@@ -18,6 +18,6 @@ export const personVision: Middleware = (readJson) => {
         fillNeighbours(readJson, readJson, readJson.util.location.grid()[Number($x)][Number($y)], Number(radius.$value));
     })
 
-    return async (writeJson) => {
+    return async () => {
     }
 }

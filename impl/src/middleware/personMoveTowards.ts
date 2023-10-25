@@ -63,7 +63,7 @@ export const personMoveTowards: Middleware = readUnit => {
       })
     })
   return async writeUnit => {
-    const persons = writeUnit.json.queryAll("people").flatMap(e => e.queryAll("person"))
+    const persons = writeUnit.queryAll("people").flatMap(e => e.queryAll("person"))
     actions.forEach(action => {
       const person = persons.find(e => e.$name === action.person.$name);
       const location = person.query("location")

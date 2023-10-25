@@ -1,6 +1,7 @@
 import {Middleware, Unit} from "../utils/middleware";
 import {JsonSchema} from "../utils/JsonSchema";
 import {nodeBodyType} from "../JSONQuery";
+import {JsonUtil} from "../utils";
 
 type PersonQueryType = JsonSchema[typeof nodeBodyType]["people"][typeof nodeBodyType]["person"]
 
@@ -47,8 +48,9 @@ export const personAction: Middleware = readJson => {
     })
 
   return async writeJson => {
+    const writeJsonUtil = new JsonUtil(writeJson);
     actions.forEach(({from, personAction, property_mutation_list}) => {
-      const personList = writeJson.json.queryAll("people").flatMap(e => e.queryAll("person"));
+      const personList = writeJson.queryAll("people").flatMap(e => e.queryAll("person"));
       const person = personList.find(e => e.$name === from.$name);
       const targetPerson = personList.find(e => e.$name === personAction.$to);
 
@@ -57,7 +59,7 @@ export const personAction: Middleware = readJson => {
           ? targetPerson
           : person;
         const propertyName = mutation.property_mutation.$name;
-        const propertyValue = writeJson.util.person.getProperty(applicablePerson, propertyName);
+        const propertyValue = writeJsonUtil.person.getProperty(applicablePerson, propertyName);
 
         applicablePerson.queryAll("properties")
           .flatMap(e => e.queryAll("property"))

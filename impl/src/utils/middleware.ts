@@ -6,5 +6,5 @@ export type Unit = {
   util: JsonUtil,
 }
 
-export type Middleware = (readUnit: Unit) => (writeUnit: Unit) => Promise<void>
+export type Middleware = (readUnit: Unit) => (writeUnit: JsonSchema) => Promise<void>
 
