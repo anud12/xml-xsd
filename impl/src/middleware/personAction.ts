@@ -5,7 +5,7 @@ import {nodeBodyType} from "../JSONQuery";
 type PersonQueryType = JsonSchema[typeof nodeBodyType]["people"][typeof nodeBodyType]["person"]
 
 
-type MutationQueryType = JsonSchema[typeof nodeBodyType]["action_metadata"][typeof nodeBodyType]["person_entry"][typeof nodeBodyType]["property_mutation"]
+type MutationQueryType = JsonSchema[typeof nodeBodyType]["action_metadata"][typeof nodeBodyType]["person_to_person"][typeof nodeBodyType]["property_mutation"]
 const mutationToValue = (readJson: Unit, mutation: MutationQueryType, person: PersonQueryType, targetPerson: PersonQueryType) => {
   const operations = mutation.queryAll("from").flatMap(from => {
     const partaker = from.$partaker;
@@ -23,32 +23,34 @@ const mutationToValue = (readJson: Unit, mutation: MutationQueryType, person: Pe
 
 export const personAction: Middleware = readJson => {
   const actionMetadata = readJson.json.queryAll("action_metadata")
-    .flatMap(e => e.queryAll("person_entry"));
+    .flatMap(e => e.queryAll("person_to_person"));
 
   const personList = readJson.json.queryAll("people").flatMap(e => e.queryAll("person"));
 
-  const actions = readJson.json.queryAll("action")
-    .flatMap(e => e.queryAll("person_action"))
-    .map(personAction => {
-      const action = actionMetadata.find(e => e.$name === personAction.$ref);
-      const person = personList.find(e => e.$name === personAction.$name);
-      const targetPerson = personList.find(e => e.$name === personAction.$target_name);
+  const actions = readJson.json.queryAll("actions")
+    .flatMap(e => e.queryAll("by"))
+    .map(from => {
+      const personDo = from.query("do")
+      const action = actionMetadata.find(e => e.$name === personDo.$action);
+      const person = personList.find(e => e.$name === from.$name);
+      const targetPerson = personList.find(e => e.$name === personDo.$to);
 
       const property_mutation_list = action.queryAll("property_mutation").map(e => {
         const value = mutationToValue(readJson, e, person, targetPerson);
         return {value, property_mutation: e}
       });
       return {
-        personAction,
+        from,
+        personAction: personDo,
         property_mutation_list: property_mutation_list
       }
     })
 
   return async writeJson => {
-    actions.forEach(({personAction, property_mutation_list}) => {
+    actions.forEach(({from, personAction, property_mutation_list}) => {
       const personList = writeJson.json.queryAll("people").flatMap(e => e.queryAll("person"));
-      const person = personList.find(e => e.$name === personAction.$name);
-      const targetPerson = personList.find(e => e.$name === personAction.$target_name);
+      const person = personList.find(e => e.$name === from.$name);
+      const targetPerson = personList.find(e => e.$name === personAction.$to);
 
       property_mutation_list.forEach(mutation => {
         const applicablePerson = mutation.property_mutation.$on === "target"

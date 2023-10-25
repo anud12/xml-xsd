@@ -8,8 +8,6 @@
             <entry value="2"/>
         </randomization_table>
     </world_metadata>
-
-
     <property_metadata>
         <entry name="athletics" units="points">
             <default>
@@ -70,7 +68,7 @@
     </race_metadata>
 
     <action_metadata>
-        <person_entry name="meleeAttack">
+        <person_to_person name="meleeAttack">
             <range value="1" inclusive="true"/>
             <test>
                 <value target="self">
@@ -104,9 +102,8 @@
                         </group>
                     </operation>
                 </from>
-
             </property_mutation>
-        </person_entry>
+        </person_to_person>
     </action_metadata>
 
     <item_metadata>
@@ -164,7 +161,6 @@
         <person name="Billy">
             <race name="human"/>
             <location x="10" y="10"/>
-            <!--            <relations with="Bob"/>-->
             <properties>
                 <property ref="strength" value="3"/>
             </properties>
@@ -173,7 +169,7 @@
             </inventory>
             <command/>
         </person>
-        <person name="Bob">
+        <person name="Bobu">
             <race name="human"/>
             <location x="10" y="10"/>
             <properties/>
@@ -193,7 +189,12 @@
         <cell type="plains" x="-1" y="1"/>
         <cell type="plains" x="-1" y="-1"/>
     </location_layer>
-    <action>
-        <person_action ref="meleeAttack" name="Billy" target_name="Bob"/>
-    </action>
+    <actions>
+        <by name="Billy">
+            <do action="meleeAttack" to="Bobu"/>
+        </by>
+        <by name="Billy">
+            <move_towards x="3" y="3"/>
+        </by>
+    </actions>
 </world_step>
