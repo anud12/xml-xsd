@@ -99,7 +99,8 @@ export type JsonSchema = JsonQueryType<never, {
 
   actions: JsonQueryType<never, {
     by:JsonQueryType<"name", {
-      do: JsonQueryType<"action" | "to">
+      do: JsonQueryType<"action" | "to">,
+      move_towards: JsonQueryType<"x" | "y">
     }>
   }>
 }>
