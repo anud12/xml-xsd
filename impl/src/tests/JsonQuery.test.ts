@@ -129,7 +129,7 @@ describe("xml query", () => {
       throw "Should throw";
     }
     catch (e:any) {
-      expect(e.message).toBe("query from '//world_metadata[0]/other' returned undefined");
+      expect(e.message).toBe("query '//world_metadata[0]/other' returned undefined");
     }
 
   })

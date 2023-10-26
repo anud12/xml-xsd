@@ -33,6 +33,7 @@ export type JsonQueryType<
   query: <P extends keyof B> (p: P) => B[P] | undefined
   queryAll: <P extends keyof B> (p: P) => Array<B[P]>
   queryAllOptional: <P extends keyof B> (p: P) => Array<B[P]>
+  getPath: () => string,
   serialize: () => string
 } & {
   [nodeBodyType]: {
@@ -107,7 +108,7 @@ export class JsonQuery<A extends JsonQueryType> implements A {
     if (!this.parent) {
       return "/"
     }
-    const index = this.parent.children.findIndex(e => e === this);
+    const index = this.parent.children.filter(e => e.tag === this.tag).findIndex(e => e === this);
     return `${this.parent.getPath()}/${this.tag}[${index}]`
   }
 
@@ -167,7 +168,7 @@ export class JsonQuery<A extends JsonQueryType> implements A {
     if (result.length !== 0) {
       return result;
     }
-    throw new Error(`query from '${this.getPath()}/${p}' returned undefined`)
+    throw new Error(`query '${this.getPath()}/${p}' returned undefined`)
   }
 
   query = <P extends any>(p: P): any => {
