@@ -16,7 +16,7 @@ export const getRaceProperty = (readJson: Unit, personQueryType: PersonQueryType
     .reduce((previousValue, currentValue) => currentValue(previousValue), "0")
 
 
-  const propertyBonus: Bonus = raceQueryType.queryAll("property_bonus")
+  const propertyBonus: Bonus = raceQueryType.queryAllOptional("property_bonus")
     .find(e => e.$ref === key);
   if (!propertyBonus) {
     return base;
@@ -31,13 +31,13 @@ export const getRaceProperty = (readJson: Unit, personQueryType: PersonQueryType
 export type PersonQueryType = JsonSchema[typeof nodeBodyType]["people"][typeof nodeBodyType]["person"]
 export const getProperty = (readJson: Unit, personQueryType: PersonQueryType, key: string) => {
   console.log("getProperty", key, personQueryType.$name)
-  let propertyList = personQueryType.queryAll("properties");
+  let propertyList = personQueryType.queryAllOptional("properties");
   if (propertyList.length === 0) {
     personQueryType.appendChild("properties", {})
     propertyList = personQueryType.queryAll("properties");
   }
   const property = propertyList
-    .flatMap(e => e.queryAll("property"))
+    .flatMap(e => e.queryAllOptional("property"))
     .find(e => e.$ref === key);
   if (property) {
     return property.$value;

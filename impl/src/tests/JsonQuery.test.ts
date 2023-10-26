@@ -120,14 +120,18 @@ describe("xml query", () => {
   })
 
   test("invalid child", () => {
-    const dom = new jsdom.JSDOM(file, {
-      contentType: "application/xhtml+xml"
-    });
-    const query = JsonQuery.fromText<JsonQueryType<never, {
-      other: JsonQueryType
-    }>>(file);
-    const body = query.query("other")
-    expect(body?.tag).toBe(undefined);
+    try {
+      const dom = new jsdom.JSDOM(file, {
+        contentType: "application/xhtml+xml"
+      });
+      const query = JsonQuery.fromText<JsonQueryType<never, any>>(file);
+      const body = query.query("world_metadata").query("other")
+      throw "Should throw";
+    }
+    catch (e:any) {
+      expect(e.message).toBe("query from '//world_metadata[0]/other' returned undefined");
+    }
+
   })
 
   test("getTagName", () => {
