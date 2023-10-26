@@ -32,6 +32,8 @@ export type JsonQueryType<
   appendChild: <U extends keyof B>(key: keyof B, element: string | InferJsonNodeAttribute<B[U]>, attributes?: InferJsonNodeAttribute<B[U]>) => void
   query: <P extends keyof B> (p: P) => B[P] | undefined
   queryAll: <P extends keyof B> (p: P) => Array<B[P]>
+  queryAllOptional: <P extends keyof B> (p: P) => Array<B[P]>
+  getPath: () => string,
   serialize: () => string
 } & {
   [nodeBodyType]: {
@@ -77,7 +79,7 @@ export class JsonQuery<A extends JsonQueryType> implements A {
       contentType: "text/xml",
     })
     const d = root.window.document.childNodes;
-    return new JsonQuery(root, d[0]) as unknown as A
+    return new JsonQuery(root, d[0], undefined) as unknown as A
   }
   [nodeBodyType]: never;
   [nodeAttributes]: never;
@@ -85,9 +87,11 @@ export class JsonQuery<A extends JsonQueryType> implements A {
   body: string;
   children: any;
   tag: JsonNodeTag;
+  parent?: JsonQuery<any>;
 
-  constructor(private root: jsdom.JSDOM, element: Node) {
+  constructor(private root: jsdom.JSDOM, element: Node, parent: JsonQuery<any> | undefined) {
     this.children = []
+    this.parent = parent;
     this.tag = UnknownJsonTag;
     if (element.nodeType === element.ELEMENT_NODE) {
       this.initElement(root, element as Element)
@@ -100,16 +104,24 @@ export class JsonQuery<A extends JsonQueryType> implements A {
     }
   }
 
+  private getPath() {
+    if (!this.parent) {
+      return "/"
+    }
+    const index = this.parent.children.filter(e => e.tag === this.tag).findIndex(e => e === this);
+    return `${this.parent.getPath()}/${this.tag}[${index}]`
+  }
+
   private initElement(root: jsdom.JSDOM, element: Element) {
     this.tag = element.tagName;
     const children = [...element.childNodes ?? []].map((childNode) => {
       const childElement: Element = childNode as any;
-      const jsonQuery = new JsonQuery(root, childElement);
-      jsonQuery.children = [...childElement.childNodes ?? []].map(value => new JsonQuery(root, value))
+      const jsonQuery = new JsonQuery(root, childElement, this);
+      jsonQuery.children = [...childElement.childNodes ?? []].map(value => new JsonQuery(root, value, jsonQuery))
       return jsonQuery;
     })
-        .filter(e => e)
-        .filter(e => e.tag !== UnknownJsonTag);
+      .filter(e => e)
+      .filter(e => e.tag !== UnknownJsonTag);
     this.children = children as any;
     [...element.getAttributeNames()].forEach((currentValue) => {
       this[`$${currentValue}`] = element.getAttribute(currentValue)
@@ -126,7 +138,7 @@ export class JsonQuery<A extends JsonQueryType> implements A {
   }
 
   appendChild = (key: JsonNodeTag, body: string | JsonNodeAttribute<string>, attributesArg?: JsonNodeAttribute<string>): void => {
-    if(key === UnknownJsonTag) {
+    if (key === UnknownJsonTag) {
       return;
     }
     let attributes = attributesArg;
@@ -143,24 +155,35 @@ export class JsonQuery<A extends JsonQueryType> implements A {
     Object.entries(attributes).forEach(([key, value]) => {
       element.setAttribute(key.replace("$", ""), value);
     })
-    this.children.push(new JsonQuery(this.root, element) as unknown as JsonQueryType);
+    const jsonQuery = new JsonQuery(this.root, element, this);
+    this.children.push(jsonQuery);
   }
+
+  queryAllOptional = <P extends any>(p: P): any[] => {
+    return this.children.filter(e => e.tag === p);
+  }
+
+  queryAll = <P extends any>(p: P): any[] => {
+    const result = this.queryAllOptional(p);
+    if (result.length !== 0) {
+      return result;
+    }
+    throw new Error(`query '${this.getPath()}/${p}' returned undefined`)
+  }
+
   query = <P extends any>(p: P): any => {
     return this.queryAll(p)?.[0];
-  }
-  queryAll = <P extends any>(p: P): any[] => {
-    return this.children.filter(e => e.tag === p)
   }
 
   serialize = () => {
     const element = innerSerialize(this.root, this as unknown as JsonQueryType) as Element
-    const result:string = prettier.format(element.outerHTML, {
+    const result: string = prettier.format(element.outerHTML, {
       parser: "babel",
     })
     return result.replaceAll("__namespace__", ":")
-        .replaceAll("<COMMENT_TO_BE_REPLACED>", "<!--")
-        .replaceAll("</COMMENT_TO_BE_REPLACED>", "-->")
-        .replaceAll("<COMMENT_TO_BE_REPLACED\>", "")
-        .split(";")[0] + "\n";
+      .replaceAll("<COMMENT_TO_BE_REPLACED>", "<!--")
+      .replaceAll("</COMMENT_TO_BE_REPLACED>", "-->")
+      .replaceAll("<COMMENT_TO_BE_REPLACED\>", "")
+      .split(";")[0] + "\n";
   }
 }

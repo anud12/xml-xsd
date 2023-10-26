@@ -125,4 +125,50 @@ describe("getProperty", () => {
 </world_step>
 `.split("\n").filter((_, index) => index !== 0).join("\n"));
   })
+
+
+  it("fails when no property is found", async () => {
+    const query = JsonQuery.fromText<JsonSchema>(`<world_step
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../schema/world_step/world_step.xsd"
+>
+  <world_metadata>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+    <property_metadata>
+    </property_metadata>
+  <race_metadata>
+      <entry name="human">
+          <vision value="20" inclusive="true"/>
+          <movement value="5" inclusive="true"/>
+      </entry>
+  </race_metadata>
+  <people>
+    <person name="Billy">
+      <race name="human"/>
+      <location x="10" y="10"/>
+      <properties/>
+      <inventory>
+          <item ref="Long sword" equipped="hand"/>
+      </inventory>
+      <command/>
+    </person>
+  </people>
+</world_step>`);
+
+    try {
+      getProperty({
+          util: new JsonUtil(query),
+          json: query
+        },
+        query.query("people").query("person"),
+        "health"
+      );
+      throw new Error("")
+    } catch (e) {
+      expect(e.message).toBe("getProperty of health failed for //people[0]/person[0]")
+    }
+  })
 })
