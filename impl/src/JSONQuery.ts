@@ -5,7 +5,7 @@ const prettier = require("prettier")
 const CommentJsonTag = "CommentJsonTag"
 const UnknownJsonTag = "UnknownJsonTag"
 
-export type JsonNodeTag = string | typeof CommentJsonTag | typeof UnknownJsonTag
+export type JsonNodeTag<U = string> = U | typeof CommentJsonTag | typeof UnknownJsonTag
 export type JsonNode = {
   body: string
   tag: JsonNodeTag
@@ -29,7 +29,7 @@ export type JsonQueryType<
 > = JsonElement<A>
   & {
   children: Array<B[keyof B]>;
-  appendChild: <U extends keyof B>(key: keyof B, element: string | InferJsonNodeAttribute<B[U]>, attributes?: InferJsonNodeAttribute<B[U]>) => void
+  appendChild: <U extends keyof B>(key: U, element: string | InferJsonNodeAttribute<B[U]>, attributes?: InferJsonNodeAttribute<B[U]>) => B[U]
   query: <P extends keyof B> (p: P) => B[P] | undefined
   queryAll: <P extends keyof B> (p: P) => Array<B[P]>
   queryAllOptional: <P extends keyof B> (p: P) => Array<B[P]>
@@ -137,7 +137,7 @@ export class JsonQuery<A extends JsonQueryType> implements A {
     this.body = cloneElement.textContent.trim();
   }
 
-  appendChild = (key: JsonNodeTag, body: string | JsonNodeAttribute<string>, attributesArg?: JsonNodeAttribute<string>): void => {
+  appendChild = (key: any, body: string | JsonNodeAttribute<string>, attributesArg?: JsonNodeAttribute<string>): any => {
     if (key === UnknownJsonTag) {
       return;
     }
@@ -157,6 +157,7 @@ export class JsonQuery<A extends JsonQueryType> implements A {
     })
     const jsonQuery = new JsonQuery(this.root, element, this);
     this.children.push(jsonQuery);
+    return jsonQuery;
   }
 
   queryAllOptional = <P extends any>(p: P): any[] => {
