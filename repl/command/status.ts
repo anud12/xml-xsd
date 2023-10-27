@@ -3,7 +3,7 @@ import {Command} from "./commandType";
 
 export const status:Command<[string]> = {
   key: "status",
-  action: (personName:string) => {
+  action: async (personName:string) => {
     const person = jsonSchema.queryAll("people")
       .flatMap(e => e.queryAll("person"))
       .find(e => e.$name === personName);

@@ -29,7 +29,7 @@ export type JsonQueryType<
 > = JsonElement<A>
   & {
   children: Array<B[keyof B]>;
-  appendChild: <U extends keyof B>(key: U, element: string | InferJsonNodeAttribute<B[U]>, attributes?: InferJsonNodeAttribute<B[U]>) => B[U]
+  appendChild: <U extends keyof B>(key: U, element: string | B[U][typeof nodeAttributes], attributes?: B[U][typeof nodeAttributes]) => B[U]
   query: <P extends keyof B> (p: P) => B[P] | undefined
   queryAll: <P extends keyof B> (p: P) => Array<B[P]>
   queryAllOptional: <P extends keyof B> (p: P) => Array<B[P]>

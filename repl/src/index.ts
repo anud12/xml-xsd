@@ -4,6 +4,7 @@ import {JsonSchema} from "demo/src/utils/JsonSchema";
 import * as fs from "fs";
 import {status} from "../command/status";
 import {moveTowards} from "../command/moveTowards";
+import {writeToDisk} from "../command/writeToDisk";
 
 export const jsonSchema = JsonQuery.fromText<JsonSchema>(fs.readFileSync(process.argv[2]).toString())
 
@@ -23,7 +24,8 @@ async function commandLoop(personName: string) {
   while (true) {
     const commandLists = [
       status,
-      moveTowards
+      moveTowards,
+      writeToDisk,
     ];
     const {command} = await inquirer.prompt([
       {
@@ -33,7 +35,7 @@ async function commandLoop(personName: string) {
         choices: [...commandLists.map(e => e.key), 'exit'],
       },
     ]);
-    commandLists.find(e => e.key === command).action(personName)
+    await commandLists.find(e => e.key === command)?.action(personName)
 
     if(command === "exit") {
       return;

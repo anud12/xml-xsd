@@ -1,17 +1,29 @@
 import {Command} from "./commandType";
 import {jsonSchema} from "../src";
-import inquirer from "inquirer";
+import * as inquirer from 'inquirer';
 
-export const moveTowards:Command<[string]> = {
+export const moveTowards: Command<[string]> = {
   key: "move towards",
-  action: (personName:string) => {
+  action: async (personName: string) => {
 
-    inquirer.prompt({
-      type:"number",
-      message:""
-    })
+    const {x} = await inquirer.prompt([{
+      type: "number",
+      name: "x",
+      message: "Destination X:"
+    }])
 
-    jsonSchema.query("actions").appendChild("by", "").appendChild("move_towards", "", {})
-
+    const {y} = await inquirer.prompt([{
+      type: "number",
+      name: "y",
+      message: "Destination Y:"
+    }])
+    jsonSchema.query("actions")
+      .appendChild("by", {
+        $name: personName,
+      })
+      .appendChild("move_towards", {
+        $x: x,
+        $y: y,
+      })
   }
 }
