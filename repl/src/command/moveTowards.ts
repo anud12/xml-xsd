@@ -1,5 +1,5 @@
 import {Command} from "./commandType";
-import {jsonSchema} from "../src";
+import {jsonSchema} from "../";
 import * as inquirer from 'inquirer';
 
 export const moveTowards: Command<[string]> = {

@@ -44,7 +44,7 @@ export const personMoveTowards: Middleware = readUnit => {
   const raceMetadata = readUnit.json.queryAll("race_metadata")
     .flatMap(raceMetadata => raceMetadata.queryAll("entry"))
   const actions = readUnit.json.queryAll("actions")
-    .flatMap(e => e.queryAll("by"))
+    .flatMap(e => e.queryAllOptional("by"))
     .flatMap(by => {
       return by.queryAll("move_towards").flatMap(moveTowards => {
 

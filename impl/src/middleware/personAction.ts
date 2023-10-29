@@ -29,7 +29,7 @@ export const personAction: Middleware = readJson => {
   const personList = readJson.json.queryAll("people").flatMap(e => e.queryAll("person"));
 
   const actions = readJson.json.queryAll("actions")
-    .flatMap(e => e.queryAll("by"))
+    .flatMap(e => e.queryAllOptional("by"))
     .map(from => {
       const personDo = from.query("do")
       const action = actionMetadata.find(e => e.$name === personDo.$action);

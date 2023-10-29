@@ -1,6 +1,5 @@
 import {Command} from "./commandType";
-import {jsonSchema} from "../src";
-import inquirer from "inquirer";
+import {jsonSchema} from "../";
 import * as fs from "fs";
 
 export const writeToDisk: Command<[string]> = {

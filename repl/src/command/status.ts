@@ -1,4 +1,4 @@
-import {jsonSchema} from "../src";
+import {jsonSchema} from "../";
 import {Command} from "./commandType";
 
 export const status:Command<[string]> = {

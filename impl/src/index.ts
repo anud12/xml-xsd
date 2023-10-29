@@ -6,10 +6,13 @@ import {personMoveTowards} from "./middleware/personMoveTowards";
 import {Unit} from "./utils/middleware";
 import {personAction} from "./middleware/personAction";
 import {JsonQuery} from "./JSONQuery";
+import * as path from "path";
 
 
 (async () => {
-  const data = fs.readFileSync("../world.xml")
+  const filePath = process.argv[2];
+  console.log("Reading from " + filePath);
+  const data = fs.readFileSync(filePath)
   const readJson = JsonQuery.fromText<JsonSchema>(data.toString());
 
   fs.writeFileSync(`world.xml`, readJson.serialize())
@@ -32,7 +35,6 @@ import {JsonQuery} from "./JSONQuery";
   const iter = Number(writeWorldMetadata.query("next_world_step").body.split("_")?.[1] ?? 0);
   const writeNextWorldStep = readJson.query("world_metadata").query("next_world_step")
   writeNextWorldStep.body = `world_${iter + 1}`
-
-  fs.writeFileSync(`${writeNextWorldStep.body}.xml`, readJson.serialize())
+  fs.writeFileSync(`${path.parse(filePath).dir}/${writeNextWorldStep.body}.xml`, readJson.serialize())
 
 })()
