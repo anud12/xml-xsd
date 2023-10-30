@@ -1,4 +1,4 @@
-export type Command<T extends Array<any>> = {
-  key:string,
-  action: (...t:T) => Promise<void>
+export type Command<T extends Array<any>, ActionArg extends Array<string> = [...T, string]> = {
+  key:(...t) => string[],
+  action: (...t: ActionArg) => Promise<void>
 }

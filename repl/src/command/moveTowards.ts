@@ -1,23 +1,31 @@
 import {Command} from "./commandType";
-import {jsonSchema} from "../";
+import {state} from "../";
 import * as inquirer from 'inquirer';
 
 export const moveTowards: Command<[string]> = {
-  key: "move towards",
+  key: () => ["move towards"],
   action: async (personName: string) => {
-
-    const {x} = await inquirer.prompt([{
+    const location = state.jsonSchema.query("people").queryAll("person").find(e => e.$name === personName).query("location");
+    let {x} = await inquirer.prompt([{
       type: "number",
       name: "x",
-      message: "Destination X:"
+      message: `Destination X (current = ${location.$x}):`
     }])
-
-    const {y} = await inquirer.prompt([{
+    let {y} = await inquirer.prompt([{
       type: "number",
       name: "y",
-      message: "Destination Y:"
+      message: `Destination Y (current = ${location.$y}):`
     }])
-    jsonSchema.query("actions")
+    if(isNaN(x) && isNaN(y)) {
+      return
+    }
+    if(isNaN(x)) {
+      x = location.$x;
+    }
+    if(isNaN(y)) {
+      y = location.$y;
+    }
+    state.jsonSchema.query("actions")
       .appendChild("by", {
         $name: personName,
       })

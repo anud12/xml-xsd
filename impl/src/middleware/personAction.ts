@@ -30,8 +30,11 @@ export const personAction: Middleware = readJson => {
 
   const actions = readJson.json.queryAll("actions")
     .flatMap(e => e.queryAllOptional("by"))
-    .map(from => {
-      const personDo = from.query("do")
+    .flatMap(from => {
+      const personDo = from.queryOptional("do")
+      if(!personDo) {
+        return [];
+      }
       const action = actionMetadata.find(e => e.$name === personDo.$action);
       const person = personList.find(e => e.$name === from.$name);
       const targetPerson = personList.find(e => e.$name === personDo.$to);
@@ -40,11 +43,11 @@ export const personAction: Middleware = readJson => {
         const value = mutationToValue(readJson, e, person, targetPerson);
         return {value, property_mutation: e}
       });
-      return {
+      return [{
         from,
         personAction: personDo,
         property_mutation_list: property_mutation_list
-      }
+      }]
     })
 
   return async writeJson => {

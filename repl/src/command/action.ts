@@ -1,24 +1,25 @@
 import {Command} from "./commandType";
-import {jsonSchema} from "../";
+import {state} from "../";
 import {promptChoice} from "../promptChoice";
+import {personNameToSymbol} from "../view/personStatusView";
 
 export const action: Command<[string]> = {
-  key: "action",
-  action: async (personName: string) => {
+  key: () => {
+    const actionList = state.jsonSchema.query("action_metadata").queryAll("person_to_person");
+    return actionList.map(e => e.$name)
+  },
+  action: async (personName: string, actionName:string) => {
 
+    const actionList = state.jsonSchema.query("action_metadata").queryAll("person_to_person");
+    const action = actionList.find(e => e.$name === actionName);
 
-    const actionList = jsonSchema.query("action_metadata").queryAll("person_to_person");
-    const action = await promptChoice("Choose action", actionList, e => e.$name)
-    if (!action) {
-      return;
-    }
-    const personList = jsonSchema.query("people").queryAll("person");
-    const target = await promptChoice("Choose target", personList.filter(e => e.$name !== personName), u => u.$name)
+    const personList = state.jsonSchema.query("people").queryAll("person");
+    const target = await promptChoice("Choose target", personList.filter(e => e.$name !== personName), u => `${u.$name}(${personNameToSymbol(u.$name)})`)
     if (!target) {
       return
     }
 
-    jsonSchema.query("actions").appendChild("by", {
+    state.jsonSchema.query("actions").appendChild("by", {
       $name: personName
     }).appendChild("do", {
       $to: target.$name,

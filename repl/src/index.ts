@@ -4,15 +4,18 @@ import {JsonSchema} from "demo/src/utils/JsonSchema";
 import * as fs from "fs";
 import {status} from "./command/status";
 import {moveTowards} from "./command/moveTowards";
-import {writeToDisk} from "./command/writeToDisk";
+import {writeToDiskCommand} from "./command/writeToDiskCommand";
 import {promptMenu} from "./promptMenu";
-import {map} from "./command/map";
 import {action} from "./command/action";
+import {run} from "./command/run";
 
-export const jsonSchema = JsonQuery.fromText<JsonSchema>(fs.readFileSync(process.argv[2]).toString())
+export const state = {
+  argPath: process.argv[2],
+  jsonSchema: JsonQuery.fromText<JsonSchema>(fs.readFileSync(process.argv[2]).toString())
+}
 
 async function main() {
-  const personList = jsonSchema.queryAll("people").flatMap(e => e.queryAll("person"));
+  const personList = state.jsonSchema.queryAll("people").flatMap(e => e.queryAll("person"));
   const {people: selectedPerson} = await inquirer.prompt([{
     type: "list",
     name: "people",
@@ -21,11 +24,11 @@ async function main() {
   }]);
   // Now that the schema is loaded, start the command loop
   await promptMenu([selectedPerson], [
-    status,
-    map,
+    run,
     moveTowards,
     action,
-    writeToDisk
+    status,
+    writeToDiskCommand,
   ]);
 }
 

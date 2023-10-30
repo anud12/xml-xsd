@@ -30,7 +30,8 @@ export type JsonQueryType<
   & {
   children: Array<B[keyof B]>;
   appendChild: <U extends keyof B>(key: U, element: string | B[U][typeof nodeAttributes], attributes?: B[U][typeof nodeAttributes]) => B[U]
-  query: <P extends keyof B> (p: P) => B[P] | undefined
+  query: <P extends keyof B> (p: P) => B[P],
+  queryOptional: <P extends keyof B> (p: P) => B[P] | undefined,
   queryAll: <P extends keyof B> (p: P) => Array<B[P]>
   queryAllOptional: <P extends keyof B> (p: P) => Array<B[P]>
   getPath: () => string,
@@ -174,6 +175,13 @@ export class JsonQuery<A extends JsonQueryType> implements A {
 
   query = <P extends any>(p: P): any => {
     return this.queryAll(p)?.[0];
+  }
+  queryOptional = <P extends any>(p: P): any => {
+    try {
+      return this.queryAll(p)?.[0];
+    } catch (e) {
+      return undefined;
+    }
   }
 
   serialize = () => {

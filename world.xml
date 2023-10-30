@@ -48,8 +48,8 @@
     <!--_-->
     <race_metadata>
         <entry name="human">
-            <vision value="20" inclusive="true" />
-            <movement value="5" inclusive="true" />
+            <vision value="4" inclusive="true" />
+            <movement value="3" inclusive="true" />
             <property_bonus ref="strength">
                 <operation>
                     <add_dice value="3" />
@@ -103,7 +103,13 @@
                             <operation>
                                 <divide value="2" />
                             </operation>
+                            <operation>
+                                <multiply value="-1"/>
+                            </operation>
                         </group>
+                    </operation>
+                    <operation>
+                        <multiply value="-1" />
                     </operation>
                 </from>
             </property_mutation>
