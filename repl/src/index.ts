@@ -8,6 +8,9 @@ import {writeToDiskCommand} from "./command/writeToDiskCommand";
 import {promptMenu} from "./promptMenu";
 import {action} from "./command/action";
 import {run} from "./command/run";
+import {sideBySide} from "./sideBySide";
+import {personMapView} from "./view/personMapView";
+import {personNameToSymbol, personStatusView} from "./view/personStatusView";
 
 export const state = {
   argPath: process.argv[2],
@@ -23,7 +26,10 @@ async function main() {
     choices: personList.map(e => e.$name)
   }]);
   // Now that the schema is loaded, start the command loop
-  await promptMenu([selectedPerson], [
+  const message = () => {
+    return sideBySide(personMapView(selectedPerson), personStatusView(selectedPerson))
+  }
+  await promptMenu(message, [selectedPerson], [
     run,
     moveTowards,
     action,
