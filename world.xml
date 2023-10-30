@@ -5,7 +5,106 @@
     <world_metadata>
         <next_world_step>./world_1</next_world_step>
         <randomization_table>
+            <entry value="4" />
+            <entry value="9" />
             <entry value="2" />
+            <entry value="8" />
+            <entry value="3" />
+            <entry value="6" />
+            <entry value="5" />
+            <entry value="7" />
+            <entry value="1" />
+            <entry value="10" />
+            <entry value="7" />
+            <entry value="3" />
+            <entry value="8" />
+            <entry value="4" />
+            <entry value="9" />
+            <entry value="2" />
+            <entry value="10" />
+            <entry value="1" />
+            <entry value="6" />
+            <entry value="5" />
+            <entry value="1" />
+            <entry value="8" />
+            <entry value="7" />
+            <entry value="3" />
+            <entry value="5" />
+            <entry value="4" />
+            <entry value="2" />
+            <entry value="6" />
+            <entry value="10" />
+            <entry value="9" />
+            <entry value="9" />
+            <entry value="6" />
+            <entry value="7" />
+            <entry value="2" />
+            <entry value="10" />
+            <entry value="4" />
+            <entry value="5" />
+            <entry value="1" />
+            <entry value="3" />
+            <entry value="8" />
+            <entry value="6" />
+            <entry value="5" />
+            <entry value="1" />
+            <entry value="10" />
+            <entry value="4" />
+            <entry value="3" />
+            <entry value="7" />
+            <entry value="2" />
+            <entry value="8" />
+            <entry value="9" />
+            <entry value="2" />
+            <entry value="3" />
+            <entry value="7" />
+            <entry value="5" />
+            <entry value="1" />
+            <entry value="9" />
+            <entry value="10" />
+            <entry value="6" />
+            <entry value="4" />
+            <entry value="8" />
+            <entry value="8" />
+            <entry value="4" />
+            <entry value="2" />
+            <entry value="6" />
+            <entry value="3" />
+            <entry value="7" />
+            <entry value="10" />
+            <entry value="1" />
+            <entry value="9" />
+            <entry value="5" />
+            <entry value="5" />
+            <entry value="9" />
+            <entry value="1" />
+            <entry value="10" />
+            <entry value="2" />
+            <entry value="4" />
+            <entry value="8" />
+            <entry value="7" />
+            <entry value="3" />
+            <entry value="6" />
+            <entry value="3" />
+            <entry value="6" />
+            <entry value="5" />
+            <entry value="8" />
+            <entry value="10" />
+            <entry value="9" />
+            <entry value="4" />
+            <entry value="7" />
+            <entry value="2" />
+            <entry value="1" />
+            <entry value="4" />
+            <entry value="8" />
+            <entry value="1" />
+            <entry value="7" />
+            <entry value="6" />
+            <entry value="5" />
+            <entry value="9" />
+            <entry value="2" />
+            <entry value="3" />
+            <entry value="10" />
         </randomization_table>
     </world_metadata>
     <!--_-->
@@ -48,7 +147,7 @@
     <!--_-->
     <race_metadata>
         <entry name="human">
-            <vision value="4" inclusive="true" />
+            <vision value="10" inclusive="true" />
             <movement value="3" inclusive="true" />
             <property_bonus ref="strength">
                 <operation>
@@ -134,16 +233,16 @@
     <!--_-->
     <locations_markov_chain>
         <location_markov_link type="plains">
-            <sibling type="plains" quantity="20" position="all"/>
+            <sibling type="plains" quantity="10" position="all"/>
             <sibling type="forest" position="all"/>
         </location_markov_link>
         <location_markov_link type="forest">
-            <sibling type="forest" quantity="20" position="all"/>
+            <sibling type="forest" quantity="10" position="all"/>
             <sibling type="plains" position="all"/>
             <sibling type="hills" position="all"/>
         </location_markov_link>
         <location_markov_link type="hills">
-            <sibling type="hills" quantity="20" position="all"/>
+            <sibling type="hills" quantity="10" position="all"/>
             <sibling type="forest" position="all"/>
         </location_markov_link>
     </locations_markov_chain>
