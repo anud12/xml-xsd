@@ -54,27 +54,40 @@ const getTransitionFromNeighbours = (json: Unit, cell: Cell): Transition<string>
   return transition;
 }
 export const fillNeighbours = (readJson: Unit, writeJson: Unit, originalCell: Cell, radius = 1) => {
-  const grid = writeJson.util.location.grid();
-  const locationLayer = writeJson.json.query("location_layer");
-  const x = Number(originalCell.$x);
-  const y = Number(originalCell.$y);
+  try {
+    const grid = writeJson.util.location.grid();
+    const locationLayer = writeJson.json.query("location_layer");
+    const x = Number(originalCell.$x);
+    const y = Number(originalCell.$y);
 
-  for (let i = -radius; i <= radius; i++) {
-    for (let j = -radius; j <= radius; j++) {
-      const cell = grid?.[x + i]?.[y + j];
-      if (!cell) {
-        const transition = getTransitionFromNeighbours(writeJson, originalCell)
-        const type = markovNext(transition, readJson.util.random);
-        const cell: Cell[typeof nodeAttributes] = {
-          $type: type,
-          $x: String(x + i),
-          $y: String(y + j),
-        };
-        console.log(`Created cell: ${JSON.stringify(cell)}`)
-        locationLayer.appendChild("cell", cell)
-        writeJson.util.invalidate()
+    for (let i = -radius; i <= radius; i++) {
+      for (let j = -radius; j <= radius; j++) {
+        const cell = grid?.[x + i]?.[y + j];
+        if (!cell) {
+          const transition = getTransitionFromNeighbours(writeJson, originalCell);
+          if(transition.length === 0) {
+            throw new Error("transition length is 0");
+          }
+          const type = markovNext(transition, readJson.util.random);
+          if(!type) {
+            throw new Error("resulted type is undefined");
+          }
+          const cell: Cell[typeof nodeAttributes] = {
+            $type: type,
+            $x: String(x + i),
+            $y: String(y + j),
+          };
+          console.log(`Created cell: ${JSON.stringify(cell)}`)
+          locationLayer.appendChild("cell", cell)
+          writeJson.util.invalidate()
+        }
       }
     }
+  } catch (e) {
+    const newError = new Error(`fillNeighbours of type: ${originalCell.$type}, x:${originalCell.$x}, y:${originalCell.$y}`);
+    newError.stack += '\nCaused by: ' + e.stack;
+    throw newError;
   }
+
 
 }

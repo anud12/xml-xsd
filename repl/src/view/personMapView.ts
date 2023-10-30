@@ -7,8 +7,10 @@ const walkableCharacter = "\u25CB";
 export function personMapView(personName: string) {
   let string = "";
   const person = state.jsonSchema.query("people").queryAll("person").find(e => e.$name === personName)
+  const personRaceMetadata = state.jsonSchema.query("race_metadata")
+  .queryAll("entry").find(e => e.$name === person.query("race").$name)
   //get vision from person list of properties
-  const vision = 5;
+  const vision = Number(personRaceMetadata.query("vision").$value);
 
   const personLocation = person.query("location");
   const personX = Number(personLocation.$x);
@@ -24,6 +26,18 @@ export function personMapView(personName: string) {
     const y = Number(e.$y);
     const gridY = grid[y] ?? [];
     grid[y] = gridY;
+    if(e.$type === "plains"){
+      gridY[x] = `\u25CB`;
+      return;
+    }
+    if(e.$type === "forest"){
+      gridY[x] = `\u25CD`;
+      return;
+    }
+    if(e.$type === "hills"){
+      gridY[x] = `\u25B3`;
+      return;
+    }
     gridY[x] = walkableCharacter;
   })
 
@@ -36,9 +50,9 @@ export function personMapView(personName: string) {
     gridY[x] = personNameToSymbol(e.$name);
   })
   let rows = [];
-  for (let y = personY - vision; y < personY + vision; y++) {
+  for (let y = personY - vision; y <= personY + vision; y++) {
     let row = "";
-    for (let x = personX - vision; x < personX + vision; x++) {
+    for (let x = personX - vision; x <= personX + vision; x++) {
       if (grid[y] && grid[y][x]) {
         row += ` ${grid[y][x]} `;
       } else {

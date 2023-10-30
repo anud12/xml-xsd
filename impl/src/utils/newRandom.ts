@@ -1,7 +1,7 @@
 import {JsonUtil} from "./index";
 
+let counter = 0;
 export const newRandom = (worldSchema: JsonUtil) => {
-    let counter = 0;
     return () => {
         const entries = worldSchema.jsonQuery.query("world_metadata").query("randomization_table").queryAll("entry")
             .map(value => Number(value.$value));
@@ -12,6 +12,7 @@ export const newRandom = (worldSchema: JsonUtil) => {
         }, 0)
         const index = counter % entries.length;
         counter += 1;
-        return entries[index] / max;
+        const result = entries[index] / max;
+        return result;
     }
 }

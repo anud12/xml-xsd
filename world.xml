@@ -147,7 +147,7 @@
     <!--_-->
     <race_metadata>
         <entry name="human">
-            <vision value="10" inclusive="true" />
+            <vision value="4" inclusive="true" />
             <movement value="3" inclusive="true" />
             <property_bonus ref="strength">
                 <operation>
@@ -233,16 +233,16 @@
     <!--_-->
     <locations_markov_chain>
         <location_markov_link type="plains">
-            <sibling type="plains" quantity="10" position="all"/>
+            <sibling type="plains" quantity="15" position="all"/>
             <sibling type="forest" position="all"/>
         </location_markov_link>
         <location_markov_link type="forest">
-            <sibling type="forest" quantity="10" position="all"/>
+            <sibling type="forest" quantity="15" position="all"/>
             <sibling type="plains" position="all"/>
             <sibling type="hills" position="all"/>
         </location_markov_link>
         <location_markov_link type="hills">
-            <sibling type="hills" quantity="10" position="all"/>
+            <sibling type="hills" quantity="15" position="all"/>
             <sibling type="forest" position="all"/>
         </location_markov_link>
     </locations_markov_chain>
@@ -272,7 +272,7 @@
     <people>
         <person name="Billy">
             <race name="human" />
-            <location x="10" y="10" />
+            <location x="1" y="1" />
             <properties>
                 <property ref="strength" value="3" />
             </properties>
@@ -283,7 +283,7 @@
         </person>
         <person name="Bobu">
             <race name="human" />
-            <location x="7" y="12" />
+            <location x="-1" y="-1" />
             <properties />
             <command />
         </person>
