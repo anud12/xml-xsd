@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "@types/inquirer": "^8.2.6",
+    "demo": "file:../impl",
+    "inquirer": "^8.2.6",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  },
+  "scripts": {
+    "start": "ts-node src/index.ts"
+  }
+}
