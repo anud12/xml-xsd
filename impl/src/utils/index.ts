@@ -5,7 +5,7 @@ import {create} from "./location/create";
 import {questMarkov} from "./questMarkov";
 import {JsonSchema, OperationQueryType} from "./JsonSchema";
 import {newRandom} from "./newRandom";
-import {computeOperation} from "./operation/computeOperation";
+import {createOperationFromQueryType} from "./operation/createOperationFromQueryType";
 import {getProperty, PersonQueryType} from "./person/getProperty";
 
 export const memoizeFunction = <T>(func: T): T => {
@@ -41,7 +41,7 @@ export class JsonUtil {
   }
   questMarkov: () => void;
   computeOperation = (operationQueryType: OperationQueryType, getExternalProperty?: (string: string) => string) => {
-    return computeOperation({
+    return createOperationFromQueryType({
       util: this,
       json: this.jsonQuery
     }, operationQueryType, getExternalProperty)

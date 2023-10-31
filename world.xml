@@ -141,7 +141,32 @@
                 </operation>
             </default>
         </entry>
+        <entry name="health" units="points">
+            <default>
+                <operation>
+                    <add_property_value name="constitution"/>
+                </operation>
+                <operation>
+                    <add_dice value="8"/>
+                </operation>
+            </default>
+        </entry>
     </property_metadata>
+    <!--_-->
+    <!--Classification metadata-->
+    <!--_-->
+    <classification_metadata>
+        <entry name="dead">
+            <has_positive_value>
+                <operation>
+                    <add_property_value name="health"/>
+                </operation>
+                <operation>
+                    <multiply value="-1"/>
+                </operation>
+            </has_positive_value>
+        </entry>
+    </classification_metadata>
     <!--_-->
     <!--Race metadata-->
     <!--_-->

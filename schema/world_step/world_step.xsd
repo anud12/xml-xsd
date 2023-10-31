@@ -11,6 +11,17 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:complexType name="metadata_classification">
+        <xs:sequence>
+            <xs:element name="required_property">
+                <xs:complexType>
+                    <xs:attribute name="name" use="required"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="name" use="required"/>
+    </xs:complexType>
+
     <xs:complexType name="item_ref">
         <xs:attribute name="ref" use="required"/>
         <xs:attribute name="equipped" type="item_slot"/>
@@ -181,6 +192,27 @@
                         <xs:selector xpath="entry"/>
                         <xs:field xpath="@name"/>
                     </xs:key>
+                </xs:element>
+
+                <xs:element name="classification_metadata">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="entry" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="has_positive_value" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:group ref="type_math_operations"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute name="name" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
                 </xs:element>
 
 
@@ -499,11 +531,18 @@
             </xs:sequence>
         </xs:complexType>
 
-        <xs:keyref name="FK__people__person__inventory__item.ref" refer="K__item_metadata__entry.name">
-            <xs:selector xpath="people/person/inventory/item"/>
-            <xs:field xpath="@ref"/>
-        </xs:keyref>
 
+        <!---->
+        <!-- FK property_metadata -->
+        <!---->
+
+        <!---->
+        <!-- FK classification_metadata -->
+        <!---->
+        <xs:keyref name="FK__classification_metadata__entry__operation__add_property_value.name" refer="K__property_metadata__entry.name">
+            <xs:selector xpath="classification_metadata/entry/has_positive_value/operation/add_property_value"/>
+            <xs:field xpath="@name"/>
+        </xs:keyref>
         <!---->
         <!-- FK race_metadata -->
         <!---->
@@ -529,6 +568,10 @@
             <xs:field xpath="@to"/>
         </xs:keyref>
 
+        <xs:keyref name="FK__people__person__inventory__item.ref" refer="K__item_metadata__entry.name">
+            <xs:selector xpath="people/person/inventory/item"/>
+            <xs:field xpath="@ref"/>
+        </xs:keyref>
 
     </xs:element>
 </xs:schema>

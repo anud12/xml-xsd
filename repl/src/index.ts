@@ -10,7 +10,7 @@ import {action} from "./command/action";
 import {run} from "./command/run";
 import {sideBySide} from "./sideBySide";
 import {personMapView} from "./view/personMapView";
-import {personNameToSymbol, personStatusView} from "./view/personStatusView";
+import {personStatusView} from "./view/personStatusView";
 
 export const state = {
   argPath: process.argv[2],
@@ -27,7 +27,7 @@ async function main() {
   }]);
   // Now that the schema is loaded, start the command loop
   const message = () => {
-    return sideBySide(personMapView(selectedPerson), personStatusView(selectedPerson))
+    return "\n" + sideBySide(personMapView(selectedPerson), personStatusView(selectedPerson))
   }
   await promptMenu(message, [selectedPerson], [
     run,
