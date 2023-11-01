@@ -16,7 +16,7 @@ export const sideBySide = (str1: string, str2: string): string => {
   for (let i = 0; i < maxLength; i++) {
     const line1 = lines1[i] || '';
     const line2 = i < lines2.length ? ' '.repeat(maxLineSize - line1.length) + lines2[i] : ''; // Add padding to the second window
-    mergedString += line1 + ' \t ' + line2 + '\n';
+    mergedString += line1 + '  ' + line2 + '\n';
   }
 
   return mergedString;
