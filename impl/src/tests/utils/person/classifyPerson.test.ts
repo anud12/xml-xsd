@@ -18,21 +18,18 @@ describe("classifyPerson", () => {
     <property_metadata/>
     <classification_metadata>
         <entry name="dead">
-            <has_positive_value>
+            <property name="health" is="lessThan" >
                 <operation>
-                    <add_property_value name="health"/>
+                    <add value="0"/>
                 </operation>
-                <operation>
-                    <multiply value="-1"/>
-                </operation>
-            </has_positive_value>
+            </property>
         </entry>
         <entry name="alive">
-            <has_positive_value>
+            <property name="health" is="greaterThan">
                 <operation>
-                    <add_property_value name="health"/>
+                    <add value="0"/>
                 </operation>
-            </has_positive_value>
+            </property>
         </entry>
     </classification_metadata>
   <race_metadata>

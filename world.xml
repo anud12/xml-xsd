@@ -157,14 +157,18 @@
     <!--_-->
     <classification_metadata>
         <entry name="dead">
-            <has_positive_value>
+            <property name="health" is="lessThanOrEqual">
                 <operation>
-                    <add_property_value name="health"/>
+                    <add value="0"/>
                 </operation>
+            </property>
+        </entry>
+        <entry name="alive">
+            <property name="health" is="greaterThan">
                 <operation>
-                    <multiply value="-1"/>
+                    <add value="0"/>
                 </operation>
-            </has_positive_value>
+            </property>
         </entry>
     </classification_metadata>
     <!--_-->
@@ -304,13 +308,11 @@
             <inventory>
                 <item ref="Long sword" equipped="hand" />
             </inventory>
-            <command />
         </person>
         <person name="Bobu">
             <race name="human" />
             <location x="-1" y="-1" />
             <properties />
-            <command />
         </person>
     </people>
     <!--_-->

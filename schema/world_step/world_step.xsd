@@ -194,17 +194,31 @@
                     </xs:key>
                 </xs:element>
 
+
                 <xs:element name="classification_metadata">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="entry" maxOccurs="unbounded">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="has_positive_value" maxOccurs="unbounded">
+                                        <xs:element name="property" maxOccurs="unbounded">
                                             <xs:complexType>
                                                 <xs:sequence>
                                                     <xs:group ref="type_math_operations"/>
                                                 </xs:sequence>
+                                                <xs:attribute name="name" use="required"/>
+                                                <xs:attribute name="is" use="required">
+                                                    <xs:simpleType>
+                                                        <xs:restriction>
+                                                            <xs:enumeration value="lessThan"/>
+                                                            <xs:enumeration value="lessThanOrEqual"/>
+                                                            <xs:enumeration value="greaterThan"/>
+                                                            <xs:enumeration value="greaterThanOrEqual"/>
+                                                            <xs:enumeration value="equal"/>
+                                                            <xs:enumeration value="notEqual"/>
+                                                        </xs:restriction>
+                                                    </xs:simpleType>
+                                                </xs:attribute>
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
@@ -469,7 +483,11 @@
                                                 </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>
-                                        <xs:element name="command"/>
+                                        <xs:element name="classification" minOccurs="0">
+                                            <xs:complexType>
+                                                <xs:attribute name="name" use="required"/>
+                                            </xs:complexType>
+                                        </xs:element>
                                     </xs:sequence>
                                     <xs:attribute name="name" use="required"/>
                                 </xs:complexType>
@@ -539,8 +557,12 @@
         <!---->
         <!-- FK classification_metadata -->
         <!---->
-        <xs:keyref name="FK__classification_metadata__entry__operation__add_property_value.name" refer="K__property_metadata__entry.name">
-            <xs:selector xpath="classification_metadata/entry/has_positive_value/operation/add_property_value"/>
+        <xs:keyref name="FK__classification_metadata__entry__property.name" refer="K__property_metadata__entry.name">
+            <xs:selector xpath="classification_metadata/entry/property"/>
+            <xs:field xpath="@name"/>
+        </xs:keyref>
+        <xs:keyref name="FK__classification_metadata__entry__property__add_property_value.name" refer="K__property_metadata__entry.name">
+            <xs:selector xpath="classification_metadata/entry/property/operation/add_property_value"/>
             <xs:field xpath="@name"/>
         </xs:keyref>
         <!---->

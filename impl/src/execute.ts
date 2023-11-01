@@ -5,6 +5,7 @@ import {Unit} from "./utils/middleware";
 import {personVision} from "./middleware/personVision";
 import {personMoveTowards} from "./middleware/personMoveTowards";
 import {personAction} from "./middleware/personAction";
+import {personAssignClassification} from "./middleware/personAssignClassification";
 
 export const execute = async (xmlString:string) => {
   const readJson = JsonQuery.fromText<JsonSchema>(xmlString.toString());
@@ -15,10 +16,12 @@ export const execute = async (xmlString:string) => {
     util: readJsonUtil
   }
 
+  const personAssignClassificationResult = personAssignClassification(unit);
   const personVisionResult = personVision(unit);
   const personMoveTowardsResult = personMoveTowards(unit);
   const personActionResult = personAction(unit);
 
+  await personAssignClassificationResult(readJson);
   await personVisionResult(readJson);
   await personMoveTowardsResult(readJson);
   await personActionResult(readJson);

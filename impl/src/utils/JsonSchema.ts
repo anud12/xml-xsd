@@ -32,7 +32,7 @@ export type JsonSchema = JsonQueryType<never, {
 
   classification_metadata: JsonQueryType<never, {
     entry: JsonQueryType<"name", {
-      has_positive_value: JsonQueryType<never, {
+      property: JsonQueryType<"name" | "is", {
         operation: OperationQueryType,
       }>,
     }>
@@ -97,7 +97,8 @@ export type JsonSchema = JsonQueryType<never, {
       }>,
       inventory: JsonQueryType<never, {
         item: JsonQueryType<"ref" | "equipped">
-      }>
+      }>,
+      classification: JsonQueryType<"name">,
     }>
   }>;
 
