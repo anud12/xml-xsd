@@ -23,12 +23,20 @@ export type JsonSchema = JsonQueryType<never, {
   }>,
 
   property_metadata: JsonQueryType<never, {
-    entry: JsonQueryType<"name" | "default" | "value" | "max_value" , {
+    entry: JsonQueryType<"name" | "default" | "value" | "max_value", {
       default: JsonQueryType<never, {
-        operation:OperationQueryType
+        operation: OperationQueryType
       }>
     }>
   }>,
+
+  classification_metadata: JsonQueryType<never, {
+    entry: JsonQueryType<"name", {
+      property: JsonQueryType<"name" | "is", {
+        operation: OperationQueryType,
+      }>,
+    }>
+  }>
 
   action_metadata: JsonQueryType<never, {
     person_to_person: JsonQueryType<"name", {
@@ -42,7 +50,7 @@ export type JsonSchema = JsonQueryType<never, {
         }>
       }>,
       property_mutation: JsonQueryType<"name" | "on", {
-        from:JsonQueryType<"partaker", {
+        from: JsonQueryType<"partaker", {
           operation: OperationQueryType
         }>
       }>
@@ -89,7 +97,10 @@ export type JsonSchema = JsonQueryType<never, {
       }>,
       inventory: JsonQueryType<never, {
         item: JsonQueryType<"ref" | "equipped">
-      }>
+      }>,
+      classifications: JsonQueryType<never, {
+        classification: JsonQueryType<"name">
+      }>,
     }>
   }>;
 
@@ -98,7 +109,7 @@ export type JsonSchema = JsonQueryType<never, {
   }>,
 
   actions: JsonQueryType<never, {
-    by:JsonQueryType<"name", {
+    by: JsonQueryType<"name", {
       do: JsonQueryType<"action" | "to">,
       move_towards: JsonQueryType<"x" | "y">
     }>

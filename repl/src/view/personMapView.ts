@@ -51,15 +51,15 @@ export function personMapView(personName: string) {
   })
   let rows = [];
   for (let y = personY - vision; y <= personY + vision; y++) {
-    let row = "";
+    let row = [];
     for (let x = personX - vision; x <= personX + vision; x++) {
       if (grid[y] && grid[y][x]) {
-        row += ` ${grid[y][x]} `;
+        row.push(grid[y][x]);
       } else {
-        row += ` ${unfilledCharacter} `;
+        row.push(unfilledCharacter);
       }
     }
-    rows.push(row);
+    rows.push(row.join(" "));
   }
   string += rows.join("\n")
   return string;

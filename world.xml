@@ -141,7 +141,36 @@
                 </operation>
             </default>
         </entry>
+        <entry name="health" units="points">
+            <default>
+                <operation>
+                    <add_property_value name="constitution"/>
+                </operation>
+                <operation>
+                    <add_dice value="8"/>
+                </operation>
+            </default>
+        </entry>
     </property_metadata>
+    <!--_-->
+    <!--Classification metadata-->
+    <!--_-->
+    <classification_metadata>
+        <entry name="dead">
+            <property name="health" is="lessThanOrEqual">
+                <operation>
+                    <add value="0"/>
+                </operation>
+            </property>
+        </entry>
+        <entry name="alive">
+            <property name="health" is="greaterThan">
+                <operation>
+                    <add value="0"/>
+                </operation>
+            </property>
+        </entry>
+    </classification_metadata>
     <!--_-->
     <!--Race metadata-->
     <!--_-->
@@ -279,13 +308,13 @@
             <inventory>
                 <item ref="Long sword" equipped="hand" />
             </inventory>
-            <command />
+            <classifications/>
         </person>
         <person name="Bobu">
             <race name="human" />
             <location x="-1" y="-1" />
             <properties />
-            <command />
+            <classifications/>
         </person>
     </people>
     <!--_-->

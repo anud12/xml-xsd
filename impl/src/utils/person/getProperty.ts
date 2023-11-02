@@ -6,7 +6,7 @@ import {nodeBodyType} from "../../JSONQuery";
 type RaceQueryType = JsonSchema[typeof nodeBodyType]["race_metadata"][typeof nodeBodyType]["entry"]
 type Bonus = RaceQueryType[typeof nodeBodyType]["property_bonus"]
 
-export const getBaseProperty = (readJson: Unit, personQueryType: PersonQueryType, key: string) =>  {
+export const getBaseProperty = (readJson: Unit, personQueryType: PersonQueryType, key: string):string =>  {
   try {
     return readJson.json.queryAll("property_metadata")
       .flatMap(e => e.queryAll("entry"))
@@ -23,7 +23,7 @@ export const getBaseProperty = (readJson: Unit, personQueryType: PersonQueryType
   }
 }
 
-export const getRaceProperty = (readJson: Unit, personQueryType: PersonQueryType, raceQueryType: RaceQueryType, key: string) => {
+export const getRaceProperty = (readJson: Unit, personQueryType: PersonQueryType, raceQueryType: RaceQueryType, key: string):string => {
   const base = getBaseProperty(readJson, personQueryType, key);
   const propertyBonus: Bonus = raceQueryType.queryAllOptional("property_bonus")
     .find(e => e.$ref === key);
@@ -38,7 +38,7 @@ export const getRaceProperty = (readJson: Unit, personQueryType: PersonQueryType
 }
 
 export type PersonQueryType = JsonSchema[typeof nodeBodyType]["people"][typeof nodeBodyType]["person"]
-export const getProperty = (readJson: Unit, personQueryType: PersonQueryType, key: string) => {
+export const getProperty = (readJson: Unit, personQueryType: PersonQueryType, key: string):string => {
   try {
     let propertyList = personQueryType.queryAllOptional("properties");
     if (propertyList.length === 0) {

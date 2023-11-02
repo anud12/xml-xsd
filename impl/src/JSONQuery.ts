@@ -82,6 +82,15 @@ export class JsonQuery<A extends JsonQueryType> implements A {
     const d = root.window.document.childNodes;
     return new JsonQuery(root, d[0], undefined) as unknown as A
   }
+  static canCreate = (childNode:ChildNode) => {
+    if (childNode.nodeType === childNode.COMMENT_NODE) {
+      return true;
+    }
+    if (childNode.nodeType === childNode.ELEMENT_NODE) {
+      return true;
+    }
+    return false
+  }
   [nodeBodyType]: never;
   [nodeAttributes]: never;
 
@@ -94,6 +103,7 @@ export class JsonQuery<A extends JsonQueryType> implements A {
     this.children = []
     this.parent = parent;
     this.tag = UnknownJsonTag;
+
     if (element.nodeType === element.ELEMENT_NODE) {
       this.initElement(root, element as Element)
       return;
@@ -103,6 +113,7 @@ export class JsonQuery<A extends JsonQueryType> implements A {
       this.body = element.nodeValue;
       return;
     }
+    throw new Error(`failed to create JSONQuery unknown nodeType ${element.nodeType}`);
   }
 
   private getPath() {
@@ -115,10 +126,11 @@ export class JsonQuery<A extends JsonQueryType> implements A {
 
   private initElement(root: jsdom.JSDOM, element: Element) {
     this.tag = element.tagName;
-    const children = [...element.childNodes ?? []].map((childNode) => {
+    const children = [...element.childNodes ?? []]
+      .filter(childNode => JsonQuery.canCreate(childNode))
+      .map((childNode) => {
       const childElement: Element = childNode as any;
       const jsonQuery = new JsonQuery(root, childElement, this);
-      jsonQuery.children = [...childElement.childNodes ?? []].map(value => new JsonQuery(root, value, jsonQuery))
       return jsonQuery;
     })
       .filter(e => e)
