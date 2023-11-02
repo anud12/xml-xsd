@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@types/inquirer": "^8.2.6",
+    "blessed": "^0.1.81",
     "demo": "file:../impl",
     "inquirer": "^8.2.6",
     "ts-node": "^10.9.1",
