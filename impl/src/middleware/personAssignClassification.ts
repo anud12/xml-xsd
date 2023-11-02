@@ -15,9 +15,10 @@ export const personAssignClassification: Middleware = (readJson)  => {
     const personList = writeJson.queryAll("people").flatMap(e => e.queryAll("person"));
     classificationListByPersonName.forEach(({name, classificationList}) => {
       const person = personList.find(e => e.$name === name);
-      person.children = person.children.filter(e => e.tag !== "classification");
+      const classifications = person.query("classifications");
+      classifications.children = [];
       classificationList.forEach(classification => {
-        person.appendChild("classification", {
+        classifications.appendChild("classification", {
           $name: classification
         })
       })

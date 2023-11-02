@@ -47,6 +47,7 @@ describe("personAssignClassification", () => {
             <inventory>
                 <item ref="Long sword" equipped="hand"/>
             </inventory>
+            <classifications/>
         </person>
     </people>
 </world_step>
@@ -96,7 +97,9 @@ describe("personAssignClassification", () => {
       <inventory>
         <item ref="Long sword" equipped="hand" />
       </inventory>
-      <classification name="dead" />
+      <classifications>
+        <classification name="dead" />
+      </classifications>
     </person>
   </people>
 </world_step>

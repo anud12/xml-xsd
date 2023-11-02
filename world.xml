@@ -308,11 +308,13 @@
             <inventory>
                 <item ref="Long sword" equipped="hand" />
             </inventory>
+            <classifications/>
         </person>
         <person name="Bobu">
             <race name="human" />
             <location x="-1" y="-1" />
             <properties />
+            <classifications/>
         </person>
     </people>
     <!--_-->

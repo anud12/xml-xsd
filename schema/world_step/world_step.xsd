@@ -483,9 +483,15 @@
                                                 </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>
-                                        <xs:element name="classification" minOccurs="0">
+                                        <xs:element name="classifications">
                                             <xs:complexType>
-                                                <xs:attribute name="name" use="required"/>
+                                                <xs:sequence>
+                                                    <xs:element name="classification" minOccurs="0" maxOccurs="unbounded">
+                                                        <xs:complexType>
+                                                            <xs:attribute name="name" use="required"/>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>

@@ -16,13 +16,13 @@ export const execute = async (xmlString:string) => {
     util: readJsonUtil
   }
 
-  const personAssignClassificationResult = personAssignClassification(unit);
-  const personVisionResult = personVision(unit);
+  await personAssignClassification(unit)(readJson);
+  await personVision(unit)(readJson);
   const personMoveTowardsResult = personMoveTowards(unit);
   const personActionResult = personAction(unit);
+  const personAssignClassificationResult = personAssignClassification(unit);
 
   await personAssignClassificationResult(readJson);
-  await personVisionResult(readJson);
   await personMoveTowardsResult(readJson);
   await personActionResult(readJson);
 
