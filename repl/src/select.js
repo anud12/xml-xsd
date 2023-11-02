@@ -2,59 +2,68 @@ var blessed = require('blessed');
 
 // Create a screen object.
 var screen = blessed.screen({
-    smartCSR: true
+    smartCSR: true,
+    dockBorders: true,
 });
 
 screen.title = 'my window title';
 
 // Create a box perfectly centered horizontally and vertically.
 var box = blessed.box({
-    content: 'Hello {bold}world{/bold}!',
-    tags: true,
-    border: false,
+    content: 'Hello world!',
+    border: "line",
     width: 10,
-    height: 5,
+    height: 15,
+});
+
+// Append our box to the screen.
+// screen.append(box);
+// screen.append(blessed.box({
+//     content: 'Second box',
+//     width: 10,
+//     height: 5,
+//     border: "line",
+//     style: {
+//         fg: 'magenta',
+//         hover: {
+//             bg: 'green'
+//         }
+//     }
+// }))
+
+const layout = blessed.layout({
+    width: 20,
+    height: 10,
+    dockBorders: true,
+    border:"line"
+})
+
+layout.append(blessed.box({
+    content: 'Second box',
+    // border: "line",
     style: {
-        fg: 'white',
-        bg: 'magenta',
-        border: {
-            bg: '#f0f0f0',
-            fg: '#f0f0f0'
-        },
+        fg: 'magenta',
         hover: {
             bg: 'green'
         }
     }
-});
+}))
 
-// Append our box to the screen.
-screen.append(box);
+layout.append(blessed.box({
+    content: 'Second box with large text that wraps and keeps going',
+    scrollable: true,
+    scrollbar:true,
+    border: "line",
+    style: {
+        fg: 'magenta',
+        hover: {
+            bg: 'green'
+        }
+    }
+}))
 
-// Add a png icon to the box
-var icon = blessed.image({
-    parent: box,
-    top: 0,
-    left: 0,
-    type: 'overlay',
-    width: 'shrink',
-    height: 'shrink',
-    file: __dirname + '/my-program-icon.png',
-    search: false
-});
+screen.append(layout)
 
-// If our box is clicked, change the content.
-box.on('click', function (data) {
-    box.setContent('{center}Some different {red-fg}content{/red-fg}.{/center}');
-    screen.render();
-});
-
-// If box is focused, handle `enter`/`return` and give us some more content.
-box.key('enter', function (ch, key) {
-    box.setContent('{right}Even different {black-fg}content{/black-fg}.{/right}\n');
-    box.setLine(1, 'bar');
-    box.insertLine(1, 'foo');
-    screen.render();
-});
 
 // Quit on Escape, q, or Control-C.
 screen.key(['escape', 'q', 'C-c'], function (ch, key) {
@@ -62,7 +71,7 @@ screen.key(['escape', 'q', 'C-c'], function (ch, key) {
 });
 
 // Focus our element.
-box.focus();
+// box.focus();
 
 // Render the screen.
 screen.render();
