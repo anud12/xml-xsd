@@ -1,13 +1,13 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 >
 
-    <xs:include schemaLocation="../types/schema.xsd"/>
+    <xs:include schemaLocation="../types/schema.xsd" />
 
     <xs:simpleType name="item_slot">
-        <xs:restriction>
-            <xs:enumeration value="hand"/>
-            <xs:enumeration value="chest"/>
-            <xs:enumeration value="legs"/>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="hand" />
+            <xs:enumeration value="chest" />
+            <xs:enumeration value="legs" />
         </xs:restriction>
     </xs:simpleType>
 
@@ -15,35 +15,35 @@
         <xs:sequence>
             <xs:element name="required_property">
                 <xs:complexType>
-                    <xs:attribute name="name" use="required"/>
+                    <xs:attribute name="name" use="required" />
                 </xs:complexType>
             </xs:element>
         </xs:sequence>
-        <xs:attribute name="name" use="required"/>
+        <xs:attribute name="name" use="required" />
     </xs:complexType>
 
     <xs:complexType name="item_ref">
-        <xs:attribute name="ref" use="required"/>
-        <xs:attribute name="equipped" type="item_slot"/>
+        <xs:attribute name="ref" use="required" />
+        <xs:attribute name="equipped" type="item_slot" />
     </xs:complexType>
 
     <xs:simpleType name="type_direction">
-        <xs:restriction>
-            <xs:enumeration value="north"/>
-            <xs:enumeration value="east"/>
-            <xs:enumeration value="south"/>
-            <xs:enumeration value="west"/>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="north" />
+            <xs:enumeration value="east" />
+            <xs:enumeration value="south" />
+            <xs:enumeration value="west" />
         </xs:restriction>
     </xs:simpleType>
     <xs:complexType name="type_cell_ref">
-        <xs:attribute name="layer"/>
-        <xs:attribute name="x" use="required" type="xs:integer"/>
-        <xs:attribute name="y" use="required" type="xs:integer"/>
+        <xs:attribute name="layer" />
+        <xs:attribute name="x" use="required" type="xs:integer" />
+        <xs:attribute name="y" use="required" type="xs:integer" />
     </xs:complexType>
     <xs:simpleType name="type_person_target">
-        <xs:restriction>
-            <xs:enumeration value="self"/>
-            <xs:enumeration value="target"/>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="self" />
+            <xs:enumeration value="target" />
         </xs:restriction>
     </xs:simpleType>
 
@@ -54,55 +54,55 @@
                     <xs:choice>
                         <xs:element name="add" minOccurs="0">
                             <xs:complexType>
-                                <xs:attribute name="value" type="xs:int" use="required"/>
+                                <xs:attribute name="value" type="xs:int" use="required" />
                             </xs:complexType>
                         </xs:element>
                         <xs:element name="add_dice" minOccurs="0">
                             <xs:complexType>
-                                <xs:attribute name="value" type="xs:int" use="required"/>
+                                <xs:attribute name="value" type="xs:int" use="required" />
                             </xs:complexType>
                         </xs:element>
                         <xs:element name="multiply" minOccurs="0">
                             <xs:complexType>
-                                <xs:attribute name="value" type="xs:int" use="required"/>
+                                <xs:attribute name="value" type="xs:int" use="required" />
                             </xs:complexType>
                         </xs:element>
                         <xs:element name="multiply_dice" minOccurs="0">
                             <xs:complexType>
-                                <xs:attribute name="value" type="xs:int" use="required"/>
+                                <xs:attribute name="value" type="xs:int" use="required" />
                             </xs:complexType>
                         </xs:element>
                         <xs:element name="divide" minOccurs="0">
                             <xs:complexType>
-                                <xs:attribute name="value" type="xs:int" use="required"/>
+                                <xs:attribute name="value" type="xs:int" use="required" />
                             </xs:complexType>
                         </xs:element>
                         <xs:element name="divide_dice" minOccurs="0">
                             <xs:complexType>
-                                <xs:attribute name="value" type="xs:int" use="required"/>
+                                <xs:attribute name="value" type="xs:int" use="required" />
                             </xs:complexType>
                         </xs:element>
                         <xs:element name="modulo" minOccurs="0">
                             <xs:complexType>
-                                <xs:attribute name="value" type="xs:int" use="required"/>
+                                <xs:attribute name="value" type="xs:int" use="required" />
                             </xs:complexType>
                         </xs:element>
                         <xs:element name="modulo_dice" minOccurs="0">
                             <xs:complexType>
-                                <xs:attribute name="value" type="xs:int" use="required"/>
+                                <xs:attribute name="value" type="xs:int" use="required" />
                             </xs:complexType>
                         </xs:element>
 
 
                         <xs:element name="add_property_value" minOccurs="0">
                             <xs:complexType>
-                                <xs:attribute name="name" use="required"/>
+                                <xs:attribute name="name" use="required" />
                             </xs:complexType>
                         </xs:element>
 
                         <xs:element name="group" minOccurs="0">
                             <xs:complexType>
-                                <xs:group ref="type_math_operations"/>
+                                <xs:group ref="type_math_operations" />
                             </xs:complexType>
                         </xs:element>
 
@@ -111,7 +111,7 @@
                                 <xs:sequence>
                                     <xs:element name="group" minOccurs="2" maxOccurs="unbounded">
                                         <xs:complexType>
-                                            <xs:group ref="type_math_operations"/>
+                                            <xs:group ref="type_math_operations" />
                                         </xs:complexType>
                                     </xs:element>
                                 </xs:sequence>
@@ -122,7 +122,7 @@
                                 <xs:sequence>
                                     <xs:element name="group" minOccurs="2" maxOccurs="unbounded">
                                         <xs:complexType>
-                                            <xs:group ref="type_math_operations"/>
+                                            <xs:group ref="type_math_operations" />
                                         </xs:complexType>
                                     </xs:element>
                                 </xs:sequence>
@@ -142,14 +142,14 @@
                 <xs:element name="world_metadata">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="previous_world_step" type="xs:anyURI" minOccurs="0"/>
-                            <xs:element name="next_world_step" type="xs:anyURI"/>
+                            <xs:element name="previous_world_step" type="xs:anyURI" minOccurs="0" />
+                            <xs:element name="next_world_step" type="xs:anyURI" />
                             <xs:element name="randomization_table">
                                 <xs:complexType>
                                     <xs:sequence>
                                         <xs:element name="entry" maxOccurs="unbounded">
                                             <xs:complexType>
-                                                <xs:attribute name="value" type="xs:int"/>
+                                                <xs:attribute name="value" type="xs:int" />
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
@@ -169,28 +169,32 @@
                                         <xs:element name="default">
                                             <xs:complexType>
                                                 <xs:choice>
-                                                    <xs:group ref="type_math_operations"/>
+                                                    <xs:group ref="type_math_operations" />
                                                 </xs:choice>
                                             </xs:complexType>
                                         </xs:element>
-                                        <xs:element name="property-threshold" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:element name="property-threshold" minOccurs="0"
+                                            maxOccurs="unbounded">
                                             <xs:complexType>
-                                                <xs:attribute name="name" type="xs:string" use="required"/>
-                                                <xs:attribute name="min-value-inclusive" type="xs:int"/>
-                                                <xs:attribute name="max-value-inclusive" type="xs:int"/>
+                                                <xs:attribute name="name" type="xs:string"
+                                                    use="required" />
+                                                <xs:attribute name="min-value-inclusive"
+                                                    type="xs:int" />
+                                                <xs:attribute name="max-value-inclusive"
+                                                    type="xs:int" />
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
-                                    <xs:attribute name="name" use="required"/>
-                                    <xs:attribute name="units" use="required" default="points"/>
+                                    <xs:attribute name="name" use="required" />
+                                    <xs:attribute name="units" use="required" />
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
                     </xs:complexType>
 
                     <xs:key name="K__property_metadata__entry.name">
-                        <xs:selector xpath="entry"/>
-                        <xs:field xpath="@name"/>
+                        <xs:selector xpath="entry" />
+                        <xs:field xpath="@name" />
                     </xs:key>
                 </xs:element>
 
@@ -204,25 +208,26 @@
                                         <xs:element name="property" maxOccurs="unbounded">
                                             <xs:complexType>
                                                 <xs:sequence>
-                                                    <xs:group ref="type_math_operations"/>
+                                                    <xs:group ref="type_math_operations" />
                                                 </xs:sequence>
-                                                <xs:attribute name="name" use="required"/>
+                                                <xs:attribute name="name" use="required" />
                                                 <xs:attribute name="is" use="required">
                                                     <xs:simpleType>
-                                                        <xs:restriction>
-                                                            <xs:enumeration value="lessThan"/>
-                                                            <xs:enumeration value="lessThanOrEqual"/>
-                                                            <xs:enumeration value="greaterThan"/>
-                                                            <xs:enumeration value="greaterThanOrEqual"/>
-                                                            <xs:enumeration value="equal"/>
-                                                            <xs:enumeration value="notEqual"/>
+                                                        <xs:restriction base="xs:string">
+                                                            <xs:enumeration value="lessThan" />
+                                                            <xs:enumeration value="lessThanOrEqual" />
+                                                            <xs:enumeration value="greaterThan" />
+                                                            <xs:enumeration
+                                                                value="greaterThanOrEqual" />
+                                                            <xs:enumeration value="equal" />
+                                                            <xs:enumeration value="notEqual" />
                                                         </xs:restriction>
                                                     </xs:simpleType>
                                                 </xs:attribute>
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
-                                    <xs:attribute name="name" use="required"/>
+                                    <xs:attribute name="name" use="required" />
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
@@ -236,16 +241,17 @@
                             <xs:element name="entry" maxOccurs="unbounded">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="vision" type="type_range"/>
-                                        <xs:element name="movement" type="type_range"/>
-                                        <xs:element name="property_bonus" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:element name="vision" type="type_range" />
+                                        <xs:element name="movement" type="type_range" />
+                                        <xs:element name="property_bonus" minOccurs="0"
+                                            maxOccurs="unbounded">
                                             <xs:complexType>
-                                                <xs:group ref="type_math_operations"/>
-                                                <xs:attribute name="ref"/>
+                                                <xs:group ref="type_math_operations" />
+                                                <xs:attribute name="ref" />
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
-                                    <xs:attribute name="name" type="xs:string" use="required"/>
+                                    <xs:attribute name="name" type="xs:string" use="required" />
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
@@ -261,7 +267,7 @@
                                     <xs:sequence>
                                         <xs:element name="range">
                                             <xs:complexType>
-                                                <xs:attributeGroup ref="attributeGroup_range"/>
+                                                <xs:attributeGroup ref="attributeGroup_range" />
                                             </xs:complexType>
                                         </xs:element>
                                         <xs:element name="test">
@@ -269,16 +275,18 @@
                                                 <xs:sequence>
                                                     <xs:element name="value">
                                                         <xs:complexType>
-                                                            <xs:group ref="type_math_operations"/>
-                                                            <xs:attribute name="target" type="type_person_target"
-                                                                          use="required"/>
+                                                            <xs:group ref="type_math_operations" />
+                                                            <xs:attribute name="target"
+                                                                type="type_person_target"
+                                                                use="required" />
                                                         </xs:complexType>
                                                     </xs:element>
                                                     <xs:element name="expected">
                                                         <xs:complexType>
-                                                            <xs:group ref="type_math_operations"/>
-                                                            <xs:attribute name="target" type="type_person_target"
-                                                                          use="required"/>
+                                                            <xs:group ref="type_math_operations" />
+                                                            <xs:attribute name="target"
+                                                                type="type_person_target"
+                                                                use="required" />
                                                         </xs:complexType>
                                                     </xs:element>
                                                 </xs:sequence>
@@ -289,13 +297,16 @@
                                                 <xs:sequence>
                                                     <xs:element name="from" maxOccurs="unbounded">
                                                         <xs:complexType>
-                                                            <xs:group ref="type_math_operations"/>
-                                                            <xs:attribute name="participant" type="type_person_target" use="required"/>
+                                                            <xs:group ref="type_math_operations" />
+                                                            <xs:attribute name="participant"
+                                                                type="type_person_target"
+                                                                use="required" />
                                                         </xs:complexType>
                                                     </xs:element>
                                                 </xs:sequence>
-                                                <xs:attribute name="name"/>
-                                                <xs:attribute name="on" type="type_person_target" use="required"/>
+                                                <xs:attribute name="name" />
+                                                <xs:attribute name="on" type="type_person_target"
+                                                    use="required" />
                                             </xs:complexType>
                                         </xs:element>
                                         <xs:element name="location_mutation" minOccurs="0">
@@ -303,25 +314,28 @@
                                                 <xs:sequence>
                                                     <xs:element name="from" maxOccurs="unbounded">
                                                         <xs:complexType>
-                                                            <xs:group ref="type_math_operations"/>
-                                                            <xs:attribute name="participant" type="type_person_target" use="required"/>
+                                                            <xs:group ref="type_math_operations" />
+                                                            <xs:attribute name="participant"
+                                                                type="type_person_target"
+                                                                use="required" />
                                                         </xs:complexType>
                                                     </xs:element>
                                                 </xs:sequence>
-                                                <xs:attribute name="name"/>
-                                                <xs:attribute name="on" type="type_person_target" use="required"/>
+                                                <xs:attribute name="name" />
+                                                <xs:attribute name="on" type="type_person_target"
+                                                    use="required" />
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
-                                    <xs:attribute name="name"/>
+                                    <xs:attribute name="name" />
                                 </xs:complexType>
                             </xs:element>
 
                         </xs:sequence>
                     </xs:complexType>
                     <xs:key name="K__action_metadata_person_to_person.name">
-                        <xs:selector xpath="person_to_person"/>
-                        <xs:field xpath="@name"/>
+                        <xs:selector xpath="person_to_person" />
+                        <xs:field xpath="@name" />
                     </xs:key>
                 </xs:element>
 
@@ -334,24 +348,25 @@
                                     <xs:sequence>
                                         <xs:element name="weight-kg" minOccurs="0">
                                             <xs:complexType>
-                                                <xs:attribute name="value"/>
+                                                <xs:attribute name="value" />
                                             </xs:complexType>
                                         </xs:element>
-                                        <xs:element name="wearable" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:element name="wearable" minOccurs="0"
+                                            maxOccurs="unbounded">
                                             <xs:complexType>
-                                                <xs:attribute name="slot" type="item_slot"/>
+                                                <xs:attribute name="slot" type="item_slot" />
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
-                                    <xs:attribute name="name" use="required"/>
+                                    <xs:attribute name="name" use="required" />
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
                     </xs:complexType>
 
                     <xs:key name="K__item_metadata__entry.name">
-                        <xs:selector xpath="entry"/>
-                        <xs:field xpath="@name"/>
+                        <xs:selector xpath="entry" />
+                        <xs:field xpath="@name" />
                     </xs:key>
                 </xs:element>
 
@@ -359,54 +374,58 @@
                 <xs:element name="locations_markov_chain" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="location_markov_link" minOccurs="0" maxOccurs="unbounded">
+                            <xs:element name="location_markov_link" minOccurs="0"
+                                maxOccurs="unbounded">
                                 <xs:complexType>
                                     <xs:sequence>
                                         <xs:element name="tag" minOccurs="0" maxOccurs="unbounded">
                                             <xs:complexType>
-                                                <xs:attribute name="name" use="required"/>
+                                                <xs:attribute name="name" use="required" />
                                             </xs:complexType>
                                         </xs:element>
-                                        <xs:element name="sibling" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:element name="sibling" minOccurs="0"
+                                            maxOccurs="unbounded">
                                             <xs:complexType>
-                                                <xs:attribute name="type" use="required"/>
-                                                <xs:attribute name="quantity" type="xs:int" default="1"/>
-                                                <xs:attribute name="position" default="all" use="required">
+                                                <xs:attribute name="type" use="required" />
+                                                <xs:attribute name="quantity" type="xs:int"
+                                                    default="1" />
+                                                <xs:attribute name="position" use="required">
                                                     <xs:simpleType>
-                                                        <xs:restriction>
-                                                            <xs:enumeration value="all"/>
-                                                            <xs:enumeration value="fill"/>
-                                                            <xs:enumeration value="top"/>
-                                                            <xs:enumeration value="right"/>
-                                                            <xs:enumeration value="bottom"/>
-                                                            <xs:enumeration value="left"/>
+                                                        <xs:restriction base="xs:string">
+                                                            <xs:enumeration value="all" />
+                                                            <xs:enumeration value="fill" />
+                                                            <xs:enumeration value="top" />
+                                                            <xs:enumeration value="right" />
+                                                            <xs:enumeration value="bottom" />
+                                                            <xs:enumeration value="left" />
                                                         </xs:restriction>
                                                     </xs:simpleType>
+
                                                 </xs:attribute>
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
-                                    <xs:attribute name="type" use="required"/>
+                                    <xs:attribute name="type" use="required" />
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                     <xs:key name="K_location_type">
-                        <xs:selector xpath="location_markov_link"/>
-                        <xs:field xpath="@type"/>
+                        <xs:selector xpath="location_markov_link" />
+                        <xs:field xpath="@type" />
                     </xs:key>
                     <xs:keyref name="FK_sibling_type" refer="K_location_type">
-                        <xs:selector xpath="location_markov_link/sibling"/>
-                        <xs:field xpath="@type"/>
+                        <xs:selector xpath="location_markov_link/sibling" />
+                        <xs:field xpath="@type" />
                     </xs:keyref>
 
                     <xs:key name="K_location_tag">
-                        <xs:selector xpath="location_markov_link/tag"/>
-                        <xs:field xpath="@name"/>
+                        <xs:selector xpath="location_markov_link/tag" />
+                        <xs:field xpath="@name" />
                     </xs:key>
                     <xs:keyref name="FK_sibling_tag" refer="K_location_tag">
-                        <xs:selector xpath="location_markov_link/sibling"/>
-                        <xs:field xpath="@tag"/>
+                        <xs:selector xpath="location_markov_link/sibling" />
+                        <xs:field xpath="@tag" />
                     </xs:keyref>
                 </xs:element>
 
@@ -419,25 +438,27 @@
                                     <xs:sequence>
                                         <xs:element name="next" minOccurs="0" maxOccurs="unbounded">
                                             <xs:complexType>
-                                                <xs:attribute name="type" use="required"/>
-                                                <xs:attribute name="quantity" type="xs:int" default="1"/>
+                                                <xs:attribute name="type" use="required" />
+                                                <xs:attribute name="quantity" type="xs:int"
+                                                    default="1" />
                                             </xs:complexType>
                                         </xs:element>
                                         <xs:element name="complete_condition">
                                         </xs:element>
                                     </xs:sequence>
-                                    <xs:attribute name="type"/>
+                                    <xs:attribute name="type" />
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                     <xs:key name="K__quest_markov_link.type">
-                        <xs:selector xpath="quest_markov_link"/>
-                        <xs:field xpath="@type"/>
+                        <xs:selector xpath="quest_markov_link" />
+                        <xs:field xpath="@type" />
                     </xs:key>
-                    <xs:keyref name="FK__quest_markov_link__next.type" refer="K__quest_markov_link.type">
-                        <xs:selector xpath="quest_markov_link/next"/>
-                        <xs:field xpath="@type"/>
+                    <xs:keyref name="FK__quest_markov_link__next.type"
+                        refer="K__quest_markov_link.type">
+                        <xs:selector xpath="quest_markov_link/next" />
+                        <xs:field xpath="@type" />
                     </xs:keyref>
                 </xs:element>
 
@@ -450,25 +471,28 @@
                                     <xs:sequence>
                                         <xs:element name="race">
                                             <xs:complexType>
-                                                <xs:attribute name="name" use="required"/>
+                                                <xs:attribute name="name" use="required" />
                                             </xs:complexType>
                                         </xs:element>
-                                        <xs:element name="location" type="type_cell_ref"/>
+                                        <xs:element name="location" type="type_cell_ref" />
                                         <xs:element name="properties">
                                             <xs:complexType>
                                                 <xs:sequence>
-                                                    <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
+                                                    <xs:element name="property" minOccurs="0"
+                                                        maxOccurs="unbounded">
                                                         <xs:complexType>
-                                                            <xs:attribute name="ref" use="required"/>
-                                                            <xs:attribute name="value" use="required"/>
+                                                            <xs:attribute name="ref" use="required" />
+                                                            <xs:attribute name="value"
+                                                                use="required" />
                                                         </xs:complexType>
                                                     </xs:element>
                                                 </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>
-                                        <xs:element name="relations" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:element name="relations" minOccurs="0"
+                                            maxOccurs="unbounded">
                                             <xs:complexType>
-                                                <xs:attribute name="with" use="required"/>
+                                                <xs:attribute name="with" use="required" />
                                             </xs:complexType>
                                         </xs:element>
                                         <xs:element name="inventory" minOccurs="0">
@@ -476,8 +500,9 @@
                                                 <xs:sequence>
                                                     <xs:element name="item">
                                                         <xs:complexType>
-                                                            <xs:attribute name="ref"/>
-                                                            <xs:attribute name="equipped" type="item_slot"/>
+                                                            <xs:attribute name="ref" />
+                                                            <xs:attribute name="equipped"
+                                                                type="item_slot" />
                                                         </xs:complexType>
                                                     </xs:element>
                                                 </xs:sequence>
@@ -486,27 +511,28 @@
                                         <xs:element name="classifications">
                                             <xs:complexType>
                                                 <xs:sequence>
-                                                    <xs:element name="classification" minOccurs="0" maxOccurs="unbounded">
+                                                    <xs:element name="classification" minOccurs="0"
+                                                        maxOccurs="unbounded">
                                                         <xs:complexType>
-                                                            <xs:attribute name="name" use="required"/>
+                                                            <xs:attribute name="name" use="required" />
                                                         </xs:complexType>
                                                     </xs:element>
                                                 </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
-                                    <xs:attribute name="name" use="required"/>
+                                    <xs:attribute name="name" use="required" />
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                     <xs:key name="K__people_person.name">
-                        <xs:selector xpath="person"/>
-                        <xs:field xpath="@name"/>
+                        <xs:selector xpath="person" />
+                        <xs:field xpath="@name" />
                     </xs:key>
-                    <xs:keyref name="FK__person__relations.with" refer="K__person.name">
-                        <xs:selector xpath="person/relations"/>
-                        <xs:field xpath="@with"/>
+                    <xs:keyref name="FK__person__relations.with" refer="K__people_person.name">
+                        <xs:selector xpath="person/relations" />
+                        <xs:field xpath="@with" />
                     </xs:keyref>
                 </xs:element>
 
@@ -516,14 +542,15 @@
                         <xs:sequence>
                             <xs:element name="cell" maxOccurs="unbounded">
                                 <xs:complexType>
-                                    <xs:attribute name="type" use="required"/>
-                                    <xs:attribute name="x" use="required"/>
-                                    <xs:attribute name="y" use="required"/>
-                                    <xs:attribute name="rotation" type="type_direction" default="north"/>
+                                    <xs:attribute name="type" use="required" />
+                                    <xs:attribute name="x" use="required" />
+                                    <xs:attribute name="y" use="required" />
+                                    <xs:attribute name="rotation" type="type_direction"
+                                        default="north" />
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
-                        <xs:attribute name="name" default="default"/>
+                        <xs:attribute name="name" default="default" />
                     </xs:complexType>
                 </xs:element>
                 <xs:element name="actions">
@@ -534,19 +561,19 @@
                                     <xs:choice>
                                         <xs:element name="do">
                                             <xs:complexType>
-                                                <xs:attribute name="action" use="required"/>
-                                                <xs:attribute name="to" use="required"/>
+                                                <xs:attribute name="action" use="required" />
+                                                <xs:attribute name="to" use="required" />
                                             </xs:complexType>
                                         </xs:element>
                                         <xs:element name="move_towards">
                                             <xs:complexType>
-                                                <xs:attribute name="layer" type="xs:string"/>
-                                                <xs:attribute name="x" type="xs:int" use="required"/>
-                                                <xs:attribute name="y" type="xs:int" use="required"/>
+                                                <xs:attribute name="layer" type="xs:string" />
+                                                <xs:attribute name="x" type="xs:int" use="required" />
+                                                <xs:attribute name="y" type="xs:int" use="required" />
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:choice>
-                                    <xs:attribute name="name" use="required"/>
+                                    <xs:attribute name="name" use="required" />
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
@@ -563,42 +590,47 @@
         <!---->
         <!-- FK classification_metadata -->
         <!---->
-        <xs:keyref name="FK__classification_metadata__entry__property.name" refer="K__property_metadata__entry.name">
-            <xs:selector xpath="classification_metadata/entry/property"/>
-            <xs:field xpath="@name"/>
+        <xs:keyref name="FK__classification_metadata__entry__property.name"
+            refer="K__property_metadata__entry.name">
+            <xs:selector xpath="classification_metadata/entry/property" />
+            <xs:field xpath="@name" />
         </xs:keyref>
-        <xs:keyref name="FK__classification_metadata__entry__property__add_property_value.name" refer="K__property_metadata__entry.name">
-            <xs:selector xpath="classification_metadata/entry/property/operation/add_property_value"/>
-            <xs:field xpath="@name"/>
+        <xs:keyref name="FK__classification_metadata__entry__property__add_property_value.name"
+            refer="K__property_metadata__entry.name">
+            <xs:selector xpath="classification_metadata/entry/property/operation/add_property_value" />
+            <xs:field xpath="@name" />
         </xs:keyref>
         <!---->
         <!-- FK race_metadata -->
         <!---->
-        <xs:keyref name="FK__race_metadata__entry__property_bonus.type" refer="K__property_metadata__entry.name">
-            <xs:selector xpath="race_metadata/entry/property_bonus"/>
-            <xs:field xpath="@type"/>
+        <xs:keyref name="FK__race_metadata__entry__property_bonus.type"
+            refer="K__property_metadata__entry.name">
+            <xs:selector xpath="race_metadata/entry/property_bonus" />
+            <xs:field xpath="@type" />
         </xs:keyref>
 
         <!---->
         <!-- FK actions -->
         <!---->
         <xs:keyref name="FK__actions_by.name__to__people_person.name" refer="K__people_person.name">
-            <xs:selector xpath="actions/by"/>
-            <xs:field xpath="@name"/>
+            <xs:selector xpath="actions/by" />
+            <xs:field xpath="@name" />
         </xs:keyref>
 
-        <xs:keyref name="FK__actions_by_do.action__to__people_person.name" refer="K__action_metadata_person_to_person.name">
-            <xs:selector xpath="actions/by/do"/>
-            <xs:field xpath="@action"/>
+        <xs:keyref name="FK__actions_by_do.action__to__people_person.name"
+            refer="K__action_metadata_person_to_person.name">
+            <xs:selector xpath="actions/by/do" />
+            <xs:field xpath="@action" />
         </xs:keyref>
         <xs:keyref name="FK__actions_by_do.on__to__people_person.name" refer="K__people_person.name">
-            <xs:selector xpath="actions/by/do"/>
-            <xs:field xpath="@to"/>
+            <xs:selector xpath="actions/by/do" />
+            <xs:field xpath="@to" />
         </xs:keyref>
 
-        <xs:keyref name="FK__people__person__inventory__item.ref" refer="K__item_metadata__entry.name">
-            <xs:selector xpath="people/person/inventory/item"/>
-            <xs:field xpath="@ref"/>
+        <xs:keyref name="FK__people__person__inventory__item.ref"
+            refer="K__item_metadata__entry.name">
+            <xs:selector xpath="people/person/inventory/item" />
+            <xs:field xpath="@ref" />
         </xs:keyref>
 
     </xs:element>

@@ -1,8 +1,8 @@
-import {Middleware} from "../utils/middleware";
-import {classifyPerson} from "../utils/person/classifyPerson";
+import { Middleware } from "../utils/middleware";
+import { classifyPerson } from "../utils/person/classifyPerson";
 
 // for person in people add a classifications
-export const personAssignClassification: Middleware = (readJson)  => {
+export const personAssignClassification: Middleware = (readJson) => {
   const personList = readJson.json.queryAll("people").flatMap(e => e.queryAll("person"));
   const classificationListByPersonName = personList.map(person => {
     const classificationList = classifyPerson(readJson, person);
