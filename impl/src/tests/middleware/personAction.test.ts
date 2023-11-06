@@ -173,11 +173,7 @@ describe("personAction" , () => {
       <command />
     </person>
   </people>
-  <actions>
-    <by name="Billy">
-      <do action="meleeAttack" to="Bob" />
-    </by>
-  </actions>
+  <actions />
 </world_step>
 `.split("\n").filter((_, index) => index !== 0).join("\n"));
   })

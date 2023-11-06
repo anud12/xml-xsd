@@ -34,6 +34,7 @@ export type JsonQueryType<
   queryOptional: <P extends keyof B> (p: P) => B[P] | undefined,
   queryAll: <P extends keyof B> (p: P) => Array<B[P]>
   queryAllOptional: <P extends keyof B> (p: P) => Array<B[P]>
+  removeFromParent: () => void,
   getPath: () => string,
   serialize: () => string
 } & {
@@ -194,6 +195,13 @@ export class JsonQuery<A extends JsonQueryType> implements A {
     } catch (e) {
       return undefined;
     }
+  }
+
+  removeFromParent = () => {
+    if (!this.parent) {
+      return;
+    }
+    this.parent.children = this.parent.children.filter(e => e !== this);
   }
 
   serialize = () => {
