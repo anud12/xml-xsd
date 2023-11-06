@@ -10,7 +10,6 @@ import {moveTowards} from "./command/moveTowards";
 import {action} from "./command/action";
 import {writeToDiskCommand} from "./command/writeToDiskCommand";
 import {sideBySide} from "./printer/sideBySide";
-import {render} from "./printer/render";
 import {consoleRenderer} from "./printer/print";
 
 

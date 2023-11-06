@@ -38,12 +38,10 @@ export const select = async <T>(render:Render, message:() => string, options: T[
         return;
       }
       if (key.name === "return") {
-        process.stdout.write("\b");
         process.stdin.removeListener('keypress', listener);
         resolve(options[selectedIndex])
       }
       process.stdout.write("\b");
-      process.stdout.write(" ");
       print();
     };
     process.stdin.on('keypress', listener);

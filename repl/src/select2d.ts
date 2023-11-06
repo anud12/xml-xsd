@@ -54,11 +54,9 @@ export const select2d = async <T>(
       }
       if (key.name === 'return') {
         process.stdin.removeListener('keypress', listener);
-        process.stdout.write('\b');
         resolve(options[selectedRowIndex][selectedColIndex]);
       }
       process.stdout.write("\b");
-      process.stdout.write(" ");
       print();
     };
 
