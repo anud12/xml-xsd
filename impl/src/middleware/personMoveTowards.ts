@@ -55,10 +55,11 @@ export const personMoveTowards: Middleware = readUnit => {
 
         const location = person.query("location")
 
-        const destinationAttributes = calculateDestinationCoordinate(location, moveTowards, movement)
+        const newDestinationAttributes = calculateDestinationCoordinate(location, moveTowards, movement)
         return {
           person,
-          destinationAttributes
+          destinationAttributes: moveTowards,
+          newDestinationAttributes: newDestinationAttributes
         }
       })
     })
@@ -67,8 +68,20 @@ export const personMoveTowards: Middleware = readUnit => {
     actions.forEach(action => {
       const person = persons.find(e => e.$name === action.person.$name);
       const location = person.query("location")
-      location.$x = action.destinationAttributes.$x
-      location.$y = action.destinationAttributes.$y
+      location.$x = action.newDestinationAttributes.$x
+      location.$y = action.newDestinationAttributes.$y
+
+      if (location.$x === action.destinationAttributes.$x && location.$y === action.destinationAttributes.$y) {
+        writeUnit.queryAllOptional("actions")
+          .flatMap(e => e.queryAllOptional("by"))
+          .filter(e => e.$name === action.person.$name)
+          .filter(e => e.queryAllOptional("move_towards"))
+          .forEach(e => {
+            e.removeFromParent();
+          });
+      }
+
     });
+
   }
 }

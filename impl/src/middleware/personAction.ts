@@ -30,13 +30,13 @@ export const personAction: Middleware = readJson => {
 
   const actions = readJson.json.queryAll("actions")
     .flatMap(e => e.queryAllOptional("by"))
-    .flatMap(from => {
-      const personDo = from.queryOptional("do")
-      if(!personDo) {
+    .flatMap(by => {
+      const personDo = by.queryOptional("do")
+      if (!personDo) {
         return [];
       }
       const action = actionMetadata.find(e => e.$name === personDo.$action);
-      const person = personList.find(e => e.$name === from.$name);
+      const person = personList.find(e => e.$name === by.$name);
       const targetPerson = personList.find(e => e.$name === personDo.$to);
 
       const property_mutation_list = action.queryAll("property_mutation").map(e => {
@@ -44,7 +44,7 @@ export const personAction: Middleware = readJson => {
         return {value, property_mutation: e}
       });
       return [{
-        from,
+        by: by,
         personAction: personDo,
         property_mutation_list: property_mutation_list
       }]
@@ -52,9 +52,9 @@ export const personAction: Middleware = readJson => {
 
   return async writeJson => {
     const writeJsonUtil = new JsonUtil(writeJson);
-    actions.forEach(({from, personAction, property_mutation_list}) => {
+    actions.forEach(({by: by, personAction, property_mutation_list}) => {
       const personList = writeJson.queryAll("people").flatMap(e => e.queryAll("person"));
-      const person = personList.find(e => e.$name === from.$name);
+      const person = personList.find(e => e.$name === by.$name);
       const targetPerson = personList.find(e => e.$name === personAction.$to);
 
       property_mutation_list.forEach(mutation => {
@@ -68,6 +68,13 @@ export const personAction: Middleware = readJson => {
           .flatMap(e => e.queryAll("property"))
           .find(e => e.$ref === propertyName)
           .$value = String(Number(propertyValue) + Number(mutation.value))
+
+        writeJsonUtil.jsonQuery.queryAllOptional("actions")
+          .flatMap(e => e.queryAllOptional("by"))
+          .filter(e => e.$name === by.$name)
+          .forEach(e => {
+            e.removeFromParent();
+          });
       })
     })
   }
