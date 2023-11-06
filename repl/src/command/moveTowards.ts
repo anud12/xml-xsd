@@ -1,14 +1,11 @@
 import {Command} from "./commandType";
 import {state} from "../";
-import * as inquirer from 'inquirer';
 import {personMapView} from "../view/personMapView";
 import {select2d} from "../select2d";
-import {log} from "../print";
-import {select} from "../select";
 
 export const moveTowards: Command<[string]> = {
   key: () => ["move towards"],
-  action: async (personName: string) => {
+  action: async (render, personName: string) => {
     const mapString = personMapView(personName);
     const cells = mapString.split("\n").map((line, y) => {
       return line.split(" ").map((cell, x) => {
@@ -19,7 +16,7 @@ export const moveTowards: Command<[string]> = {
         }
       })
     });
-    const selectedCell = await select2d(() => "Select destination:", cells, e => e.cell);
+    const selectedCell = await select2d(render.addRight(), () => "Select destination:", cells, e => e.cell);
     state.jsonSchema.query("actions")
       .appendChild("by", {
         $name: personName,
@@ -28,5 +25,6 @@ export const moveTowards: Command<[string]> = {
         $x: String(selectedCell.y),
         $y: String(selectedCell.x),
       })
+    render.unsubscribeRight();
   }
 }

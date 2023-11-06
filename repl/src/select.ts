@@ -1,6 +1,6 @@
-import {consolePrint} from "./print";
+import {Render} from "./printer/render";
 
-export const select = async <T>(message:() => string, options: T[], mapper: (t: T) => string = t => t as string): Promise<T> => {
+export const select = async <T>(render:Render, message:() => string, options: T[], mapper: (t: T) => string = t => t as string): Promise<T> => {
   return await new Promise<T>((resolve) => {
     let selectedIndex = 0;
     const print = () => {
@@ -14,21 +14,36 @@ export const select = async <T>(message:() => string, options: T[], mapper: (t: 
           return `├${tip}${e}`;
           // return i === selectedIndex ? `> ${e} <` : `  ${e}`
         }).join("\n")
-      consolePrint(message() + "\n" + stringOptions);
+      render.update(message() + "\n" + stringOptions);
     }
     print();
     const listener = (_, key) => {
 
+      if (key.name === "left") {
+        process.stdout.write("\b");
+        return;
+      }
+      if(key.name === "right") {
+        process.stdout.write("\b");
+        return;
+      }
       if (key.name === "up") {
         selectedIndex = Math.max(0, selectedIndex - 1);
+        print();
+        return;
       }
       if (key.name === "down") {
         selectedIndex = Math.min(options.length - 1, selectedIndex + 1);
+        print();
+        return;
       }
       if (key.name === "return") {
-        resolve(options[selectedIndex])
+        process.stdout.write("\b");
         process.stdin.removeListener('keypress', listener);
+        resolve(options[selectedIndex])
       }
+      process.stdout.write("\b");
+      process.stdout.write(" ");
       print();
     };
     process.stdin.on('keypress', listener);

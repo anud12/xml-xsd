@@ -6,7 +6,7 @@ import {writeToDisk} from "./writeToDiskCommand";
 
 export const run: Command<[]> = {
   key: () => ["run"],
-  action: async () => {
+  action: async (render) => {
     try {
       state.jsonSchema = await execute(state.jsonSchema.serialize());
       writeToDisk();
@@ -16,6 +16,6 @@ export const run: Command<[]> = {
       console.error(newError);
 
     }
-
+    render.update("");
   }
 }

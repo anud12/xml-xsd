@@ -1,5 +1,6 @@
 import * as logUpdate from 'log-update';
 import * as readline from "readline";
+import {render} from "./render";
 
 
 readline.emitKeypressEvents(process.stdin);
@@ -10,11 +11,9 @@ export const rl = readline.createInterface({
 const update = logUpdate.create(process.stdout, { showCursor: true});
 
 const logs = [];
-
-export const consolePrint = (str: string) => {
-  update([...logs, str].join("\n"));
+export const consoleRenderer= () => {
+  const renderer = render();
+  renderer.onUpdate(update);
+  return renderer;
 }
-export const log = str => {
-  logs.push(str);
-  update(logs.join("\n"));
-};
+

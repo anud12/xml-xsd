@@ -1,6 +1,7 @@
-import { consolePrint } from './print';
+import {Render} from "./printer/render";
 
 export const select2d = async <T>(
+  render:Render,
   message: () => string,
   options: T[][],
   mapper: (t: T) => string = (t) => t as string
@@ -25,7 +26,7 @@ export const select2d = async <T>(
           .join('');
       });
 
-      consolePrint(message() + '\n' + gridOptions.join('\n'));
+      render.update(message() + '\n' + gridOptions.join('\n'));
     };
 
     print();
@@ -33,20 +34,31 @@ export const select2d = async <T>(
     const listener = (_, key) => {
       if (key.name === 'up') {
         selectedRowIndex = Math.max(0, selectedRowIndex - 1);
+        print();
+        return;
       }
       if (key.name === 'down') {
         selectedRowIndex = Math.min(numRows - 1, selectedRowIndex + 1);
+        print();
+        return;
       }
       if (key.name === 'left') {
         selectedColIndex = Math.max(0, selectedColIndex - 1);
+        print();
+        return;
       }
       if (key.name === 'right') {
         selectedColIndex = Math.min(numCols - 1, selectedColIndex + 1);
+        print();
+        return;
       }
       if (key.name === 'return') {
-        resolve(options[selectedRowIndex][selectedColIndex]);
         process.stdin.removeListener('keypress', listener);
+        process.stdout.write('\b');
+        resolve(options[selectedRowIndex][selectedColIndex]);
       }
+      process.stdout.write("\b");
+      process.stdout.write(" ");
       print();
     };
 
