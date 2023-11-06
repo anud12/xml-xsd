@@ -1,7 +1,7 @@
 import {state} from "../index";
-import {sideBySide} from "../sideBySide";
 import {nodeBodyType} from "demo/src/JSONQuery";
 import {JsonSchema} from "demo/src/utils/JsonSchema";
+import {topAndBottom} from "../printer/topAndBottom";
 
 const personSymbol = [
   "α", "β", "γ", "δ", "ε", "ζ", "η", "θ", "ι", "κ", "λ", "μ", "ν", "ξ", "ο", "π", "ρ", "σ", "τ", "υ", "φ", "χ", "ψ", "ω", "ё", "ж", "ц", "ч", "ш", "ъ", "ы", "ь", "э", "ю", "я", "ά", "έ", "ή", "ί"
@@ -39,13 +39,17 @@ function personProperties(person: PersonQueryType) {
 
 function personClassifications(person: PersonQueryType) {
   let string = "";
-  string += 'Classifications:\n'
-  person.queryAllOptional("classifications")
+  string += 'Classifications:'
+  const classificationList = person.queryAllOptional("classifications")
     .flatMap(e => e.queryAllOptional("classification"))
-    .forEach((classification) => {
-      string += ` - ${classification.$name}\n`;
-    });
-  return string;
+    .reduce((string, classification) => {
+      string += ` - ${classification.$name}\n`
+      return string;
+    }, "")
+  if (classificationList === "") {
+    return string;
+  }
+  return string + "\n" + classificationList;
 }
 
 export function personStatusView(personName: string) {
@@ -58,6 +62,5 @@ export function personStatusView(personName: string) {
   const classifications = personClassifications(person);
   string += status;
   string += classifications;
-
-  return sideBySide(string, properties);
+  return topAndBottom(string, properties);
 }

@@ -8,7 +8,7 @@ export const action: Command<[string]> = {
     const actionList = state.jsonSchema.query("action_metadata").queryAll("person_to_person");
     return actionList.map(e => e.$name)
   },
-  action: async (personName: string, actionName:string) => {
+  action: async (render, personName: string, actionName:string) => {
 
     const actionList = state.jsonSchema.query("action_metadata").queryAll("person_to_person");
     const action = actionList.find(e => e.$name === actionName);

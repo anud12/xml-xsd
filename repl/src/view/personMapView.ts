@@ -5,7 +5,6 @@ const unfilledCharacter = "?";
 const walkableCharacter = "\u25CB";
 
 export function personMapView(personName: string) {
-  let string = "";
   const person = state.jsonSchema.query("people").queryAll("person").find(e => e.$name === personName)
   const personRaceMetadata = state.jsonSchema.query("race_metadata")
   .queryAll("entry").find(e => e.$name === person.query("race").$name)
@@ -61,6 +60,5 @@ export function personMapView(personName: string) {
     }
     rows.push(row.join(" "));
   }
-  string += rows.join("\n")
-  return string;
+  return rows.join("\n");
 }

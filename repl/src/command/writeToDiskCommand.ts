@@ -11,7 +11,7 @@ export const writeToDisk = () => {
 
 export const writeToDiskCommand: Command<[string]> = {
   key: () => ["write to disk"],
-  action: async (personName: string) => {
+  action: async (render, personName: string) => {
     const outputFileName = state.jsonSchema.query("world_metadata").query("next_world_step").body;
     const outputPath = path.parse(state.argPath).dir;
     fs.writeFileSync(`${outputPath}/${outputFileName}.xml`, state.jsonSchema.serialize());
