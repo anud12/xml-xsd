@@ -14,46 +14,50 @@ export type Render = {
   addRight: () => Render,
   addTop: () => Render,
   addBottom: () => Render,
+  getLeft: () => Render | undefined,
+  getRight: () => Render | undefined,
+  getTop: () => Render | undefined,
+  getBottom: () => Render | undefined,
   unsubscribeLeft: () => void,
   unsubscribeRight: () => void,
   unsubscribeTop: () => void,
   unsubscribeBottom: () => void,
-  update: (text: string) => void,
+  update: (...text: string[]) => void,
   rerender: () => string,
   unsubscribe: () => void,
   onUpdate: (callback: (string:string) => void) => () => void
 }
 
-export const render = (): Render => {
+export const createRender = (): Render => {
   let left: Render | undefined;
   let right: Render | undefined;
   let top: Render | undefined;
   let bottom: Render | undefined;
-  let text: string | undefined;
+  let text: string[] | undefined;
   let updateCallback: ((string: string) => void) | undefined;
   const addLeft = (): Render => {
-    left = render();
+    left = createRender();
     left.onUpdate(() => {
       updateCallback?.(rerender());
     })
     return left;
   }
   const addRight = (): Render => {
-    right = render();
+    right = createRender();
     right.onUpdate(() => {
       updateCallback?.(rerender());
     })
     return right
   }
   const addTop = (): Render => {
-    top = render();
+    top = createRender();
     top.onUpdate(() => {
       updateCallback?.(rerender());
     })
     return top;
   }
   const addBottom = (): Render => {
-    bottom = render();
+    bottom = createRender();
     bottom.onUpdate(() => {
       updateCallback?.(rerender());
     })
@@ -79,7 +83,7 @@ export const render = (): Render => {
     }
   }
 
-  const update = (newText: string): void => {
+  const update = (...newText: string[]): void => {
     text = newText;
     updateCallback?.(rerender());
   }
@@ -89,22 +93,24 @@ export const render = (): Render => {
     const rightText = right?.rerender() || '';
     const topText = top?.rerender() || '';
     const bottomText = bottom?.rerender() || '';
-    return topAndBottom(topText, topAndBottom(sideBySide(leftText, sideBySide(text || '', rightText)), bottomText));
+
+    return sideBySide(leftText, sideBySide(topAndBottom(topText, topAndBottom(text?.join() || '', bottomText)), rightText));
+    // return topAndBottom(topText, topAndBottom(sideBySide(leftText, sideBySide(text || '', rightText)), bottomText));
   }
   const unsubscribeLeft = (): void => {
-    left.unsubscribe();
+    left?.unsubscribe();
     left = undefined;
   }
   const unsubscribeRight = (): void => {
-    right.unsubscribe();
+    right?.unsubscribe();
     right = undefined;
   }
   const unsubscribeTop = (): void => {
-    top.unsubscribe();
+    top?.unsubscribe();
     top = undefined;
   }
   const unsubscribeBottom = (): void => {
-    bottom.unsubscribe();
+    bottom?.unsubscribe();
     bottom = undefined;
   }
   return {
@@ -112,6 +118,10 @@ export const render = (): Render => {
     addRight,
     addTop,
     addBottom,
+    getLeft: () => left,
+    getRight: () => right,
+    getTop: () => top,
+    getBottom: () => bottom,
     unsubscribeLeft,
     unsubscribeRight,
     unsubscribeTop,

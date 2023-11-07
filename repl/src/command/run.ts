@@ -8,13 +8,12 @@ export const run: Command<[]> = {
   key: () => ["run"],
   action: async (render) => {
     try {
-      state.jsonSchema = await execute(state.jsonSchema.serialize());
+      state.jsonSchema = await execute(state.jsonSchema.serialize(), () => {});
       writeToDisk();
     } catch (e) {
       const newError = new Error(`run failed`);
       newError.stack += '\nCaused by: ' + e.stack;
       console.error(newError);
-
     }
     render.update("");
   }

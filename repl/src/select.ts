@@ -1,4 +1,4 @@
-import {Render} from "./printer/render";
+import {Render} from "./printer/createRender";
 
 export const select = async <T>(render:Render, message:() => string, options: T[], mapper: (t: T) => string = t => t as string): Promise<T> => {
   return await new Promise<T>((resolve) => {
@@ -14,7 +14,12 @@ export const select = async <T>(render:Render, message:() => string, options: T[
           return `├${tip}${e}`;
           // return i === selectedIndex ? `> ${e} <` : `  ${e}`
         }).join("\n")
-      render.update(message() + "\n" + stringOptions);
+      const messageString = message();
+      if(messageString?.length > 0) {
+        render.update(messageString + "\n" + stringOptions);
+        return;
+      }
+      render.update(stringOptions);
     }
     print();
     const listener = (_, key) => {

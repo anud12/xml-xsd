@@ -5,7 +5,7 @@ import {execute} from "./execute";
   const filePath = process.argv[2];
   console.log("Reading from " + filePath);
   const data = fs.readFileSync(filePath)
-  const outJson = await execute(data.toString());
+  const outJson = await execute(data.toString(), console.log);
   fs.writeFileSync(outJson.query("world_metadata").query("next_world_step").body + ".xml", outJson.serialize());
 
 })()

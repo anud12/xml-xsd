@@ -30,11 +30,16 @@ function personStatus(person: PersonQueryType) {
 
 function personProperties(person: PersonQueryType) {
   let string = "";
-  string += 'Properties:\n'
-  person.query("properties").queryAllOptional("property").forEach((property) => {
-    string += ` - ${property.$ref}: ${property.$value}\n`;
-  });
-  return string;
+  string += 'Properties:'
+  var propertyString = person.query("properties").queryAllOptional("property")
+    .map((property) => ` - ${property.$ref}: ${property.$value}`)
+    .join("\n");
+
+  if (propertyString === "") {
+    return string;
+  }
+  return string + "\n" + propertyString;
+
 }
 
 function personClassifications(person: PersonQueryType) {
@@ -42,10 +47,8 @@ function personClassifications(person: PersonQueryType) {
   string += 'Classifications:'
   const classificationList = person.queryAllOptional("classifications")
     .flatMap(e => e.queryAllOptional("classification"))
-    .reduce((string, classification) => {
-      string += ` - ${classification.$name}\n`
-      return string;
-    }, "")
+    .map(classification => ` - ${classification.$name}`)
+    .join("\n");
   if (classificationList === "") {
     return string;
   }

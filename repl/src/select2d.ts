@@ -1,14 +1,15 @@
-import {Render} from "./printer/render";
+import {Render} from "./printer/createRender";
 
 export const select2d = async <T>(
-  render:Render,
+  render: Render,
   message: () => string,
   options: T[][],
-  mapper: (t: T) => string = (t) => t as string
+  mapper: (t: T) => string = (t) => t as string,
+  initialPosition?: { x: number, y: number },
 ): Promise<T> => {
   return await new Promise<T>((resolve) => {
-    let selectedRowIndex = 0;
-    let selectedColIndex = 0;
+    let selectedRowIndex = initialPosition.y ?? 0;
+    let selectedColIndex = initialPosition.x ?? 0;
 
     const numRows = options.length;
     const numCols = options[0].length;
@@ -25,8 +26,12 @@ export const select2d = async <T>(
           })
           .join('');
       });
-
-      render.update(message() + '\n' + gridOptions.join('\n'));
+      const messageString = message();
+      if (messageString?.length > 0) {
+        render.update(messageString + "\n" + gridOptions.join('\n'));
+        return;
+      }
+      render.update(gridOptions.join('\n'));
     };
 
     print();

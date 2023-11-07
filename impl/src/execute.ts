@@ -7,7 +7,9 @@ import {personMoveTowards} from "./middleware/personMoveTowards";
 import {personAction} from "./middleware/personAction";
 import {personAssignClassification} from "./middleware/personAssignClassification";
 
-export const execute = async (xmlString:string) => {
+export const execute = async (xmlString:string, log: (...string:any[]) => void) => {
+  const oldLog = console.log;
+  console.log = log;
   const readJson = JsonQuery.fromText<JsonSchema>(xmlString.toString());
 
   const readJsonUtil = new JsonUtil(readJson);
@@ -30,5 +32,6 @@ export const execute = async (xmlString:string) => {
   const iter = Number(writeWorldMetadata.query("next_world_step").body.split("_")?.[1] ?? 0);
   const writeNextWorldStep = readJson.query("world_metadata").query("next_world_step")
   writeNextWorldStep.body = `world_${iter + 1}`
+  console.log = oldLog;
   return readJson;
 }

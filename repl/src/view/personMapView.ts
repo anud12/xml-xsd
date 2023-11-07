@@ -58,7 +58,7 @@ export function personMapView(personName: string) {
         row.push(unfilledCharacter);
       }
     }
-    rows.push(row.join(" "));
+    rows.push(row.map(e => ` ${e} `).join(""));
   }
   return rows.join("\n");
 }
