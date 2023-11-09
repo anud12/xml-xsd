@@ -9,12 +9,13 @@ import {run} from "./command/run";
 import {moveTowards} from "./command/moveTowards";
 import {action} from "./command/action";
 import {writeToDiskCommand} from "./command/writeToDiskCommand";
-import {sideBySide} from "./printer/sideBySide";
 import {consoleRenderer} from "./printer/print";
+import {setTarget} from "./command/setTarget";
 
 
 export const state = {
   argPath: process.argv[2],
+  targetName: undefined as undefined | string,
   jsonSchema: JsonQuery.fromText<JsonSchema>(fs.readFileSync(process.argv[2]).toString())
 }
 
@@ -22,8 +23,10 @@ const baseRenderer = consoleRenderer();
 export const constRenderer = {
   map: baseRenderer.addRight(),
   status: baseRenderer.getRight().addRight(),
+  target: baseRenderer.getRight().getRight().addRight(),
   log: baseRenderer.addTop(),
 }
+
 // readline.createInterface({input: process.stdin, output: process.stdout})
 async function main() {
   const renderer = baseRenderer.addBottom()
@@ -33,6 +36,7 @@ async function main() {
   const message = () => {
     constRenderer.map.update(personMapView(selectedPerson.$name));
     constRenderer.status.update(personStatusView(selectedPerson.$name));
+    constRenderer.target.update(state.targetName ? personStatusView(state.targetName) : "No target selected");
     return "Select action:";
 
   }
@@ -40,8 +44,10 @@ async function main() {
     run,
     moveTowards,
     action,
+    setTarget,
     writeToDiskCommand,
   ]);
   process.exit(0);
 }
+
 main();
