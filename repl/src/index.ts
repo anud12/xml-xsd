@@ -22,6 +22,7 @@ export const state = {
 const baseRenderer = consoleRenderer();
 export const constRenderer = {
   map: baseRenderer.addRight(),
+  worldName: baseRenderer.getRight().addBottom(),
   status: baseRenderer.addLeft(),
   target: baseRenderer.getRight().addRight(),
   log: baseRenderer.addTop(),
@@ -35,6 +36,7 @@ async function main() {
   renderer.unsubscribeBottom();
 
   const message = () => {
+    constRenderer.worldName.update(state.jsonSchema.query("world_metadata").query("next_world_step").body);
     constRenderer.map.update(personMapView(selectedPerson.$name));
     constRenderer.status.update(personStatusView(selectedPerson.$name));
     constRenderer.target.update(state.targetName ? personStatusView(state.targetName) : "No target selected");

@@ -1,29 +1,29 @@
 import {Command} from "./commandType";
 import {constRenderer, state} from "../";
-import {personMapView} from "../view/personMapView";
+import {personMap, personMapView} from "../view/personMapView";
 import {select2d} from "../select2d";
 
 export const moveTowards: Command<[string]> = {
   key: () => ["move towards"],
   action: async (render, personName: string) => {
-    const mapString = personMapView(personName);
+    const mapString = personMap(personName);
     const personLocation = state.jsonSchema.query("people")
       .queryAllOptional("person")
       .find(e => e.$name === personName)
       ?.queryOptional("location");
 
-    const cells = mapString.split("\n").map((line, y) => {
-      return line.split("  ").map((cell, x) => {
+    const cells = mapString.map((lineList, y,column) => {
+      return lineList.map((cell, x, line) => {
         return {
-          x: x - Math.floor(line.split("  ").length / 2),
-          y: y - Math.floor(mapString.split("\n").length / 2),
+          x: x - Math.floor(line.length / 2),
+          y: y - Math.floor(column.length / 2),
           cell,
         }
       })
     });
     const selectedCell = await select2d(constRenderer.map, () => undefined, cells, e => e.cell, {
-      x: Math.floor(Number(mapString.split("\n").length / 2)),
-      y: Math.floor(Number(mapString.split("\n").length / 2)),
+      x: Math.floor(Number(mapString.length / 2)),
+      y: Math.floor(Number(mapString.length / 2)),
     });
     state.jsonSchema.query("actions")
       .appendChild("by", {

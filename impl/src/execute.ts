@@ -22,11 +22,11 @@ export const execute = async (xmlString:string, log: (...string:any[]) => void) 
   await personVision(unit)(readJson);
   const personMoveTowardsResult = personMoveTowards(unit);
   const personActionResult = personAction(unit);
-  const personAssignClassificationResult = personAssignClassification(unit);
 
-  await personAssignClassificationResult(readJson);
   await personMoveTowardsResult(readJson);
   await personActionResult(readJson);
+  await personVision(unit)(readJson);
+  await personAssignClassification(unit)(readJson);
 
   const writeWorldMetadata = readJson.query("world_metadata");
   const iter = Number(writeWorldMetadata.query("next_world_step").body.split("_")?.[1] ?? 0);

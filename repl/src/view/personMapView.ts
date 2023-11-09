@@ -4,10 +4,15 @@ import {personNameToSymbol} from "./personStatusView";
 const unfilledCharacter = "?";
 const walkableCharacter = "\u25CB";
 
-export function personMapView(personName: string) {
+type Cell = {
+  x: number,
+  y: number,
+  character: string,
+}
+export const personMap = (personName: string): Array<Array<string>> => {
   const person = state.jsonSchema.query("people").queryAll("person").find(e => e.$name === personName)
   const personRaceMetadata = state.jsonSchema.query("race_metadata")
-  .queryAll("entry").find(e => e.$name === person.query("race").$name)
+    .queryAll("entry").find(e => e.$name === person.query("race").$name)
   //get vision from person list of properties
   const vision = Number(personRaceMetadata.query("vision").$value);
 
@@ -25,15 +30,15 @@ export function personMapView(personName: string) {
     const y = Number(e.$y);
     const gridY = grid[y] ?? [];
     grid[y] = gridY;
-    if(e.$type === "plains"){
+    if (e.$type === "plains") {
       gridY[x] = `\u25CB`;
       return;
     }
-    if(e.$type === "forest"){
-      gridY[x] = `\u25CD`;
+    if (e.$type === "forest") {
+      gridY[x] = `T`;
       return;
     }
-    if(e.$type === "hills"){
+    if (e.$type === "hills") {
       gridY[x] = `\u25B3`;
       return;
     }
@@ -48,7 +53,7 @@ export function personMapView(personName: string) {
     grid[y] = gridY;
     gridY[x] = personNameToSymbol(e.$name);
   })
-  let rows = [];
+  let rows:Array<Array<string>> = [];
   for (let y = personY - vision; y <= personY + vision; y++) {
     let row = [];
     for (let x = personX - vision; x <= personX + vision; x++) {
@@ -58,7 +63,24 @@ export function personMapView(personName: string) {
         row.push(unfilledCharacter);
       }
     }
-    rows.push(row.map(e => ` ${e} `).join(""));
+    rows.push(row);
   }
-  return rows.join("\n");
+  return rows;
+}
+
+
+export function personMapView(personName: string) {
+  const person = state.jsonSchema.query("people").queryAll("person").find(e => e.$name === personName)
+  const personRaceMetadata = state.jsonSchema.query("race_metadata")
+    .queryAll("entry").find(e => e.$name === person.query("race").$name)
+  //get vision from person list of properties
+  const vision = Number(personRaceMetadata.query("vision").$value);
+
+  const personLocation = person.query("location");
+  const personX = Number(personLocation.$x);
+  const personY = Number(personLocation.$y);
+  const grid = personMap(personName);
+
+
+  return grid.map(e => e.map(e => ` ${e} `).join("")).join("\n");
 }
