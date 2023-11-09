@@ -14,8 +14,8 @@ export const action: Command<[string]> = {
     const action = actionList.find(e => e.$name === actionName);
 
     const personList = state.jsonSchema.query("people").queryAll("person");
-    const target = await promptChoice(render.addBottom(), "Choose target", personList.filter(e => e.$name !== personName), u => `${u.$name}(${personNameToSymbol(u.$name)})`)
-    render.unsubscribeBottom();
+    const target = await promptChoice(render.addLeft(), "Choose target", personList.filter(e => e.$name !== personName), u => `${u.$name}(${personNameToSymbol(u.$name)})`)
+    render.addLeft();
     if (!target) {
       return
     }
