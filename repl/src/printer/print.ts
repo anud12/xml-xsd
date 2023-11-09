@@ -7,6 +7,7 @@ readline.emitKeypressEvents(process.stdin);
 export const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
+  terminal: true
 });
 const update = logUpdate.create(process.stdout, { showCursor: true});
 

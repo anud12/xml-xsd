@@ -6,13 +6,12 @@ export const select = async <T>(render:Render, message:() => string, options: T[
     const print = () => {
       const stringOptions = options.map(e => mapper(e))
         .map((e, i) => {
-          const tip = i === selectedIndex ? "─>" : "─";
+          const tip = i === selectedIndex ? "> " : "";
 
           if(i === options.length - 1) {
-            return `╰${tip}${e}`;
+            return `${tip}${e}`;
           }
-          return `├${tip}${e}`;
-          // return i === selectedIndex ? `> ${e} <` : `  ${e}`
+          return `${tip}${e}`;
         }).join("\n")
       const messageString = message();
       if(messageString?.length > 0) {
@@ -43,10 +42,12 @@ export const select = async <T>(render:Render, message:() => string, options: T[
         return;
       }
       if (key.name === "return") {
+        process.stdout.write("\b\b  ");
         process.stdin.removeListener('keypress', listener);
         resolve(options[selectedIndex])
+        return;
       }
-      process.stdout.write("\b");
+      process.stdout.write("\b ");
       print();
     };
     process.stdin.on('keypress', listener);

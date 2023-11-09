@@ -8,6 +8,7 @@ export const promptMenu = async <T extends Array<any>>(render:Render, message: (
     const commandKey = commandList.flatMap(e => e.key(...t));
     const command = await select(render, message, [...commandKey, 'exit']);
     await commandList.find(e => e.key(...t).includes(command))?.action(render, ...t, command)
+    render.focus();
     if (command === "exit") {
       return;
     }

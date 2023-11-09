@@ -37,7 +37,7 @@ async function main() {
     return "Select action:";
 
   }
-  await promptMenu(renderer.addBottom(), message, [selectedPerson.$name], [
+  await promptMenu(renderer.addBottom().focus(), message, [selectedPerson.$name], [
     run,
     moveTowards,
     action,
