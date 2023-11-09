@@ -15,6 +15,7 @@ export const select2d = async <T>(
     const numCols = options[0].length;
 
     const print = () => {
+      render.focus();
       const gridOptions = options.map((row, rowIndex) => {
         return row
           .map((col, colIndex) => {

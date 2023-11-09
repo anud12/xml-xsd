@@ -21,7 +21,7 @@ export const moveTowards: Command<[string]> = {
         }
       })
     });
-    const selectedCell = await select2d(constRenderer.map.focus(), () => undefined, cells, e => e.cell, {
+    const selectedCell = await select2d(constRenderer.map, () => undefined, cells, e => e.cell, {
       x: Math.floor(Number(mapString.split("\n").length / 2)),
       y: Math.floor(Number(mapString.split("\n").length / 2)),
     });

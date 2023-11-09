@@ -19,7 +19,6 @@ export const state = {
 }
 
 const baseRenderer = consoleRenderer();
-
 export const constRenderer = {
   map: baseRenderer.addRight(),
   status: baseRenderer.getRight().addRight(),
@@ -37,7 +36,7 @@ async function main() {
     return "Select action:";
 
   }
-  await promptMenu(renderer.addBottom().focus(), message, [selectedPerson.$name], [
+  await promptMenu(renderer.addBottom(), message, [selectedPerson.$name], [
     run,
     moveTowards,
     action,

@@ -4,6 +4,7 @@ export const select = async <T>(render:Render, message:() => string, options: T[
   return await new Promise<T>((resolve) => {
     let selectedIndex = 0;
     const print = () => {
+      render.focus();
       const stringOptions = options.map(e => mapper(e))
         .map((e, i) => {
           const tip = i === selectedIndex ? "> " : "";
