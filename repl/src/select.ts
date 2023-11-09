@@ -7,12 +7,9 @@ export const select = async <T>(render:Render, message:() => string, options: T[
       render.focus();
       const stringOptions = options.map(e => mapper(e))
         .map((e, i) => {
-          const tip = i === selectedIndex ? "> " : "";
-
-          if(i === options.length - 1) {
-            return `${tip}${e}`;
-          }
-          return `${tip}${e}`;
+          const prefix = i === selectedIndex ? "> " : "";
+          const postfix = i === selectedIndex ? "" : "  ";
+          return `${prefix}${e}${postfix}`;
         }).join("\n")
       const messageString = message();
       if(messageString?.length > 0) {
