@@ -176,8 +176,8 @@
     <!--_-->
     <race_metadata>
         <entry name="human">
-            <vision value="10" inclusive="true" />
-            <movement value="3" inclusive="true" />
+            <vision value="5" inclusive="true" />
+            <movement value="2" inclusive="true" />
             <property_bonus ref="strength">
                 <operation>
                     <add_dice value="3" />
@@ -277,19 +277,29 @@
     <!--_-->
     <quests_markov_chain>
         <quest_markov_link type="talk-to">
-            <next type="talk-to" quantity="4" />
-            <next type="escort" quantity="2" />
-            <next type="assassination" />
-            <complete_condition />
+            <person_group name="kill" quantity="1">
+                <classification name="alive"/>
+            </person_group>
+            <complete_condition>
+                <person_group name="kill" quantity="2">
+
+                </person_group>
+
+                <next type="talk-to" quantity="4" />
+                <next type="escort" quantity="2" />
+                <next type="assassination" />
+            </complete_condition>
         </quest_markov_link>
         <quest_markov_link type="escort">
-            <next type="assassination" quantity="4" />
-            <next type="talk-to" />
-            <complete_condition />
+            <complete_condition>
+                <next type="assassination" quantity="4" />
+                <next type="talk-to" />
+            </complete_condition>
         </quest_markov_link>
         <quest_markov_link type="assassination">
-            <next type="talk-to" quantity="4" />
-            <complete_condition />
+            <complete_condition>
+                <next type="talk-to" quantity="4" />
+            </complete_condition>
         </quest_markov_link>
     </quests_markov_chain>
     <!--_-->

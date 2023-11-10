@@ -232,6 +232,10 @@
                             </xs:element>
                         </xs:sequence>
                     </xs:complexType>
+                    <xs:key name="K__classification_metadata__entry.name">
+                        <xs:selector xpath="entry" />
+                        <xs:field xpath="@name" />
+                    </xs:key>
                 </xs:element>
 
 
@@ -436,14 +440,44 @@
                             <xs:element name="quest_markov_link" minOccurs="0" maxOccurs="unbounded">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="next" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:element name="person_group" minOccurs="0" maxOccurs="unbounded">
                                             <xs:complexType>
-                                                <xs:attribute name="type" use="required" />
-                                                <xs:attribute name="quantity" type="xs:int"
-                                                    default="1" />
+                                                <xs:sequence>
+                                                    <xs:element name="classification" minOccurs="0" maxOccurs="unbounded">
+                                                        <xs:complexType>
+                                                            <xs:attribute name="name" use="required" type="xs:string"/>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                                <xs:attribute name="name" use="required" type="xs:string"/>
+                                                <xs:attribute name="quantity" use="required" type="xs:int"/>
                                             </xs:complexType>
                                         </xs:element>
                                         <xs:element name="complete_condition">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="person_group" minOccurs="0" maxOccurs="unbounded">
+                                                        <xs:complexType>
+                                                            <xs:sequence>
+                                                                <xs:element name="classification" minOccurs="0" maxOccurs="unbounded">
+                                                                    <xs:complexType>
+                                                                        <xs:attribute name="name" use="required" type="xs:string"/>
+                                                                    </xs:complexType>
+                                                                </xs:element>
+                                                            </xs:sequence>
+                                                            <xs:attribute name="name" use="required" type="xs:string"/>
+                                                            <xs:attribute name="quantity" use="required" type="xs:int"/>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                    <xs:element name="next" minOccurs="0" maxOccurs="unbounded">
+                                                        <xs:complexType>
+                                                            <xs:attribute name="type" use="required" />
+                                                            <xs:attribute name="quantity" type="xs:int"
+                                                                          default="1" />
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
                                     <xs:attribute name="type" />
@@ -451,6 +485,15 @@
                             </xs:element>
                         </xs:sequence>
                     </xs:complexType>
+                    <xs:key name="K__quest_markov_link__person_group.name">
+                        <xs:selector xpath="quest_markov_link/person_group" />
+                        <xs:field xpath="@name" />
+                    </xs:key>
+                    <xs:keyref name="FK__quest_markov_link__complete_condition__person_group.name"
+                               refer="K__quest_markov_link__person_group.name">
+                        <xs:selector xpath="quest_markov_link/complete_condition/person_group" />
+                        <xs:field xpath="@name" />
+                    </xs:keyref>
                     <xs:key name="K__quest_markov_link.type">
                         <xs:selector xpath="quest_markov_link" />
                         <xs:field xpath="@type" />
@@ -459,6 +502,10 @@
                         refer="K__quest_markov_link.type">
                         <xs:selector xpath="quest_markov_link/next" />
                         <xs:field xpath="@type" />
+                    </xs:keyref>
+                    <xs:keyref name="FK__quest_markov_link__required_person_group__classification.name" refer="K__classification_metadata__entry.name">
+                        <xs:selector xpath="quest_markov_link/required_person_group/classification" />
+                        <xs:field xpath="@id" />
                     </xs:keyref>
                 </xs:element>
 
