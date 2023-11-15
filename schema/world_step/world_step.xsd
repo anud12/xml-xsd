@@ -11,6 +11,15 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="type_all">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="all"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="type_unbondedNumber">
+        <xs:union memberTypes="xs:int type_all"/>
+    </xs:simpleType>
+
     <xs:complexType name="metadata_classification">
         <xs:sequence>
             <xs:element name="required_property">
@@ -404,7 +413,6 @@
                                                             <xs:enumeration value="left" />
                                                         </xs:restriction>
                                                     </xs:simpleType>
-
                                                 </xs:attribute>
                                             </xs:complexType>
                                         </xs:element>
@@ -431,6 +439,64 @@
                         <xs:selector xpath="location_markov_link/sibling" />
                         <xs:field xpath="@tag" />
                     </xs:keyref>
+                </xs:element>
+
+
+                <xs:element name="events_chain">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="entry">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="classification" minOccurs="0" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:attribute name="name" use="required" type="xs:string"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="requirement">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="person_group" minOccurs="0" maxOccurs="unbounded">
+                                                        <xs:complexType>
+                                                            <xs:sequence>
+                                                                <xs:element name="classification" minOccurs="0" maxOccurs="unbounded">
+                                                                    <xs:complexType>
+                                                                        <xs:attribute name="name" use="required" type="xs:string"/>
+                                                                    </xs:complexType>
+                                                                </xs:element>
+                                                                <xs:element name="quantity" minOccurs="0">
+                                                                    <xs:complexType>
+                                                                        <xs:group ref="type_math_operations" />
+                                                                    </xs:complexType>
+                                                                </xs:element>
+                                                            </xs:sequence>
+                                                            <xs:attribute name="name" use="required" type="xs:string"/>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="trigger" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="action" minOccurs="0" maxOccurs="unbounded">
+                                                        <xs:complexType>
+                                                            <xs:attribute name="name" use="required" type="xs:string"/>
+                                                            <xs:attribute name="on_group" use="required" type="xs:string"/>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="setup"/>
+                                        <xs:element name="resolution" maxOccurs="unbounded"/>
+                                        <xs:element name="cleanup"/>
+                                    </xs:sequence>
+                                    <xs:attribute name="name" use="required" type="xs:string"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
                 </xs:element>
 
 
