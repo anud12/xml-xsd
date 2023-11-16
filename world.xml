@@ -4,6 +4,9 @@
         xsi:noNamespaceSchemaLocation="schema/world_step/world_step.xsd">
     <world_metadata>
         <next_world_step>./world_1</next_world_step>
+        <elapsedTime value="0"/>
+        <stepDuration value="1"/>
+
         <randomization_table>
             <entry value="4"/>
             <entry value="9"/>
@@ -276,47 +279,20 @@
     <!--events_chain-->
     <!--_-->
     <events_chain>
-        <entry name="kill_bandits">
+        <entry name="spawn_bandits">
             <classification name="dd"/>
             <requirement>
-                <person_group name="talk">
-                    <classification name="bartender"/>
-                    <classification name="alive"/>
-                    <quantity>
-                        <operation>
-                            <add value="1"/>
-                        </operation>
-                    </quantity>
-                </person_group>
             </requirement>
             <trigger>
+
             </trigger>
             <setup>
-                <create_action name="accept_quest" on_group="talk"/>
+                <create_action name="accept_quest" type="" on_group="talk"/>
             </setup>
             <resolution>
             </resolution>
             <cleanup/>
         </entry>
-        <entry name="kill_bandits">
-            <requirement/>
-            <trigger>
-            </trigger>
-            <setup>
-                <create_person name="demo">
-                    <classification name="bartender"/>
-                    <classification name="alive"/>
-                    <quantity>
-                        <operation>
-                            <add value="1"/>
-                        </operation>
-                    </quantity>
-                </create_person>
-            </setup>
-            <resolution></resolution>
-            <cleanup></cleanup>
-        </entry>
-
     </events_chain>
     <!--_-->
     <!--Quests_Markov_chain-->
