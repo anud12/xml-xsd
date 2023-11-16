@@ -1,6 +1,5 @@
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:xi="http://www.w3.org/2001/XInclude"
         xsi:noNamespaceSchemaLocation="schema/world_step/world_step.xsd">
     <world_metadata>
         <next_world_step>./world_1</next_world_step>
@@ -204,6 +203,21 @@
     <!--Action_metadata-->
     <!--_-->
     <action_metadata>
+        <person_to_person name="talk">
+            <range value="1" inclusive="true"/>
+            <test>
+                <value target="self">
+                    <operation>
+                        <add value="1"/>
+                    </operation>
+                </value>
+                <expected target="target">
+                    <operation>
+                        <add value="1"/>
+                    </operation>
+                </expected>
+            </test>
+        </person_to_person>
         <person_to_person name="meleeAttack">
             <range value="1" inclusive="true"/>
             <test>
@@ -281,16 +295,14 @@
     <events_chain>
         <entry name="spawn_bandits">
             <classification name="dd"/>
-            <requirement>
-            </requirement>
+            <requirement/>
             <trigger>
-
+                <elapsed_time_divisible_by value="1"/>
             </trigger>
             <setup>
-                <create_action name="accept_quest" type="" on_group="talk"/>
+                <create_action name="accept_quest" type="talk" on_group="talk"/>
             </setup>
-            <resolution>
-            </resolution>
+            <resolution/>
             <cleanup/>
         </entry>
     </events_chain>
