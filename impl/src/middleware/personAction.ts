@@ -7,16 +7,18 @@ type PersonQueryType = JsonSchema[typeof nodeBodyType]["people"][typeof nodeBody
 
 
 type MutationQueryType = JsonSchema[typeof nodeBodyType]["action_metadata"][typeof nodeBodyType]["person_to_person"][typeof nodeBodyType]["property_mutation"]
+type FromQueryType = MutationQueryType[typeof nodeBodyType]["from"]
+
 const mutationToValue = (readJson: Unit, mutation: MutationQueryType, person: PersonQueryType, targetPerson: PersonQueryType) => {
-  const operations = mutation.queryAll("from").flatMap(from => {
-    const partaker = from.$partaker;
-    const partakerPerson = partaker === "target"
+  const operations = mutation.queryAll("from").flatMap((from:FromQueryType) => {
+    const participant = from.$participant
+    const participantPerson = participant === "target"
       ? targetPerson
       : person;
     return from.queryAll("operation")
       .flatMap(operation => operation.children)
       .flatMap(operation => readJson.util.computeOperation(operation, string => {
-        return readJson.util.person.getProperty(partakerPerson, string)
+        return readJson.util.person.getProperty(participantPerson, string)
       }))
   });
   return operations.reduce((e, op) => op(e), "0");
@@ -39,9 +41,9 @@ export const personAction: Middleware = readJson => {
       const person = personList.find(e => e.$name === by.$name);
       const targetPerson = personList.find(e => e.$name === personDo.$to);
 
-      const property_mutation_list = action.queryAll("property_mutation").map(e => {
-        const value = mutationToValue(readJson, e, person, targetPerson);
-        return {value, property_mutation: e}
+      const property_mutation_list = action.queryAll("property_mutation").map(property_mutation => {
+        const value = mutationToValue(readJson, property_mutation, person, targetPerson);
+        return {value, property_mutation: property_mutation}
       });
       return [{
         by: by,

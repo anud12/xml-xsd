@@ -50,7 +50,7 @@ export type JsonSchema = JsonQueryType<never, {
         }>
       }>,
       property_mutation: JsonQueryType<"name" | "on", {
-        from: JsonQueryType<"partaker", {
+        from: JsonQueryType<"participant", {
           operation: OperationQueryType
         }>
       }>
