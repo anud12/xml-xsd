@@ -7,6 +7,10 @@ import {JsonSchema, OperationQueryType} from "./JsonSchema";
 import {newRandom} from "./newRandom";
 import {createOperationFromQueryType} from "./operation/createOperationFromQueryType";
 import {getProperty, PersonQueryType} from "./person/getProperty";
+import {getByName} from "./person/getByName";
+import {createPerson, CreatePersonArgs} from "./person/createPerson";
+import {JsonQueryType} from "../JSONQuery";
+import {createOperationFromParent} from "./operation/createOperationFromParent";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -39,12 +43,26 @@ export class JsonUtil {
     markovChainMatrix: (direction: string) => LocationMatrix,
     create: (x: number, y: number) => void,
   }
+
+  randomFromArray = <T>(array: T[]): T => {
+    return array[Math.floor(this.random() * array.length)];
+  }
   questMarkov: () => void;
   computeOperation = (operationQueryType: OperationQueryType, getExternalProperty?: (string: string) => string) => {
     return createOperationFromQueryType({
       util: this,
       json: this.jsonQuery
     }, operationQueryType, getExternalProperty)
+  }
+  computeOperationFromParent = (operationList: JsonQueryType<any, {
+    operation: OperationQueryType
+  }>, getExternalProperty?: (string: string) => string) => {
+    return createOperationFromParent({
+        util: this,
+        json: this.jsonQuery
+      },
+      operationList,
+      getExternalProperty)
   }
   invalidate = () => {
     this.random = newRandom(this);
@@ -73,7 +91,11 @@ export class JsonUtil {
     getProperty: (personQueryType: PersonQueryType, key) => getProperty({
       util: this,
       json: this.jsonQuery
-    }, personQueryType, key)
+    }, personQueryType, key),
+    getByName: memoizeFunction((name: string): PersonQueryType => {
+      return getByName(this.jsonQuery, name)
+    }),
+    create: (args: CreatePersonArgs) => createPerson(this, args)
   }
 
   markov = markovNext;

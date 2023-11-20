@@ -80,6 +80,25 @@ export type JsonSchema = JsonQueryType<never, {
     }>
   }>,
 
+  events_metadata: JsonQueryType<never, {
+    entry: JsonQueryType<"name", {
+      when:JsonQueryType<never, {
+        person_action_used: JsonQueryType<"type">
+      }>,
+      then: JsonQueryType<never, {
+        at: JsonQueryType<"origin", {
+          radius: JsonQueryType<never, {
+            operation: OperationQueryType
+          }>
+          location: JsonQueryType<"type" | "quantity">
+        }>,
+        create_person?: JsonQueryType<never, {
+          race: JsonQueryType<"name" | "quantity">,
+        }>
+      }>
+    }>
+  }>
+
   quests_markov_chain: JsonQueryType<never, {
     quest_markov_link: JsonQueryType<"type", {
       next: JsonQueryType<"type" | "quantity">

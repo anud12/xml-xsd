@@ -40,12 +40,23 @@
         <xs:attribute name="x" use="required" type="xs:integer"/>
         <xs:attribute name="y" use="required" type="xs:integer"/>
     </xs:complexType>
-    <xs:simpleType name="type_person_target">
+    <xs:simpleType name="type_person_select">
         <xs:restriction base="xs:string">
             <xs:enumeration value="self"/>
             <xs:enumeration value="target"/>
         </xs:restriction>
     </xs:simpleType>
+
+    <xs:complexType name="type_person_selection">
+        <xs:sequence>
+            <xs:element name="race" minOccurs="0">
+                <xs:complexType>
+                    <xs:attribute name="name" use="required"/>
+                    <xs:attribute name="quantity" use="required" type="xs:int"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
 
     <xs:group name="type_math_operations">
         <xs:sequence>
@@ -296,7 +307,7 @@
                                                         <xs:complexType>
                                                             <xs:group ref="type_math_operations"/>
                                                             <xs:attribute name="target"
-                                                                          type="type_person_target"
+                                                                          type="type_person_select"
                                                                           use="required"/>
                                                         </xs:complexType>
                                                     </xs:element>
@@ -304,7 +315,7 @@
                                                         <xs:complexType>
                                                             <xs:group ref="type_math_operations"/>
                                                             <xs:attribute name="target"
-                                                                          type="type_person_target"
+                                                                          type="type_person_select"
                                                                           use="required"/>
                                                         </xs:complexType>
                                                     </xs:element>
@@ -318,13 +329,13 @@
                                                         <xs:complexType>
                                                             <xs:group ref="type_math_operations"/>
                                                             <xs:attribute name="participant"
-                                                                          type="type_person_target"
+                                                                          type="type_person_select"
                                                                           use="required"/>
                                                         </xs:complexType>
                                                     </xs:element>
                                                 </xs:sequence>
                                                 <xs:attribute name="name"/>
-                                                <xs:attribute name="on" type="type_person_target"
+                                                <xs:attribute name="on" type="type_person_select"
                                                               use="required"/>
                                             </xs:complexType>
                                         </xs:element>
@@ -335,13 +346,13 @@
                                                         <xs:complexType>
                                                             <xs:group ref="type_math_operations"/>
                                                             <xs:attribute name="participant"
-                                                                          type="type_person_target"
+                                                                          type="type_person_select"
                                                                           use="required"/>
                                                         </xs:complexType>
                                                     </xs:element>
                                                 </xs:sequence>
                                                 <xs:attribute name="name"/>
-                                                <xs:attribute name="on" type="type_person_target"
+                                                <xs:attribute name="on" type="type_person_select"
                                                               use="required"/>
                                             </xs:complexType>
                                         </xs:element>
@@ -468,52 +479,51 @@
                 </xs:element>
 
 
-                <xs:element name="events_chain">
+                <xs:element name="events_metadata">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="classification" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:element name="when" maxOccurs="unbounded">
                                             <xs:complexType>
-                                                <xs:attribute name="name" use="required" type="xs:string"/>
-                                            </xs:complexType>
-                                        </xs:element>
-                                        <xs:element name="requirement">
-                                            <xs:complexType>
-                                                <xs:sequence>
-                                                    <xs:element name="person_group" minOccurs="0" maxOccurs="unbounded"/>
-                                                </xs:sequence>
-                                            </xs:complexType>
-                                        </xs:element>
-                                        <xs:element name="trigger" maxOccurs="unbounded">
-                                            <xs:complexType>
-                                                <xs:sequence>
-                                                    <xs:element name="elapsed_time_divisible_by" minOccurs="0" maxOccurs="unbounded">
+                                                <xs:choice>
+                                                    <xs:element name="person_action_used">
                                                         <xs:complexType>
-                                                            <xs:attribute name="value" use="required" type="xs:int"/>
+                                                            <xs:attribute name="type" use="required"/>
                                                         </xs:complexType>
                                                     </xs:element>
-                                                </xs:sequence>
+                                                </xs:choice>
                                             </xs:complexType>
                                         </xs:element>
-                                        <xs:element name="setup">
+                                        <xs:element name="then" maxOccurs="unbounded">
                                             <xs:complexType>
                                                 <xs:sequence>
-                                                    <xs:element name="create_action" minOccurs="0"
-                                                                maxOccurs="unbounded">
+                                                    <xs:element name="at">
                                                         <xs:complexType>
-                                                            <xs:attribute name="name" use="required" type="xs:string"/>
-                                                            <xs:attribute name="type" use="required" type="xs:string"/>
-                                                            <xs:attribute name="on_group" use="required"
-                                                                          type="xs:string"/>
+                                                            <xs:sequence>
+                                                                <xs:element name="radius">
+                                                                    <xs:complexType>
+                                                                        <xs:sequence>
+                                                                            <xs:group ref="type_math_operations"/>
+                                                                        </xs:sequence>
+                                                                    </xs:complexType>
+                                                                </xs:element>
+                                                            </xs:sequence>
+                                                            <xs:attribute name="origin">
+                                                                <xs:simpleType>
+                                                                    <xs:restriction base="xs:string">
+                                                                        <xs:enumeration value="self"/>
+                                                                        <xs:enumeration value="target"/>
+                                                                    </xs:restriction>
+                                                                </xs:simpleType>
+                                                            </xs:attribute>
                                                         </xs:complexType>
                                                     </xs:element>
+                                                    <xs:element name="create_person" minOccurs="0" type="type_person_selection"/>
                                                 </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>
-                                        <xs:element name="resolution" maxOccurs="unbounded"/>
-                                        <xs:element name="cleanup"/>
                                     </xs:sequence>
                                     <xs:attribute name="name" use="required" type="xs:string"/>
                                 </xs:complexType>

@@ -290,22 +290,27 @@
         </location_markov_link>
     </locations_markov_chain>
     <!--_-->
-    <!--events_chain-->
+    <!--events_metadata-->
     <!--_-->
-    <events_chain>
+    <events_metadata>
         <entry name="spawn_bandits">
-            <classification name="dd"/>
-            <requirement/>
-            <trigger>
-                <elapsed_time_divisible_by value="1"/>
-            </trigger>
-            <setup>
-                <create_action name="accept_quest" type="talk" on_group="talk"/>
-            </setup>
-            <resolution/>
-            <cleanup/>
+            <when>
+                <person_action_used type="talk"/>
+            </when>
+            <then>
+                <at origin="self">
+                    <radius>
+                        <operation>
+                            <add value="1"/>
+                        </operation>
+                    </radius>
+                </at>
+                <create_person>
+                    <race name="human" quantity="1"/>
+                </create_person>
+            </then>
         </entry>
-    </events_chain>
+    </events_metadata>
     <!--_-->
     <!--Quests_Markov_chain-->
     <!--_-->
