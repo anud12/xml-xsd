@@ -48,7 +48,7 @@ export const personMoveTowards: Middleware = readUnit => {
     .flatMap(by => {
       return by.queryAllOptional("move_towards").flatMap(moveTowards => {
 
-        const person = personList.find(person => person.$name === by.$name);
+        const person = personList.find(person => person.$id === by.$person);
         const race = raceMetadata.find(race => race.$name === person.query("race").$name)
 
         const movement = race.query("movement").$value
@@ -74,7 +74,7 @@ export const personMoveTowards: Middleware = readUnit => {
       if (location.$x === action.destinationAttributes.$x && location.$y === action.destinationAttributes.$y) {
         writeUnit.queryAllOptional("actions")
           .flatMap(e => e.queryAllOptional("by"))
-          .filter(e => e.$name === action.person.$name)
+          .filter(e => e.$person === action.person.$name)
           .filter(e => e.queryAllOptional("move_towards"))
           .forEach(e => {
             e.removeFromParent();

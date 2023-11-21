@@ -17,6 +17,8 @@ export type JsonSchema = JsonQueryType<never, {
 
   world_metadata: JsonQueryType<never, {
     next_world_step: JsonQueryType,
+    elapsed_time: JsonQueryType<"value">,
+    counter: JsonQueryType<"value">,
     randomization_table: JsonQueryType<never, {
       entry: JsonQueryType<"value">
     }>
@@ -50,7 +52,7 @@ export type JsonSchema = JsonQueryType<never, {
         }>
       }>,
       property_mutation: JsonQueryType<"name" | "on", {
-        from: JsonQueryType<"partaker", {
+        from: JsonQueryType<"participant", {
           operation: OperationQueryType
         }>
       }>
@@ -80,6 +82,25 @@ export type JsonSchema = JsonQueryType<never, {
     }>
   }>,
 
+  events_metadata: JsonQueryType<never, {
+    entry: JsonQueryType<"name", {
+      when:JsonQueryType<never, {
+        person_action_used: JsonQueryType<"type">
+      }>,
+      then: JsonQueryType<never, {
+        at: JsonQueryType<"origin", {
+          radius: JsonQueryType<never, {
+            operation: OperationQueryType
+          }>
+          location: JsonQueryType<"type" | "quantity">
+        }>,
+        create_person?: JsonQueryType<never, {
+          race: JsonQueryType<"name" | "quantity">,
+        }>
+      }>
+    }>
+  }>
+
   quests_markov_chain: JsonQueryType<never, {
     quest_markov_link: JsonQueryType<"type", {
       next: JsonQueryType<"type" | "quantity">
@@ -88,7 +109,7 @@ export type JsonSchema = JsonQueryType<never, {
   }>,
 
   people: JsonQueryType<never, {
-    person: JsonQueryType<"name", {
+    person: JsonQueryType<"name" | "id", {
       race: JsonQueryType<"name">,
       location: JsonQueryType<"x" | "y">
       relations: JsonQueryType<"with">,
@@ -109,7 +130,7 @@ export type JsonSchema = JsonQueryType<never, {
   }>,
 
   actions: JsonQueryType<never, {
-    by: JsonQueryType<"name", {
+    by: JsonQueryType<"person", {
       do: JsonQueryType<"action" | "to">,
       move_towards: JsonQueryType<"x" | "y">
     }>

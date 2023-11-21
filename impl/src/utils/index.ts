@@ -7,6 +7,11 @@ import {JsonSchema, OperationQueryType} from "./JsonSchema";
 import {newRandom} from "./newRandom";
 import {createOperationFromQueryType} from "./operation/createOperationFromQueryType";
 import {getProperty, PersonQueryType} from "./person/getProperty";
+import {getById} from "./person/getById";
+import {createPerson, CreatePersonArgs} from "./person/createPerson";
+import {JsonQueryType} from "../JSONQuery";
+import {createOperationFromParent} from "./operation/createOperationFromParent";
+import {json} from "stream/consumers";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -39,12 +44,33 @@ export class JsonUtil {
     markovChainMatrix: (direction: string) => LocationMatrix,
     create: (x: number, y: number) => void,
   }
+
+  randomFromArray = <T>(array: T[]): T => {
+    return array[Math.floor(this.random() * array.length)];
+  }
   questMarkov: () => void;
+
+  counterNext = () => {
+    const counter = this.jsonQuery.query("world_metadata").query("counter");
+    const next = Number(counter.$value);
+    counter.$value = String(next + 1);
+    return next;
+  }
   computeOperation = (operationQueryType: OperationQueryType, getExternalProperty?: (string: string) => string) => {
     return createOperationFromQueryType({
       util: this,
       json: this.jsonQuery
     }, operationQueryType, getExternalProperty)
+  }
+  computeOperationFromParent = (operationList: JsonQueryType<any, {
+    operation: OperationQueryType
+  }>, getExternalProperty?: (string: string) => string) => {
+    return createOperationFromParent({
+        util: this,
+        json: this.jsonQuery
+      },
+      operationList,
+      getExternalProperty)
   }
   invalidate = () => {
     this.random = newRandom(this);
@@ -73,7 +99,11 @@ export class JsonUtil {
     getProperty: (personQueryType: PersonQueryType, key) => getProperty({
       util: this,
       json: this.jsonQuery
-    }, personQueryType, key)
+    }, personQueryType, key),
+    getById: memoizeFunction((id: string): PersonQueryType => {
+      return getById(this.jsonQuery, id)
+    }),
+    create: (args: CreatePersonArgs) => createPerson(this, args)
   }
 
   markov = markovNext;

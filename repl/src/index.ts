@@ -15,7 +15,7 @@ import {setTarget} from "./command/setTarget";
 
 export const state = {
   argPath: process.argv[2],
-  targetName: undefined as undefined | string,
+  targetId: undefined as undefined | string,
   jsonSchema: JsonQuery.fromText<JsonSchema>(fs.readFileSync(process.argv[2]).toString())
 }
 
@@ -37,13 +37,13 @@ async function main() {
 
   const message = () => {
     constRenderer.worldName.update(state.jsonSchema.query("world_metadata").query("next_world_step").body);
-    constRenderer.map.update(personMapView(selectedPerson.$name));
-    constRenderer.status.update(personStatusView(selectedPerson.$name));
-    constRenderer.target.update(state.targetName ? personStatusView(state.targetName) : "No target selected");
+    constRenderer.map.update(personMapView(selectedPerson.$id));
+    constRenderer.status.update(personStatusView(selectedPerson.$id));
+    constRenderer.target.update(state.targetId ? personStatusView(state.targetId) : "No target selected");
     return "Select action:";
 
   }
-  await promptMenu(constRenderer.status.addBottom(), message, [selectedPerson.$name], [
+  await promptMenu(constRenderer.status.addBottom(), message, [selectedPerson.$id], [
     run,
     moveTowards,
     action,

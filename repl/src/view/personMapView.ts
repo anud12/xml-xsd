@@ -9,8 +9,8 @@ type Cell = {
   y: number,
   character: string,
 }
-export const personMap = (personName: string): Array<Array<string>> => {
-  const person = state.jsonSchema.query("people").queryAll("person").find(e => e.$name === personName)
+export const personMap = (personId: string): Array<Array<string>> => {
+  const person = state.jsonSchema.query("people").queryAll("person").find(e => e.$id === personId)
   const personRaceMetadata = state.jsonSchema.query("race_metadata")
     .queryAll("entry").find(e => e.$name === person.query("race").$name)
   //get vision from person list of properties
@@ -45,13 +45,13 @@ export const personMap = (personName: string): Array<Array<string>> => {
     gridY[x] = walkableCharacter;
   })
 
-  state.jsonSchema.query("people").queryAll("person").forEach(e => {
-    const location = e.query("location");
+  state.jsonSchema.query("people").queryAll("person").forEach(person => {
+    const location = person.query("location");
     const x = Number(location.$x);
     const y = Number(location.$y);
     const gridY = grid[y] ?? [];
     grid[y] = gridY;
-    gridY[x] = personNameToSymbol(e.$name);
+    gridY[x] = personNameToSymbol(person.$id);
   })
   let rows:Array<Array<string>> = [];
   for (let y = personY - vision; y <= personY + vision; y++) {
@@ -70,7 +70,7 @@ export const personMap = (personName: string): Array<Array<string>> => {
 
 
 export function personMapView(personName: string) {
-  const person = state.jsonSchema.query("people").queryAll("person").find(e => e.$name === personName)
+  const person = state.jsonSchema.query("people").queryAll("person").find(e => e.$id === personName)
   const personRaceMetadata = state.jsonSchema.query("race_metadata")
     .queryAll("entry").find(e => e.$name === person.query("race").$name)
   //get vision from person list of properties

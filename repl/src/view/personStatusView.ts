@@ -16,11 +16,12 @@ export const personNameToSymbol = (string: string) => {
 
 function personStatus(person: PersonQueryType) {
   let string = "";
-  const personName = person.$name;
+  const personId = person.$id;
   const personRace = person.query("race")
+  const personName = person.$name ?? "";
   const race = state.jsonSchema.query("race_metadata").queryAll("entry")
     .find(e => e.$name === personRace.$name)
-  string += `Name: ${personName} (${personNameToSymbol(personName)})\n`
+  string += `Name: ${personName} (${personNameToSymbol(personId)})\n`
   string += `Race: ${race.$name}\n`;
   string += `Location: X: ${person.query("location").$x}, Y: ${person.query("location").$y}\n`;
   string += `Movement: ${race.query("movement").$value}\n`
@@ -55,11 +56,11 @@ function personClassifications(person: PersonQueryType) {
   return string + "\n" + classificationList;
 }
 
-export function personStatusView(personName: string) {
+export function personStatusView(personId: string) {
   let string = "";
   const person = state.jsonSchema.queryAll("people")
     .flatMap(e => e.queryAll("person"))
-    .find(e => e.$name === personName);
+    .find(e => e.$id === personId);
   const status = personStatus(person);
   const properties = personProperties(person);
   const classifications = personClassifications(person);
