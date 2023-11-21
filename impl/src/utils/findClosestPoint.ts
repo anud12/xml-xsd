@@ -6,6 +6,12 @@ export type Grid<T> = Record<number, Record<number, T>> & {
 }
 
 export function findClosestPoint<T>(locationGrid: Grid<T>, x: number, y: number): T | null {
+    if(isNaN(x)) {
+        throw new Error("x is NaN")
+    }
+    if(isNaN(y)) {
+        throw new Error("y is NaN")
+    }
     let closestPoint: T | null = null;
     let minDistance: number | null = null;
 

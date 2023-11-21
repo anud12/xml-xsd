@@ -10,7 +10,7 @@ type MutationQueryType = JsonSchema[typeof nodeBodyType]["action_metadata"][type
 type FromQueryType = MutationQueryType[typeof nodeBodyType]["from"]
 
 const mutationToValue = (readJson: Unit, mutation: MutationQueryType, person: PersonQueryType, targetPerson: PersonQueryType) => {
-  const operations = mutation.queryAll("from").flatMap((from:FromQueryType) => {
+  const operations = mutation.queryAll("from").flatMap((from: FromQueryType) => {
     const participant = from.$participant
     const participantPerson = participant === "target"
       ? targetPerson
@@ -41,7 +41,7 @@ export const personAction: Middleware = readJson => {
       const person = personList.find(e => e.$id === by.$person);
       const targetPerson = personList.find(e => e.$id === personDo.$to);
 
-      const property_mutation_list = action.queryAll("property_mutation").map(property_mutation => {
+      const property_mutation_list = action.queryAllOptional("property_mutation").map(property_mutation => {
         const value = mutationToValue(readJson, property_mutation, person, targetPerson);
         return {value, property_mutation: property_mutation}
       });
@@ -70,14 +70,16 @@ export const personAction: Middleware = readJson => {
           .flatMap(e => e.queryAll("property"))
           .find(e => e.$ref === propertyName)
           .$value = String(Number(propertyValue) + Number(mutation.value))
-
-        writeJsonUtil.jsonQuery.queryAllOptional("actions")
-          .flatMap(e => e.queryAllOptional("by"))
-          .filter(byElement => byElement.$person === by.$person)
-          .forEach(e => {
-            e.removeFromParent();
-          });
       })
     })
+    writeJsonUtil.jsonQuery.queryAllOptional("actions")
+      .flatMap(action => action.queryAllOptional("by"))
+      .forEach(by => {
+        if (!by.queryOptional("move_towards")) {
+          by.removeFromParent();
+        }
+      });
   }
+
+
 }

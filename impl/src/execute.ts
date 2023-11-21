@@ -6,6 +6,7 @@ import {personVision} from "./middleware/personVision";
 import {personMoveTowards} from "./middleware/personMoveTowards";
 import {personAction} from "./middleware/personAction";
 import {personAssignClassification} from "./middleware/personAssignClassification";
+import {eventsMetadata} from "./middleware/eventsMetadata";
 
 export const execute = async (xmlString:string, log: (...string:any[]) => void) => {
   const oldLog = console.log;
@@ -18,13 +19,13 @@ export const execute = async (xmlString:string, log: (...string:any[]) => void) 
     util: readJsonUtil
   }
 
-  await personAssignClassification(unit)(readJson);
-  await personVision(unit)(readJson);
   const personMoveTowardsResult = personMoveTowards(unit);
   const personActionResult = personAction(unit);
+  const eventsMetadataResult = eventsMetadata(unit)
 
   await personMoveTowardsResult(readJson);
   await personActionResult(readJson);
+  await eventsMetadataResult(readJson);
   await personVision(unit)(readJson);
   await personAssignClassification(unit)(readJson);
 

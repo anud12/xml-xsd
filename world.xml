@@ -301,7 +301,7 @@
                 <at origin="self">
                     <radius>
                         <operation>
-                            <add value="1"/>
+                            <add value="10"/>
                         </operation>
                     </radius>
                 </at>

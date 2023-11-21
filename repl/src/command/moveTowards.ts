@@ -5,11 +5,11 @@ import {select2d} from "../select2d";
 
 export const moveTowards: Command<[string]> = {
   key: () => ["move towards"],
-  action: async (render, personName: string) => {
-    const mapString = personMap(personName);
+  action: async (render, personId: string) => {
+    const mapString = personMap(personId);
     const personLocation = state.jsonSchema.query("people")
       .queryAllOptional("person")
-      .find(e => e.$name === personName)
+      .find(e => e.$id === personId)
       ?.queryOptional("location");
 
     const cells = mapString.map((lineList, y,column) => {
@@ -27,7 +27,7 @@ export const moveTowards: Command<[string]> = {
     });
     state.jsonSchema.query("actions")
       .appendChild("by", {
-        $name: personName,
+        $person: personId,
       })
       .appendChild("move_towards", {
         $x: String(selectedCell.x + Number(personLocation.$x)),

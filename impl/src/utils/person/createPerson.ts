@@ -18,9 +18,11 @@ export const createPerson = (jsonSchema: JsonUtil, args: CreatePersonArgs): void
   const race = args.race || jsonSchema.randomFromArray(raceNameList)
 
   const people = jsonSchema.jsonQuery.query("people");
+  console.log("createPerson", args);
   const person = people.appendChild("person", {
     $id: `${time}.${jsonSchema.counterNext()}`,
   });
   person.appendChild("location", args.location);
   person.appendChild("race", {$name: race});
+  person.appendChild("classifications", {});
 }

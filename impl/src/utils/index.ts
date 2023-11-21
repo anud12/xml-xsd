@@ -7,7 +7,7 @@ import {JsonSchema, OperationQueryType} from "./JsonSchema";
 import {newRandom} from "./newRandom";
 import {createOperationFromQueryType} from "./operation/createOperationFromQueryType";
 import {getProperty, PersonQueryType} from "./person/getProperty";
-import {getByName} from "./person/getByName";
+import {getById} from "./person/getById";
 import {createPerson, CreatePersonArgs} from "./person/createPerson";
 import {JsonQueryType} from "../JSONQuery";
 import {createOperationFromParent} from "./operation/createOperationFromParent";
@@ -100,8 +100,8 @@ export class JsonUtil {
       util: this,
       json: this.jsonQuery
     }, personQueryType, key),
-    getByName: memoizeFunction((name: string): PersonQueryType => {
-      return getByName(this.jsonQuery, name)
+    getById: memoizeFunction((id: string): PersonQueryType => {
+      return getById(this.jsonQuery, id)
     }),
     create: (args: CreatePersonArgs) => createPerson(this, args)
   }
