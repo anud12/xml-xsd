@@ -684,7 +684,7 @@
                                         </xs:element>
                                     </xs:sequence>
                                     <xs:attribute name="id" use="required"/>
-                                    <xs:attribute name="name" use="required"/>
+                                    <xs:attribute name="name"/>
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
