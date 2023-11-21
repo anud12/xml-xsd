@@ -69,7 +69,7 @@ describe("personAction" , () => {
         </person_to_person>
     </action_metadata>
     <people>
-        <person name="Billy">
+        <person id="Billy">
             <race name="human"/>
             <location x="10" y="10"/>
             <inventory>
@@ -77,14 +77,14 @@ describe("personAction" , () => {
             </inventory>
             <properties/>
         </person>
-        <person name="Bob">
+        <person id="Bob">
             <race name="human"/>
             <location x="10" y="10"/>
             <properties/>
         </person>
     </people>
     <actions>
-        <by name="Billy">
+        <by person="Billy">
             <do action="meleeAttack" to="Bob" />
         </by>
     </actions>
@@ -155,7 +155,7 @@ describe("personAction" , () => {
     </person_to_person>
   </action_metadata>
   <people>
-    <person name="Billy">
+    <person id="Billy">
       <race name="human" />
       <location x="10" y="10" />
       <inventory>
@@ -165,7 +165,7 @@ describe("personAction" , () => {
         <property ref="strength" value="10" />
       </properties>
     </person>
-    <person name="Bob">
+    <person id="Bob">
       <race name="human" />
       <location x="10" y="10" />
       <properties>

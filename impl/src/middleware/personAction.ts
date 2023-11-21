@@ -38,8 +38,8 @@ export const personAction: Middleware = readJson => {
         return [];
       }
       const action = actionMetadata.find(e => e.$name === personDo.$action);
-      const person = personList.find(e => e.$name === by.$name);
-      const targetPerson = personList.find(e => e.$name === personDo.$to);
+      const person = personList.find(e => e.$id === by.$person);
+      const targetPerson = personList.find(e => e.$id === personDo.$to);
 
       const property_mutation_list = action.queryAll("property_mutation").map(property_mutation => {
         const value = mutationToValue(readJson, property_mutation, person, targetPerson);
@@ -56,8 +56,8 @@ export const personAction: Middleware = readJson => {
     const writeJsonUtil = new JsonUtil(writeJson);
     actions.forEach(({by: by, personAction, property_mutation_list}) => {
       const personList = writeJson.queryAll("people").flatMap(e => e.queryAll("person"));
-      const person = personList.find(e => e.$name === by.$name);
-      const targetPerson = personList.find(e => e.$name === personAction.$to);
+      const person = personList.find(e => e.$id === by.$person);
+      const targetPerson = personList.find(e => e.$id === personAction.$to);
 
       property_mutation_list.forEach(mutation => {
         const applicablePerson = mutation.property_mutation.$on === "target"
@@ -73,7 +73,7 @@ export const personAction: Middleware = readJson => {
 
         writeJsonUtil.jsonQuery.queryAllOptional("actions")
           .flatMap(e => e.queryAllOptional("by"))
-          .filter(e => e.$name === by.$name)
+          .filter(byElement => byElement.$person === by.$person)
           .forEach(e => {
             e.removeFromParent();
           });

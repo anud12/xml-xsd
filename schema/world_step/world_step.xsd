@@ -704,11 +704,19 @@
                         <xs:field xpath="@name"/>
                     </xs:key>
 
+                    <!-- key for -->
+                    <!-- people/person@id -->
+                    <xs:key name="K__people__person.id">
+                        <xs:selector xpath="person"/>
+                        <xs:field xpath="@id"/>
+                    </xs:key>
+
                     <!-- fk for -->
                     <!-- people/person/relation@with -->
-                    <!-- people/person@name -->
-                    <xs:keyref name="FK__people__person__relations.with" refer="K__people__person.name">
-                        <xs:selector xpath="person/relations"/>
+                    <!-- people/person@id -->
+                    <xs:keyref name="FK__people__person__relation.with__to__people_person.id"
+                               refer="K__people__person.id">
+                        <xs:selector xpath="person/relation"/>
                         <xs:field xpath="@with"/>
                     </xs:keyref>
                 </xs:element>
@@ -750,7 +758,7 @@
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:choice>
-                                    <xs:attribute name="name" use="required"/>
+                                    <xs:attribute name="person" use="required"/>
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
@@ -798,18 +806,28 @@
 
         <!-- FK actions -->
 
-
-        <xs:keyref name="FK__actions_by.name__to__people_person.name" refer="K__people__person.name">
+        <!-- fk for -->
+        <!-- actions/by@name -->
+        <!-- people/person@id-->
+        <xs:keyref name="FK__actions_by.name__to__people_person.id"
+                   refer="K__people__person.id">
             <xs:selector xpath="actions/by"/>
             <xs:field xpath="@name"/>
         </xs:keyref>
 
-        <xs:keyref name="FK__actions_by_do.action__to__people_person.name"
+        <!-- fk for -->
+        <!-- actions/by/do@to -->
+        <!-- action_metadata/person_to_person@name -->
+        <xs:keyref name="FK__actions_by_do.action__to__people_person.id"
                    refer="K__action_metadata__person_to_person.name">
             <xs:selector xpath="actions/by/do"/>
             <xs:field xpath="@action"/>
         </xs:keyref>
-        <xs:keyref name="FK__actions_by_do.on__to__people_person.name" refer="K__people__person.name">
+
+        <!-- fk for -->
+        <!-- actions/by/do@to -->
+        <!-- people/person@id -->
+        <xs:keyref name="FK__actions_by_do.on__to__people_person.id" refer="K__people__person.id">
             <xs:selector xpath="actions/by/do"/>
             <xs:field xpath="@to"/>
         </xs:keyref>
