@@ -11,6 +11,8 @@ describe("eventsMetadata", () => {
             xsi:noNamespaceSchemaLocation="../../../../schema/world_step/world_step.xsd"
 >
   <world_metadata>
+    <elapsed_time value="0"/>
+    <counter value="0"/>
     <randomization_table>
       <entry value="2"/>
     </randomization_table>
@@ -29,7 +31,7 @@ describe("eventsMetadata", () => {
           </radius>
         </at>
         <create_person>
-          <race name="human" quantity="1"/>
+          <race name="race_definition" quantity="1"/>
         </create_person>
       </then>
     </entry>
@@ -78,6 +80,8 @@ describe("eventsMetadata", () => {
   xsi:noNamespaceSchemaLocation="../../../../schema/world_step/world_step.xsd"
 >
   <world_metadata>
+    <elapsed_time value="0" />
+    <counter value="1" />
     <randomization_table>
       <entry value="2" />
     </randomization_table>
@@ -96,7 +100,7 @@ describe("eventsMetadata", () => {
           </radius>
         </at>
         <create_person>
-          <race name="human" quantity="1" />
+          <race name="race_definition" quantity="1" />
         </create_person>
       </then>
     </entry>
@@ -116,9 +120,9 @@ describe("eventsMetadata", () => {
       <race name="race_definition" />
       <location x="0" y="0" />
     </person>
-    <person name="person">
+    <person id="0.0">
+      <location x="10" y="10" />
       <race name="race_definition" />
-      <location x="0" y="0" />
     </person>
   </people>
   <location_layer>

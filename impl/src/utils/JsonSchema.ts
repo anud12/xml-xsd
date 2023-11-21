@@ -17,6 +17,8 @@ export type JsonSchema = JsonQueryType<never, {
 
   world_metadata: JsonQueryType<never, {
     next_world_step: JsonQueryType,
+    elapsed_time: JsonQueryType<"value">,
+    counter: JsonQueryType<"value">,
     randomization_table: JsonQueryType<never, {
       entry: JsonQueryType<"value">
     }>
@@ -107,7 +109,7 @@ export type JsonSchema = JsonQueryType<never, {
   }>,
 
   people: JsonQueryType<never, {
-    person: JsonQueryType<"name", {
+    person: JsonQueryType<"name" | "id", {
       race: JsonQueryType<"name">,
       location: JsonQueryType<"x" | "y">
       relations: JsonQueryType<"with">,

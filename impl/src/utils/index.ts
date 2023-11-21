@@ -11,6 +11,7 @@ import {getByName} from "./person/getByName";
 import {createPerson, CreatePersonArgs} from "./person/createPerson";
 import {JsonQueryType} from "../JSONQuery";
 import {createOperationFromParent} from "./operation/createOperationFromParent";
+import {json} from "stream/consumers";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -48,6 +49,13 @@ export class JsonUtil {
     return array[Math.floor(this.random() * array.length)];
   }
   questMarkov: () => void;
+
+  counterNext = () => {
+    const counter = this.jsonQuery.query("world_metadata").query("counter");
+    const next = Number(counter.$value);
+    counter.$value = String(next + 1);
+    return next;
+  }
   computeOperation = (operationQueryType: OperationQueryType, getExternalProperty?: (string: string) => string) => {
     return createOperationFromQueryType({
       util: this,

@@ -155,12 +155,17 @@
                         <xs:sequence>
                             <xs:element name="previous_world_step" type="xs:anyURI" minOccurs="0"/>
                             <xs:element name="next_world_step" type="xs:anyURI"/>
-                            <xs:element name="elapsedTime">
+                            <xs:element name="elapsed_time">
                                 <xs:complexType>
                                     <xs:attribute name="value" type="xs:int" use="required"/>
                                 </xs:complexType>
                             </xs:element>
                             <xs:element name="stepDuration">
+                                <xs:complexType>
+                                    <xs:attribute name="value" type="xs:int" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="counter">
                                 <xs:complexType>
                                     <xs:attribute name="value" type="xs:int" use="required"/>
                                 </xs:complexType>
@@ -678,11 +683,19 @@
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
+                                    <xs:attribute name="id" use="required"/>
                                     <xs:attribute name="name" use="required"/>
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
                     </xs:complexType>
+
+                    <!-- unique for -->
+                    <!-- people/person@id -->
+                    <xs:unique name="U__people__person.id">
+                        <xs:selector xpath="person"/>
+                        <xs:field xpath="@id"/>
+                    </xs:unique>
 
                     <!-- key for -->
                     <!-- people/person@name -->

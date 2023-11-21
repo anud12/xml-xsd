@@ -3,9 +3,9 @@
         xsi:noNamespaceSchemaLocation="schema/world_step/world_step.xsd">
     <world_metadata>
         <next_world_step>./world_1</next_world_step>
-        <elapsedTime value="0"/>
+        <elapsed_time value="0"/>
         <stepDuration value="1"/>
-
+        <counter value="0"/>
         <randomization_table>
             <entry value="4"/>
             <entry value="9"/>
@@ -345,7 +345,7 @@
     <!--People-->
     <!--_-->
     <people>
-        <person name="Billy">
+        <person id="1" name="Billy">
             <race name="human"/>
             <location x="1" y="1"/>
             <properties>
@@ -356,7 +356,7 @@
             </inventory>
             <classifications/>
         </person>
-        <person name="Bobu">
+        <person id="3" name="Bobu">
             <race name="human"/>
             <location x="-1" y="-1"/>
             <properties/>

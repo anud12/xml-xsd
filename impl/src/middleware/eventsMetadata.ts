@@ -54,14 +54,14 @@ const thenCreatePerson = (readJson: Unit, origin: Origin): Array<(util: JsonUtil
       ? origin.self
       : origin.target
 
-    const x = String(Math.floor(readJson.util.random() * radius * 2) - radius) + Number(originElement.$x);
-    const y = String(Math.floor(readJson.util.random() * radius * 2) - radius) + Number(originElement.$y);
-
     return then.queryAllOptional("create_person")
       .map(create_person =>
         (util: JsonUtil) => {
+          const race = create_person.queryOptional("race")?.$name;
+          const x = String(Math.floor(readJson.util.random() * radius * 2) - radius) + Number(originElement.$x);
+          const y = String(Math.floor(readJson.util.random() * radius * 2) - radius) + Number(originElement.$y);
           util.person.create({
-            race: create_person.queryOptional("race")?.$name,
+            race: race,
             location: {
               $x: x,
               $y: y
@@ -75,7 +75,6 @@ const thenCreatePerson = (readJson: Unit, origin: Origin): Array<(util: JsonUtil
 export const eventsMetadata: Middleware = readJson => {
   const originList = applyFromPersonActionUsed(readJson, readJson.json.query("events_metadata").query("entry"));
   const actions = originList.flatMap(origin => thenCreatePerson(readJson, origin));
-
 
   return async writeJson => {
     const writeJsonUtil = new JsonUtil(writeJson);
