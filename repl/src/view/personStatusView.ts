@@ -23,7 +23,9 @@ function personStatus(person: PersonQueryType) {
     .find(e => e.$name === personRace.$name)
   string += `Name: ${personName} (${personNameToSymbol(personId)})\n`
   string += `Race: ${race.$name}\n`;
-  string += `Location: X: ${person.query("location").$x}, Y: ${person.query("location").$y}\n`;
+  string += `Location: \n`;
+  string += ` - X: ${person.query("location").$x}\n`;
+  string += ` - Y: ${person.query("location").$y}\n`;
   string += `Movement: ${race.query("movement").$value}\n`
   string += 'Relations:\n'
   return string;

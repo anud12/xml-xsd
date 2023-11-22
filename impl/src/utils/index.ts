@@ -11,7 +11,6 @@ import {getById} from "./person/getById";
 import {createPerson, CreatePersonArgs} from "./person/createPerson";
 import {JsonQueryType} from "../JSONQuery";
 import {createOperationFromParent} from "./operation/createOperationFromParent";
-import {json} from "stream/consumers";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
