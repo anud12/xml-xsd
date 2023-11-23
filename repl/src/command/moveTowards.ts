@@ -25,6 +25,9 @@ export const moveTowards: Command<[string]> = {
       x: Math.floor(Number(mapString.length / 2)),
       y: Math.floor(Number(mapString.length / 2)),
     });
+    if(!selectedCell){
+      return;
+    }
     state.jsonSchema.query("actions")
       .appendChild("by", {
         $person: personId,

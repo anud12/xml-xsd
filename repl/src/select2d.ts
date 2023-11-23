@@ -1,4 +1,6 @@
 import {Render} from "./printer/createRender";
+import {clearInput} from "./printer/clearInput";
+import readline from "readline";
 
 export const select2d = async <T>(
   render: Render,
@@ -6,7 +8,7 @@ export const select2d = async <T>(
   options: T[][],
   mapper: (t: T) => string = (t) => t as string,
   initialPosition?: { x: number, y: number },
-): Promise<T> => {
+): Promise<T | undefined> => {
   return await new Promise<T>((resolve) => {
     let selectedRowIndex = initialPosition.y ?? 0;
     let selectedColIndex = initialPosition.x ?? 0;
@@ -37,7 +39,8 @@ export const select2d = async <T>(
 
     print();
 
-    const listener = (_, key) => {
+    const listener = (_, key: readline.Key ) => {
+      clearInput(key)
       if (key.name === 'up') {
         selectedRowIndex = Math.max(0, selectedRowIndex - 1);
         print();
@@ -61,8 +64,13 @@ export const select2d = async <T>(
       if (key.name === 'return') {
         process.stdin.removeListener('keypress', listener);
         resolve(options[selectedRowIndex][selectedColIndex]);
+        return;
       }
-      process.stdout.write("\b");
+      if(key.name === 'escape') {
+        process.stdin.removeListener('keypress', listener);
+        resolve(undefined);
+        return;
+      }
       print();
     };
 

@@ -51,6 +51,10 @@ export const personMap = (personId: string): Array<Array<string>> => {
     const y = Number(location.$y);
     const gridY = grid[y] ?? [];
     grid[y] = gridY;
+    if(personId === person.$id){
+      gridY[x] = "@";
+      return;
+    }
     gridY[x] = personNameToSymbol(person.$id);
   })
   let rows:Array<Array<string>> = [];

@@ -1,4 +1,8 @@
 import {Render} from "./printer/createRender";
+import * as readline from "readline";
+import {clearInput} from "./printer/clearInput";
+
+
 
 export const select = async <T>(render:Render, message:() => string, options: T[], mapper: (t: T) => string = t => t as string): Promise<T> => {
   return await new Promise<T>((resolve) => {
@@ -19,16 +23,8 @@ export const select = async <T>(render:Render, message:() => string, options: T[
       render.update(stringOptions);
     }
     print();
-    const listener = (_, key) => {
-
-      if (key.name === "left") {
-        process.stdout.write("\b");
-        return;
-      }
-      if(key.name === "right") {
-        process.stdout.write("\b");
-        return;
-      }
+    const listener = async (_, key:readline.Key) => {
+      await clearInput(key);
       if (key.name === "up") {
         selectedIndex = Math.max(0, selectedIndex - 1);
         print();
@@ -40,12 +36,10 @@ export const select = async <T>(render:Render, message:() => string, options: T[
         return;
       }
       if (key.name === "return") {
-        process.stdout.write("\b\b  ");
         process.stdin.removeListener('keypress', listener);
         resolve(options[selectedIndex])
         return;
       }
-      process.stdout.write("\b ");
       print();
     };
     process.stdin.on('keypress', listener);
