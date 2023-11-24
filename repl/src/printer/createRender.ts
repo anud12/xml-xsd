@@ -12,10 +12,10 @@ text, and a function that unsubscribes the added text
  */
 
 export type Render = {
-  addLeft: () => Render,
-  addRight: () => Render,
-  addTop: () => Render,
-  addBottom: () => Render,
+  addLeft: (title?:string) => Render,
+  addRight: (title?:string) => Render,
+  addTop: (title?:string) => Render,
+  addBottom: (title?:string) => Render,
   getLeft: () => Render | undefined,
   getRight: () => Render | undefined,
   getTop: () => Render | undefined,
@@ -42,7 +42,7 @@ class Renderer implements Render{
   updateCallback: ((string: string) => void) | undefined;
   focusValue = false;
 
-  constructor(public parent?:Render) {
+  constructor(public title?:string, public parent?:Render) {
   }
 
   getLeft = ():Render | undefined => this.left
@@ -51,29 +51,29 @@ class Renderer implements Render{
   getBottom = ():Render | undefined => this.bottom
   getParent = ():Render | undefined => this.parent
 
-  addLeft = (): Render => {
-    this.left = createRender(this);
+  addLeft = (title?:string): Render => {
+    this.left = createRender(title, this);
     this.left.onUpdate(() => {
       this.updateCallback?.(this.rerender());
     })
     return this.left;
   }
-  addRight = (): Render => {
-    this.right = createRender(this);
+  addRight = (title?:string): Render => {
+    this.right = createRender(title,this);
     this.right.onUpdate(() => {
       this.updateCallback?.(this.rerender());
     })
     return this.right
   }
-  addTop = (): Render => {
-    this.top = createRender(this);
+  addTop = (title?:string): Render => {
+    this.top = createRender(title,this);
     this.top.onUpdate(() => {
       this.updateCallback?.(this.rerender());
     })
     return this.top;
   }
-  addBottom = (): Render => {
-    this.bottom = createRender(this);
+  addBottom = (title?:string): Render => {
+    this.bottom = createRender(title,this);
     this.bottom.onUpdate(() => {
       this.updateCallback?.(this.rerender());
     })
@@ -110,7 +110,7 @@ class Renderer implements Render{
     const topText = this.top?.rerender() || '';
     const bottomText = this.bottom?.rerender() || '';
 
-    return sideBySide(leftText, sideBySide(topAndBottom(topText, topAndBottom(addBorder(this.text?.join(), this.focusValue) || '', bottomText)), rightText));
+    return sideBySide(leftText, sideBySide(topAndBottom(topText, topAndBottom(addBorder(this.text?.join(), this.title, this.focusValue) || '', bottomText)), rightText));
     // return topAndBottom(topText, topAndBottom(sideBySide(leftText, sideBySide(text || '', rightText)), bottomText));
   }
   unsubscribeLeft = (): void => {
@@ -167,6 +167,6 @@ class Renderer implements Render{
   }
 }
 
-export const createRender = (parent?:Render): Render => {
-  return new Renderer(parent);
+export const createRender = (title?:string, parent?:Render): Render => {
+  return new Renderer(title, parent);
 }

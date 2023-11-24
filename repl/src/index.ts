@@ -21,10 +21,10 @@ export const state = {
 
 const baseRenderer = consoleRenderer();
 export const constRenderer = {
-  map: baseRenderer.addRight(),
-  worldName: baseRenderer.getRight().addBottom(),
-  status: baseRenderer.addLeft(),
-  target: baseRenderer.getRight().addRight(),
+  map: baseRenderer.addRight("Map"),
+  worldName: baseRenderer.getRight().addBottom("World Name"),
+  status: baseRenderer.addLeft("Status"),
+  target: baseRenderer.getRight().addRight("Selected Target"),
   log: baseRenderer.addTop(),
 }
 
