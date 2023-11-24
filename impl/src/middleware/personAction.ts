@@ -4,7 +4,7 @@ import {nodeBodyType} from "../JSONQuery";
 import {JsonUtil} from "../utils";
 
 type PersonQueryType = JsonSchema[typeof nodeBodyType]["people"][typeof nodeBodyType]["person"]
-
+type PersonActionMetadataQueryType = JsonSchema[typeof nodeBodyType]["action_metadata"][typeof nodeBodyType]["person_to_person"];
 
 type MutationQueryType = JsonSchema[typeof nodeBodyType]["action_metadata"][typeof nodeBodyType]["person_to_person"][typeof nodeBodyType]["property_mutation"]
 type FromQueryType = MutationQueryType[typeof nodeBodyType]["from"]
@@ -24,6 +24,24 @@ const mutationToValue = (readJson: Unit, mutation: MutationQueryType, person: Pe
   return operations.reduce((e, op) => op(e), "0");
 }
 
+export const isOutOfRange = (readJson: Unit, personAction: PersonActionMetadataQueryType, person: PersonQueryType, targetPerson: PersonQueryType, ) => {
+  const maxRange = personAction.query("max_range");
+  if (!maxRange) {
+    return true;
+  }
+  const maxRangeValue = readJson.util.computeOperationFromParent(maxRange, string => readJson.util.person.getProperty(person, string))("0");
+  const distance = readJson.util.person.getDistance(person, targetPerson);
+  if(distance > Number(maxRangeValue)) {
+    return true;
+  }
+  const minRange = personAction.query("min_range");
+  if (!minRange) {
+    return false;
+  }
+  const minRangeValue = readJson.util.computeOperationFromParent(minRange, string => readJson.util.person.getProperty(person, string))("0");
+  return Number(minRangeValue) > distance;
+}
+
 export const personAction: Middleware = readJson => {
   const actionMetadata = readJson.json.queryAll("action_metadata")
     .flatMap(e => e.queryAll("person_to_person"));
@@ -37,9 +55,17 @@ export const personAction: Middleware = readJson => {
       if (!personDo) {
         return [];
       }
-      const action = actionMetadata.find(e => e.$name === personDo.$action);
-      const person = personList.find(e => e.$id === by.$person);
-      const targetPerson = personList.find(e => e.$id === personDo.$to);
+      const action = actionMetadata.find(action => action.$name === personDo.$action);
+      const person = personList.find(person => person.$id === by.$person);
+      const targetPerson = personList.find(person => person.$id === personDo.$to);
+
+      if(isOutOfRange(readJson, action, person, targetPerson)) {
+        return [{
+          by: by,
+          personAction: personDo,
+          property_mutation_list: []
+        }];
+      }
 
       const property_mutation_list = action.queryAllOptional("property_mutation").map(property_mutation => {
         const value = mutationToValue(readJson, property_mutation, person, targetPerson);

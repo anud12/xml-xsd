@@ -102,6 +102,13 @@ export class JsonUtil {
     getById: memoizeFunction((id: string): PersonQueryType => {
       return getById(this.jsonQuery, id)
     }),
+    getDistance: memoizeFunction((personQueryType: PersonQueryType, secondPersonQueryType: PersonQueryType) => {
+      const x = Number(personQueryType.query("location").$x);
+      const y = Number(personQueryType.query("location").$y);
+      const x2 = Number(secondPersonQueryType.query("location").$x);
+      const y2 = Number(secondPersonQueryType.query("location").$y);
+      return Math.sqrt(Math.pow(x - x2, 2) + Math.pow(y - y2, 2));
+    }),
     create: (args: CreatePersonArgs) => createPerson(this, args)
   }
 

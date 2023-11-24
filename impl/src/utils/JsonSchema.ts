@@ -42,7 +42,12 @@ export type JsonSchema = JsonQueryType<never, {
 
   action_metadata: JsonQueryType<never, {
     person_to_person: JsonQueryType<"name", {
-      range: JsonQueryType<"value" | "inclusive">,
+      max_range: JsonQueryType<never, {
+        operation: OperationQueryType,
+      }>,
+      min_range: JsonQueryType<never, {
+        operation: OperationQueryType,
+      }>,
       test: JsonQueryType<never, {
         value: JsonQueryType<"target", {
           operation: OperationQueryType,

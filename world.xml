@@ -204,7 +204,11 @@
     <!--_-->
     <action_metadata>
         <person_to_person name="talk">
-            <range value="1" inclusive="true"/>
+            <max_range>
+                <operation>
+                    <add value="1"/>
+                </operation>
+            </max_range>
             <test>
                 <value target="self">
                     <operation>
@@ -219,7 +223,11 @@
             </test>
         </person_to_person>
         <person_to_person name="meleeAttack">
-            <range value="1" inclusive="true"/>
+            <max_range>
+                <operation>
+                    <add value="1"/>
+                </operation>
+            </max_range>
             <test>
                 <value target="self">
                     <operation>
