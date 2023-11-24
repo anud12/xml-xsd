@@ -31,15 +31,15 @@ export const isOutOfRange = (readJson: Unit, personAction: PersonActionMetadataQ
   }
   const maxRangeValue = readJson.util.computeOperationFromParent(maxRange, string => readJson.util.person.getProperty(person, string))("0");
   const distance = readJson.util.person.getDistance(person, targetPerson);
-  if(distance >= Number(maxRangeValue)) {
+  if(distance > (Number(maxRangeValue) + 1)) {
     return true;
   }
-  const minRange = personAction.query("min_range");
+  const minRange = personAction.queryOptional("min_range");
   if (!minRange) {
     return false;
   }
   const minRangeValue = readJson.util.computeOperationFromParent(minRange, string => readJson.util.person.getProperty(person, string))("0");
-  return Number(minRangeValue) >= distance;
+  return (Number(minRangeValue) + 1)> distance;
 }
 
 export const personAction: Middleware = readJson => {
