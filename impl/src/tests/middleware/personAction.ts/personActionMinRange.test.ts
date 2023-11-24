@@ -1,11 +1,11 @@
-import {JsonUtil} from "../../utils";
-import {JsonQuery} from "../../JSONQuery";
-import {JsonSchema} from "../../utils/JsonSchema";
+import {JsonUtil} from "../../../utils";
+import {JsonQuery} from "../../../JSONQuery";
+import {JsonSchema} from "../../../utils/JsonSchema";
 import {describe} from "@jest/globals";
-import {personAction} from "../../middleware/personAction";
+import {personAction} from "../../../middleware/personAction";
 
 describe("personAction" , () => {
-  it("should initialize values from property metadata and compute", async () => {
+  it("should initialize values from property metadata and compute if distance between people is over min range", async () => {
     const query = JsonQuery.fromText<JsonSchema>(`<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:noNamespaceSchemaLocation="../../../../schema/world_step/world_step.xsd"
 >
@@ -42,7 +42,16 @@ describe("personAction" , () => {
     
     <action_metadata>
         <person_to_person name="meleeAttack">
-            <range value="1" inclusive="true"/>
+            <max_range>
+                <operation>
+                    <add value="5"/>
+                </operation>
+            </max_range>
+            <min_range>
+                <operation>
+                    <add value="3"/>
+                </operation>
+            </min_range>
             <test>
                 <value target="self">
                     <operation>
@@ -79,7 +88,7 @@ describe("personAction" , () => {
         </person>
         <person id="Bob">
             <race name="human"/>
-            <location x="10" y="10"/>
+            <location x="12" y="10"/>
             <properties/>
         </person>
     </people>
@@ -129,7 +138,16 @@ describe("personAction" , () => {
   </race_metadata>
   <action_metadata>
     <person_to_person name="meleeAttack">
-      <range value="1" inclusive="true" />
+      <max_range>
+        <operation>
+          <add value="5" />
+        </operation>
+      </max_range>
+      <min_range>
+        <operation>
+          <add value="3" />
+        </operation>
+      </min_range>
       <test>
         <value target="self">
           <operation>
@@ -161,16 +179,12 @@ describe("personAction" , () => {
       <inventory>
         <item ref="Long sword" equipped="hand" />
       </inventory>
-      <properties>
-        <property ref="strength" value="10" />
-      </properties>
+      <properties />
     </person>
     <person id="Bob">
       <race name="human" />
-      <location x="10" y="10" />
-      <properties>
-        <property ref="health" value="15" />
-      </properties>
+      <location x="12" y="10" />
+      <properties />
     </person>
   </people>
   <actions />
