@@ -21,10 +21,10 @@ export const state = {
 
 const baseRenderer = consoleRenderer();
 export const constRenderer = {
-  map: baseRenderer.addRight(),
-  worldName: baseRenderer.getRight().addBottom(),
-  status: baseRenderer.addLeft(),
-  target: baseRenderer.getRight().addRight(),
+  map: baseRenderer.addRight("Map"),
+  worldName: baseRenderer.getRight().addBottom("World Name"),
+  status: baseRenderer.addLeft("Status"),
+  target: baseRenderer.getRight().addRight("Selected Target"),
   log: baseRenderer.addTop(),
 }
 
@@ -40,10 +40,10 @@ async function main() {
     constRenderer.map.update(personMapView(selectedPerson.$id));
     constRenderer.status.update(personStatusView(selectedPerson.$id));
     constRenderer.target.update(state.targetId ? personStatusView(state.targetId) : "No target selected");
-    return "Select action:";
+    return "";
 
   }
-  await promptMenu(constRenderer.status.addBottom(), message, [selectedPerson.$id], [
+  await promptMenu(constRenderer.status.addBottom("Select Action"), message, [selectedPerson.$id], [
     run,
     moveTowards,
     action,

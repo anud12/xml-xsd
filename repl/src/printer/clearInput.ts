@@ -3,6 +3,10 @@ import readline from "readline";
 export const clearInput = async (key:readline.Key) => {
   if(key.name === "right") {
     await new Promise<void>(resolve => process.stdout.moveCursor(-1, 0, resolve));
+    return;
+  }
+  if(key.name === "left") {
+    return;
   }
   if(key.name === "up") {
     return;
