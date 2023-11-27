@@ -17,35 +17,32 @@ describe("eventsMetadata", () => {
       <entry value="2"/>
     </randomization_table>
   </world_metadata>
-  <events_metadata>
-    <entry name="spawn_human">
-      <when>
-        <person_action_used type="talk"/>
-      </when>
-      <then>
-        <at origin="self">
-          <radius>
-            <operation>
-              <add value="1"/>
-            </operation>
-          </radius>
-        </at>
-        <create_person>
-          <race name="race_definition" quantity="1"/>
-        </create_person>
-      </then>
-    </entry>
+  <rule_group>
+    <race_metadata>
+      <entry name="race_definition">
+        <vision value="1"/>
+      </entry>
+    </race_metadata>
+    <events_metadata>
+      <entry name="spawn_human">
+        <when>
+          <person_action_used type="talk"/>
+        </when>
+        <then>
+          <at origin="self">
+            <radius>
+              <operation>
+                <add value="1"/>
+              </operation>
+            </radius>
+          </at>
+          <create_person>
+            <race name="race_definition" quantity="1"/>
+          </create_person>
+        </then>
+      </entry>
     </events_metadata>
-  <locations_markov_chain>
-    <location_markov_link type="type">
-      <sibling type="type" position="all"/>
-    </location_markov_link>
-  </locations_markov_chain>
-  <race_metadata>
-    <entry name="race_definition">
-      <vision value="1"/>
-    </entry>
-  </race_metadata>
+  </rule_group>
   <people>
     <person name="person">
       <race name="race_definition"/>
@@ -86,43 +83,41 @@ describe("eventsMetadata", () => {
       <entry value="2" />
     </randomization_table>
   </world_metadata>
-  <events_metadata>
-    <entry name="spawn_human">
-      <when>
-        <person_action_used type="talk" />
-      </when>
-      <then>
-        <at origin="self">
-          <radius>
-            <operation>
-              <add value="1" />
-            </operation>
-          </radius>
-        </at>
-        <create_person>
-          <race name="race_definition" quantity="1" />
-        </create_person>
-      </then>
-    </entry>
-  </events_metadata>
-  <locations_markov_chain>
-    <location_markov_link type="type">
-      <sibling type="type" position="all" />
-    </location_markov_link>
-  </locations_markov_chain>
-  <race_metadata>
-    <entry name="race_definition">
-      <vision value="1" />
-    </entry>
-  </race_metadata>
+  <rule_group>
+    <race_metadata>
+      <entry name="race_definition">
+        <vision value="1" />
+      </entry>
+    </race_metadata>
+    <events_metadata>
+      <entry name="spawn_human">
+        <when>
+          <person_action_used type="talk" />
+        </when>
+        <then>
+          <at origin="self">
+            <radius>
+              <operation>
+                <add value="1" />
+              </operation>
+            </radius>
+          </at>
+          <create_person>
+            <race name="race_definition" quantity="1" />
+          </create_person>
+        </then>
+      </entry>
+    </events_metadata>
+  </rule_group>
   <people>
     <person name="person">
       <race name="race_definition" />
       <location x="0" y="0" />
     </person>
     <person id="0.0">
-      <location x="10" y="10" />
+      <location x="1" y="1" />
       <race name="race_definition" />
+      <classifications />
     </person>
   </people>
   <location_layer>

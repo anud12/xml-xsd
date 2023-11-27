@@ -10,8 +10,9 @@ type Cell = {
   character: string,
 }
 export const personMap = (personId: string): Array<Array<string>> => {
+  const ruleGroup = state.jsonSchema.query("rule_group");
   const person = state.jsonSchema.query("people").queryAll("person").find(e => e.$id === personId)
-  const personRaceMetadata = state.jsonSchema.query("race_metadata")
+  const personRaceMetadata = ruleGroup.query("race_metadata")
     .queryAll("entry").find(e => e.$name === person.query("race").$name)
   //get vision from person list of properties
   const vision = Number(personRaceMetadata.query("vision").$value);
@@ -74,8 +75,9 @@ export const personMap = (personId: string): Array<Array<string>> => {
 
 
 export function personMapView(personName: string) {
+  const ruleGroup = state.jsonSchema.query("rule_group");
   const person = state.jsonSchema.query("people").queryAll("person").find(e => e.$id === personName)
-  const personRaceMetadata = state.jsonSchema.query("race_metadata")
+  const personRaceMetadata = ruleGroup.query("race_metadata")
     .queryAll("entry").find(e => e.$name === person.query("race").$name)
   //get vision from person list of properties
   const vision = Number(personRaceMetadata.query("vision").$value);

@@ -3,10 +3,11 @@ import {JsonSchema} from "../utils/JsonSchema";
 import {nodeBodyType} from "../JSONQuery";
 import {JsonUtil} from "../utils";
 
+type RuleGroupQueryType = JsonSchema[typeof nodeBodyType]["rule_group"]
 type PersonQueryType = JsonSchema[typeof nodeBodyType]["people"][typeof nodeBodyType]["person"]
-type PersonActionMetadataQueryType = JsonSchema[typeof nodeBodyType]["action_metadata"][typeof nodeBodyType]["person_to_person"];
+type PersonActionMetadataQueryType = RuleGroupQueryType[typeof nodeBodyType]["action_metadata"][typeof nodeBodyType]["person_to_person"];
 
-type MutationQueryType = JsonSchema[typeof nodeBodyType]["action_metadata"][typeof nodeBodyType]["person_to_person"][typeof nodeBodyType]["property_mutation"]
+type MutationQueryType = RuleGroupQueryType[typeof nodeBodyType]["action_metadata"][typeof nodeBodyType]["person_to_person"][typeof nodeBodyType]["property_mutation"]
 type FromQueryType = MutationQueryType[typeof nodeBodyType]["from"]
 
 const mutationToValue = (readJson: Unit, mutation: MutationQueryType, person: PersonQueryType, targetPerson: PersonQueryType) => {
@@ -31,7 +32,7 @@ export const isOutOfRange = (readJson: Unit, personAction: PersonActionMetadataQ
   }
   const maxRangeValue = readJson.util.computeOperationFromParent(maxRange, string => readJson.util.person.getProperty(person, string))("0");
   const distance = readJson.util.person.getDistance(person, targetPerson);
-  if(distance > (Number(maxRangeValue) + 1)) {
+  if((distance + 1) > (Number(maxRangeValue) )) {
     return true;
   }
   const minRange = personAction.queryOptional("min_range");
@@ -43,7 +44,8 @@ export const isOutOfRange = (readJson: Unit, personAction: PersonActionMetadataQ
 }
 
 export const personAction: Middleware = readJson => {
-  const actionMetadata = readJson.json.queryAll("action_metadata")
+  const ruleGroup = readJson.json.query("rule_group");
+  const actionMetadata = ruleGroup.queryAll("action_metadata")
     .flatMap(e => e.queryAll("person_to_person"));
 
   const personList = readJson.json.queryAll("people").flatMap(e => e.queryAll("person"));

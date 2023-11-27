@@ -2,13 +2,14 @@ import {Unit} from "../middleware";
 import {JsonSchema} from "../JsonSchema";
 import {nodeBodyType} from "../../JSONQuery";
 
-
-type RaceQueryType = JsonSchema[typeof nodeBodyType]["race_metadata"][typeof nodeBodyType]["entry"]
+type RuleGroupQueryType = JsonSchema[typeof nodeBodyType]["rule_group"]
+type RaceQueryType = RuleGroupQueryType[typeof nodeBodyType]["race_metadata"][typeof nodeBodyType]["entry"]
 type Bonus = RaceQueryType[typeof nodeBodyType]["property_bonus"]
 
 export const getBaseProperty = (readJson: Unit, personQueryType: PersonQueryType, key: string):string =>  {
   try {
-    return readJson.json.queryAll("property_metadata")
+    const ruleGroup = readJson.json.query("rule_group");
+    return ruleGroup.queryAll("property_metadata")
       .flatMap(e => e.queryAll("entry"))
       .filter(value => value.$name === key)
       .flatMap(e => e.queryAll("default"))
@@ -40,6 +41,7 @@ export const getRaceProperty = (readJson: Unit, personQueryType: PersonQueryType
 export type PersonQueryType = JsonSchema[typeof nodeBodyType]["people"][typeof nodeBodyType]["person"]
 export const getProperty = (readJson: Unit, personQueryType: PersonQueryType, key: string):string => {
   try {
+    const ruleGroup = readJson.json.query("rule_group");
     let propertyList = personQueryType.queryAllOptional("properties");
     if (propertyList.length === 0) {
       personQueryType.appendChild("properties", {})
@@ -52,7 +54,7 @@ export const getProperty = (readJson: Unit, personQueryType: PersonQueryType, ke
       return property.$value;
     }
 
-    const raceMetadata = readJson.json.queryAll("race_metadata")
+    const raceMetadata = ruleGroup.queryAll("race_metadata")
       .flatMap(e => e.queryAll("entry"))
       .find(e => e.$name === personQueryType.query("race").$name);
 

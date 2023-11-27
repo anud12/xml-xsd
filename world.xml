@@ -1,392 +1,429 @@
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="schema/world_step/world_step.xsd">
-    <world_metadata>
-        <next_world_step>./world_1</next_world_step>
-        <elapsed_time value="0"/>
-        <stepDuration value="1"/>
-        <counter value="0"/>
-        <randomization_table>
-            <entry value="4"/>
-            <entry value="9"/>
-            <entry value="2"/>
-            <entry value="8"/>
-            <entry value="3"/>
-            <entry value="6"/>
-            <entry value="5"/>
-            <entry value="7"/>
-            <entry value="1"/>
-            <entry value="10"/>
-            <entry value="7"/>
-            <entry value="3"/>
-            <entry value="8"/>
-            <entry value="4"/>
-            <entry value="9"/>
-            <entry value="2"/>
-            <entry value="10"/>
-            <entry value="1"/>
-            <entry value="6"/>
-            <entry value="5"/>
-            <entry value="1"/>
-            <entry value="8"/>
-            <entry value="7"/>
-            <entry value="3"/>
-            <entry value="5"/>
-            <entry value="4"/>
-            <entry value="2"/>
-            <entry value="6"/>
-            <entry value="10"/>
-            <entry value="9"/>
-            <entry value="9"/>
-            <entry value="6"/>
-            <entry value="7"/>
-            <entry value="2"/>
-            <entry value="10"/>
-            <entry value="4"/>
-            <entry value="5"/>
-            <entry value="1"/>
-            <entry value="3"/>
-            <entry value="8"/>
-            <entry value="6"/>
-            <entry value="5"/>
-            <entry value="1"/>
-            <entry value="10"/>
-            <entry value="4"/>
-            <entry value="3"/>
-            <entry value="7"/>
-            <entry value="2"/>
-            <entry value="8"/>
-            <entry value="9"/>
-            <entry value="2"/>
-            <entry value="3"/>
-            <entry value="7"/>
-            <entry value="5"/>
-            <entry value="1"/>
-            <entry value="9"/>
-            <entry value="10"/>
-            <entry value="6"/>
-            <entry value="4"/>
-            <entry value="8"/>
-            <entry value="8"/>
-            <entry value="4"/>
-            <entry value="2"/>
-            <entry value="6"/>
-            <entry value="3"/>
-            <entry value="7"/>
-            <entry value="10"/>
-            <entry value="1"/>
-            <entry value="9"/>
-            <entry value="5"/>
-            <entry value="5"/>
-            <entry value="9"/>
-            <entry value="1"/>
-            <entry value="10"/>
-            <entry value="2"/>
-            <entry value="4"/>
-            <entry value="8"/>
-            <entry value="7"/>
-            <entry value="3"/>
-            <entry value="6"/>
-            <entry value="3"/>
-            <entry value="6"/>
-            <entry value="5"/>
-            <entry value="8"/>
-            <entry value="10"/>
-            <entry value="9"/>
-            <entry value="4"/>
-            <entry value="7"/>
-            <entry value="2"/>
-            <entry value="1"/>
-            <entry value="4"/>
-            <entry value="8"/>
-            <entry value="1"/>
-            <entry value="7"/>
-            <entry value="6"/>
-            <entry value="5"/>
-            <entry value="9"/>
-            <entry value="2"/>
-            <entry value="3"/>
-            <entry value="10"/>
-        </randomization_table>
-    </world_metadata>
+  <world_metadata>
+    <next_world_step>./world_1</next_world_step>
+    <elapsed_time value="0"/>
+    <stepDuration value="1"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="4"/>
+      <entry value="9"/>
+      <entry value="2"/>
+      <entry value="8"/>
+      <entry value="3"/>
+      <entry value="6"/>
+      <entry value="5"/>
+      <entry value="7"/>
+      <entry value="1"/>
+      <entry value="10"/>
+      <entry value="7"/>
+      <entry value="3"/>
+      <entry value="8"/>
+      <entry value="4"/>
+      <entry value="9"/>
+      <entry value="2"/>
+      <entry value="10"/>
+      <entry value="1"/>
+      <entry value="6"/>
+      <entry value="5"/>
+      <entry value="1"/>
+      <entry value="8"/>
+      <entry value="7"/>
+      <entry value="3"/>
+      <entry value="5"/>
+      <entry value="4"/>
+      <entry value="2"/>
+      <entry value="6"/>
+      <entry value="10"/>
+      <entry value="9"/>
+      <entry value="9"/>
+      <entry value="6"/>
+      <entry value="7"/>
+      <entry value="2"/>
+      <entry value="10"/>
+      <entry value="4"/>
+      <entry value="5"/>
+      <entry value="1"/>
+      <entry value="3"/>
+      <entry value="8"/>
+      <entry value="6"/>
+      <entry value="5"/>
+      <entry value="1"/>
+      <entry value="10"/>
+      <entry value="4"/>
+      <entry value="3"/>
+      <entry value="7"/>
+      <entry value="2"/>
+      <entry value="8"/>
+      <entry value="9"/>
+      <entry value="2"/>
+      <entry value="3"/>
+      <entry value="7"/>
+      <entry value="5"/>
+      <entry value="1"/>
+      <entry value="9"/>
+      <entry value="10"/>
+      <entry value="6"/>
+      <entry value="4"/>
+      <entry value="8"/>
+      <entry value="8"/>
+      <entry value="4"/>
+      <entry value="2"/>
+      <entry value="6"/>
+      <entry value="3"/>
+      <entry value="7"/>
+      <entry value="10"/>
+      <entry value="1"/>
+      <entry value="9"/>
+      <entry value="5"/>
+      <entry value="5"/>
+      <entry value="9"/>
+      <entry value="1"/>
+      <entry value="10"/>
+      <entry value="2"/>
+      <entry value="4"/>
+      <entry value="8"/>
+      <entry value="7"/>
+      <entry value="3"/>
+      <entry value="6"/>
+      <entry value="3"/>
+      <entry value="6"/>
+      <entry value="5"/>
+      <entry value="8"/>
+      <entry value="10"/>
+      <entry value="9"/>
+      <entry value="4"/>
+      <entry value="7"/>
+      <entry value="2"/>
+      <entry value="1"/>
+      <entry value="4"/>
+      <entry value="8"/>
+      <entry value="1"/>
+      <entry value="7"/>
+      <entry value="6"/>
+      <entry value="5"/>
+      <entry value="9"/>
+      <entry value="2"/>
+      <entry value="3"/>
+      <entry value="10"/>
+    </randomization_table>
+  </world_metadata>
+
+
+  <rule_group name="default">
+    <!--_-->
+    <!--_-->
+    <!--_-->
     <!--_-->
     <!--Property_metadata-->
     <!--_-->
     <property_metadata>
-        <entry name="athletics" units="points">
-            <default>
-                <operation>
-                    <add_dice value="6"/>
-                </operation>
-                <operation>
-                    <add value="-1"/>
-                </operation>
-            </default>
-        </entry>
-        <entry name="strength" units="points">
-            <default>
-                <operation>
-                    <add_dice value="12"/>
-                </operation>
-                <operation>
-                    <add value="8"/>
-                </operation>
-            </default>
-        </entry>
-        <entry name="constitution" units="points">
-            <default>
-                <operation>
-                    <add_dice value="12"/>
-                </operation>
-                <operation>
-                    <add value="8"/>
-                </operation>
-            </default>
-        </entry>
-        <entry name="health" units="points">
-            <default>
-                <operation>
-                    <add_property_value name="constitution"/>
-                </operation>
-                <operation>
-                    <add_dice value="8"/>
-                </operation>
-            </default>
-        </entry>
+      <entry name="athletics" units="points">
+        <default>
+          <operation>
+            <add_dice value="6"/>
+          </operation>
+          <operation>
+            <add value="-1"/>
+          </operation>
+        </default>
+      </entry>
+      <entry name="strength" units="points">
+        <default>
+          <operation>
+            <add_dice value="12"/>
+          </operation>
+          <operation>
+            <add value="8"/>
+          </operation>
+        </default>
+      </entry>
+      <entry name="constitution" units="points">
+        <default>
+          <operation>
+            <add_dice value="12"/>
+          </operation>
+          <operation>
+            <add value="8"/>
+          </operation>
+        </default>
+      </entry>
+      <entry name="health" units="points">
+        <default>
+          <operation>
+            <add_property_value name="constitution"/>
+          </operation>
+          <operation>
+            <add_dice value="8"/>
+          </operation>
+        </default>
+      </entry>
     </property_metadata>
+    <!--_-->
+    <!--_-->
+    <!--_-->
     <!--_-->
     <!--Classification_metadata-->
     <!--_-->
     <classification_metadata>
-        <entry name="dead">
-            <property name="health" is="lessThanOrEqual">
-                <operation>
-                    <add value="0"/>
-                </operation>
-            </property>
-        </entry>
-        <entry name="alive">
-            <property name="health" is="greaterThan">
-                <operation>
-                    <add value="0"/>
-                </operation>
-            </property>
-        </entry>
+      <entry name="dead">
+        <property name="health" is="lessThanOrEqual">
+          <operation>
+            <add value="0"/>
+          </operation>
+        </property>
+      </entry>
+      <entry name="alive">
+        <property name="health" is="greaterThan">
+          <operation>
+            <add value="0"/>
+          </operation>
+        </property>
+      </entry>
     </classification_metadata>
+    <!--_-->
+    <!--_-->
+    <!--_-->
     <!--_-->
     <!--Race_metadata-->
     <!--_-->
     <race_metadata>
-        <entry name="human">
-            <vision value="5" inclusive="true"/>
-            <movement value="2" inclusive="true"/>
-            <property_bonus ref="strength">
-                <operation>
-                    <add_dice value="3"/>
-                </operation>
-                <operation>
-                    <add value="-1"/>
-                </operation>
-            </property_bonus>
-            <property_bonus ref="constitution">
-                <operation>
-                    <add_dice value="3"/>
-                </operation>
-                <operation>
-                    <add value="-1"/>
-                </operation>
-                <operation/>
-            </property_bonus>
-        </entry>
+      <entry name="human">
+        <vision value="5" inclusive="true"/>
+        <movement value="2" inclusive="true"/>
+        <property_bonus ref="strength">
+          <operation>
+            <add_dice value="3"/>
+          </operation>
+          <operation>
+            <add value="-1"/>
+          </operation>
+        </property_bonus>
+        <property_bonus ref="constitution">
+          <operation>
+            <add_dice value="3"/>
+          </operation>
+          <operation>
+            <add value="-1"/>
+          </operation>
+          <operation/>
+        </property_bonus>
+      </entry>
     </race_metadata>
+    <!--_-->
+    <!--_-->
+    <!--_-->
     <!--_-->
     <!--Action_metadata-->
     <!--_-->
     <action_metadata>
-        <person_to_person name="talk">
-            <max_range>
+      <person_to_person name="talk">
+        <max_range>
+          <operation>
+            <add value="1"/>
+          </operation>
+        </max_range>
+        <test>
+          <value target="self">
+            <operation>
+              <add value="1"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation>
+              <add value="1"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+      <person_to_person name="meleeAttack">
+        <max_range>
+          <operation>
+            <add value="1"/>
+          </operation>
+        </max_range>
+        <test>
+          <value target="self">
+            <operation>
+              <add value="3"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation>
+              <add value="3"/>
+            </operation>
+          </expected>
+        </test>
+        <property_mutation name="health" on="target">
+          <from participant="target">
+            <operation>
+              <add_dice value="6"/>
+            </operation>
+            <operation>
+              <group>
                 <operation>
-                    <add value="1"/>
+                  <add_property_value name="strength"/>
                 </operation>
-            </max_range>
-            <test>
-                <value target="self">
-                    <operation>
-                        <add value="1"/>
-                    </operation>
-                </value>
-                <expected target="target">
-                    <operation>
-                        <add value="1"/>
-                    </operation>
-                </expected>
-            </test>
-        </person_to_person>
-        <person_to_person name="meleeAttack">
-            <max_range>
                 <operation>
-                    <add value="1"/>
+                  <add value="-10"/>
                 </operation>
-            </max_range>
-            <test>
-                <value target="self">
-                    <operation>
-                        <add value="3"/>
-                    </operation>
-                </value>
-                <expected target="target">
-                    <operation>
-                        <add value="3"/>
-                    </operation>
-                </expected>
-            </test>
-            <property_mutation name="health" on="target">
-                <from participant="target">
-                    <operation>
-                        <add_dice value="6"/>
-                    </operation>
-                    <operation>
-                        <group>
-                            <operation>
-                                <add_property_value name="strength"/>
-                            </operation>
-                            <operation>
-                                <add value="-10"/>
-                            </operation>
-                            <operation>
-                                <divide value="2"/>
-                            </operation>
-                        </group>
-                    </operation>
-                    <operation>
-                        <multiply value="-1"/>
-                    </operation>
-                </from>
-            </property_mutation>
-        </person_to_person>
+                <operation>
+                  <divide value="2"/>
+                </operation>
+              </group>
+            </operation>
+            <operation>
+              <multiply value="-1"/>
+            </operation>
+          </from>
+        </property_mutation>
+      </person_to_person>
     </action_metadata>
+    <!--_-->
+    <!--_-->
+    <!--_-->
     <!--_-->
     <!--Item_metadata-->
     <!--_-->
     <item_metadata>
-        <entry name="Long sword">
-            <weight-kg value="2"/>
-            <wearable slot="hand"/>
-        </entry>
-        <entry name="dress">
-            <weight-kg value="1"/>
-            <wearable slot="chest"/>
-            <wearable slot="legs"/>
-        </entry>
+      <entry name="Long sword">
+        <weight-kg value="2"/>
+        <wearable slot="hand"/>
+      </entry>
+      <entry name="dress">
+        <weight-kg value="1"/>
+        <wearable slot="chest"/>
+        <wearable slot="legs"/>
+      </entry>
     </item_metadata>
     <!--_-->
-    <!--Locations_markov_chain-->
     <!--_-->
-    <locations_markov_chain>
-        <location_markov_link type="plains">
-            <sibling type="plains" quantity="5" position="all"/>
-            <sibling type="forest" position="all"/>
-        </location_markov_link>
-        <location_markov_link type="forest">
-            <sibling type="forest" quantity="5" position="all"/>
-            <sibling type="plains" position="all"/>
-            <sibling type="hills" position="all"/>
-        </location_markov_link>
-        <location_markov_link type="hills">
-            <sibling type="hills" quantity="20" position="all"/>
-            <sibling type="forest" position="all"/>
-        </location_markov_link>
-    </locations_markov_chain>
+    <!--_-->
     <!--_-->
     <!--events_metadata-->
     <!--_-->
     <events_metadata>
-        <entry name="spawn_bandits">
-            <when>
-                <person_action_used type="talk"/>
-            </when>
-            <then>
-                <at origin="self">
-                    <radius>
-                        <operation>
-                            <add value="10"/>
-                        </operation>
-                    </radius>
-                </at>
-                <create_person>
-                    <race name="human" quantity="1"/>
-                </create_person>
-            </then>
-        </entry>
+      <entry name="spawn_bandits">
+        <when>
+          <person_action_used type="talk"/>
+        </when>
+        <then>
+          <at origin="self">
+            <radius>
+              <operation>
+                <add value="10"/>
+              </operation>
+            </radius>
+          </at>
+          <create_person>
+            <race name="human" quantity="1"/>
+          </create_person>
+        </then>
+      </entry>
     </events_metadata>
     <!--_-->
-    <!--Quests_Markov_chain-->
     <!--_-->
-    <quests_markov_chain>
-        <quest_markov_link type="talk-to">
-            <person_group name="kill" quantity="1">
-                <classification name="alive"/>
-            </person_group>
-            <complete_condition>
-                <person_group name="kill" quantity="2">
+    <!--_-->
+    <!--_-->
+    <!--Locations_markov_chain-->
+    <!--_-->
+    <locations_markov_chain>
+      <location_markov_link type="plains">
+        <sibling type="plains" quantity="5" position="all"/>
+        <sibling type="forest" position="all"/>
+      </location_markov_link>
+      <location_markov_link type="forest">
+        <sibling type="forest" quantity="5" position="all"/>
+        <sibling type="plains" position="all"/>
+        <sibling type="hills" position="all"/>
+      </location_markov_link>
+      <location_markov_link type="hills">
+        <sibling type="hills" quantity="20" position="all"/>
+        <sibling type="forest" position="all"/>
+      </location_markov_link>
+    </locations_markov_chain>
+  </rule_group>
+  <!--_-->
+  <!--_-->
+  <!--_-->
+  <!--_-->
+  <!--Quests_Markov_chain-->
+  <!--_-->
+  <quests_markov_chain>
+    <quest_markov_link type="talk-to">
+      <person_group name="kill" quantity="1">
+        <classification name="alive"/>
+      </person_group>
+      <complete_condition>
+        <person_group name="kill" quantity="2">
 
-                </person_group>
+        </person_group>
 
-                <next type="talk-to" quantity="4"/>
-                <next type="escort" quantity="2"/>
-                <next type="assassination"/>
-            </complete_condition>
-        </quest_markov_link>
-        <quest_markov_link type="escort">
-            <complete_condition>
-                <next type="assassination" quantity="4"/>
-                <next type="talk-to"/>
-            </complete_condition>
-        </quest_markov_link>
-        <quest_markov_link type="assassination">
-            <complete_condition>
-                <next type="talk-to" quantity="4"/>
-            </complete_condition>
-        </quest_markov_link>
-    </quests_markov_chain>
-    <!--_-->
-    <!--People-->
-    <!--_-->
-    <people>
-        <person id="1" name="Billy">
-            <race name="human"/>
-            <location x="1" y="1"/>
-            <properties>
-                <property ref="strength" value="13"/>
-            </properties>
-            <inventory>
-                <item ref="Long sword" equipped="hand"/>
-            </inventory>
-            <classifications/>
-        </person>
-        <person id="3" name="Bobu">
-            <race name="human"/>
-            <location x="-1" y="-1"/>
-            <properties/>
-            <classifications/>
-        </person>
-    </people>
-    <!--_-->
-    <!--Location_layer-->
-    <!--_-->
-    <location_layer>
-        <cell type="plains" x="0" y="0"/>
-        <cell type="plains" x="0" y="1"/>
-        <cell type="plains" x="0" y="-1"/>
-        <cell type="plains" x="1" y="0"/>
-        <cell type="plains" x="1" y="1"/>
-        <cell type="plains" x="1" y="-1"/>
-        <cell type="plains" x="-1" y="0"/>
-        <cell type="plains" x="-1" y="1"/>
-        <cell type="plains" x="-1" y="-1"/>
-    </location_layer>
-    <!--_-->
-    <!--Actions-->
-    <!--_-->
-    <actions/>
+        <next type="talk-to" quantity="4"/>
+        <next type="escort" quantity="2"/>
+        <next type="assassination"/>
+      </complete_condition>
+    </quest_markov_link>
+    <quest_markov_link type="escort">
+      <complete_condition>
+        <next type="assassination" quantity="4"/>
+        <next type="talk-to"/>
+      </complete_condition>
+    </quest_markov_link>
+    <quest_markov_link type="assassination">
+      <complete_condition>
+        <next type="talk-to" quantity="4"/>
+      </complete_condition>
+    </quest_markov_link>
+  </quests_markov_chain>
+  <!--_-->
+  <!--_-->
+  <!--_-->
+  <!--_-->
+  <!--People-->
+  <!--_-->
+  <people>
+    <person id="1" name="Billy">
+      <race name="human"/>
+      <location x="1" y="1"/>
+      <properties>
+        <property ref="strength" value="13"/>
+      </properties>
+      <inventory>
+        <item ref="Long sword" equipped="hand"/>
+      </inventory>
+      <classifications/>
+    </person>
+    <person id="3" name="Bobu">
+      <race name="human"/>
+      <location x="-1" y="-1"/>
+      <properties/>
+      <classifications/>
+    </person>
+  </people>
+  <!--_-->
+  <!--_-->
+  <!--_-->
+  <!--_-->
+  <!--Location_layer-->
+  <!--_-->
+  <location_layer>
+    <cell type="plains" x="0" y="0"/>
+    <cell type="plains" x="0" y="1"/>
+    <cell type="plains" x="0" y="-1"/>
+    <cell type="plains" x="1" y="0"/>
+    <cell type="plains" x="1" y="1"/>
+    <cell type="plains" x="1" y="-1"/>
+    <cell type="plains" x="-1" y="0"/>
+    <cell type="plains" x="-1" y="1"/>
+    <cell type="plains" x="-1" y="-1"/>
+  </location_layer>
+  <!--_-->
+  <!--_-->
+  <!--_-->
+  <!--_-->
+  <!--Actions-->
+  <!--_-->
+  <actions/>
 </world_step>

@@ -3,7 +3,9 @@ import {nodeBodyType} from "../JSONQuery";
 import {JsonSchema} from "../utils/JsonSchema";
 import {JsonUtil} from "../utils";
 
-type EventQueryType = JsonSchema[typeof nodeBodyType]["events_metadata"][typeof nodeBodyType]["entry"];
+
+type RuleGroupQueryType = JsonSchema[typeof nodeBodyType]["rule_group"]
+type EventQueryType = RuleGroupQueryType[typeof nodeBodyType]["events_metadata"][typeof nodeBodyType]["entry"];
 type ThenQueryType = EventQueryType[typeof nodeBodyType]["then"]
 
 
@@ -73,7 +75,8 @@ const thenCreatePerson = (readJson: Unit, origin: Origin): Array<(util: JsonUtil
 }
 
 export const eventsMetadata: Middleware = readJson => {
-  const originList = applyFromPersonActionUsed(readJson, readJson.json.query("events_metadata").query("entry"));
+  const ruleGroup = readJson.json.query("rule_group");
+  const originList = applyFromPersonActionUsed(readJson, ruleGroup.query("events_metadata").query("entry"));
   const actions = originList.flatMap(origin => thenCreatePerson(readJson, origin));
 
   return async writeJson => {

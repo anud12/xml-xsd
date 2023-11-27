@@ -4,7 +4,8 @@ import {JsonUtil} from "../index";
 export type LocationMatrix = Record<string, Transition<string>>;
 
 export const locationMarkovChainMatrix = (json: JsonUtil, direction): LocationMatrix => {
-  const matrix = json.jsonQuery.query("locations_markov_chain").queryAll("location_markov_link").reduce((previous, link) => {
+  const ruleGroup = json.jsonQuery.query("rule_group");
+  const matrix = ruleGroup.query("locations_markov_chain").queryAll("location_markov_link").reduce((previous, link) => {
     let next = link.queryAll("sibling")
       ?.filter(e => e.$position === direction || e.$position === "all")
       ?.flatMap(e => {

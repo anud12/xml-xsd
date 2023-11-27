@@ -39,9 +39,10 @@ const calculateDestinationCoordinate = (initial: CoordinatesNode, destination: C
 }
 
 export const personMoveTowards: Middleware = readUnit => {
+  const ruleGroup = readUnit.json.query("rule_group");
   const personList = readUnit.json.queryAll("people")
     .flatMap(people => people.queryAll("person"));
-  const raceMetadata = readUnit.json.queryAll("race_metadata")
+  const raceMetadata = ruleGroup.queryAll("race_metadata")
     .flatMap(raceMetadata => raceMetadata.queryAll("entry"))
   const actions = readUnit.json.queryAll("actions")
     .flatMap(e => e.queryAllOptional("by"))
@@ -65,17 +66,17 @@ export const personMoveTowards: Middleware = readUnit => {
     })
   return async writeUnit => {
     const persons = writeUnit.queryAll("people").flatMap(e => e.queryAll("person"))
-    actions.forEach(action => {
-      const person = persons.find(e => e.$name === action.person.$name);
+    actions.forEach(mutation => {
+      const person = persons.find(e => e.$name === mutation.person.$name);
       const location = person.query("location")
-      location.$x = action.newDestinationAttributes.$x
-      location.$y = action.newDestinationAttributes.$y
+      location.$x = mutation.newDestinationAttributes.$x
+      location.$y = mutation.newDestinationAttributes.$y
 
-      if (location.$x === action.destinationAttributes.$x && location.$y === action.destinationAttributes.$y) {
+      if (location.$x === mutation.destinationAttributes.$x && location.$y === mutation.destinationAttributes.$y) {
         writeUnit.queryAllOptional("actions")
-          .flatMap(e => e.queryAllOptional("by"))
-          .filter(e => e.$person === action.person.$name)
-          .filter(e => e.queryAllOptional("move_towards"))
+          .flatMap(actions => actions.queryAllOptional("by"))
+          .filter(by => by.$person === mutation.person.$id)
+          .filter(by => by.queryAllOptional("move_towards"))
           .forEach(e => {
             e.removeFromParent();
           });

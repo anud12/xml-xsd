@@ -14,16 +14,18 @@ describe("personVision", () => {
       <entry value="2"/>
     </randomization_table>
   </world_metadata>
-  <locations_markov_chain>
-    <location_markov_link type="type">
-      <sibling type="type" position="all"/>
-    </location_markov_link>
-  </locations_markov_chain>
-  <race_metadata>
-    <entry name="race_definition">
-      <vision value="1"/>
-    </entry>
-  </race_metadata>
+  <rule_group>
+    <locations_markov_chain>
+      <location_markov_link type="type">
+        <sibling type="type" position="all"/>
+      </location_markov_link>
+    </locations_markov_chain>
+    <race_metadata>
+      <entry name="race_definition">
+        <vision value="1"/>
+      </entry>
+    </race_metadata>
+  </rule_group>
   <people>
     <person>
       <race name="race_definition"/>
@@ -57,16 +59,18 @@ describe("personVision", () => {
       <entry value="2" />
     </randomization_table>
   </world_metadata>
-  <locations_markov_chain>
-    <location_markov_link type="type">
-      <sibling type="type" position="all" />
-    </location_markov_link>
-  </locations_markov_chain>
-  <race_metadata>
-    <entry name="race_definition">
-      <vision value="1" />
-    </entry>
-  </race_metadata>
+  <rule_group>
+    <locations_markov_chain>
+      <location_markov_link type="type">
+        <sibling type="type" position="all" />
+      </location_markov_link>
+    </locations_markov_chain>
+    <race_metadata>
+      <entry name="race_definition">
+        <vision value="1" />
+      </entry>
+    </race_metadata>
+  </rule_group>
   <people>
     <person>
       <race name="race_definition" />
