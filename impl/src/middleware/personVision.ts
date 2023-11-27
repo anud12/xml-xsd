@@ -1,4 +1,4 @@
-import {Middleware} from "../utils/middleware";
+import {Middleware, Unit} from "./_type";
 import {fillNeighbours} from "../utils/location/fillNeighbours";
 
 export const personVision: Middleware = (readJson) => {

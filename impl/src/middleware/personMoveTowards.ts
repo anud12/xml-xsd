@@ -1,4 +1,4 @@
-import {Middleware} from "../utils/middleware";
+import {Middleware, Unit} from "./_type";
 import {InferJsonNodeAttribute, JsonQueryType} from "../JSONQuery";
 
 type CoordinatesNode = JsonQueryType<"x" | "y">;

@@ -1,4 +1,4 @@
-import {Middleware, Unit} from "../utils/middleware";
+import {Middleware, Unit} from "./_type";
 import {nodeBodyType} from "../JSONQuery";
 import {JsonSchema} from "../utils/JsonSchema";
 import {JsonUtil} from "../utils";

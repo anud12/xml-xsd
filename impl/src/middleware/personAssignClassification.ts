@@ -1,4 +1,4 @@
-import { Middleware } from "../utils/middleware";
+import {Middleware, Unit} from "./_type";
 import { classifyPerson } from "../utils/person/classifyPerson";
 
 // for person in people add a classifications
