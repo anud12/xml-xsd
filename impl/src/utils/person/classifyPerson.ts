@@ -5,7 +5,8 @@ import {createOperationFromParent} from "../operation/createOperationFromParent"
 
 export const classifyPerson = (readJson: Unit, personQueryType: PersonQueryType): string[] => {
   try {
-    const classificationMetadataEntry = readJson.json.queryAll("classification_metadata")
+    const ruleGroup = readJson.json.query("rule_group");
+    const classificationMetadataEntry = ruleGroup.queryAll("classification_metadata")
       .flatMap(e => e.queryAllOptional("entry"));
 
     return classificationMetadataEntry.filter(entry => {

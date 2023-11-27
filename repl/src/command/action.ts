@@ -9,7 +9,7 @@ export const action: Command<[string]> = {
 
   },
   action: async (render, personId: string) => {
-
+    const ruleGroup = state.jsonSchema.query("rule_group");
     // const actionList = state.jsonSchema.query("action_metadata").queryAll("person_to_person");
     // const action = actionList.find(e => e.$name === actionName);
 
@@ -20,7 +20,7 @@ export const action: Command<[string]> = {
       render.unsubscribeRight();
       return
     }
-    const actionList = state.jsonSchema.query("action_metadata").queryAll("person_to_person");
+    const actionList = ruleGroup.query("action_metadata").queryAll("person_to_person");
     const action = await promptChoice(render.getRight().addRight(), "Choose Action", actionList.filter(e => e.$name !== personId), u => u.$name)
     render.unsubscribeRight();
 

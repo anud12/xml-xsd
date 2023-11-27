@@ -15,11 +15,12 @@ export const personNameToSymbol = (string: string) => {
 }
 
 function personStatus(person: PersonQueryType) {
+  const ruleGroup = state.jsonSchema.query("rule_group");
   let string = "";
   const personId = person.$id;
   const personRace = person.query("race")
   const personName = person.$name ?? "";
-  const race = state.jsonSchema.query("race_metadata").queryAll("entry")
+  const race = ruleGroup.query("race_metadata").queryAll("entry")
     .find(e => e.$name === personRace.$name)
   string += `Name: ${personName} (${personNameToSymbol(personId)})\n`
   string += `Race: ${race.$name}\n`;

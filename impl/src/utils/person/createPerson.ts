@@ -9,7 +9,8 @@ export type CreatePersonArgs = {
 }
 
 export const createPerson = (jsonSchema: JsonUtil, args: CreatePersonArgs): void => {
-  const raceNameList = jsonSchema.jsonQuery.queryAll("race_metadata")
+  const ruleGroup = jsonSchema.jsonQuery.query("rule_group");
+  const raceNameList = ruleGroup.queryAll("race_metadata")
     .flatMap(e => e.queryAll("entry"))
     .map(e => e.$name);
 

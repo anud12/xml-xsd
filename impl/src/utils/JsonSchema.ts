@@ -23,87 +23,82 @@ export type JsonSchema = JsonQueryType<never, {
       entry: JsonQueryType<"value">
     }>
   }>,
-
-  property_metadata: JsonQueryType<never, {
-    entry: JsonQueryType<"name" | "default" | "value" | "max_value", {
-      default: JsonQueryType<never, {
-        operation: OperationQueryType
-      }>
-    }>
-  }>,
-
-  classification_metadata: JsonQueryType<never, {
-    entry: JsonQueryType<"name", {
-      property: JsonQueryType<"name" | "is", {
-        operation: OperationQueryType,
-      }>,
-    }>
-  }>
-
-  action_metadata: JsonQueryType<never, {
-    person_to_person: JsonQueryType<"name", {
-      max_range: JsonQueryType<never, {
-        operation: OperationQueryType,
-      }>,
-      min_range: JsonQueryType<never, {
-        operation: OperationQueryType,
-      }>,
-      test: JsonQueryType<never, {
-        value: JsonQueryType<"target", {
-          operation: OperationQueryType,
-        }>,
-        expected: JsonQueryType<"target", {
-          operation: OperationQueryType,
-        }>
-      }>,
-      property_mutation: JsonQueryType<"name" | "on", {
-        from: JsonQueryType<"participant", {
+  rule_group: JsonQueryType<never, {
+    property_metadata: JsonQueryType<never, {
+      entry: JsonQueryType<"name" | "default" | "value" | "max_value", {
+        default: JsonQueryType<never, {
           operation: OperationQueryType
         }>
       }>
-    }>
-  }>
-
-  race_metadata: JsonQueryType<never, {
-    entry: JsonQueryType<"name", {
-      vision: JsonQueryType<"value">
-      movement: JsonQueryType<"value">
-      property_bonus: JsonQueryType<"ref" | "value" | "max_value ", {
-        operation: OperationQueryType
+    }>,
+    classification_metadata: JsonQueryType<never, {
+      entry: JsonQueryType<"name", {
+        property: JsonQueryType<"name" | "is", {
+          operation: OperationQueryType,
+        }>,
       }>
     }>
-  }>,
-
-  item_metadata: JsonQueryType<never, {
-    entry: JsonQueryType<"name"> & JsonQueryType<never, {
-      weight_kg: JsonQueryType<"value">,
-      wearable: JsonQueryType<"slot">,
-    }>
-  }>,
-
-  locations_markov_chain: JsonQueryType<never, {
-    location_markov_link: JsonQueryType<"type", {
-      sibling: JsonQueryType<"type" | "position" | "quantity">
-    }>
-  }>,
-
-  events_metadata: JsonQueryType<never, {
-    entry: JsonQueryType<"name", {
-      when:JsonQueryType<never, {
-        person_action_used: JsonQueryType<"type">
-      }>,
-      then: JsonQueryType<never, {
-        at: JsonQueryType<"origin", {
-          radius: JsonQueryType<never, {
+    action_metadata: JsonQueryType<never, {
+      person_to_person: JsonQueryType<"name", {
+        max_range: JsonQueryType<never, {
+          operation: OperationQueryType,
+        }>,
+        min_range: JsonQueryType<never, {
+          operation: OperationQueryType,
+        }>,
+        test: JsonQueryType<never, {
+          value: JsonQueryType<"target", {
+            operation: OperationQueryType,
+          }>,
+          expected: JsonQueryType<"target", {
+            operation: OperationQueryType,
+          }>
+        }>,
+        property_mutation: JsonQueryType<"name" | "on", {
+          from: JsonQueryType<"participant", {
             operation: OperationQueryType
           }>
-          location: JsonQueryType<"type" | "quantity">
-        }>,
-        create_person?: JsonQueryType<never, {
-          race: JsonQueryType<"name" | "quantity">,
         }>
       }>
     }>
+    race_metadata: JsonQueryType<never, {
+      entry: JsonQueryType<"name", {
+        vision: JsonQueryType<"value">
+        movement: JsonQueryType<"value">
+        property_bonus: JsonQueryType<"ref" | "value" | "max_value ", {
+          operation: OperationQueryType
+        }>
+      }>
+    }>,
+    item_metadata: JsonQueryType<never, {
+      entry: JsonQueryType<"name"> & JsonQueryType<never, {
+        weight_kg: JsonQueryType<"value">,
+        wearable: JsonQueryType<"slot">,
+      }>
+    }>,
+    events_metadata: JsonQueryType<never, {
+      entry: JsonQueryType<"name", {
+        when:JsonQueryType<never, {
+          person_action_used: JsonQueryType<"type">
+        }>,
+        then: JsonQueryType<never, {
+          at: JsonQueryType<"origin", {
+            radius: JsonQueryType<never, {
+              operation: OperationQueryType
+            }>
+            location: JsonQueryType<"type" | "quantity">
+          }>,
+          create_person?: JsonQueryType<never, {
+            race: JsonQueryType<"name" | "quantity">,
+          }>
+        }>
+      }>
+    }>,
+    locations_markov_chain: JsonQueryType<never, {
+      location_markov_link: JsonQueryType<"type", {
+        sibling: JsonQueryType<"type" | "position" | "quantity">
+      }>
+    }>,
   }>
 
   quests_markov_chain: JsonQueryType<never, {

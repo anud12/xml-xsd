@@ -3,13 +3,14 @@ import {fillNeighbours} from "../utils/location/fillNeighbours";
 
 export const personVision: Middleware = (readJson) => {
     const persons = readJson.json.query("people").queryAll("person");
+    const ruleGroup = readJson.json.query("rule_group");
     persons.map(async e => {
         const location = e.query("location");
 
         const {$x, $y} = location;
         const race = e.query("race").$name;
 
-        const radius = readJson.json
+        const radius = ruleGroup
           .query("race_metadata")
           .queryAll("entry")
           .filter(e => e.$name === race)?.[0]
