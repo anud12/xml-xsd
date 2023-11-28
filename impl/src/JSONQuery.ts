@@ -208,7 +208,6 @@ export class JsonQuery<A extends JsonQueryType> implements A {
       .map(e => e.queryAllRecursiveLike(p))
       .flat();
     const result = this.queryAllOptional(p.tag);
-    console.log(`queryAllRecursiveLike in ${this.getPath()} for ${p.tag} result ${result.length}`)
     return [...result, ...childrenResult];
   }
 
