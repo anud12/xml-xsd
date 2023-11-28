@@ -59,7 +59,7 @@ const thenCreatePerson = (readJson: Unit, origin: Origin): Array<(util: JsonUtil
     return then.queryAllOptional("create_person")
       .map(create_person =>
         (util: JsonUtil) => {
-          const race = create_person.queryOptional("race")?.$name;
+          const race = create_person.queryOptional("race")?.$race_ref;
           const x = String(Math.floor(readJson.util.random() * radius * 2) - radius + Number(originElement.$x));
           const y = String(Math.floor(readJson.util.random() * radius * 2) - radius + Number(originElement.$y));
           util.person.create({

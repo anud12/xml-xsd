@@ -1,4 +1,4 @@
-import {Unit} from "../middleware";
+import {Unit} from "../../middleware/_type";
 import {JsonSchema} from "../JsonSchema";
 import {nodeBodyType} from "../../JSONQuery";
 
@@ -56,7 +56,7 @@ export const getProperty = (readJson: Unit, personQueryType: PersonQueryType, ke
 
     const raceMetadata = ruleGroup.queryAll("race_metadata")
       .flatMap(e => e.queryAll("entry"))
-      .find(e => e.$name === personQueryType.query("race").$name);
+      .find(e => e.$name === personQueryType.query("race").$race_ref);
 
     const value = getRaceProperty(readJson, personQueryType, raceMetadata, key);
 

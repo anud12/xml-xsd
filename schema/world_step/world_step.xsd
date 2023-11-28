@@ -51,7 +51,7 @@
     <xs:sequence>
       <xs:element name="race" minOccurs="0">
         <xs:complexType>
-          <xs:attribute name="name" use="required"/>
+          <xs:attribute name="race_ref" use="required"/>
           <xs:attribute name="quantity" use="required" type="xs:int"/>
         </xs:complexType>
       </xs:element>
@@ -648,7 +648,7 @@
                   <xs:sequence>
                     <xs:element name="race">
                       <xs:complexType>
-                        <xs:attribute name="name" use="required"/>
+                        <xs:attribute name="race_ref" use="required"/>
                       </xs:complexType>
                     </xs:element>
                     <xs:element name="location" type="type_cell_ref"/>

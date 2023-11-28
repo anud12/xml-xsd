@@ -39,7 +39,7 @@ export type JsonQueryType<
   queryOptional: <P extends keyof B> (p: P) => B[P] | undefined,
   queryAll: <P extends keyof B> (p: P) => Array<B[P]>,
   queryAllOptional: <P extends keyof B> (p: P) => Array<B[P]>,
-  queryAllRecursiveLike: <P extends JsonQueryType>(p: P) => Array<P>,
+  queryAllRecursiveWithAttributeFrom: <P extends JsonQueryType>(attribute: keyof P[typeof nodeAttributes]) => Array<P>,
   removeFromParent: () => void,
   getPath: () => string,
   serialize: () => string
@@ -203,11 +203,12 @@ export class JsonQuery<A extends JsonQueryType> implements A {
     }
   }
 
-  queryAllRecursiveLike = (p: JsonQueryType): any[] => {
-    const childrenResult = this.children.filter(e => e.tag !== p.tag)
-      .map(e => e.queryAllRecursiveLike(p))
+  queryAllRecursiveWithAttributeFrom = (attribute: string | number | symbol): any[] => {
+    const childrenResult = this.children
+      .map(e => e.queryAllRecursiveWithAttributeFrom(attribute))
       .flat();
-    const result = this.queryAllOptional(p.tag);
+    console.log(`path: ${this.getPath()} attribute: ${String(attribute)} childrenResult: ${childrenResult.length}`)
+    const result = this.children.filter(e => e[`${String(attribute)}`] !== undefined);
     return [...result, ...childrenResult];
   }
 

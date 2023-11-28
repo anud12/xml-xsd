@@ -77,7 +77,7 @@ describe("personAction" , () => {
   
   <people>
     <person id="Billy">
-      <race name="human"/>
+      <race race_ref="human"/>
       <location x="10" y="10"/>
       <inventory>
         <item ref="Long sword" equipped="hand"/>
@@ -85,7 +85,7 @@ describe("personAction" , () => {
       <properties/>
     </person>
     <person id="Bob">
-      <race name="human"/>
+      <race race_ref="human"/>
       <location x="12" y="10"/>
       <properties/>
     </person>
@@ -169,7 +169,7 @@ describe("personAction" , () => {
   </rule_group>
   <people>
     <person id="Billy">
-      <race name="human" />
+      <race race_ref="human" />
       <location x="10" y="10" />
       <inventory>
         <item ref="Long sword" equipped="hand" />
@@ -177,7 +177,7 @@ describe("personAction" , () => {
       <properties />
     </person>
     <person id="Bob">
-      <race name="human" />
+      <race race_ref="human" />
       <location x="12" y="10" />
       <properties />
     </person>

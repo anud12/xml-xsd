@@ -1,6 +1,6 @@
 import {markovNext, Transition} from "../markovNext";
 import {Cell} from "./locationGrid";
-import {Unit} from "../middleware";
+import {Unit} from "../../middleware/_type";
 import {nodeAttributes} from "../../JSONQuery";
 
 const getTransitionFromNeighbours = (json: Unit, cell: Cell): Transition<string> => {

@@ -50,7 +50,7 @@ export const personMoveTowards: Middleware = readUnit => {
       return by.queryAllOptional("move_towards").flatMap(moveTowards => {
 
         const person = personList.find(person => person.$id === by.$person);
-        const race = raceMetadata.find(race => race.$name === person.query("race").$name)
+        const race = raceMetadata.find(race => race.$name === person.query("race").$race_ref)
 
         const movement = race.query("movement").$value
 

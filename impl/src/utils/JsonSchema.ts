@@ -89,7 +89,7 @@ export type JsonSchema = JsonQueryType<never, {
             location: JsonQueryType<"type" | "quantity">
           }>,
           create_person?: JsonQueryType<never, {
-            race: JsonQueryType<"name" | "quantity">,
+            race: JsonQueryType<"race_ref" | "quantity">,
           }>
         }>
       }>
@@ -110,7 +110,7 @@ export type JsonSchema = JsonQueryType<never, {
 
   people: JsonQueryType<never, {
     person: JsonQueryType<"name" | "id", {
-      race: JsonQueryType<"name">,
+      race: JsonQueryType<"race_ref">,
       location: JsonQueryType<"x" | "y">
       relations: JsonQueryType<"with">,
       properties: JsonQueryType<never, {

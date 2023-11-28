@@ -7,56 +7,58 @@ import {JsonUtil} from "../../../utils";
 describe("getProperty", () => {
   it("add unset property that depends on another property", async () => {
     const query = JsonQuery.fromText<JsonSchema>(`<world_step
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:noNamespaceSchemaLocation="../../../../../schema/world_step/world_step.xsd"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../schema/world_step/world_step.xsd"
 >
   <world_metadata>
     <randomization_table>
       <entry value="2"/>
     </randomization_table>
   </world_metadata>
+  <rule_group>
     <property_metadata>
-        <entry name="constitution" units="points">
-            <default>
-                <operation>
-                    <add value="8"/>
-                </operation>
-            </default>
-        </entry>
+      <entry name="constitution" units="points">
+        <default>
+          <operation>
+            <add value="8"/>
+          </operation>
+        </default>
+      </entry>
     </property_metadata>
-  <race_metadata>
-        <entry name="human">
-            <vision value="20" inclusive="true"/>
-            <movement value="5" inclusive="true"/>
-            <property_bonus ref="constitution">
-                <operation>
-                    <add_dice value="3"/>
-                </operation>
-                <operation>
-                    <add value="-1"/>
-                </operation>
-            </property_bonus>
-            <property_bonus ref="health">
-                <operation>
-                    <add_property_value name="constitution"/>
-                </operation>
-                <operation>
-                    <multiply value="2"/>
-                </operation>
-            </property_bonus>
-        </entry>
+    <race_metadata>
+      <entry name="human">
+        <vision value="20" inclusive="true"/>
+        <movement value="5" inclusive="true"/>
+        <property_bonus ref="constitution">
+          <operation>
+            <add_dice value="3"/>
+          </operation>
+          <operation>
+            <add value="-1"/>
+          </operation>
+        </property_bonus>
+        <property_bonus ref="health">
+          <operation>
+            <add_property_value name="constitution"/>
+          </operation>
+          <operation>
+            <multiply value="2"/>
+          </operation>
+        </property_bonus>
+      </entry>
     </race_metadata>
-    <people>
-        <person name="Billy">
-            <race name="human"/>
-            <location x="10" y="10"/>
-            <properties/>
-            <inventory>
-                <item ref="Long sword" equipped="hand"/>
-            </inventory>
-            <command/>
-        </person>
-    </people>
+  </rule_group>
+  <people>
+    <person name="Billy">
+      <race race_ref="human"/>
+      <location x="10" y="10"/>
+      <properties/>
+      <inventory>
+        <item ref="Long sword" equipped="hand"/>
+      </inventory>
+      <command/>
+    </person>
+  </people>
 </world_step>`);
 
     const value = getProperty({
@@ -77,40 +79,42 @@ describe("getProperty", () => {
       <entry value="2" />
     </randomization_table>
   </world_metadata>
-  <property_metadata>
-    <entry name="constitution" units="points">
-      <default>
-        <operation>
-          <add value="8" />
-        </operation>
-      </default>
-    </entry>
-  </property_metadata>
-  <race_metadata>
-    <entry name="human">
-      <vision value="20" inclusive="true" />
-      <movement value="5" inclusive="true" />
-      <property_bonus ref="constitution">
-        <operation>
-          <add_dice value="3" />
-        </operation>
-        <operation>
-          <add value="-1" />
-        </operation>
-      </property_bonus>
-      <property_bonus ref="health">
-        <operation>
-          <add_property_value name="constitution" />
-        </operation>
-        <operation>
-          <multiply value="2" />
-        </operation>
-      </property_bonus>
-    </entry>
-  </race_metadata>
+  <rule_group>
+    <property_metadata>
+      <entry name="constitution" units="points">
+        <default>
+          <operation>
+            <add value="8" />
+          </operation>
+        </default>
+      </entry>
+    </property_metadata>
+    <race_metadata>
+      <entry name="human">
+        <vision value="20" inclusive="true" />
+        <movement value="5" inclusive="true" />
+        <property_bonus ref="constitution">
+          <operation>
+            <add_dice value="3" />
+          </operation>
+          <operation>
+            <add value="-1" />
+          </operation>
+        </property_bonus>
+        <property_bonus ref="health">
+          <operation>
+            <add_property_value name="constitution" />
+          </operation>
+          <operation>
+            <multiply value="2" />
+          </operation>
+        </property_bonus>
+      </entry>
+    </race_metadata>
+  </rule_group>
   <people>
     <person name="Billy">
-      <race name="human" />
+      <race race_ref="human" />
       <location x="10" y="10" />
       <properties>
         <property ref="constitution" value="10" />
@@ -147,7 +151,7 @@ describe("getProperty", () => {
   </race_metadata>
   <people>
     <person name="Billy">
-      <race name="human"/>
+      <race race_ref="human"/>
       <location x="10" y="10"/>
       <properties/>
       <inventory>

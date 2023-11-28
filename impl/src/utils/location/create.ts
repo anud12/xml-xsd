@@ -1,4 +1,4 @@
-import {Middleware, Unit} from "../middleware";
+import {Unit} from "../../middleware/_type";
 import {findClosestPoint} from "../findClosestPoint";
 import {fillNeighbours} from "./fillNeighbours";
 
