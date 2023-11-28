@@ -1,7 +1,7 @@
 import {JsonQuery} from "../../JSONQuery";
 import {JsonSchema} from "../../utils/JsonSchema";
 import {describe} from "@jest/globals";
-import {raceValidator} from "../../validators/race.validator";
+import {raceRefValidator} from "../../validators/raceRef.validator";
 
 describe("raceReference.validator", () => {
   it("should fail when race race_ref attribute value does not have race_definition", async () => {
@@ -34,7 +34,7 @@ describe("raceReference.validator", () => {
   </people>
 </world_step>`);
 
-    const result = await raceValidator(query);
+    const result = await raceRefValidator(query);
     expect(result.map(e => e.message).join("\n")).toBe([
         "ValidationError: human at //people[0]/person[0]/race[0]@race_ref not in [race_definition]",
         "ValidationError: elf at //people[0]/person[1]/race[0]@race_ref not in [race_definition]"

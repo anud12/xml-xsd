@@ -4,7 +4,7 @@ import {JsonSchema} from "../utils/JsonSchema";
 
 type RaceQueryType = JsonSchema[typeof nodeBodyType]["people"][typeof nodeBodyType]["person"][typeof nodeBodyType]["race"]
 
-export const raceValidator: Validator<AttributeNotInValidationError<RaceQueryType>> = async (jsonSchema) => {
+export const raceRefValidator: Validator<AttributeNotInValidationError<RaceQueryType>> = async (jsonSchema) => {
   const ruleGroup = jsonSchema.query("rule_group");
   const metadata = ruleGroup.queryAll("race_metadata");
   const raceMetadataNames = metadata.flatMap(e => e.queryAll("entry").map(e => e.$name));
