@@ -21,7 +21,7 @@ function personStatus(person: PersonQueryType) {
   const personRace = person.query("race")
   const personName = person.$name ?? "";
   const race = ruleGroup.query("race_metadata").queryAll("entry")
-    .find(e => e.$name === personRace.$name)
+    .find(e => e.$name === personRace.$race_ref)
   string += `Name: ${personName} (${personNameToSymbol(personId)})\n`
   string += `Race: ${race.$name}\n`;
   string += `Location: \n`;

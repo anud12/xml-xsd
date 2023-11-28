@@ -1,4 +1,4 @@
-import {Unit} from "../middleware";
+import {Unit} from "../../middleware/_type";
 import {getProperty, PersonQueryType} from "./getProperty";
 import {createOperationFromParent} from "../operation/createOperationFromParent";
 
