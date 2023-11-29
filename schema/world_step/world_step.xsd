@@ -107,7 +107,7 @@
 
             <xs:element name="add_property_value" minOccurs="0">
               <xs:complexType>
-                <xs:attribute name="name" use="required"/>
+                <xs:attribute name="property_ref" use="required"/>
               </xs:complexType>
             </xs:element>
 
@@ -243,7 +243,7 @@
                               <xs:sequence>
                                 <xs:group ref="type_math_operations"/>
                               </xs:sequence>
-                              <xs:attribute name="name" use="required"/>
+                              <xs:attribute name="property_ref" use="required"/>
                               <xs:attribute name="is" use="required">
                                 <xs:simpleType>
                                   <xs:restriction base="xs:string">
@@ -287,7 +287,7 @@
                                       maxOccurs="unbounded">
                             <xs:complexType>
                               <xs:group ref="type_math_operations"/>
-                              <xs:attribute name="ref"/>
+                              <xs:attribute name="property_ref"/>
                             </xs:complexType>
                           </xs:element>
                         </xs:sequence>
@@ -349,7 +349,7 @@
                                   </xs:complexType>
                                 </xs:element>
                               </xs:sequence>
-                              <xs:attribute name="name"/>
+                              <xs:attribute name="property_ref"/>
                               <xs:attribute name="on" type="type_person_select"
                                             use="required"/>
                             </xs:complexType>
@@ -658,7 +658,7 @@
                           <xs:element name="property" minOccurs="0"
                                       maxOccurs="unbounded">
                             <xs:complexType>
-                              <xs:attribute name="ref" use="required"/>
+                              <xs:attribute name="property_ref" use="required"/>
                               <xs:attribute name="value"
                                             use="required"/>
                             </xs:complexType>
@@ -789,21 +789,21 @@
     <!-- fk for -->
     <!-- world_step/property_metadata/entry@name -->
     <!-- world_step/classification_metadata/entry/property@name -->
-    <xs:keyref name="FK__classification_metadata__entry__property.name"
-               refer="K__property_metadata__entry.name">
-      <xs:selector xpath="classification_metadata/entry/property"/>
-      <xs:field xpath="@name"/>
-    </xs:keyref>
+<!--    <xs:keyref name="FK__classification_metadata__entry__property.name"-->
+<!--               refer="K__property_metadata__entry.name">-->
+<!--      <xs:selector xpath="classification_metadata/entry/property"/>-->
+<!--      <xs:field xpath="@name"/>-->
+<!--    </xs:keyref>-->
 
 
     <!-- fk for -->
     <!-- world_step/classification_metadata/entry/property/operation/add_property_value@name -->
     <!-- world_step/property_metadata/entry@name -->
-    <xs:keyref name="FK__classification_metadata__entry__property__add_property_value.name"
-               refer="K__property_metadata__entry.name">
-      <xs:selector xpath="classification_metadata/entry/property/operation/add_property_value"/>
-      <xs:field xpath="@name"/>
-    </xs:keyref>
+<!--    <xs:keyref name="FK__classification_metadata__entry__property__add_property_value.name"-->
+<!--               refer="K__property_metadata__entry.name">-->
+<!--      <xs:selector xpath="classification_metadata/entry/property/operation/add_property_value"/>-->
+<!--      <xs:field xpath="@name"/>-->
+<!--    </xs:keyref>-->
 
 
     <!-- FK race_metadata -->
@@ -812,11 +812,11 @@
     <!-- fk for -->
     <!-- world_step/race_metadata/entry/property_bonus@type -->
     <!-- world_step/property_metadata/entry@name -->
-    <xs:keyref name="FK__race_metadata__entry__property_bonus.type"
-               refer="K__property_metadata__entry.name">
-      <xs:selector xpath="race_metadata/entry/property_bonus"/>
-      <xs:field xpath="@type"/>
-    </xs:keyref>
+<!--    <xs:keyref name="FK__race_metadata__entry__property_bonus.type"-->
+<!--               refer="K__property_metadata__entry.name">-->
+<!--      <xs:selector xpath="race_metadata/entry/property_bonus"/>-->
+<!--      <xs:field xpath="@type"/>-->
+<!--    </xs:keyref>-->
 
 
     <!-- FK actions -->

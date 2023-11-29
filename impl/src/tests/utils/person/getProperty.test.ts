@@ -29,7 +29,7 @@ describe("getProperty", () => {
       <entry name="human">
         <vision value="20" inclusive="true"/>
         <movement value="5" inclusive="true"/>
-        <property_bonus ref="constitution">
+        <property_bonus property_ref="constitution">
           <operation>
             <add_dice value="3"/>
           </operation>
@@ -37,9 +37,9 @@ describe("getProperty", () => {
             <add value="-1"/>
           </operation>
         </property_bonus>
-        <property_bonus ref="health">
+        <property_bonus property_ref="health">
           <operation>
-            <add_property_value name="constitution"/>
+            <add_property_value property_ref="constitution"/>
           </operation>
           <operation>
             <multiply value="2"/>
@@ -93,7 +93,7 @@ describe("getProperty", () => {
       <entry name="human">
         <vision value="20" inclusive="true" />
         <movement value="5" inclusive="true" />
-        <property_bonus ref="constitution">
+        <property_bonus property_ref="constitution">
           <operation>
             <add_dice value="3" />
           </operation>
@@ -101,9 +101,9 @@ describe("getProperty", () => {
             <add value="-1" />
           </operation>
         </property_bonus>
-        <property_bonus ref="health">
+        <property_bonus property_ref="health">
           <operation>
-            <add_property_value name="constitution" />
+            <add_property_value property_ref="constitution" />
           </operation>
           <operation>
             <multiply value="2" />
@@ -117,8 +117,8 @@ describe("getProperty", () => {
       <race race_ref="human" />
       <location x="10" y="10" />
       <properties>
-        <property ref="constitution" value="10" />
-        <property ref="health" value="20" />
+        <property property_ref="constitution" value="10" />
+        <property property_ref="health" value="20" />
       </properties>
       <inventory>
         <item ref="Long sword" equipped="hand" />

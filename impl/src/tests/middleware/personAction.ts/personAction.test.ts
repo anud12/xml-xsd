@@ -60,10 +60,10 @@ describe("personAction" , () => {
         </expected>
       </test>
   
-      <property_mutation name="health" on="target">
+      <property_mutation property_ref="health" on="target">
         <from participant="self">
           <operation>
-            <add_property_value name="strength"/>
+            <add_property_value property_ref="strength"/>
           </operation>
           <operation>
             <divide value="2"/>
@@ -153,10 +153,10 @@ describe("personAction" , () => {
             </operation>
           </expected>
         </test>
-        <property_mutation name="health" on="target">
+        <property_mutation property_ref="health" on="target">
           <from participant="self">
             <operation>
-              <add_property_value name="strength" />
+              <add_property_value property_ref="strength" />
             </operation>
             <operation>
               <divide value="2" />
@@ -174,14 +174,14 @@ describe("personAction" , () => {
         <item ref="Long sword" equipped="hand" />
       </inventory>
       <properties>
-        <property ref="strength" value="10" />
+        <property property_ref="strength" value="10" />
       </properties>
     </person>
     <person id="Bob">
       <race race_ref="human" />
       <location x="10" y="10" />
       <properties>
-        <property ref="health" value="15" />
+        <property property_ref="health" value="15" />
       </properties>
     </person>
   </people>

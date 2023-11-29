@@ -19,14 +19,14 @@ describe("classifyPerson", () => {
     <property_metadata/>
     <classification_metadata>
       <entry name="dead">
-        <property name="health" is="lessThan" >
+        <property property_ref="health" is="lessThan" >
           <operation>
             <add value="0"/>
           </operation>
         </property>
       </entry>
       <entry name="alive">
-        <property name="health" is="greaterThan">
+        <property property_ref="health" is="greaterThan">
           <operation>
             <add value="0"/>
           </operation>
@@ -45,7 +45,7 @@ describe("classifyPerson", () => {
       <race race_ref="human"/>
       <location x="10" y="10"/>
       <properties>
-        <property ref="health" value="-1" />
+        <property property_ref="health" value="-1" />
       </properties>
       <inventory>
         <item ref="Long sword" equipped="hand"/>

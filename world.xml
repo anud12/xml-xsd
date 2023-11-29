@@ -152,7 +152,7 @@
       <entry name="health" units="points">
         <default>
           <operation>
-            <add_property_value name="constitution"/>
+            <add_property_value property_ref="constitution"/>
           </operation>
           <operation>
             <add_dice value="8"/>
@@ -168,14 +168,14 @@
     <!--_-->
     <classification_metadata>
       <entry name="dead">
-        <property name="health" is="lessThanOrEqual">
+        <property property_ref="health" is="lessThanOrEqual">
           <operation>
             <add value="0"/>
           </operation>
         </property>
       </entry>
       <entry name="alive">
-        <property name="health" is="greaterThan">
+        <property property_ref="health" is="greaterThan">
           <operation>
             <add value="0"/>
           </operation>
@@ -192,7 +192,7 @@
       <entry name="human">
         <vision value="5" inclusive="true"/>
         <movement value="2" inclusive="true"/>
-        <property_bonus ref="strength">
+        <property_bonus property_ref="strength">
           <operation>
             <add_dice value="3"/>
           </operation>
@@ -200,7 +200,7 @@
             <add value="-1"/>
           </operation>
         </property_bonus>
-        <property_bonus ref="constitution">
+        <property_bonus property_ref="constitution">
           <operation>
             <add_dice value="3"/>
           </operation>
@@ -255,7 +255,7 @@
             </operation>
           </expected>
         </test>
-        <property_mutation name="health" on="target">
+        <property_mutation property_ref="health" on="target">
           <from participant="target">
             <operation>
               <add_dice value="6"/>
@@ -263,7 +263,7 @@
             <operation>
               <group>
                 <operation>
-                  <add_property_value name="strength"/>
+                  <add_property_value property_ref="strength"/>
                 </operation>
                 <operation>
                   <add value="-10"/>
@@ -388,7 +388,7 @@
       <race race_ref="human"/>
       <location x="1" y="1"/>
       <properties>
-        <property ref="strength" value="13"/>
+        <property property_ref="strength" value="13"/>
       </properties>
       <inventory>
         <item ref="Long sword" equipped="hand"/>

@@ -36,7 +36,7 @@ function personProperties(person: PersonQueryType) {
   let string = "";
   string += 'Properties:'
   var propertyString = person.query("properties").queryAllOptional("property")
-    .map((property) => ` - ${property.$ref}: ${property.$value}`)
+    .map((property) => ` - ${property.$property_ref}: ${property.$value}`)
     .join("\n");
 
   if (propertyString === "") {

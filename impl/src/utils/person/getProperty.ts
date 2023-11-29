@@ -27,7 +27,7 @@ export const getBaseProperty = (readJson: Unit, personQueryType: PersonQueryType
 export const getRaceProperty = (readJson: Unit, personQueryType: PersonQueryType, raceQueryType: RaceQueryType, key: string):string => {
   const base = getBaseProperty(readJson, personQueryType, key);
   const propertyBonus: Bonus = raceQueryType.queryAllOptional("property_bonus")
-    .find(e => e.$ref === key);
+    .find(e => e.$property_ref === key);
   if (!propertyBonus) {
     return base;
   }
@@ -49,7 +49,7 @@ export const getProperty = (readJson: Unit, personQueryType: PersonQueryType, ke
     }
     const property = propertyList
       .flatMap(e => e.queryAllOptional("property"))
-      .find(e => e.$ref === key);
+      .find(e => e.$property_ref === key);
     if (property) {
       return property.$value;
     }
@@ -62,7 +62,7 @@ export const getProperty = (readJson: Unit, personQueryType: PersonQueryType, ke
 
     propertyList.forEach(e => {
       e.appendChild("property", {
-        $ref: key,
+        $property_ref: key,
         $value: value
       })
     })

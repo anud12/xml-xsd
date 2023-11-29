@@ -3,7 +3,7 @@ import {OperationQueryType} from "../JsonSchema";
 import {Unit} from "../../middleware/_type";
 
 type OperationTags = keyof InferJsonNodeBody<OperationQueryType>
-type Operation = JsonQueryType<"value" | "name", {
+type Operation = JsonQueryType<"value" | "property_ref", {
   group: JsonQueryType<never, {
     operation: Operation
   }>
@@ -74,7 +74,11 @@ export const createOperationFromQueryType = (
         return operationArg.children.reduce((acc, e) => createOperationFromQueryType(readJson, e.children[0], getExternalProperty)(acc), value)
       })
     case "add_property_value": return wrapper(value => {
-      const newValue = getExternalProperty(operationValue.$name);
+      const propertyRef = operationValue.$property_ref;
+      if(propertyRef === undefined) {
+        throw new Error(`Operation ${operationValue.getPath()} property is undefined`);
+      }
+      const newValue = getExternalProperty(propertyRef);
       console.log(`${value} ${operationValue.tag} with ${newValue}`)
       return String(Number(value) + Math.floor(Number(newValue)));
     })

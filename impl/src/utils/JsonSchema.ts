@@ -1,7 +1,8 @@
 import {JsonQueryType} from "../JSONQuery";
 
+
 export type OperationQueryType = JsonQueryType<never, {
-  add_property_value: JsonQueryType<"name">,
+  add_property_value: JsonQueryType<"property_ref">,
   add: JsonQueryType<"value">,
   add_dice: JsonQueryType<"value">,
   multiply_dice: JsonQueryType<"value">,
@@ -33,7 +34,7 @@ export type JsonSchema = JsonQueryType<never, {
     }>,
     classification_metadata: JsonQueryType<never, {
       entry: JsonQueryType<"name", {
-        property: JsonQueryType<"name" | "is", {
+        property: JsonQueryType<"property_ref" | "is", {
           operation: OperationQueryType,
         }>,
       }>
@@ -54,7 +55,7 @@ export type JsonSchema = JsonQueryType<never, {
             operation: OperationQueryType,
           }>
         }>,
-        property_mutation: JsonQueryType<"name" | "on", {
+        property_mutation: JsonQueryType<"property_ref" | "on", {
           from: JsonQueryType<"participant", {
             operation: OperationQueryType
           }>
@@ -65,7 +66,7 @@ export type JsonSchema = JsonQueryType<never, {
       entry: JsonQueryType<"name", {
         vision: JsonQueryType<"value">
         movement: JsonQueryType<"value">
-        property_bonus: JsonQueryType<"ref" | "value" | "max_value ", {
+        property_bonus: JsonQueryType<"property_ref" | "value" | "max_value ", {
           operation: OperationQueryType
         }>
       }>
@@ -114,7 +115,7 @@ export type JsonSchema = JsonQueryType<never, {
       location: JsonQueryType<"x" | "y">
       relations: JsonQueryType<"with">,
       properties: JsonQueryType<never, {
-        property: JsonQueryType<"ref" | "value">
+        property: JsonQueryType<"property_ref" | "value">
       }>,
       inventory: JsonQueryType<never, {
         item: JsonQueryType<"ref" | "equipped">

@@ -12,7 +12,7 @@ export const classifyPerson = (readJson: Unit, personQueryType: PersonQueryType)
     return classificationMetadataEntry.filter(entry => {
       const isTrue = entry.queryAll("property")
         .reduce((acc, operation) => {
-          const propertyValue = getProperty(readJson, personQueryType, operation.$name);
+          const propertyValue = getProperty(readJson, personQueryType, operation.$property_ref);
           const formula = createOperationFromParent(readJson, operation, key => getProperty(readJson, personQueryType, key));
           const value = formula("0");
           switch (operation.$is) {

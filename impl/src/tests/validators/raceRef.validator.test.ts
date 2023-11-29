@@ -4,7 +4,7 @@ import {describe} from "@jest/globals";
 import {raceRefValidator} from "../../validators/raceRef.validator";
 
 describe("raceReference.validator", () => {
-  it("should fail when race race_ref attribute value does not have race_definition", async () => {
+  it("should throw 2 validation errors", async () => {
     const query = JsonQuery.fromText<JsonSchema>(`<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:noNamespaceSchemaLocation="../../../../schema/world_step/world_step.xsd"
 >
@@ -22,22 +22,14 @@ describe("raceReference.validator", () => {
       </entry>
     </race_metadata>
   </rule_group>
-  <people>
-    <person name="person">
-      <race race_ref="human"/>
-      <location x="0" y="0"/>
-    </person>
-    <person name="person">
-      <race race_ref="elf"/>
-      <location x="0" y="0"/>
-    </person>
-  </people>
+  <any_element race_ref="other_property"/>
+  <any_element race_ref="unmapped_property"/>
 </world_step>`);
 
     const result = await raceRefValidator(query);
     expect(result.map(e => e.message).join("\n")).toBe([
-        "ValidationError: human at //people[0]/person[0]/race[0]@race_ref not in [race_definition]",
-        "ValidationError: elf at //people[0]/person[1]/race[0]@race_ref not in [race_definition]"
+        "ValidationError: other_property at //any_element[0]@race_ref not in [race_definition]",
+        "ValidationError: unmapped_property at //any_element[1]@race_ref not in [race_definition]"
       ].join("\n")
     )
   })
