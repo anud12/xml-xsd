@@ -21,7 +21,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "ts-node src/index.ts"
+    "start": "ts-node src/index.ts",
+    "start-debug": "ts-node src/index.ts ../world_2.xml"
   },
   "author": "",
   "license": "ISC",

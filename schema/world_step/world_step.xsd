@@ -381,10 +381,10 @@
 
                 <!-- key for -->
                 <!-- action_metadata/person_to_person@name -->
-                <xs:key name="K__action_metadata__person_to_person.name">
-                  <xs:selector xpath="person_to_person"/>
-                  <xs:field xpath="@name"/>
-                </xs:key>
+<!--                <xs:key name="K__action_metadata__person_to_person.name">-->
+<!--                  <xs:selector xpath="person_to_person"/>-->
+<!--                  <xs:field xpath="@name"/>-->
+<!--                </xs:key>-->
               </xs:element>
 
 
@@ -432,7 +432,7 @@
                               <xs:choice>
                                 <xs:element name="person_action_used">
                                   <xs:complexType>
-                                    <xs:attribute name="type" use="required"/>
+                                    <xs:attribute name="action_ref" use="required"/>
                                   </xs:complexType>
                                 </xs:element>
                               </xs:choice>
@@ -761,7 +761,7 @@
                   <xs:choice>
                     <xs:element name="do">
                       <xs:complexType>
-                        <xs:attribute name="action" use="required"/>
+                        <xs:attribute name="action_ref" use="required"/>
                         <xs:attribute name="to" use="required"/>
                       </xs:complexType>
                     </xs:element>
@@ -833,11 +833,11 @@
     <!-- fk for -->
     <!-- actions/by/do@to -->
     <!-- action_metadata/person_to_person@name -->
-    <xs:keyref name="FK__actions_by_do.action__to__people_person.id"
-               refer="K__action_metadata__person_to_person.name">
-      <xs:selector xpath="actions/by/do"/>
-      <xs:field xpath="@action"/>
-    </xs:keyref>
+<!--    <xs:keyref name="FK__actions_by_do.action__to__people_person.id"-->
+<!--               refer="K__action_metadata__person_to_person.name">-->
+<!--      <xs:selector xpath="actions/by/do"/>-->
+<!--      <xs:field xpath="@action"/>-->
+<!--    </xs:keyref>-->
 
     <!-- fk for -->
     <!-- actions/by/do@to -->
@@ -864,11 +864,11 @@
     <!-- fk for -->
     <!-- events_chain/entry/setup/create_action@type -->
     <!-- action_metadata/person_to_person@name -->
-    <xs:keyref name="FK__events_chain__entry__setup__create_action.type"
-               refer="K__action_metadata__person_to_person.name">
-      <xs:selector xpath="events_chain/entry/setup/create_action"/>
-      <xs:field xpath="@type"/>
-    </xs:keyref>
+<!--    <xs:keyref name="FK__events_chain__entry__setup__create_action.type"-->
+<!--               refer="K__action_metadata__person_to_person.name">-->
+<!--      <xs:selector xpath="events_chain/entry/setup/create_action"/>-->
+<!--      <xs:field xpath="@type"/>-->
+<!--    </xs:keyref>-->
 
 
     <!-- FK quests_markov_chain -->

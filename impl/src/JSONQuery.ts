@@ -207,7 +207,6 @@ export class JsonQuery<A extends JsonQueryType> implements A {
     const childrenResult = this.children
       .map(e => e.queryAllRecursiveWithAttributeFrom(attribute))
       .flat();
-    console.log(`path: ${this.getPath()} attribute: ${String(attribute)} childrenResult: ${childrenResult.length}`)
     const result = this.children.filter(e => e[`${String(attribute)}`] !== undefined);
     return [...result, ...childrenResult];
   }

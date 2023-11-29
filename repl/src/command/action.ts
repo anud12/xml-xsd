@@ -28,7 +28,7 @@ export const action: Command<[string]> = {
       $person: personId,
     }).appendChild("do", {
       $to: target.$id,
-      $action: action.$name,
+      $action_ref: action.$name,
     })
   }
 }

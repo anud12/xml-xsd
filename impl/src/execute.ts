@@ -8,6 +8,8 @@ import {personAction} from "./middleware/personAction";
 import {personAssignClassification} from "./middleware/personAssignClassification";
 import {eventsMetadata} from "./middleware/eventsMetadata";
 import {offsetRandomisationTable} from "./middleware/offsetRandomisationTable";
+import {propertyRefValidator} from "./validators/propertyRef.validator";
+import {raceRefValidator} from "./validators/raceRef.validator";
 
 export const execute = async (xmlString:string, log: (...string:any[]) => void) => {
   const oldLog = console.log;
@@ -19,6 +21,9 @@ export const execute = async (xmlString:string, log: (...string:any[]) => void) 
     json: readJson,
     util: readJsonUtil
   }
+
+  await propertyRefValidator(readJson);
+  await raceRefValidator(readJson);
 
   const personMoveTowardsResult = personMoveTowards(unit);
   const personActionResult = personAction(unit);

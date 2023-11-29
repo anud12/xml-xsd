@@ -80,7 +80,7 @@ export type JsonSchema = JsonQueryType<never, {
     events_metadata: JsonQueryType<never, {
       entry: JsonQueryType<"name", {
         when:JsonQueryType<never, {
-          person_action_used: JsonQueryType<"type">
+          person_action_used: JsonQueryType<"action_ref">
         }>,
         then: JsonQueryType<never, {
           at: JsonQueryType<"origin", {
@@ -132,7 +132,7 @@ export type JsonSchema = JsonQueryType<never, {
 
   actions: JsonQueryType<never, {
     by: JsonQueryType<"person", {
-      do: JsonQueryType<"action" | "to">,
+      do: JsonQueryType<"action_ref" | "to">,
       move_towards: JsonQueryType<"x" | "y">
     }>
   }>

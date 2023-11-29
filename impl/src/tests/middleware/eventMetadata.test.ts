@@ -26,7 +26,7 @@ describe("eventsMetadata", () => {
     <events_metadata>
       <entry name="spawn_human">
         <when>
-          <person_action_used type="talk"/>
+          <person_action_used action_ref="talk"/>
         </when>
         <then>
           <at origin="self">
@@ -62,7 +62,7 @@ describe("eventsMetadata", () => {
   </location_layer>
   <actions>
     <by name="person">
-      <do action="talk" to="person"/>
+      <do action_ref="talk" to="person"/>
     </by>
   </actions>
 </world_step>`);
@@ -92,7 +92,7 @@ describe("eventsMetadata", () => {
     <events_metadata>
       <entry name="spawn_human">
         <when>
-          <person_action_used type="talk" />
+          <person_action_used action_ref="talk" />
         </when>
         <then>
           <at origin="self">
@@ -133,7 +133,7 @@ describe("eventsMetadata", () => {
   </location_layer>
   <actions>
     <by name="person">
-      <do action="talk" to="person" />
+      <do action_ref="talk" to="person" />
     </by>
   </actions>
 </world_step>

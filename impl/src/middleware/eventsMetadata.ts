@@ -18,12 +18,14 @@ type Origin = {
 const applyFromPersonActionUsed = (readJson: Unit, event: EventQueryType): Origin[] => {
   const personActionUsedTypeList = event.queryAll("when")
     .flatMap(when => when.queryAllOptional("person_action_used"))
-    .flatMap(person_action_used => person_action_used.$type);
+    .flatMap(person_action_used => person_action_used.$action_ref);
   const byList = readJson.json.queryAll("actions").flatMap(action => action.queryAllOptional("by"));
 
-  return byList.filter(by => personActionUsedTypeList.includes(by.queryOptional("do")?.$action))
+  return byList.filter(by => personActionUsedTypeList.includes(by.queryOptional("do")?.$action_ref))
     .flatMap(by => {
-
+      if(!by.queryOptional("do")?.$action_ref) {
+        return [];
+      }
       const self = readJson.util.person.getById(by.$person);
       const selfLocation = self.query("location");
       const target = readJson.util.person.getById(by.queryOptional("do").$to)

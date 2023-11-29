@@ -2,6 +2,7 @@ import {JsonQuery} from "../../JSONQuery";
 import {JsonSchema} from "../../utils/JsonSchema";
 import {describe} from "@jest/globals";
 import {raceRefValidator} from "../../validators/raceRef.validator";
+import {actionRefValidator} from "../../validators/actionRef.validator";
 
 describe("raceReference.validator", () => {
   it("should throw 2 validation errors", async () => {
@@ -9,18 +10,19 @@ describe("raceReference.validator", () => {
             xsi:noNamespaceSchemaLocation="../../../../schema/world_step/world_step.xsd"
 >
   <rule_group>
-    <race_metadata>
-      <entry name="race_definition"/>
-    </race_metadata>
+    <action_metadata>
+      <person_to_person name="action_definition">
+      </person_to_person>
+    </action_metadata>
   </rule_group>
-  <any_element race_ref="other_property"/>
-  <any_element race_ref="unmapped_property"/>
+  <any_element action_ref="other_property"/>
+  <any_element action_ref="unmapped_property"/>
 </world_step>`);
 
-    const result = await raceRefValidator(query);
+    const result = await actionRefValidator(query);
     expect(result.map(e => e.message).join("\n")).toBe([
-        "ValidationError: other_property at //any_element[0]@race_ref not in [race_definition]",
-        "ValidationError: unmapped_property at //any_element[1]@race_ref not in [race_definition]"
+        "ValidationError: other_property at //any_element[0]@action_ref not in [action_definition]",
+        "ValidationError: unmapped_property at //any_element[1]@action_ref not in [action_definition]"
       ].join("\n")
     )
   })

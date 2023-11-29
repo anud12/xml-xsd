@@ -306,7 +306,7 @@
     <events_metadata>
       <entry name="spawn_bandits">
         <when>
-          <person_action_used type="talk"/>
+          <person_action_used action_ref="talk"/>
         </when>
         <then>
           <at origin="self">

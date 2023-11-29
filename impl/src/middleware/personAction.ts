@@ -59,7 +59,7 @@ export const personAction: Middleware = readJson => {
         if (!personDo) {
           return [];
         }
-        const action = actionMetadata.find(action => action.$name === personDo.$action);
+        const action = actionMetadata.find(action => action.$name === personDo.$action_ref);
         const person = personList.find(person => person.$id === by.$person);
         const targetPerson = personList.find(person => person.$id === personDo.$to);
 
