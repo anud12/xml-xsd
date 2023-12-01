@@ -10,7 +10,7 @@ describe("propertyRef.validator", () => {
 >
   <rule_group>
     <property_metadata>
-      <entry name="athletics"/>
+      <entry name="rule_definition"/>
     </property_metadata>
   </rule_group>
   <any_element property_ref="other_property"/>
@@ -19,8 +19,8 @@ describe("propertyRef.validator", () => {
 
     const result = await propertyRefValidator(query);
     expect(result.map(e => e.message).join("\n")).toBe([
-        "ValidationError: other_property at //any_element[0]@property_ref not in [athletics]",
-        "ValidationError: unmapped_property at //any_element[1]@property_ref not in [athletics]"
+        "ValidationError: other_property at //any_element[0]@property_ref not in [rule_definition]",
+        "ValidationError: unmapped_property at //any_element[1]@property_ref not in [rule_definition]"
       ].join("\n")
     )
   })

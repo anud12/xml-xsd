@@ -10,7 +10,7 @@ export const locationMarkovChainMatrix = (json: JsonUtil, direction): LocationMa
       ?.filter(e => e.$position === direction || e.$position === "all")
       ?.flatMap(e => {
           const slots = new Array(Number(e.$quantity ?? 1));
-          return slots.fill(e.$type);
+          return slots.fill(e.$location_ref);
         }
       );
     if (next?.length === undefined || next.length === 0) {
@@ -18,7 +18,7 @@ export const locationMarkovChainMatrix = (json: JsonUtil, direction): LocationMa
         ?.filter(e => e.$position === "fill")
         ?.flatMap(e => {
             const slots = new Array(Number(e.$quantity ?? 1));
-            return slots.fill(e.$type);
+            return slots.fill(e.$location_ref);
           }
         )
     }

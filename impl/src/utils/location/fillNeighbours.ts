@@ -1,58 +1,9 @@
-import {markovNext, Transition} from "../markovNext";
+import {markovNext} from "../markovNext";
 import {Cell} from "./locationGrid";
 import {Unit} from "../../middleware/_type";
 import {nodeAttributes} from "../../JSONQuery";
+import {getTransitionFromNeighbours} from "./getTransitionFromNeighbours";
 
-const getTransitionFromNeighbours = (json: Unit, cell: Cell): Transition<string> => {
-  const x = Number(cell.$x)
-  const y = Number(cell.$y)
-  const grid = json.util.location.grid();
-  let transition = undefined;
-
-  let element = grid?.[x]?.[y + 1];
-  if (element) {
-    const type = element.$type;
-    transition = json.util.location.markovChainMatrix("bottom")[type] ?? []
-  }
-
-  element = grid?.[x + 1]?.[y];
-  if (element) {
-    const type = element.$type;
-    const typeList = json.util.location.markovChainMatrix("left")[type]
-    if (transition) {
-      transition = transition.filter(e => typeList.includes(e))
-    } else {
-      transition = typeList
-    }
-
-  }
-
-  element = grid?.[x]?.[y - 1];
-  if (element) {
-    const type = element.$type;
-    const typeList = json.util.location.markovChainMatrix("top")[type]
-    if (transition) {
-      transition = transition.filter(e => typeList.includes(e))
-    } else {
-      transition = typeList
-    }
-  }
-
-  element = grid?.[x - 1]?.[y];
-  if (element) {
-    const type = element.$type;
-    const typeList = json.util.location.markovChainMatrix("right")[type]
-    if (transition) {
-      transition = transition.filter(e => typeList.includes(e))
-    } else {
-      transition = typeList
-    }
-  }
-  if (!transition) {
-    transition = json.util.location.markovChainMatrix("all")[cell.$type]
-  }
-  return transition;
-}
 export const fillNeighbours = (readJson: Unit, writeJson: Unit, originalCell: Cell, radius = 1) => {
   try {
     const grid = writeJson.util.location.grid();
@@ -65,6 +16,10 @@ export const fillNeighbours = (readJson: Unit, writeJson: Unit, originalCell: Ce
         const cell = grid?.[x + i]?.[y + j];
         if (!cell) {
           const transition = getTransitionFromNeighbours(writeJson, originalCell);
+
+          if(!transition) {
+            throw new Error("transition is undefined");
+          }
           if(transition.length === 0) {
             throw new Error("transition length is 0");
           }
@@ -73,7 +28,7 @@ export const fillNeighbours = (readJson: Unit, writeJson: Unit, originalCell: Ce
             throw new Error("resulted type is undefined");
           }
           const cell: Cell[typeof nodeAttributes] = {
-            $type: type,
+            $location_ref: type,
             $x: String(x + i),
             $y: String(y + j),
           };
@@ -84,7 +39,7 @@ export const fillNeighbours = (readJson: Unit, writeJson: Unit, originalCell: Ce
       }
     }
   } catch (e) {
-    const newError = new Error(`fillNeighbours of type: ${originalCell.$type}, x:${originalCell.$x}, y:${originalCell.$y}`);
+    const newError = new Error(`fillNeighbours of type: ${originalCell.$location_ref}, x:${originalCell.$x}, y:${originalCell.$y}`);
     newError.stack += '\nCaused by: ' + e.stack;
     throw newError;
   }

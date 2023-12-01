@@ -10,7 +10,7 @@ describe("raceReference.validator", () => {
 >
   <rule_group>
     <race_metadata>
-      <entry name="race_definition"/>
+      <entry name="rule_definition"/>
     </race_metadata>
   </rule_group>
   <any_element race_ref="other_property"/>
@@ -19,8 +19,8 @@ describe("raceReference.validator", () => {
 
     const result = await raceRefValidator(query);
     expect(result.map(e => e.message).join("\n")).toBe([
-        "ValidationError: other_property at //any_element[0]@race_ref not in [race_definition]",
-        "ValidationError: unmapped_property at //any_element[1]@race_ref not in [race_definition]"
+        "ValidationError: other_property at //any_element[0]@race_ref not in [rule_definition]",
+        "ValidationError: unmapped_property at //any_element[1]@race_ref not in [rule_definition]"
       ].join("\n")
     )
   })

@@ -505,7 +505,7 @@
                           <xs:element name="sibling" minOccurs="0"
                                       maxOccurs="unbounded">
                             <xs:complexType>
-                              <xs:attribute name="type" use="required"/>
+                              <xs:attribute name="location_ref" use="required"/>
                               <xs:attribute name="quantity" type="xs:int"
                                             default="1"/>
                               <xs:attribute name="position" use="required">
@@ -742,7 +742,7 @@
             <xs:sequence>
               <xs:element name="cell" maxOccurs="unbounded">
                 <xs:complexType>
-                  <xs:attribute name="type" use="required"/>
+                  <xs:attribute name="location_ref" use="required"/>
                   <xs:attribute name="x" use="required"/>
                   <xs:attribute name="y" use="required"/>
                   <xs:attribute name="rotation" type="type_direction"

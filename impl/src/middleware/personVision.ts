@@ -5,7 +5,7 @@ export const personVision: Middleware = (readJson) => {
     try {
         const persons = readJson.json.query("people").queryAll("person");
         const ruleGroup = readJson.json.query("rule_group");
-        persons.map(async e => {
+        persons.map(e => {
             const location = e.query("location");
 
             const {$x, $y} = location;

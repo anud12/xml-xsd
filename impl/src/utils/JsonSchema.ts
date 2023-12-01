@@ -97,7 +97,7 @@ export type JsonSchema = JsonQueryType<never, {
     }>,
     locations_markov_chain: JsonQueryType<never, {
       location_markov_link: JsonQueryType<"type", {
-        sibling: JsonQueryType<"type" | "position" | "quantity">
+        sibling: JsonQueryType<"location_ref" | "position" | "quantity">
       }>
     }>,
   }>
@@ -127,7 +127,7 @@ export type JsonSchema = JsonQueryType<never, {
   }>;
 
   location_layer: JsonQueryType<"name", {
-    cell: JsonQueryType<"type" | "x" | "y">,
+    cell: JsonQueryType<"location_ref" | "x" | "y">,
   }>,
 
   actions: JsonQueryType<never, {

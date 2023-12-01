@@ -1,5 +1,5 @@
 import {Unit} from "../../middleware/_type";
-import {findClosestPoint} from "../findClosestPoint";
+import {findClosestPoint} from "./findClosestPoint";
 import {fillNeighbours} from "./fillNeighbours";
 
 export const create = (readJson:Unit, x: number, y: number): void => {

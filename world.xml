@@ -330,17 +330,17 @@
     <!--_-->
     <locations_markov_chain>
       <location_markov_link type="plains">
-        <sibling type="plains" quantity="5" position="all"/>
-        <sibling type="forest" position="all"/>
+        <sibling location_ref="plains" quantity="5" position="all"/>
+        <sibling location_ref="forest" position="all"/>
       </location_markov_link>
       <location_markov_link type="forest">
-        <sibling type="forest" quantity="5" position="all"/>
-        <sibling type="plains" position="all"/>
-        <sibling type="hills" position="all"/>
+        <sibling location_ref="forest" quantity="5" position="all"/>
+        <sibling location_ref="plains" position="all"/>
+        <sibling location_ref="hills" position="all"/>
       </location_markov_link>
       <location_markov_link type="hills">
-        <sibling type="hills" quantity="20" position="all"/>
-        <sibling type="forest" position="all"/>
+        <sibling location_ref="hills" quantity="20" position="all"/>
+        <sibling location_ref="forest" position="all"/>
       </location_markov_link>
     </locations_markov_chain>
   </rule_group>
@@ -409,15 +409,15 @@
   <!--Location_layer-->
   <!--_-->
   <location_layer>
-    <cell type="plains" x="0" y="0"/>
-    <cell type="plains" x="0" y="1"/>
-    <cell type="plains" x="0" y="-1"/>
-    <cell type="plains" x="1" y="0"/>
-    <cell type="plains" x="1" y="1"/>
-    <cell type="plains" x="1" y="-1"/>
-    <cell type="plains" x="-1" y="0"/>
-    <cell type="plains" x="-1" y="1"/>
-    <cell type="plains" x="-1" y="-1"/>
+    <cell location_ref="plains" x="0" y="0"/>
+    <cell location_ref="plains" x="0" y="1"/>
+    <cell location_ref="plains" x="0" y="-1"/>
+    <cell location_ref="plains" x="1" y="0"/>
+    <cell location_ref="plains" x="1" y="1"/>
+    <cell location_ref="plains" x="1" y="-1"/>
+    <cell location_ref="plains" x="-1" y="0"/>
+    <cell location_ref="plains" x="-1" y="1"/>
+    <cell location_ref="plains" x="-1" y="-1"/>
   </location_layer>
   <!--_-->
   <!--_-->
