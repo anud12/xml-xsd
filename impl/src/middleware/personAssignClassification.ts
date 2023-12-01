@@ -19,7 +19,7 @@ export const personAssignClassification: Middleware = (readJson) => {
       classifications.children = [];
       classificationList.forEach(classification => {
         classifications.appendChild("classification", {
-          $name: classification
+          $classification_ref: classification
         })
       })
     })

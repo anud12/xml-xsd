@@ -539,27 +539,27 @@
                 <!-- fk for -->
                 <!-- locations_markov_chain/location_markov_link/sibling@type -->
                 <!-- locations_markov_chain/location_markov_link@type -->
-                <xs:keyref name="FK__locations_markov_chain__location_markov_link__sibling.type"
-                           refer="K__locations_markov_chain__location_markov_link.type">
-                  <xs:selector xpath="location_markov_link/sibling"/>
-                  <xs:field xpath="@type"/>
-                </xs:keyref>
+<!--                <xs:keyref name="FK__locations_markov_chain__location_markov_link__sibling.type"-->
+<!--                           refer="K__locations_markov_chain__location_markov_link.type">-->
+<!--                  <xs:selector xpath="location_markov_link/sibling"/>-->
+<!--                  <xs:field xpath="@type"/>-->
+<!--                </xs:keyref>-->
 
                 <!-- key for -->
                 <!-- locations_markov_chain/location_markov_link/tag@name -->
-                <xs:key name="K__locations_markov_chain__location_markov_link__tag.name">
-                  <xs:selector xpath="location_markov_link/tag"/>
-                  <xs:field xpath="@name"/>
-                </xs:key>
+<!--                <xs:key name="K__locations_markov_chain__location_markov_link__tag.name">-->
+<!--                  <xs:selector xpath="location_markov_link/tag"/>-->
+<!--                  <xs:field xpath="@name"/>-->
+<!--                </xs:key>-->
 
                 <!-- fk for -->
                 <!-- locations_markov_chain/location_markov_link/sibling@tag -->
                 <!-- locations_markov_chain/location_markov_link/tag@name -->
-                <xs:keyref name="FK__locations_markov_chain__location_markov_link__sibling.tag"
-                           refer="K__locations_markov_chain__location_markov_link__tag.name">
-                  <xs:selector xpath="location_markov_link/sibling"/>
-                  <xs:field xpath="@tag"/>
-                </xs:keyref>
+<!--                <xs:keyref name="FK__locations_markov_chain__location_markov_link__sibling.tag"-->
+<!--                           refer="K__locations_markov_chain__location_markov_link__tag.name">-->
+<!--                  <xs:selector xpath="location_markov_link/sibling"/>-->
+<!--                  <xs:field xpath="@tag"/>-->
+<!--                </xs:keyref>-->
               </xs:element>
             </xs:sequence>
 
@@ -567,77 +567,6 @@
           </xs:complexType>
         </xs:element>
 
-
-        <xs:element name="quests_markov_chain" maxOccurs="unbounded">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="quest_markov_link" minOccurs="0" maxOccurs="unbounded">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="person_group" minOccurs="0" maxOccurs="unbounded">
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element name="classification" minOccurs="0"
-                                      maxOccurs="unbounded">
-                            <xs:complexType>
-                              <xs:attribute name="name" use="required" type="xs:string"/>
-                            </xs:complexType>
-                          </xs:element>
-                        </xs:sequence>
-                        <xs:attribute name="name" use="required" type="xs:string"/>
-                        <xs:attribute name="quantity" use="required" type="xs:int"/>
-                      </xs:complexType>
-                    </xs:element>
-                    <xs:element name="complete_condition">
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element name="person_group" minOccurs="0" maxOccurs="unbounded">
-                            <xs:complexType>
-                              <xs:sequence>
-                                <xs:element name="classification" minOccurs="0"
-                                            maxOccurs="unbounded">
-                                  <xs:complexType>
-                                    <xs:attribute name="name" use="required"
-                                                  type="xs:string"/>
-                                  </xs:complexType>
-                                </xs:element>
-                              </xs:sequence>
-                              <xs:attribute name="name" use="required" type="xs:string"/>
-                              <xs:attribute name="quantity" use="required" type="xs:int"/>
-                            </xs:complexType>
-                          </xs:element>
-                          <xs:element name="next" minOccurs="0" maxOccurs="unbounded">
-                            <xs:complexType>
-                              <xs:attribute name="type" use="required"/>
-                              <xs:attribute name="quantity" type="xs:int"
-                                            default="1"/>
-                            </xs:complexType>
-                          </xs:element>
-                        </xs:sequence>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:sequence>
-                  <xs:attribute name="type"/>
-                </xs:complexType>
-              </xs:element>
-            </xs:sequence>
-          </xs:complexType>
-
-          <!-- key for -->
-          <!-- quests_markov_chain/quest_markov_link/person_group@name -->
-          <xs:key name="K__quests_markov_chain__quest_markov_link__person_group.name">
-            <xs:selector xpath="quest_markov_link/person_group"/>
-            <xs:field xpath="@name"/>
-          </xs:key>
-
-          <!-- key for -->
-          <!-- quests_markov_chain/quest_markov_link@type -->
-          <xs:key name="K__quests_markov_chain__quest_markov_link.type">
-            <xs:selector xpath="quest_markov_link"/>
-            <xs:field xpath="@type"/>
-          </xs:key>
-
-        </xs:element>
 
 
         <xs:element name="people" maxOccurs="unbounded">
@@ -688,7 +617,7 @@
                     <xs:element name="classifications">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="classification" minOccurs="0"
+                          <xs:element name="classification_ref" minOccurs="0"
                                       maxOccurs="unbounded">
                             <xs:complexType>
                               <xs:attribute name="name" use="required"/>
@@ -842,10 +771,10 @@
     <!-- fk for -->
     <!-- actions/by/do@to -->
     <!-- people/person@id -->
-    <xs:keyref name="FK__actions_by_do.on__to__people_person.id" refer="K__people__person.id">
-      <xs:selector xpath="actions/by/do"/>
-      <xs:field xpath="@to"/>
-    </xs:keyref>
+<!--    <xs:keyref name="FK__actions_by_do.on__to__people_person.id" refer="K__people__person.id">-->
+<!--      <xs:selector xpath="actions/by/do"/>-->
+<!--      <xs:field xpath="@to"/>-->
+<!--    </xs:keyref>-->
 
 
     <!-- FK people -->

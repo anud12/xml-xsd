@@ -348,39 +348,6 @@
   <!--_-->
   <!--_-->
   <!--_-->
-  <!--Quests_Markov_chain-->
-  <!--_-->
-  <quests_markov_chain>
-    <quest_markov_link type="talk-to">
-      <person_group name="kill" quantity="1">
-        <classification name="alive"/>
-      </person_group>
-      <complete_condition>
-        <person_group name="kill" quantity="2">
-
-        </person_group>
-
-        <next type="talk-to" quantity="4"/>
-        <next type="escort" quantity="2"/>
-        <next type="assassination"/>
-      </complete_condition>
-    </quest_markov_link>
-    <quest_markov_link type="escort">
-      <complete_condition>
-        <next type="assassination" quantity="4"/>
-        <next type="talk-to"/>
-      </complete_condition>
-    </quest_markov_link>
-    <quest_markov_link type="assassination">
-      <complete_condition>
-        <next type="talk-to" quantity="4"/>
-      </complete_condition>
-    </quest_markov_link>
-  </quests_markov_chain>
-  <!--_-->
-  <!--_-->
-  <!--_-->
-  <!--_-->
   <!--People-->
   <!--_-->
   <people>

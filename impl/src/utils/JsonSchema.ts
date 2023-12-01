@@ -102,13 +102,6 @@ export type JsonSchema = JsonQueryType<never, {
     }>,
   }>
 
-  quests_markov_chain: JsonQueryType<never, {
-    quest_markov_link: JsonQueryType<"type", {
-      next: JsonQueryType<"type" | "quantity">
-      completeCondition: JsonQueryType
-    }>
-  }>,
-
   people: JsonQueryType<never, {
     person: JsonQueryType<"name" | "id", {
       race: JsonQueryType<"race_ref">,
@@ -121,7 +114,7 @@ export type JsonSchema = JsonQueryType<never, {
         item: JsonQueryType<"ref" | "equipped">
       }>,
       classifications: JsonQueryType<never, {
-        classification: JsonQueryType<"name">
+        classification: JsonQueryType<"classification_ref">
       }>,
     }>
   }>;
