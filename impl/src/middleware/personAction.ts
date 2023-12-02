@@ -60,8 +60,8 @@ export const personAction: Middleware = readJson => {
           return [];
         }
         const action = actionMetadata.find(action => action.$name === personDo.$action_ref);
-        const person = personList.find(person => person.$id === by.$person);
-        const targetPerson = personList.find(person => person.$id === personDo.$to);
+        const person = personList.find(person => person.$id === by.$person_ref);
+        const targetPerson = personList.find(person => person.$id === personDo.$person_ref);
 
         if (isOutOfRange(readJson, action, person, targetPerson)) {
           return [{
@@ -92,8 +92,8 @@ export const personAction: Middleware = readJson => {
     const writeJsonUtil = new JsonUtil(writeJson);
     actions.forEach(({by: by, personAction, property_mutation_list}) => {
       const personList = writeJson.queryAll("people").flatMap(e => e.queryAll("person"));
-      const person = personList.find(e => e.$id === by.$person);
-      const targetPerson = personList.find(e => e.$id === personAction.$to);
+      const person = personList.find(e => e.$id === by.$person_ref);
+      const targetPerson = personList.find(e => e.$id === personAction.$person_ref);
 
       property_mutation_list.forEach(mutation => {
         const applicablePerson = mutation.property_mutation.$on === "target"

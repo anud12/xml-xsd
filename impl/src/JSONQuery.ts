@@ -39,7 +39,7 @@ export type JsonQueryType<
   queryOptional: <P extends keyof B> (p: P) => B[P] | undefined,
   queryAll: <P extends keyof B> (p: P) => Array<B[P]>,
   queryAllOptional: <P extends keyof B> (p: P) => Array<B[P]>,
-  queryAllRecursiveWithAttributeFrom: <P extends JsonQueryType>(attribute: keyof P[typeof nodeAttributes]) => Array<P>,
+  queryAllRecursiveWithAttributeFrom: <P extends JsonQueryType<any, any>>(attribute: keyof P[typeof nodeAttributes]) => Array<P>,
   removeFromParent: () => void,
   getPath: () => string,
   serialize: () => string

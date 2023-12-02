@@ -4,7 +4,7 @@ import {describe} from "@jest/globals";
 import {raceRefValidator} from "../../validators/raceRef.validator";
 import {actionRefValidator} from "../../validators/actionRef.validator";
 
-describe("raceReference.validator", () => {
+describe("actionRef.validator", () => {
   it("should throw 2 validation errors", async () => {
     const query = JsonQuery.fromText<JsonSchema>(`<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:noNamespaceSchemaLocation="../../../../schema/world_step/world_step.xsd"

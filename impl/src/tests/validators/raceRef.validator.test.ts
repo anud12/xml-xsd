@@ -3,7 +3,7 @@ import {JsonSchema} from "../../utils/JsonSchema";
 import {describe} from "@jest/globals";
 import {raceRefValidator} from "../../validators/raceRef.validator";
 
-describe("raceReference.validator", () => {
+describe("raceRef.validator", () => {
   it("should throw 2 validation errors", async () => {
     const query = JsonQuery.fromText<JsonSchema>(`<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:noNamespaceSchemaLocation="../../../../schema/world_step/world_step.xsd"

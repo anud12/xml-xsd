@@ -691,7 +691,7 @@
                     <xs:element name="do">
                       <xs:complexType>
                         <xs:attribute name="action_ref" use="required"/>
-                        <xs:attribute name="to" use="required"/>
+                        <xs:attribute name="person_ref" use="required"/>
                       </xs:complexType>
                     </xs:element>
                     <xs:element name="move_towards">
@@ -702,7 +702,7 @@
                       </xs:complexType>
                     </xs:element>
                   </xs:choice>
-                  <xs:attribute name="person" use="required"/>
+                  <xs:attribute name="person_ref" use="required"/>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
@@ -753,11 +753,11 @@
     <!-- fk for -->
     <!-- actions/by@name -->
     <!-- people/person@id-->
-    <xs:keyref name="FK__actions_by.name__to__people_person.id"
-               refer="K__people__person.id">
-      <xs:selector xpath="actions/by"/>
-      <xs:field xpath="@name"/>
-    </xs:keyref>
+<!--    <xs:keyref name="FK__actions_by.name__to__people_person.id"-->
+<!--               refer="K__people__person.id">-->
+<!--      <xs:selector xpath="actions/by"/>-->
+<!--      <xs:field xpath="@name"/>-->
+<!--    </xs:keyref>-->
 
     <!-- fk for -->
     <!-- actions/by/do@to -->
@@ -806,29 +806,29 @@
     <!-- fk for -->
     <!-- quests_markov_chain/quest_markov_link/complete_condition/person_group@name -->
     <!-- quests_markov_chain/quest_markov_link/person_group@name -->
-    <xs:keyref name="FK__quests_markov_chain__quest_markov_link__complete_condition__person_group.name"
-               refer="K__quests_markov_chain__quest_markov_link__person_group.name">
-      <xs:selector xpath="quest_markov_link/complete_condition/person_group"/>
-      <xs:field xpath="@name"/>
-    </xs:keyref>
+<!--    <xs:keyref name="FK__quests_markov_chain__quest_markov_link__complete_condition__person_group.name"-->
+<!--               refer="K__quests_markov_chain__quest_markov_link__person_group.name">-->
+<!--      <xs:selector xpath="quest_markov_link/complete_condition/person_group"/>-->
+<!--      <xs:field xpath="@name"/>-->
+<!--    </xs:keyref>-->
 
     <!-- fk for -->
     <!-- quests_markov_chain/quest_markov_link/next@type -->
     <!-- quests_markov_chain/quest_markov_link@type -->
-    <xs:keyref name="FK__quests_markov_chain__quest_markov_link__next.type"
-               refer="K__quests_markov_chain__quest_markov_link.type">
-      <xs:selector xpath="quest_markov_link/next"/>
-      <xs:field xpath="@type"/>
-    </xs:keyref>
+<!--    <xs:keyref name="FK__quests_markov_chain__quest_markov_link__next.type"-->
+<!--               refer="K__quests_markov_chain__quest_markov_link.type">-->
+<!--      <xs:selector xpath="quest_markov_link/next"/>-->
+<!--      <xs:field xpath="@type"/>-->
+<!--    </xs:keyref>-->
 
     <!-- fk for -->
     <!-- quests_markov_chain/quest_markov_link/person_group/classification@name -->
     <!-- classification_metadata/entry@name -->
-    <xs:keyref name="FK__quest_markov_link__person_group__classification.name"
-               refer="K__classification_metadata__entry.name">
-      <xs:selector xpath="quest_markov_link/person_group/classification"/>
-      <xs:field xpath="@name"/>
-    </xs:keyref>
+<!--    <xs:keyref name="FK__quest_markov_link__person_group__classification.name"-->
+<!--               refer="K__classification_metadata__entry.name">-->
+<!--      <xs:selector xpath="quest_markov_link/person_group/classification"/>-->
+<!--      <xs:field xpath="@name"/>-->
+<!--    </xs:keyref>-->
 
   </xs:element>
 </xs:schema>
