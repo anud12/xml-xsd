@@ -606,7 +606,7 @@
                         <xs:sequence>
                           <xs:element name="item">
                             <xs:complexType>
-                              <xs:attribute name="ref"/>
+                              <xs:attribute name="item_ref"/>
                               <xs:attribute name="equipped"
                                             type="item_slot"/>
                             </xs:complexType>

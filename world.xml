@@ -358,7 +358,7 @@
         <property property_ref="strength" value="13"/>
       </properties>
       <inventory>
-        <item ref="Long sword" equipped="hand"/>
+        <item item_ref="Long sword" equipped="hand"/>
       </inventory>
       <classifications/>
     </person>

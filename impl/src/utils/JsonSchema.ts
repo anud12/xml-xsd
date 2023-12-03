@@ -111,7 +111,7 @@ export type JsonSchema = JsonQueryType<never, {
         property: JsonQueryType<"property_ref" | "value">
       }>,
       inventory: JsonQueryType<never, {
-        item: JsonQueryType<"ref" | "equipped">
+        item: JsonQueryType<"item_ref" | "equipped">
       }>,
       classifications: JsonQueryType<never, {
         classification: JsonQueryType<"classification_ref">
