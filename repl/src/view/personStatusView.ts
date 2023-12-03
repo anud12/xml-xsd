@@ -21,7 +21,7 @@ function personStatus(person: PersonQueryType) {
   const personRace = person.query("race")
   const personName = person.$name ?? "";
   const race = ruleGroup.query("race_metadata").queryAll("entry")
-    .find(e => e.$name === personRace.$name)
+    .find(e => e.$name === personRace.$race_ref)
   string += `Name: ${personName} (${personNameToSymbol(personId)})\n`
   string += `Race: ${race.$name}\n`;
   string += `Location: \n`;
@@ -36,7 +36,7 @@ function personProperties(person: PersonQueryType) {
   let string = "";
   string += 'Properties:'
   var propertyString = person.query("properties").queryAllOptional("property")
-    .map((property) => ` - ${property.$ref}: ${property.$value}`)
+    .map((property) => ` - ${property.$property_ref}: ${property.$value}`)
     .join("\n");
 
   if (propertyString === "") {
@@ -51,7 +51,7 @@ function personClassifications(person: PersonQueryType) {
   string += 'Classifications:'
   const classificationList = person.queryAllOptional("classifications")
     .flatMap(e => e.queryAllOptional("classification"))
-    .map(classification => ` - ${classification.$name}`)
+    .map(classification => ` - ${classification.$classification_ref}`)
     .join("\n");
   if (classificationList === "") {
     return string;

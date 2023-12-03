@@ -24,6 +24,6 @@ export const createPerson = (jsonSchema: JsonUtil, args: CreatePersonArgs): void
     $id: `${time}.${jsonSchema.counterNext()}`,
   });
   person.appendChild("location", args.location);
-  person.appendChild("race", {$name: race});
+  person.appendChild("race", {$race_ref: race});
   person.appendChild("classifications", {});
 }

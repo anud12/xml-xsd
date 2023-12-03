@@ -1,4 +1,4 @@
-import {Unit} from "../middleware";
+import {Unit} from "../../middleware/_type";
 import {JsonSchema} from "../JsonSchema";
 import {nodeBodyType} from "../../JSONQuery";
 
@@ -27,7 +27,7 @@ export const getBaseProperty = (readJson: Unit, personQueryType: PersonQueryType
 export const getRaceProperty = (readJson: Unit, personQueryType: PersonQueryType, raceQueryType: RaceQueryType, key: string):string => {
   const base = getBaseProperty(readJson, personQueryType, key);
   const propertyBonus: Bonus = raceQueryType.queryAllOptional("property_bonus")
-    .find(e => e.$ref === key);
+    .find(e => e.$property_ref === key);
   if (!propertyBonus) {
     return base;
   }
@@ -49,20 +49,20 @@ export const getProperty = (readJson: Unit, personQueryType: PersonQueryType, ke
     }
     const property = propertyList
       .flatMap(e => e.queryAllOptional("property"))
-      .find(e => e.$ref === key);
+      .find(e => e.$property_ref === key);
     if (property) {
       return property.$value;
     }
 
     const raceMetadata = ruleGroup.queryAll("race_metadata")
       .flatMap(e => e.queryAll("entry"))
-      .find(e => e.$name === personQueryType.query("race").$name);
+      .find(e => e.$name === personQueryType.query("race").$race_ref);
 
     const value = getRaceProperty(readJson, personQueryType, raceMetadata, key);
 
     propertyList.forEach(e => {
       e.appendChild("property", {
-        $ref: key,
+        $property_ref: key,
         $value: value
       })
     })

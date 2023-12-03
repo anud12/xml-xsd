@@ -1,4 +1,4 @@
-import {Unit} from "../middleware";
+import {Unit} from "../../middleware/_type";
 import {OperationQueryType} from "../JsonSchema";
 import {JsonQueryType} from "../../JSONQuery";
 import {createOperationFromQueryType} from "./createOperationFromQueryType";

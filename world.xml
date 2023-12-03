@@ -152,7 +152,7 @@
       <entry name="health" units="points">
         <default>
           <operation>
-            <add_property_value name="constitution"/>
+            <add_property_value property_ref="constitution"/>
           </operation>
           <operation>
             <add_dice value="8"/>
@@ -168,14 +168,14 @@
     <!--_-->
     <classification_metadata>
       <entry name="dead">
-        <property name="health" is="lessThanOrEqual">
+        <property property_ref="health" is="lessThanOrEqual">
           <operation>
             <add value="0"/>
           </operation>
         </property>
       </entry>
       <entry name="alive">
-        <property name="health" is="greaterThan">
+        <property property_ref="health" is="greaterThan">
           <operation>
             <add value="0"/>
           </operation>
@@ -192,7 +192,7 @@
       <entry name="human">
         <vision value="5" inclusive="true"/>
         <movement value="2" inclusive="true"/>
-        <property_bonus ref="strength">
+        <property_bonus property_ref="strength">
           <operation>
             <add_dice value="3"/>
           </operation>
@@ -200,7 +200,7 @@
             <add value="-1"/>
           </operation>
         </property_bonus>
-        <property_bonus ref="constitution">
+        <property_bonus property_ref="constitution">
           <operation>
             <add_dice value="3"/>
           </operation>
@@ -255,7 +255,7 @@
             </operation>
           </expected>
         </test>
-        <property_mutation name="health" on="target">
+        <property_mutation property_ref="health" on="target">
           <from participant="target">
             <operation>
               <add_dice value="6"/>
@@ -263,7 +263,7 @@
             <operation>
               <group>
                 <operation>
-                  <add_property_value name="strength"/>
+                  <add_property_value property_ref="strength"/>
                 </operation>
                 <operation>
                   <add value="-10"/>
@@ -306,7 +306,7 @@
     <events_metadata>
       <entry name="spawn_bandits">
         <when>
-          <person_action_used type="talk"/>
+          <person_action_used action_ref="talk"/>
         </when>
         <then>
           <at origin="self">
@@ -317,7 +317,7 @@
             </radius>
           </at>
           <create_person>
-            <race name="human" quantity="1"/>
+            <race race_ref="human" quantity="1"/>
           </create_person>
         </then>
       </entry>
@@ -330,53 +330,20 @@
     <!--_-->
     <locations_markov_chain>
       <location_markov_link type="plains">
-        <sibling type="plains" quantity="5" position="all"/>
-        <sibling type="forest" position="all"/>
+        <sibling location_ref="plains" quantity="5" position="all"/>
+        <sibling location_ref="forest" position="all"/>
       </location_markov_link>
       <location_markov_link type="forest">
-        <sibling type="forest" quantity="5" position="all"/>
-        <sibling type="plains" position="all"/>
-        <sibling type="hills" position="all"/>
+        <sibling location_ref="forest" quantity="5" position="all"/>
+        <sibling location_ref="plains" position="all"/>
+        <sibling location_ref="hills" position="all"/>
       </location_markov_link>
       <location_markov_link type="hills">
-        <sibling type="hills" quantity="20" position="all"/>
-        <sibling type="forest" position="all"/>
+        <sibling location_ref="hills" quantity="20" position="all"/>
+        <sibling location_ref="forest" position="all"/>
       </location_markov_link>
     </locations_markov_chain>
   </rule_group>
-  <!--_-->
-  <!--_-->
-  <!--_-->
-  <!--_-->
-  <!--Quests_Markov_chain-->
-  <!--_-->
-  <quests_markov_chain>
-    <quest_markov_link type="talk-to">
-      <person_group name="kill" quantity="1">
-        <classification name="alive"/>
-      </person_group>
-      <complete_condition>
-        <person_group name="kill" quantity="2">
-
-        </person_group>
-
-        <next type="talk-to" quantity="4"/>
-        <next type="escort" quantity="2"/>
-        <next type="assassination"/>
-      </complete_condition>
-    </quest_markov_link>
-    <quest_markov_link type="escort">
-      <complete_condition>
-        <next type="assassination" quantity="4"/>
-        <next type="talk-to"/>
-      </complete_condition>
-    </quest_markov_link>
-    <quest_markov_link type="assassination">
-      <complete_condition>
-        <next type="talk-to" quantity="4"/>
-      </complete_condition>
-    </quest_markov_link>
-  </quests_markov_chain>
   <!--_-->
   <!--_-->
   <!--_-->
@@ -385,18 +352,18 @@
   <!--_-->
   <people>
     <person id="1" name="Billy">
-      <race name="human"/>
+      <race race_ref="human"/>
       <location x="1" y="1"/>
       <properties>
-        <property ref="strength" value="13"/>
+        <property property_ref="strength" value="13"/>
       </properties>
       <inventory>
-        <item ref="Long sword" equipped="hand"/>
+        <item item_ref="Long sword" equipped="hand"/>
       </inventory>
       <classifications/>
     </person>
     <person id="3" name="Bobu">
-      <race name="human"/>
+      <race race_ref="human"/>
       <location x="-1" y="-1"/>
       <properties/>
       <classifications/>
@@ -409,15 +376,15 @@
   <!--Location_layer-->
   <!--_-->
   <location_layer>
-    <cell type="plains" x="0" y="0"/>
-    <cell type="plains" x="0" y="1"/>
-    <cell type="plains" x="0" y="-1"/>
-    <cell type="plains" x="1" y="0"/>
-    <cell type="plains" x="1" y="1"/>
-    <cell type="plains" x="1" y="-1"/>
-    <cell type="plains" x="-1" y="0"/>
-    <cell type="plains" x="-1" y="1"/>
-    <cell type="plains" x="-1" y="-1"/>
+    <cell location_ref="plains" x="0" y="0"/>
+    <cell location_ref="plains" x="0" y="1"/>
+    <cell location_ref="plains" x="0" y="-1"/>
+    <cell location_ref="plains" x="1" y="0"/>
+    <cell location_ref="plains" x="1" y="1"/>
+    <cell location_ref="plains" x="1" y="-1"/>
+    <cell location_ref="plains" x="-1" y="0"/>
+    <cell location_ref="plains" x="-1" y="1"/>
+    <cell location_ref="plains" x="-1" y="-1"/>
   </location_layer>
   <!--_-->
   <!--_-->

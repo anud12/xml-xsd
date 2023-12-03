@@ -1,4 +1,4 @@
-import { Middleware } from "../utils/middleware";
+import {Middleware, Unit} from "./_type";
 import { classifyPerson } from "../utils/person/classifyPerson";
 
 // for person in people add a classifications
@@ -19,7 +19,7 @@ export const personAssignClassification: Middleware = (readJson) => {
       classifications.children = [];
       classificationList.forEach(classification => {
         classifications.appendChild("classification", {
-          $name: classification
+          $classification_ref: classification
         })
       })
     })

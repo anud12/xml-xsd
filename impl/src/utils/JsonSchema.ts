@@ -1,7 +1,8 @@
 import {JsonQueryType} from "../JSONQuery";
 
+
 export type OperationQueryType = JsonQueryType<never, {
-  add_property_value: JsonQueryType<"name">,
+  add_property_value: JsonQueryType<"property_ref">,
   add: JsonQueryType<"value">,
   add_dice: JsonQueryType<"value">,
   multiply_dice: JsonQueryType<"value">,
@@ -33,7 +34,7 @@ export type JsonSchema = JsonQueryType<never, {
     }>,
     classification_metadata: JsonQueryType<never, {
       entry: JsonQueryType<"name", {
-        property: JsonQueryType<"name" | "is", {
+        property: JsonQueryType<"property_ref" | "is", {
           operation: OperationQueryType,
         }>,
       }>
@@ -54,7 +55,7 @@ export type JsonSchema = JsonQueryType<never, {
             operation: OperationQueryType,
           }>
         }>,
-        property_mutation: JsonQueryType<"name" | "on", {
+        property_mutation: JsonQueryType<"property_ref" | "on", {
           from: JsonQueryType<"participant", {
             operation: OperationQueryType
           }>
@@ -65,7 +66,7 @@ export type JsonSchema = JsonQueryType<never, {
       entry: JsonQueryType<"name", {
         vision: JsonQueryType<"value">
         movement: JsonQueryType<"value">
-        property_bonus: JsonQueryType<"ref" | "value" | "max_value ", {
+        property_bonus: JsonQueryType<"property_ref" | "value" | "max_value ", {
           operation: OperationQueryType
         }>
       }>
@@ -79,7 +80,7 @@ export type JsonSchema = JsonQueryType<never, {
     events_metadata: JsonQueryType<never, {
       entry: JsonQueryType<"name", {
         when:JsonQueryType<never, {
-          person_action_used: JsonQueryType<"type">
+          person_action_used: JsonQueryType<"action_ref">
         }>,
         then: JsonQueryType<never, {
           at: JsonQueryType<"origin", {
@@ -89,49 +90,42 @@ export type JsonSchema = JsonQueryType<never, {
             location: JsonQueryType<"type" | "quantity">
           }>,
           create_person?: JsonQueryType<never, {
-            race: JsonQueryType<"name" | "quantity">,
+            race: JsonQueryType<"race_ref" | "quantity">,
           }>
         }>
       }>
     }>,
     locations_markov_chain: JsonQueryType<never, {
       location_markov_link: JsonQueryType<"type", {
-        sibling: JsonQueryType<"type" | "position" | "quantity">
+        sibling: JsonQueryType<"location_ref" | "position" | "quantity">
       }>
     }>,
   }>
 
-  quests_markov_chain: JsonQueryType<never, {
-    quest_markov_link: JsonQueryType<"type", {
-      next: JsonQueryType<"type" | "quantity">
-      completeCondition: JsonQueryType
-    }>
-  }>,
-
   people: JsonQueryType<never, {
     person: JsonQueryType<"name" | "id", {
-      race: JsonQueryType<"name">,
+      race: JsonQueryType<"race_ref">,
       location: JsonQueryType<"x" | "y">
       relations: JsonQueryType<"with">,
       properties: JsonQueryType<never, {
-        property: JsonQueryType<"ref" | "value">
+        property: JsonQueryType<"property_ref" | "value">
       }>,
       inventory: JsonQueryType<never, {
-        item: JsonQueryType<"ref" | "equipped">
+        item: JsonQueryType<"item_ref" | "equipped">
       }>,
       classifications: JsonQueryType<never, {
-        classification: JsonQueryType<"name">
+        classification: JsonQueryType<"classification_ref">
       }>,
     }>
   }>;
 
   location_layer: JsonQueryType<"name", {
-    cell: JsonQueryType<"type" | "x" | "y">,
+    cell: JsonQueryType<"location_ref" | "x" | "y">,
   }>,
 
   actions: JsonQueryType<never, {
-    by: JsonQueryType<"person", {
-      do: JsonQueryType<"action" | "to">,
+    by: JsonQueryType<"person_ref", {
+      do: JsonQueryType<"action_ref" | "person_ref">,
       move_towards: JsonQueryType<"x" | "y">
     }>
   }>

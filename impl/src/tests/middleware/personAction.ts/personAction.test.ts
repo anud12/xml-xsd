@@ -60,10 +60,10 @@ describe("personAction" , () => {
         </expected>
       </test>
   
-      <property_mutation name="health" on="target">
+      <property_mutation property_ref="health" on="target">
         <from participant="self">
           <operation>
-            <add_property_value name="strength"/>
+            <add_property_value property_ref="strength"/>
           </operation>
           <operation>
             <divide value="2"/>
@@ -76,7 +76,7 @@ describe("personAction" , () => {
   
   <people>
   <person id="Billy">
-    <race name="human"/>
+    <race race_ref="human"/>
     <location x="10" y="10"/>
     <inventory>
       <item ref="Long sword" equipped="hand"/>
@@ -84,14 +84,14 @@ describe("personAction" , () => {
     <properties/>
   </person>
   <person id="Bob">
-    <race name="human"/>
+    <race race_ref="human"/>
     <location x="10" y="10"/>
     <properties/>
   </person>
   </people>
   <actions>
-  <by person="Billy">
-    <do action="meleeAttack" to="Bob"/>
+  <by person_ref="Billy">
+    <do action_ref="meleeAttack" person_ref="Bob"/>
   </by>
   </actions>
 </world_step>`);
@@ -153,10 +153,10 @@ describe("personAction" , () => {
             </operation>
           </expected>
         </test>
-        <property_mutation name="health" on="target">
+        <property_mutation property_ref="health" on="target">
           <from participant="self">
             <operation>
-              <add_property_value name="strength" />
+              <add_property_value property_ref="strength" />
             </operation>
             <operation>
               <divide value="2" />
@@ -168,20 +168,20 @@ describe("personAction" , () => {
   </rule_group>
   <people>
     <person id="Billy">
-      <race name="human" />
+      <race race_ref="human" />
       <location x="10" y="10" />
       <inventory>
         <item ref="Long sword" equipped="hand" />
       </inventory>
       <properties>
-        <property ref="strength" value="10" />
+        <property property_ref="strength" value="10" />
       </properties>
     </person>
     <person id="Bob">
-      <race name="human" />
+      <race race_ref="human" />
       <location x="10" y="10" />
       <properties>
-        <property ref="health" value="15" />
+        <property property_ref="health" value="15" />
       </properties>
     </person>
   </people>

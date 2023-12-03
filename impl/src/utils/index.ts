@@ -2,7 +2,6 @@ import {LocationGrid, locationGrid} from "./location/locationGrid";
 import {locationMarkovChainMatrix, LocationMatrix} from "./location/locationMarkovChainMatrix";
 import {markovNext} from "./markovNext";
 import {create} from "./location/create";
-import {questMarkov} from "./questMarkov";
 import {JsonSchema, OperationQueryType} from "./JsonSchema";
 import {newRandom} from "./newRandom";
 import {createOperationFromQueryType} from "./operation/createOperationFromQueryType";
@@ -29,7 +28,6 @@ export const utils = {
   locationMarkovChainMatrix: locationMarkovChainMatrix,
   markov: markovNext,
   newLocation: create,
-  questMarkov: questMarkov,
 }
 
 export class JsonUtil {
@@ -89,9 +87,6 @@ export class JsonUtil {
         }, x, y)
       })
     }
-    this.questMarkov = memoizeFunction(() => {
-      questMarkov(this)
-    })
   }
 
   person = {

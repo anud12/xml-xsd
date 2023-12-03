@@ -25,10 +25,10 @@ export const action: Command<[string]> = {
     render.unsubscribeRight();
 
     state.jsonSchema.query("actions").appendChild("by", {
-      $person: personId,
+      $person_ref: personId,
     }).appendChild("do", {
-      $to: target.$id,
-      $action: action.$name,
+      $person_ref: target.$id,
+      $action_ref: action.$name,
     })
   }
 }

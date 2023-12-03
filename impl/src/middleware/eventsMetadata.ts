@@ -1,4 +1,4 @@
-import {Middleware, Unit} from "../utils/middleware";
+import {Middleware, Unit} from "./_type";
 import {nodeBodyType} from "../JSONQuery";
 import {JsonSchema} from "../utils/JsonSchema";
 import {JsonUtil} from "../utils";
@@ -18,15 +18,17 @@ type Origin = {
 const applyFromPersonActionUsed = (readJson: Unit, event: EventQueryType): Origin[] => {
   const personActionUsedTypeList = event.queryAll("when")
     .flatMap(when => when.queryAllOptional("person_action_used"))
-    .flatMap(person_action_used => person_action_used.$type);
+    .flatMap(person_action_used => person_action_used.$action_ref);
   const byList = readJson.json.queryAll("actions").flatMap(action => action.queryAllOptional("by"));
 
-  return byList.filter(by => personActionUsedTypeList.includes(by.queryOptional("do")?.$action))
+  return byList.filter(by => personActionUsedTypeList.includes(by.queryOptional("do")?.$action_ref))
     .flatMap(by => {
-
-      const self = readJson.util.person.getById(by.$person);
+      if(!by.queryOptional("do")?.$action_ref) {
+        return [];
+      }
+      const self = readJson.util.person.getById(by.$person_ref);
       const selfLocation = self.query("location");
-      const target = readJson.util.person.getById(by.queryOptional("do").$to)
+      const target = readJson.util.person.getById(by.queryOptional("do").$person_ref)
       const targetLocation = target.query("location");
 
       return {
@@ -59,7 +61,7 @@ const thenCreatePerson = (readJson: Unit, origin: Origin): Array<(util: JsonUtil
     return then.queryAllOptional("create_person")
       .map(create_person =>
         (util: JsonUtil) => {
-          const race = create_person.queryOptional("race")?.$name;
+          const race = create_person.queryOptional("race")?.$race_ref;
           const x = String(Math.floor(readJson.util.random() * radius * 2) - radius + Number(originElement.$x));
           const y = String(Math.floor(readJson.util.random() * radius * 2) - radius + Number(originElement.$y));
           util.person.create({

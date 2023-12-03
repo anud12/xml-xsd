@@ -1,4 +1,4 @@
-import {Middleware} from "../utils/middleware";
+import {Middleware, Unit} from "./_type";
 import {InferJsonNodeAttribute, JsonQueryType} from "../JSONQuery";
 
 type CoordinatesNode = JsonQueryType<"x" | "y">;
@@ -49,8 +49,8 @@ export const personMoveTowards: Middleware = readUnit => {
     .flatMap(by => {
       return by.queryAllOptional("move_towards").flatMap(moveTowards => {
 
-        const person = personList.find(person => person.$id === by.$person);
-        const race = raceMetadata.find(race => race.$name === person.query("race").$name)
+        const person = personList.find(person => person.$id === by.$person_ref);
+        const race = raceMetadata.find(race => race.$name === person.query("race").$race_ref)
 
         const movement = race.query("movement").$value
 
@@ -75,7 +75,7 @@ export const personMoveTowards: Middleware = readUnit => {
       if (location.$x === mutation.destinationAttributes.$x && location.$y === mutation.destinationAttributes.$y) {
         writeUnit.queryAllOptional("actions")
           .flatMap(actions => actions.queryAllOptional("by"))
-          .filter(by => by.$person === mutation.person.$id)
+          .filter(by => by.$person_ref === mutation.person.$id)
           .filter(by => by.queryAllOptional("move_towards"))
           .forEach(e => {
             e.removeFromParent();

@@ -31,7 +31,7 @@ describe("personActionMoveTowardsReachedDestination" , () => {
   </rule_group>
   <people>
     <person id="Billy">
-      <race name="human"/>
+      <race race_ref="human"/>
       <location x="0" y="0"/>
       <inventory>
         <item ref="Long sword" equipped="hand"/>
@@ -73,7 +73,7 @@ describe("personActionMoveTowardsReachedDestination" , () => {
   </rule_group>
   <people>
     <person id="Billy">
-      <race name="human" />
+      <race race_ref="human" />
       <location x="70" y="70" />
       <inventory>
         <item ref="Long sword" equipped="hand" />

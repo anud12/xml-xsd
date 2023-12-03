@@ -30,7 +30,7 @@ export const moveTowards: Command<[string]> = {
     }
     state.jsonSchema.query("actions")
       .appendChild("by", {
-        $person: personId,
+        $person_ref: personId,
       })
       .appendChild("move_towards", {
         $x: String(selectedCell.x + Number(personLocation.$x)),

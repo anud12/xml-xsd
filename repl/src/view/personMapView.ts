@@ -13,7 +13,7 @@ export const personMap = (personId: string): Array<Array<string>> => {
   const ruleGroup = state.jsonSchema.query("rule_group");
   const person = state.jsonSchema.query("people").queryAll("person").find(e => e.$id === personId)
   const personRaceMetadata = ruleGroup.query("race_metadata")
-    .queryAll("entry").find(e => e.$name === person.query("race").$name)
+    .queryAll("entry").find(e => e.$name === person.query("race").$race_ref)
   //get vision from person list of properties
   const vision = Number(personRaceMetadata.query("vision").$value);
 
@@ -31,15 +31,15 @@ export const personMap = (personId: string): Array<Array<string>> => {
     const y = Number(e.$y);
     const gridY = grid[y] ?? [];
     grid[y] = gridY;
-    if (e.$type === "plains") {
+    if (e.$location_ref === "plains") {
       gridY[x] = `\u25CB`;
       return;
     }
-    if (e.$type === "forest") {
+    if (e.$location_ref === "forest") {
       gridY[x] = `T`;
       return;
     }
-    if (e.$type === "hills") {
+    if (e.$location_ref === "hills") {
       gridY[x] = `\u25B3`;
       return;
     }
@@ -78,7 +78,7 @@ export function personMapView(personName: string) {
   const ruleGroup = state.jsonSchema.query("rule_group");
   const person = state.jsonSchema.query("people").queryAll("person").find(e => e.$id === personName)
   const personRaceMetadata = ruleGroup.query("race_metadata")
-    .queryAll("entry").find(e => e.$name === person.query("race").$name)
+    .queryAll("entry").find(e => e.$name === person.query("race").$race_ref)
   //get vision from person list of properties
   const vision = Number(personRaceMetadata.query("vision").$value);
 

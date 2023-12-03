@@ -1,4 +1,4 @@
-import {Middleware} from "../utils/middleware";
+import {Middleware, Unit} from "./_type";
 
 export const offsetRandomisationTable:Middleware = _ => async writeUnit => {
   writeUnit.queryAll("world_metadata").flatMap(e => e.queryAll("randomization_table")).forEach(randomization_table => {

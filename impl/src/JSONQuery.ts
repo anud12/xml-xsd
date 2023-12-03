@@ -22,7 +22,12 @@ export type JsonNodeAttribute<A extends string> = {
   [P in A as `$${P}`]?: string
 }
 export const nodeBodyType = Symbol()
-export const nodeAttributes = Symbol()
+export const nodeAttributes = Symbol();
+
+export type RecursiveKeys<T> = T extends object
+  ? keyof T & RecursiveKeys<T[keyof T]>
+  : never
+
 export type JsonQueryType<
   A extends string = never,
   B extends Record<string, JsonQueryType<string, any>> = never
@@ -32,8 +37,9 @@ export type JsonQueryType<
   appendChild: <U extends keyof B>(key: U, element: string | B[U][typeof nodeAttributes], attributes?: B[U][typeof nodeAttributes]) => B[U]
   query: <P extends keyof B> (p: P) => B[P],
   queryOptional: <P extends keyof B> (p: P) => B[P] | undefined,
-  queryAll: <P extends keyof B> (p: P) => Array<B[P]>
-  queryAllOptional: <P extends keyof B> (p: P) => Array<B[P]>
+  queryAll: <P extends keyof B> (p: P) => Array<B[P]>,
+  queryAllOptional: <P extends keyof B> (p: P) => Array<B[P]>,
+  queryAllRecursiveWithAttributeFrom: <P extends JsonQueryType<any, any>>(attribute: keyof P[typeof nodeAttributes]) => Array<P>,
   removeFromParent: () => void,
   getPath: () => string,
   serialize: () => string
@@ -83,7 +89,7 @@ export class JsonQuery<A extends JsonQueryType> implements A {
     const d = root.window.document.childNodes;
     return new JsonQuery(root, d[0], undefined) as unknown as A
   }
-  static canCreate = (childNode:ChildNode) => {
+  static canCreate = (childNode: ChildNode) => {
     if (childNode.nodeType === childNode.COMMENT_NODE) {
       return true;
     }
@@ -130,10 +136,10 @@ export class JsonQuery<A extends JsonQueryType> implements A {
     const children = [...element.childNodes ?? []]
       .filter(childNode => JsonQuery.canCreate(childNode))
       .map((childNode) => {
-      const childElement: Element = childNode as any;
-      const jsonQuery = new JsonQuery(root, childElement, this);
-      return jsonQuery;
-    })
+        const childElement: Element = childNode as any;
+        const jsonQuery = new JsonQuery(root, childElement, this);
+        return jsonQuery;
+      })
       .filter(e => e)
       .filter(e => e.tag !== UnknownJsonTag);
     this.children = children as any;
@@ -195,6 +201,14 @@ export class JsonQuery<A extends JsonQueryType> implements A {
     } catch (e) {
       return undefined;
     }
+  }
+
+  queryAllRecursiveWithAttributeFrom = (attribute: string | number | symbol): any[] => {
+    const childrenResult = this.children
+      .map(e => e.queryAllRecursiveWithAttributeFrom(attribute))
+      .flat();
+    const result = this.children.filter(e => e[`${String(attribute)}`] !== undefined);
+    return [...result, ...childrenResult];
   }
 
   removeFromParent = () => {

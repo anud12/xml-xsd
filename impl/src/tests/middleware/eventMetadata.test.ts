@@ -26,7 +26,7 @@ describe("eventsMetadata", () => {
     <events_metadata>
       <entry name="spawn_human">
         <when>
-          <person_action_used type="talk"/>
+          <person_action_used action_ref="talk"/>
         </when>
         <then>
           <at origin="self">
@@ -37,7 +37,7 @@ describe("eventsMetadata", () => {
             </radius>
           </at>
           <create_person>
-            <race name="race_definition" quantity="1"/>
+            <race race_ref="race_definition" quantity="1"/>
           </create_person>
         </then>
       </entry>
@@ -45,7 +45,7 @@ describe("eventsMetadata", () => {
   </rule_group>
   <people>
     <person name="person">
-      <race name="race_definition"/>
+      <race race_ref="race_definition"/>
       <location x="0" y="0"/>
     </person>
   </people>
@@ -62,7 +62,7 @@ describe("eventsMetadata", () => {
   </location_layer>
   <actions>
     <by name="person">
-      <do action="talk" to="person"/>
+      <do action_ref="talk" to="person"/>
     </by>
   </actions>
 </world_step>`);
@@ -92,7 +92,7 @@ describe("eventsMetadata", () => {
     <events_metadata>
       <entry name="spawn_human">
         <when>
-          <person_action_used type="talk" />
+          <person_action_used action_ref="talk" />
         </when>
         <then>
           <at origin="self">
@@ -103,7 +103,7 @@ describe("eventsMetadata", () => {
             </radius>
           </at>
           <create_person>
-            <race name="race_definition" quantity="1" />
+            <race race_ref="race_definition" quantity="1" />
           </create_person>
         </then>
       </entry>
@@ -111,12 +111,12 @@ describe("eventsMetadata", () => {
   </rule_group>
   <people>
     <person name="person">
-      <race name="race_definition" />
+      <race race_ref="race_definition" />
       <location x="0" y="0" />
     </person>
     <person id="0.0">
       <location x="1" y="1" />
-      <race name="race_definition" />
+      <race race_ref="race_definition" />
       <classifications />
     </person>
   </people>
@@ -133,7 +133,7 @@ describe("eventsMetadata", () => {
   </location_layer>
   <actions>
     <by name="person">
-      <do action="talk" to="person" />
+      <do action_ref="talk" to="person" />
     </by>
   </actions>
 </world_step>
