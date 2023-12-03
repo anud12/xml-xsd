@@ -26,9 +26,9 @@ const applyFromPersonActionUsed = (readJson: Unit, event: EventQueryType): Origi
       if(!by.queryOptional("do")?.$action_ref) {
         return [];
       }
-      const self = readJson.util.person.getById(by.$person);
+      const self = readJson.util.person.getById(by.$person_ref);
       const selfLocation = self.query("location");
-      const target = readJson.util.person.getById(by.queryOptional("do").$to)
+      const target = readJson.util.person.getById(by.queryOptional("do").$person_ref)
       const targetLocation = target.query("location");
 
       return {

@@ -51,7 +51,7 @@ function personClassifications(person: PersonQueryType) {
   string += 'Classifications:'
   const classificationList = person.queryAllOptional("classifications")
     .flatMap(e => e.queryAllOptional("classification"))
-    .map(classification => ` - ${classification.$name}`)
+    .map(classification => ` - ${classification.$classification_ref}`)
     .join("\n");
   if (classificationList === "") {
     return string;
