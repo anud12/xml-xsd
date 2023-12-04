@@ -91,6 +91,13 @@ export type JsonSchema = JsonQueryType<never, {
           }>,
           create_person?: JsonQueryType<never, {
             race: JsonQueryType<"race_ref" | "quantity">,
+            inventory: JsonQueryType<never, {
+              item: JsonQueryType<"item_ref", {
+                quantity: JsonQueryType<never, {
+                  operation: OperationQueryType
+                }>
+              }>
+            }>
           }>
         }>
       }>

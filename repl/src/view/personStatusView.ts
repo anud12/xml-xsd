@@ -29,6 +29,15 @@ function personStatus(person: PersonQueryType) {
   string += ` - Y: ${person.query("location").$y}\n`;
   string += `Movement: ${race.query("movement").$value}\n`
   string += 'Relations:\n'
+  string += 'Inventory:\n'
+  const inventory = person.queryAllOptional("inventory")
+    .flatMap(e => e.queryAllOptional("item"))
+    .map(e => ` - ${e.$item_ref}`).join("\n");
+  if (inventory !== "") {
+    string += inventory + "\n";
+  }
+
+
   return string;
 }
 

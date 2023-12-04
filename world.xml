@@ -296,6 +296,9 @@
         <wearable slot="chest"/>
         <wearable slot="legs"/>
       </entry>
+      <entry name="bandana">
+        <weight-kg value="0.1"/>
+      </entry>
     </item_metadata>
     <!--_-->
     <!--_-->
@@ -318,6 +321,21 @@
           </at>
           <create_person>
             <race race_ref="human" quantity="1"/>
+            <inventory>
+              <item item_ref="bandana">
+                <quantity>
+                  <operation>
+                    <add_dice value="10"/>
+                  </operation>
+                  <operation>
+                    <add value="2"/>
+                  </operation>
+                  <operation>
+                    <divide value="2"/>
+                  </operation>
+                </quantity>
+              </item>
+            </inventory>
           </create_person>
         </then>
       </entry>
