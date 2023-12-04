@@ -186,7 +186,7 @@
         </xs:element>
 
 
-        <xs:element name="rule_group">
+        <xs:element name="rule_group" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
 
