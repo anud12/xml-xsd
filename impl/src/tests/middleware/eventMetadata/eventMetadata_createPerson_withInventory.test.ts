@@ -1,12 +1,11 @@
-import {personVision} from "../../middleware/personVision";
-import {JsonUtil} from "../../utils";
-import {JsonQuery} from "../../JSONQuery";
-import {JsonSchema} from "../../utils/JsonSchema";
+import {JsonUtil} from "../../../utils";
+import {JsonQuery} from "../../../JSONQuery";
+import {JsonSchema} from "../../../utils/JsonSchema";
 import {describe} from "@jest/globals";
-import {eventsMetadata} from "../../middleware/eventsMetadata";
+import {eventsMetadata} from "../../../middleware/eventsMetadata";
 
-describe("eventsMetadata", () => {
-  it("react to person_action_used abd create a person", async () => {
+describe("eventsMetadata create person with inventory", () => {
+  it("react to person_action_used and create a person", async () => {
     const query = JsonQuery.fromText<JsonSchema>(`<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:noNamespaceSchemaLocation="../../../../schema/world_step/world_step.xsd"
 >
@@ -37,7 +36,15 @@ describe("eventsMetadata", () => {
             </radius>
           </at>
           <create_person>
-            <race race_ref="race_definition" quantity="1"/>
+            <inventory>
+              <item item_ref="item_definition">
+                <quantity>
+                  <operation>
+                    <add value="2" />
+                  </operation>
+                </quantity>
+              </item>
+            </inventory>
           </create_person>
         </then>
       </entry>
@@ -102,7 +109,15 @@ describe("eventsMetadata", () => {
             </radius>
           </at>
           <create_person>
-            <race race_ref="race_definition" quantity="1" />
+            <inventory>
+              <item item_ref="item_definition">
+                <quantity>
+                  <operation>
+                    <add value="2" />
+                  </operation>
+                </quantity>
+              </item>
+            </inventory>
           </create_person>
         </then>
       </entry>
@@ -117,6 +132,10 @@ describe("eventsMetadata", () => {
       <location x="1" y="1" />
       <race race_ref="race_definition" />
       <classifications />
+      <inventory>
+        <item item_ref="item_definition" equipped="false" />
+        <item item_ref="item_definition" equipped="false" />
+      </inventory>
     </person>
   </people>
   <location_layer>

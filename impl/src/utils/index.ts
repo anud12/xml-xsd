@@ -43,7 +43,7 @@ export class JsonUtil {
   }
 
   randomFromArray = <T>(array: T[]): T => {
-    return array[Math.floor(this.random() * array.length)];
+    return array[Math.floor(this.random() * (array.length - 1))];
   }
   questMarkov: () => void;
 

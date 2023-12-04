@@ -64,12 +64,25 @@ const thenCreatePerson = (readJson: JsonUtil, origin: Origin): Array<(util: Json
           const race = create_person.queryOptional("race")?.$race_ref;
           const x = String(Math.floor(readJson.random() * radius * 2) - radius + Number(originElement.$x));
           const y = String(Math.floor(readJson.random() * radius * 2) - radius + Number(originElement.$y));
+
+          const itemList = create_person.queryAllOptional("inventory")
+          .flatMap(inventory => inventory.queryAllOptional("item"))
+          .flatMap(item => {
+            const item_ref = item.$item_ref;
+            const quantity = readJson.computeOperationFromParent(item.queryOptional("quantity"), string => string)("0");
+            return {
+              $item_ref: item_ref,
+              $quantity: String(Math.floor(Number(quantity))),
+            }
+
+          })
           util.person.create({
             race: race,
             location: {
               $x: x,
               $y: y
-            }
+            },
+            items: itemList,
           })
         }
       )
