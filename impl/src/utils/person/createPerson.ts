@@ -38,7 +38,6 @@ export const createPerson = (jsonSchema: JsonUtil, args: CreatePersonArgs): void
       for(let i = 0; i < Number(item.$quantity); i++){
         inventory.appendChild("item", {
           $item_ref: item.$item_ref,
-          $equipped: "false",
         });
       }
     })
