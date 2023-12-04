@@ -1,12 +1,12 @@
-import {Unit} from "../../middleware/_type";
 import {JsonSchema} from "../JsonSchema";
 import {nodeBodyType} from "../../JSONQuery";
+import {JsonUtil} from "../index";
 
 type RuleGroupQueryType = JsonSchema[typeof nodeBodyType]["rule_group"]
 type RaceQueryType = RuleGroupQueryType[typeof nodeBodyType]["race_metadata"][typeof nodeBodyType]["entry"]
 type Bonus = RaceQueryType[typeof nodeBodyType]["property_bonus"]
 
-export const getBaseProperty = (readJson: Unit, personQueryType: PersonQueryType, key: string):string =>  {
+export const getBaseProperty = (readJson: JsonUtil, personQueryType: PersonQueryType, key: string):string =>  {
   try {
     const ruleGroup = readJson.json.query("rule_group");
     return ruleGroup.queryAll("property_metadata")
@@ -15,7 +15,7 @@ export const getBaseProperty = (readJson: Unit, personQueryType: PersonQueryType
       .flatMap(e => e.queryAll("default"))
       .flatMap(e => e.queryAll("operation"))
       .flatMap(e => e.children)
-      .map(e => readJson.util.computeOperation(e, string => getProperty(readJson, personQueryType, string)))
+      .map(e => readJson.computeOperation(e, string => getProperty(readJson, personQueryType, string)))
       .reduce((previousValue, currentValue) => currentValue(previousValue), "0");
   } catch (e) {
     const newError = new Error(`getBaseProperty of ${key}`);
@@ -24,7 +24,7 @@ export const getBaseProperty = (readJson: Unit, personQueryType: PersonQueryType
   }
 }
 
-export const getRaceProperty = (readJson: Unit, personQueryType: PersonQueryType, raceQueryType: RaceQueryType, key: string):string => {
+export const getRaceProperty = (readJson: JsonUtil, personQueryType: PersonQueryType, raceQueryType: RaceQueryType, key: string):string => {
   const base = getBaseProperty(readJson, personQueryType, key);
   const propertyBonus: Bonus = raceQueryType.queryAllOptional("property_bonus")
     .find(e => e.$property_ref === key);
@@ -33,13 +33,13 @@ export const getRaceProperty = (readJson: Unit, personQueryType: PersonQueryType
   }
   return propertyBonus.queryAll("operation")
     .flatMap(e => e.children)
-    .map(e => readJson.util.computeOperation(e, string => getProperty(readJson, personQueryType, string)))
+    .map(e => readJson.computeOperation(e, string => getProperty(readJson, personQueryType, string)))
     .reduce((acc, p) => p(acc), base);
 
 }
 
 export type PersonQueryType = JsonSchema[typeof nodeBodyType]["people"][typeof nodeBodyType]["person"]
-export const getProperty = (readJson: Unit, personQueryType: PersonQueryType, key: string):string => {
+export const getProperty = (readJson: JsonUtil, personQueryType: PersonQueryType, key: string):string => {
   try {
     const ruleGroup = readJson.json.query("rule_group");
     let propertyList = personQueryType.queryAllOptional("properties");

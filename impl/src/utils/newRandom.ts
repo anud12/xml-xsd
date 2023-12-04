@@ -3,7 +3,7 @@ import {JsonUtil} from "./index";
 let counter = 0;
 export const newRandom = (worldSchema: JsonUtil) => {
     return () => {
-        const entries = worldSchema.jsonQuery.query("world_metadata").query("randomization_table").queryAll("entry")
+        const entries = worldSchema.json.query("world_metadata").query("randomization_table").queryAll("entry")
             .map(value => Number(value.$value));
         const max = entries.reduce((previousValue, currentValue) => {
             return previousValue > currentValue

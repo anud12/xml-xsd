@@ -2,6 +2,7 @@ import {JsonQuery} from "../../JSONQuery";
 import {JsonSchema} from "../../utils/JsonSchema";
 import {describe} from "@jest/globals";
 import {propertyRefValidator} from "../../validators/propertyRef.validator";
+import {JsonUtil} from "../../utils";
 
 describe("propertyRef.validator", () => {
   it("should throw 2 validation errors", async () => {
@@ -13,14 +14,19 @@ describe("propertyRef.validator", () => {
       <entry name="rule_definition"/>
     </property_metadata>
   </rule_group>
+  <rule_group>
+    <property_metadata>
+      <entry name="second_rule_definition"/>
+    </property_metadata>
+  </rule_group>
   <any_element property_ref="other_property"/>
   <any_element property_ref="unmapped_property"/>
 </world_step>`);
 
-    const result = await propertyRefValidator(query);
+    const result = await propertyRefValidator(new JsonUtil(query));
     expect(result.map(e => e.message).join("\n")).toBe([
-        "ValidationError: other_property at //any_element[0]@property_ref not in [rule_definition]",
-        "ValidationError: unmapped_property at //any_element[1]@property_ref not in [rule_definition]"
+        "ValidationError: other_property at //any_element[0]@property_ref not in [rule_definition, second_rule_definition]",
+        "ValidationError: unmapped_property at //any_element[1]@property_ref not in [rule_definition, second_rule_definition]"
       ].join("\n")
     )
   })

@@ -1,7 +1,6 @@
 import {JsonQuery} from "./JSONQuery";
 import {JsonSchema} from "./utils/JsonSchema";
 import {JsonUtil} from "./utils";
-import {Unit} from "./middleware/_type";
 import {personVision} from "./middleware/personVision";
 import {personMoveTowards} from "./middleware/personMoveTowards";
 import {personAction} from "./middleware/personAction";
@@ -17,24 +16,20 @@ export const execute = async (xmlString:string, log: (...string:any[]) => void) 
   const readJson = JsonQuery.fromText<JsonSchema>(xmlString.toString());
 
   const readJsonUtil = new JsonUtil(readJson);
-  const unit:Unit = {
-    json: readJson,
-    util: readJsonUtil
-  }
 
-  await propertyRefValidator(readJson);
-  await raceRefValidator(readJson);
+  await propertyRefValidator(readJsonUtil);
+  await raceRefValidator(readJsonUtil);
 
-  const personMoveTowardsResult = personMoveTowards(unit);
-  const personActionResult = personAction(unit);
-  const eventsMetadataResult = eventsMetadata(unit);
+  const personMoveTowardsResult = personMoveTowards(readJsonUtil);
+  const personActionResult = personAction(readJsonUtil);
+  const eventsMetadataResult = eventsMetadata(readJsonUtil);
 
-  await personMoveTowardsResult(readJson);
-  await personActionResult(readJson);
-  await eventsMetadataResult(readJson);
-  await personVision(unit)(readJson);
-  await personAssignClassification(unit)(readJson);
-  await offsetRandomisationTable(unit)(readJson)
+  await personMoveTowardsResult(readJsonUtil);
+  await personActionResult(readJsonUtil);
+  await eventsMetadataResult(readJsonUtil);
+  await personVision(readJsonUtil)(readJsonUtil);
+  await personAssignClassification(readJsonUtil)(readJsonUtil);
+  await offsetRandomisationTable(readJsonUtil)(readJsonUtil)
 
   const writeWorldMetadata = readJson.query("world_metadata");
   const iter = Number(writeWorldMetadata.query("next_world_step").body.split("_")?.[1] ?? 0);

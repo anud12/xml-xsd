@@ -45,10 +45,10 @@ describe("personVision", () => {
   </location_layer>
 </world_step>`);
 
-    await personVision({
-      util: new JsonUtil(query),
-      json: query
-    })(query);
+
+    const util = new JsonUtil(query);
+    await personVision(util)(util);
+
     expect(query.serialize()).toBe(`
 <world_step
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -153,10 +153,9 @@ describe("personVision", () => {
   </location_layer>
 </world_step>`);
 
-    await personVision({
-      util: new JsonUtil(query),
-      json: query
-    })(query);
+
+    const util = new JsonUtil(query);
+    await personVision(util)(util);
     expect(query.serialize()).toBe(`
 <world_step
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

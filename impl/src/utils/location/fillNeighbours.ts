@@ -1,12 +1,12 @@
 import {markovNext} from "../markovNext";
 import {Cell} from "./locationGrid";
-import {Unit} from "../../middleware/_type";
 import {nodeAttributes} from "../../JSONQuery";
 import {getTransitionFromNeighbours} from "./getTransitionFromNeighbours";
+import {JsonUtil} from "../index";
 
-export const fillNeighbours = (readJson: Unit, writeJson: Unit, originalCell: Cell, radius = 1) => {
+export const fillNeighbours = (readJson: JsonUtil, writeJson: JsonUtil, originalCell: Cell, radius = 1) => {
   try {
-    const grid = writeJson.util.location.grid();
+    const grid = writeJson.location.grid();
     const locationLayer = writeJson.json.query("location_layer");
     const x = Number(originalCell.$x);
     const y = Number(originalCell.$y);
@@ -23,7 +23,7 @@ export const fillNeighbours = (readJson: Unit, writeJson: Unit, originalCell: Ce
           if(transition.length === 0) {
             throw new Error("transition length is 0");
           }
-          const type = markovNext(transition, readJson.util.random);
+          const type = markovNext(transition, readJson.random);
           if(!type) {
             throw new Error("resulted type is undefined");
           }
@@ -34,7 +34,7 @@ export const fillNeighbours = (readJson: Unit, writeJson: Unit, originalCell: Ce
           };
           console.log(`Created cell: ${JSON.stringify(cell)}`)
           locationLayer.appendChild("cell", cell)
-          writeJson.util.invalidate()
+          writeJson.invalidate()
         }
       }
     }

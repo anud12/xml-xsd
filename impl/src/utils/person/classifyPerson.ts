@@ -1,12 +1,13 @@
-import {Unit} from "../../middleware/_type";
 import {getProperty, PersonQueryType} from "./getProperty";
 import {createOperationFromParent} from "../operation/createOperationFromParent";
+import {JsonUtil} from "../index";
 
 
-export const classifyPerson = (readJson: Unit, personQueryType: PersonQueryType): string[] => {
+export const classifyPerson = (readJson: JsonUtil, personQueryType: PersonQueryType): string[] => {
   try {
-    const ruleGroup = readJson.json.query("rule_group");
-    const classificationMetadataEntry = ruleGroup.queryAll("classification_metadata")
+    const ruleGroup = readJson.getRuleGroups();
+
+    const classificationMetadataEntry = ruleGroup.flatMap(ruleGroup => ruleGroup.queryAllOptional("classification_metadata"))
       .flatMap(e => e.queryAllOptional("entry"));
 
     return classificationMetadataEntry.filter(entry => {

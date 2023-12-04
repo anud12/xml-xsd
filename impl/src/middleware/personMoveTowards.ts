@@ -1,4 +1,4 @@
-import {Middleware, Unit} from "./_type";
+import {Middleware} from "./_type";
 import {InferJsonNodeAttribute, JsonQueryType} from "../JSONQuery";
 
 type CoordinatesNode = JsonQueryType<"x" | "y">;
@@ -39,11 +39,12 @@ const calculateDestinationCoordinate = (initial: CoordinatesNode, destination: C
 }
 
 export const personMoveTowards: Middleware = readUnit => {
-  const ruleGroup = readUnit.json.query("rule_group");
+  const ruleGroup = readUnit.getRuleGroups();
+  const raceMetadata = ruleGroup.flatMap(ruleGroup => ruleGroup.queryAllOptional("race_metadata"))
+    .flatMap(raceMetadata => raceMetadata.queryAll("entry"))
   const personList = readUnit.json.queryAll("people")
     .flatMap(people => people.queryAll("person"));
-  const raceMetadata = ruleGroup.queryAll("race_metadata")
-    .flatMap(raceMetadata => raceMetadata.queryAll("entry"))
+
   const actions = readUnit.json.queryAll("actions")
     .flatMap(e => e.queryAllOptional("by"))
     .flatMap(by => {
@@ -65,7 +66,7 @@ export const personMoveTowards: Middleware = readUnit => {
       })
     })
   return async writeUnit => {
-    const persons = writeUnit.queryAll("people").flatMap(e => e.queryAll("person"))
+    const persons = writeUnit.json.queryAll("people").flatMap(e => e.queryAll("person"))
     actions.forEach(mutation => {
       const person = persons.find(e => e.$name === mutation.person.$name);
       const location = person.query("location")
@@ -73,7 +74,7 @@ export const personMoveTowards: Middleware = readUnit => {
       location.$y = mutation.newDestinationAttributes.$y
 
       if (location.$x === mutation.destinationAttributes.$x && location.$y === mutation.destinationAttributes.$y) {
-        writeUnit.queryAllOptional("actions")
+        writeUnit.json.queryAllOptional("actions")
           .flatMap(actions => actions.queryAllOptional("by"))
           .filter(by => by.$person_ref === mutation.person.$id)
           .filter(by => by.queryAllOptional("move_towards"))

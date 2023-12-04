@@ -1,10 +1,10 @@
-import {Unit} from "../../middleware/_type";
 import {OperationQueryType} from "../JsonSchema";
 import {JsonQueryType} from "../../JSONQuery";
 import {createOperationFromQueryType} from "./createOperationFromQueryType";
+import {JsonUtil} from "../index";
 
 export const createOperationFromParent = (
-  readJson: Unit,
+  readJson: JsonUtil,
   operationList: JsonQueryType<any, { operation: OperationQueryType }>,
   getExternalProperty: (key: string) => string = () => "0"
 ): (string: string) => string => {
