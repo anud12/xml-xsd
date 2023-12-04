@@ -5,11 +5,11 @@ import {JsonSchema} from "../utils/JsonSchema";
 type QueryType = JsonSchema[typeof nodeBodyType]["people"][typeof nodeBodyType]["person"][typeof nodeBodyType]["race"]
 
 export const raceRefValidator: Validator<AttributeNotInValidationError<QueryType>> = async (jsonSchema) => {
-  const ruleGroup = jsonSchema.query("rule_group");
-  const metadata = ruleGroup.queryAll("race_metadata");
+  const ruleGroups = jsonSchema.getRuleGroups();
+  const metadata = ruleGroups.flatMap(ruleGroup => ruleGroup.queryAllOptional("race_metadata"));
   const raceMetadataNames = metadata.flatMap(e => e.queryAll("entry").map(e => e.$name));
 
-  return jsonSchema.queryAllRecursiveWithAttributeFrom<QueryType>("$race_ref")
+  return jsonSchema.json.queryAllRecursiveWithAttributeFrom<QueryType>("$race_ref")
     .filter((race) => !raceMetadataNames.includes(race.$race_ref))
     .map(race => new AttributeNotInValidationError(race, "$race_ref", raceMetadataNames));
 }

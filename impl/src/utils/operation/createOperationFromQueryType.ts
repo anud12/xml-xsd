@@ -1,6 +1,6 @@
 import {InferJsonNodeBody, JsonQueryType, nodeBodyType} from "../../JSONQuery";
 import {OperationQueryType} from "../JsonSchema";
-import {Unit} from "../../middleware/_type";
+import {JsonUtil} from "../index";
 
 type OperationTags = keyof InferJsonNodeBody<OperationQueryType>
 type Operation = JsonQueryType<"value" | "property_ref", {
@@ -10,7 +10,7 @@ type Operation = JsonQueryType<"value" | "property_ref", {
 }>;
 
 export const createOperationFromQueryType = (
-  readJson: Unit,
+  readJson: JsonUtil,
   operationArg: OperationQueryType,
   getExternalProperty: (key:string) => string = () => "0"
 ): (value: string) => string => {
@@ -32,7 +32,7 @@ export const createOperationFromQueryType = (
     case "add_dice":
       return wrapper(value => {
         console.log(`${value} ${operationValue.tag} with ${operationValue.$value}`)
-        const randomValue = readJson.util.random() * Number(operationValue.$value);
+        const randomValue = readJson.random() * Number(operationValue.$value);
         return String(Number(value) + Math.floor(randomValue))
       })
     case "multiply":
@@ -43,7 +43,7 @@ export const createOperationFromQueryType = (
     case "multiply_dice":
       return value => {
         console.log(`${value} ${operationValue.tag} with ${operationValue.$value}`)
-        const randomValue = readJson.util.random() * Number(operationValue.$value);
+        const randomValue = readJson.random() * Number(operationValue.$value);
         return String(Number(value) * Math.floor(randomValue))
       }
     case "divide":
@@ -54,7 +54,7 @@ export const createOperationFromQueryType = (
     case "divide_dice":
       return wrapper(value => {
         console.log(`${value} ${operationValue.tag} with ${operationValue.$value}`)
-        const randomValue = readJson.util.random() * Number(operationValue.$value);
+        const randomValue = readJson.random() * Number(operationValue.$value);
         return String(Number(value) / Math.floor(randomValue))
       })
     case "modulo":
@@ -65,7 +65,7 @@ export const createOperationFromQueryType = (
     case "modulo_dice":
       return wrapper(value => {
         console.log(`${value} ${operationValue.tag} with ${operationValue.$value}`)
-        const randomValue = readJson.util.random() * Number(operationValue.$value);
+        const randomValue = readJson.random() * Number(operationValue.$value);
         return String(Number(value) % Math.floor(randomValue))
       })
     case "group" :

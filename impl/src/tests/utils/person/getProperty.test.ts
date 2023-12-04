@@ -61,13 +61,12 @@ describe("getProperty", () => {
   </people>
 </world_step>`);
 
-    const value = getProperty({
-        util: new JsonUtil(query),
-        json: query
-      },
+    const util = new JsonUtil(query);
+    const value = getProperty(util,
       query.query("people").query("person"),
       "health"
     );
+
     expect(value).toBe("20");
     expect(query.serialize()).toBe(`
 <world_step
@@ -163,10 +162,8 @@ describe("getProperty", () => {
 </world_step>`);
 
     try {
-      getProperty({
-          util: new JsonUtil(query),
-          json: query
-        },
+      const util = new JsonUtil(query);
+      getProperty(util,
         query.query("people").query("person"),
         "health"
       );

@@ -54,9 +54,10 @@ describe("personAssignClassification", () => {
   </people>
 </world_step>
 `);
+
     const util: JsonUtil = new JsonUtil(query);
-    await personAssignClassification({util, json: query})
-    (query);
+    await personAssignClassification(util)(util);
+
     expect(query.serialize()).toEqual(`<world_step
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:noNamespaceSchemaLocation="../../../../../schema/world_step/world_step.xsd"

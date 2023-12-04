@@ -31,7 +31,7 @@ export const utils = {
 }
 
 export class JsonUtil {
-  constructor(public jsonQuery: JsonSchema) {
+  constructor(public json: JsonSchema) {
     this.invalidate();
   }
 
@@ -48,26 +48,18 @@ export class JsonUtil {
   questMarkov: () => void;
 
   counterNext = () => {
-    const counter = this.jsonQuery.query("world_metadata").query("counter");
+    const counter = this.json.query("world_metadata").query("counter");
     const next = Number(counter.$value);
     counter.$value = String(next + 1);
     return next;
   }
   computeOperation = (operationQueryType: OperationQueryType, getExternalProperty?: (string: string) => string) => {
-    return createOperationFromQueryType({
-      util: this,
-      json: this.jsonQuery
-    }, operationQueryType, getExternalProperty)
+    return createOperationFromQueryType(this, operationQueryType, getExternalProperty)
   }
   computeOperationFromParent = (operationList: JsonQueryType<any, {
     operation: OperationQueryType
   }>, getExternalProperty?: (string: string) => string) => {
-    return createOperationFromParent({
-        util: this,
-        json: this.jsonQuery
-      },
-      operationList,
-      getExternalProperty)
+    return createOperationFromParent(this, operationList, getExternalProperty)
   }
   invalidate = () => {
     this.random = newRandom(this);
@@ -81,21 +73,15 @@ export class JsonUtil {
       }),
 
       create: memoizeFunction((x: number, y: number) => {
-        return create({
-          util: this,
-          json: this.jsonQuery
-        }, x, y)
+        return create(this, x, y)
       })
     }
   }
 
   person = {
-    getProperty: (personQueryType: PersonQueryType, key) => getProperty({
-      util: this,
-      json: this.jsonQuery
-    }, personQueryType, key),
+    getProperty: (personQueryType: PersonQueryType, key) => getProperty(this, personQueryType, key),
     getById: memoizeFunction((id: string): PersonQueryType => {
-      return getById(this.jsonQuery, id)
+      return getById(this.json, id)
     }),
     getDistance: memoizeFunction((personQueryType: PersonQueryType, secondPersonQueryType: PersonQueryType) => {
       const x = Number(personQueryType.query("location").$x);
@@ -108,6 +94,10 @@ export class JsonUtil {
   }
 
   markov = markovNext;
+
+  getRuleGroups = () => {
+    return this.json.queryAll("rule_group");
+  }
 
 
 }

@@ -40,16 +40,15 @@ describe("personActionMoveTowardsReachedDestination" , () => {
     </person>
   </people>
   <actions>
-    <by person="Billy">
+    <by person_ref="Billy">
       <move_towards x="70" y="70"/>
     </by>
   </actions>
 </world_step>`);
 
-    await personMoveTowards({
-      util: new JsonUtil(query),
-      json: query
-    })(query);
+    const util = new JsonUtil(query);
+    await personMoveTowards(util)(util);
+
     expect(query.serialize()).toBe(`
 <world_step
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

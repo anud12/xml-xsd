@@ -67,10 +67,9 @@ describe("eventsMetadata", () => {
   </actions>
 </world_step>`);
 
-    await eventsMetadata({
-      util: new JsonUtil(query),
-      json: query
-    })(query);
+    const util = new JsonUtil(query);
+    await eventsMetadata(util)(util);
+
     expect(query.serialize()).toBe(`
 <world_step
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

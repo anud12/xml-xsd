@@ -9,16 +9,17 @@ export type CreatePersonArgs = {
 }
 
 export const createPerson = (jsonSchema: JsonUtil, args: CreatePersonArgs): void => {
-  const ruleGroup = jsonSchema.jsonQuery.query("rule_group");
-  const raceNameList = ruleGroup.queryAll("race_metadata")
+  const ruleGroup = jsonSchema.getRuleGroups();
+
+  const raceNameList = ruleGroup.flatMap(ruleGroup => ruleGroup.queryAllOptional("race_metadata"))
     .flatMap(e => e.queryAll("entry"))
     .map(e => e.$name);
 
-  const time = jsonSchema.jsonQuery.query("world_metadata").query("elapsed_time").$value;
+  const time = jsonSchema.json.query("world_metadata").query("elapsed_time").$value;
 
   const race = args.race || jsonSchema.randomFromArray(raceNameList)
 
-  const people = jsonSchema.jsonQuery.query("people");
+  const people = jsonSchema.json.query("people");
   console.log("createPerson", args);
   const person = people.appendChild("person", {
     $id: `${time}.${jsonSchema.counterNext()}`,

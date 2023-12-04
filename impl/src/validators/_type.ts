@@ -1,5 +1,5 @@
-import {JsonSchema} from "../utils/JsonSchema";
 import {JsonQueryType, nodeAttributes} from "../JSONQuery";
+import {JsonUtil} from "../utils";
 
 export class ValidationError<P extends JsonQueryType<any,any>> {
   constructor(public jsonQuery: P, attribute?:keyof P[typeof nodeAttributes], public message?: string) {
@@ -13,4 +13,4 @@ export class AttributeNotInValidationError<T extends JsonQueryType<any, any>> ex
     super(jsonQuery, attribute, message);
   }
 }
-export type Validator<T extends ValidationError<any>> = (unit: JsonSchema) => Promise<T[]>;
+export type Validator<T extends ValidationError<any>> = (unit: JsonUtil) => Promise<T[]>;

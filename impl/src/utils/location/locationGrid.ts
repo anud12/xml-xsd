@@ -10,7 +10,7 @@ export type LocationGrid = Record<number, Record<number, Cell>> & {
 }
 export const locationGrid = (json: JsonUtil): LocationGrid => {
 
-  const location = json.jsonQuery.query("location_layer").queryAll("cell");
+  const location = json.json.query("location_layer").queryAll("cell");
   let maxX = 0;
   let maxY = 0;
   const xLocation = location.reduce((acc, e) => {

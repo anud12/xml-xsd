@@ -96,10 +96,9 @@ describe("personAction" , () => {
   </actions>
 </world_step>`);
 
-    await personAction({
-      util: new JsonUtil(query),
-      json: query
-    })(query);
+    const util = new JsonUtil(query);
+    await personAction(util)(util);
+
     expect(query.serialize()).toBe(`
 <world_step
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

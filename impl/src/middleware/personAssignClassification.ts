@@ -1,4 +1,4 @@
-import {Middleware, Unit} from "./_type";
+import {Middleware} from "./_type";
 import { classifyPerson } from "../utils/person/classifyPerson";
 
 // for person in people add a classifications
@@ -12,7 +12,7 @@ export const personAssignClassification: Middleware = (readJson) => {
     }
   })
   return async writeJson => {
-    const personList = writeJson.queryAll("people").flatMap(e => e.queryAll("person"));
+    const personList = writeJson.json.queryAll("people").flatMap(e => e.queryAll("person"));
     classificationListByPersonName.forEach(({name, classificationList}) => {
       const person = personList.find(e => e.$name === name);
       const classifications = person.query("classifications");

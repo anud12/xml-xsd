@@ -56,7 +56,7 @@ describe("classifyPerson", () => {
 </world_step>
 `);
     const util: JsonUtil = new JsonUtil(query);
-    const result = classifyPerson({util, json: query}, query.query("people").query("person"));
+    const result = classifyPerson(util, query.query("people").query("person"));
     expect(result).toEqual(["dead"]);
 
   })

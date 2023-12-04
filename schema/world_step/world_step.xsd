@@ -186,7 +186,7 @@
         </xs:element>
 
 
-        <xs:element name="rule_group">
+        <xs:element name="rule_group" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
 
@@ -222,13 +222,6 @@
                     </xs:element>
                   </xs:sequence>
                 </xs:complexType>
-
-                <!-- key for -->
-                <!-- property_metadata/entry@name -->
-                <xs:key name="K__property_metadata__entry.name">
-                  <xs:selector xpath="entry"/>
-                  <xs:field xpath="@name"/>
-                </xs:key>
               </xs:element>
 
 
@@ -265,13 +258,6 @@
                     </xs:element>
                   </xs:sequence>
                 </xs:complexType>
-
-                <!-- key for -->
-                <!-- classification_metadata/entry@name -->
-                <xs:key name="K__classification_metadata__entry.name">
-                  <xs:selector xpath="entry"/>
-                  <xs:field xpath="@name"/>
-                </xs:key>
               </xs:element>
 
 
@@ -378,13 +364,6 @@
 
                   </xs:sequence>
                 </xs:complexType>
-
-                <!-- key for -->
-                <!-- action_metadata/person_to_person@name -->
-<!--                <xs:key name="K__action_metadata__person_to_person.name">-->
-<!--                  <xs:selector xpath="person_to_person"/>-->
-<!--                  <xs:field xpath="@name"/>-->
-<!--                </xs:key>-->
               </xs:element>
 
 
@@ -411,13 +390,6 @@
                     </xs:element>
                   </xs:sequence>
                 </xs:complexType>
-
-                <!-- key for -->
-                <!-- item_metadata/entry@name -->
-                <xs:key name="K__item_metadata__entry.name">
-                  <xs:selector xpath="entry"/>
-                  <xs:field xpath="@name"/>
-                </xs:key>
               </xs:element>
 
 
@@ -472,21 +444,6 @@
                     </xs:element>
                   </xs:sequence>
                 </xs:complexType>
-
-                <!-- key for -->
-                <!-- events_chain/entry@name -->
-                <xs:key name="K__events_chain__entry.name">
-                  <xs:selector xpath="entry"/>
-                  <xs:field xpath="@name"/>
-                </xs:key>
-
-                <!-- key for -->
-                <!-- events_chain/setup/create_action/@name -->
-                <xs:key name="K__events_chain__setup__create_action.name">
-                  <xs:selector xpath="entry/setup/create_action"/>
-                  <xs:field xpath="@name"/>
-                </xs:key>
-
               </xs:element>
 
 
@@ -528,38 +485,6 @@
                     </xs:element>
                   </xs:sequence>
                 </xs:complexType>
-
-                <!-- key for -->
-                <!-- locations_markov_chain/location_markov_link@type -->
-                <xs:key name="K__locations_markov_chain__location_markov_link.type">
-                  <xs:selector xpath="location_markov_link"/>
-                  <xs:field xpath="@type"/>
-                </xs:key>
-
-                <!-- fk for -->
-                <!-- locations_markov_chain/location_markov_link/sibling@type -->
-                <!-- locations_markov_chain/location_markov_link@type -->
-<!--                <xs:keyref name="FK__locations_markov_chain__location_markov_link__sibling.type"-->
-<!--                           refer="K__locations_markov_chain__location_markov_link.type">-->
-<!--                  <xs:selector xpath="location_markov_link/sibling"/>-->
-<!--                  <xs:field xpath="@type"/>-->
-<!--                </xs:keyref>-->
-
-                <!-- key for -->
-                <!-- locations_markov_chain/location_markov_link/tag@name -->
-<!--                <xs:key name="K__locations_markov_chain__location_markov_link__tag.name">-->
-<!--                  <xs:selector xpath="location_markov_link/tag"/>-->
-<!--                  <xs:field xpath="@name"/>-->
-<!--                </xs:key>-->
-
-                <!-- fk for -->
-                <!-- locations_markov_chain/location_markov_link/sibling@tag -->
-                <!-- locations_markov_chain/location_markov_link/tag@name -->
-<!--                <xs:keyref name="FK__locations_markov_chain__location_markov_link__sibling.tag"-->
-<!--                           refer="K__locations_markov_chain__location_markov_link__tag.name">-->
-<!--                  <xs:selector xpath="location_markov_link/sibling"/>-->
-<!--                  <xs:field xpath="@tag"/>-->
-<!--                </xs:keyref>-->
               </xs:element>
             </xs:sequence>
 
@@ -633,36 +558,6 @@
               </xs:element>
             </xs:sequence>
           </xs:complexType>
-
-          <!-- unique for -->
-          <!-- people/person@id -->
-          <xs:unique name="U__people__person.id">
-            <xs:selector xpath="person"/>
-            <xs:field xpath="@id"/>
-          </xs:unique>
-
-          <!-- key for -->
-          <!-- people/person@name -->
-          <xs:key name="K__people__person.name">
-            <xs:selector xpath="person"/>
-            <xs:field xpath="@name"/>
-          </xs:key>
-
-          <!-- key for -->
-          <!-- people/person@id -->
-          <xs:key name="K__people__person.id">
-            <xs:selector xpath="person"/>
-            <xs:field xpath="@id"/>
-          </xs:key>
-
-          <!-- fk for -->
-          <!-- people/person/relation@with -->
-          <!-- people/person@id -->
-          <xs:keyref name="FK__people__person__relation.with__to__people_person.id"
-                     refer="K__people__person.id">
-            <xs:selector xpath="person/relation"/>
-            <xs:field xpath="@with"/>
-          </xs:keyref>
         </xs:element>
 
 
@@ -710,125 +605,5 @@
         </xs:element>
       </xs:sequence>
     </xs:complexType>
-
-
-    <!-- FK classification_metadata -->
-
-
-    <!-- fk for -->
-    <!-- world_step/property_metadata/entry@name -->
-    <!-- world_step/classification_metadata/entry/property@name -->
-<!--    <xs:keyref name="FK__classification_metadata__entry__property.name"-->
-<!--               refer="K__property_metadata__entry.name">-->
-<!--      <xs:selector xpath="classification_metadata/entry/property"/>-->
-<!--      <xs:field xpath="@name"/>-->
-<!--    </xs:keyref>-->
-
-
-    <!-- fk for -->
-    <!-- world_step/classification_metadata/entry/property/operation/add_property_value@name -->
-    <!-- world_step/property_metadata/entry@name -->
-<!--    <xs:keyref name="FK__classification_metadata__entry__property__add_property_value.name"-->
-<!--               refer="K__property_metadata__entry.name">-->
-<!--      <xs:selector xpath="classification_metadata/entry/property/operation/add_property_value"/>-->
-<!--      <xs:field xpath="@name"/>-->
-<!--    </xs:keyref>-->
-
-
-    <!-- FK race_metadata -->
-
-
-    <!-- fk for -->
-    <!-- world_step/race_metadata/entry/property_bonus@type -->
-    <!-- world_step/property_metadata/entry@name -->
-<!--    <xs:keyref name="FK__race_metadata__entry__property_bonus.type"-->
-<!--               refer="K__property_metadata__entry.name">-->
-<!--      <xs:selector xpath="race_metadata/entry/property_bonus"/>-->
-<!--      <xs:field xpath="@type"/>-->
-<!--    </xs:keyref>-->
-
-
-    <!-- FK actions -->
-
-    <!-- fk for -->
-    <!-- actions/by@name -->
-    <!-- people/person@id-->
-<!--    <xs:keyref name="FK__actions_by.name__to__people_person.id"-->
-<!--               refer="K__people__person.id">-->
-<!--      <xs:selector xpath="actions/by"/>-->
-<!--      <xs:field xpath="@name"/>-->
-<!--    </xs:keyref>-->
-
-    <!-- fk for -->
-    <!-- actions/by/do@to -->
-    <!-- action_metadata/person_to_person@name -->
-<!--    <xs:keyref name="FK__actions_by_do.action__to__people_person.id"-->
-<!--               refer="K__action_metadata__person_to_person.name">-->
-<!--      <xs:selector xpath="actions/by/do"/>-->
-<!--      <xs:field xpath="@action"/>-->
-<!--    </xs:keyref>-->
-
-    <!-- fk for -->
-    <!-- actions/by/do@to -->
-    <!-- people/person@id -->
-<!--    <xs:keyref name="FK__actions_by_do.on__to__people_person.id" refer="K__people__person.id">-->
-<!--      <xs:selector xpath="actions/by/do"/>-->
-<!--      <xs:field xpath="@to"/>-->
-<!--    </xs:keyref>-->
-
-
-    <!-- FK people -->
-
-
-    <xs:keyref name="FK__people__person__inventory__item.ref"
-               refer="K__item_metadata__entry.name">
-      <xs:selector xpath="people/person/inventory/item"/>
-      <xs:field xpath="@ref"/>
-    </xs:keyref>
-
-
-    <!-- FK events_chain -->
-
-
-    <!-- fk for -->
-    <!-- events_chain/entry/setup/create_action@type -->
-    <!-- action_metadata/person_to_person@name -->
-<!--    <xs:keyref name="FK__events_chain__entry__setup__create_action.type"-->
-<!--               refer="K__action_metadata__person_to_person.name">-->
-<!--      <xs:selector xpath="events_chain/entry/setup/create_action"/>-->
-<!--      <xs:field xpath="@type"/>-->
-<!--    </xs:keyref>-->
-
-
-    <!-- FK quests_markov_chain -->
-
-
-    <!-- fk for -->
-    <!-- quests_markov_chain/quest_markov_link/complete_condition/person_group@name -->
-    <!-- quests_markov_chain/quest_markov_link/person_group@name -->
-<!--    <xs:keyref name="FK__quests_markov_chain__quest_markov_link__complete_condition__person_group.name"-->
-<!--               refer="K__quests_markov_chain__quest_markov_link__person_group.name">-->
-<!--      <xs:selector xpath="quest_markov_link/complete_condition/person_group"/>-->
-<!--      <xs:field xpath="@name"/>-->
-<!--    </xs:keyref>-->
-
-    <!-- fk for -->
-    <!-- quests_markov_chain/quest_markov_link/next@type -->
-    <!-- quests_markov_chain/quest_markov_link@type -->
-<!--    <xs:keyref name="FK__quests_markov_chain__quest_markov_link__next.type"-->
-<!--               refer="K__quests_markov_chain__quest_markov_link.type">-->
-<!--      <xs:selector xpath="quest_markov_link/next"/>-->
-<!--      <xs:field xpath="@type"/>-->
-<!--    </xs:keyref>-->
-
-    <!-- fk for -->
-    <!-- quests_markov_chain/quest_markov_link/person_group/classification@name -->
-    <!-- classification_metadata/entry@name -->
-<!--    <xs:keyref name="FK__quest_markov_link__person_group__classification.name"-->
-<!--               refer="K__classification_metadata__entry.name">-->
-<!--      <xs:selector xpath="quest_markov_link/person_group/classification"/>-->
-<!--      <xs:field xpath="@name"/>-->
-<!--    </xs:keyref>-->
-
   </xs:element>
 </xs:schema>

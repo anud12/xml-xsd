@@ -3,6 +3,7 @@ import {JsonQuery} from "../../../JSONQuery";
 import {JsonSchema} from "../../../utils/JsonSchema";
 import {describe} from "@jest/globals";
 import {personMoveTowards} from "../../../middleware/personMoveTowards";
+import {personAction} from "../../../middleware/personAction";
 
 describe("personActionMoveTowards" , () => {
   it("should compute", async () => {
@@ -47,10 +48,10 @@ describe("personActionMoveTowards" , () => {
   </actions>
 </world_step>`);
 
-    await personMoveTowards({
-      util: new JsonUtil(query),
-      json: query
-    })(query);
+
+    const util = new JsonUtil(query);
+    await personMoveTowards(util)(util);
+
     expect(query.serialize()).toBe(`
 <world_step
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
