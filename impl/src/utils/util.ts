@@ -8,7 +8,7 @@ import {createOperationFromQueryType} from "./operation/createOperationFromQuery
 import {getProperty, PersonQueryType} from "./person/getProperty";
 import {getById} from "./person/getById";
 import {createPerson, CreatePersonArgs} from "./person/createPerson";
-import {JsonQueryType} from "../JSONQuery";
+import {JsonQueryType, nodeBodyType} from "../JSONQuery";
 import {createOperationFromParent} from "./operation/createOperationFromParent";
 
 export const memoizeFunction = <T>(func: T): T => {
@@ -95,7 +95,7 @@ export class JsonUtil {
 
   markov = markovNext;
 
-  getRuleGroups = () => {
+  getRuleGroups = ():Array<JsonSchema[typeof nodeBodyType]["rule_group"]> => {
     return this.json.queryAll("rule_group");
   }
 

@@ -83,11 +83,23 @@ const innerSerialize = (dom: jsdom.JSDOM, query: JsonQueryType<any, any>): Eleme
 // @ts-ignore TS2420
 export class JsonQuery<A extends JsonQueryType> implements A {
   static fromText = <A>(file: string): A => {
-    const root = new jsdom.JSDOM(file, {
-      contentType: "text/xml",
-    })
-    const d = root.window.document.childNodes;
-    return new JsonQuery(root, d[0], undefined) as unknown as A
+    let documentList :NodeListOf<ChildNode>;
+    let root;
+    if(window) {
+      const parser = new DOMParser();
+      const document = parser.parseFromString(file, "application/xml")
+      root = global
+      documentList = document.childNodes
+    }
+    if(!window) {
+      root = new jsdom.JSDOM(file, {
+        contentType: "text/xml",
+      })
+      documentList = root.window.document.childNodes;
+    }
+
+
+    return new JsonQuery(root, documentList[0], undefined) as unknown as A
   }
   static canCreate = (childNode: ChildNode) => {
     if (childNode.nodeType === childNode.COMMENT_NODE) {
@@ -198,7 +210,7 @@ export class JsonQuery<A extends JsonQueryType> implements A {
   queryOptional = <P extends any>(p: P): any => {
     try {
       return this.queryAll(p)?.[0];
-    } catch (e) {
+    } catch (e:any)  {
       return undefined;
     }
   }

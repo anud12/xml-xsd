@@ -2,7 +2,7 @@ import {JsonQuery} from "../../JSONQuery";
 import {JsonSchema} from "../../utils/JsonSchema";
 import {describe} from "@jest/globals";
 import {propertyRefValidator} from "../../validators/propertyRef.validator";
-import {JsonUtil} from "../../utils";
+import {JsonUtil} from "../../utils/util";
 
 describe("propertyRef.validator", () => {
   it("should throw 2 validation errors", async () => {

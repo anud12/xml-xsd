@@ -1,6 +1,6 @@
 import {InferJsonNodeBody, JsonQueryType, nodeBodyType} from "../../JSONQuery";
 import {OperationQueryType} from "../JsonSchema";
-import {JsonUtil} from "../index";
+import {JsonUtil} from "../util";
 
 type OperationTags = keyof InferJsonNodeBody<OperationQueryType>
 type Operation = JsonQueryType<"value" | "property_ref", {

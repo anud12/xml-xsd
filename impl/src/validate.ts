@@ -7,7 +7,7 @@ import {actionRefValidator} from "./validators/actionRef.validator";
 import {locationRefValidator} from "./validators/locationRef.validator";
 import {personRefValidator} from "./validators/personRefValidator";
 import {itemRefValidator} from "./validators/itemRef.validator";
-import {JsonUtil} from "./utils";
+import {JsonUtil} from "./utils/util";
 
 export const validate = async (xmlString: string, log: (...string: any[]) => void) => {
   const readJson = JsonQuery.fromText<JsonSchema>(xmlString.toString());

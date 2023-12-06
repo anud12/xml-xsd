@@ -1,0 +1,17 @@
+.cell {
+    display: inline-block;
+    align-content: center;
+    text-align: center;
+    flex-flow: column;
+    cursor: default;
+}
+.cell:hover {
+    box-shadow: inset 0 0 0 1px #7f7f7f;
+}
+.cell .break {
+    display: block;
+    width: 100%;
+    height: 0;
+    margin: 0;
+    padding: 0;
+}

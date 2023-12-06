@@ -25,7 +25,7 @@ export const personVision: Middleware = (readJson) => {
 
     return async () => {
     }
-  } catch (e) {
+  } catch (e:any)  {
     const newError = new Error("Error in personVision middleware");
     newError.stack += '\nCaused by: ' + e.stack;
     throw newError;

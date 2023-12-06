@@ -1,5 +1,5 @@
 import {JsonSchema} from "../JsonSchema";
-import {JsonUtil} from "../index";
+import {JsonUtil} from "../util";
 import {nodeBodyType} from "../../JSONQuery";
 
 export type Cell = JsonSchema[typeof nodeBodyType]["location_layer"][typeof nodeBodyType]["cell"]

@@ -1,7 +1,12 @@
 {
+  "files": ["src/module.ts"],
   "compilerOptions": {
+    "module": "CommonJS",
+    "declaration": true,
     "target": "ES2022",
     "moduleResolution": "Node",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
+    "outDir": "./dist"
   }
 }

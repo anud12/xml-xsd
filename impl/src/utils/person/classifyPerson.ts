@@ -1,6 +1,6 @@
 import {getProperty, PersonQueryType} from "./getProperty";
 import {createOperationFromParent} from "../operation/createOperationFromParent";
-import {JsonUtil} from "../index";
+import {JsonUtil} from "../util";
 
 
 export const classifyPerson = (readJson: JsonUtil, personQueryType: PersonQueryType): string[] => {
@@ -37,7 +37,7 @@ export const classifyPerson = (readJson: JsonUtil, personQueryType: PersonQueryT
       return isTrue;
     })
       .map(entry => entry.$name);
-  } catch (e) {
+  } catch (e:any)  {
     const newError = new Error(`classifyPerson failed for ${personQueryType.$name}`);
     newError.stack += '\nCaused by: ' + e.stack;
     throw newError;

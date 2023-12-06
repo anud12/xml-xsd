@@ -10,7 +10,7 @@ export const run: Command<[]> = {
     try {
       state.jsonSchema = await execute(state.jsonSchema.serialize(), () => {});
       writeToDisk();
-    } catch (e) {
+    } catch (e:any)  {
       const newError = new Error(`run failed`);
       newError.stack += '\nCaused by: ' + e.stack;
       constRenderer.log.update(newError.stack);

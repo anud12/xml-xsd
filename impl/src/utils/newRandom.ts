@@ -1,4 +1,4 @@
-import {JsonUtil} from "./index";
+import {JsonUtil} from "./util";
 
 let counter = 0;
 export const newRandom = (worldSchema: JsonUtil) => {

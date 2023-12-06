@@ -1,7 +1,7 @@
 import {Middleware} from "./_type";
 import {JsonSchema} from "../utils/JsonSchema";
 import {nodeBodyType} from "../JSONQuery";
-import {JsonUtil} from "../utils";
+import {JsonUtil} from "../utils/util";
 
 type RuleGroupQueryType = JsonSchema[typeof nodeBodyType]["rule_group"]
 type PersonQueryType = JsonSchema[typeof nodeBodyType]["people"][typeof nodeBodyType]["person"]
@@ -81,7 +81,7 @@ export const personAction: Middleware = readJson => {
           personAction: personDo,
           property_mutation_list: property_mutation_list
         }]
-      } catch (e) {
+      } catch (e:any)  {
         const newError = new Error(`Error computing by element ${by.getPath()}`);
         newError.stack += '\nCaused by: ' + e.stack;
         throw newError;

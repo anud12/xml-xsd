@@ -1,6 +1,6 @@
 import {JsonQuery} from "../../JSONQuery";
 import {JsonSchema} from "../../utils/JsonSchema";
-import {JsonUtil} from "../../utils";
+import {JsonUtil} from "../../utils/util";
 import {personAssignClassification} from "../../middleware/personAssignClassification";
 
 describe("personAssignClassification", () => {

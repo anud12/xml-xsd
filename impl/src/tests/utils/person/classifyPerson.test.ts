@@ -2,7 +2,7 @@ import {describe} from "@jest/globals";
 import {JsonQuery} from "../../../JSONQuery";
 import {JsonSchema} from "../../../utils/JsonSchema";
 import {classifyPerson} from "../../../utils/person/classifyPerson";
-import {JsonUtil} from "../../../utils";
+import {JsonUtil} from "../../../utils/util";
 
 describe("classifyPerson", () => {
   it("return classifications for person only if health is negative", () => {

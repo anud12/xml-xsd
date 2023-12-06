@@ -1,5 +1,5 @@
 import {personVision} from "../../middleware/personVision";
-import {JsonUtil} from "../../utils";
+import {JsonUtil} from "../../utils/util";
 import {JsonQuery} from "../../JSONQuery";
 import {JsonSchema} from "../../utils/JsonSchema";
 import {describe} from "@jest/globals";

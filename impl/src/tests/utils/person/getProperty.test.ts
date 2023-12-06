@@ -2,7 +2,7 @@ import {describe, expect} from "@jest/globals";
 import {JsonQuery} from "../../../JSONQuery";
 import {JsonSchema} from "../../../utils/JsonSchema";
 import {getProperty} from "../../../utils/person/getProperty";
-import {JsonUtil} from "../../../utils";
+import {JsonUtil} from "../../../utils/util";
 
 describe("getProperty", () => {
   it("add unset property that depends on another property", async () => {
@@ -168,7 +168,7 @@ describe("getProperty", () => {
         "health"
       );
       throw new Error("")
-    } catch (e) {
+    } catch (e:any)  {
       expect(e.message).toBe("getProperty of health failed for //people[0]/person[0]")
     }
   })

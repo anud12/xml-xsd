@@ -1,6 +1,6 @@
 import {Cell} from "./locationGrid";
 import {Transition} from "../markovNext";
-import {JsonUtil} from "../index";
+import {JsonUtil} from "../util";
 
 export const getTransitionFromNeighbours = (json: JsonUtil, cell: Cell): Transition<string> => {
   const x = Number(cell.$x)

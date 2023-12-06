@@ -1,6 +1,6 @@
 import {findClosestPoint} from "./findClosestPoint";
 import {fillNeighbours} from "./fillNeighbours";
-import {JsonUtil} from "../index";
+import {JsonUtil} from "../util";
 
 export const create = (readJson:JsonUtil, x: number, y: number): void => {
   let grid = readJson.location.grid()

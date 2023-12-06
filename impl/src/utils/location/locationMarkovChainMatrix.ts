@@ -1,5 +1,5 @@
 import {Transition} from "../markovNext";
-import {JsonUtil} from "../index";
+import {JsonUtil} from "../util";
 
 export type LocationMatrix = Record<string, Transition<string>>;
 

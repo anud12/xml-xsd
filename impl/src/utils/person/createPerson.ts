@@ -1,4 +1,4 @@
-import {JsonUtil} from "../index";
+import {JsonUtil} from "../util";
 
 export type CreatePersonArgs = {
   race?: string,

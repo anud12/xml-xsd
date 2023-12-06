@@ -1,6 +1,6 @@
 import {JsonSchema} from "../JsonSchema";
 import {nodeBodyType} from "../../JSONQuery";
-import {JsonUtil} from "../index";
+import {JsonUtil} from "../util";
 
 type RuleGroupQueryType = JsonSchema[typeof nodeBodyType]["rule_group"]
 type RaceQueryType = RuleGroupQueryType[typeof nodeBodyType]["race_metadata"][typeof nodeBodyType]["entry"]
@@ -17,7 +17,7 @@ export const getBaseProperty = (readJson: JsonUtil, personQueryType: PersonQuery
       .flatMap(e => e.children)
       .map(e => readJson.computeOperation(e, string => getProperty(readJson, personQueryType, string)))
       .reduce((previousValue, currentValue) => currentValue(previousValue), "0");
-  } catch (e) {
+  } catch (e:any)  {
     const newError = new Error(`getBaseProperty of ${key}`);
     newError.stack += '\nCaused by: ' + e.stack;
     throw newError;
@@ -67,7 +67,7 @@ export const getProperty = (readJson: JsonUtil, personQueryType: PersonQueryType
       })
     })
     return value;
-  } catch (e) {
+  } catch (e:any)  {
     const newError = new Error(`getProperty of ${key} failed for ${personQueryType.getPath()}`);
     newError.stack += '\nCaused by: ' + e.stack;
     throw newError;

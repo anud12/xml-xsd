@@ -1,5 +1,5 @@
 import {JsonSchema} from "../utils/JsonSchema";
-import {JsonUtil} from "../utils/index";
+import {JsonUtil} from "../utils/util";
 
 // export type Unit = {
 //   json: JsonSchema,

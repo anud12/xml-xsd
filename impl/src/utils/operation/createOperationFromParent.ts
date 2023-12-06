@@ -1,7 +1,7 @@
 import {OperationQueryType} from "../JsonSchema";
 import {JsonQueryType} from "../../JSONQuery";
 import {createOperationFromQueryType} from "./createOperationFromQueryType";
-import {JsonUtil} from "../index";
+import {JsonUtil} from "../util";
 
 export const createOperationFromParent = (
   readJson: JsonUtil,
@@ -20,7 +20,7 @@ export const createOperationFromParent = (
     }, (value: string) => value);
 
     return result;
-  } catch (e) {
+  } catch (e:any)  {
     const newError = new Error(`createOperationFromParent failed for ${operationList?.$name}`);
     newError.stack += '\nCaused by: ' + e.stack;
     throw newError;

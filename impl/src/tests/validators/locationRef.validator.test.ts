@@ -3,7 +3,7 @@ import {JsonSchema} from "../../utils/JsonSchema";
 import {describe} from "@jest/globals";
 import {raceRefValidator} from "../../validators/raceRef.validator";
 import {locationRefValidator} from "../../validators/locationRef.validator";
-import {JsonUtil} from "../../utils";
+import {JsonUtil} from "../../utils/util";
 
 describe("locationRef.validator", () => {
   it("should throw 2 validation errors", async () => {

@@ -1,7 +1,7 @@
 import {Middleware} from "./_type";
 import {nodeBodyType} from "../JSONQuery";
 import {JsonSchema} from "../utils/JsonSchema";
-import {JsonUtil} from "../utils";
+import {JsonUtil} from "../utils/util";
 
 
 type RuleGroupQueryType = JsonSchema[typeof nodeBodyType]["rule_group"]

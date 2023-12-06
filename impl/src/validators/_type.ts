@@ -1,5 +1,5 @@
 import {JsonQueryType, nodeAttributes} from "../JSONQuery";
-import {JsonUtil} from "../utils";
+import {JsonUtil} from "../utils/util";
 
 export class ValidationError<P extends JsonQueryType<any,any>> {
   constructor(public jsonQuery: P, attribute?:keyof P[typeof nodeAttributes], public message?: string) {

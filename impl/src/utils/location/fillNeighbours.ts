@@ -2,7 +2,7 @@ import {markovNext} from "../markovNext";
 import {Cell} from "./locationGrid";
 import {nodeAttributes} from "../../JSONQuery";
 import {getTransitionFromNeighbours} from "./getTransitionFromNeighbours";
-import {JsonUtil} from "../index";
+import {JsonUtil} from "../util";
 
 export const fillNeighbours = (readJson: JsonUtil, writeJson: JsonUtil, originalCell: Cell, radius = 1) => {
   try {
@@ -38,7 +38,7 @@ export const fillNeighbours = (readJson: JsonUtil, writeJson: JsonUtil, original
         }
       }
     }
-  } catch (e) {
+  } catch (e:any)  {
     const newError = new Error(`fillNeighbours of type: ${originalCell.$location_ref}, x:${originalCell.$x}, y:${originalCell.$y}`);
     newError.stack += '\nCaused by: ' + e.stack;
     throw newError;
