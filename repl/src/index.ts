@@ -32,7 +32,7 @@ export const constRenderer = {
 async function main() {
   const renderer = baseRenderer.addBottom()
   const personList = state.jsonSchema.queryAll("people").flatMap(e => e.queryAll("person"));
-  const selectedPerson = await select(renderer.addBottom(), () => "Select person:", personList, e => e.$name);
+  const selectedPerson = await select(renderer.addBottom(), () => "PersonSelect person:", personList, e => e.$name);
   renderer.unsubscribeBottom();
 
   const message = () => {
@@ -43,7 +43,7 @@ async function main() {
     return "";
 
   }
-  await promptMenu(constRenderer.status.addBottom("Select Action"), message, [selectedPerson.$id], [
+  await promptMenu(constRenderer.status.addBottom("PersonSelect Action"), message, [selectedPerson.$id], [
     run,
     moveTowards,
     action,

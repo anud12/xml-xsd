@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {createContext, useEffect} from 'react';
 import './App.css';
-import {Cell} from "./terminal/Cell";
 import {JsonUtil} from "demo/dist/utils/util";
 import {JsonQuery} from "demo/dist/JSONQuery";
+import {MapView} from "./view/MapView";
+import {PersonSelect} from "./terminal/PersonSelect";
+import { QueuedActions } from './view/QueuedActions';
+import {MenuLine} from "./terminal/MenuLine";
 
 
 const LoremIpsum = `
@@ -33,27 +36,48 @@ const LoremIpsum = `
 ╚═══════════════╝
 `
 
+export const worldUtilContext = createContext<JsonUtil | undefined>(undefined)
+export const mainPersonIdContext = createContext<string | undefined>(undefined)
+
 function App() {
   const [world, setWorld] = React.useState<JsonUtil | undefined>(undefined);
+  const [mainPersonId, setMainPersonId] = React.useState<string | undefined>(undefined);
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      console.log(window.innerWidth, window.innerHeight);
+    })
+  }, [])
   return (
     <>
-      <form>
-        <label>
-          Upload world xml:
-          <input type="file" name="file" onChange={async event => {
-            const text = await event.target.files?.[0].text();
-            const world = new JsonUtil(JsonQuery.fromText(text ?? ""))
-            setWorld(world);
-          }}/>
-        </label>
-      </form>
-      <div className="App">
-        {LoremIpsum.split("").map((char, index) => {
-          return <Cell key={index}>{char}</Cell>
-        })}
-      </div>
-    </>
+      {!world && <form>
+          <label>
+              Upload world xml:
+              <input type="file" name="file" onChange={async event => {
+                const text = await event.target.files?.[0].text();
+                const world = new JsonUtil(JsonQuery.fromText(text ?? ""));
+                console.log(world);
+                setWorld(world);
+              }}/>
+          </label>
+      </form>}
+      <worldUtilContext.Provider value={world}>
+        {world && !mainPersonId &&
+            <PersonSelect onChange={setMainPersonId}/>
+        }
+        <mainPersonIdContext.Provider value={mainPersonId}>
+          {world && mainPersonId && <>
+              <MapView/>
+              <QueuedActions/>
+              <MenuLine options={{
+                "Move To": () => {
 
+                }
+              }}/>
+          </>
+          }
+        </mainPersonIdContext.Provider>
+      </worldUtilContext.Provider>
+    </>
   );
 }
 
