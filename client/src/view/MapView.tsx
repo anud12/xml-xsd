@@ -43,6 +43,9 @@ const extractPersonByCoords = (world: JsonUtil, x: number, y: number) => {
 
   return {
     display: person?.$name?.split("")?.[0] ?? "P",
+    style: {
+      color: "red",
+    },
     cell: person,
   };
 
@@ -60,7 +63,7 @@ const worldToGrid = (world: JsonUtil, mainPersonId: string) => {
       const y = Number(cell.$y) ?? 0;
       maxY = Math.max(maxY, y);
       minY = Math.min(minY, y);
-      const yArray = acc.get(y) ?? new Map<number, Array<{ display: string, cell: JsonQueryType<any, any> }>>();
+      const yArray = acc.get(y) ?? new Map();
       acc.set(y, yArray);
 
       const x = Number(cell.$x) ?? 0;
@@ -78,18 +81,20 @@ const worldToGrid = (world: JsonUtil, mainPersonId: string) => {
         if (person.cell.$id === mainPersonId) {
           xArray.push({
             display: "@",
+            className: "mainPerson interactible-font_color",
             cell: person.cell,
           });
           return acc;
         }
         xArray.push({
           display: person.display,
+          className: "interactible-font_color",
           cell: person.cell,
         });
       }
       return acc;
 
-    }, new Map() as Map<number, Map<number, Array<{ display: string, cell: JsonQueryType<any, any> }>>>);
+    }, new Map() as Map<number, Map<number, Array<{ display: string, cell: JsonQueryType<any, any>, style?: any, className?:string }>>>);
 
   return {
     locations,
@@ -134,19 +139,21 @@ export const MapView = () => {
               {new Array(maxX).fill(0)
                 .map((_, x) => x - Math.floor(maxX / 2))
                 .map((x) => {
-                  const cell = grid.locations.get(y)?.get(x)?.map(element => {
-                    return element.display
-                  });
+                  const cell = grid.locations.get(y)?.get(x);
                   return <Cell key={y}>
                     {!cell && "?"}
                     {cell?.map((element, index) => {
-                      if (element === "@") {
-                        return <span ref={mainPersonRef} key={index} className={"mainPerson"}>
-                          {element}
+                      if (element.display === "@") {
+                        return <span ref={mainPersonRef} key={index}
+                                      style={element.style}
+                                     className={element.className}>
+                          {element.display}
                         </span>
                       }
-                      return <span key={index}>
-                        {element ?? ")"}
+                      return <span key={index}
+                                   className={element.className}
+                                   style={element.style}>
+                        {element.display ?? ")"}
                       </span>
                     })}
                   </Cell>
