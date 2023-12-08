@@ -33,8 +33,8 @@ export const QueuedActions = () => {
     <div className={"QueuedActions"}>
       <div>Queued actions</div>
       <div>
-        {actions?.map(action => {
-          return <div>{action}</div>
+        {actions?.map((action, index) => {
+          return <div key={index}>{action}</div>
         })}
       </div>
     </div>

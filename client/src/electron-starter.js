@@ -11,10 +11,6 @@ const url = require('url');
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
-electron.ipcMain.on("jsonUtilChanged", (...args) => {
-    console.log(args);
-})
-
 
 function createWindow() {
     // Create the browser window.
@@ -23,6 +19,19 @@ function createWindow() {
         height: 600,
         autoHideMenuBar: true,
     });
+
+
+
+    mainWindow.webContents.setWindowOpenHandler(({url}) => {
+        return {
+            action: 'allow',
+            overrideBrowserWindowOptions: {
+                width: 800,
+                height: 600,
+                autoHideMenuBar: true,
+            }
+        }
+    })
 
     // and load the index.html of the app.
     mainWindow.loadURL('http://localhost:3000');

@@ -16,13 +16,13 @@ const extractLocationByCoords = (world: JsonUtil, x: number, y: number) => {
 
   let display = cell?.$location_ref?.split("")?.[0] ?? "0";
 
-  if(cell.$location_ref === "plains") {
+  if (cell.$location_ref === "plains") {
     display = " ";
   }
-  if(cell.$location_ref === "forest") {
+  if (cell.$location_ref === "forest") {
     display = "T";
   }
-  if(cell.$location_ref === "mountains") {
+  if (cell.$location_ref === "mountains") {
     display = "^";
   }
 
@@ -94,7 +94,12 @@ const worldToGrid = (world: JsonUtil, mainPersonId: string) => {
       }
       return acc;
 
-    }, new Map() as Map<number, Map<number, Array<{ display: string, cell: JsonQueryType<any, any>, style?: any, className?:string }>>>);
+    }, new Map() as Map<number, Map<number, Array<{
+      display: string,
+      cell: JsonQueryType<any, any>,
+      style?: any,
+      className?: string
+    }>>>);
 
   return {
     locations,
@@ -106,7 +111,14 @@ const worldToGrid = (world: JsonUtil, mainPersonId: string) => {
 }
 
 
-export const MapView = () => {
+type Props = {
+  onClick?: (cell: JsonQueryType<any, any>[], position: {
+    x: number,
+    y: number,
+  }) => void;
+}
+
+export const MapView = (props: Props) => {
 
   const world = React.useContext(worldUtilContext);
   const mainPersonId = React.useContext(mainPersonIdContext);
@@ -114,7 +126,7 @@ export const MapView = () => {
   const mainPersonRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    if(!mainPersonRef.current) return;
+    if (!mainPersonRef.current) return;
     mainPersonRef.current.scrollIntoView({
       behavior: "smooth",
       block: "center",
@@ -140,12 +152,21 @@ export const MapView = () => {
                 .map((_, x) => x - Math.floor(maxX / 2))
                 .map((x) => {
                   const cell = grid.locations.get(y)?.get(x);
-                  return <Cell key={y}>
+                  const cellElements = cell?.map((element, index) => element.cell);
+                  return <Cell key={y}
+                               onClick={() => {
+                                 props.onClick?.(cellElements ?? [], {
+                                   x, y,
+                                 })
+                               }}
+                  onContextMenu={() => {
+                    console.log("context menu", cellElements);
+                  }}>
                     {!cell && "?"}
                     {cell?.map((element, index) => {
                       if (element.display === "@") {
                         return <span ref={mainPersonRef} key={index}
-                                      style={element.style}
+                                     style={element.style}
                                      className={element.className}>
                           {element.display}
                         </span>

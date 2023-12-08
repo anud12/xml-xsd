@@ -42,11 +42,6 @@ export const mainPersonIdContext = createContext<string | undefined>(undefined)
 function App() {
   const [world, setWorld] = React.useState<JsonUtil | undefined>(undefined);
   const [mainPersonId, setMainPersonId] = React.useState<string | undefined>(undefined);
-  useEffect(() => {
-    window.addEventListener("resize", () => {
-      console.log(window.innerWidth, window.innerHeight);
-    })
-  }, [])
   return (
     <>
       {!world && <form>
@@ -66,7 +61,11 @@ function App() {
         }
         <mainPersonIdContext.Provider value={mainPersonId}>
           {world && mainPersonId && <>
-              <MapView/>
+              <MapView onClick={(cell, coord) => {
+                console.log(cell, coord);
+                const windowRef = window.open("http://localhost:3000","", "popup=1");
+                console.log(windowRef);
+              }}/>
               <QueuedActions/>
               <MenuLine options={{
                 "Move To": () => {
