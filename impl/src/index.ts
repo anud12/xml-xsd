@@ -8,7 +8,7 @@ import {validate} from "./validate";
   const data = fs.readFileSync(filePath)
   const dataString = data.toString();
   const errors = await validate(dataString, console.log);
-  if(errors) {
+  if(errors?.length) {
     throw new Error(errors.map(e => e.message).join("\n"));
   }
   const outJson = await execute(data.toString(), console.log);

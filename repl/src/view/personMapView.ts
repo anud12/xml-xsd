@@ -15,7 +15,7 @@ export const personMap = (personId: string): Array<Array<string>> => {
   const personRaceMetadata = ruleGroup.query("race_metadata")
     .queryAll("entry").find(e => e.$name === person.query("race").$race_ref)
   //get vision from person list of properties
-  const vision = Number(personRaceMetadata.query("vision").$value);
+  const vision = Math.max(Number(personRaceMetadata.query("vision").$value), 10);
 
   const personLocation = person.query("location");
   const personX = Number(personLocation.$x);

@@ -1,8 +1,9 @@
-import {worldUtilContext} from "../App";
-import React from "react";
+import {mainPersonIdContext, worldUtilContext} from "../App";
+import React, {useEffect, useRef} from "react";
 import {JsonUtil} from "demo/dist/utils/util";
 import {JsonQueryType} from "demo/dist/JSONQuery";
 import {Cell} from "../terminal/Cell";
+import "./MapView.css";
 
 const extractLocationByCoords = (world: JsonUtil, x: number, y: number) => {
   const cell = world.json.queryAll("location_layer")
@@ -13,8 +14,20 @@ const extractLocationByCoords = (world: JsonUtil, x: number, y: number) => {
 
   if (!cell) return undefined;
 
+  let display = cell?.$location_ref?.split("")?.[0] ?? "0";
+
+  if(cell.$location_ref === "plains") {
+    display = " ";
+  }
+  if(cell.$location_ref === "forest") {
+    display = "T";
+  }
+  if(cell.$location_ref === "mountains") {
+    display = "^";
+  }
+
   return {
-    display: cell?.$location_ref?.split("")?.[0] ?? "0",
+    display: display,
     cell,
   };
 }
@@ -36,7 +49,7 @@ const extractPersonByCoords = (world: JsonUtil, x: number, y: number) => {
 }
 
 
-const worldToGrid = (world: JsonUtil) => {
+const worldToGrid = (world: JsonUtil, mainPersonId: string) => {
   let maxX = 0;
   let minX = 0;
   let maxY = 0;
@@ -62,6 +75,13 @@ const worldToGrid = (world: JsonUtil) => {
       }
       const person = extractPersonByCoords(world, x, y);
       if (person) {
+        if (person.cell.$id === mainPersonId) {
+          xArray.push({
+            display: "@",
+            cell: person.cell,
+          });
+          return acc;
+        }
         xArray.push({
           display: person.display,
           cell: person.cell,
@@ -84,35 +104,57 @@ const worldToGrid = (world: JsonUtil) => {
 export const MapView = () => {
 
   const world = React.useContext(worldUtilContext);
+  const mainPersonId = React.useContext(mainPersonIdContext);
+
+  const mainPersonRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    if(!mainPersonRef.current) return;
+    mainPersonRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+      inline: "center",
+    });
+  }, [mainPersonRef.current]);
 
   if (!world) return <div>Map</div>;
 
-  const grid = worldToGrid(world);
+  const grid = worldToGrid(world, mainPersonId ?? "");
 
   const maxY = Math.max(grid.maxY, Math.abs(grid.minY)) * 2;
   const maxX = Math.max(grid.maxX, Math.abs(grid.minX)) * 2;
 
   return <div className={"MapView"}>
-    {new Array(maxY).fill(0)
-      .map((_, y) => y - Math.floor(maxY / 2))
-      .map((y) => {
-        return <div key={y} className={"column"}>
-          {new Array(maxX).fill(0)
-            .map((_, x) => x - Math.floor(maxX / 2))
-            .map((x) => {
-              const cell = grid.locations.get(y)?.get(x)?.map(element => {
-                return element.display
-              });
-              return <Cell key={y}>
-                {!cell && "?"}
-                {cell?.map((element, index) =>
-                    <span key={index}>
-                {element ?? ")"}
-              </span>
-                )}
-              </Cell>
-            })}
-        </div>
-      })}
-  </div>;
+    <div>
+      <div>
+        {new Array(maxY).fill(0)
+          .map((_, y) => y - Math.floor(maxY / 2))
+          .map((y) => {
+            return <div key={y} className={"column"}>
+              {new Array(maxX).fill(0)
+                .map((_, x) => x - Math.floor(maxX / 2))
+                .map((x) => {
+                  const cell = grid.locations.get(y)?.get(x)?.map(element => {
+                    return element.display
+                  });
+                  return <Cell key={y}>
+                    {!cell && "?"}
+                    {cell?.map((element, index) => {
+                      if (element === "@") {
+                        return <span ref={mainPersonRef} key={index} className={"mainPerson"}>
+                          {element}
+                        </span>
+                      }
+                      return <span key={index}>
+                        {element ?? ")"}
+                      </span>
+                    })}
+                  </Cell>
+                })}
+            </div>
+          })}
+      </div>
+      <div/>
+    </div>
+  </div>
 }

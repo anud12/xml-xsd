@@ -2,6 +2,7 @@ import {mainPersonIdContext, worldUtilContext} from "../App";
 import {useContext} from "react";
 import {JsonSchema} from "demo/dist/utils/JsonSchema";
 import {nodeBodyType} from "demo/dist/JSONQuery";
+import "./QueuedActions.css"
 
 type MoveTowardsQueryType = JsonSchema[typeof nodeBodyType]["actions"][typeof nodeBodyType]["by"][typeof nodeBodyType]["move_towards"]
 type DoQueryType = JsonSchema[typeof nodeBodyType]["actions"][typeof nodeBodyType]["by"][typeof nodeBodyType]["do"]
@@ -29,7 +30,7 @@ export const QueuedActions = () => {
     })
 
   return (
-    <div>
+    <div className={"QueuedActions"}>
       <div>Queued actions</div>
       <div>
         {actions?.map(action => {
