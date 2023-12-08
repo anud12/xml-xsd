@@ -6,7 +6,7 @@ import {MapView} from "./view/MapView";
 import {PersonSelect} from "./terminal/PersonSelect";
 import { QueuedActions } from './view/QueuedActions';
 import {MenuLine} from "./terminal/MenuLine";
-
+import hot from "react-hot-loader/root";
 
 const LoremIpsum = `
 ╭Status-------------╮╭Map------------------------------╮╭Selected Target----╮
@@ -81,4 +81,4 @@ function App() {
   );
 }
 
-export default App;
+export default hot.hot(App);

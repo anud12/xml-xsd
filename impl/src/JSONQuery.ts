@@ -85,13 +85,13 @@ export class JsonQuery<A extends JsonQueryType> implements A {
   static fromText = <A>(file: string): A => {
     let documentList :NodeListOf<ChildNode>;
     let root;
-    if(global.window) {
+    if(window) {
       const parser = new DOMParser();
       const document = parser.parseFromString(file, "application/xml")
       root = global
       documentList = document.childNodes
     }
-    if(!global.window) {
+    if(!window) {
       root = new jsdom.JSDOM(file, {
         contentType: "text/xml",
       })
