@@ -21,7 +21,7 @@ export const Nano = (props:Props) => {
     </div>
 
 
-    <div className={"Nano_content"} style={{display:"inline-flex"}}>
+    <div className={"Nano_content"}>
       {props.children} <Cursor/>
     </div>
     <div className={"Nano_footer Nano_float"}>
