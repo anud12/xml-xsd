@@ -1,0 +1,19 @@
+.terminal__prompt {
+    display: inline-flex;
+}
+
+.terminal__prompt--user {
+    color: #7eda28;
+}
+
+.terminal__prompt--machine   {
+    color: #ad80a8;
+}
+
+.terminal__prompt--location {
+    color: #4878c0;
+}
+
+.terminal__prompt--bling {
+    color: #dddddd;
+}
