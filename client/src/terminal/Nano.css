@@ -1,0 +1,67 @@
+.Nano {
+
+}
+
+.Nano_title {
+    opacity: 0;
+    background-color: white;
+    color: black;
+    display: flex;
+    top: 0;
+    padding: 1px;
+}
+
+.Nano_float {
+    position: fixed;
+    width: 100%;
+    opacity: 100%;
+}
+.Nano_appName {
+    margin-left: 15px;
+    position: fixed;
+}
+
+.Nano_fileName {
+    margin: auto;
+}
+
+.Nano_content {
+}
+
+.Nano_footer {
+    bottom: 0;
+}
+
+.Nano_footer {
+
+}
+
+.Nano_alert {
+    display: flex;
+    justify-content: center;
+
+}
+.Nano_alert_text {
+    background-color: white;
+    color: black;
+    padding: 1px;
+}
+
+.Nano_menu {
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
+}
+
+.Nano_menu_entry {
+    display: flex;
+    justify-content: start;
+}
+.Nano_menu_key {
+    background-color: white;
+    color: black;
+    padding: 1px;
+}
+.Nano_menu_label {
+    padding: 0 15px 0 15px;
+}

@@ -11,7 +11,6 @@ export const Prompt = () => {
       <span>:</span>
       <span className="terminal__prompt--location">demo</span>
       <span className="terminal__prompt--bling">$</span>
-      <Cursor/>
     </div>
   )
 }

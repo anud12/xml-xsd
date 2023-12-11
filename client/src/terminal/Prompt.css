@@ -1,5 +1,5 @@
 .terminal__prompt {
-    display: inline-flex;
+    display: inline;
 }
 
 .terminal__prompt--user {
@@ -16,4 +16,5 @@
 
 .terminal__prompt--bling {
     color: #dddddd;
+    margin-right: 9px;
 }

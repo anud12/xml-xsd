@@ -2,7 +2,6 @@
 .Cursor {
   display: inline-block;
   width: calc(var(--font-size) / 1.5);
-  margin-left: 9px;
   animation: blink 1200ms linear infinite;
 }
 
