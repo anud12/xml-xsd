@@ -1,40 +1,13 @@
-import React, {createContext, useEffect} from 'react';
+import React, {createContext} from 'react';
 import './App.css';
 import {JsonUtil} from "demo/dist/utils/util";
-import {JsonQuery} from "demo/dist/JSONQuery";
-import {MapView} from "./view/MapView";
-import {PersonSelect} from "./terminal/PersonSelect";
-import { QueuedActions } from './view/QueuedActions';
-import {MenuLine} from "./terminal/MenuLine";
 import hot from "react-hot-loader/root";
-
-const LoremIpsum = `
-╭Status-------------╮╭Map------------------------------╮╭Selected Target----╮
-┆Name: Billy (λ)    ┆┆ T  ○  T  T  T  T  T  ○  T  T  ○ ┆┆Name: Bobu (ν)     ┆
-┆Race: human        ┆┆ T  T  ○  T  T  T  T  T  T  T  T ┆┆Race: human        ┆
-┆Location:          ┆┆ T  T  ○  T  T  ○  T  T  T  T  T ┆┆Location:          ┆
-┆ - X: 1            ┆┆ T  T  ○  ν  ○  ○  T  ○  T  T  T ┆┆ - X: -1           ┆
-┆ - Y: 1            ┆┆ ○  T  T  ○  ○  ○  T  T  T  T  T ┆┆ - Y: -1           ┆
-┆Movement: 2        ┆┆ T  T  T  ○  ○  @  T  ○  ○  T  T ┆┆Movement: 2        ┆
-┆Relations:         ┆┆ T  T  T  T  ○  T  T  T  ○  ○  T ┆┆Relations:         ┆
-┆Inventory:         ┆┆ T  T  ○  T  ○  ○  T  T  T  T  T ┆┆Inventory:         ┆
-┆ - Long sword      ┆┆ T  T  T  ○  T  T  T  T  T  T  ○ ┆┆Classifications:   ┆
-┆Classifications:   ┆┆ ○  T  T  T  T  T  ○  T  T  ○  T ┆┆ - alive           ┆
-┆ - alive           ┆┆ T  T  T  T  T  T  T  T  T  T  T ┆┆Properties:        ┆
-┆Properties:        ┆╰---------------------------------╯┆ - constitution: 20┆
-┆ - strength: 13    ┆╭World Name╮                       ┆ - health: 24      ┆
-┆ - constitution: 16┆┆world_2   ┆                       ╰-------------------╯
-┆ - health: 16      ┆╰----------╯
-╰-------------------╯
-╔Select Action══╗
-║> run          ║
-║move towards   ║
-║action         ║
-║set target     ║
-║write to disk  ║
-║exit           ║
-╚═══════════════╝
-`
+import {Prompt} from "./terminal/Prompt";
+import {Nano} from "./terminal/Nano";
+import {Cursor} from "./terminal/Cursor";
+import {Button} from "./terminal/Button";
+import {useGlobalState} from "./globalState";
+import {frame} from "./frame/frame";
 
 export const worldUtilContext = createContext<JsonUtil | undefined>(undefined)
 export const mainPersonIdContext = createContext<string | undefined>(undefined)
@@ -42,40 +15,54 @@ export const mainPersonIdContext = createContext<string | undefined>(undefined)
 function App() {
   const [world, setWorld] = React.useState<JsonUtil | undefined>(undefined);
   const [mainPersonId, setMainPersonId] = React.useState<string | undefined>(undefined);
+
+  const globalState = frame.useGlobalState();
   return (
     <>
-      {!world && <form>
-          <label>
-              Upload world xml:
-              <input type="file" name="file" onChange={async event => {
-                const text = await event.target.files?.[0].text();
-                const world = new JsonUtil(JsonQuery.fromText(text ?? ""));
-                console.log(world);
-                setWorld(world);
-              }}/>
-          </label>
-      </form>}
-      <worldUtilContext.Provider value={world}>
-        {world && !mainPersonId &&
-            <PersonSelect onChange={setMainPersonId}/>
-        }
-        <mainPersonIdContext.Provider value={mainPersonId}>
-          {world && mainPersonId && <>
-              <MapView onClick={(cell, coord) => {
-                console.log(cell, coord);
-                const windowRef = window.open("http://localhost:3000","", "popup=1");
-                console.log(windowRef);
-              }}/>
-              <QueuedActions/>
-              <MenuLine options={{
-                "Move To": () => {
-
-                }
-              }}/>
-          </>
-          }
-        </mainPersonIdContext.Provider>
-      </worldUtilContext.Provider>
+      <div style={{height:"100vh"}}>
+        <Nano
+          fileName={"map"}
+          alert={"Move to"}
+          menu={[{
+            key: "None",
+            label: <Button onClick={() => frame.open("http://localhost:3000")}>
+              Settings
+            </Button>
+          }, {
+            key: "None",
+            label: <Button onClick={() => {
+              window.location.reload()
+            }}>
+              Reload
+            </Button>
+          }, {
+            key: "None",
+            label: <Button onClick={() => {
+              globalState.set({name:"data"})
+            }}>
+              Global state set data
+            </Button>
+          }, {
+            key: "None",
+            label: <Button onClick={() => {
+              globalState.set({name:"name"})
+            }}>
+              Global state set name
+            </Button>
+          }]}>
+          <div>
+            <Prompt/>
+            <span style={{"whiteSpace": "pre-wrap"}}>
+          {`lorem ipsum long test that keeps going and may overflow if it keeps going \\
+and is preformated \\
+with multiple lines`}
+            </span>
+          </div>
+          <div>
+            <Prompt/> {globalState.name} <Cursor/>
+          </div>
+        </Nano>
+      </div>
     </>
   );
 }
