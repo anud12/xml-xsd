@@ -1,6 +1,6 @@
 body {
     --font-size: 12px;
-    --interactible-font: cyan;
+    --interactible-color: cyan;
     margin: 0;
     font-family: monospace;
     font-size: var(--font-size);
@@ -12,5 +12,5 @@ body {
 }
 
 .interactible-font_color {
-    color: var(--interactible-font);
+    color: var(--interactible-color);
 }

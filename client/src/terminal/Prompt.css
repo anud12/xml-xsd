@@ -16,4 +16,5 @@
 
 .terminal__prompt--bling {
     color: #dddddd;
+    margin-right: calc(var(--font-size) / 1.5);
 }
