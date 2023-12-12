@@ -15,23 +15,25 @@ let mainWindow;
 function createWindow() {
     // Create the browser window.
     mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
+
         autoHideMenuBar: true,
     });
 
 
 
-    mainWindow.webContents.setWindowOpenHandler(({url}) => {
+    mainWindow.webContents.setWindowOpenHandler((arg) => {
+
         return {
             action: 'allow',
             overrideBrowserWindowOptions: {
-                width: 800,
-                height: 600,
-                center: true,
                 autoHideMenuBar: true,
             }
         }
+    })
+    mainWindow.webContents.on("did-create-window", (window, details) => {
+        const position = mainWindow.getPosition();
+        window.setPosition(...position);
+        window.webContents.once("dom-ready", () => window.webContents.openDevTools());
     })
 
     // and load the index.html of the app.
