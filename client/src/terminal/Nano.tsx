@@ -1,84 +1,45 @@
 import "./Nano.css"
-import {Cursor} from "./Cursor";
-import {PropsWithChildren} from "react";
+import {Fragment, PropsWithChildren, ReactNode} from "react";
 
-type Props = PropsWithChildren
+type Props = PropsWithChildren & {
+  appName?: string,
+  fileName?: string,
+  alert?: string,
+  menu?: Array<{
+    key: string,
+    label: ReactNode,
+  }>
+}
 
-export const Nano = (props:Props) => {
+export const Nano = (props: Props) => {
   return <div className={"Nano"}>
     <div className={"Nano_title Nano_float"}>
       <span className={"Nano_appName"}>
-        GNU nano 6.2
+        {props?.appName}
       </span>
-      <span className={"Nano_fileName"}> .bashrc</span>
-    </div>
-
-    <div className={"Nano_title"}>
-      <span className={"Nano_appName"}>
-        GNU nano 6.2
+      <span className={"Nano_fileName"}>
+        {props?.fileName || "\u00A0"}
       </span>
-      <span className={"Nano_fileName"}> .bashrc</span>
     </div>
-
 
     <div className={"Nano_content"}>
-      {props.children} <Cursor/>
+      {props?.children}
     </div>
+
+
     <div className={"Nano_footer Nano_float"}>
       <div className={"Nano_alert"}>
-          <div className={"Nano_alert_text"}>
-              [ Alert ]
-          </div>
+        <div className={"Nano_alert_text"}>
+          {props?.alert && <Fragment>[ {props.alert} ]</Fragment>}
+        </div>
       </div>
       <div className={"Nano_menu"}>
-        <span className={"Nano_menu_entry"}>
-          <span className={"Nano_menu_key"}>^G</span>
-          <span className={"Nano_menu_label"}>Help</span>
-        </span>
-        <span className={"Nano_menu_entry"}>
-          <span className={"Nano_menu_key"}>^G</span>
-          <span className={"Nano_menu_label"}>Help</span>
-        </span>
-        <span className={"Nano_menu_entry"}>
-          <span className={"Nano_menu_key"}>^G</span>
-          <span className={"Nano_menu_label"}>Help</span>
-        </span>
-        <span className={"Nano_menu_entry"}>
-          <span className={"Nano_menu_key"}>^G</span>
-          <span className={"Nano_menu_label"}>Help</span>
-        </span>
-        <span className={"Nano_menu_entry"}>
-          <span className={"Nano_menu_key"}>^G</span>
-          <span className={"Nano_menu_label"}>Help</span>
-        </span>
-        <span className={"Nano_menu_entry"}>
-          <span className={"Nano_menu_key"}>^G</span>
-          <span className={"Nano_menu_label"}>Help</span>
-        </span>
-        <span className={"Nano_menu_entry"}>
-          <span className={"Nano_menu_key"}>^G</span>
-          <span className={"Nano_menu_label"}>Help</span>
-        </span>
-        <span className={"Nano_menu_entry"}>
-          <span className={"Nano_menu_key"}>^G</span>
-          <span className={"Nano_menu_label"}>Help</span>
-        </span>
-        <span className={"Nano_menu_entry"}>
-          <span className={"Nano_menu_key"}>^G</span>
-          <span className={"Nano_menu_label"}>Help</span>
-        </span>
-        <span className={"Nano_menu_entry"}>
-          <span className={"Nano_menu_key"}>^G</span>
-          <span className={"Nano_menu_label"}>Help</span>
-        </span>
-        <span className={"Nano_menu_entry"}>
-          <span className={"Nano_menu_key"}>^G</span>
-          <span className={"Nano_menu_label"}>Help</span>
-        </span>
-        <span className={"Nano_menu_entry"}>
-          <span className={"Nano_menu_key"}>^G</span>
-          <span className={"Nano_menu_label"}>Help</span>
-        </span>
+        {props?.menu?.map((value, index) => (
+          <span className={"Nano_menu_entry"}>
+            <span className={"Nano_menu_key"}>{value.key}</span>
+            <span className={"Nano_menu_label"}>{value.label}</span>
+          </span>
+        ))}
       </div>
     </div>
   </div>
