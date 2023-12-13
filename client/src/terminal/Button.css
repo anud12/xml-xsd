@@ -1,6 +1,3 @@
 .Button {
     all: unset;
-    color: var(--interactible-color);
-    text-decoration: underline;
-    cursor: pointer;
 }

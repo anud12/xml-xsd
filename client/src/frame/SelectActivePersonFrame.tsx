@@ -8,6 +8,8 @@ export const selectActivePersonUrl = "#selectActivePerson";
 
 export const SelectActivePerson = () => {
   const globalState = frame.useGlobalState();
+
+  
   const worldName = globalState.jsonUtil?.json.queryOptional("world_metadata")?.queryOptional("next_world_step")?.body
 
   const personList = globalState.jsonUtil?.json.queryAll("people").flatMap(people => people.queryAll("person"))

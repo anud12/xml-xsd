@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {JsonUtil} from "demo/dist/utils/util";
 
-const crossSymbol = Symbol();
+const crossSymbol = Symbol("CrossSymbol");
 
 type State = {
   jsonUtil?: JsonUtil,
@@ -25,10 +25,16 @@ export class Frame {
     useEffect(() => {
       (window as any).globalState = state;
       window.addEventListener("useGlobalState" as any, (evt: CustomEvent) => {
-        (window as any).globalState = evt.detail;
-        setState(evt.detail)
+        setState(prevState => {
+          const newState:any = {
+            ...prevState,
+            ...evt.detail
+          };
+          (window as any).globalState = newState;
+          return newState;
+        });
       })
-    }, []);
+    }, [setState]);
 
     return {
       ...state,

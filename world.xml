@@ -190,7 +190,7 @@
     <!--_-->
     <race_metadata>
       <entry name="human">
-        <vision value="50" inclusive="true"/>
+        <vision value="5" inclusive="true"/>
         <movement value="2" inclusive="true"/>
         <property_bonus property_ref="strength">
           <operation>

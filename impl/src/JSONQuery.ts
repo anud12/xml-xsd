@@ -42,6 +42,7 @@ export type JsonQueryType<
   queryAllRecursiveWithAttributeFrom: <P extends JsonQueryType<any, any>>(attribute: keyof P[typeof nodeAttributes]) => Array<P>,
   removeFromParent: () => void,
   getPath: () => string,
+  serializeRaw: () => string,
   serialize: () => string
 } & {
   [nodeBodyType]: {
@@ -228,6 +229,15 @@ export class JsonQuery<A extends JsonQueryType> implements A {
       return;
     }
     this.parent.children = this.parent.children.filter(e => e !== this);
+  }
+
+  serializeRaw = () => {
+    const element = innerSerialize(this.root, this as unknown as JsonQueryType) as Element
+    return element.outerHTML.replaceAll("__namespace__", ":")
+      .replaceAll("<COMMENT_TO_BE_REPLACED>", "<!--")
+      .replaceAll("</COMMENT_TO_BE_REPLACED>", "-->")
+      .replaceAll("<COMMENT_TO_BE_REPLACED\>", "")
+      .split(";")[0] + "\n";
   }
 
   serialize = () => {

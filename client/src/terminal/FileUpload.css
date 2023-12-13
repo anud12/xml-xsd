@@ -2,7 +2,7 @@
   display: inline;
   text-decoration: underline;
   cursor: pointer;
-  color: var(--interactible-color);
+  color: var(--popup-color);
 }
 
 .FileUpload__input {

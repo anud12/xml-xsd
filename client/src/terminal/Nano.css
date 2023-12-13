@@ -33,6 +33,7 @@
 
 .Nano_content{
     height: 100%;
+    overflow: auto;
 }
 
 

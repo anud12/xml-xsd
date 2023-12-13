@@ -17,7 +17,7 @@ const extractLocationByCoords = (world: JsonUtil, x: number, y: number) => {
   let display = cell?.$location_ref?.split("")?.[0] ?? "0";
 
   if (cell.$location_ref === "plains") {
-    display = " ";
+    display = "\u00A0";
   }
   if (cell.$location_ref === "forest") {
     display = "T";
@@ -81,14 +81,14 @@ const worldToGrid = (world: JsonUtil, mainPersonId: string) => {
         if (person.cell.$id === mainPersonId) {
           xArray.push({
             display: "@",
-            className: "mainPerson interactible-font_color",
+            className: "mainPerson",
             cell: person.cell,
           });
           return acc;
         }
         xArray.push({
           display: person.display,
-          className: "interactible-font_color",
+          className: "",
           cell: person.cell,
         });
       }
@@ -112,6 +112,8 @@ const worldToGrid = (world: JsonUtil, mainPersonId: string) => {
 
 
 type Props = {
+  world?:JsonUtil,
+  mainPersonId?:string,
   onClick?: (cell: JsonQueryType<any, any>[], position: {
     x: number,
     y: number,
@@ -119,10 +121,7 @@ type Props = {
 }
 
 export const MapView = (props: Props) => {
-
-  const world = React.useContext(worldUtilContext);
-  const mainPersonId = React.useContext(mainPersonIdContext);
-
+  console.log(props);
   const mainPersonRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
@@ -134,12 +133,13 @@ export const MapView = (props: Props) => {
     });
   }, [mainPersonRef.current]);
 
-  if (!world) return <div>Map</div>;
+  if (!props.world) return <div>Map</div>;
+  if (!props.mainPersonId) return <div>Map</div>
 
-  const grid = worldToGrid(world, mainPersonId ?? "");
+  const grid = worldToGrid(props.world, props.mainPersonId ?? "");
 
-  const maxY = Math.max(grid.maxY, Math.abs(grid.minY)) * 2;
-  const maxX = Math.max(grid.maxX, Math.abs(grid.minX)) * 2;
+  const maxY = Math.max(grid.maxY, Math.abs(grid.minY)) * 2 + 1;
+  const maxX = Math.max(grid.maxX, Math.abs(grid.minX)) * 2 + 1;
 
   return <div className={"MapView"}>
     <div>

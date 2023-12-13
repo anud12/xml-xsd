@@ -5,10 +5,11 @@
     "@babel/preset-env": "^7.22.20",
     "@babel/preset-typescript": "^7.23.0",
     "babel-jest": "^29.7.0",
+    "prettier": "^2.8.8",
     "fast-xml-parser": "^4.2.7",
     "jest": "^29.7.0",
     "jsdom": "^22.1.0",
-    "prettier": "^2.8.8",
+
     "ts-node": "^10.9.1"
   },
   "type": "commonjs",

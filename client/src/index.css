@@ -1,6 +1,6 @@
 body {
     --font-size: 12px;
-    --interactible-color: cyan;
+    --popup-color: cyan;
     margin: 0;
     font-family: monospace;
     font-size: var(--font-size);
@@ -11,6 +11,13 @@ body {
     background-color: black;
 }
 
-.interactible-font_color {
-    color: var(--interactible-color);
+.interactible{
+    text-decoration: underline !important;
+    cursor: pointer !important;
+}
+
+.popup__color {
+    cursor: pointer;
+    text-decoration: underline;
+    color: var(--popup-color);
 }
