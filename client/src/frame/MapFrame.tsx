@@ -1,7 +1,7 @@
 import {Nano} from "../terminal/Nano";
 import {Button} from "../terminal/Button";
 import {frame} from "./frame";
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import {FileUpload} from "../terminal/FileUpload";
 import {JsonUtil} from "demo/dist/utils/util";
 import {JsonQuery} from "demo/dist/JSONQuery";
@@ -10,9 +10,25 @@ import {MapView} from "../view/MapView";
 import {runAction} from "../action/runAction";
 import {moveToAction} from "../action/moveToAction";
 
+
+
+
 export const MapFrame = () => {
   const globalState = frame.useGlobalState();
   const worldName = globalState.jsonUtil?.json.queryOptional("world_metadata")?.queryOptional("next_world_step")?.body
+
+
+  const mainPersonRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    if (!mainPersonRef.current) return;
+    mainPersonRef.current.scrollIntoView({
+      behavior: "instant",
+      block: "center",
+      inline: "center",
+    });
+  }, [mainPersonRef.current]);
+
   return (
     <div style={{height: "100vh"}}>
       <Nano
@@ -25,6 +41,7 @@ export const MapFrame = () => {
             globalState.set({
               jsonUtil: new JsonUtil(JsonQuery.fromText(await file.text()))
             })
+            frame.open(selectActivePersonUrl)
           }}/>
         }, {
           key: "None",
@@ -32,6 +49,17 @@ export const MapFrame = () => {
             frame.open(selectActivePersonUrl)
           }}>
             Select active person
+          </Button>
+        }, {
+          key: "None",
+          label: <Button spawnsNew={true} onClick={() => {
+            mainPersonRef.current?.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+              inline: "center",
+            });
+          }}>
+            Scroll to @
           </Button>
         }, {
           key: "None",
@@ -72,6 +100,7 @@ export const MapFrame = () => {
           <MapView
             world={globalState.jsonUtil}
             mainPersonId={globalState.activePersonId}
+            onMainPersonRef={mainPersonRef}
             onClick={async (cell, position) => {
               moveToAction(globalState.jsonUtil, globalState.activePersonId, position.x, position.y);
               globalState.set({

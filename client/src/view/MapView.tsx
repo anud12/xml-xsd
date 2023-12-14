@@ -1,9 +1,8 @@
-import {mainPersonIdContext, worldUtilContext} from "../App";
-import React, {useEffect, useRef} from "react";
+import React from "react";
 import {JsonUtil} from "demo/dist/utils/util";
 import {JsonQueryType} from "demo/dist/JSONQuery";
+import {Grid} from "../terminal/Grid";
 import {Cell} from "../terminal/Cell";
-import "./MapView.css";
 
 const extractLocationByCoords = (world: JsonUtil, x: number, y: number) => {
   const cell = world.json.queryAll("location_layer")
@@ -112,8 +111,9 @@ const worldToGrid = (world: JsonUtil, mainPersonId: string) => {
 
 
 type Props = {
-  world?:JsonUtil,
-  mainPersonId?:string,
+  world?: JsonUtil,
+  mainPersonId?: string,
+  onMainPersonRef?: React.LegacyRef<HTMLElement>
   onClick?: (cell: JsonQueryType<any, any>[], position: {
     x: number,
     y: number,
@@ -121,71 +121,49 @@ type Props = {
 }
 
 export const MapView = (props: Props) => {
-  console.log(props);
-  const mainPersonRef = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    if (!mainPersonRef.current) return;
-    mainPersonRef.current.scrollIntoView({
-      behavior: "instant",
-      block: "center",
-      inline: "center",
-    });
-  }, [mainPersonRef.current]);
 
   if (!props.world) return <div>Map</div>;
   if (!props.mainPersonId) return <div>Map</div>
 
   const grid = worldToGrid(props.world, props.mainPersonId ?? "");
 
-  const maxY = Math.abs(grid.minY) + Math.abs(grid.maxY)+ 1;
-  const maxX = Math.abs(grid.minX) +Math.abs(grid.maxX) + 1;
-
-  return <div className={"MapView"}>
-    <div>
-      <div>
-        {new Array(maxY).fill(0)
-          .map((_, y) => y + grid.minY)
-          .map((y) => {
-            return <div key={y} className={"column"}>
-              {new Array(maxX).fill(0)
-                .map((_, x) => x + grid.minX)
-                .map((x) => {
-                  const cell = grid.locations.get(y)?.get(x);
-                  const cellElements = cell?.map((element, index) => element.cell);
-                  const contextMenu = cell?.find(cell => {
-                    return cell.cell.tag === "person"
-                  })
-                  return <Cell key={y}
-                               onClick={() => {
-                                 props.onClick?.(cellElements ?? [], {
-                                   x, y,
-                                 })
-                               }}
-                  onContextMenu={contextMenu ? () => {
-                    console.log("Context menu")
-                  } : undefined}>
-                    {!cell && " "}
-                    {cell?.map((element, index) => {
-                      if (element.display === "@") {
-                        return <span ref={mainPersonRef} key={index}
-                                     style={element.style}
-                                     className={element.className}>
-                          {element.display}
+  return <Grid max={{
+    x: grid.maxX,
+    y: grid.maxY
+  }} min={{
+    x: grid.minX,
+    y: grid.minY,
+  }} getNode={(x, y) => {
+    const cell = grid.locations.get(y)?.get(x);
+    const cellElements = cell?.map((element, index) => element.cell);
+    const contextMenu = cell?.find(cell => {
+      return cell.cell.tag === "person"
+    })
+    return <Cell onClick={() => {
+                   props.onClick?.(cellElements ?? [], {
+                     x, y,
+                   })
+                 }}
+                 onContextMenu={contextMenu ? () => {
+                   console.log("Context menu")
+                 } : undefined}>
+      {!cell && " "}
+      {cell?.map((element, index) => {
+        if (element.display === "@") {
+          return <span ref={props.onMainPersonRef} key={index}
+                       style={element.style}
+                       className={element.className}>
+                            {element.display}
+                          </span>
+        }
+        return <span key={index}
+                     className={element.className}
+                     style={element.style}>
+                          {element.display ?? ")"}
                         </span>
-                      }
-                      return <span key={index}
-                                   className={element.className}
-                                   style={element.style}>
-                        {element.display ?? ")"}
-                      </span>
-                    })}
-                  </Cell>
-                })}
-            </div>
-          })}
-      </div>
-      <div/>
-    </div>
-  </div>
+      })}
+    </Cell>
+  }}>
+
+  </Grid>
 }

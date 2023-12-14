@@ -33,7 +33,7 @@ function createWindow() {
     mainWindow.webContents.on("did-create-window", (window, details) => {
         const position = mainWindow.getPosition();
         window.setPosition(...position);
-        window.webContents.once("dom-ready", () => window.webContents.openDevTools());
+        // window.webContents.once("dom-ready", () => window.webContents.openDevTools());
     })
 
     // and load the index.html of the app.

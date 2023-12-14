@@ -1,0 +1,20 @@
+.Grid {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.Grid > div {
+  display: flex;
+  margin: auto 0 auto 0;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+  justify-content: center;
+}
+
+.Grid > div > div {
+  flex-wrap: nowrap;
+}
+
+.Grid .column {
+  display: flex;
+}

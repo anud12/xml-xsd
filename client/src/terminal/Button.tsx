@@ -7,5 +7,5 @@ type Props = PropsWithChildren &{
 }
 
 export const Button = (props: Props) => {
-  return <button className={"Button interactible" + (props.spawnsNew ? " popup__color" : "")} onClick={props.onClick}>{props.children}</button>
+  return <button className={`Button interactible ${props.spawnsNew ? "popup__color" : ""}`} onClick={props.onClick}>{props.children}</button>
 }
