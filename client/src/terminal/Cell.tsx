@@ -11,8 +11,8 @@ export const Cell = (props: Props) => {
 
   const childrenCount = ((props.children as any)?.length ?? 0)
   console.log(childrenCount);
-
-  return <div className={"cell interactible"} onClick={props.onClick} onContextMenu={props.onContextMenu}>
+  const contextMenu = props.onContextMenu ? "context_menu" : "";
+  return <div className={`cell interactible ${contextMenu}`} onClick={props.onClick} onContextMenu={props.onContextMenu}>
     {(props.children as any)?.length &&
       (props.children as any)?.map((child: any) => {
         return <div

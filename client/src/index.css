@@ -16,6 +16,21 @@ body {
     cursor: pointer !important;
 }
 
+.context_menu {
+    position: relative;
+}
+
+.context_menu:after {
+    content: "+";
+    font-size: calc(var(--font-size) * 1);
+    line-height: var(--font-size);
+
+    scale: 1;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
 .popup__color {
     cursor: pointer;
     text-decoration: underline;

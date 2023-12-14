@@ -127,7 +127,7 @@ export const MapView = (props: Props) => {
   useEffect(() => {
     if (!mainPersonRef.current) return;
     mainPersonRef.current.scrollIntoView({
-      behavior: "smooth",
+      behavior: "instant",
       block: "center",
       inline: "center",
     });
@@ -138,31 +138,34 @@ export const MapView = (props: Props) => {
 
   const grid = worldToGrid(props.world, props.mainPersonId ?? "");
 
-  const maxY = Math.max(grid.maxY, Math.abs(grid.minY)) * 2 + 1;
-  const maxX = Math.max(grid.maxX, Math.abs(grid.minX)) * 2 + 1;
+  const maxY = Math.abs(grid.minY) + Math.abs(grid.maxY)+ 1;
+  const maxX = Math.abs(grid.minX) +Math.abs(grid.maxX) + 1;
 
   return <div className={"MapView"}>
     <div>
       <div>
         {new Array(maxY).fill(0)
-          .map((_, y) => y - Math.floor(maxY / 2))
+          .map((_, y) => y + grid.minY)
           .map((y) => {
             return <div key={y} className={"column"}>
               {new Array(maxX).fill(0)
-                .map((_, x) => x - Math.floor(maxX / 2))
+                .map((_, x) => x + grid.minX)
                 .map((x) => {
                   const cell = grid.locations.get(y)?.get(x);
                   const cellElements = cell?.map((element, index) => element.cell);
+                  const contextMenu = cell?.find(cell => {
+                    return cell.cell.tag === "person"
+                  })
                   return <Cell key={y}
                                onClick={() => {
                                  props.onClick?.(cellElements ?? [], {
                                    x, y,
                                  })
                                }}
-                  onContextMenu={() => {
-                    console.log("context menu", cellElements);
-                  }}>
-                    {!cell && "?"}
+                  onContextMenu={contextMenu ? () => {
+                    console.log("Context menu")
+                  } : undefined}>
+                    {!cell && " "}
                     {cell?.map((element, index) => {
                       if (element.display === "@") {
                         return <span ref={mainPersonRef} key={index}
