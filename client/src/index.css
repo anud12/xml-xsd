@@ -12,9 +12,9 @@ body {
     background-color: black;
 }
 
-.interactible{
-    text-decoration: underline !important;
-    cursor: pointer !important;
+body .interactible{
+    text-decoration: underline ;
+    cursor: pointer ;
 }
 
 .context_menu {
@@ -22,18 +22,18 @@ body {
 }
 
 .context_menu:after {
-    content: "+";
-    font-size: calc(var(--font-size) * 1);
-    line-height: var(--font-size);
-    color:var(--popup-color);
-
-    scale: 1;
+    content: "⋯";
+    font-size: calc(var(--font-size) * 1.3);
+    line-height: calc(var(--font-size) * 0.4);
+    /*background-color:var(--popup-color);*/
+    /*color: black;*/
+    color: var(--popup-color);
     position: absolute;
-    bottom: 0;
+    top: 0;
     right: 0;
 }
 
-.popup__color {
+body .popup__color {
     cursor: pointer;
     text-decoration: underline;
     color: var(--popup-color);

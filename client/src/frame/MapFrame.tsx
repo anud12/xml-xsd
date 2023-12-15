@@ -52,7 +52,7 @@ export const MapFrame = () => {
           </Button>
         }, {
           key: "None",
-          label: <Button spawnsNew={true} onClick={() => {
+          label: <Button onClick={() => {
             mainPersonRef.current?.scrollIntoView({
               behavior: "smooth",
               block: "center",
@@ -60,11 +60,6 @@ export const MapFrame = () => {
             });
           }}>
             Scroll to @
-          </Button>
-        }, {
-          key: "None",
-          label: <Button spawnsNew={true} onClick={() => frame.open("")}>
-            Settings
           </Button>
         },{
           key:"None",

@@ -152,7 +152,7 @@ export const MapView = (props: Props) => {
       }}
       onContextMenu={!person ? undefined : (evt) => {
         myHook.openAtCursor(evt, <ContextMenu>
-            <Button onClick={() => {
+            <Button spawnsNew={true} onClick={() => {
               frame.open(statusFrameUrl, {personId: person.$id ?? ""})
               myHook.close();
             }}>
