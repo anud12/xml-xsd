@@ -3,6 +3,11 @@ import {JsonUtil} from "demo/dist/utils/util";
 import {JsonQueryType} from "demo/dist/JSONQuery";
 import {Grid} from "../terminal/Grid";
 import {Cell} from "../terminal/Cell";
+import {useContextMenu} from "../terminal/useContextMenu";
+import {Button} from "../terminal/Button";
+import {ContextMenu} from "../terminal/ContextMenu";
+import {frame} from "../frame/frame";
+import {statusFrameUrl} from "../frame/StatusFrame";
 
 const extractLocationByCoords = (world: JsonUtil, x: number, y: number) => {
   const cell = world.json.queryAll("location_layer")
@@ -126,7 +131,7 @@ export const MapView = (props: Props) => {
   if (!props.mainPersonId) return <div>Map</div>
 
   const grid = worldToGrid(props.world, props.mainPersonId ?? "");
-
+  const myHook = useContextMenu();
   return <Grid max={{
     x: grid.maxX,
     y: grid.maxY
@@ -135,18 +140,32 @@ export const MapView = (props: Props) => {
     y: grid.minY,
   }} getNode={(x, y) => {
     const cell = grid.locations.get(y)?.get(x);
-    const cellElements = cell?.map((element, index) => element.cell);
-    const contextMenu = cell?.find(cell => {
-      return cell.cell.tag === "person"
+    const cellElements = cell?.map((element) => element.cell);
+    const person = cell?.map(cell => cell.cell)?.find(cell => {
+      return cell.tag === "person"
     })
-    return <Cell onClick={() => {
-                   props.onClick?.(cellElements ?? [], {
-                     x, y,
-                   })
-                 }}
-                 onContextMenu={contextMenu ? () => {
-                   console.log("Context menu")
-                 } : undefined}>
+    return <Cell
+      onClick={!cell ? undefined : () => {
+        props.onClick?.(cellElements ?? [], {
+          x, y,
+        })
+      }}
+      onContextMenu={!person ? undefined : (evt) => {
+        myHook.openAtCursor(evt, <ContextMenu>
+            <Button onClick={() => {
+              frame.open(statusFrameUrl, {personId: person.$id ?? ""})
+              myHook.close();
+            }}>
+              Status
+            </Button>
+            <Button onClick={() => {
+              myHook.close();
+            }}>
+              Close
+            </Button>
+          </ContextMenu>
+        )
+      }}>
       {!cell && " "}
       {cell?.map((element, index) => {
         if (element.display === "@") {

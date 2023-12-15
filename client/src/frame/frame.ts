@@ -26,7 +26,7 @@ export class Frame {
       (window as any).globalState = state;
       window.addEventListener("useGlobalState" as any, (evt: CustomEvent) => {
         setState(prevState => {
-          const newState:any = {
+          const newState: any = {
             ...prevState,
             ...evt.detail
           };
@@ -43,8 +43,13 @@ export class Frame {
   }
 
 
-  open = (string: string) => {
-    const childWindow = window.open("http://localhost:3000/" + string);
+  open = (string: string, parameters?: Record<string, string>) => {
+    const url = new URL("http://localhost:3000/" + string);
+    Object.entries(parameters ?? {}).map(value => {
+      url.searchParams.set(...value);
+    })
+    console.log(url)
+    const childWindow = window.open(url.href);
     if (childWindow) {
       (childWindow as any).globalState = (window as any).globalState
     }

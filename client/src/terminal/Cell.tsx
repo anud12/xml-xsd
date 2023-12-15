@@ -3,7 +3,7 @@ import "./Cell.css";
 
 type Props = PropsWithChildren & {
   onClick?: () => void;
-  onContextMenu?: () => void;
+  onContextMenu?: (evt:MouseEvent) => void;
 }
 
 
@@ -12,10 +12,11 @@ export const Cell = (props: Props) => {
   const childrenCount = ((props.children as any)?.length ?? 0)
   console.log(childrenCount);
   const contextMenu = props.onContextMenu ? "context_menu" : "";
-  return <div className={`cell interactible ${contextMenu}`} onClick={props.onClick} onContextMenu={props.onContextMenu}>
+  const click = props.onClick ? "onClick" : "";
+  return <div className={`cell interactible ${click} ${contextMenu}`} onClick={props.onClick} onContextMenu={evt => props.onContextMenu?.(evt as any)}>
     {(props.children as any)?.length &&
-      (props.children as any)?.map((child: any) => {
-        return <div
+      (props.children as any)?.map((child: any, index:any) => {
+        return <div key={index}
           className={"content"}>
           {child}
         </div>

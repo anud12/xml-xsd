@@ -32,7 +32,7 @@ function createWindow() {
     })
     mainWindow.webContents.on("did-create-window", (window, details) => {
         const position = mainWindow.getPosition();
-        window.setPosition(...position);
+        window.setPosition(position[0], position[1], true);
         // window.webContents.once("dom-ready", () => window.webContents.openDevTools());
     })
 
