@@ -15,8 +15,11 @@ let mainWindow;
 function createWindow() {
     // Create the browser window.
     mainWindow = new BrowserWindow({
-
+        darkTheme:true,
         autoHideMenuBar: true,
+        webPreferences:{
+            enableBlinkFeatures: "CSSColorSchemeUARendering",
+        }
     });
 
 
@@ -26,6 +29,7 @@ function createWindow() {
         return {
             action: 'allow',
             overrideBrowserWindowOptions: {
+                darkTheme:true,
                 autoHideMenuBar: true,
             }
         }

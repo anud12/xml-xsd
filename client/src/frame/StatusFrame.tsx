@@ -27,16 +27,26 @@ export const StatusFrame = () => {
             .replace(window.location.host, "")
             .replace(window.location.protocol + "//", "")}
         />
+        <span>ls ~/clasifications</span>
+      </div>
+      {person?.query("classifications")?.children.map(e => {
+        return <div key={e.$classification_ref}>
+          <span>{e.$classification_ref}</span>
+        </div>
+      })
+      }
+      <div>
+        <Prompt
+          machine={person?.$name}
+          user={worldName}
+          location={window.location.href
+            .replace(window.location.host, "")
+            .replace(window.location.protocol + "//", "")}
+        />
         <span>cd ~/properties</span>
       </div>
       {person?.query("properties")?.children.map(e => {
-        return <div>
-          <Prompt
-            key={e.$property_ref}
-            machine={person?.$name}
-            user={worldName}
-            location={`~/properties/${e.$property_ref}`}
-          />
+        return <div key={e.$property_ref}>
           <span>{e.$value}</span>
         </div>
       })
@@ -49,21 +59,25 @@ export const StatusFrame = () => {
             .replace(window.location.host, "")
             .replace(window.location.protocol + "//", "")}
         />
-        <span>cd ~/inventory</span>
+        <span>ls ~/inventory</span>
       </div>
       {person?.queryOptional("inventory")?.children.map(e => {
-        return <div>
-          <Prompt
-            key={e.$item_ref}
-            machine={person?.$name}
-            user={worldName}
-            location={`~/inventory/${e.$item_ref}`}
-          />
-          <span>{e.$equipped}</span>
+        return <div key={e.$item_ref}>
+          <span>{e.$item_ref}</span>
         </div>
       })
       }
-      <Cursor/>
+      <div>
+        <Prompt
+          machine={person?.$name}
+          user={worldName}
+          location={window.location.href
+            .replace(window.location.host, "")
+            .replace(window.location.protocol + "//", "")}
+        />
+        <Cursor/>
+      </div>
+
       <div/>
     </div>
   )

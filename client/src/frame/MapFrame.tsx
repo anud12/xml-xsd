@@ -11,6 +11,7 @@ import {runAction} from "../action/runAction";
 import {moveToAction} from "../action/moveToAction";
 
 
+const border = 50;
 
 
 export const MapFrame = () => {
@@ -27,7 +28,7 @@ export const MapFrame = () => {
       block: "center",
       inline: "center",
     });
-  }, [mainPersonRef.current]);
+  }, [mainPersonRef.current, globalState.jsonUtil]);
 
   return (
     <div style={{height: "100vh"}}>
@@ -91,19 +92,24 @@ export const MapFrame = () => {
             Reload
           </Button>
         }]}>
-        <div>
-          <MapView
-            world={globalState.jsonUtil}
-            mainPersonId={globalState.activePersonId}
-            onMainPersonRef={mainPersonRef}
-            onClick={async (cell, position) => {
-              moveToAction(globalState.jsonUtil, globalState.activePersonId, position.x, position.y);
-              globalState.set({
-                jsonUtil: await runAction(globalState.jsonUtil)
-              })
-            }}
-          />
-
+        <div style={{display:"flex"}}>
+          <div style={{width:`${border}vw`, flexShrink:0}}/>
+          <div style={{display:"flex", flexDirection:"column"}}>
+            <div style={{height:`${border}vh`, flexShrink:0}}/>
+            <MapView
+              world={globalState.jsonUtil}
+              mainPersonId={globalState.activePersonId}
+              onMainPersonRef={mainPersonRef}
+              onClick={async (cell, position) => {
+                moveToAction(globalState.jsonUtil, globalState.activePersonId, position.x, position.y);
+                globalState.set({
+                  jsonUtil: await runAction(globalState.jsonUtil)
+                })
+              }}
+            />
+            <div style={{height:`${border}vh`, flexShrink:0}}/>
+          </div>
+          <div style={{width:`${border}vw`, flexShrink:0}}/>
         </div>
       </Nano>
     </div>
