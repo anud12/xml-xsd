@@ -1,16 +1,40 @@
 .cell {
-    display: inline-block;
-    align-content: center;
-    text-align: center;
-    flex-flow: column;
+    --padding: calc(var(--font-size) * 0.7);
+    display: inline-flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: space-evenly;
     cursor: default;
+
+    width: calc(var(--font-size) + (2 * var(--padding)));
+    height: calc(var(--font-size) + (2 * var(--padding)));
+    /*max-height: var(--font-size);*/
+    /*min-height: var(--font-size);*/
+
+    /*box-shadow: inset 0 0 1px 1px #171717;*/
 }
-.cell:hover {
-    box-shadow: inset 0 0 0 1px #7f7f7f;
+
+.cell > * {
+    padding-top: var(--padding);
+    padding-bottom: var(--padding);
 }
+.cell > *:first-child {
+    padding-left: var(--padding);
+}
+.cell > *:last-child {
+    padding-right: var(--padding);
+}
+.cell .content {
+    justify-self: center;
+    display: flex;
+}
+
+.cell.onClick:hover {
+    box-shadow: inset 0 0 1px 1px #7f7f7f;
+}
+
 .cell .break {
     display: block;
-    width: 100%;
     height: 0;
     margin: 0;
     padding: 0;

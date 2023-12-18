@@ -1,0 +1,7 @@
+.ContextMenu {
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    border: 0.5px dashed white;
+}

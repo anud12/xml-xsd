@@ -133,8 +133,8 @@ describe("eventsMetadata create person with inventory", () => {
       <race race_ref="race_definition" />
       <classifications />
       <inventory>
-        <item item_ref="item_definition" equipped="false" />
-        <item item_ref="item_definition" equipped="false" />
+        <item item_ref="item_definition" />
+        <item item_ref="item_definition" />
       </inventory>
     </person>
   </people>

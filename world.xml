@@ -190,7 +190,7 @@
     <!--_-->
     <race_metadata>
       <entry name="human">
-        <vision value="5" inclusive="true"/>
+        <vision value="1" inclusive="true"/>
         <movement value="2" inclusive="true"/>
         <property_bonus property_ref="strength">
           <operation>
@@ -240,7 +240,7 @@
       <person_to_person name="meleeAttack">
         <max_range>
           <operation>
-            <add value="1"/>
+            <add value="2"/>
           </operation>
         </max_range>
         <test>
@@ -256,7 +256,7 @@
           </expected>
         </test>
         <property_mutation property_ref="health" on="target">
-          <from participant="target">
+          <from participant="self">
             <operation>
               <add_dice value="6"/>
             </operation>
@@ -380,7 +380,7 @@
       </inventory>
       <classifications/>
     </person>
-    <person id="3" name="Bobu">
+    <person id="3" name="Dave">
       <race race_ref="human"/>
       <location x="-1" y="-1"/>
       <properties/>

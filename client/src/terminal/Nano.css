@@ -1,0 +1,76 @@
+.Nano {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top:0;
+    height: 100%;
+}
+
+.Nano .Nano_float {
+    position: sticky;
+    width: 100%;
+    opacity: 100%;
+}
+
+.Nano_title {
+    background-color: white;
+    color: black;
+    display: flex;
+    max-width: calc(100% - 2px);
+    top: 0;
+    padding: 1px;
+}
+
+.Nano_appName {
+    margin-left: 15px;
+    position: fixed;
+}
+
+.Nano_fileName {
+    margin: auto;
+}
+
+
+.Nano_content{
+    height: 100%;
+    overflow: auto;
+}
+
+
+.Nano_footer {
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    background-color: black;
+}
+
+.Nano_alert {
+    display: flex;
+    justify-content: center;
+
+}
+.Nano_alert_text {
+    background-color: white;
+    color: black;
+    padding: 1px;
+}
+
+.Nano_menu {
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
+}
+
+.Nano_menu_entry {
+    display: flex;
+    justify-content: start;
+}
+.Nano_menu_key {
+    white-space: pre-wrap;
+    background-color: white;
+    color: black;
+    padding: 1px;
+}
+.Nano_menu_label {
+    padding: 0 15px 0 15px;
+}

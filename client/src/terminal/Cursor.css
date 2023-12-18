@@ -1,0 +1,27 @@
+
+.Cursor {
+  display: inline-block;
+  width: calc(var(--font-size) / 1.5);
+  height: calc(var(--font-size) + 4px);
+  animation: blink 1200ms linear infinite;
+  padding: 0;
+  margin: -2px 0 -2px 0;
+}
+
+@keyframes blink {
+  0% {
+    background: #ffffff;
+  }
+  49% {
+    background: #ffffff;
+  }
+  60% {
+    background: transparent;
+  }
+  99% {
+    background: transparent;
+  }
+  100% {
+    background: #ffffff;
+  }
+}

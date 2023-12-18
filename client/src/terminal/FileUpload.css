@@ -1,0 +1,10 @@
+.FileUpload{
+  display: inline;
+  text-decoration: underline;
+  cursor: pointer;
+  color: var(--popup-color);
+}
+
+.FileUpload__input {
+  display: none;
+}

@@ -11,9 +11,30 @@ const url = require('url');
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
+
 function createWindow() {
     // Create the browser window.
-    mainWindow = new BrowserWindow({width: 800, height: 600, autoHideMenuBar:true});
+    mainWindow = new BrowserWindow({
+
+        autoHideMenuBar: true,
+    });
+
+
+
+    mainWindow.webContents.setWindowOpenHandler((arg) => {
+
+        return {
+            action: 'allow',
+            overrideBrowserWindowOptions: {
+                autoHideMenuBar: true,
+            }
+        }
+    })
+    mainWindow.webContents.on("did-create-window", (window, details) => {
+        const position = mainWindow.getPosition();
+        window.setPosition(position[0], position[1], true);
+        // window.webContents.once("dom-ready", () => window.webContents.openDevTools());
+    })
 
     // and load the index.html of the app.
     mainWindow.loadURL('http://localhost:3000');

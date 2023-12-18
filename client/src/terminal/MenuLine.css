@@ -1,0 +1,11 @@
+.MenuLine {
+    position: fixed;
+    display: flex;
+    flex-wrap: nowrap;
+    bottom: 0;
+    padding-bottom: 5px;
+    overflow: hidden;
+    width: 100%;
+
+    height: var(--font-size);
+}
