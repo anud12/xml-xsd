@@ -240,7 +240,7 @@
       <person_to_person name="meleeAttack">
         <max_range>
           <operation>
-            <add value="1"/>
+            <add value="2"/>
           </operation>
         </max_range>
         <test>
@@ -256,7 +256,7 @@
           </expected>
         </test>
         <property_mutation property_ref="health" on="target">
-          <from participant="target">
+          <from participant="self">
             <operation>
               <add_dice value="6"/>
             </operation>

@@ -8,6 +8,9 @@ import {Button} from "../terminal/Button";
 import {ContextMenu} from "../terminal/ContextMenu";
 import {frame} from "../frame/frame";
 import {statusFrameUrl} from "../frame/StatusFrame";
+import {ActionOptions} from "./ActionOptions";
+import {addAction} from "../action/addAction";
+import {runAction} from "../action/runAction";
 
 const extractLocationByCoords = (world: JsonUtil, x: number, y: number) => {
   const cell = world.json.queryAll("location_layer")
@@ -130,6 +133,8 @@ export const MapView = (props: Props) => {
   if (!props.world) return <div>Map</div>;
   if (!props.mainPersonId) return <div>Map</div>
 
+  const globalState = frame.useGlobalState();
+
   const grid = worldToGrid(props.world, props.mainPersonId ?? "");
   const myHook = useContextMenu();
   return <Grid max={{
@@ -152,6 +157,13 @@ export const MapView = (props: Props) => {
       }}
       onContextMenu={!person ? undefined : (evt) => {
         myHook.openAtCursor(evt, <ContextMenu>
+            <ActionOptions onClick={async actionName => {
+              addAction(props.world, props.mainPersonId, person.$id, actionName);
+              myHook.close();
+              globalState.set({
+                jsonUtil: await runAction(props.world)
+              })
+            }}/>
             <Button spawnsNew={true} onClick={() => {
               frame.open(statusFrameUrl, {personId: person.$id ?? ""})
               myHook.close();

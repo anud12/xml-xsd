@@ -60,11 +60,10 @@ export const StatusFrame = () => {
             location={`~/inventory/${e.$item_ref}`}
           />
           <span>{e.$equipped}</span>
-          <Cursor/>
         </div>
       })
       }
-
+      <Cursor/>
       <div/>
     </div>
   )
