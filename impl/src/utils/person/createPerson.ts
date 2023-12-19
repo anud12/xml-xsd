@@ -17,9 +17,9 @@ export const createPerson = (jsonSchema: JsonUtil, args: CreatePersonArgs): void
 
   const raceNameList = ruleGroup.flatMap(ruleGroup => ruleGroup.queryAllOptional("race_metadata"))
     .flatMap(e => e.queryAll("entry"))
-    .map(e => e.$name);
+    .map(e => e.getAttribute("name"));
 
-  const time = jsonSchema.json.query("world_metadata").query("elapsed_time").$value;
+  const time = jsonSchema.json.query("world_metadata").query("elapsed_time").getAttribute("value");
 
   const race = args.race ?? jsonSchema.randomFromArray(raceNameList)
 

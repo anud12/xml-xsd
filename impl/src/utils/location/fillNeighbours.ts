@@ -1,6 +1,5 @@
 import {markovNext} from "../markovNext";
 import {Cell} from "./locationGrid";
-import {nodeAttributes} from "../../JSONQuery";
 import {getTransitionFromNeighbours} from "./getTransitionFromNeighbours";
 import {JsonUtil} from "../util";
 
@@ -8,8 +7,8 @@ export const fillNeighbours = (readJson: JsonUtil, writeJson: JsonUtil, original
   try {
     const grid = writeJson.location.grid();
     const locationLayer = writeJson.json.query("location_layer");
-    const x = Number(originalCell.$x);
-    const y = Number(originalCell.$y);
+    const x = Number(originalCell.getAttribute("x"));
+    const y = Number(originalCell.getAttribute("y"));
 
     for (let i = -radius; i <= radius; i++) {
       for (let j = -radius; j <= radius; j++) {
@@ -27,7 +26,7 @@ export const fillNeighbours = (readJson: JsonUtil, writeJson: JsonUtil, original
           if(!type) {
             throw new Error("resulted type is undefined");
           }
-          const cell: Cell[typeof nodeAttributes] = {
+          const cell: Cell["children"] = {
             $location_ref: type,
             $x: String(x + i),
             $y: String(y + j),
@@ -39,7 +38,7 @@ export const fillNeighbours = (readJson: JsonUtil, writeJson: JsonUtil, original
       }
     }
   } catch (e:any)  {
-    const newError = new Error(`fillNeighbours of type: ${originalCell.$location_ref}, x:${originalCell.$x}, y:${originalCell.$y}`);
+    const newError = new Error(`fillNeighbours of type: ${originalCell.getAttribute("location_ref")}, x:${originalCell.getAttribute("x")}, y:${originalCell.getAttribute("y")}`);
     newError.stack += '\nCaused by: ' + e.stack;
     throw newError;
   }

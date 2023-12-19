@@ -1,8 +1,7 @@
 import {JsonSchema} from "../JsonSchema";
 import {JsonUtil} from "../util";
-import {nodeBodyType} from "../../JSONQuery";
 
-export type Cell = JsonSchema[typeof nodeBodyType]["location_layer"][typeof nodeBodyType]["cell"]
+export type Cell = JsonSchema["children"]["location_layer"]["children"]["cell"]
 
 export type LocationGrid = Record<number, Record<number, Cell>> & {
   maxX: number,
@@ -14,15 +13,15 @@ export const locationGrid = (json: JsonUtil): LocationGrid => {
   let maxX = 0;
   let maxY = 0;
   const xLocation = location.reduce((acc, e) => {
-    const xObj = acc[Number(e.$x)] ?? {};
+    const xObj = acc[Number(e.getAttribute("x"))] ?? {};
 
-    maxX = Math.abs(Number(e.$x)) > maxX ? Math.abs(Number(e.$x)) : maxX
+    maxX = Math.abs(Number(e.getAttribute("x"))) > maxX ? Math.abs(Number(e.getAttribute("x"))) : maxX
 
-    maxY = Math.abs(Number(e.$y)) > maxY ? Math.abs(Number(e.$y)) : maxY
+    maxY = Math.abs(Number(e.getAttribute("y"))) > maxY ? Math.abs(Number(e.getAttribute("y"))) : maxY
 
-    acc[Number(e.$x)] = {
+    acc[Number(e.getAttribute("x"))] = {
       ...xObj,
-      [Number(e.$y)]: e
+      [Number(e.getAttribute("y"))]: e
     }
     return acc;
   }, {});

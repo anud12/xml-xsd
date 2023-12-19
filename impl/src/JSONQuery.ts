@@ -1,59 +1,60 @@
 import * as jsdom from "jsdom";
+import {JsonQueryType} from "./JsonQueryType";
 
 const prettier = require("prettier")
 
 const CommentJsonTag = "CommentJsonTag"
 const UnknownJsonTag = "UnknownJsonTag"
-
-export type JsonNodeTag<U = string> = U | typeof CommentJsonTag | typeof UnknownJsonTag
-export type JsonNode = {
-  body: string
-  tag: JsonNodeTag
-}
-
-export type InferJsonNodeBody<T> = T extends JsonQueryType<infer A, infer B>
-  ? { [P in keyof B]: InferJsonNodeBody<B[P]> & JsonNodeAttribute<A> }
-  : never;
-export type InferJsonNodeAttribute<T> = T extends JsonQueryType<infer A> ? JsonNodeAttribute<A> : never;
-
-export type JsonElement<A extends string> = JsonNode & JsonNodeAttribute<A>
-
-export type JsonNodeAttribute<A extends string> = {
-  [P in A as `$${P}`]?: string
-}
-export const nodeBodyType = Symbol()
-export const nodeAttributes = Symbol();
-
-export type RecursiveKeys<T> = T extends object
-  ? keyof T & RecursiveKeys<T[keyof T]>
-  : never
-
-export type JsonQueryType<
-  A extends string = never,
-  B extends Record<string, JsonQueryType<string, any>> = never
-> = JsonElement<A>
-  & {
-  children: Array<B[keyof B]>;
-  appendChild: <U extends keyof B>(key: U, element: string | B[U][typeof nodeAttributes], attributes?: B[U][typeof nodeAttributes]) => B[U]
-  query: <P extends keyof B> (p: P) => B[P],
-  queryOptional: <P extends keyof B> (p: P) => B[P] | undefined,
-  queryAll: <P extends keyof B> (p: P) => Array<B[P]>,
-  queryAllOptional: <P extends keyof B> (p: P) => Array<B[P]>,
-  queryAllRecursiveWithAttributeFrom: <P extends JsonQueryType<any, any>>(attribute: keyof P[typeof nodeAttributes]) => Array<P>,
-  removeFromParent: () => void,
-  getPath: () => string,
-  serializeRaw: () => string,
-  serialize: () => string
-} & {
-  [nodeBodyType]: {
-    [P in keyof B]: B[P] extends JsonQueryType<any, any> ? B[P] : never
-  }
-}
-  & {
-  [nodeAttributes]: {
-    [P in A as `$${P}`]?: string
-  }
-}
+//
+// export type JsonNodeTag<U = string> = U | typeof CommentJsonTag | typeof UnknownJsonTag
+// export type JsonNode = {
+//   body: string
+//   tag: JsonNodeTag
+// }
+//
+// export type InferJsonNodeBody<T> = T extends JsonQueryType<infer A, infer B>
+//   ? { [P in keyof B]: InferJsonNodeBody<B[P]> & JsonNodeAttribute<A> }
+//   : never;
+// export type InferJsonNodeAttribute<T> = T extends JsonQueryType<infer A> ? JsonNodeAttribute<A> : never;
+//
+// export type JsonElement<A extends string> = JsonNode & JsonNodeAttribute<A>
+//
+// export type JsonNodeAttribute<A extends string> = {
+//   [P in A as `$${P}`]?: string
+// }
+// export const nodeBodyType = Symbol()
+// export const nodeAttributes = Symbol();
+//
+// export type RecursiveKeys<T> = T extends object
+//   ? keyof T & RecursiveKeys<T[keyof T]>
+//   : never
+//
+// export type JsonQueryType<
+//   A extends string = never,
+//   B extends Record<string, JsonQueryType<string, any>> = never
+// > = JsonElement<A>
+//   & {
+//   children: Array<B[keyof B]>;
+//   appendChild: <U extends keyof B>(key: U, element: string | B[U][typeof nodeAttributes], attributes?: B[U][typeof nodeAttributes]) => B[U]
+//   query: <P extends keyof B> (p: P) => B[P],
+//   queryOptional: <P extends keyof B> (p: P) => B[P] | undefined,
+//   queryAll: <P extends keyof B> (p: P) => Array<B[P]>,
+//   queryAllOptional: <P extends keyof B> (p: P) => Array<B[P]>,
+//   queryAllRecursiveWithAttributeFrom: <P extends JsonQueryType<any, any>>(attribute: keyof P[typeof nodeAttributes]) => Array<P>,
+//   removeFromParent: () => void,
+//   getPath: () => string,
+//   serializeRaw: () => string,
+//   serialize: () => string
+// } & {
+//   [nodeBodyType]: {
+//     [P in keyof B]: B[P] extends JsonQueryType<any, any> ? B[P] : never
+//   }
+// }
+//   & {
+//   [nodeAttributes]: {
+//     [P in A as `$${P}`]?: string
+//   }
+// }
 
 const innerSerialize = (dom: jsdom.JSDOM, query: JsonQueryType<any, any>): Element | Comment | undefined => {
   if (query.tag === CommentJsonTag) {
@@ -81,18 +82,23 @@ const innerSerialize = (dom: jsdom.JSDOM, query: JsonQueryType<any, any>): Eleme
   return rootElement
 }
 
+
 // @ts-ignore TS2420
-export class JsonQuery<A extends JsonQueryType> implements A {
+export class JsonQuery<A extends JsonQueryType<Attribute, Children, Tag>,
+  Attribute extends Record<string, any> = never,
+  Children extends Record<string, JsonQueryType<any, any, any>> = any,
+  Tag extends any | never = never,
+> implements A {
   static fromText = <A>(file: string): A => {
-    let documentList :NodeListOf<ChildNode>;
+    let documentList: NodeListOf<ChildNode>;
     let root;
-    if(global.window) {
+    if (global.window) {
       const parser = new DOMParser();
       const document = parser.parseFromString(file, "application/xml")
       root = global
       documentList = document.childNodes
     }
-    if(!global.window) {
+    if (!global.window) {
       root = new jsdom.JSDOM(file, {
         contentType: "text/xml",
       })
@@ -111,12 +117,10 @@ export class JsonQuery<A extends JsonQueryType> implements A {
     }
     return false
   }
-  [nodeBodyType]: never;
-  [nodeAttributes]: never;
 
   body: string;
   children: any;
-  tag: JsonNodeTag;
+  tag: any;
   parent?: JsonQuery<any>;
 
   constructor(private root: jsdom.JSDOM, element: Node, parent: JsonQuery<any> | undefined) {
@@ -170,7 +174,7 @@ export class JsonQuery<A extends JsonQueryType> implements A {
     this.body = cloneElement.textContent.trim();
   }
 
-  appendChild = (key: any, body: string | JsonNodeAttribute<string>, attributesArg?: JsonNodeAttribute<string>): any => {
+  appendChild = (key: any, body: string | Attribute, attributesArg?: Attribute): any => {
     if (key === UnknownJsonTag) {
       return;
     }
@@ -211,7 +215,7 @@ export class JsonQuery<A extends JsonQueryType> implements A {
   queryOptional = <P extends any>(p: P): any => {
     try {
       return this.queryAll(p)?.[0];
-    } catch (e:any)  {
+    } catch (e: any) {
       return undefined;
     }
   }

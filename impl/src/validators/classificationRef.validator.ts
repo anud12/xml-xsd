@@ -7,7 +7,7 @@ type QueryType = JsonSchema[typeof nodeBodyType]["people"][typeof nodeBodyType][
 export const classificationRefValidator: Validator<AttributeNotInValidationError<QueryType>> = async (jsonSchema) => {
   const ruleGroups = jsonSchema.getRuleGroups();
   const metadata = ruleGroups.flatMap(ruleGroup => ruleGroup.queryAllOptional("classification_metadata"));
-  const raceMetadataNames = metadata.flatMap(e => e.queryAll("entry").map(e => e.$name));
+  const raceMetadataNames = metadata.flatMap(e => e.queryAll("entry").map(e => e.getAttribute("name")));
 
   return jsonSchema.json.queryAllRecursiveWithAttributeFrom<QueryType>("$classification_ref")
     .filter((race) => !raceMetadataNames.includes(race.$classification_ref))

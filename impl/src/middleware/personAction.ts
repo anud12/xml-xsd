@@ -1,23 +1,22 @@
 import {Middleware} from "./_type";
 import {JsonSchema} from "../utils/JsonSchema";
-import {nodeBodyType} from "../JSONQuery";
 import {JsonUtil} from "../utils/util";
 
-type RuleGroupQueryType = JsonSchema[typeof nodeBodyType]["rule_group"]
-type PersonQueryType = JsonSchema[typeof nodeBodyType]["people"][typeof nodeBodyType]["person"]
-type PersonActionMetadataQueryType = RuleGroupQueryType[typeof nodeBodyType]["action_metadata"][typeof nodeBodyType]["person_to_person"];
+type RuleGroupQueryType = JsonSchema["children"]["rule_group"]
+type PersonQueryType = JsonSchema["children"]["people"]["children"]["person"]
+type PersonActionMetadataQueryType = RuleGroupQueryType["children"]["action_metadata"]["children"]["person_to_person"];
 
-type MutationQueryType = RuleGroupQueryType[typeof nodeBodyType]["action_metadata"][typeof nodeBodyType]["person_to_person"][typeof nodeBodyType]["property_mutation"]
-type FromQueryType = MutationQueryType[typeof nodeBodyType]["from"]
+type MutationQueryType = RuleGroupQueryType["children"]["action_metadata"]["children"]["person_to_person"]["children"]["property_mutation"]
+type FromQueryType = MutationQueryType["children"]["from"]
 
 const mutationToValue = (readJson: JsonUtil, mutation: MutationQueryType, person: PersonQueryType, targetPerson: PersonQueryType) => {
   const operations = mutation.queryAll("from").flatMap((from: FromQueryType) => {
-    const participant = from.$participant
+    const participant = from.getAttribute("participant")
     const participantPerson = participant === "target"
       ? targetPerson
       : person;
     return from.queryAll("operation")
-      .flatMap(operation => operation.children)
+      .flatMap(operation => operation.childrenList)
       .flatMap(operation => readJson.computeOperation(operation, string => {
         return readJson.person.getProperty(participantPerson, string)
       }))
@@ -60,9 +59,9 @@ export const personAction: Middleware = readJson => {
         if (!personDo) {
           return [];
         }
-        const action = actionMetadata.find(action => action.$name === personDo.$action_ref);
-        const person = personList.find(person => person.$id === by.$person_ref);
-        const targetPerson = personList.find(person => person.$id === personDo.$person_ref);
+        const action = actionMetadata.find(action => action.getAttribute("name") === personDo.getAttribute("action_ref"));
+        const person = personList.find(person => person.getAttribute("id") === by.getAttribute("person_ref"));
+        const targetPerson = personList.find(person => person.getAttribute("id") === personDo.getAttribute("person_ref"));
 
         if (isOutOfRange(readJson, action, person, targetPerson)) {
           return [{
@@ -92,20 +91,20 @@ export const personAction: Middleware = readJson => {
   return async writeJson => {
     actions.forEach(({by: by, personAction, property_mutation_list}) => {
       const personList = writeJson.json.queryAll("people").flatMap(e => e.queryAll("person"));
-      const person = personList.find(e => e.$id === by.$person_ref);
-      const targetPerson = personList.find(e => e.$id === personAction.$person_ref);
+      const person = personList.find(e => e.getAttribute("id") === by.getAttribute("person_ref"));
+      const targetPerson = personList.find(e => e.getAttribute("id") === personAction.getAttribute("person_ref"));
 
       property_mutation_list.forEach(mutation => {
-        const applicablePerson = mutation.property_mutation.$on === "target"
+        const applicablePerson = mutation.property_mutation.getAttribute("on") === "target"
           ? targetPerson
           : person;
-        const propertyName = mutation.property_mutation.$property_ref;
+        const propertyName = mutation.property_mutation.getAttribute("property_ref");
         const propertyValue = writeJson.person.getProperty(applicablePerson, propertyName);
 
         applicablePerson.queryAll("properties")
           .flatMap(e => e.queryAll("property"))
-          .find(e => e.$property_ref === propertyName)
-          .$value = String(Number(propertyValue) + Number(mutation.value))
+          .find(e => e.getAttribute("property_ref") === propertyName)
+          .setAttribute("value", String(Number(propertyValue) + Number(mutation.value)))
       })
     })
     writeJson.json.queryAllOptional("actions")

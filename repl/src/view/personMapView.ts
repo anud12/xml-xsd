@@ -31,15 +31,15 @@ export const personMap = (personId: string): Array<Array<string>> => {
     const y = Number(e.$y);
     const gridY = grid[y] ?? [];
     grid[y] = gridY;
-    if (e.$location_ref === "plains") {
+    if (e.getAttribute("location_ref") === "plains") {
       gridY[x] = `\u25CB`;
       return;
     }
-    if (e.$location_ref === "forest") {
+    if (e.getAttribute("location_ref") === "forest") {
       gridY[x] = `T`;
       return;
     }
-    if (e.$location_ref === "hills") {
+    if (e.getAttribute("location_ref") === "hills") {
       gridY[x] = `\u25B3`;
       return;
     }

@@ -8,5 +8,5 @@ export const create = (readJson:JsonUtil, x: number, y: number): void => {
   do {
     cell = findClosestPoint(readJson.location.grid(), x, y);
     fillNeighbours(readJson, readJson, cell);
-  } while (Number(cell.$y) !== y || Number(cell.$x) !== x)
+  } while (Number(cell.getAttribute("x")) !== y || Number(cell.getAttribute("x")) !== x)
 }

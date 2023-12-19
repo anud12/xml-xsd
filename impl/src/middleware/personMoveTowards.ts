@@ -1,18 +1,21 @@
 import {Middleware} from "./_type";
-import {InferJsonNodeAttribute, JsonQueryType} from "../JSONQuery";
+import {JsonQueryType} from "../JsonQueryType";
 
-type CoordinatesNode = JsonQueryType<"x" | "y">;
-type CoordinatesAttributes = InferJsonNodeAttribute<CoordinatesNode>
+type CoordinatesNode = JsonQueryType<{
+  x:string
+  y:string
+}>;
+type CoordinatesAttributes = CoordinatesNode["attributeMap"]
 
 const calculateDestinationCoordinate = (initial: CoordinatesNode, destination: CoordinatesNode, distanceString: string): CoordinatesAttributes => {
   // Calculate the Euclidean distance between initial and destination coordinates
   const distance = Number(distanceString);
 
-  const initialX = Number(initial.$x);
-  const initialY = Number(initial.$y);
+  const initialX = Number(initial.getAttribute("x"));
+  const initialY = Number(initial.getAttribute("y"));
 
-  const destinationX = Number(destination.$x);
-  const destinationY = Number(destination.$y);
+  const destinationX = Number(destination.getAttribute("x"));
+  const destinationY = Number(destination.getAttribute("y"));
 
   const deltaX = destinationX - initialX;
   const deltaY = destinationY - initialY;
@@ -20,7 +23,7 @@ const calculateDestinationCoordinate = (initial: CoordinatesNode, destination: C
 
   // Check if the current distance is greater than or equal to the given distance
   if (distance >= currentDistance) {
-    return destination; // Return the destination coordinate
+    return destination.attributeMap; // Return the destination coordinate
   } else {
     // Calculate the new coordinate by moving a fraction of the distance
     const fraction = distance / currentDistance;
@@ -32,8 +35,8 @@ const calculateDestinationCoordinate = (initial: CoordinatesNode, destination: C
 
     // Round the coordinates down to integers
     return {
-      $x: String(Math.floor(newX)),
-      $y: String(Math.floor(newY)),
+      x: String(Math.floor(newX)),
+      y: String(Math.floor(newY)),
     }; // Return the new coordinate
   }
 }
@@ -50,10 +53,10 @@ export const personMoveTowards: Middleware = readUnit => {
     .flatMap(by => {
       return by.queryAllOptional("move_towards").flatMap(moveTowards => {
 
-        const person = personList.find(person => person.$id === by.$person_ref);
-        const race = raceMetadata.find(race => race.$name === person.query("race").$race_ref)
+        const person = personList.find(person => person.getAttribute("id") === by.getAttribute("person_ref"));
+        const race = raceMetadata.find(race => race.getAttribute("name") === person.query("race").getAttribute("race_ref"))
 
-        const movement = race.query("movement").$value
+        const movement = race.query("movement").getAttribute("value")
 
         const location = person.query("location")
 
@@ -68,15 +71,15 @@ export const personMoveTowards: Middleware = readUnit => {
   return async writeUnit => {
     const persons = writeUnit.json.queryAll("people").flatMap(e => e.queryAll("person"))
     actions.forEach(mutation => {
-      const person = persons.find(e => e.$name === mutation.person.$name);
+      const person = persons.find(e => e.getAttribute("name") === mutation.person.getAttribute("name"));
       const location = person.query("location")
-      location.$x = mutation.newDestinationAttributes.$x
-      location.$y = mutation.newDestinationAttributes.$y
+      location.setAttribute("x", mutation.newDestinationAttributes.x)
+      location.setAttribute("y", mutation.newDestinationAttributes.y)
 
-      if (location.$x === mutation.destinationAttributes.$x && location.$y === mutation.destinationAttributes.$y) {
+      if (location.getAttribute("x") === mutation.destinationAttributes.getAttribute("x") && location.getAttribute("y") === mutation.destinationAttributes.getAttribute("y")) {
         writeUnit.json.queryAllOptional("actions")
           .flatMap(actions => actions.queryAllOptional("by"))
-          .filter(by => by.$person_ref === mutation.person.$id)
+          .filter(by => by.getAttribute("person_ref") === mutation.person.getAttribute("id"))
           .filter(by => by.queryAllOptional("move_towards"))
           .forEach(e => {
             e.removeFromParent();
