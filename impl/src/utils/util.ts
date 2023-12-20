@@ -49,7 +49,7 @@ export class JsonUtil {
 
   counterNext = () => {
     const counter = this.json.query("world_metadata").query("counter");
-    const attribute = counter.getAttribute("value");
+    const attribute = counter.attributeMap.value;
     counter.setAttribute("value", value => {
       return String(Number(value)+ 1)
     })
@@ -86,10 +86,10 @@ export class JsonUtil {
       return getById(this.json, id)
     }),
     getDistance: memoizeFunction((personQueryType: PersonQueryType, secondPersonQueryType: PersonQueryType) => {
-      const x = Number(personQueryType.query("location").getAttribute("x"));
-      const y = Number(personQueryType.query("location").getAttribute("y"));
-      const x2 = Number(secondPersonQueryType.query("location").getAttribute("x"));
-      const y2 = Number(secondPersonQueryType.query("location").getAttribute("y"));
+      const x = Number(personQueryType.query("location").attributeMap.x);
+      const y = Number(personQueryType.query("location").attributeMap.y);
+      const x2 = Number(secondPersonQueryType.query("location").attributeMap.x);
+      const y2 = Number(secondPersonQueryType.query("location").attributeMap.y);
       return Math.sqrt(Math.pow(x - x2, 2) + Math.pow(y - y2, 2));
     }),
     create: (args: CreatePersonArgs) => createPerson(this, args)

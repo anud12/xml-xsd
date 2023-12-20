@@ -11,11 +11,11 @@ const calculateDestinationCoordinate = (initial: CoordinatesNode, destination: C
   // Calculate the Euclidean distance between initial and destination coordinates
   const distance = Number(distanceString);
 
-  const initialX = Number(initial.getAttribute("x"));
-  const initialY = Number(initial.getAttribute("y"));
+  const initialX = Number(initial.attributeMap.x);
+  const initialY = Number(initial.attributeMap.y);
 
-  const destinationX = Number(destination.getAttribute("x"));
-  const destinationY = Number(destination.getAttribute("y"));
+  const destinationX = Number(destination.attributeMap.x);
+  const destinationY = Number(destination.attributeMap.y);
 
   const deltaX = destinationX - initialX;
   const deltaY = destinationY - initialY;
@@ -53,10 +53,10 @@ export const personMoveTowards: Middleware = readUnit => {
     .flatMap(by => {
       return by.queryAllOptional("move_towards").flatMap(moveTowards => {
 
-        const person = personList.find(person => person.getAttribute("id") === by.getAttribute("person_ref"));
-        const race = raceMetadata.find(race => race.getAttribute("name") === person.query("race").getAttribute("race_ref"))
+        const person = personList.find(person => person.attributeMap.id === by.attributeMap.person_ref);
+        const race = raceMetadata.find(race => race.attributeMap.name === person.query("race").attributeMap.race_ref)
 
-        const movement = race.query("movement").getAttribute("value")
+        const movement = race.query("movement").attributeMap.value
 
         const location = person.query("location")
 
@@ -71,15 +71,15 @@ export const personMoveTowards: Middleware = readUnit => {
   return async writeUnit => {
     const persons = writeUnit.json.queryAll("people").flatMap(e => e.queryAll("person"))
     actions.forEach(mutation => {
-      const person = persons.find(e => e.getAttribute("name") === mutation.person.getAttribute("name"));
+      const person = persons.find(e => e.attributeMap.name === mutation.person.attributeMap.name);
       const location = person.query("location")
       location.setAttribute("x", mutation.newDestinationAttributes.x)
       location.setAttribute("y", mutation.newDestinationAttributes.y)
 
-      if (location.getAttribute("x") === mutation.destinationAttributes.getAttribute("x") && location.getAttribute("y") === mutation.destinationAttributes.getAttribute("y")) {
+      if (location.attributeMap.x === mutation.destinationAttributes.attributeMap.x && location.attributeMap.y === mutation.destinationAttributes.attributeMap.y) {
         writeUnit.json.queryAllOptional("actions")
           .flatMap(actions => actions.queryAllOptional("by"))
-          .filter(by => by.getAttribute("person_ref") === mutation.person.getAttribute("id"))
+          .filter(by => by.attributeMap.person_ref === mutation.person.attributeMap.id)
           .filter(by => by.queryAllOptional("move_towards"))
           .forEach(e => {
             e.removeFromParent();

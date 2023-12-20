@@ -9,25 +9,25 @@ export const locationMarkovChainMatrix = (json: JsonUtil, direction): LocationMa
     .flatMap(e => e.queryAll("location_markov_link"));
   const matrix = locationMarkovLinkList.reduce((previous, link) => {
     let next = link.queryAll("sibling")
-      ?.filter(e => e.getAttribute("position") === direction || e.getAttribute("position") === "all")
+      ?.filter(e => e.attributeMap.position === direction || e.attributeMap.position === "all")
       ?.flatMap(e => {
-          const slots = new Array(Number(e.getAttribute("quantity") ?? 1));
-          return slots.fill(e.getAttribute("location_ref"));
+          const slots = new Array(Number(e.attributeMap.quantity ?? 1));
+          return slots.fill(e.attributeMap.location_ref);
         }
       );
     if (next?.length === undefined || next.length === 0) {
       next = link.queryAll("sibling")
-        ?.filter(e => e.getAttribute("position") === "fill")
+        ?.filter(e => e.attributeMap.position === "fill")
         ?.flatMap(e => {
-            const slots = new Array(Number(e.getAttribute("quantity") ?? 1));
-            return slots.fill(e.getAttribute("location_ref"));
+            const slots = new Array(Number(e.attributeMap.quantity ?? 1));
+            return slots.fill(e.attributeMap.location_ref);
           }
         )
     }
 
     return {
       ...previous,
-      [link.getAttribute("type")]: next ?? []
+      [link.attributeMap.type]: next ?? []
     }
   }, {} as any);
   return matrix;

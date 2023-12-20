@@ -7,14 +7,14 @@ export const personAssignClassification: Middleware = (readJson) => {
   const classificationListByPersonName = personList.map(person => {
     const classificationList = classifyPerson(readJson, person);
     return {
-      name: person.getAttribute("name"),
+      name: person.attributeMap.name,
       classificationList
     }
   })
   return async writeJson => {
     const personList = writeJson.json.queryAll("people").flatMap(e => e.queryAll("person"));
     classificationListByPersonName.forEach(({name, classificationList}) => {
-      const person = personList.find(e => e.getAttribute("name") === name);
+      const person = personList.find(e => e.attributeMap.name === name);
       const classifications = person.query("classifications");
       classifications.childrenList = [];
       classificationList.forEach(classification => {

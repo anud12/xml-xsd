@@ -73,7 +73,7 @@ describe("xml query", () => {
       .query("world_metadata")
       .query("randomization_table")
       .query("entry");
-    const body = navigation.getAttribute("value")
+    const body = navigation.attributeMap.value
     expect(body).toBe("first");
   })
 
@@ -85,7 +85,7 @@ describe("xml query", () => {
       .query("world_metadata")
       .query("randomization_table")
       .queryAll("entry");
-    const body = navigation.map(e => e.getAttribute("value")).join(", ");
+    const body = navigation.map(e => e.attributeMap.value).join(", ");
     expect(body).toBe("first, second");
   })
 
@@ -95,7 +95,7 @@ describe("xml query", () => {
       .query("world_metadata")
       .query("randomization_table")
       .childrenList;
-    const body = navigation.map(e => e.getAttribute("value")).join(", ");
+    const body = navigation.map(e => e.attributeMap.value).join(", ");
     expect(body).toBe("first, default_value, second");
   })
 

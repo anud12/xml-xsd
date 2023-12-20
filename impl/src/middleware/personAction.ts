@@ -11,7 +11,7 @@ type FromQueryType = MutationQueryType["children"]["from"]
 
 const mutationToValue = (readJson: JsonUtil, mutation: MutationQueryType, person: PersonQueryType, targetPerson: PersonQueryType) => {
   const operations = mutation.queryAll("from").flatMap((from: FromQueryType) => {
-    const participant = from.getAttribute("participant")
+    const participant = from.attributeMap.participant
     const participantPerson = participant === "target"
       ? targetPerson
       : person;
@@ -59,9 +59,9 @@ export const personAction: Middleware = readJson => {
         if (!personDo) {
           return [];
         }
-        const action = actionMetadata.find(action => action.getAttribute("name") === personDo.getAttribute("action_ref"));
-        const person = personList.find(person => person.getAttribute("id") === by.getAttribute("person_ref"));
-        const targetPerson = personList.find(person => person.getAttribute("id") === personDo.getAttribute("person_ref"));
+        const action = actionMetadata.find(action => action.attributeMap.name === personDo.attributeMap.action_ref);
+        const person = personList.find(person => person.attributeMap.id === by.attributeMap.person_ref);
+        const targetPerson = personList.find(person => person.attributeMap.id === personDo.attributeMap.person_ref);
 
         if (isOutOfRange(readJson, action, person, targetPerson)) {
           return [{
@@ -91,19 +91,19 @@ export const personAction: Middleware = readJson => {
   return async writeJson => {
     actions.forEach(({by: by, personAction, property_mutation_list}) => {
       const personList = writeJson.json.queryAll("people").flatMap(e => e.queryAll("person"));
-      const person = personList.find(e => e.getAttribute("id") === by.getAttribute("person_ref"));
-      const targetPerson = personList.find(e => e.getAttribute("id") === personAction.getAttribute("person_ref"));
+      const person = personList.find(e => e.attributeMap.id === by.attributeMap.person_ref);
+      const targetPerson = personList.find(e => e.attributeMap.id === personAction.attributeMap.person_ref);
 
       property_mutation_list.forEach(mutation => {
-        const applicablePerson = mutation.property_mutation.getAttribute("on") === "target"
+        const applicablePerson = mutation.property_mutation.attributeMap.on === "target"
           ? targetPerson
           : person;
-        const propertyName = mutation.property_mutation.getAttribute("property_ref");
+        const propertyName = mutation.property_mutation.attributeMap.property_ref;
         const propertyValue = writeJson.person.getProperty(applicablePerson, propertyName);
 
         applicablePerson.queryAll("properties")
           .flatMap(e => e.queryAll("property"))
-          .find(e => e.getAttribute("property_ref") === propertyName)
+          .find(e => e.attributeMap.property_ref === propertyName)
           .setAttribute("value", String(Number(propertyValue) + Number(mutation.value)))
       })
     })

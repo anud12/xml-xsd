@@ -21,15 +21,15 @@ const extractLocationByCoords = (world: JsonUtil, x: number, y: number) => {
 
   if (!cell) return undefined;
 
-  let display = cell?.getAttribute("location_ref")?.split("")?.[0] ?? "0";
+  let display = cell?.attributeMap.location_ref?.split("")?.[0] ?? "0";
 
-  if (cell.getAttribute("location_ref") === "plains") {
+  if (cell.attributeMap.location_ref === "plains") {
     display = "\u00A0";
   }
-  if (cell.getAttribute("location_ref") === "forest") {
+  if (cell.attributeMap.location_ref === "forest") {
     display = "T";
   }
-  if (cell.getAttribute("location_ref") === "mountains") {
+  if (cell.attributeMap.location_ref === "mountains") {
     display = "^";
   }
 

@@ -21,7 +21,7 @@ export const createOperationFromParent = (
 
     return result;
   } catch (e:any)  {
-    const newError = new Error(`createOperationFromParent failed for ${operationList?.getAttribute("name")}`);
+    const newError = new Error(`createOperationFromParent failed for ${operationList?.attributeMap.name}`);
     newError.stack += '\nCaused by: ' + e.stack;
     throw newError;
   }

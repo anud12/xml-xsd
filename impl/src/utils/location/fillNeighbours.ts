@@ -7,8 +7,8 @@ export const fillNeighbours = (readJson: JsonUtil, writeJson: JsonUtil, original
   try {
     const grid = writeJson.location.grid();
     const locationLayer = writeJson.json.query("location_layer");
-    const x = Number(originalCell.getAttribute("x"));
-    const y = Number(originalCell.getAttribute("y"));
+    const x = Number(originalCell.attributeMap.x);
+    const y = Number(originalCell.attributeMap.y);
 
     for (let i = -radius; i <= radius; i++) {
       for (let j = -radius; j <= radius; j++) {
@@ -38,7 +38,7 @@ export const fillNeighbours = (readJson: JsonUtil, writeJson: JsonUtil, original
       }
     }
   } catch (e:any)  {
-    const newError = new Error(`fillNeighbours of type: ${originalCell.getAttribute("location_ref")}, x:${originalCell.getAttribute("x")}, y:${originalCell.getAttribute("y")}`);
+    const newError = new Error(`fillNeighbours of type: ${originalCell.attributeMap.location_ref}, x:${originalCell.attributeMap.x}, y:${originalCell.attributeMap.y}`);
     newError.stack += '\nCaused by: ' + e.stack;
     throw newError;
   }

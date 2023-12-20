@@ -13,15 +13,15 @@ export const locationGrid = (json: JsonUtil): LocationGrid => {
   let maxX = 0;
   let maxY = 0;
   const xLocation = location.reduce((acc, e) => {
-    const xObj = acc[Number(e.getAttribute("x"))] ?? {};
+    const xObj = acc[Number(e.attributeMap.x)] ?? {};
 
-    maxX = Math.abs(Number(e.getAttribute("x"))) > maxX ? Math.abs(Number(e.getAttribute("x"))) : maxX
+    maxX = Math.abs(Number(e.attributeMap.x)) > maxX ? Math.abs(Number(e.attributeMap.x)) : maxX
 
-    maxY = Math.abs(Number(e.getAttribute("y"))) > maxY ? Math.abs(Number(e.getAttribute("y"))) : maxY
+    maxY = Math.abs(Number(e.attributeMap.y)) > maxY ? Math.abs(Number(e.attributeMap.y)) : maxY
 
-    acc[Number(e.getAttribute("x"))] = {
+    acc[Number(e.attributeMap.x)] = {
       ...xObj,
-      [Number(e.getAttribute("y"))]: e
+      [Number(e.attributeMap.y)]: e
     }
     return acc;
   }, {});

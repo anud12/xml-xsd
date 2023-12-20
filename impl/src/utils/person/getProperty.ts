@@ -10,7 +10,7 @@ export const getBaseProperty = (readJson: JsonUtil, personQueryType: PersonQuery
     const ruleGroup = readJson.json.query("rule_group");
     return ruleGroup.queryAll("property_metadata")
       .flatMap(e => e.queryAll("entry"))
-      .filter(value => value.getAttribute("name") === key)
+      .filter(value => value.attributeMap.name === key)
       .flatMap(e => e.queryAll("default"))
       .flatMap(e => e.queryAll("operation"))
       .flatMap(e => e.childrenList)
@@ -26,7 +26,7 @@ export const getBaseProperty = (readJson: JsonUtil, personQueryType: PersonQuery
 export const getRaceProperty = (readJson: JsonUtil, personQueryType: PersonQueryType, raceQueryType: RaceQueryType, key: string): string => {
   const base = getBaseProperty(readJson, personQueryType, key);
   const propertyBonus: Bonus = raceQueryType.queryAllOptional("property_bonus")
-    .find(e => e.getAttribute("property_ref") === key);
+    .find(e => e.attributeMap.property_ref === key);
   if (!propertyBonus) {
     return base;
   }
@@ -48,14 +48,14 @@ export const getProperty = (readJson: JsonUtil, personQueryType: PersonQueryType
     }
     const property = propertyList
       .flatMap(e => e.queryAllOptional("property"))
-      .find(e => e.getAttribute("property_ref") === key);
+      .find(e => e.attributeMap.property_ref === key);
     if (property) {
-      return property.getAttribute("value");
+      return property.attributeMap.value;
     }
 
     const raceMetadata = ruleGroup.queryAll("race_metadata")
       .flatMap(e => e.queryAll("entry"))
-      .find(e => e.getAttribute("name") === personQueryType.query("race").getAttribute("race_ref"));
+      .find(e => e.attributeMap.name === personQueryType.query("race").attributeMap.race_ref);
 
     const value = getRaceProperty(readJson, personQueryType, raceMetadata, key);
 
