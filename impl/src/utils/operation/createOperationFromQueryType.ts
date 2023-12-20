@@ -66,7 +66,7 @@ export const createOperationFromQueryType = (
       return wrapper(value => {
         const operation = operationValue as unknown as OperationQueryType;
         console.log(`${value} ${operation.tag}`)
-        return operation.childrenList.reduce((acc, e) => createOperationFromQueryType(readJson, e.children[0], getExternalProperty)(acc), value)
+        return operation.childrenList.reduce((acc, e) => createOperationFromQueryType(readJson, e.childrenList[0] as OperationQueryType["childrenList"][number], getExternalProperty)(acc), value)
       })
     case "add_property_value":
       return wrapper(value => {

@@ -9,7 +9,7 @@ export const selectActivePersonUrl = "#selectActivePerson";
 export const SelectActivePerson = () => {
   const globalState = frame.useGlobalState();
 
-  
+
   const worldName = globalState.jsonUtil?.json.queryOptional("world_metadata")?.queryOptional("next_world_step")?.body
 
   const personList = globalState.jsonUtil?.json.queryAll("people").flatMap(people => people.queryAll("person"))
@@ -18,14 +18,14 @@ export const SelectActivePerson = () => {
     <div style={{height:"100vh"}}>
       <Prompt location={`~/${worldName}`}/> Select person
       {personList?.map(value => (
-        <div key={value.$id}>
+        <div key={value.attributeMap.id}>
           <Button  onClick={() => {
             globalState.set({
-              activePersonId: value.$id
+              activePersonId: value.attributeMap.id
             })
             window.close();
           }}>
-            {value.$name}
+            {value.attributeMap.name}
           </Button>
         </div>
 

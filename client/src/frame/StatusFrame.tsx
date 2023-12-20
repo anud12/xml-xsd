@@ -7,7 +7,7 @@ import {Cursor} from "../terminal/Cursor";
 const getPerson = (world?: JsonUtil, personId?: string) => {
   return world?.json?.queryAll("people")
     .flatMap(people => people.queryAll("person"))
-    .find(person => person.$id === personId);
+    .find(person => person.attributeMap.id === personId);
 }
 
 export const statusFrameUrl = "#statusFrameUrl";
@@ -21,7 +21,7 @@ export const StatusFrame = () => {
     <div>
       <div>
         <Prompt
-          machine={person?.$name}
+          machine={person?.attributeMap.name}
           user={worldName}
           location={window.location.href
             .replace(window.location.host, "")
@@ -29,21 +29,21 @@ export const StatusFrame = () => {
         />
         <span>cd ~/properties</span>
       </div>
-      {person?.query("properties")?.children.map(e => {
+      {person?.query("properties")?.childrenList.map(e => {
         return <div>
           <Prompt
-            key={e.$property_ref}
-            machine={person?.$name}
+            key={e.attributeMap.property_ref}
+            machine={person?.attributeMap.name}
             user={worldName}
-            location={`~/properties/${e.$property_ref}`}
+            location={`~/properties/${e.attributeMap.property_ref}`}
           />
-          <span>{e.$value}</span>
+          <span>{e.attributeMap.value}</span>
         </div>
       })
       }
       <div>
         <Prompt
-          machine={person?.$name}
+          machine={person?.attributeMap.name}
           user={worldName}
           location={window.location.href
             .replace(window.location.host, "")
@@ -51,15 +51,15 @@ export const StatusFrame = () => {
         />
         <span>cd ~/inventory</span>
       </div>
-      {person?.queryOptional("inventory")?.children.map(e => {
+      {person?.queryOptional("inventory")?.childrenList.map(e => {
         return <div>
           <Prompt
-            key={e.$item_ref}
-            machine={person?.$name}
+            key={e.attributeMap.item_ref}
+            machine={person?.attributeMap.name}
             user={worldName}
-            location={`~/inventory/${e.$item_ref}`}
+            location={`~/inventory/${e.attributeMap.item_ref}`}
           />
-          <span>{e.$equipped}</span>
+          <span>{e.attributeMap.equipped}</span>
         </div>
       })
       }
