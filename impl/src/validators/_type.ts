@@ -9,7 +9,7 @@ export class ValidationError<P extends JsonQueryType<any,any>> {
 export class AttributeNotInValidationError<T extends JsonQueryType<any>> extends ValidationError<T> {
 
   constructor(public jsonQuery: T, attribute: keyof T["attributeMap"], expectedValues: string[]) {
-    const message = `ValidationError: ${jsonQuery[attribute]} at ${jsonQuery.getPath()}@${String(attribute).replace("$", "")} not in [${expectedValues.join(", ")}]`
+    const message = `ValidationError: ${jsonQuery.attributeMap[attribute]} at ${jsonQuery.getPath()}@${String(attribute)} not in [${expectedValues.join(", ")}]`
     super(jsonQuery, attribute, message);
   }
 }

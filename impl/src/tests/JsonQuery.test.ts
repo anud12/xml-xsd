@@ -1,8 +1,6 @@
 import * as jsdom from "jsdom";
-import {
-  JsonQuery,
-  JsonQueryType,
-} from "../JSONQuery";
+import {JsonQuery,} from "../JSONQuery";
+import {JsonQueryType} from "../JsonQueryType";
 
 const file = `<?xml version="1.0" standalone="no"?>
 <world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -23,8 +21,8 @@ type Schema = JsonQueryType<never, {
   world_metadata: JsonQueryType<never, {
     next_world_step: JsonQueryType,
     randomization_table: JsonQueryType<never, {
-      entry: JsonQueryType<"value">,
-      default: JsonQueryType<"value">
+      entry: JsonQueryType<{ "value": string }>,
+      default: JsonQueryType<{ "value": string }>
     }>
   }>
 }>
@@ -75,7 +73,7 @@ describe("xml query", () => {
       .query("world_metadata")
       .query("randomization_table")
       .query("entry");
-    const body = navigation.$value;
+    const body = navigation.getAttribute("value")
     expect(body).toBe("first");
   })
 
@@ -87,7 +85,7 @@ describe("xml query", () => {
       .query("world_metadata")
       .query("randomization_table")
       .queryAll("entry");
-    const body = navigation.map(e => e.$value).join(", ");
+    const body = navigation.map(e => e.getAttribute("value")).join(", ");
     expect(body).toBe("first, second");
   })
 
@@ -96,8 +94,8 @@ describe("xml query", () => {
     const navigation = query
       .query("world_metadata")
       .query("randomization_table")
-      .children;
-    const body = navigation.map(e => e.$value).join(", ");
+      .childrenList;
+    const body = navigation.map(e => e.getAttribute("value")).join(", ");
     expect(body).toBe("first, default_value, second");
   })
 
@@ -127,8 +125,7 @@ describe("xml query", () => {
       const query = JsonQuery.fromText<JsonQueryType<never, any>>(file);
       const body = query.query("world_metadata").query("other")
       throw "Should throw";
-    }
-    catch (e:any) {
+    } catch (e: any) {
       expect(e.message).toBe("query '//world_metadata[0]/other' returned undefined");
     }
 
@@ -170,7 +167,7 @@ describe("xml query", () => {
 
     let body = query.query("world_metadata");
     body.query("randomization_table").body = "helloWorld"
-    body.query("randomization_table").$name = "value";
+    body.query("randomization_table").setAttribute("name", "value");
     expect(query.serialize()).toBe(`<world_step
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:noNamespaceSchemaLocation="schema/world_step/world_step.xsd"

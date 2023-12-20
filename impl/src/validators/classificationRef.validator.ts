@@ -1,15 +1,14 @@
 import {AttributeNotInValidationError, Validator} from "./_type";
-import {nodeBodyType} from "../JSONQuery";
 import {JsonSchema} from "../utils/JsonSchema";
 
-type QueryType = JsonSchema[typeof nodeBodyType]["people"][typeof nodeBodyType]["person"][typeof nodeBodyType]["classifications"][typeof nodeBodyType]["classification"]
+type QueryType = JsonSchema["children"]["people"]["children"]["person"]["children"]["classifications"]["children"]["classification"]
 
 export const classificationRefValidator: Validator<AttributeNotInValidationError<QueryType>> = async (jsonSchema) => {
   const ruleGroups = jsonSchema.getRuleGroups();
   const metadata = ruleGroups.flatMap(ruleGroup => ruleGroup.queryAllOptional("classification_metadata"));
   const raceMetadataNames = metadata.flatMap(e => e.queryAll("entry").map(e => e.getAttribute("name")));
 
-  return jsonSchema.json.queryAllRecursiveWithAttributeFrom<QueryType>("$classification_ref")
-    .filter((race) => !raceMetadataNames.includes(race.$classification_ref))
-    .map(race => new AttributeNotInValidationError(race, "$classification_ref", raceMetadataNames));
+  return jsonSchema.json.queryAllRecursiveWithAttributeFrom<QueryType>("classification_ref")
+    .filter((race) => !raceMetadataNames.includes(race.getAttribute("classification_ref")))
+    .map(race => new AttributeNotInValidationError(race, "classification_ref", raceMetadataNames));
 }

@@ -49,10 +49,11 @@ export class JsonUtil {
 
   counterNext = () => {
     const counter = this.json.query("world_metadata").query("counter");
+    const attribute = counter.getAttribute("value");
     counter.setAttribute("value", value => {
       return String(Number(value)+ 1)
     })
-    return counter.getAttribute("value");
+    return attribute;
   }
   computeOperation = (operationQueryType: OperationQueryType["childrenList"][number], getExternalProperty?: (string: string) => string) => {
     return createOperationFromQueryType(this, operationQueryType, getExternalProperty)

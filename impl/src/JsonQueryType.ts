@@ -1,7 +1,7 @@
 const attributes = Symbol("atributes")
 const children = Symbol("children");
 
-type JsonQueryChildren<T extends Record<string, JsonQueryType<any, any, any>>> = {
+export type JsonQueryChildren<T extends Record<string, JsonQueryType<any, any, any>>> = {
   [P in keyof T]: P extends string
     ? T[P] extends JsonQueryType<infer A, infer B, infer _>
       ? JsonQueryType<A, B, P>
@@ -17,9 +17,10 @@ export type JsonQueryType<
   tag: Tag,
   body?: string,
   attributeMap: Attribute,
+  children: Children,
+  childrenList: Array<JsonQueryChildren<Children>[keyof JsonQueryChildren<Children>]>,
   getAttribute: <T extends keyof Attribute>(name: T) => Attribute[T],
   setAttribute: <T extends keyof Attribute>(name: T, value: Attribute[T] | ((value: Attribute[T]) => Attribute[T])) => JsonQueryType<Attribute, Children, Tag>,
-  children: Children,
   query: <P extends keyof Children> (p: P) => Children[P],
   queryOptional: <P extends keyof Children> (p: P) => Children[P] | undefined,
   queryAll: <P extends keyof Children> (p: P) => Array<Children[P]>,
@@ -27,8 +28,7 @@ export type JsonQueryType<
   queryAllRecursiveWithAttributeFrom: <
     P extends JsonQueryType<any>,
   >(attribute: keyof P["attributeMap"]) => Array<P>,
-  childrenList: Array<JsonQueryChildren<Children>[keyof JsonQueryChildren<Children>]>,
-    appendChild: <U extends keyof Children>(key: U, element: string | Children[U]["children"][number], attributes?: Children[U]["attributeMap"]) => Children[U]
+  appendChild: <U extends keyof Children>(key: U, element: string | Children[U]["children"][number], attributes?: Children[U]["attributeMap"]) => Children[U]
   removeFromParent: () => void,
   getPath: () => string,
   serializeRaw: () => string,
