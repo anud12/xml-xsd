@@ -1,6 +1,6 @@
 import {mainPersonIdContext, worldUtilContext} from "../App";
 import {useContext} from "react";
-import {JsonSchema} from "demo/dist/utils/JsonSchema";
+import {JsonSchema} from "demo/src/utils/JsonSchema";
 import "./QueuedActions.css"
 
 type MoveTowardsQueryType = JsonSchema["children"]["actions"]["children"]["by"]["children"]["move_towards"]

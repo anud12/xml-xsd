@@ -1,5 +1,5 @@
-import {JsonUtil} from "demo/dist/utils/util";
-import {execute} from "demo/dist/execute";
+import {JsonUtil} from "demo/src/utils/util";
+import {execute} from "demo/src/execute";
 
 export const runAction = async (jsonUtil: JsonUtil | undefined) => {
   if (!jsonUtil) {

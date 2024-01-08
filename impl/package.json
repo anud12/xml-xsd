@@ -18,7 +18,8 @@
   "main": "./dist/module.js",
   "scripts": {
     "test": "jest",
-    "build": "tsc --watch",
+    "build": "tsc",
+    "build-watch": "tsc --watch",
     "start": "ts-node src/index.ts",
     "start-debug": "ts-node src/index.ts ../world_2.xml"
   },
