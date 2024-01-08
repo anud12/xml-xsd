@@ -1,0 +1,16 @@
+.cellQueryType {
+    width: calc(var(--font-size) + ( 2 *var(--padding)));
+    height: calc(var(--font-size) + (2 *var(--padding)));
+    filter: brightness(0) invert(0.60);
+}
+
+.personQueryType {
+    width: calc(var(--font-size) + ( 2 *var(--padding)));
+    height: calc(var(--font-size) + (2 *var(--padding)));
+    scale: 0.5;
+    filter: brightness(0) invert(1) sepia(100%) hue-rotate(160deg) saturate(2339%);
+}
+
+.mapView {
+    --font-size: 20px;
+}
