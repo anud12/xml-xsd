@@ -13,6 +13,9 @@ export type OperationQueryType = JsonQueryType<{}, {
   group: JsonQueryType
 }>
 
+export type IconType = JsonQueryType<any, {
+  svg: JsonQueryType<any, any>
+}>;
 export type ClassificationOperationIs = "lessThan"
   | "lessThanOrEqual"
   | "greaterThan"
@@ -73,7 +76,8 @@ export type JsonSchema = JsonQueryType<{}, {
         movement: JsonQueryType<{ value: string }>
         property_bonus: JsonQueryType<{ property_ref: string, value: string, max_value: string }, {
           operation: OperationQueryType
-        }>
+        }>,
+        icon: IconType
       }>
     }>,
     item_metadata: JsonQueryType<{}, {
@@ -109,7 +113,8 @@ export type JsonSchema = JsonQueryType<{}, {
     }>,
     locations_markov_chain: JsonQueryType<{}, {
       location_markov_link: JsonQueryType<{ type: string }, {
-        sibling: JsonQueryType<{ location_ref: string, position: string, quantity: string }>
+        sibling: JsonQueryType<{ location_ref: string, position: string, quantity: string }>,
+        icon: IconType
       }>
     }>,
   }>
@@ -128,6 +133,7 @@ export type JsonSchema = JsonQueryType<{}, {
       classifications: JsonQueryType<{}, {
         classification: JsonQueryType<{ classification_ref: string }>
       }>,
+      icon: IconType
     }>
   }>;
 
