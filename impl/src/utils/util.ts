@@ -8,8 +8,8 @@ import {createOperationFromQueryType} from "./operation/createOperationFromQuery
 import {getProperty, PersonQueryType} from "./person/getProperty";
 import {getById} from "./person/getById";
 import {createPerson, CreatePersonArgs} from "./person/createPerson";
-import {JsonQueryType, nodeBodyType} from "../JSONQuery";
 import {createOperationFromParent} from "./operation/createOperationFromParent";
+import {JsonQueryType} from "../JsonQueryType";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -49,11 +49,13 @@ export class JsonUtil {
 
   counterNext = () => {
     const counter = this.json.query("world_metadata").query("counter");
-    const next = Number(counter.$value);
-    counter.$value = String(next + 1);
-    return next;
+    const attribute = counter.attributeMap.value;
+    counter.setAttribute("value", value => {
+      return String(Number(value)+ 1)
+    })
+    return attribute;
   }
-  computeOperation = (operationQueryType: OperationQueryType, getExternalProperty?: (string: string) => string) => {
+  computeOperation = (operationQueryType: OperationQueryType["childrenList"][number], getExternalProperty?: (string: string) => string) => {
     return createOperationFromQueryType(this, operationQueryType, getExternalProperty)
   }
   computeOperationFromParent = (operationList: JsonQueryType<any, {
@@ -84,10 +86,10 @@ export class JsonUtil {
       return getById(this.json, id)
     }),
     getDistance: memoizeFunction((personQueryType: PersonQueryType, secondPersonQueryType: PersonQueryType) => {
-      const x = Number(personQueryType.query("location").$x);
-      const y = Number(personQueryType.query("location").$y);
-      const x2 = Number(secondPersonQueryType.query("location").$x);
-      const y2 = Number(secondPersonQueryType.query("location").$y);
+      const x = Number(personQueryType.query("location").attributeMap.x);
+      const y = Number(personQueryType.query("location").attributeMap.y);
+      const x2 = Number(secondPersonQueryType.query("location").attributeMap.x);
+      const y2 = Number(secondPersonQueryType.query("location").attributeMap.y);
       return Math.sqrt(Math.pow(x - x2, 2) + Math.pow(y - y2, 2));
     }),
     create: (args: CreatePersonArgs) => createPerson(this, args)
@@ -95,7 +97,7 @@ export class JsonUtil {
 
   markov = markovNext;
 
-  getRuleGroups = ():Array<JsonSchema[typeof nodeBodyType]["rule_group"]> => {
+  getRuleGroups = ():Array<JsonSchema["children"]["rule_group"]> => {
     return this.json.queryAll("rule_group");
   }
 

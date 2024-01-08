@@ -1,15 +1,15 @@
-import {JsonQueryType, nodeAttributes} from "../JSONQuery";
 import {JsonUtil} from "../utils/util";
+import {JsonQueryType} from "../JsonQueryType";
 
 export class ValidationError<P extends JsonQueryType<any,any>> {
-  constructor(public jsonQuery: P, attribute?:keyof P[typeof nodeAttributes], public message?: string) {
+  constructor(public jsonQuery: P, attribute?:keyof P["attributeMap"], public message?: string) {
   }
 }
 
-export class AttributeNotInValidationError<T extends JsonQueryType<any, any>> extends ValidationError<T> {
+export class AttributeNotInValidationError<T extends JsonQueryType<any>> extends ValidationError<T> {
 
-  constructor(public jsonQuery: T, attribute: keyof T[typeof nodeAttributes], expectedValues: string[]) {
-    const message = `ValidationError: ${jsonQuery[attribute]} at ${jsonQuery.getPath()}@${String(attribute).replace("$", "")} not in [${expectedValues.join(", ")}]`
+  constructor(public jsonQuery: T, attribute: keyof T["attributeMap"], expectedValues: string[]) {
+    const message = `ValidationError: ${jsonQuery.attributeMap[attribute]} at ${jsonQuery.getPath()}@${String(attribute)} not in [${expectedValues.join(", ")}]`
     super(jsonQuery, attribute, message);
   }
 }

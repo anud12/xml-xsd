@@ -1,61 +1,12 @@
 import * as jsdom from "jsdom";
+import {JsonQueryChildren, JsonQueryType} from "./JsonQueryType";
 
 const prettier = require("prettier")
 
 const CommentJsonTag = "CommentJsonTag"
 const UnknownJsonTag = "UnknownJsonTag"
 
-export type JsonNodeTag<U = string> = U | typeof CommentJsonTag | typeof UnknownJsonTag
-export type JsonNode = {
-  body: string
-  tag: JsonNodeTag
-}
-
-export type InferJsonNodeBody<T> = T extends JsonQueryType<infer A, infer B>
-  ? { [P in keyof B]: InferJsonNodeBody<B[P]> & JsonNodeAttribute<A> }
-  : never;
-export type InferJsonNodeAttribute<T> = T extends JsonQueryType<infer A> ? JsonNodeAttribute<A> : never;
-
-export type JsonElement<A extends string> = JsonNode & JsonNodeAttribute<A>
-
-export type JsonNodeAttribute<A extends string> = {
-  [P in A as `$${P}`]?: string
-}
-export const nodeBodyType = Symbol()
-export const nodeAttributes = Symbol();
-
-export type RecursiveKeys<T> = T extends object
-  ? keyof T & RecursiveKeys<T[keyof T]>
-  : never
-
-export type JsonQueryType<
-  A extends string = never,
-  B extends Record<string, JsonQueryType<string, any>> = never
-> = JsonElement<A>
-  & {
-  children: Array<B[keyof B]>;
-  appendChild: <U extends keyof B>(key: U, element: string | B[U][typeof nodeAttributes], attributes?: B[U][typeof nodeAttributes]) => B[U]
-  query: <P extends keyof B> (p: P) => B[P],
-  queryOptional: <P extends keyof B> (p: P) => B[P] | undefined,
-  queryAll: <P extends keyof B> (p: P) => Array<B[P]>,
-  queryAllOptional: <P extends keyof B> (p: P) => Array<B[P]>,
-  queryAllRecursiveWithAttributeFrom: <P extends JsonQueryType<any, any>>(attribute: keyof P[typeof nodeAttributes]) => Array<P>,
-  removeFromParent: () => void,
-  getPath: () => string,
-  serializeRaw: () => string,
-  serialize: () => string
-} & {
-  [nodeBodyType]: {
-    [P in keyof B]: B[P] extends JsonQueryType<any, any> ? B[P] : never
-  }
-}
-  & {
-  [nodeAttributes]: {
-    [P in A as `$${P}`]?: string
-  }
-}
-
-const innerSerialize = (dom: jsdom.JSDOM, query: JsonQueryType<any, any>): Element | Comment | undefined => {
+const innerSerialize = (dom: jsdom.JSDOM, query: JsonQueryType<Record<string, any>, any, string>): Element | Comment | undefined => {
   if (query.tag === CommentJsonTag) {
     const element = dom.window.document.createElementNS("", "COMMENT_TO_BE_REPLACED");
     element.innerHTML = query.body ?? ""
@@ -65,14 +16,12 @@ const innerSerialize = (dom: jsdom.JSDOM, query: JsonQueryType<any, any>): Eleme
     return undefined
   }
   const rootElement = dom.window.document.createElementNS("", query.tag);
-  Object.keys(query).forEach((key) => {
-    if (key?.startsWith("$")) {
-      const attributeKey = key.replace("$", "").replace(":", "__namespace__");
-      rootElement.setAttribute(attributeKey, query[key])
-    }
+  Object.entries(query.attributeMap).forEach(([key, value]) => {
+    const attributeKey = key.replace(":", "__namespace__");
+    rootElement.setAttribute(attributeKey, value)
   })
   rootElement.innerHTML += query.body ?? "";
-  query.children
+  query.childrenList
     .map(value => innerSerialize(dom, value))
     .filter(value => value)
     .forEach(value => {
@@ -81,18 +30,23 @@ const innerSerialize = (dom: jsdom.JSDOM, query: JsonQueryType<any, any>): Eleme
   return rootElement
 }
 
+
 // @ts-ignore TS2420
-export class JsonQuery<A extends JsonQueryType> implements A {
+export class JsonQuery<A extends JsonQueryType<Attribute, Children, Tag>,
+  Attribute extends Record<string, any> = Record<string, any>,
+  Children extends Record<string, JsonQueryType<any, any, any>> = any,
+  Tag extends any | never = any,
+> implements A {
   static fromText = <A>(file: string): A => {
-    let documentList :NodeListOf<ChildNode>;
+    let documentList: NodeListOf<ChildNode>;
     let root;
-    if(global.window) {
+    if (global.window) {
       const parser = new DOMParser();
       const document = parser.parseFromString(file, "application/xml")
       root = global
       documentList = document.childNodes
     }
-    if(!global.window) {
+    if (!global.window) {
       root = new jsdom.JSDOM(file, {
         contentType: "text/xml",
       })
@@ -111,16 +65,17 @@ export class JsonQuery<A extends JsonQueryType> implements A {
     }
     return false
   }
-  [nodeBodyType]: never;
-  [nodeAttributes]: never;
 
+  tag: any;
   body: string;
+  attributeMap: Attribute;
+  childrenList: Array<JsonQueryChildren<Children>[keyof JsonQueryChildren<Children>]>;
   children: any;
-  tag: JsonNodeTag;
   parent?: JsonQuery<any>;
 
   constructor(private root: jsdom.JSDOM, element: Node, parent: JsonQuery<any> | undefined) {
-    this.children = []
+    this.childrenList = []
+    this.attributeMap = {} as Attribute;
     this.parent = parent;
     this.tag = UnknownJsonTag;
 
@@ -140,7 +95,7 @@ export class JsonQuery<A extends JsonQueryType> implements A {
     if (!this.parent) {
       return "/"
     }
-    const index = this.parent.children.filter(e => e.tag === this.tag).findIndex(e => e === this);
+    const index = this.parent.childrenList.filter(e => e.tag === this.tag).findIndex(e => e === this as any);
     return `${this.parent.getPath()}/${this.tag}[${index}]`
   }
 
@@ -155,9 +110,9 @@ export class JsonQuery<A extends JsonQueryType> implements A {
       })
       .filter(e => e)
       .filter(e => e.tag !== UnknownJsonTag);
-    this.children = children as any;
+    this.childrenList = children as any;
     [...element.getAttributeNames()].forEach((currentValue) => {
-      this[`$${currentValue}`] = element.getAttribute(currentValue)
+      (this.attributeMap as any)[currentValue] = element.getAttribute(currentValue)
     })
 
     let cloneElement = element.cloneNode(true);
@@ -170,7 +125,20 @@ export class JsonQuery<A extends JsonQueryType> implements A {
     this.body = cloneElement.textContent.trim();
   }
 
-  appendChild = (key: any, body: string | JsonNodeAttribute<string>, attributesArg?: JsonNodeAttribute<string>): any => {
+  getAttribute = <T extends keyof Attribute>(name: T): Attribute[T] => {
+    return this.attributeMap[name];
+  }
+  setAttribute = <T extends keyof Attribute>(name: T, value: Attribute[T] | ((value: Attribute[T]) => Attribute[T])): JsonQueryType<Attribute, Children, Tag> => {
+    if (typeof value === "function") {
+      const valueFunc = value as unknown as ((value: Attribute[T]) => Attribute[T]);
+      this.attributeMap[name] = valueFunc(this.attributeMap[name]);
+      return this as unknown as JsonQueryType<Attribute, Children, Tag>;
+    }
+    this.attributeMap[name] = value;
+    return this as unknown as JsonQueryType<Attribute, Children, Tag>;
+  }
+
+  appendChild = (key: any, body: string | Attribute, attributesArg?: Attribute): any => {
     if (key === UnknownJsonTag) {
       return;
     }
@@ -189,12 +157,12 @@ export class JsonQuery<A extends JsonQueryType> implements A {
       element.setAttribute(key.replace("$", ""), value);
     })
     const jsonQuery = new JsonQuery(this.root, element, this);
-    this.children.push(jsonQuery);
+    this.childrenList.push(jsonQuery as any);
     return jsonQuery;
   }
 
   queryAllOptional = <P extends any>(p: P): any[] => {
-    return this.children.filter(e => e.tag === p);
+    return this.childrenList.filter(e => e.tag === p);
   }
 
   queryAll = <P extends any>(p: P): any[] => {
@@ -211,16 +179,16 @@ export class JsonQuery<A extends JsonQueryType> implements A {
   queryOptional = <P extends any>(p: P): any => {
     try {
       return this.queryAll(p)?.[0];
-    } catch (e:any)  {
+    } catch (e: any) {
       return undefined;
     }
   }
 
   queryAllRecursiveWithAttributeFrom = (attribute: string | number | symbol): any[] => {
-    const childrenResult = this.children
+    const childrenResult = this.childrenList
       .map(e => e.queryAllRecursiveWithAttributeFrom(attribute))
       .flat();
-    const result = this.children.filter(e => e[`${String(attribute)}`] !== undefined);
+    const result = this.childrenList.filter(e => e.attributeMap[`${String(attribute)}`] !== undefined);
     return [...result, ...childrenResult];
   }
 
@@ -228,7 +196,7 @@ export class JsonQuery<A extends JsonQueryType> implements A {
     if (!this.parent) {
       return;
     }
-    this.parent.children = this.parent.children.filter(e => e !== this);
+    this.parent.childrenList = this.parent.childrenList.filter(e => e !== this as any);
   }
 
   serializeRaw = () => {

@@ -8,19 +8,20 @@ export const personVision: Middleware = (readJson) => {
     persons.map(e => {
       const location = e.query("location");
 
-      const {$x, $y} = location;
-      const race = e.query("race").$race_ref;
+      const x = location.attributeMap.x;
+      const y= location.attributeMap.y;
+      const race = e.query("race").attributeMap.race_ref;
 
       const raceMetadata = ruleGroup.flatMap(ruleGroup => {
         return ruleGroup.queryOptional("race_metadata")
           .queryAll("entry")
 
       })
-      const radius = raceMetadata.find(e => e.$name === race)
+      const radius = raceMetadata.find(e => e.attributeMap.name === race)
         .queryOptional("vision");
 
-      readJson.location.create(Number($x), Number($y));
-      fillNeighbours(readJson, readJson, readJson.location.grid()[Number($x)][Number($y)], Number(radius.$value));
+      readJson.location.create(Number(x), Number(y));
+      fillNeighbours(readJson, readJson, readJson.location.grid()[Number(x)][Number(y)], Number(radius.attributeMap.value));
     })
 
     return async () => {

@@ -15,12 +15,12 @@ export const ActionOptions = (props: Props) => {
     {personToPerson?.map(action => {
       return <div className={"ActionOptions__action"}>
         <Button onClick={() => {
-          if (!action.$name) {
+          if (!action.attributeMap.name) {
             console.error("No name for action", action)
             return
           }
-          props.onClick?.(action.$name)
-        }}>{action.$name}</Button>
+          props.onClick?.(action.attributeMap.name)
+        }}>{action.attributeMap.name}</Button>
       </div>
     })}
   </div>

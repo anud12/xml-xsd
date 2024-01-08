@@ -1,12 +1,11 @@
 import {Middleware} from "./_type";
-import {nodeBodyType} from "../JSONQuery";
 import {JsonSchema} from "../utils/JsonSchema";
 import {JsonUtil} from "../utils/util";
 
 
-type RuleGroupQueryType = JsonSchema[typeof nodeBodyType]["rule_group"]
-type EventQueryType = RuleGroupQueryType[typeof nodeBodyType]["events_metadata"][typeof nodeBodyType]["entry"];
-type ThenQueryType = EventQueryType[typeof nodeBodyType]["then"]
+type RuleGroupQueryType = JsonSchema["children"]["rule_group"]
+type EventQueryType = RuleGroupQueryType["children"]["events_metadata"]["children"]["entry"];
+type ThenQueryType = EventQueryType["children"]["then"]
 
 
 type Origin = {
@@ -18,28 +17,28 @@ type Origin = {
 const applyFromPersonActionUsed = (readJson: JsonUtil, event: EventQueryType): Origin[] => {
   const personActionUsedTypeList = event.queryAll("when")
     .flatMap(when => when.queryAllOptional("person_action_used"))
-    .flatMap(person_action_used => person_action_used.$action_ref);
+    .flatMap(person_action_used => person_action_used.attributeMap.action_ref);
   const byList = readJson.json.queryAll("actions").flatMap(action => action.queryAllOptional("by"));
 
-  return byList.filter(by => personActionUsedTypeList.includes(by.queryOptional("do")?.$action_ref))
+  return byList.filter(by => personActionUsedTypeList.includes(by.queryOptional("do")?.attributeMap.action_ref))
     .flatMap(by => {
-      if(!by.queryOptional("do")?.$action_ref) {
+      if(!by.queryOptional("do")?.attributeMap.action_ref) {
         return [];
       }
-      const self = readJson.person.getById(by.$person_ref);
+      const self = readJson.person.getById(by.attributeMap.person_ref);
       const selfLocation = self.query("location");
-      const target = readJson.person.getById(by.queryOptional("do").$person_ref)
+      const target = readJson.person.getById(by.queryOptional("do").attributeMap.action_ref)
       const targetLocation = target.query("location");
 
       return {
         thenList: event.queryAllOptional("then"),
         self: {
-          $x: selfLocation.$x,
-          $y: selfLocation.$y,
+          $x: selfLocation.attributeMap.x,
+          $y: selfLocation.attributeMap.y,
         },
         target: {
-          $x: targetLocation.$x,
-          $y: targetLocation.$y,
+          $x: targetLocation.attributeMap.x,
+          $y: targetLocation.attributeMap.y,
         }
       }
     });
@@ -54,21 +53,21 @@ const thenCreatePerson = (readJson: JsonUtil, origin: Origin): Array<(util: Json
     const radiusOperation = readJson.computeOperationFromParent(radiusElement, string => string);
     const radius = Number(radiusOperation("0"))
 
-    const originElement = then.query("at").$origin === "self"
+    const originElement = then.query("at").attributeMap.origin === "self"
       ? origin.self
       : origin.target
 
     return then.queryAllOptional("create_person")
       .map(create_person =>
         (util: JsonUtil) => {
-          const race = create_person.queryOptional("race")?.$race_ref;
+          const race = create_person.queryOptional("race")?.attributeMap.race_ref;
           const x = String(Math.floor(readJson.random() * radius * 2) - radius + Number(originElement.$x));
           const y = String(Math.floor(readJson.random() * radius * 2) - radius + Number(originElement.$y));
 
           const itemList = create_person.queryAllOptional("inventory")
           .flatMap(inventory => inventory.queryAllOptional("item"))
           .flatMap(item => {
-            const item_ref = item.$item_ref;
+            const item_ref = item.attributeMap.item_ref;
             const quantity = readJson.computeOperationFromParent(item.queryOptional("quantity"), string => string)("0");
             return {
               $item_ref: item_ref,

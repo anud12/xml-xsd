@@ -1,11 +1,10 @@
 import {mainPersonIdContext, worldUtilContext} from "../App";
 import {useContext} from "react";
 import {JsonSchema} from "demo/dist/utils/JsonSchema";
-import {nodeBodyType} from "demo/dist/JSONQuery";
 import "./QueuedActions.css"
 
-type MoveTowardsQueryType = JsonSchema[typeof nodeBodyType]["actions"][typeof nodeBodyType]["by"][typeof nodeBodyType]["move_towards"]
-type DoQueryType = JsonSchema[typeof nodeBodyType]["actions"][typeof nodeBodyType]["by"][typeof nodeBodyType]["do"]
+type MoveTowardsQueryType = JsonSchema["children"]["actions"]["children"]["by"]["children"]["move_towards"]
+type DoQueryType = JsonSchema["children"]["actions"]["children"]["by"]["children"]["do"]
 
 export const QueuedActions = () => {
 
@@ -14,16 +13,16 @@ export const QueuedActions = () => {
 
   const actions = world?.json.queryAll("actions")
     .flatMap(queued_actions => queued_actions.queryAllOptional("by"))
-    .filter(by => by.$person_ref === mainPersonId)
+    .filter(by => by.attributeMap.person_ref === mainPersonId)
     .flatMap(by => {
-      return by.children.map(action => {
+      return by.childrenList.map(action => {
         if (action.tag === "move_towards") {
           const moveTowards = action as MoveTowardsQueryType;
-          return `Move towards x:${moveTowards.$x}, y:${moveTowards.$y}`;
+          return `Move towards x:${moveTowards.attributeMap.x}, y:${moveTowards.attributeMap.y}`;
         }
         if (action.tag === "do") {
           const doAction = action as DoQueryType;
-          return `Do ${doAction.$action_ref} to ${doAction.$person_ref}`
+          return `Do ${doAction.attributeMap.action_ref} to ${doAction.attributeMap.person_ref}`
         }
         return "Unknown action";
       })

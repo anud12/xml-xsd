@@ -16,17 +16,17 @@ export const addAction = (jsonUtil: JsonUtil | undefined, mainPersonId: string |
   const actions = jsonUtil.json.queryOptional("actions")
 
   actions?.queryAllOptional("by")
-    ?.filter(by => by.$person_ref === mainPersonId)
+    ?.filter(by => by.attributeMap.person_ref === mainPersonId)
     ?.forEach(by => {
       by.queryOptional("do")?.removeFromParent();
     })
 
   const by = actions?.appendChild("by", {
-    $person_ref: mainPersonId,
+    person_ref: mainPersonId,
   })
   by?.appendChild("do", {
-    $person_ref: toPersonRef,
-    $action_ref: actionName,
+    person_ref: toPersonRef,
+    action_ref: actionName,
   })
   return;
 

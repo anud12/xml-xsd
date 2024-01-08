@@ -12,11 +12,11 @@ export const PersonSelect = (props:Props) => {
 
   return <div className={"PersonSelect"}>
     {world?.json.queryAll("people").flatMap(people => people.queryAll("person")).map(person => {
-      return <Fragment key={person.$id}>
+      return <Fragment key={person.attributeMap.id}>
         <Button onClick={() => {
-          props.onChange(person.$id ?? "");
+          props.onChange(person.attributeMap.id ?? "");
         }}>
-          {person.$name}
+          {person.attributeMap.name}
         </Button>
         <br/>
       </Fragment>
