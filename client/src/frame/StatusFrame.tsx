@@ -1,7 +1,7 @@
 import {frame} from "./frame";
 import React from "react";
 import {Prompt} from "../terminal/Prompt";
-import {JsonUtil} from "demo/dist/utils/util";
+import {JsonUtil} from "demo/src/utils/util";
 import {Cursor} from "../terminal/Cursor";
 
 const getPerson = (world?: JsonUtil, personId?: string) => {

@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {JsonUtil} from "demo/dist/utils/util";
+import {JsonUtil} from "demo/src/utils/util";
 
 const crossSymbol = Symbol("CrossSymbol");
 

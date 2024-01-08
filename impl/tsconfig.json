@@ -7,6 +7,6 @@
     "moduleResolution": "Node",
     "allowSyntheticDefaultImports": true,
     "downlevelIteration": true,
-    "outDir": "./dist"
+    "noEmit": true
   }
 }

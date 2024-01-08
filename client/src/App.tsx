@@ -1,7 +1,6 @@
 import React, {createContext} from 'react';
 import './App.css';
-import {JsonUtil} from "demo/dist/utils/util";
-import hot from "react-hot-loader/root";
+import {JsonUtil} from "demo/src/utils/util";
 import {MapFrame} from "./frame/MapFrame";
 import {SelectActivePerson, selectActivePersonUrl} from "./frame/SelectActivePersonFrame";
 import {StatusFrame, statusFrameUrl} from "./frame/StatusFrame";
@@ -21,4 +20,4 @@ function App() {
   }
 }
 
-export default hot.hot(App);
+export default App;

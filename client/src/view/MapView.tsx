@@ -1,5 +1,5 @@
 import React from "react";
-import {JsonUtil} from "demo/dist/utils/util";
+import {JsonUtil} from "demo/src/utils/util";
 import {Grid} from "../terminal/Grid";
 import {Cell} from "../terminal/Cell";
 import {useContextMenu} from "../terminal/useContextMenu";
@@ -10,7 +10,7 @@ import {statusFrameUrl} from "../frame/StatusFrame";
 import {ActionOptions} from "./ActionOptions";
 import {addAction} from "../action/addAction";
 import {runAction} from "../action/runAction";
-import {JsonQueryType} from "demo/dist/JsonQueryType";
+import {JsonQueryType} from "demo/src/JsonQueryType";
 
 const extractLocationByCoords = (world: JsonUtil, x: number, y: number) => {
   const cell = world.json.queryAll("location_layer")

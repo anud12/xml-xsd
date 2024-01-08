@@ -1,4 +1,4 @@
-import {JsonUtil} from "demo/dist/utils/util";
+import {JsonUtil} from "demo/src/utils/util";
 
 export const addAction = (jsonUtil: JsonUtil | undefined, mainPersonId: string | undefined, toPersonRef: string | undefined, actionName: string | undefined) => {
   if (!jsonUtil) {
