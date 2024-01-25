@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import {execute} from "./execute";
+import {execute, executeFromString} from "./execute";
 import {validate} from "./validate";
 
 (async () => {
@@ -11,7 +11,7 @@ import {validate} from "./validate";
   if(errors?.length) {
     throw new Error(errors.map(e => e.message).join("\n"));
   }
-  const outJson = await execute(data.toString(), console.log);
+  const outJson = await executeFromString(data.toString(), console.log);
   fs.writeFileSync(outJson.query("world_metadata").query("next_world_step").body + ".xml", outJson.serialize());
 
 })()

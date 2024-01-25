@@ -9,9 +9,9 @@ import {frame} from "../frame/frame";
 import {statusFrameUrl} from "../frame/StatusFrame";
 import {ActionOptions} from "./ActionOptions";
 import {addAction} from "../action/addAction";
-import {runAction} from "../action/runAction";
 import {JsonQueryType} from "demo/src/JsonQueryType";
 import "./MapView.css";
+import {runAction} from "../action/runAction";
 
 
 const playerSymbol  = `<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -178,9 +178,12 @@ export const MapView = (props: Props) => {
             <ActionOptions onClick={async actionName => {
               addAction(props.world, props.mainPersonId, person.attributeMap.id, actionName);
               myHook.close();
-              globalState.set({
-                jsonUtil: await runAction(props.world)
+              runAction(props.world, jsonUtil => {
+                globalState.set({
+                  jsonUtil: jsonUtil
+                })
               })
+
             }}/>
             <Button spawnsNew={true} onClick={() => {
               frame.open(statusFrameUrl, {personId: person.attributeMap.id ?? ""})

@@ -20,14 +20,14 @@ export const MapFrame = () => {
 
   const mainPersonRef = useRef<HTMLSpanElement>(null);
 
-  useEffect(() => {
-    if (!mainPersonRef.current) return;
-    mainPersonRef.current.scrollIntoView({
-      behavior: "instant",
-      block: "center",
-      inline: "center",
-    });
-  }, [mainPersonRef.current]);
+  // useEffect(() => {
+  //   if (!mainPersonRef.current) return;
+  //   mainPersonRef.current.scrollIntoView({
+  //     behavior: "instant",
+  //     block: "center",
+  //     inline: "center",
+  //   });
+  // }, [mainPersonRef.current]);
 
   return (
     <div style={{height: "100vh"}}>
@@ -64,9 +64,12 @@ export const MapFrame = () => {
         },{
           key:"None",
           label: <Button onClick={async () => {
-            globalState.set({
-              jsonUtil: await runAction(globalState.jsonUtil)
+            await runAction(globalState.jsonUtil, jsonUtil => {
+              globalState.set({
+                jsonUtil: jsonUtil
+              })
             })
+
           }}>
             Run
           </Button>
@@ -98,9 +101,12 @@ export const MapFrame = () => {
             onMainPersonRef={mainPersonRef}
             onClick={async (cell, position) => {
               moveToAction(globalState.jsonUtil, globalState.activePersonId, position.x, position.y);
-              globalState.set({
-                jsonUtil: await runAction(globalState.jsonUtil)
+              runAction(globalState.jsonUtil, jsonUtil => {
+                globalState.set({
+                  jsonUtil:jsonUtil,
+                })
               })
+
             }}
           />
 

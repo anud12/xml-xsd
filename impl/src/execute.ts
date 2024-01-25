@@ -10,10 +10,19 @@ import {offsetRandomisationTable} from "./middleware/offsetRandomisationTable";
 import {propertyRefValidator} from "./validators/propertyRef.validator";
 import {raceRefValidator} from "./validators/raceRef.validator";
 
-export const execute = async (xmlString:string, log: (...string:any[]) => void) => {
+export const executeFromString = async(xmlString:string, log: (...string:any[]) => void) => {
   const oldLog = console.log;
   console.log = log;
   const readJson = JsonQuery.fromText<JsonSchema>(xmlString.toString());
+  const result = execute(readJson, log)
+  console.log = oldLog;
+  return result;
+}
+
+
+export const execute = async (readJson:JsonSchema, log: (...string:any[]) => void) => {
+  const oldLog = console.log;
+  console.log = log;
 
   const readJsonUtil = new JsonUtil(readJson);
 
