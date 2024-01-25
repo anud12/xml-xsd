@@ -49,6 +49,28 @@ export const StatusFrame = () => {
             .replace(window.location.host, "")
             .replace(window.location.protocol + "//", "")}
         />
+        <span>cd ~/classification</span>
+      </div>
+      {person?.query("classifications")?.childrenList.map(e => {
+        return <div>
+          <Prompt
+            key={e.attributeMap.classification_ref}
+            machine={person?.attributeMap.name}
+            user={worldName}
+            location={`~/classification/${e.attributeMap.classification_ref}`}
+          />
+          <span>{e.attributeMap.classification_ref}</span>
+        </div>
+      })
+      }
+      <div>
+        <Prompt
+          machine={person?.attributeMap.name}
+          user={worldName}
+          location={window.location.href
+            .replace(window.location.host, "")
+            .replace(window.location.protocol + "//", "")}
+        />
         <span>cd ~/inventory</span>
       </div>
       {person?.queryOptional("inventory")?.childrenList.map(e => {

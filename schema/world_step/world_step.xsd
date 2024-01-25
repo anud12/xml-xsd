@@ -1,7 +1,11 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
->
-
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:include schemaLocation="../types/schema.xsd"/>
+
+  <xs:complexType name="type_icon">
+    <xs:simpleContent>
+      <xs:extension base="xs:anyType"/>
+    </xs:simpleContent>
+  </xs:complexType>
 
   <xs:simpleType name="item_slot">
     <xs:restriction base="xs:string">
@@ -294,6 +298,7 @@
                               <xs:attribute name="property_ref"/>
                             </xs:complexType>
                           </xs:element>
+                          <xs:element name="icon" type="type_icon"/>
                         </xs:sequence>
                         <xs:attribute name="name" type="xs:string" use="required"/>
                       </xs:complexType>
@@ -497,6 +502,7 @@
                               </xs:attribute>
                             </xs:complexType>
                           </xs:element>
+                          <xs:element name="icon" type="type_icon"/>
                         </xs:sequence>
                         <xs:attribute name="type" use="required"/>
                       </xs:complexType>
@@ -569,6 +575,7 @@
                         </xs:sequence>
                       </xs:complexType>
                     </xs:element>
+                    <xs:element name="icon" type="type_icon" minOccurs="0"/>
                   </xs:sequence>
                   <xs:attribute name="id" use="required"/>
                   <xs:attribute name="name"/>
