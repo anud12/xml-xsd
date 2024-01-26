@@ -1,6 +1,10 @@
 import {JsonUtil} from "./util";
 
 let counter = 0;
+/**
+ * Returns a function that returns a random number between 0 and 1
+ * @param worldSchema
+ */
 export const newRandom = (worldSchema: JsonUtil) => {
     return () => {
         const entries = worldSchema.json.query("world_metadata").query("randomization_table").queryAll("entry")

@@ -40,7 +40,7 @@ describe("personAssignClassification", () => {
     </race_metadata>
   </rule_group>
   <people>
-    <person name="Billy">
+    <person id="Billy">
       <race race_ref="human"/>
       <location x="10" y="10"/>
       <properties>
@@ -93,7 +93,7 @@ describe("personAssignClassification", () => {
     </race_metadata>
   </rule_group>
   <people>
-    <person name="Billy">
+    <person id="Billy">
       <race race_ref="human" />
       <location x="10" y="10" />
       <properties>

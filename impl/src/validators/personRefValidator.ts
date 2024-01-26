@@ -1,6 +1,5 @@
 import {AttributeNotInValidationError, Validator} from "./_type";
 import {JsonSchema} from "../utils/JsonSchema";
-import any = jasmine.any;
 
 type QueryType = JsonSchema["children"]["actions"]["children"]["by"]
 

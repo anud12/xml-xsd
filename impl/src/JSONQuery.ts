@@ -7,27 +7,34 @@ const CommentJsonTag = "CommentJsonTag"
 const UnknownJsonTag = "UnknownJsonTag"
 
 const innerSerialize = (dom: jsdom.JSDOM, query: JsonQueryType<Record<string, any>, any, string>): Element | Comment | undefined => {
-  if (query.tag === CommentJsonTag) {
-    const element = dom.window.document.createElementNS("", "COMMENT_TO_BE_REPLACED");
-    element.innerHTML = query.body ?? ""
-    return element;
-  }
-  if (query.tag === UnknownJsonTag) {
-    return undefined
-  }
-  const rootElement = dom.window.document.createElementNS("", query.tag);
-  Object.entries(query.attributeMap).forEach(([key, value]) => {
-    const attributeKey = key.replace(":", "__namespace__");
-    rootElement.setAttribute(attributeKey, value)
-  })
-  rootElement.innerHTML += query.body ?? "";
-  query.childrenList
-    .map(value => innerSerialize(dom, value))
-    .filter(value => value)
-    .forEach(value => {
-      rootElement.appendChild(value);
+  try {
+    if (query.tag === CommentJsonTag) {
+      const element = dom.window.document.createElementNS("", "COMMENT_TO_BE_REPLACED");
+      element.innerHTML = query.body ?? ""
+      return element;
+    }
+    if (query.tag === UnknownJsonTag) {
+      return undefined
+    }
+    const rootElement = dom.window.document.createElementNS("", query.tag);
+    Object.entries(query.attributeMap).forEach(([key, value]) => {
+      const attributeKey = key.replace(":", "__namespace__");
+      rootElement.setAttribute(attributeKey, value)
     })
-  return rootElement
+    rootElement.innerHTML += query.body ?? "";
+    query.childrenList
+      .map(value => innerSerialize(dom, value))
+      .filter(value => value)
+      .forEach(value => {
+        rootElement.appendChild(value);
+      })
+    rootElement.outerHTML;
+    return rootElement
+  } catch (e: any) {
+    const newError = new Error(`serialize failed for ${query.getPath()}`);
+    newError.stack += '\nCaused by: ' + e.stack;
+    throw newError;
+  }
 }
 
 
@@ -142,7 +149,7 @@ export class JsonQuery<A extends JsonQueryType<Attribute, Children, Tag>,
     if (key === UnknownJsonTag) {
       return;
     }
-    let attributes = attributesArg;
+    let attributes = attributesArg || {};
 
     let element = key === CommentJsonTag
       ? this.root.window.document.createComment("") as unknown as Element
@@ -153,7 +160,7 @@ export class JsonQuery<A extends JsonQueryType<Attribute, Children, Tag>,
     } else {
       element.textContent = body;
     }
-    Object.entries(attributes).forEach(([key, value]) => {
+    Object.entries(attributes).forEach(([key, value]: [string, string]) => {
       element.setAttribute(key.replace("$", ""), value);
     })
     const jsonQuery = new JsonQuery(this.root, element, this);

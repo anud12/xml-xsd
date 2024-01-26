@@ -21,7 +21,7 @@
     "build": "tsc",
     "build-watch": "tsc --watch",
     "start": "ts-node src/index.ts",
-    "start-debug": "ts-node src/index.ts ../world_2.xml"
+    "start-debug": "ts-node src/index.ts ../world.xml"
   },
   "author": "",
   "license": "ISC",
