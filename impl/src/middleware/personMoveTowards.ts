@@ -71,7 +71,7 @@ export const personMoveTowards: Middleware = readUnit => {
   return async writeUnit => {
     const persons = writeUnit.json.queryAll("people").flatMap(e => e.queryAll("person"))
     actions.forEach(mutation => {
-      const person = persons.find(e => e.attributeMap.name === mutation.person.attributeMap.name);
+      const person = persons.find(e => e.attributeMap.id === mutation.person.attributeMap.id);
       const location = person.query("location")
       location.setAttribute("x", mutation.newDestinationAttributes.x)
       location.setAttribute("y", mutation.newDestinationAttributes.y)

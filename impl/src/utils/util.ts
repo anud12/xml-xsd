@@ -10,6 +10,7 @@ import {getById} from "./person/getById";
 import {createPerson, CreatePersonArgs} from "./person/createPerson";
 import {createOperationFromParent} from "./operation/createOperationFromParent";
 import {JsonQueryType} from "../JsonQueryType";
+import {calculateNameFromRefString} from "./calculateName";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -34,7 +35,9 @@ export class JsonUtil {
   constructor(public json: JsonSchema) {
     this.invalidate();
   }
-
+  /**
+   * Returns a function that returns a random number between 0 and 1
+   */
   random: () => number;
   location: {
     grid: () => LocationGrid,
@@ -79,6 +82,10 @@ export class JsonUtil {
       })
     }
   }
+
+  calculateNameFromRefString = memoizeFunction((name: string) => {
+    return calculateNameFromRefString(this, name);
+  })
 
   person = {
     getProperty: (personQueryType: PersonQueryType, key) => getProperty(this, personQueryType, key),

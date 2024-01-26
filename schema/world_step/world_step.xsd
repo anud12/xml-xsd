@@ -65,9 +65,9 @@
             <xs:element name="item" minOccurs="0" maxOccurs="unbounded">
               <xs:complexType>
                 <xs:sequence>
-                  <xs:element name="quantity" minOccurs="1">
+                  <xs:element name="quantity">
                     <xs:complexType>
-                      <xs:group ref="type_math_operations"/>
+                      <xs:group ref="group__math_operations"/>
                     </xs:complexType>
                   </xs:element>
                 </xs:sequence>
@@ -80,7 +80,7 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:group name="type_math_operations">
+  <xs:group name="group__math_operations">
     <xs:sequence>
       <xs:element name="operation" maxOccurs="unbounded">
         <xs:complexType>
@@ -135,7 +135,7 @@
 
             <xs:element name="group" minOccurs="0">
               <xs:complexType>
-                <xs:group ref="type_math_operations"/>
+                <xs:group ref="group__math_operations"/>
               </xs:complexType>
             </xs:element>
 
@@ -144,7 +144,7 @@
                 <xs:sequence>
                   <xs:element name="group" minOccurs="2" maxOccurs="unbounded">
                     <xs:complexType>
-                      <xs:group ref="type_math_operations"/>
+                      <xs:group ref="group__math_operations"/>
                     </xs:complexType>
                   </xs:element>
                 </xs:sequence>
@@ -155,13 +155,37 @@
                 <xs:sequence>
                   <xs:element name="group" minOccurs="2" maxOccurs="unbounded">
                     <xs:complexType>
-                      <xs:group ref="type_math_operations"/>
+                      <xs:group ref="group__math_operations"/>
                     </xs:complexType>
                   </xs:element>
                 </xs:sequence>
               </xs:complexType>
             </xs:element>
           </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+
+  <xs:group name="group__name_token">
+    <xs:sequence>
+      <xs:element name="name_token" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:choice>
+            <xs:element name="ref" minOccurs="0">
+              <xs:complexType>
+                <xs:attribute name="name_ref" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="one_of">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:group ref="group__name_token"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:choice>
+          <xs:attribute name="prefix" use="required"/>
         </xs:complexType>
       </xs:element>
     </xs:sequence>
@@ -222,7 +246,7 @@
                           <xs:element name="default">
                             <xs:complexType>
                               <xs:choice>
-                                <xs:group ref="type_math_operations"/>
+                                <xs:group ref="group__math_operations"/>
                               </xs:choice>
                             </xs:complexType>
                           </xs:element>
@@ -256,7 +280,7 @@
                           <xs:element name="property" maxOccurs="unbounded">
                             <xs:complexType>
                               <xs:sequence>
-                                <xs:group ref="type_math_operations"/>
+                                <xs:group ref="group__math_operations"/>
                               </xs:sequence>
                               <xs:attribute name="property_ref" use="required"/>
                               <xs:attribute name="is" use="required">
@@ -283,6 +307,20 @@
               </xs:element>
 
 
+              <xs:element name="name_metadata" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="entry" minOccurs="0">
+                      <xs:complexType>
+                        <xs:group ref="group__name_token"/>
+                        <xs:attribute name="name" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+
               <xs:element name="race_metadata">
                 <xs:complexType>
                   <xs:sequence>
@@ -291,10 +329,15 @@
                         <xs:sequence>
                           <xs:element name="vision" type="type_range"/>
                           <xs:element name="movement" type="type_range"/>
+                          <xs:element name="name" minOccurs="0">
+                            <xs:complexType>
+                              <xs:attribute name="name_ref" use="required"/>
+                            </xs:complexType>
+                          </xs:element>
                           <xs:element name="property_bonus" minOccurs="0"
                                       maxOccurs="unbounded">
                             <xs:complexType>
-                              <xs:group ref="type_math_operations"/>
+                              <xs:group ref="group__math_operations"/>
                               <xs:attribute name="property_ref"/>
                             </xs:complexType>
                           </xs:element>
@@ -316,12 +359,12 @@
                         <xs:sequence>
                           <xs:element name="max_range" minOccurs="1">
                             <xs:complexType>
-                              <xs:group ref="type_math_operations"/>
+                              <xs:group ref="group__math_operations"/>
                             </xs:complexType>
                           </xs:element>
                           <xs:element name="min_range" minOccurs="0">
                             <xs:complexType>
-                              <xs:group ref="type_math_operations"/>
+                              <xs:group ref="group__math_operations"/>
                             </xs:complexType>
                           </xs:element>
                           <xs:element name="test">
@@ -329,7 +372,7 @@
                               <xs:sequence>
                                 <xs:element name="value">
                                   <xs:complexType>
-                                    <xs:group ref="type_math_operations"/>
+                                    <xs:group ref="group__math_operations"/>
                                     <xs:attribute name="target"
                                                   type="type_person_select"
                                                   use="required"/>
@@ -337,7 +380,7 @@
                                 </xs:element>
                                 <xs:element name="expected">
                                   <xs:complexType>
-                                    <xs:group ref="type_math_operations"/>
+                                    <xs:group ref="group__math_operations"/>
                                     <xs:attribute name="target"
                                                   type="type_person_select"
                                                   use="required"/>
@@ -351,7 +394,7 @@
                               <xs:sequence>
                                 <xs:element name="from" maxOccurs="unbounded">
                                   <xs:complexType>
-                                    <xs:group ref="type_math_operations"/>
+                                    <xs:group ref="group__math_operations"/>
                                     <xs:attribute name="participant"
                                                   type="type_person_select"
                                                   use="required"/>
@@ -368,7 +411,7 @@
                               <xs:sequence>
                                 <xs:element name="from" maxOccurs="unbounded">
                                   <xs:complexType>
-                                    <xs:group ref="type_math_operations"/>
+                                    <xs:group ref="group__math_operations"/>
                                     <xs:attribute name="participant"
                                                   type="type_person_select"
                                                   use="required"/>
@@ -442,7 +485,7 @@
                                       <xs:element name="radius">
                                         <xs:complexType>
                                           <xs:sequence>
-                                            <xs:group ref="type_math_operations"/>
+                                            <xs:group ref="group__math_operations"/>
                                           </xs:sequence>
                                         </xs:complexType>
                                       </xs:element>
@@ -515,7 +558,6 @@
             <xs:attribute name="name" use="required"/>
           </xs:complexType>
         </xs:element>
-
 
 
         <xs:element name="people" maxOccurs="unbounded">

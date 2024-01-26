@@ -22,6 +22,7 @@ export type ClassificationOperationIs = "lessThan"
   | "greaterThanOrEqual"
   | "equal"
   | "notEqual"
+
 export type JsonSchema = JsonQueryType<{}, {
 
   world_metadata: JsonQueryType<{}, {
@@ -45,6 +46,16 @@ export type JsonSchema = JsonQueryType<{}, {
         property: JsonQueryType<{ property_ref: string, is: ClassificationOperationIs }, {
           operation: OperationQueryType,
         }>,
+      }>
+    }>
+    name_metadata: JsonQueryType<{}, {
+      entry: JsonQueryType<{ name: string }, {
+        name_token: JsonQueryType<{ prefix: string }, {
+          ref: JsonQueryType<{ name_ref: string }, {}>,
+          one_of: JsonQueryType<{}, {
+            name_token: JsonQueryType<{ prefix: string }, any>
+          }>
+        }>
       }>
     }>
     action_metadata: JsonQueryType<{}, {
@@ -72,6 +83,7 @@ export type JsonSchema = JsonQueryType<{}, {
     }>
     race_metadata: JsonQueryType<{}, {
       entry: JsonQueryType<{ name: string }, {
+        name: JsonQueryType<{ name_ref: string }>,
         vision: JsonQueryType<{ value: string }>
         movement: JsonQueryType<{ value: string }>
         property_bonus: JsonQueryType<{ property_ref: string, value: string, max_value: string }, {
@@ -120,7 +132,7 @@ export type JsonSchema = JsonQueryType<{}, {
   }>
 
   people: JsonQueryType<{}, {
-    person: JsonQueryType<{ name: string, id: string }, {
+    person: JsonQueryType<{ id: string, name: string }, {
       race: JsonQueryType<{ race_ref: string }>,
       location: JsonQueryType<{ x: string, y: string }>,
       relations: JsonQueryType<{ with: string }>,

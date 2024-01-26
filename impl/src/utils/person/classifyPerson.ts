@@ -39,7 +39,7 @@ export const classifyPerson = (readJson: JsonUtil, personQueryType: PersonQueryT
     })
       .map(entry => entry.attributeMap.name);
   } catch (e:any)  {
-    const newError = new Error(`classifyPerson failed for ${personQueryType.attributeMap.name}`);
+    const newError = new Error(`classifyPerson failed for ${personQueryType.attributeMap.id}`);
     newError.stack += '\nCaused by: ' + e.stack;
     throw newError;
   }
