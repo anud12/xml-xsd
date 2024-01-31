@@ -5,7 +5,7 @@ import {describe} from "@jest/globals";
 import {eventsMetadata} from "../../../middleware/eventsMetadata";
 
 describe("eventsMetadata create person with race", () => {
-  it("react to person_action_used abd create a person", async () => {
+  it("react to person_action_used and create a person", async () => {
     const query = JsonQuery.fromText<JsonSchema>(`<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:noNamespaceSchemaLocation="../../../../schema/world_step/world_step.xsd"
 >
@@ -17,15 +17,15 @@ describe("eventsMetadata create person with race", () => {
     </randomization_table>
   </world_metadata>
   <rule_group>
-    <race_metadata>
-      <entry name="race_definition">
+    <race_rule>
+      <entry id="race_definition">
         <vision value="1"/>
       </entry>
-    </race_metadata>
-    <events_metadata>
-      <entry name="spawn_human">
+    </race_rule>
+    <events_rule>
+      <entry id="spawn_human">
         <when>
-          <person_action_used action_ref="talk"/>
+          <person_action_used action_rule_ref="talk"/>
         </when>
         <then>
           <at origin="self">
@@ -36,15 +36,15 @@ describe("eventsMetadata create person with race", () => {
             </radius>
           </at>
           <create_person>
-            <race race_ref="race_definition" quantity="1"/>
+            <race race_rule_ref="race_definition" quantity="1"/>
           </create_person>
         </then>
       </entry>
-    </events_metadata>
+    </events_rule>
   </rule_group>
   <people>
     <person name="person">
-      <race race_ref="race_definition"/>
+      <race race_rule_ref="race_definition"/>
       <location x="0" y="0"/>
     </person>
   </people>
@@ -61,7 +61,7 @@ describe("eventsMetadata create person with race", () => {
   </location_layer>
   <actions>
     <by name="person">
-      <do action_ref="talk" to="person"/>
+      <do action_rule_ref="talk" to="person"/>
     </by>
   </actions>
 </world_step>`);
@@ -82,15 +82,15 @@ describe("eventsMetadata create person with race", () => {
     </randomization_table>
   </world_metadata>
   <rule_group>
-    <race_metadata>
-      <entry name="race_definition">
+    <race_rule>
+      <entry id="race_definition">
         <vision value="1" />
       </entry>
-    </race_metadata>
-    <events_metadata>
-      <entry name="spawn_human">
+    </race_rule>
+    <events_rule>
+      <entry id="spawn_human">
         <when>
-          <person_action_used action_ref="talk" />
+          <person_action_used action_rule_ref="talk" />
         </when>
         <then>
           <at origin="self">
@@ -101,20 +101,20 @@ describe("eventsMetadata create person with race", () => {
             </radius>
           </at>
           <create_person>
-            <race race_ref="race_definition" quantity="1" />
+            <race race_rule_ref="race_definition" quantity="1" />
           </create_person>
         </then>
       </entry>
-    </events_metadata>
+    </events_rule>
   </rule_group>
   <people>
     <person name="person">
-      <race race_ref="race_definition" />
+      <race race_rule_ref="race_definition" />
       <location x="0" y="0" />
     </person>
     <person id="0.0">
       <location x="1" y="1" />
-      <race race_ref="race_definition" />
+      <race race_rule_ref="race_definition" />
       <classifications />
     </person>
   </people>
@@ -131,7 +131,7 @@ describe("eventsMetadata create person with race", () => {
   </location_layer>
   <actions>
     <by name="person">
-      <do action_ref="talk" to="person" />
+      <do action_rule_ref="talk" to="person" />
     </by>
   </actions>
 </world_step>

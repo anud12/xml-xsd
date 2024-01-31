@@ -12,8 +12,8 @@ describe("personRef.validator", () => {
   <people>
     <person id="definition"/>
   </people>
-  <any_element person_ref="other_property"/>
-  <any_element person_ref="unmapped_property"/>
+  <any_element person_rule_ref="other_property"/>
+  <any_element person_rule_ref="unmapped_property"/>
 </world_step>`);
 
     const result = await personRefValidator(new JsonUtil(query));

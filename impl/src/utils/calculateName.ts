@@ -2,7 +2,7 @@ import {JsonSchema} from "./JsonSchema";
 import {JsonUtil} from "./util";
 import {JsonQueryType} from "../JsonQueryType";
 
-type NameTokenQueryType = JsonSchema["children"]["rule_group"]["children"]["name_metadata"]["children"]["entry"]["children"]["name_token"]
+type NameTokenQueryType = JsonSchema["children"]["rule_group"]["children"]["name_rule"]["children"]["entry"]["children"]["name_token"]
 type Children = NameTokenQueryType["childrenList"][number]
 
 const calculateNameToken = (readJson: JsonUtil, tokenQueryType?: JsonQueryType<any, any,any>): string | undefined => {
@@ -35,7 +35,7 @@ const calculateChildren = (readJson: JsonUtil, child?: Children): string | undef
     return [element.attributeMap.prefix, ...tokenBuffer].join("");
   }
   if (child.tag === "ref") {
-    return calculateNameFromRefString(readJson, child.attributeMap.name_ref);
+    return calculateNameFromRefString(readJson, child.attributeMap.name_rule_ref);
   }
 
   throw new Error(`Unknown child type ${(child as any).tag}`);
@@ -46,10 +46,10 @@ export const calculateNameFromRefString = (readJson: JsonUtil, ref: string): str
       return undefined;
     }
     const nameMetadataList = readJson.getRuleGroups()
-      .flatMap(ruleGroup => ruleGroup.queryAllOptional("name_metadata"))
+      .flatMap(ruleGroup => ruleGroup.queryAllOptional("name_rule"))
       .flatMap(e => e.queryAll("entry"));
 
-    const entry = nameMetadataList.find(e => e.attributeMap.name === ref);
+    const entry = nameMetadataList.find(e => e.attributeMap.id === ref);
 
     if (!entry) {
       throw new Error(`Unknown name_ref ${ref}`);

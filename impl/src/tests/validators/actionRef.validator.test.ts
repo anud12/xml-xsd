@@ -2,7 +2,7 @@ import {JsonQuery} from "../../JSONQuery";
 import {JsonSchema} from "../../utils/JsonSchema";
 import {describe} from "@jest/globals";
 import {raceRefValidator} from "../../validators/raceRef.validator";
-import {actionRefValidator} from "../../validators/actionRef.validator";
+import {actionRuleRefValidator} from "../../validators/actionRuleRef.validator";
 import {JsonUtil} from "../../utils/util";
 
 describe("actionRef.validator", () => {
@@ -11,21 +11,21 @@ describe("actionRef.validator", () => {
             xsi:noNamespaceSchemaLocation="../../../../schema/world_step/world_step.xsd"
 >
   <rule_group>
-    <action_metadata>
-      <person_to_person name="rule_definition">
+    <action_rule>
+      <person_to_person id="rule_definition">
       </person_to_person>
-    </action_metadata>
+    </action_rule>
   </rule_group>
   <rule_group>
-    <action_metadata>
-      <person_to_person name="second_rule_definition"/>
-    </action_metadata>
+    <action_rule>
+      <person_to_person id="second_rule_definition"/>
+    </action_rule>
   </rule_group>
-  <any_element action_ref="other_property"/>
-  <any_element action_ref="unmapped_property"/>
+  <any_element action_rule_ref="other_property"/>
+  <any_element action_rule_ref="unmapped_property"/>
 </world_step>`);
 
-    const result = await actionRefValidator(new JsonUtil(query));
+    const result = await actionRuleRefValidator(new JsonUtil(query));
     expect(result.map(e => e.message).join("\n")).toBe([
         "ValidationError: other_property at //any_element[0]@action_ref not in [rule_definition, second_rule_definition]",
         "ValidationError: unmapped_property at //any_element[1]@action_ref not in [rule_definition, second_rule_definition]"

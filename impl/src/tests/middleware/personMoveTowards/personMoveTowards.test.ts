@@ -18,22 +18,22 @@ describe("personActionMoveTowards" , () => {
   </world_metadata>
   <rule_group>
     
-    <property_metadata>
-    </property_metadata>
+    <property_rule>
+    </property_rule>
   
-    <race_metadata>
-      <entry name="human">
+    <race_rule>
+      <entry id="human">
         <vision value="20" inclusive="true"/>
         <movement value="100" inclusive="true"/>
       </entry>
-    </race_metadata>
+    </race_rule>
   
-    <action_metadata>
-    </action_metadata>
+    <action_rule>
+    </action_rule>
   </rule_group>
   <people>
     <person name="Billy">
-      <race race_ref="human"/>
+      <race race_rule_ref="human"/>
       <location x="0" y="0"/>
       <inventory>
         <item ref="Long sword" equipped="hand"/>
@@ -64,18 +64,18 @@ describe("personActionMoveTowards" , () => {
     </randomization_table>
   </world_metadata>
   <rule_group>
-    <property_metadata />
-    <race_metadata>
-      <entry name="human">
+    <property_rule />
+    <race_rule>
+      <entry id="human">
         <vision value="20" inclusive="true" />
         <movement value="100" inclusive="true" />
       </entry>
-    </race_metadata>
-    <action_metadata />
+    </race_rule>
+    <action_rule />
   </rule_group>
   <people>
     <person name="Billy">
-      <race race_ref="human" />
+      <race race_rule_ref="human" />
       <location x="70" y="70" />
       <inventory>
         <item ref="Long sword" equipped="hand" />

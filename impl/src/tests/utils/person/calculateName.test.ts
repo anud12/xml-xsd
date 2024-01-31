@@ -16,11 +16,11 @@ describe("calculateName", () => {
     </randomization_table>
   </world_metadata>
   <rule_group>
-    <name_metadata>
-      <entry name="name_metadata">
+    <name_rule>
+      <entry id="name_metadata">
         <name_token prefix="bob" />
       </entry>
-    </name_metadata>
+    </name_rule>
   </rule_group>
 </world_step>
 `);

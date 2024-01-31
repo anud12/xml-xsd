@@ -16,24 +16,24 @@ describe("calculateName from ref", () => {
     </randomization_table>
   </world_metadata>
   <rule_group>
-    <name_metadata>
-      <entry name="name_metadata">
+    <name_rule>
+      <entry id="name_metadata">
         <name_token prefix="bob">
           <one_of>
             <name_token prefix=" one of ">
               <one_of>
                 <name_token prefix=" second of ">
-                  <ref name_ref="name_metadata_ref"/>
+                  <ref name_rule_ref="name_metadata_ref"/>
                 </name_token>
               </one_of>
             </name_token>
           </one_of>
         </name_token>
       </entry>
-      <entry name="name_metadata_ref">
+      <entry id="name_metadata_ref">
         <ref prefix="ref"/>
       </entry>
-    </name_metadata>
+    </name_rule>
   </rule_group>
 </world_step>
 `);

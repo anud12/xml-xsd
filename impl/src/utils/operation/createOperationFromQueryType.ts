@@ -70,7 +70,7 @@ export const createOperationFromQueryType = (
       })
     case "add_property_value":
       return wrapper(value => {
-        const propertyRef = operationValue.attributeMap.property_ref;
+        const propertyRef = operationValue.attributeMap.property_rule_ref;
         if (propertyRef === undefined) {
           throw new Error(`Operation ${operationValue.getPath()} property is undefined`);
         }

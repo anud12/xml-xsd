@@ -16,15 +16,15 @@ describe("calculateName from list", () => {
     </randomization_table>
   </world_metadata>
   <rule_group>
-    <name_metadata>
-      <entry name="name_metadata">
+    <name_rule>
+      <entry id="name_metadata">
         <name_token prefix="bob">
           <one_of>
             <name_token prefix="bob"/>
           </one_of>
         </name_token>
       </entry>
-    </name_metadata>
+    </name_rule>
   </rule_group>
 </world_step>
 `);

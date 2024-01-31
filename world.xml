@@ -111,15 +111,15 @@
   </world_metadata>
 
 
-  <rule_group name="default">
+  <rule_group id="default">
     <!--_-->
     <!--_-->
     <!--_-->
     <!--_-->
     <!--Property_metadata-->
     <!--_-->
-    <property_metadata>
-      <entry name="athletics" units="points">
+    <property_rule>
+      <entry id="athletics" units="points">
         <default>
           <operation>
             <add_dice value="6"/>
@@ -129,7 +129,7 @@
           </operation>
         </default>
       </entry>
-      <entry name="strength" units="points">
+      <entry id="strength" units="points">
         <default>
           <operation>
             <add_dice value="12"/>
@@ -139,7 +139,7 @@
           </operation>
         </default>
       </entry>
-      <entry name="constitution" units="points">
+      <entry id="constitution" units="points">
         <default>
           <operation>
             <add_dice value="12"/>
@@ -149,47 +149,47 @@
           </operation>
         </default>
       </entry>
-      <entry name="health" units="points">
+      <entry id="health" units="points">
         <default>
           <operation>
-            <add_property_value property_ref="constitution"/>
+            <add_property_value property_rule_ref="constitution"/>
           </operation>
           <operation>
             <add_dice value="8"/>
           </operation>
         </default>
       </entry>
-    </property_metadata>
+    </property_rule>
     <!--_-->
     <!--_-->
     <!--_-->
     <!--_-->
     <!--Classification_metadata-->
     <!--_-->
-    <classification_metadata>
-      <entry name="dead">
-        <property property_ref="health" is="lessThanOrEqual">
+    <classification_rule>
+      <entry id="dead">
+        <property property_rule_ref="health" is="lessThanOrEqual">
           <operation>
             <add value="0"/>
           </operation>
         </property>
       </entry>
-      <entry name="alive">
-        <property property_ref="health" is="greaterThan">
+      <entry id="alive">
+        <property property_rule_ref="health" is="greaterThan">
           <operation>
             <add value="0"/>
           </operation>
         </property>
       </entry>
-    </classification_metadata>
+    </classification_rule>
     <!--_-->
     <!--_-->
     <!--_-->
     <!--_-->
     <!--Name_metadata-->
     <!--_-->
-    <name_metadata>
-      <entry name="humanName">
+    <name_rule>
+      <entry id="humanName">
         <name_token prefix="">
           <one_of>
             <name_token prefix="Estevan"/>
@@ -215,13 +215,13 @@
           </one_of>
         </name_token>
         <name_token prefix=" of the ">
-          <ref name_ref="banditFactions"/>
+          <ref name_rule_ref="banditFactions"/>
         </name_token>
       </entry>
-    </name_metadata>
+    </name_rule>
 
-    <name_metadata>
-      <entry name="banditFactions">
+    <name_rule>
+      <entry id="banditFactions">
         <name_token prefix="">
           <one_of>
             <name_token prefix="The Shadow"/>
@@ -271,19 +271,19 @@
           </one_of>
         </name_token>
       </entry>
-    </name_metadata>
+    </name_rule>
     <!--_-->
     <!--_-->
     <!--_-->
     <!--_-->
     <!--Race_metadata-->
     <!--_-->
-    <race_metadata>
-      <entry name="human">
+    <race_rule>
+      <entry id="human">
         <vision value="5" inclusive="true"/>
         <movement value="2" inclusive="true"/>
-        <name name_ref="humanName"/>
-        <property_bonus property_ref="strength">
+        <name name_rule_ref="humanName"/>
+        <property_bonus property_rule_ref="strength">
           <operation>
             <add_dice value="3"/>
           </operation>
@@ -291,7 +291,7 @@
             <add value="-1"/>
           </operation>
         </property_bonus>
-        <property_bonus property_ref="constitution">
+        <property_bonus property_rule_ref="constitution">
           <operation>
             <add_dice value="3"/>
           </operation>
@@ -338,15 +338,15 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
           </svg>
         </icon>
       </entry>
-    </race_metadata>
+    </race_rule>
     <!--_-->
     <!--_-->
     <!--_-->
     <!--_-->
     <!--Action_metadata-->
     <!--_-->
-    <action_metadata>
-      <person_to_person name="talk">
+    <action_rule>
+      <person_to_person id="talk">
         <max_range>
           <operation>
             <add value="1"/>
@@ -365,7 +365,7 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
           </expected>
         </test>
       </person_to_person>
-      <person_to_person name="meleeAttack">
+      <person_to_person id="meleeAttack">
         <max_range>
           <operation>
             <add value="2"/>
@@ -383,7 +383,7 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
             </operation>
           </expected>
         </test>
-        <property_mutation property_ref="health" on="target">
+        <property_mutation property_rule_ref="health" on="target">
           <from participant="self">
             <operation>
               <add_dice value="6"/>
@@ -391,7 +391,7 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
             <operation>
               <group>
                 <operation>
-                  <add_property_value property_ref="strength"/>
+                  <add_property_value property_rule_ref="strength"/>
                 </operation>
                 <operation>
                   <add value="-10"/>
@@ -407,37 +407,37 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
           </from>
         </property_mutation>
       </person_to_person>
-    </action_metadata>
+    </action_rule>
     <!--_-->
     <!--_-->
     <!--_-->
     <!--_-->
     <!--Item_metadata-->
     <!--_-->
-    <item_metadata>
-      <entry name="Long sword">
+    <item_rule>
+      <entry id="Long sword">
         <weight-kg value="2"/>
         <wearable slot="hand"/>
       </entry>
-      <entry name="dress">
+      <entry id="dress">
         <weight-kg value="1"/>
         <wearable slot="chest"/>
         <wearable slot="legs"/>
       </entry>
-      <entry name="bandana">
+      <entry id="bandana">
         <weight-kg value="0.1"/>
       </entry>
-    </item_metadata>
+    </item_rule>
     <!--_-->
     <!--_-->
     <!--_-->
     <!--_-->
     <!--events_metadata-->
     <!--_-->
-    <events_metadata>
-      <entry name="spawn_bandits">
+    <events_rule>
+      <entry id="spawn_bandits">
         <when>
-          <person_action_used action_ref="talk"/>
+          <person_action_used action_rule_ref="talk"/>
         </when>
         <then>
           <at origin="self">
@@ -448,9 +448,9 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
             </radius>
           </at>
           <create_person>
-            <race race_ref="human" quantity="1"/>
+            <race race_rule_ref="human" quantity="1"/>
             <inventory>
-              <item item_ref="bandana">
+              <item item_rule_ref="bandana">
                 <quantity>
                   <operation>
                     <add_dice value="10"/>
@@ -467,7 +467,7 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
           </create_person>
         </then>
       </entry>
-    </events_metadata>
+    </events_rule>
     <!--_-->
     <!--_-->
     <!--_-->
@@ -476,8 +476,8 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
     <!--_-->
     <locations_markov_chain>
       <location_markov_link type="plains">
-        <sibling location_ref="plains" quantity="5" position="all"/>
-        <sibling location_ref="forest" position="all"/>
+        <sibling location_rule_ref="plains" quantity="5" position="all"/>
+        <sibling location_rule_ref="forest" position="all"/>
         <icon>
           <!-- Svg Vector Icons : http://www.onlinewebfonts.com/icon -->
           <svg version="1.1" x="0px" y="0px" viewBox="0 0 256 256" enable-background="new 0 0 256 256" xml:space="preserve">
@@ -487,9 +487,9 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
         </icon>
       </location_markov_link>
       <location_markov_link type="forest">
-        <sibling location_ref="forest" quantity="5" position="all"/>
-        <sibling location_ref="plains" position="all"/>
-        <sibling location_ref="hills" position="all"/>
+        <sibling location_rule_ref="forest" quantity="5" position="all"/>
+        <sibling location_rule_ref="plains" position="all"/>
+        <sibling location_rule_ref="hills" position="all"/>
         <icon>
           <svg fill="#000000" height="800px" width="800px" version="1.1" id="Layer_1"
                viewBox="0 0 512.001 512.001" xml:space="preserve">
@@ -530,8 +530,8 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
         </icon>
       </location_markov_link>
       <location_markov_link type="hills">
-        <sibling location_ref="hills" quantity="20" position="all"/>
-        <sibling location_ref="forest" position="all"/>
+        <sibling location_rule_ref="hills" quantity="20" position="all"/>
+        <sibling location_rule_ref="forest" position="all"/>
         <icon>
           <svg width="800px" height="800px" viewBox="0 0 400 400" fill="none">
             <path d="M296.215 154.719C285.523 147.585 272.592 144.572 260.741 139.613C250.81 135.457 218.937 122.059 209.659 134.483C203.112 143.25 217.595 160.857 221.294 167.545C241.987 204.953 311.224 244.394 349 257.04"
@@ -553,18 +553,18 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
   <!--_-->
   <people>
     <person id="1" name="Billy">
-      <race race_ref="human"/>
+      <race race_rule_ref="human"/>
       <location x="1" y="1"/>
       <properties>
-        <property property_ref="strength" value="13"/>
+        <property property_rule_ref="strength" value="13"/>
       </properties>
       <inventory>
-        <item item_ref="Long sword" equipped="hand"/>
+        <item item_rule_ref="Long sword" equipped="hand"/>
       </inventory>
       <classifications/>
     </person>
     <person id="3" name="Dave">
-      <race race_ref="human"/>
+      <race race_rule_ref="human"/>
       <location x="-1" y="-1"/>
       <properties/>
       <classifications/>
@@ -589,15 +589,15 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
   <!--Location_layer-->
   <!--_-->
   <location_layer>
-    <cell location_ref="plains" x="0" y="0"/>
-    <cell location_ref="plains" x="0" y="1"/>
-    <cell location_ref="plains" x="0" y="-1"/>
-    <cell location_ref="plains" x="1" y="0"/>
-    <cell location_ref="plains" x="1" y="1"/>
-    <cell location_ref="plains" x="1" y="-1"/>
-    <cell location_ref="plains" x="-1" y="0"/>
-    <cell location_ref="plains" x="-1" y="1"/>
-    <cell location_ref="plains" x="-1" y="-1"/>
+    <cell location_rule_ref="plains" x="0" y="0"/>
+    <cell location_rule_ref="plains" x="0" y="1"/>
+    <cell location_rule_ref="plains" x="0" y="-1"/>
+    <cell location_rule_ref="plains" x="1" y="0"/>
+    <cell location_rule_ref="plains" x="1" y="1"/>
+    <cell location_rule_ref="plains" x="1" y="-1"/>
+    <cell location_rule_ref="plains" x="-1" y="0"/>
+    <cell location_rule_ref="plains" x="-1" y="1"/>
+    <cell location_rule_ref="plains" x="-1" y="-1"/>
   </location_layer>
   <!--_-->
   <!--_-->

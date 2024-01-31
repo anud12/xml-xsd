@@ -16,20 +16,20 @@ describe("getProperty", () => {
     </randomization_table>
   </world_metadata>
   <rule_group>
-    <property_metadata>
-      <entry name="constitution" units="points">
+    <property_rule>
+      <entry id="constitution" units="points">
         <default>
           <operation>
             <add value="8"/>
           </operation>
         </default>
       </entry>
-    </property_metadata>
-    <race_metadata>
-      <entry name="human">
+    </property_rule>
+    <race_rule>
+      <entry id="human">
         <vision value="20" inclusive="true"/>
         <movement value="5" inclusive="true"/>
-        <property_bonus property_ref="constitution">
+        <property_bonus property_rule_ref="constitution">
           <operation>
             <add_dice value="3"/>
           </operation>
@@ -37,20 +37,20 @@ describe("getProperty", () => {
             <add value="-1"/>
           </operation>
         </property_bonus>
-        <property_bonus property_ref="health">
+        <property_bonus property_rule_ref="health">
           <operation>
-            <add_property_value property_ref="constitution"/>
+            <add_property_value property_rule_ref="constitution"/>
           </operation>
           <operation>
             <multiply value="2"/>
           </operation>
         </property_bonus>
       </entry>
-    </race_metadata>
+    </race_rule>
   </rule_group>
   <people>
     <person name="Billy">
-      <race race_ref="human"/>
+      <race race_rule_ref="human"/>
       <location x="10" y="10"/>
       <properties/>
       <inventory>
@@ -79,20 +79,20 @@ describe("getProperty", () => {
     </randomization_table>
   </world_metadata>
   <rule_group>
-    <property_metadata>
-      <entry name="constitution" units="points">
+    <property_rule>
+      <entry id="constitution" units="points">
         <default>
           <operation>
             <add value="8" />
           </operation>
         </default>
       </entry>
-    </property_metadata>
-    <race_metadata>
-      <entry name="human">
+    </property_rule>
+    <race_rule>
+      <entry id="human">
         <vision value="20" inclusive="true" />
         <movement value="5" inclusive="true" />
-        <property_bonus property_ref="constitution">
+        <property_bonus property_rule_ref="constitution">
           <operation>
             <add_dice value="3" />
           </operation>
@@ -100,24 +100,24 @@ describe("getProperty", () => {
             <add value="-1" />
           </operation>
         </property_bonus>
-        <property_bonus property_ref="health">
+        <property_bonus property_rule_ref="health">
           <operation>
-            <add_property_value property_ref="constitution" />
+            <add_property_value property_rule_ref="constitution" />
           </operation>
           <operation>
             <multiply value="2" />
           </operation>
         </property_bonus>
       </entry>
-    </race_metadata>
+    </race_rule>
   </rule_group>
   <people>
     <person name="Billy">
-      <race race_ref="human" />
+      <race race_rule_ref="human" />
       <location x="10" y="10" />
       <properties>
-        <property property_ref="constitution" value="10" />
-        <property property_ref="health" value="20" />
+        <property property_rule_ref="constitution" value="10" />
+        <property property_rule_ref="health" value="20" />
       </properties>
       <inventory>
         <item ref="Long sword" equipped="hand" />
@@ -140,17 +140,17 @@ describe("getProperty", () => {
       <entry value="2"/>
     </randomization_table>
   </world_metadata>
-    <property_metadata>
-    </property_metadata>
-  <race_metadata>
-      <entry name="human">
+    <property_rule>
+    </property_rule>
+  <race_rule>
+      <entry id="human">
           <vision value="20" inclusive="true"/>
           <movement value="5" inclusive="true"/>
       </entry>
-  </race_metadata>
+  </race_rule>
   <people>
     <person name="Billy">
-      <race race_ref="human"/>
+      <race race_rule_ref="human"/>
       <location x="10" y="10"/>
       <properties/>
       <inventory>

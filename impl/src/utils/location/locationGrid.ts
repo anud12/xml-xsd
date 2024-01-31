@@ -1,9 +1,9 @@
 import {JsonSchema} from "../JsonSchema";
 import {JsonUtil} from "../util";
 
-export type Cell = JsonSchema["children"]["location_layer"]["children"]["cell"]
+export type CellQueryType = JsonSchema["children"]["location_layer"]["children"]["cell"]
 
-export type LocationGrid = Record<number, Record<number, Cell>> & {
+export type LocationGrid = Record<number, Record<number, CellQueryType>> & {
   maxX: number,
   maxY: number
 }

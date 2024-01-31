@@ -10,17 +10,17 @@ describe("propertyRef.validator", () => {
             xsi:noNamespaceSchemaLocation="../../../../schema/world_step/world_step.xsd"
 >
   <rule_group>
-    <property_metadata>
-      <entry name="rule_definition"/>
-    </property_metadata>
+    <property_rule>
+      <entry id="rule_definition"/>
+    </property_rule>
   </rule_group>
   <rule_group>
-    <property_metadata>
-      <entry name="second_rule_definition"/>
-    </property_metadata>
+    <property_rule>
+      <entry id="second_rule_definition"/>
+    </property_rule>
   </rule_group>
-  <any_element property_ref="other_property"/>
-  <any_element property_ref="unmapped_property"/>
+  <any_element property_rule_ref="other_property"/>
+  <any_element property_rule_ref="unmapped_property"/>
 </world_step>`);
 
     const result = await propertyRefValidator(new JsonUtil(query));

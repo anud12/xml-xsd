@@ -16,32 +16,32 @@ describe("personAction" , () => {
     </randomization_table>
   </world_metadata>
   <rule_group>
-    <property_metadata>
-      <entry name="strength" units="points">
+    <property_rule>
+      <entry id="strength" units="points">
         <default>
           <operation>
             <add value="10"/>
           </operation>
         </default>
       </entry>
-      <entry name="health" units="points">
+      <entry id="health" units="points">
         <default>
           <operation>
             <add value="10"/>
           </operation>
         </default>
       </entry>
-    </property_metadata>
+    </property_rule>
   
-    <race_metadata>
-      <entry name="human">
+    <race_rule>
+      <entry id="human">
         <vision value="20" inclusive="true"/>
         <movement value="5" inclusive="true"/>
       </entry>
-    </race_metadata>
+    </race_rule>
   
-    <action_metadata>
-      <person_to_person name="meleeAttack">
+    <action_rule>
+      <person_to_person id="meleeAttack">
         <max_range>
           <operation>
             <add value="5"/>
@@ -76,12 +76,12 @@ describe("personAction" , () => {
           </from>
         </property_mutation>
       </person_to_person>
-    </action_metadata>
+    </action_rule>
   </rule_group>
   
   <people>
     <person id="Billy">
-      <race race_ref="human"/>
+      <race race_rule_ref="human"/>
       <location x="10" y="10"/>
       <inventory>
         <item ref="Long sword" equipped="hand"/>
@@ -89,14 +89,14 @@ describe("personAction" , () => {
       <properties/>
     </person>
     <person id="Bob">
-      <race race_ref="human"/>
+      <race race_rule_ref="human"/>
       <location x="12" y="10"/>
       <properties/>
     </person>
   </people>
   <actions>
-    <by person_ref="Billy">
-      <do action_ref="meleeAttack" person_ref="Bob"/>
+    <by person_rule_ref="Billy">
+      <do action_rule_ref="meleeAttack" person_rule_ref="Bob"/>
     </by>
   </actions>
 </world_step>`);
@@ -116,30 +116,30 @@ describe("personAction" , () => {
     </randomization_table>
   </world_metadata>
   <rule_group>
-    <property_metadata>
-      <entry name="strength" units="points">
+    <property_rule>
+      <entry id="strength" units="points">
         <default>
           <operation>
             <add value="10" />
           </operation>
         </default>
       </entry>
-      <entry name="health" units="points">
+      <entry id="health" units="points">
         <default>
           <operation>
             <add value="10" />
           </operation>
         </default>
       </entry>
-    </property_metadata>
-    <race_metadata>
-      <entry name="human">
+    </property_rule>
+    <race_rule>
+      <entry id="human">
         <vision value="20" inclusive="true" />
         <movement value="5" inclusive="true" />
       </entry>
-    </race_metadata>
-    <action_metadata>
-      <person_to_person name="meleeAttack">
+    </race_rule>
+    <action_rule>
+      <person_to_person id="meleeAttack">
         <max_range>
           <operation>
             <add value="5" />
@@ -173,11 +173,11 @@ describe("personAction" , () => {
           </from>
         </property_mutation>
       </person_to_person>
-    </action_metadata>
+    </action_rule>
   </rule_group>
   <people>
     <person id="Billy">
-      <race race_ref="human" />
+      <race race_rule_ref="human" />
       <location x="10" y="10" />
       <inventory>
         <item ref="Long sword" equipped="hand" />
@@ -185,7 +185,7 @@ describe("personAction" , () => {
       <properties />
     </person>
     <person id="Bob">
-      <race race_ref="human" />
+      <race race_rule_ref="human" />
       <location x="12" y="10" />
       <properties />
     </person>

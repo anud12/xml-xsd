@@ -27,7 +27,7 @@ export type JsonQueryType<
   queryAllRecursiveWithAttributeFrom: <
     P extends JsonQueryType<any>,
   >(attribute: keyof P["attributeMap"]) => Array<P>,
-  appendChild: <U extends keyof Children>(key: U, element: string | Children[U]["children"][number], attributes?: Children[U]["attributeMap"]) => Children[U]
+  appendChild: <U extends keyof Children>(key: U, element?: string, attributes?: Partial<Children[U]["attributeMap"]>) => Children[U]
   removeFromParent: () => void,
   getPath: () => string,
   serializeRaw: () => string,

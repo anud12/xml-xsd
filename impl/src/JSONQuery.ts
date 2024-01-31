@@ -145,7 +145,7 @@ export class JsonQuery<A extends JsonQueryType<Attribute, Children, Tag>,
     return this as unknown as JsonQueryType<Attribute, Children, Tag>;
   }
 
-  appendChild = (key: any, body: string | Attribute, attributesArg?: Attribute): any => {
+  appendChild = (key: any, body?: string, attributesArg?: Attribute): any => {
     if (key === UnknownJsonTag) {
       return;
     }
@@ -155,13 +155,10 @@ export class JsonQuery<A extends JsonQueryType<Attribute, Children, Tag>,
       ? this.root.window.document.createComment("") as unknown as Element
       : this.root.window.document.createElementNS("", key);
 
-    if (typeof body !== "string") {
-      attributes = body;
-    } else {
-      element.textContent = body;
-    }
+    element.textContent = body;
+
     Object.entries(attributes).forEach(([key, value]: [string, string]) => {
-      element.setAttribute(key.replace("$", ""), value);
+      element.setAttribute(key.replace("", ""), value);
     })
     const jsonQuery = new JsonQuery(this.root, element, this);
     this.childrenList.push(jsonQuery as any);

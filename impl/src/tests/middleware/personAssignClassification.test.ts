@@ -15,33 +15,33 @@ describe("personAssignClassification", () => {
     </randomization_table>
   </world_metadata>
   <rule_group>
-    <property_metadata/>
-    <classification_metadata>
-      <entry name="dead">
+    <property_rule/>
+    <classification_rule>
+      <entry id="dead">
         <property name="health" is="lessThan" >
           <operation>
             <add value="0"/>
           </operation>
         </property>
       </entry>
-      <entry name="alive">
+      <entry id="alive">
         <property name="health" is="greaterThan">
           <operation>
             <add value="0"/>
           </operation>
         </property>
       </entry>
-    </classification_metadata>
-    <race_metadata>
-      <entry name="human">
+    </classification_rule>
+    <race_rule>
+      <entry id="human">
         <vision value="20" inclusive="true"/>
         <movement value="5" inclusive="true"/>
       </entry>
-    </race_metadata>
+    </race_rule>
   </rule_group>
   <people>
     <person id="Billy">
-      <race race_ref="human"/>
+      <race race_rule_ref="human"/>
       <location x="10" y="10"/>
       <properties>
         <property ref="health" value="-1" />
@@ -68,33 +68,33 @@ describe("personAssignClassification", () => {
     </randomization_table>
   </world_metadata>
   <rule_group>
-    <property_metadata />
-    <classification_metadata>
-      <entry name="dead">
+    <property_rule />
+    <classification_rule>
+      <entry id="dead">
         <property name="health" is="lessThan">
           <operation>
             <add value="0" />
           </operation>
         </property>
       </entry>
-      <entry name="alive">
+      <entry id="alive">
         <property name="health" is="greaterThan">
           <operation>
             <add value="0" />
           </operation>
         </property>
       </entry>
-    </classification_metadata>
-    <race_metadata>
-      <entry name="human">
+    </classification_rule>
+    <race_rule>
+      <entry id="human">
         <vision value="20" inclusive="true" />
         <movement value="5" inclusive="true" />
       </entry>
-    </race_metadata>
+    </race_rule>
   </rule_group>
   <people>
     <person id="Billy">
-      <race race_ref="human" />
+      <race race_rule_ref="human" />
       <location x="10" y="10" />
       <properties>
         <property ref="health" value="-1" />
@@ -103,7 +103,7 @@ describe("personAssignClassification", () => {
         <item ref="Long sword" equipped="hand" />
       </inventory>
       <classifications>
-        <classification classification_ref="dead" />
+        <classification classification_rule_ref="dead" />
       </classifications>
     </person>
   </people>

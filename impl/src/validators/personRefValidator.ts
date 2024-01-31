@@ -7,8 +7,8 @@ export const personRefValidator: Validator<AttributeNotInValidationError<QueryTy
   const raceMetadataNames = jsonSchema.json.queryAll("people").flatMap(e => e.queryAll("person").map(e => e.attributeMap.id));
 
 
-  return jsonSchema.json.queryAllRecursiveWithAttributeFrom<QueryType>("person_ref")
-    .filter((race) => !raceMetadataNames.includes(race.attributeMap.person_ref))
-    .map(race => new AttributeNotInValidationError(race, "person_ref", raceMetadataNames));
+  return jsonSchema.json.queryAllRecursiveWithAttributeFrom<QueryType>("person_rule_ref")
+    .filter((race) => !raceMetadataNames.includes(race.attributeMap.person_rule_ref))
+    .map(race => new AttributeNotInValidationError(race, "person_rule_ref", raceMetadataNames));
 }
 

@@ -1,7 +1,7 @@
 import {JsonQueryType} from "../JsonQueryType";
 
 export type OperationQueryType = JsonQueryType<{}, {
-  add_property_value: JsonQueryType<{ property_ref: string }>,
+  add_property_value: JsonQueryType<{ property_rule_ref: string }>,
   add: JsonQueryType<{ value: string }>,
   add_dice: JsonQueryType<{ value: string }>,
   multiply_dice: JsonQueryType<{ value: string }>,
@@ -34,32 +34,32 @@ export type JsonSchema = JsonQueryType<{}, {
     }>
   }>,
   rule_group: JsonQueryType<{}, {
-    property_metadata: JsonQueryType<{}, {
-      entry: JsonQueryType<{ name: string, default: string, value: string, max_value: string }, {
+    property_rule: JsonQueryType<{}, {
+      entry: JsonQueryType<{ id: string, default: string, value: string, max_value: string }, {
         default: JsonQueryType<{}, {
           operation: OperationQueryType
         }>
       }>
     }>,
-    classification_metadata: JsonQueryType<{}, {
-      entry: JsonQueryType<{ name: string }, {
-        property: JsonQueryType<{ property_ref: string, is: ClassificationOperationIs }, {
+    classification_rule: JsonQueryType<{}, {
+      entry: JsonQueryType<{ id: string }, {
+        property: JsonQueryType<{ property_rule_ref: string, is: ClassificationOperationIs }, {
           operation: OperationQueryType,
         }>,
       }>
     }>
-    name_metadata: JsonQueryType<{}, {
-      entry: JsonQueryType<{ name: string }, {
+    name_rule: JsonQueryType<{}, {
+      entry: JsonQueryType<{ id: string }, {
         name_token: JsonQueryType<{ prefix: string }, {
-          ref: JsonQueryType<{ name_ref: string }, {}>,
+          ref: JsonQueryType<{ name_rule_ref: string }, {}>,
           one_of: JsonQueryType<{}, {
             name_token: JsonQueryType<{ prefix: string }, any>
           }>
         }>
       }>
     }>
-    action_metadata: JsonQueryType<{}, {
-      person_to_person: JsonQueryType<{ name: string }, {
+    action_rule: JsonQueryType<{}, {
+      person_to_person: JsonQueryType<{ id: string }, {
         max_range: JsonQueryType<{}, {
           operation: OperationQueryType,
         }>,
@@ -74,34 +74,34 @@ export type JsonSchema = JsonQueryType<{}, {
             operation: OperationQueryType,
           }>
         }>,
-        property_mutation: JsonQueryType<{ property_ref: string, on: string }, {
+        property_mutation: JsonQueryType<{ property_rule_ref: string, on: string }, {
           from: JsonQueryType<{ participant: string }, {
             operation: OperationQueryType
           }>
         }>
       }>
     }>
-    race_metadata: JsonQueryType<{}, {
-      entry: JsonQueryType<{ name: string }, {
-        name: JsonQueryType<{ name_ref: string }>,
+    race_rule: JsonQueryType<{}, {
+      entry: JsonQueryType<{ id: string }, {
+        name: JsonQueryType<{ name_rule_ref: string }>,
         vision: JsonQueryType<{ value: string }>
         movement: JsonQueryType<{ value: string }>
-        property_bonus: JsonQueryType<{ property_ref: string, value: string, max_value: string }, {
+        property_bonus: JsonQueryType<{ property_rule_ref: string, value: string, max_value: string }, {
           operation: OperationQueryType
         }>,
         icon: IconType
       }>
     }>,
-    item_metadata: JsonQueryType<{}, {
-      entry: JsonQueryType<{ name: string }> & JsonQueryType<{}, {
+    item_rule: JsonQueryType<{}, {
+      entry: JsonQueryType<{ id: string }> & JsonQueryType<{}, {
         weight_kg: JsonQueryType<{ value: string }>,
         wearable: JsonQueryType<{ slot: string }>,
       }>
     }>,
-    events_metadata: JsonQueryType<{}, {
-      entry: JsonQueryType<{ name: string }, {
+    events_rule: JsonQueryType<{}, {
+      entry: JsonQueryType<{ id: string }, {
         when: JsonQueryType<{}, {
-          person_action_used: JsonQueryType<{ action_ref: string }>
+          person_action_used: JsonQueryType<{ action_rule_ref: string }>
         }>,
         then: JsonQueryType<{}, {
           at: JsonQueryType<{ origin: string }, {
@@ -111,9 +111,9 @@ export type JsonSchema = JsonQueryType<{}, {
             location: JsonQueryType<{ type: string, quantity: string }>
           }>,
           create_person?: JsonQueryType<{}, {
-            race: JsonQueryType<{ race_ref: string, quantity: string }>,
+            race: JsonQueryType<{ race_rule_ref: string, quantity: string }>,
             inventory: JsonQueryType<{}, {
-              item: JsonQueryType<{ item_ref: string }, {
+              item: JsonQueryType<{ item_rule_ref: string }, {
                 quantity: JsonQueryType<{}, {
                   operation: OperationQueryType
                 }>
@@ -125,7 +125,7 @@ export type JsonSchema = JsonQueryType<{}, {
     }>,
     locations_markov_chain: JsonQueryType<{}, {
       location_markov_link: JsonQueryType<{ type: string }, {
-        sibling: JsonQueryType<{ location_ref: string, position: string, quantity: string }>,
+        sibling: JsonQueryType<{ location_rule_ref: string, position: string, quantity: string }>,
         icon: IconType
       }>
     }>,
@@ -133,29 +133,29 @@ export type JsonSchema = JsonQueryType<{}, {
 
   people: JsonQueryType<{}, {
     person: JsonQueryType<{ id: string, name: string }, {
-      race: JsonQueryType<{ race_ref: string }>,
+      race: JsonQueryType<{ race_rule_ref: string }>,
       location: JsonQueryType<{ x: string, y: string }>,
       relations: JsonQueryType<{ with: string }>,
       properties: JsonQueryType<{}, {
-        property: JsonQueryType<{ property_ref: string, value: string }>
+        property: JsonQueryType<{ property_rule_ref: string, value: string }>
       }>,
       inventory: JsonQueryType<{}, {
-        item: JsonQueryType<{ item_ref: string, equipped: string }>
+        item: JsonQueryType<{ item_rule_ref: string, equipped: string }>
       }>,
       classifications: JsonQueryType<{}, {
-        classification: JsonQueryType<{ classification_ref: string }>
+        classification: JsonQueryType<{ classification_rule_ref: string }>
       }>,
       icon: IconType
     }>
   }>;
 
   location_layer: JsonQueryType<{ name: string }, {
-    cell: JsonQueryType<{ location_ref: string, x: string, y: string }>,
+    cell: JsonQueryType<{ location_rule_ref: string, x: string, y: string }>,
   }>,
 
   actions: JsonQueryType<{}, {
-    by: JsonQueryType<{ person_ref: string }, {
-      do: JsonQueryType<{ action_ref: string, person_ref: string }>,
+    by: JsonQueryType<{ person_rule_ref: string }, {
+      do: JsonQueryType<{ action_rule_ref: string, person_rule_ref: string }>,
       move_towards: JsonQueryType<{ x: string, y: string }>
     }>
   }>

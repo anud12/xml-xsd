@@ -16,36 +16,36 @@ describe("classifyPerson", () => {
     </randomization_table>
   </world_metadata>
   <rule_group>
-    <property_metadata/>
-    <classification_metadata>
-      <entry name="dead">
-        <property property_ref="health" is="lessThan" >
+    <property_rule/>
+    <classification_rule>
+      <entry id="dead">
+        <property property_rule_ref="health" is="lessThan" >
           <operation>
             <add value="0"/>
           </operation>
         </property>
       </entry>
-      <entry name="alive">
-        <property property_ref="health" is="greaterThan">
+      <entry id="alive">
+        <property property_rule_ref="health" is="greaterThan">
           <operation>
             <add value="0"/>
           </operation>
         </property>
       </entry>
-    </classification_metadata>
-    <race_metadata>
-      <entry name="human">
+    </classification_rule>
+    <race_rule>
+      <entry id="human">
         <vision value="20" inclusive="true"/>
         <movement value="5" inclusive="true"/>
       </entry>
-    </race_metadata>
+    </race_rule>
   </rule_group>
   <people>
     <person name="Billy">
-      <race race_ref="human"/>
+      <race race_rule_ref="human"/>
       <location x="10" y="10"/>
       <properties>
-        <property property_ref="health" value="-1" />
+        <property property_rule_ref="health" value="-1" />
       </properties>
       <inventory>
         <item ref="Long sword" equipped="hand"/>
