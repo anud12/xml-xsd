@@ -18,8 +18,8 @@ export const personAssignClassification: Middleware = (readJson) => {
       const classifications = person.query("classifications");
       classifications.childrenList = [];
       classificationList.forEach(classification => {
-        classifications.appendChild("classification", {
-          $classification_ref: classification
+        classifications.appendChild("classification", undefined, {
+          classification_rule_ref: classification
         })
       })
     })

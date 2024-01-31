@@ -55,7 +55,7 @@
     <xs:sequence>
       <xs:element name="race" minOccurs="0">
         <xs:complexType>
-          <xs:attribute name="race_ref" use="required"/>
+          <xs:attribute name="race_rule_ref" use="required"/>
           <xs:attribute name="quantity" use="required" type="xs:int"/>
         </xs:complexType>
       </xs:element>
@@ -71,7 +71,7 @@
                     </xs:complexType>
                   </xs:element>
                 </xs:sequence>
-                <xs:attribute name="item_ref" use="required"/>
+                <xs:attribute name="item_rule_ref" use="required"/>
               </xs:complexType>
             </xs:element>
           </xs:sequence>
@@ -129,7 +129,7 @@
 
             <xs:element name="add_property_value" minOccurs="0">
               <xs:complexType>
-                <xs:attribute name="property_ref" use="required"/>
+                <xs:attribute name="property_rule_ref" use="required"/>
               </xs:complexType>
             </xs:element>
 
@@ -174,7 +174,7 @@
           <xs:choice>
             <xs:element name="ref" minOccurs="0">
               <xs:complexType>
-                <xs:attribute name="name_ref" use="required"/>
+                <xs:attribute name="name_rule_ref" use="required"/>
               </xs:complexType>
             </xs:element>
             <xs:element name="one_of">
@@ -237,7 +237,7 @@
             <xs:sequence>
 
 
-              <xs:element name="property_metadata">
+              <xs:element name="property_rule">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
@@ -262,7 +262,7 @@
                             </xs:complexType>
                           </xs:element>
                         </xs:sequence>
-                        <xs:attribute name="name" use="required"/>
+                        <xs:attribute name="id" use="required"/>
                         <xs:attribute name="units" use="required"/>
                       </xs:complexType>
                     </xs:element>
@@ -271,7 +271,7 @@
               </xs:element>
 
 
-              <xs:element name="classification_metadata">
+              <xs:element name="classification_rule">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
@@ -282,7 +282,7 @@
                               <xs:sequence>
                                 <xs:group ref="group__math_operations"/>
                               </xs:sequence>
-                              <xs:attribute name="property_ref" use="required"/>
+                              <xs:attribute name="property_rule_ref" use="required"/>
                               <xs:attribute name="is" use="required">
                                 <xs:simpleType>
                                   <xs:restriction base="xs:string">
@@ -299,7 +299,7 @@
                             </xs:complexType>
                           </xs:element>
                         </xs:sequence>
-                        <xs:attribute name="name" use="required"/>
+                        <xs:attribute name="id" use="required"/>
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>
@@ -307,13 +307,13 @@
               </xs:element>
 
 
-              <xs:element name="name_metadata" minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="name_rule" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="entry" minOccurs="0">
                       <xs:complexType>
                         <xs:group ref="group__name_token"/>
-                        <xs:attribute name="name" use="required"/>
+                        <xs:attribute name="id" use="required"/>
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>
@@ -321,7 +321,7 @@
               </xs:element>
 
 
-              <xs:element name="race_metadata">
+              <xs:element name="race_rule">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
@@ -331,19 +331,19 @@
                           <xs:element name="movement" type="type_range"/>
                           <xs:element name="name" minOccurs="0">
                             <xs:complexType>
-                              <xs:attribute name="name_ref" use="required"/>
+                              <xs:attribute name="name_rule_ref" use="required"/>
                             </xs:complexType>
                           </xs:element>
                           <xs:element name="property_bonus" minOccurs="0"
                                       maxOccurs="unbounded">
                             <xs:complexType>
                               <xs:group ref="group__math_operations"/>
-                              <xs:attribute name="property_ref"/>
+                              <xs:attribute name="property_rule_ref"/>
                             </xs:complexType>
                           </xs:element>
                           <xs:element name="icon" type="type_icon"/>
                         </xs:sequence>
-                        <xs:attribute name="name" type="xs:string" use="required"/>
+                        <xs:attribute name="id" type="xs:string" use="required"/>
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>
@@ -351,7 +351,7 @@
               </xs:element>
 
 
-              <xs:element name="action_metadata">
+              <xs:element name="action_rule">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="person_to_person" minOccurs="0" maxOccurs="unbounded">
@@ -401,7 +401,7 @@
                                   </xs:complexType>
                                 </xs:element>
                               </xs:sequence>
-                              <xs:attribute name="property_ref"/>
+                              <xs:attribute name="property_rule_ref"/>
                               <xs:attribute name="on" type="type_person_select"
                                             use="required"/>
                             </xs:complexType>
@@ -424,7 +424,7 @@
                             </xs:complexType>
                           </xs:element>
                         </xs:sequence>
-                        <xs:attribute name="name"/>
+                        <xs:attribute name="id"/>
                       </xs:complexType>
                     </xs:element>
 
@@ -433,7 +433,7 @@
               </xs:element>
 
 
-              <xs:element name="item_metadata">
+              <xs:element name="item_rule">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
@@ -451,7 +451,7 @@
                             </xs:complexType>
                           </xs:element>
                         </xs:sequence>
-                        <xs:attribute name="name" use="required"/>
+                        <xs:attribute name="id" use="required"/>
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>
@@ -459,7 +459,7 @@
               </xs:element>
 
 
-              <xs:element name="events_metadata">
+              <xs:element name="events_rule">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
@@ -470,7 +470,7 @@
                               <xs:choice>
                                 <xs:element name="person_action_used">
                                   <xs:complexType>
-                                    <xs:attribute name="action_ref" use="required"/>
+                                    <xs:attribute name="action_rule_ref" use="required"/>
                                   </xs:complexType>
                                 </xs:element>
                               </xs:choice>
@@ -505,7 +505,7 @@
                             </xs:complexType>
                           </xs:element>
                         </xs:sequence>
-                        <xs:attribute name="name" use="required" type="xs:string"/>
+                        <xs:attribute name="id" use="required" type="xs:string"/>
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>
@@ -528,7 +528,7 @@
                           <xs:element name="sibling" minOccurs="0"
                                       maxOccurs="unbounded">
                             <xs:complexType>
-                              <xs:attribute name="location_ref" use="required"/>
+                              <xs:attribute name="location_rule_ref" use="required"/>
                               <xs:attribute name="quantity" type="xs:int"
                                             default="1"/>
                               <xs:attribute name="position" use="required">
@@ -555,7 +555,7 @@
               </xs:element>
             </xs:sequence>
 
-            <xs:attribute name="name" use="required"/>
+            <xs:attribute name="id" use="required"/>
           </xs:complexType>
         </xs:element>
 
@@ -568,7 +568,7 @@
                   <xs:sequence>
                     <xs:element name="race">
                       <xs:complexType>
-                        <xs:attribute name="race_ref" use="required"/>
+                        <xs:attribute name="race_rule_ref" use="required"/>
                       </xs:complexType>
                     </xs:element>
                     <xs:element name="location" type="type_cell_ref"/>
@@ -578,7 +578,7 @@
                           <xs:element name="property" minOccurs="0"
                                       maxOccurs="unbounded">
                             <xs:complexType>
-                              <xs:attribute name="property_ref" use="required"/>
+                              <xs:attribute name="property_rule_ref" use="required"/>
                               <xs:attribute name="value"
                                             use="required"/>
                             </xs:complexType>
@@ -597,7 +597,7 @@
                         <xs:sequence>
                           <xs:element name="item">
                             <xs:complexType>
-                              <xs:attribute name="item_ref"/>
+                              <xs:attribute name="item_rule_ref"/>
                               <xs:attribute name="equipped"
                                             type="item_slot"/>
                             </xs:complexType>
@@ -633,7 +633,7 @@
             <xs:sequence>
               <xs:element name="cell" maxOccurs="unbounded">
                 <xs:complexType>
-                  <xs:attribute name="location_ref" use="required"/>
+                  <xs:attribute name="location_rule_ref" use="required"/>
                   <xs:attribute name="x" use="required"/>
                   <xs:attribute name="y" use="required"/>
                   <xs:attribute name="rotation" type="type_direction"

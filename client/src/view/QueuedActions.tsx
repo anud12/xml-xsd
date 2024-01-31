@@ -13,7 +13,7 @@ export const QueuedActions = () => {
 
   const actions = world?.json.queryAll("actions")
     .flatMap(queued_actions => queued_actions.queryAllOptional("by"))
-    .filter(by => by.attributeMap.person_ref === mainPersonId)
+    .filter(by => by.attributeMap.person_rule_ref === mainPersonId)
     .flatMap(by => {
       return by.childrenList.map(action => {
         if (action.tag === "move_towards") {
@@ -22,7 +22,7 @@ export const QueuedActions = () => {
         }
         if (action.tag === "do") {
           const doAction = action as DoQueryType;
-          return `Do ${doAction.attributeMap.action_ref} to ${doAction.attributeMap.person_ref}`
+          return `Do ${doAction.attributeMap.action_rule_ref} to ${doAction.attributeMap.person_rule_ref}`
         }
         return "Unknown action";
       })

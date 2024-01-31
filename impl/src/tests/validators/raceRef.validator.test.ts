@@ -10,17 +10,17 @@ describe("raceRef.validator", () => {
             xsi:noNamespaceSchemaLocation="../../../../schema/world_step/world_step.xsd"
 >
   <rule_group>
-    <race_metadata>
-      <entry name="rule_definition"/>
-    </race_metadata>
+    <race_rule>
+      <entry id="rule_definition"/>
+    </race_rule>
   </rule_group>
   <rule_group>
-    <race_metadata>
-      <entry name="second_rule_definition"/>
-    </race_metadata>
+    <race_rule>
+      <entry id="second_rule_definition"/>
+    </race_rule>
   </rule_group>
-  <any_element race_ref="other_property"/>
-  <any_element race_ref="unmapped_property"/>
+  <any_element race_rule_ref="other_property"/>
+  <any_element race_rule_ref="unmapped_property"/>
 </world_step>`);
 
     const result = await raceRefValidator(new JsonUtil(query));

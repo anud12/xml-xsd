@@ -10,14 +10,14 @@ export const personVision: Middleware = (readJson) => {
 
       const x = location.attributeMap.x;
       const y= location.attributeMap.y;
-      const race = e.query("race").attributeMap.race_ref;
+      const race = e.query("race").attributeMap.race_rule_ref;
 
       const raceMetadata = ruleGroup.flatMap(ruleGroup => {
-        return ruleGroup.queryOptional("race_metadata")
+        return ruleGroup.queryOptional("race_rule")
           .queryAll("entry")
 
       })
-      const radius = raceMetadata.find(e => e.attributeMap.name === race)
+      const radius = raceMetadata.find(e => e.attributeMap.id === race)
         .queryOptional("vision");
 
       readJson.location.create(Number(x), Number(y));

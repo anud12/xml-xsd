@@ -8,13 +8,13 @@ export const classifyPerson = (readJson: JsonUtil, personQueryType: PersonQueryT
   try {
     const ruleGroup = readJson.getRuleGroups();
 
-    const classificationMetadataEntry = ruleGroup.flatMap(ruleGroup => ruleGroup.queryAllOptional("classification_metadata"))
+    const classificationMetadataEntry = ruleGroup.flatMap(ruleGroup => ruleGroup.queryAllOptional("classification_rule"))
       .flatMap(e => e.queryAllOptional("entry"));
 
     return classificationMetadataEntry.filter(entry => {
       const isTrue = entry.queryAll("property")
         .reduce((acc, operation) => {
-          const propertyValue = getProperty(readJson, personQueryType, operation.attributeMap.property_ref);
+          const propertyValue = getProperty(readJson, personQueryType, operation.attributeMap.property_rule_ref);
           const formula = createOperationFromParent(readJson, operation, key => getProperty(readJson, personQueryType, key));
           const value = formula("0");
           switch (operation.attributeMap.is) {
@@ -37,7 +37,7 @@ export const classifyPerson = (readJson: JsonUtil, personQueryType: PersonQueryT
         }, true);
       return isTrue;
     })
-      .map(entry => entry.attributeMap.name);
+      .map(entry => entry.attributeMap.id);
   } catch (e:any)  {
     const newError = new Error(`classifyPerson failed for ${personQueryType.attributeMap.id}`);
     newError.stack += '\nCaused by: ' + e.stack;

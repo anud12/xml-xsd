@@ -20,8 +20,8 @@ describe("locationRef.validator", () => {
       <location_markov_link type="second_rule_definition"/>
     </locations_markov_chain>
   </rule_group>
-  <any_element location_ref="other_property"/>
-  <any_element location_ref="unmapped_property"/>
+  <any_element location_rule_ref="other_property"/>
+  <any_element location_rule_ref="unmapped_property"/>
 </world_step>`);
 
     const result = await locationRefValidator(new JsonUtil(query));

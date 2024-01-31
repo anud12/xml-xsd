@@ -32,10 +32,10 @@ export const StatusFrame = () => {
       {person?.query("properties")?.childrenList.map(e => {
         return <div>
           <Prompt
-            key={e.attributeMap.property_ref}
+            key={e.attributeMap.property_rule_ref}
             machine={person?.attributeMap.name}
             user={worldName}
-            location={`~/properties/${e.attributeMap.property_ref}`}
+            location={`~/properties/${e.attributeMap.property_rule_ref}`}
           />
           <span>{e.attributeMap.value}</span>
         </div>
@@ -54,12 +54,12 @@ export const StatusFrame = () => {
       {person?.query("classifications")?.childrenList.map(e => {
         return <div>
           <Prompt
-            key={e.attributeMap.classification_ref}
+            key={e.attributeMap.classification_rule_ref}
             machine={person?.attributeMap.name}
             user={worldName}
-            location={`~/classification/${e.attributeMap.classification_ref}`}
+            location={`~/classification/${e.attributeMap.classification_rule_ref}`}
           />
-          <span>{e.attributeMap.classification_ref}</span>
+          <span>{e.attributeMap.classification_rule_ref}</span>
         </div>
       })
       }
@@ -76,10 +76,10 @@ export const StatusFrame = () => {
       {person?.queryOptional("inventory")?.childrenList.map(e => {
         return <div>
           <Prompt
-            key={e.attributeMap.item_ref}
+            key={e.attributeMap.item_rule_ref}
             machine={person?.attributeMap.name}
             user={worldName}
-            location={`~/inventory/${e.attributeMap.item_ref}`}
+            location={`~/inventory/${e.attributeMap.item_rule_ref}`}
           />
           <span>{e.attributeMap.equipped}</span>
         </div>

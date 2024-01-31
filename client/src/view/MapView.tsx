@@ -31,7 +31,7 @@ const extractLocationByCoords = (world: JsonUtil, x: number, y: number) => {
     });
 
   if (!cell) return undefined;
-  const display = metadata.find(value => value.attributeMap.type === cell.attributeMap.location_ref)
+  const display = metadata.find(value => value.attributeMap.type === cell.attributeMap.location_rule_ref)
     .query("icon")
     .query("svg");
   return {
@@ -42,7 +42,7 @@ const extractLocationByCoords = (world: JsonUtil, x: number, y: number) => {
 }
 const extractPersonByCoords = (world: JsonUtil, x: number, y: number) => {
   const metadata = world.json.queryAll("rule_group")
-    .flatMap(rule_group => rule_group.queryAll("race_metadata"))
+    .flatMap(rule_group => rule_group.queryAll("race_rule"))
     .flatMap(locationMarkovChain => locationMarkovChain.queryAll("entry"));
   const person = world.json.queryAll("people")
     .flatMap(people => people.queryAll("person"))
@@ -58,7 +58,7 @@ const extractPersonByCoords = (world: JsonUtil, x: number, y: number) => {
   let displayData = person?.queryOptional("icon")?.queryOptional("svg")?.serializeRaw()
 
   if(!displayData) {
-    displayData = metadata.find(value => value.attributeMap.name === person.query("race").attributeMap.race_ref)
+    displayData = metadata.find(value => value.attributeMap.id === person.query("race").attributeMap.race_rule_ref)
       .query("icon")
       .query("svg")
       .serializeRaw();
