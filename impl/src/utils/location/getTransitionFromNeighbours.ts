@@ -1,8 +1,8 @@
-import {Cell} from "./locationGrid";
+import {CellQueryType} from "./locationGrid";
 import {Transition} from "../markovNext";
 import {JsonUtil} from "../util";
 
-export const getTransitionFromNeighbours = (json: JsonUtil, cell: Cell): Transition<string> => {
+export const getTransitionFromNeighbours = (json: JsonUtil, cell: CellQueryType): Transition<string> => {
   const x = Number(cell.attributeMap.x)
   const y = Number(cell.attributeMap.y)
   const grid = json.location.grid();
