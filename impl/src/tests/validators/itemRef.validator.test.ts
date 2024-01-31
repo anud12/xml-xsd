@@ -25,8 +25,8 @@ describe("raceRef.validator", () => {
 
     const result = await itemRuleRefValidator(new JsonUtil(query));
     expect(result.map(e => e.message).join("\n")).toBe([
-        "ValidationError: other_property at //any_element[0]@item_ref not in [rule_definition, second_rule_definition]",
-        "ValidationError: unmapped_property at //any_element[1]@item_ref not in [rule_definition, second_rule_definition]"
+        "ValidationError: other_property at //any_element[0]@item_rule_ref not in [rule_definition, second_rule_definition]",
+        "ValidationError: unmapped_property at //any_element[1]@item_rule_ref not in [rule_definition, second_rule_definition]"
       ].join("\n")
     )
   })

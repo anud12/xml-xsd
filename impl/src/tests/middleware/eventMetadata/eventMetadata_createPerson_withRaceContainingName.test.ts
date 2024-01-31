@@ -55,15 +55,15 @@ describe("eventsMetadata create person with race containing name", () => {
     </person>
   </people>
   <location_layer>
-    <cell type="type" x="-1" y="-1"/>
-    <cell type="type" x="-1" y="0"/>
-    <cell type="type" x="-1" y="1"/>
-    <cell type="type" x="0" y="-1"/>
-    <cell type="type" x="0" y="0"/>
-    <cell type="type" x="0" y="1"/>
-    <cell type="type" x="1" y="-1"/>
-    <cell type="type" x="1" y="0"/>
-    <cell type="type" x="1" y="1"/>
+    <cell x="-1" y="-1"/>
+    <cell x="-1" y="0"/>
+    <cell x="-1" y="1"/>
+    <cell x="0" y="-1"/>
+    <cell x="0" y="0"/>
+    <cell x="0" y="1"/>
+    <cell x="1" y="-1"/>
+    <cell x="1" y="0"/>
+    <cell x="1" y="1"/>
   </location_layer>
   <actions>
     <by name="person">
@@ -131,15 +131,15 @@ describe("eventsMetadata create person with race containing name", () => {
     </person>
   </people>
   <location_layer>
-    <cell type="type" x="-1" y="-1" />
-    <cell type="type" x="-1" y="0" />
-    <cell type="type" x="-1" y="1" />
-    <cell type="type" x="0" y="-1" />
-    <cell type="type" x="0" y="0" />
-    <cell type="type" x="0" y="1" />
-    <cell type="type" x="1" y="-1" />
-    <cell type="type" x="1" y="0" />
-    <cell type="type" x="1" y="1" />
+    <cell x="-1" y="-1" />
+    <cell x="-1" y="0" />
+    <cell x="-1" y="1" />
+    <cell x="0" y="-1" />
+    <cell x="0" y="0" />
+    <cell x="0" y="1" />
+    <cell x="1" y="-1" />
+    <cell x="1" y="0" />
+    <cell x="1" y="1" />
   </location_layer>
   <actions>
     <by name="person">

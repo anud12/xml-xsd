@@ -192,7 +192,7 @@ describe("xml query", () => {
     <randomization_table name="value">helloWorld</randomization_table>
   </world_metadata>
 </world_step>`);
-    query.query("world_metadata").query("randomization_table").appendChild("child", "body", {$name: "value"} as any);
+    query.query("world_metadata").query("randomization_table").appendChild("child", "body", {name: "value"} as any);
 
     expect(query.serialize()).toBe(`<world_step
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

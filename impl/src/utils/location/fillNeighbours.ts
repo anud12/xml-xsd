@@ -1,9 +1,9 @@
 import {markovNext} from "../markovNext";
-import {CellQueryType} from "./locationGrid";
+import {Cell} from "./locationGrid";
 import {getTransitionFromNeighbours} from "./getTransitionFromNeighbours";
 import {JsonUtil} from "../util";
 
-export const fillNeighbours = (readJson: JsonUtil, writeJson: JsonUtil, originalCell: CellQueryType, radius = 1) => {
+export const fillNeighbours = (readJson: JsonUtil, writeJson: JsonUtil, originalCell: Cell, radius = 1) => {
   try {
     const grid = writeJson.location.grid();
     const locationLayer = writeJson.json.query("location_layer");
@@ -26,7 +26,7 @@ export const fillNeighbours = (readJson: JsonUtil, writeJson: JsonUtil, original
           if(!type) {
             throw new Error("resulted type is undefined");
           }
-          const cell: CellQueryType["attributeMap"] = {
+          const cell: Cell["attributeMap"] = {
             location_rule_ref: type,
             x: String(x + i),
             y: String(y + j),
