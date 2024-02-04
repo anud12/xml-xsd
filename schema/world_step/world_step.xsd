@@ -80,6 +80,28 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="type_item">
+    <xs:sequence>
+      <xs:element name="weight-kg" minOccurs="0">
+        <xs:complexType>
+          <xs:attribute name="value"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="wearable" minOccurs="0"
+                  maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="slot" type="item_slot"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="id" use="required"/>
+    <xs:attribute name="name" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="type_item_selection">
+    <xs:attribute name="name"/>
+  </xs:complexType>
+
   <xs:group name="group__math_operations">
     <xs:sequence>
       <xs:element name="operation" maxOccurs="unbounded">
@@ -439,6 +461,11 @@
                     <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
+                          <xs:element name="name">
+                            <xs:complexType>
+                              <xs:group ref="group__name_token"/>
+                            </xs:complexType>
+                          </xs:element>
                           <xs:element name="weight-kg" minOccurs="0">
                             <xs:complexType>
                               <xs:attribute name="value"/>
@@ -595,13 +622,7 @@
                     <xs:element name="inventory" minOccurs="0">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="item">
-                            <xs:complexType>
-                              <xs:attribute name="item_rule_ref"/>
-                              <xs:attribute name="equipped"
-                                            type="item_slot"/>
-                            </xs:complexType>
-                          </xs:element>
+                          <xs:element name="item" type="type_item" minOccurs="0" maxOccurs="unbounded"/>
                         </xs:sequence>
                       </xs:complexType>
                     </xs:element>

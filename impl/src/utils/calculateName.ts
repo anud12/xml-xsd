@@ -2,8 +2,9 @@ import {JsonSchema} from "./JsonSchema";
 import {JsonUtil} from "./util";
 import {JsonQueryType} from "../JsonQueryType";
 
-type NameTokenQueryType = JsonSchema["children"]["rule_group"]["children"]["name_rule"]["children"]["entry"]["children"]["name_token"]
-type Children = NameTokenQueryType["childrenList"][number]
+export type NameRuleEntryQueryType = JsonSchema["children"]["rule_group"]["children"]["name_rule"]["children"]["entry"]
+export type NameTokenQueryType = NameRuleEntryQueryType["children"]["name_token"]
+export type NameTokenQueryTypeChild = NameTokenQueryType["childrenList"][number]
 
 const calculateNameToken = (readJson: JsonUtil, tokenQueryType?: JsonQueryType<any, any,any>): string | undefined => {
 
@@ -18,7 +19,7 @@ const calculateNameToken = (readJson: JsonUtil, tokenQueryType?: JsonQueryType<a
   return [prefix, value].join("");
 }
 
-const calculateChildren = (readJson: JsonUtil, child?: Children): string | undefined => {
+const calculateChildren = (readJson: JsonUtil, child?: NameTokenQueryTypeChild): string | undefined => {
 
   if (!child?.tag) {
     return undefined;
@@ -40,6 +41,15 @@ const calculateChildren = (readJson: JsonUtil, child?: Children): string | undef
 
   throw new Error(`Unknown child type ${(child as any).tag}`);
 }
+
+export const calculateNameFromChildren = (readJson: JsonUtil, element: NameRuleEntryQueryType) => {
+  const tokenBuffer = element.childrenList.flatMap(token => {
+    return calculateNameToken(readJson, token)
+  });
+
+  return tokenBuffer.join("")
+
+}
 export const calculateNameFromRefString = (readJson: JsonUtil, ref: string): string | undefined => {
   try {
     if (!ref) {
@@ -55,11 +65,7 @@ export const calculateNameFromRefString = (readJson: JsonUtil, ref: string): str
       throw new Error(`Unknown name_ref ${ref}`);
     }
 
-    const tokenBuffer = entry.childrenList.flatMap(token => {
-      return calculateNameToken(readJson, token)
-    });
-
-    return tokenBuffer.join("")
+    return calculateNameFromChildren(readJson, entry);
   } catch (e: any) {
     const newError = new Error(`calculateNameFromRefString failed for ${ref}`);
     newError.stack += '\nCaused by: ' + e.stack;

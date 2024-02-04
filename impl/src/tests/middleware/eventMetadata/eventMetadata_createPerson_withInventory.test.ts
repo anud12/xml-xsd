@@ -22,6 +22,14 @@ describe("eventsMetadata create person with inventory", () => {
         <vision value="1"/>
       </entry>
     </race_rule>
+    <item_rule>
+      <entry id="item_definition">
+        <name>
+            <name_token prefix="item"/>
+        </name>
+        <weight_kg value="0.1"/>
+      </entry>
+    </item_rule>
     <events_rule>
       <entry id="spawn_human">
         <when>
@@ -84,7 +92,7 @@ describe("eventsMetadata create person with inventory", () => {
 >
   <world_metadata>
     <elapsed_time value="0" />
-    <counter value="1" />
+    <counter value="3" />
     <randomization_table>
       <entry value="2" />
     </randomization_table>
@@ -95,6 +103,14 @@ describe("eventsMetadata create person with inventory", () => {
         <vision value="1" />
       </entry>
     </race_rule>
+    <item_rule>
+      <entry id="item_definition">
+        <name>
+          <name_token prefix="item" />
+        </name>
+        <weight_kg value="0.1" />
+      </entry>
+    </item_rule>
     <events_rule>
       <entry id="spawn_human">
         <when>
@@ -133,8 +149,8 @@ describe("eventsMetadata create person with inventory", () => {
       <race race_rule_ref="race_definition" />
       <classifications />
       <inventory>
-        <item item_rule_ref="item_definition" />
-        <item item_rule_ref="item_definition" />
+        <item id="0.1" name="item" />
+        <item id="0.2" name="item" />
       </inventory>
     </person>
   </people>

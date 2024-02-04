@@ -24,12 +24,12 @@ export const createPerson = (jsonSchema: JsonUtil, args: CreatePersonArgs): void
   const race = raceList.find(race => race.attributeMap.id === args.race)
     || jsonSchema.randomFromArray(raceList)
 
-  const name = jsonSchema.calculateNameFromRefString(race.queryOptional("name")?.attributeMap?.name_rule_ref);
+  const name = jsonSchema.name.calculateNameFromRefString(race.queryOptional("name")?.attributeMap?.name_rule_ref);
 
   const people = jsonSchema.json.query("people");
   console.log("createPerson", args);
   const person = people.appendChild("person", undefined, {
-    id: `${time}.${jsonSchema.counterNext()}`,
+    id: jsonSchema.getNextId()
   });
   if (name) {
     person.attributeMap.name = name;
@@ -44,8 +44,9 @@ export const createPerson = (jsonSchema: JsonUtil, args: CreatePersonArgs): void
     const inventory = person.appendChild("inventory");
     args.items.forEach(item => {
       for (let i = 0; i < Number(item.quantity); i++) {
-        inventory.appendChild("item", undefined, {
+        jsonSchema.item.createItemAt({
           item_rule_ref: item.item_rule_ref,
+          parentElement: inventory
         });
       }
     })

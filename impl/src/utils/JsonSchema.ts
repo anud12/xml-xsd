@@ -23,6 +23,10 @@ export type ClassificationOperationIs = "lessThan"
   | "equal"
   | "notEqual"
 
+export type ItemQueryType = JsonQueryType<{ id: string, name: string }, {
+  weight_kg: JsonQueryType<{ value: string }>
+  wearable: JsonQueryType<{ slot: string }>
+}>
 export type JsonSchema = JsonQueryType<{}, {
 
   world_metadata: JsonQueryType<{}, {
@@ -94,6 +98,7 @@ export type JsonSchema = JsonQueryType<{}, {
     }>,
     item_rule: JsonQueryType<{}, {
       entry: JsonQueryType<{ id: string }> & JsonQueryType<{}, {
+        name: JsonQueryType<{ name_rule_ref: string }>,
         weight_kg: JsonQueryType<{ value: string }>,
         wearable: JsonQueryType<{ slot: string }>,
       }>
@@ -140,7 +145,7 @@ export type JsonSchema = JsonQueryType<{}, {
         property: JsonQueryType<{ property_rule_ref: string, value: string }>
       }>,
       inventory: JsonQueryType<{}, {
-        item: JsonQueryType<{ item_rule_ref: string, equipped: string }>
+        item: ItemQueryType
       }>,
       classifications: JsonQueryType<{}, {
         classification: JsonQueryType<{ classification_rule_ref: string }>

@@ -10,7 +10,12 @@ import {getById} from "./person/getById";
 import {createPerson, CreatePersonArgs} from "./person/createPerson";
 import {createOperationFromParent} from "./operation/createOperationFromParent";
 import {JsonQueryType} from "../JsonQueryType";
-import {calculateNameFromRefString} from "./calculateName";
+import {
+  calculateNameFromChildren,
+  calculateNameFromRefString, NameRuleEntryQueryType,
+  NameTokenQueryTypeChild
+} from "./calculateName";
+import {CreateItemArgs, createItemAt} from "./item/createItemAt";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -50,6 +55,11 @@ export class JsonUtil {
   }
   questMarkov: () => void;
 
+  getNextId = () => {
+    const time = this.json.query("world_metadata").query("elapsed_time").attributeMap.value;
+    return `${time}.${this.counterNext()}`
+  }
+
   counterNext = () => {
     const counter = this.json.query("world_metadata").query("counter");
     const attribute = counter.attributeMap.value;
@@ -83,9 +93,22 @@ export class JsonUtil {
     }
   }
 
-  calculateNameFromRefString = memoizeFunction((name: string) => {
-    return calculateNameFromRefString(this, name);
-  })
+  name = {
+    calculateNameFromRefString: memoizeFunction((name: string) => {
+      return calculateNameFromRefString(this, name);
+    }),
+
+    calculateNameFromChildren: memoizeFunction((element: NameRuleEntryQueryType) => {
+      return calculateNameFromChildren(this, element);
+    })
+  }
+
+
+  item = {
+    createItemAt: (args:CreateItemArgs) => {
+      return createItemAt(this, args);
+    }
+  }
 
   person = {
     getProperty: (personQueryType: PersonQueryType, key) => getProperty(this, personQueryType, key),
