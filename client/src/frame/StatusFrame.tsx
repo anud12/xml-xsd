@@ -73,15 +73,15 @@ export const StatusFrame = () => {
         />
         <span>cd ~/inventory</span>
       </div>
-      {person?.queryOptional("inventory")?.childrenList.map(e => {
+      {person?.queryOptional("inventory")?.queryAll("item").map(e => {
         return <div>
           <Prompt
-            key={e.attributeMap.item_rule_ref}
+            key={e.attributeMap.id}
             machine={person?.attributeMap.name}
             user={worldName}
-            location={`~/inventory/${e.attributeMap.item_rule_ref}`}
+            location={`~/inventory/${e.attributeMap.id}`}
           />
-          <span>{e.attributeMap.equipped}</span>
+          <span>{e.attributeMap.name}</span>
         </div>
       })
       }

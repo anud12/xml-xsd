@@ -416,15 +416,24 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
     <!--_-->
     <item_rule>
       <entry id="Long sword">
+        <name>
+          <name_token prefix="Long sword"/>
+        </name>
         <weight-kg value="2"/>
         <wearable slot="hand"/>
       </entry>
       <entry id="dress">
+        <name>
+          <name_token prefix="dress"/>
+        </name>
         <weight-kg value="1"/>
         <wearable slot="chest"/>
         <wearable slot="legs"/>
       </entry>
       <entry id="bandana">
+        <name>
+          <name_token prefix="bandana"/>
+        </name>
         <weight-kg value="0.1"/>
       </entry>
     </item_rule>
@@ -559,7 +568,10 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
         <property property_rule_ref="strength" value="13"/>
       </properties>
       <inventory>
-        <item item_rule_ref="Long sword" equipped="hand"/>
+        <item id="0.0" name="Long sword">
+          <weight-kg value="2"/>
+          <wearable slot="chest"/>
+        </item>
       </inventory>
       <classifications/>
     </person>
