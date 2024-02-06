@@ -71,9 +71,7 @@ export class JsonUtil {
   computeOperation = (operationQueryType: OperationQueryType["childrenList"][number], getExternalProperty?: (string: string) => string) => {
     return createOperationFromQueryType(this, operationQueryType, getExternalProperty)
   }
-  computeOperationFromParent = (operationList: JsonQueryType<any, {
-    operation: OperationQueryType
-  }>, getExternalProperty?: (string: string) => string) => {
+  computeOperationFromParent = (operationList: OperationQueryType, getExternalProperty?: (string: string) => string) => {
     return createOperationFromParent(this, operationList, getExternalProperty)
   }
   invalidate = () => {

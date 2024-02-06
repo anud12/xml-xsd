@@ -20,7 +20,7 @@ describe("getProperty", () => {
       <entry id="constitution" units="points">
         <default>
           <operation>
-            <add value="8"/>
+            <and do="add" value="8"/>
           </operation>
         </default>
       </entry>
@@ -31,18 +31,14 @@ describe("getProperty", () => {
         <movement value="5" inclusive="true"/>
         <property_bonus property_rule_ref="constitution">
           <operation>
-            <add_dice value="3"/>
-          </operation>
-          <operation>
-            <add value="-1"/>
+            <and do="add_dice" value="3"/>
+            <and do="add" value="-1"/>
           </operation>
         </property_bonus>
         <property_bonus property_rule_ref="health">
           <operation>
-            <add_property_value property_rule_ref="constitution"/>
-          </operation>
-          <operation>
-            <multiply value="2"/>
+            <add_property property_rule_ref="constitution"/>
+            <and do="multiply" value="2"/>
           </operation>
         </property_bonus>
       </entry>
@@ -83,7 +79,7 @@ describe("getProperty", () => {
       <entry id="constitution" units="points">
         <default>
           <operation>
-            <add value="8" />
+            <and do="add" value="8" />
           </operation>
         </default>
       </entry>
@@ -94,18 +90,14 @@ describe("getProperty", () => {
         <movement value="5" inclusive="true" />
         <property_bonus property_rule_ref="constitution">
           <operation>
-            <add_dice value="3" />
-          </operation>
-          <operation>
-            <add value="-1" />
+            <and do="add_dice" value="3" />
+            <and do="add" value="-1" />
           </operation>
         </property_bonus>
         <property_bonus property_rule_ref="health">
           <operation>
-            <add_property_value property_rule_ref="constitution" />
-          </operation>
-          <operation>
-            <multiply value="2" />
+            <add_property property_rule_ref="constitution" />
+            <and do="multiply" value="2" />
           </operation>
         </property_bonus>
       </entry>

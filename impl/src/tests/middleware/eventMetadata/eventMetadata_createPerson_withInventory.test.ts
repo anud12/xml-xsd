@@ -39,7 +39,7 @@ describe("eventsMetadata create person with inventory", () => {
           <at origin="self">
             <radius>
               <operation>
-                <add value="1"/>
+                <and do="add" value="1"/>
               </operation>
             </radius>
           </at>
@@ -48,7 +48,7 @@ describe("eventsMetadata create person with inventory", () => {
               <item item_rule_ref="item_definition">
                 <quantity>
                   <operation>
-                    <add value="2" />
+                    <and do="add" value="2"/>
                   </operation>
                 </quantity>
               </item>
@@ -120,7 +120,7 @@ describe("eventsMetadata create person with inventory", () => {
           <at origin="self">
             <radius>
               <operation>
-                <add value="1" />
+                <and do="add" value="1" />
               </operation>
             </radius>
           </at>
@@ -129,7 +129,7 @@ describe("eventsMetadata create person with inventory", () => {
               <item item_rule_ref="item_definition">
                 <quantity>
                   <operation>
-                    <add value="2" />
+                    <and do="add" value="2" />
                   </operation>
                 </quantity>
               </item>

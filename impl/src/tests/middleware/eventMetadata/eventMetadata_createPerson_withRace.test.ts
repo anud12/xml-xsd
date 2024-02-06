@@ -31,7 +31,7 @@ describe("eventsMetadata create person with race", () => {
           <at origin="self">
             <radius>
               <operation>
-                <add value="1"/>
+                <and do="add" value="1"/>
               </operation>
             </radius>
           </at>
@@ -96,7 +96,7 @@ describe("eventsMetadata create person with race", () => {
           <at origin="self">
             <radius>
               <operation>
-                <add value="1" />
+                <and do="add" value="1" />
               </operation>
             </radius>
           </at>

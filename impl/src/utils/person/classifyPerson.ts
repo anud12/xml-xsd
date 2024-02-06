@@ -15,8 +15,7 @@ export const classifyPerson = (readJson: JsonUtil, personQueryType: PersonQueryT
       const isTrue = entry.queryAll("property")
         .reduce((acc, operation) => {
           const propertyValue = getProperty(readJson, personQueryType, operation.attributeMap.property_rule_ref);
-          const formula = createOperationFromParent(readJson, operation, key => getProperty(readJson, personQueryType, key));
-          const value = formula("0");
+          const value = createOperationFromParent(readJson, operation.query("operation"), key => getProperty(readJson, personQueryType, key));
           switch (operation.attributeMap.is) {
             case "lessThan":
               return acc && (Number(propertyValue) < Number(value));
