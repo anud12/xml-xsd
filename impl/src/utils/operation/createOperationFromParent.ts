@@ -5,23 +5,25 @@ import {JsonQueryType} from "../../JsonQueryType";
 
 export const createOperationFromParent = (
   readJson: JsonUtil,
-  operationList: JsonQueryType<any, { operation: OperationQueryType }>,
+  operationList: OperationQueryType,
   getExternalProperty: (key: string) => string = () => "0"
-): (string: string) => string => {
+): string => {
   try {
     if(!operationList) {
-      return (value: string) => value;
+      return "0";
     }
-    const result = operationList.queryAll("operation")
+
+
+    const result = operationList.childrenList
       .flatMap(operation => operation.childrenList)
       .reduce((acc, operation) => {
       const operationValue = createOperationFromQueryType(readJson, operation, getExternalProperty);
       return (value: string) => operationValue(acc((value)));
     }, (value: string) => value);
 
-    return result;
+    return result(operationList.attributeMap.initial || "0");
   } catch (e:any)  {
-    const newError = new Error(`createOperationFromParent failed for ${operationList?.attributeMap.name}`);
+    const newError = new Error(`createOperationFromParent failed for ${operationList.getPath()}`);
     newError.stack += '\nCaused by: ' + e.stack;
     throw newError;
   }

@@ -8,7 +8,6 @@ export const createOperationFromQueryType = (
   operationValue: OperationQueryType["childrenList"][number],
   getExternalProperty: (key: string) => string = () => "0"
 ): (value: string) => string => {
-  // const operationValue: Operation = operationArg as any;
 
   const wrapper = (func: (value: string) => string) => (value: string) => {
     if (!value || isNaN(Number(value))) {
@@ -18,57 +17,12 @@ export const createOperationFromQueryType = (
   }
 
   switch (operationValue.tag) {
-    case "add":
-      return wrapper(value => {
-        console.log(`${value} ${operationValue.tag} with ${operationValue.attributeMap.value}`)
-        return String(Number(value) + Number(operationValue.attributeMap.value))
-      })
-    case "add_dice":
-      return wrapper(value => {
-        console.log(`${value} ${operationValue.tag} with ${operationValue.attributeMap.value}`)
-        const randomValue = readJson.random() * Number(operationValue.attributeMap.value);
-        return String(Number(value) + Math.floor(randomValue))
-      })
-    case "multiply":
-      return wrapper(value => {
-        console.log(`${value} ${operationValue.tag} with ${operationValue.attributeMap.value}`)
-        return String(Number(value) * Number(operationValue.attributeMap.value))
-      })
-    case "multiply_dice":
-      return value => {
-        console.log(`${value} ${operationValue.tag} with ${operationValue.attributeMap.value}`)
-        const randomValue = readJson.random() * Number(operationValue.attributeMap.value);
-        return String(Number(value) * Math.floor(randomValue))
-      }
-    case "divide":
-      return wrapper(value => {
-        console.log(`${value} ${operationValue.tag} with ${operationValue.attributeMap.value}`)
-        return String(Number(value) / Number(operationValue.attributeMap.value))
-      })
-    case "divide_dice":
-      return wrapper(value => {
-        console.log(`${value} ${operationValue.tag} with ${operationValue.attributeMap.value}`)
-        const randomValue = readJson.random() * Number(operationValue.attributeMap.value);
-        return String(Number(value) / Math.floor(randomValue))
-      })
-    case "modulo":
-      return wrapper(value => {
-        console.log(`${value} ${operationValue.tag} with ${operationValue.attributeMap.value}`)
-        return String(Number(value) % Number(operationValue.attributeMap.value))
-      })
-    case "modulo_dice":
-      return wrapper(value => {
-        console.log(`${value} ${operationValue.tag} with ${operationValue.attributeMap.value}`)
-        const randomValue = readJson.random() * Number(operationValue.attributeMap.value);
-        return String(Number(value) % Math.floor(randomValue))
-      })
-    case "group" :
-      return wrapper(value => {
-        const operation = operationValue as unknown as OperationQueryType;
-        console.log(`${value} ${operation.tag}`)
-        return operation.childrenList.reduce((acc, e) => createOperationFromQueryType(readJson, e.childrenList[0] as OperationQueryType["childrenList"][number], getExternalProperty)(acc), value)
-      })
-    case "add_property_value":
+    default:
+      return (value:string) => {
+        throw new Error(`Unknown tag ${(operationValue as JsonQueryType).tag}`);
+        return value;
+      };
+    case "add_property":
       return wrapper(value => {
         const propertyRef = operationValue.attributeMap.property_rule_ref;
         if (propertyRef === undefined) {
@@ -78,9 +32,41 @@ export const createOperationFromQueryType = (
         console.log(`${value} ${operationValue.tag} with ${newValue}`)
         return String(Number(value) + Math.floor(Number(newValue)));
       })
-    default:
-      return () => {
-        throw new Error(`Unknown operation ${(operationValue as JsonQueryType).tag}`);
-      };
+    case "and":
+      return wrapper(value => {
+        console.log(`${value} ${operationValue.tag} applying ${operationValue.attributeMap.do} with value ${operationValue.attributeMap.value}`)
+        switch (operationValue.attributeMap.do) {
+          default: throw new Error(`Unknown attribute ${operationValue.attributeMap.do} for ${operationValue.tag} in ${operationValue.getPath()}`);
+          case "add": {
+            return String(Math.trunc(Number(value) + Number(operationValue.attributeMap.value)))
+          }
+          case "add_dice": {
+            const randomValue = readJson.random() * Number(operationValue.attributeMap.value);
+            return String(Math.trunc(Number(value) + Math.floor(randomValue)))
+          }
+          case "multiply": {
+            return String(Math.trunc(Number(value) * Number(operationValue.attributeMap.value)))
+          }
+          case "multiply_dice": {
+            const randomValue = readJson.random() * Number(operationValue.attributeMap.value);
+            return String(Math.trunc(Number(value) * Math.floor(randomValue)))
+          }
+          case "divide": {
+            return String(Math.trunc(Number(value) / Number(operationValue.attributeMap.value)))
+          }
+          case "divide_dice": {
+            const randomValue = readJson.random() * Number(operationValue.attributeMap.value);
+            return String(Math.trunc(Number(value) / Math.floor(randomValue)))
+          }
+          case "modulo": {
+            return String(Math.trunc(Number(value) % Number(operationValue.attributeMap.value)))
+          }
+          case "modulo_dice": {
+            const randomValue = readJson.random() * Number(operationValue.attributeMap.value);
+            return String(Math.trunc(Number(value) % Math.floor(randomValue)))
+          }
+        }
+      })
+
   }
 }

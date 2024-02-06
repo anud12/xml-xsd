@@ -20,15 +20,15 @@ describe("classifyPerson", () => {
     <classification_rule>
       <entry id="dead">
         <property property_rule_ref="health" is="lessThan" >
-          <operation>
-            <add value="0"/>
+          <operation initial="0">
+            <and do="add" value="0"/>
           </operation>
         </property>
       </entry>
       <entry id="alive">
         <property property_rule_ref="health" is="greaterThan">
-          <operation>
-            <add value="0"/>
+         <operation initial="0">
+            <and do="add" value="0"/>
           </operation>
         </property>
       </entry>

@@ -50,8 +50,8 @@ const thenCreatePerson = (readJson: JsonUtil, origin: Origin): Array<(util: Json
 
   return thenList.flatMap(then => {
     const radiusElement = then.query("at").query("radius");
-    const radiusOperation = readJson.computeOperationFromParent(radiusElement, string => string);
-    const radius = Number(radiusOperation("0"))
+    const radiusResult = readJson.computeOperationFromParent(radiusElement, string => string);
+    const radius = Number(radiusResult)
 
     const originElement = then.query("at").attributeMap.origin === "self"
       ? origin.self
@@ -68,7 +68,7 @@ const thenCreatePerson = (readJson: JsonUtil, origin: Origin): Array<(util: Json
           .flatMap(inventory => inventory.queryAllOptional("item"))
           .flatMap(item => {
             const item_ref = item.attributeMap.item_rule_ref;
-            const quantity = readJson.computeOperationFromParent(item.queryOptional("quantity"), string => string)("0");
+            const quantity = readJson.computeOperationFromParent(item.queryOptional("quantity"), string => string);
             return {
               item_rule_ref: item_ref,
               quantity: String(Math.floor(Number(quantity))),

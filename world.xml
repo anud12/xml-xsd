@@ -121,41 +121,33 @@
     <property_rule>
       <entry id="athletics" units="points">
         <default>
-          <operation>
-            <add_dice value="6"/>
-          </operation>
-          <operation>
-            <add value="-1"/>
+          <operation initial="0">
+            <and do="add_dice" value="6"/>
+            <and do="add" value="-1"/>
           </operation>
         </default>
       </entry>
       <entry id="strength" units="points">
         <default>
-          <operation>
-            <add_dice value="12"/>
-          </operation>
-          <operation>
-            <add value="8"/>
+          <operation initial="0">
+            <and do="add_dice" value="12"/>
+            <and do="add" value="8"/>
           </operation>
         </default>
       </entry>
       <entry id="constitution" units="points">
         <default>
-          <operation>
-            <add_dice value="12"/>
-          </operation>
-          <operation>
-            <add value="8"/>
+          <operation initial="0">
+            <and do="add_dice" value="12"/>
+            <and do="add" value="8"/>
           </operation>
         </default>
       </entry>
       <entry id="health" units="points">
         <default>
-          <operation>
-            <add_property_value property_rule_ref="constitution"/>
-          </operation>
-          <operation>
-            <add_dice value="8"/>
+          <operation initial="0">
+            <add_property property_rule_ref="constitution"/>
+            <and do="add" value="8"/>
           </operation>
         </default>
       </entry>
@@ -169,16 +161,12 @@
     <classification_rule>
       <entry id="dead">
         <property property_rule_ref="health" is="lessThanOrEqual">
-          <operation>
-            <add value="0"/>
-          </operation>
+          <operation initial="0"/>
         </property>
       </entry>
       <entry id="alive">
         <property property_rule_ref="health" is="greaterThan">
-          <operation>
-            <add value="0"/>
-          </operation>
+          <operation initial="0"/>
         </property>
       </entry>
     </classification_rule>
@@ -284,21 +272,16 @@
         <movement value="2" inclusive="true"/>
         <name name_rule_ref="humanName"/>
         <property_bonus property_rule_ref="strength">
-          <operation>
-            <add_dice value="3"/>
-          </operation>
-          <operation>
-            <add value="-1"/>
+          <operation initial="0">
+            <and do="add_dice" value="3"/>
+            <and do="add" value="-1"/>
           </operation>
         </property_bonus>
         <property_bonus property_rule_ref="constitution">
-          <operation>
-            <add_dice value="3"/>
+          <operation initial="0">
+            <and do="add_dice" value="3"/>
+            <and do="add" value="-1"/>
           </operation>
-          <operation>
-            <add value="-1"/>
-          </operation>
-          <operation/>
         </property_bonus>
         <icon>
           <svg version="1.0"
@@ -348,61 +331,39 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
     <action_rule>
       <person_to_person id="talk">
         <max_range>
-          <operation>
-            <add value="1"/>
-          </operation>
+          <operation initial="1"/>
         </max_range>
         <test>
           <value target="self">
-            <operation>
-              <add value="1"/>
-            </operation>
+            <operation initial="1"/>
           </value>
           <expected target="target">
-            <operation>
-              <add value="1"/>
-            </operation>
+            <operation initial="1"/>
           </expected>
         </test>
       </person_to_person>
       <person_to_person id="meleeAttack">
         <max_range>
-          <operation>
-            <add value="2"/>
-          </operation>
+          <operation initial="2"/>
         </max_range>
         <test>
           <value target="self">
-            <operation>
-              <add value="3"/>
-            </operation>
+            <operation initial="3"/>
           </value>
           <expected target="target">
-            <operation>
-              <add value="3"/>
-            </operation>
+            <operation initial="3"/>
           </expected>
         </test>
         <property_mutation property_rule_ref="health" on="target">
           <from participant="self">
-            <operation>
-              <add_dice value="6"/>
-            </operation>
-            <operation>
-              <group>
-                <operation>
-                  <add_property_value property_rule_ref="strength"/>
-                </operation>
-                <operation>
-                  <add value="-10"/>
-                </operation>
-                <operation>
-                  <divide value="2"/>
-                </operation>
-              </group>
-            </operation>
-            <operation>
-              <multiply value="-1"/>
+            <operation initial="0">
+              <and do="add_dice" value="6"/>
+              <and do="add" value="0">
+                <add_property property_rule_ref="strength"/>
+                <and do="add" value="-10"/>
+                <and do="divide" value="2"/>
+              </and>
+              <and do="multiply" value="-1"/>
             </operation>
           </from>
         </property_mutation>
@@ -451,9 +412,7 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
         <then>
           <at origin="self">
             <radius>
-              <operation>
-                <add value="10"/>
-              </operation>
+              <operation initial="10"/>
             </radius>
           </at>
           <create_person>
@@ -461,14 +420,10 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
             <inventory>
               <item item_rule_ref="bandana">
                 <quantity>
-                  <operation>
-                    <add_dice value="10"/>
-                  </operation>
-                  <operation>
-                    <add value="2"/>
-                  </operation>
-                  <operation>
-                    <divide value="2"/>
+                  <operation initial="0">
+                    <and do="add_dice" value="10"/>
+                    <and do="add" value="2"/>
+                    <and do="divide" value="2"/>
                   </operation>
                 </quantity>
               </item>
@@ -566,6 +521,7 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
       <location x="1" y="1"/>
       <properties>
         <property property_rule_ref="strength" value="13"/>
+        <property property_rule_ref="dd" value="12"/>
       </properties>
       <inventory>
         <item id="0.0" name="Long sword">

@@ -102,88 +102,48 @@
     <xs:attribute name="name"/>
   </xs:complexType>
 
+
+  <xs:simpleType name="type__group__operation__and">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="add"/>
+      <xs:enumeration value="add_dice"/>
+      <xs:enumeration value="multiply"/>
+      <xs:enumeration value="multiply_dice"/>
+      <xs:enumeration value="divide"/>
+      <xs:enumeration value="divide_dice"/>
+      <xs:enumeration value="modulo"/>
+      <xs:enumeration value="modulo_dice"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+
+  <xs:group name="group__operation__and">
+    <xs:sequence>
+      <xs:sequence>
+        <xs:element name="add_property" minOccurs="0">
+          <xs:complexType>
+            <xs:attribute name="property_rule_ref" use="required"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="and" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:group ref="group__operation__and" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="do" use="required" type="type__group__operation__and"/>
+            <xs:attribute name="value" use="required" type="xs:int"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:sequence>
+  </xs:group>
+
   <xs:group name="group__math_operations">
     <xs:sequence>
-      <xs:element name="operation" maxOccurs="unbounded">
+      <xs:element name="operation">
         <xs:complexType>
-          <xs:choice>
-            <xs:element name="add" minOccurs="0">
-              <xs:complexType>
-                <xs:attribute name="value" type="xs:int" use="required"/>
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="add_dice" minOccurs="0">
-              <xs:complexType>
-                <xs:attribute name="value" type="xs:int" use="required"/>
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="multiply" minOccurs="0">
-              <xs:complexType>
-                <xs:attribute name="value" type="xs:int" use="required"/>
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="multiply_dice" minOccurs="0">
-              <xs:complexType>
-                <xs:attribute name="value" type="xs:int" use="required"/>
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="divide" minOccurs="0">
-              <xs:complexType>
-                <xs:attribute name="value" type="xs:int" use="required"/>
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="divide_dice" minOccurs="0">
-              <xs:complexType>
-                <xs:attribute name="value" type="xs:int" use="required"/>
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="modulo" minOccurs="0">
-              <xs:complexType>
-                <xs:attribute name="value" type="xs:int" use="required"/>
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="modulo_dice" minOccurs="0">
-              <xs:complexType>
-                <xs:attribute name="value" type="xs:int" use="required"/>
-              </xs:complexType>
-            </xs:element>
-
-
-            <xs:element name="add_property_value" minOccurs="0">
-              <xs:complexType>
-                <xs:attribute name="property_rule_ref" use="required"/>
-              </xs:complexType>
-            </xs:element>
-
-            <xs:element name="group" minOccurs="0">
-              <xs:complexType>
-                <xs:group ref="group__math_operations"/>
-              </xs:complexType>
-            </xs:element>
-
-            <xs:element name="max_between" minOccurs="0">
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="group" minOccurs="2" maxOccurs="unbounded">
-                    <xs:complexType>
-                      <xs:group ref="group__math_operations"/>
-                    </xs:complexType>
-                  </xs:element>
-                </xs:sequence>
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="min" minOccurs="0">
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="group" minOccurs="2" maxOccurs="unbounded">
-                    <xs:complexType>
-                      <xs:group ref="group__math_operations"/>
-                    </xs:complexType>
-                  </xs:element>
-                </xs:sequence>
-              </xs:complexType>
-            </xs:element>
-          </xs:choice>
+          <xs:group ref="group__operation__and" minOccurs="0"/>
+          <xs:attribute name="initial" use="required" type="xs:int"/>
         </xs:complexType>
       </xs:element>
     </xs:sequence>

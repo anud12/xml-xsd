@@ -20,14 +20,14 @@ describe("personAction" , () => {
       <entry id="strength" units="points">
         <default>
           <operation>
-            <add value="10"/>
+            <and do="add" value="10"/>
           </operation>
         </default>
       </entry>
       <entry id="health" units="points">
         <default>
           <operation>
-            <add value="10"/>
+            <and do="add" value="10"/>
           </operation>
         </default>
       </entry>
@@ -44,23 +44,23 @@ describe("personAction" , () => {
       <person_to_person id="meleeAttack">
         <max_range>
           <operation>
-            <add value="5"/>
+            <and do="add" value="5"/>
           </operation>
         </max_range>
         <min_range>
           <operation>
-            <add value="3"/>
+            <and do="add" value="3"/>
           </operation>
         </min_range>
         <test>
           <value target="self">
             <operation>
-              <add value="3"/>
+              <and do="add" value="3"/>
             </operation>
           </value>
           <expected target="target">
             <operation>
-              <add value="3"/>
+              <and do="add" value="3"/>
             </operation>
           </expected>
         </test>
@@ -68,10 +68,10 @@ describe("personAction" , () => {
         <property_mutation name="health" on="target">
           <from participant="self">
             <operation>
-              <add_property_value name="strength"/>
+              <add_property property_rule_ref="strength"/>
             </operation>
             <operation>
-              <divide value="2"/>
+              <and do="divide" value="2"/>
             </operation>
           </from>
         </property_mutation>
@@ -120,14 +120,14 @@ describe("personAction" , () => {
       <entry id="strength" units="points">
         <default>
           <operation>
-            <add value="10" />
+            <and do="add" value="10" />
           </operation>
         </default>
       </entry>
       <entry id="health" units="points">
         <default>
           <operation>
-            <add value="10" />
+            <and do="add" value="10" />
           </operation>
         </default>
       </entry>
@@ -142,33 +142,33 @@ describe("personAction" , () => {
       <person_to_person id="meleeAttack">
         <max_range>
           <operation>
-            <add value="5" />
+            <and do="add" value="5" />
           </operation>
         </max_range>
         <min_range>
           <operation>
-            <add value="3" />
+            <and do="add" value="3" />
           </operation>
         </min_range>
         <test>
           <value target="self">
             <operation>
-              <add value="3" />
+              <and do="add" value="3" />
             </operation>
           </value>
           <expected target="target">
             <operation>
-              <add value="3" />
+              <and do="add" value="3" />
             </operation>
           </expected>
         </test>
         <property_mutation name="health" on="target">
           <from participant="self">
             <operation>
-              <add_property_value name="strength" />
+              <add_property property_rule_ref="strength" />
             </operation>
             <operation>
-              <divide value="2" />
+              <and do="divide" value="2" />
             </operation>
           </from>
         </property_mutation>

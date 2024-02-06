@@ -1,6 +1,6 @@
 import {JsonQueryType} from "../JsonQueryType";
 
-export type OperationQueryType = JsonQueryType<{}, {
+export type OperationQueryTypeB = JsonQueryType<{}, {
   add_property_value: JsonQueryType<{ property_rule_ref: string }>,
   add: JsonQueryType<{ value: string }>,
   add_dice: JsonQueryType<{ value: string }>,
@@ -11,6 +11,21 @@ export type OperationQueryType = JsonQueryType<{}, {
   modulo_dice: JsonQueryType<{ value: string }>,
   modulo: JsonQueryType<{ value: string }>,
   group: JsonQueryType
+}>
+
+
+export type OperationQueryTypeAndDoType = "add"
+  | "add_dice"
+  | "multiply"
+  | "multiply_dice"
+  | "divide"
+  | "divide_dice"
+  | "modulo"
+  | "modulo_dice"
+
+export type OperationQueryType = JsonQueryType<{initial:string}, {
+  add_property: JsonQueryType<{ property_rule_ref:string}>
+  and: JsonQueryType<{ do: OperationQueryTypeAndDoType, value: string }>
 }>
 
 export type IconType = JsonQueryType<any, {
