@@ -1,7 +1,6 @@
 import {OperationQueryType} from "../JsonSchema";
 import {createOperationFromQueryType} from "./createOperationFromQueryType";
 import {JsonUtil} from "../util";
-import {JsonQueryType} from "../../JsonQueryType";
 
 export const createOperationFromParent = (
   readJson: JsonUtil,
@@ -15,9 +14,8 @@ export const createOperationFromParent = (
 
 
     const result = operationList.childrenList
-      .flatMap(operation => operation.childrenList)
       .reduce((acc, operation) => {
-      const operationValue = createOperationFromQueryType(readJson, operation, getExternalProperty);
+      const operationValue = createOperationFromQueryType(readJson, operation , getExternalProperty);
       return (value: string) => operationValue(acc((value)));
     }, (value: string) => value);
 

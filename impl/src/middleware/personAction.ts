@@ -29,7 +29,7 @@ export const isOutOfRange = (readJson: JsonUtil, personAction: PersonActionMetad
   if (!maxRange) {
     return true;
   }
-  const maxRangeValue = readJson.computeOperationFromParent(maxRange, string => readJson.person.getProperty(person, string));
+  const maxRangeValue = readJson.computeOperationFromParent(maxRange.query("operation"), string => readJson.person.getProperty(person, string));
   const distance = readJson.person.getDistance(person, targetPerson);
   if ((distance + 1) > (Number(maxRangeValue))) {
     return true;
@@ -38,7 +38,7 @@ export const isOutOfRange = (readJson: JsonUtil, personAction: PersonActionMetad
   if (!minRange) {
     return false;
   }
-  const minRangeValue = readJson.computeOperationFromParent(maxRange, string => readJson.person.getProperty(person, string));
+  const minRangeValue = readJson.computeOperationFromParent(maxRange.query("operation"), string => readJson.person.getProperty(person, string));
   return (Number(minRangeValue) + 1) > distance;
 }
 
