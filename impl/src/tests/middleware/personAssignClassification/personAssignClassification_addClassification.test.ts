@@ -1,9 +1,9 @@
-import {JsonQuery} from "../../JSONQuery";
-import {JsonSchema} from "../../utils/JsonSchema";
-import {JsonUtil} from "../../utils/util";
-import {personAssignClassification} from "../../middleware/personAssignClassification";
+import {JsonQuery} from "../../../JSONQuery";
+import {JsonSchema} from "../../../utils/JsonSchema";
+import {JsonUtil} from "../../../utils/util";
+import {personAssignClassification} from "../../../middleware/personAssignClassification";
 
-describe("personAssignClassification", () => {
+describe("personAssignClassification_addClassification", () => {
   it("return classifications for person only if health is negative", async () => {
     const query = JsonQuery.fromText<JsonSchema>(`<world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

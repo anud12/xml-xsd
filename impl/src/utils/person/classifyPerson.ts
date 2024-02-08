@@ -11,8 +11,13 @@ export const classifyPerson = (readJson: JsonUtil, personQueryType: PersonQueryT
     const classificationMetadataEntry = ruleGroup.flatMap(ruleGroup => ruleGroup.queryAllOptional("classification_rule"))
       .flatMap(e => e.queryAllOptional("entry"));
 
-    return classificationMetadataEntry.filter(entry => {
-      const isTrue = entry.queryAll("property")
+    const propertyBasedClassificationList = classificationMetadataEntry.filter(entry => {
+      return entry.queryAllOptional("property").length !== 0
+    })
+
+    const computedClassificationIdList = propertyBasedClassificationList.filter(entry => {
+
+      const isTrue = entry.queryAllOptional("property")
         .reduce((acc, operation) => {
           const propertyValue = getProperty(readJson, personQueryType, operation.attributeMap.property_rule_ref);
           const value = createOperationFromParent(readJson, operation.query("operation"), key => getProperty(readJson, personQueryType, key));
@@ -36,8 +41,18 @@ export const classifyPerson = (readJson: JsonUtil, personQueryType: PersonQueryT
         }, true);
       return isTrue;
     })
-      .map(entry => entry.attributeMap.id);
-  } catch (e:any)  {
+    .map(value => value.attributeMap.id);
+
+    const staticClassificationId = personQueryType.queryAll("classifications").flatMap(classifications => classifications.queryAllOptional("classification"))
+      .filter(classification => {
+        return !propertyBasedClassificationList.map(entry => entry.attributeMap.id)
+          .includes(classification.attributeMap.classification_rule_ref);
+      })
+      .map(value => value.attributeMap.classification_rule_ref)
+
+
+    return [...computedClassificationIdList, ...staticClassificationId];
+  } catch (e: any) {
     const newError = new Error(`classifyPerson failed for ${personQueryType.attributeMap.id}`);
     newError.stack += '\nCaused by: ' + e.stack;
     throw newError;

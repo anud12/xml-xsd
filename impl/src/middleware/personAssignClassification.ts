@@ -4,7 +4,7 @@ import { classifyPerson } from "../utils/person/classifyPerson";
 // for person in people add a classifications
 export const personAssignClassification: Middleware = (readJson) => {
   const personList = readJson.json.queryAll("people").flatMap(e => e.queryAll("person"));
-  const classificationListByPersonName = personList.map(person => {
+  const classificationListByPersonId = personList.map(person => {
     const classificationList = classifyPerson(readJson, person);
     return {
       id: person.attributeMap.id,
@@ -13,7 +13,7 @@ export const personAssignClassification: Middleware = (readJson) => {
   })
   return async writeJson => {
     const personList = writeJson.json.queryAll("people").flatMap(e => e.queryAll("person"));
-    classificationListByPersonName.forEach(({id, classificationList}) => {
+    classificationListByPersonId.forEach(({id, classificationList}) => {
       const person = personList.find(e => e.attributeMap.id === id);
       const classifications = person.query("classifications");
       classifications.childrenList = [];

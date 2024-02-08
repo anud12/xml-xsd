@@ -259,7 +259,7 @@
                     <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="property" maxOccurs="unbounded">
+                          <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
                             <xs:complexType>
                               <xs:sequence>
                                 <xs:group ref="group__math_operations"/>
