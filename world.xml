@@ -169,6 +169,7 @@
           <operation initial="0"/>
         </property>
       </entry>
+      <entry id="badge"/>
     </classification_rule>
     <!--_-->
     <!--_-->
