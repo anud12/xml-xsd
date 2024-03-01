@@ -16,6 +16,7 @@ import {
   NameTokenQueryTypeChild
 } from "./calculateName";
 import {CreateItemArgs, createItemAt} from "./item/createItemAt";
+import {classifyPerson} from "./person/classifyPerson";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -113,6 +114,9 @@ export class JsonUtil {
     getById: memoizeFunction((id: string): PersonQueryType => {
       return getById(this.json, id)
     }),
+    classifyPerson: (personQueryType: PersonQueryType) => {
+      return classifyPerson(this, personQueryType);
+    },
     getDistance: memoizeFunction((personQueryType: PersonQueryType, secondPersonQueryType: PersonQueryType) => {
       const x = Number(personQueryType.query("location").attributeMap.x);
       const y = Number(personQueryType.query("location").attributeMap.y);

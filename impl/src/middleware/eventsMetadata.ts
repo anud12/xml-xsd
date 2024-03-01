@@ -57,7 +57,7 @@ const thenCreatePerson = (readJson: JsonUtil, origin: Origin): Array<(util: Json
       ? origin.self
       : origin.target
 
-    return then.queryAllOptional("create_person")
+    return then.queryAllOptional("select_person")
       .map(create_person =>
         (util: JsonUtil) => {
           const race = create_person.queryOptional("race")?.attributeMap.race_rule_ref;

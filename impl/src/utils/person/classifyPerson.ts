@@ -6,6 +6,7 @@ import {JsonQueryType} from "../../JsonQueryType";
 
 export const classifyPerson = (readJson: JsonUtil, personQueryType: PersonQueryType): string[] => {
   try {
+    console.log(`classifyPerson for ${personQueryType.attributeMap.id}`)
     const ruleGroup = readJson.getRuleGroups();
 
     const classificationMetadataEntry = ruleGroup.flatMap(ruleGroup => ruleGroup.queryAllOptional("classification_rule"))
@@ -34,6 +35,7 @@ export const classifyPerson = (readJson: JsonUtil, personQueryType: PersonQueryT
             }
           }
         }, true);
+      console.log(`classifyPerson ${entry.attributeMap.id} result ${isTrue}`)
       return isTrue;
     })
       .map(entry => entry.attributeMap.id);

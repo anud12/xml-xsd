@@ -53,31 +53,29 @@
 
   <xs:complexType name="type_person_selection">
     <xs:sequence>
-      <xs:element name="race" minOccurs="0">
-        <xs:complexType>
-          <xs:attribute name="race_rule_ref" use="required"/>
-          <xs:attribute name="quantity" use="required" type="xs:int"/>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="inventory" minOccurs="0">
+      <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
         <xs:complexType>
           <xs:sequence>
-            <xs:element name="item" minOccurs="0" maxOccurs="unbounded">
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="quantity">
-                    <xs:complexType>
-                      <xs:group ref="group__math_operations"/>
-                    </xs:complexType>
-                  </xs:element>
-                </xs:sequence>
-                <xs:attribute name="item_rule_ref" use="required"/>
-              </xs:complexType>
+            <xs:element name="min" type="type__math_operations">
+            </xs:element>
+            <xs:element name="max" type="type__math_operations">
             </xs:element>
           </xs:sequence>
+          <xs:attribute name="property_rule_ref" use="required"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="classification" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="classification_rule_ref" use="required"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="race" minOccurs="0" maxOccurs="1">
+        <xs:complexType>
+          <xs:attribute name="race_rule_ref" use="required"/>
         </xs:complexType>
       </xs:element>
     </xs:sequence>
+    <xs:attribute name="amount" use="required" type="xs:int"/>
   </xs:complexType>
 
   <xs:complexType name="type_item">
@@ -138,6 +136,11 @@
     </xs:sequence>
   </xs:group>
 
+  <xs:complexType name="type__math_operations">
+    <xs:group ref="group__operation__and" minOccurs="0"/>
+    <xs:attribute name="initial" use="required" type="xs:int"/>
+  </xs:complexType>
+
   <xs:group name="group__math_operations">
     <xs:sequence>
       <xs:element name="operation">
@@ -172,6 +175,8 @@
       </xs:element>
     </xs:sequence>
   </xs:group>
+
+
 
   <xs:element name="world_step">
     <xs:complexType>
@@ -487,7 +492,7 @@
                                     </xs:attribute>
                                   </xs:complexType>
                                 </xs:element>
-                                <xs:element name="create_person" minOccurs="0" type="type_person_selection"/>
+                                <xs:element name="select_person" minOccurs="0" type="type_person_selection"/>
                               </xs:sequence>
                             </xs:complexType>
                           </xs:element>
