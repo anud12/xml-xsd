@@ -13,6 +13,7 @@ export type OperationQueryTypeB = JsonQueryType<{}, {
   group: JsonQueryType
 }>
 
+export type StringBoolean = "false" | "true";
 
 export type OperationQueryTypeAndDoType = "add"
   | "add_dice"
@@ -45,6 +46,7 @@ export type ItemQueryType = JsonQueryType<{ id: string, name: string }, {
 
 
 export type SelectPersonQueryType = JsonQueryType<{}, {
+  list_size: OperationQueryType & JsonQueryType<{fill_missing: StringBoolean }>,
   property: JsonQueryType<{ property_rule_ref: string }, {
     min: OperationQueryType,
     max: OperationQueryType,

@@ -4,14 +4,15 @@ import {JsonQuery} from "../../../../JSONQuery";
 import {JsonUtil} from "../../../../utils/util";
 import {selectPerson} from "../../../../utils/person/selectPerson";
 
-describe("selectPerson_empty", () => {
-  it("return all persons when no rules are set", () => {
+describe("selectPerson_list_size", () => {
+  it("", () => {
     const query = JsonQuery.fromText<JsonSchema>(`<world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../schema/world_step/world_step.xsd"
 >
   <world_metadata>
     <randomization_table>
+      <entry value="1"/>
       <entry value="2"/>
     </randomization_table>
   </world_metadata>
@@ -24,7 +25,9 @@ describe("selectPerson_empty", () => {
               <operation initial="10"/>
             </radius>
           </at>
-          <select_person/>
+          <select_person>
+            <list_size initial="2"/>
+          </select_person>
         </then>
       </entry>
     </events_rule>
@@ -45,7 +48,7 @@ describe("selectPerson_empty", () => {
       .query("entry")
       .query("then")
       .query("select_person"));
-    expect(result.map(v => v.attributeMap.id)).toEqual(["0", "1", "2"]);
+    expect(result.map(v => v.attributeMap.id)).toEqual(["0", "2"]);
 
   })
 })

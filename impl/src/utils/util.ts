@@ -51,7 +51,24 @@ export class JsonUtil {
     create: (x: number, y: number) => void,
   }
 
-  randomFromArray = <T>(array: T[]): T => {
+  randomListFromArray = <T>(originalArray: T[], numberOfElements: number = 1): T[] =>{
+    // Create a copy of the array to avoid modifying the original array
+    let array = [...originalArray];
+
+    let currentIndex = array.length;
+    while (currentIndex !== 0) {
+      const randomIndex = Math.floor(this.random() * (currentIndex - 1));
+      currentIndex--;
+
+      // Swap elements
+      const temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+    return array.slice(0, numberOfElements);
+  }
+
+  randomFromArray = <T>(array: T[], numberOfElements: number = 1): T => {
     return array[Math.floor(this.random() * (array.length - 1))];
   }
   questMarkov: () => void;
