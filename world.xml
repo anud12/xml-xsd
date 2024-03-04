@@ -416,8 +416,8 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
             </radius>
           </at>
           <select_person>
-            <list_size initial="1" fill_missing="true">
-            </list_size>
+            <min initial="1"/>
+            <max initial="1"/>
             <property property_rule_ref="strength">
               <min initial="0"/>
               <max initial="0"/>

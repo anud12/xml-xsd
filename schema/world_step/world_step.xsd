@@ -53,15 +53,8 @@
 
   <xs:complexType name="type_person_selection">
     <xs:sequence>
-      <xs:element name="list_size" minOccurs="0">
-        <xs:complexType>
-          <xs:simpleContent>
-            <xs:extension base="type__math_operations">
-              <xs:attribute name="fill_missing" use="required" type="xs:boolean"/>
-            </xs:extension>
-          </xs:simpleContent>
-        </xs:complexType>
-      </xs:element>
+      <xs:element name="min" minOccurs="0" type="type__math_operations"/>
+      <xs:element name="max" minOccurs="0" type="type__math_operations"/>
       <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
         <xs:complexType>
           <xs:sequence>

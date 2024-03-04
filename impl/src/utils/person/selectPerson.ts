@@ -62,13 +62,13 @@ export const selectPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQuery
     people = filterPersonListBasedOnClassification(jsonUtil, selectPerson, people);
     people = filterPersonListBasedOnRace(jsonUtil, selectPerson, people);
 
-    const quantityElement = selectPerson.queryOptional("list_size");
+    const maxElement = selectPerson.queryOptional("max");
 
-    if(!quantityElement) {
+    if(!maxElement) {
       return people;
     }
-    const quantityValue = jsonUtil.computeOperationFromParent(quantityElement, () => "0")
-    return jsonUtil.randomListFromArray(people, Number(quantityValue));
+    const maxQuantityValue = jsonUtil.computeOperationFromParent(maxElement, () => "0")
+    return jsonUtil.randomListFromArray(people, Number(maxQuantityValue));
   } catch (e: any) {
     const newError = new Error(`selectPerson failed for ${selectPerson.getPath()}`);
     newError.stack += '\nCaused by: ' + e.stack;

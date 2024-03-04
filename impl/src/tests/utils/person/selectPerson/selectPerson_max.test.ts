@@ -4,9 +4,8 @@ import {JsonQuery} from "../../../../JSONQuery";
 import {JsonUtil} from "../../../../utils/util";
 import {selectPerson} from "../../../../utils/person/selectPerson";
 
-describe("selectPerson_list_size", () => {
-  it("", () => {
-    const query = JsonQuery.fromText<JsonSchema>(`<world_step
+it("selectPerson_max", () => {
+  const query = JsonQuery.fromText<JsonSchema>(`<world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../schema/world_step/world_step.xsd"
 >
@@ -26,7 +25,7 @@ describe("selectPerson_list_size", () => {
             </radius>
           </at>
           <select_person>
-            <list_size initial="2"/>
+            <max initial="2"/>
           </select_person>
         </then>
       </entry>
@@ -42,13 +41,12 @@ describe("selectPerson_list_size", () => {
   </people>
 </world_step>
 `);
-    const util: JsonUtil = new JsonUtil(query);
-    const result = selectPerson(util, query.query("rule_group")
-      .query("events_rule")
-      .query("entry")
-      .query("then")
-      .query("select_person"));
-    expect(result.map(v => v.attributeMap.id)).toEqual(["0", "2"]);
+  const util: JsonUtil = new JsonUtil(query);
+  const result = selectPerson(util, query.query("rule_group")
+    .query("events_rule")
+    .query("entry")
+    .query("then")
+    .query("select_person"));
+  expect(result.map(v => v.attributeMap.id)).toEqual(["0", "2"]);
 
-  })
 })

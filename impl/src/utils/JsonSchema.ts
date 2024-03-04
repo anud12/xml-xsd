@@ -46,7 +46,8 @@ export type ItemQueryType = JsonQueryType<{ id: string, name: string }, {
 
 
 export type SelectPersonQueryType = JsonQueryType<{}, {
-  list_size: OperationQueryType & JsonQueryType<{fill_missing: StringBoolean }>,
+  min: OperationQueryType,
+  max: OperationQueryType,
   property: JsonQueryType<{ property_rule_ref: string }, {
     min: OperationQueryType,
     max: OperationQueryType,

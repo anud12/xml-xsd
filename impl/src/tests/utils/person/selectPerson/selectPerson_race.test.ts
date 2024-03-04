@@ -4,9 +4,8 @@ import {JsonQuery} from "../../../../JSONQuery";
 import {JsonUtil} from "../../../../utils/util";
 import {selectPerson} from "../../../../utils/person/selectPerson";
 
-describe("selectPerson_race", () => {
-  it("return all persons when race rules are set", () => {
-    const query = JsonQuery.fromText<JsonSchema>(`<world_step
+it("selectPerson_race", () => {
+  const query = JsonQuery.fromText<JsonSchema>(`<world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../schema/world_step/world_step.xsd"
 >
@@ -44,13 +43,12 @@ describe("selectPerson_race", () => {
   </people>
 </world_step>
 `);
-    const util: JsonUtil = new JsonUtil(query);
-    const result = selectPerson(util, query.query("rule_group")
-      .query("events_rule")
-      .query("entry")
-      .query("then")
-      .query("select_person"));
-    expect(result.map(v => v.attributeMap.id)).toEqual(["0", "1"]);
+  const util: JsonUtil = new JsonUtil(query);
+  const result = selectPerson(util, query.query("rule_group")
+    .query("events_rule")
+    .query("entry")
+    .query("then")
+    .query("select_person"));
+  expect(result.map(v => v.attributeMap.id)).toEqual(["0", "1"]);
 
-  })
 })
