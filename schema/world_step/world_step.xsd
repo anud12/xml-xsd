@@ -280,7 +280,6 @@
                                     <xs:enumeration
                                             value="greaterThanOrEqual"/>
                                     <xs:enumeration value="equal"/>
-                                    <xs:enumeration value="notEqual"/>
                                   </xs:restriction>
                                 </xs:simpleType>
                               </xs:attribute>

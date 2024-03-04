@@ -17,6 +17,7 @@ import {
 } from "./calculateName";
 import {CreateItemArgs, createItemAt} from "./item/createItemAt";
 import {classifyPerson} from "./person/classifyPerson";
+import {setProperty} from "./person/setProperty";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -128,6 +129,7 @@ export class JsonUtil {
 
   person = {
     getProperty: (personQueryType: PersonQueryType, key) => getProperty(this, personQueryType, key),
+    setProperty: (personQueryType: PersonQueryType, key, value:string) => setProperty(this, personQueryType, key, value),
     getById: memoizeFunction((id: string): PersonQueryType => {
       return getById(this.json, id)
     }),

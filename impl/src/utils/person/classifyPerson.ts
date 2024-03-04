@@ -28,8 +28,6 @@ export const classifyPerson = (readJson: JsonUtil, personQueryType: PersonQueryT
               return acc && (Number(propertyValue) >= Number(value));
             case "equal":
               return acc && (Number(propertyValue) === Number(value));
-            case "notEqual":
-              return acc && (Number(propertyValue) !== Number(value));
             default: {
               throw new Error(`Unknown operation ${(operation as JsonQueryType).attributeMap.is}`);
             }

@@ -57,7 +57,7 @@ export const filterPersonListBasedOnRace = (jsonUtil: JsonUtil, selectPerson: Se
 
 export const queryPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType) => {
   try {
-    let people = jsonUtil.json.queryAll("people").flatMap(people => people.queryAll("person"));
+    let people = jsonUtil.json.queryAll("people").flatMap(people => people.queryAllOptional("person"));
     people = filterPersonListBasedOnProperties(jsonUtil, selectPerson, people);
     people = filterPersonListBasedOnClassification(jsonUtil, selectPerson, people);
     people = filterPersonListBasedOnRace(jsonUtil, selectPerson, people);

@@ -37,7 +37,6 @@ export type ClassificationOperationIs = "lessThan"
   | "greaterThan"
   | "greaterThanOrEqual"
   | "equal"
-  | "notEqual"
 
 export type ItemQueryType = JsonQueryType<{ id: string, name: string }, {
   weight_kg: JsonQueryType<{ value: string }>
