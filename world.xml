@@ -412,8 +412,8 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
         <then>
           <select_person origin="target">
             <radius initial="10"/>
-            <min initial="1"/>
-            <max initial="1"/>
+            <min initial="2"/>
+            <max initial="2"/>
             <property property_rule_ref="strength">
               <min initial="0"/>
               <max initial="0"/>
