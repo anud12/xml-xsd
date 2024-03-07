@@ -36,11 +36,6 @@ it("selectPerson__min_property_max", () => {
     <events_rule>
       <entry id="event">
         <then>
-          <at origin="self">
-            <radius>
-              <operation initial="10"/>
-            </radius>
-          </at>
           <select_person>
             <min initial="2"/>
             <property property_rule_ref="property">

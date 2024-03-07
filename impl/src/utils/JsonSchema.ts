@@ -45,6 +45,7 @@ export type ItemQueryType = JsonQueryType<{ id: string, name: string }, {
 
 
 export type SelectPersonQueryType = JsonQueryType<{}, {
+  radius: OperationQueryType,
   min: OperationQueryType,
   max: OperationQueryType,
   property: JsonQueryType<{ property_rule_ref: string }, {
@@ -137,13 +138,7 @@ export type JsonSchema = JsonQueryType<{}, {
           person_action_used: JsonQueryType<{ action_rule_ref: string }>
         }>,
         then: JsonQueryType<{}, {
-          at: JsonQueryType<{ origin: string }, {
-            radius: JsonQueryType<{}, {
-              operation: OperationQueryType
-            }>
-            location: JsonQueryType<{ type: string, quantity: string }>
-          }>,
-          select_person?: SelectPersonQueryType
+          select_person?: SelectPersonQueryType & JsonQueryType<{origin: "target" | "self"}>
         }>
       }>
     }>,

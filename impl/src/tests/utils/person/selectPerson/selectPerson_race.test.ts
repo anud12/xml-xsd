@@ -18,11 +18,6 @@ it("selectPerson_race", () => {
     <events_rule>
       <entry id="event">
         <then>
-          <at origin="self">
-            <radius>
-              <operation initial="10"/>
-            </radius>
-          </at>
           <select_person>
             <race race_rule_ref="race"/>
           </select_person>

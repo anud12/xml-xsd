@@ -410,12 +410,8 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
           <person_action_used action_rule_ref="talk"/>
         </when>
         <then>
-          <at origin="self">
-            <radius>
-              <operation initial="10"/>
-            </radius>
-          </at>
-          <select_person>
+          <select_person origin="target">
+            <radius initial="10"/>
             <min initial="1"/>
             <max initial="1"/>
             <property property_rule_ref="strength">

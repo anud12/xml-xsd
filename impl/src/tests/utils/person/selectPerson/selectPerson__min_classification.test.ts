@@ -42,11 +42,6 @@ it("selectPerson__min_classification", () => {
     <events_rule>
       <entry id="event">
         <then>
-          <at origin="self">
-            <radius>
-              <operation initial="1"/>
-            </radius>
-          </at>
           <select_person>
             <min initial="2"/>
             <classification classification_rule_ref="classification"/>

@@ -2,12 +2,12 @@ import {LocationGrid, locationGrid} from "./location/locationGrid";
 import {locationMarkovChainMatrix, LocationMatrix} from "./location/locationMarkovChainMatrix";
 import {markovNext} from "./markovNext";
 import {create} from "./location/create";
-import {JsonSchema, OperationQueryType} from "./JsonSchema";
+import {JsonSchema, OperationQueryType, SelectPersonQueryType} from "./JsonSchema";
 import {newRandom} from "./newRandom";
 import {createOperationFromQueryType} from "./operation/createOperationFromQueryType";
 import {getProperty, PersonQueryType} from "./person/getProperty";
 import {getById} from "./person/getById";
-import {createPerson, CreatePersonArgs} from "./person/createPerson";
+import {createPerson} from "./person/createPerson";
 import {createOperationFromParent} from "./operation/createOperationFromParent";
 import {JsonQueryType} from "../JsonQueryType";
 import {
@@ -18,6 +18,7 @@ import {
 import {CreateItemArgs, createItemAt} from "./item/createItemAt";
 import {classifyPerson} from "./person/classifyPerson";
 import {setProperty} from "./person/setProperty";
+import {Position, selectPerson} from "./person/selectPerson";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -128,6 +129,9 @@ export class JsonUtil {
   }
 
   person = {
+    selectPerson: (selectPersonQueryType: SelectPersonQueryType, position:Position) => {
+      return selectPerson(this, selectPersonQueryType, position);
+    },
     getProperty: (personQueryType: PersonQueryType, key) => getProperty(this, personQueryType, key),
     setProperty: (personQueryType: PersonQueryType, key, value:string) => setProperty(this, personQueryType, key, value),
     getById: memoizeFunction((id: string): PersonQueryType => {
@@ -143,7 +147,6 @@ export class JsonUtil {
       const y2 = Number(secondPersonQueryType.query("location").attributeMap.y);
       return Math.sqrt(Math.pow(x - x2, 2) + Math.pow(y - y2, 2));
     }),
-    create: (args: CreatePersonArgs) => createPerson(this, args)
   }
 
   markov = markovNext;

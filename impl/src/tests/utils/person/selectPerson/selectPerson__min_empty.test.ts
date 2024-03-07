@@ -22,11 +22,6 @@ it("selectPerson__min_empty", () => {
     <events_rule>
       <entry id="event">
         <then>
-          <at origin="self">
-            <radius>
-              <operation initial="10"/>
-            </radius>
-          </at>
           <select_person>
             <min initial="2"/>
           </select_person>
@@ -45,8 +40,8 @@ it("selectPerson__min_empty", () => {
     .query("then")
     .query("select_person"));
   expect(result.map(v => v.serializeRaw())).toEqual([
-    "<person id=\"0.0\"><location x=\"0\" y=\"0\"/><race race_rule_ref=\"race\"/><classifications/></person>",
-    "<person id=\"0.1\"><location x=\"0\" y=\"0\"/><race race_rule_ref=\"race\"/><classifications/></person>"
+    "<person id=\"0.0\"><location x=\"0\" y=\"0\"/><race race_rule_ref=\"race\"/><classifications/></person>\n",
+    "<person id=\"0.1\"><location x=\"0\" y=\"0\"/><race race_rule_ref=\"race\"/><classifications/></person>\n"
   ]);
 
 })

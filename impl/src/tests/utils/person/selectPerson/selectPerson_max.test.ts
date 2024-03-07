@@ -19,11 +19,6 @@ it("selectPerson_max", () => {
     <events_rule>
       <entry id="event">
         <then>
-          <at origin="self">
-            <radius>
-              <operation initial="10"/>
-            </radius>
-          </at>
           <select_person>
             <max initial="2"/>
           </select_person>

@@ -25,11 +25,6 @@ it("selectPerson_classification", () => {
     <events_rule>
       <entry id="event">
         <then>
-          <at origin="self">
-            <radius>
-              <operation initial="10"/>
-            </radius>
-          </at>
           <select_person>
             <classification classification_rule_ref="classification"/>
           </select_person>
