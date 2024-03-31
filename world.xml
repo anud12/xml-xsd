@@ -268,7 +268,7 @@
     <!--_-->
     <race_rule>
       <entry id="human">
-        <vision value="5" inclusive="true"/>
+        <vision value="2" inclusive="true"/>
         <movement value="2" inclusive="true"/>
         <name name_rule_ref="humanName"/>
         <property_bonus property_rule_ref="strength">
@@ -411,13 +411,9 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
         </when>
         <then>
           <select_person origin="target">
-            <radius initial="10"/>
-            <min initial="2"/>
-            <max initial="2"/>
-            <property property_rule_ref="strength">
-              <min initial="0"/>
-              <max initial="0"/>
-            </property>
+            <radius initial="30"/>
+            <min initial="4"/>
+            <max initial="4"/>
             <classification classification_rule_ref="alive"/>
             <race race_rule_ref="human"/>
           </select_person>
