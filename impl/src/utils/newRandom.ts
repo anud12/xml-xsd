@@ -13,10 +13,11 @@ export const newRandom = (worldSchema: JsonUtil) => {
             return previousValue > currentValue
                 ? previousValue
                 : currentValue
-        }, 0)
+        }, entries[0])
         const index = counter % entries.length;
         counter += 1;
         const result = entries[index] / max;
+        console.log(`random: result=${result}, max=${max}, value=${entries[index]}`)
         return result;
     }
 }

@@ -13,6 +13,7 @@ export type OperationQueryTypeB = JsonQueryType<{}, {
   group: JsonQueryType
 }>
 
+export type StringBoolean = "false" | "true";
 
 export type OperationQueryTypeAndDoType = "add"
   | "add_dice"
@@ -23,8 +24,8 @@ export type OperationQueryTypeAndDoType = "add"
   | "modulo"
   | "modulo_dice"
 
-export type OperationQueryType = JsonQueryType<{initial:string}, {
-  add_property: JsonQueryType<{ property_rule_ref:string}>
+export type OperationQueryType = JsonQueryType<{ initial: string }, {
+  add_property: JsonQueryType<{ property_rule_ref: string }>
   and: JsonQueryType<{ do: OperationQueryTypeAndDoType, value: string }>
 }>
 
@@ -36,12 +37,32 @@ export type ClassificationOperationIs = "lessThan"
   | "greaterThan"
   | "greaterThanOrEqual"
   | "equal"
-  | "notEqual"
 
 export type ItemQueryType = JsonQueryType<{ id: string, name: string }, {
   weight_kg: JsonQueryType<{ value: string }>
   wearable: JsonQueryType<{ slot: string }>
 }>
+
+export type SelectItemQueryType = JsonQueryType<{}, {
+  min: OperationQueryType,
+  max: OperationQueryType,
+}>;
+
+export type SelectPersonQueryType = JsonQueryType<{}, {
+  radius: OperationQueryType,
+  min: OperationQueryType,
+  max: OperationQueryType,
+  property: JsonQueryType<{ property_rule_ref: string }, {
+    min: OperationQueryType,
+    max: OperationQueryType,
+  }>,
+  classification: JsonQueryType<{classification_rule_ref: string}, {}>,
+  race: JsonQueryType<{race_rule_ref: string}, {}>,
+  inventory: JsonQueryType<{}, {
+    item: SelectItemQueryType
+  }>,
+}>;
+
 export type JsonSchema = JsonQueryType<{}, {
 
   world_metadata: JsonQueryType<{}, {
@@ -124,22 +145,7 @@ export type JsonSchema = JsonQueryType<{}, {
           person_action_used: JsonQueryType<{ action_rule_ref: string }>
         }>,
         then: JsonQueryType<{}, {
-          at: JsonQueryType<{ origin: string }, {
-            radius: JsonQueryType<{}, {
-              operation: OperationQueryType
-            }>
-            location: JsonQueryType<{ type: string, quantity: string }>
-          }>,
-          create_person?: JsonQueryType<{}, {
-            race: JsonQueryType<{ race_rule_ref: string, quantity: string }>,
-            inventory: JsonQueryType<{}, {
-              item: JsonQueryType<{ item_rule_ref: string }, {
-                quantity: JsonQueryType<{}, {
-                  operation: OperationQueryType
-                }>
-              }>
-            }>
-          }>
+          select_person?: SelectPersonQueryType & JsonQueryType<{origin: "target" | "self"}>
         }>
       }>
     }>,

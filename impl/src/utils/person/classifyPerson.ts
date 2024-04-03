@@ -6,6 +6,7 @@ import {JsonQueryType} from "../../JsonQueryType";
 
 export const classifyPerson = (readJson: JsonUtil, personQueryType: PersonQueryType): string[] => {
   try {
+    console.log(`classifyPerson for ${personQueryType.attributeMap.id}`)
     const ruleGroup = readJson.getRuleGroups();
 
     const classificationMetadataEntry = ruleGroup.flatMap(ruleGroup => ruleGroup.queryAllOptional("classification_rule"))
@@ -32,13 +33,12 @@ export const classifyPerson = (readJson: JsonUtil, personQueryType: PersonQueryT
               return acc && (Number(propertyValue) >= Number(value));
             case "equal":
               return acc && (Number(propertyValue) === Number(value));
-            case "notEqual":
-              return acc && (Number(propertyValue) !== Number(value));
             default: {
               throw new Error(`Unknown operation ${(operation as JsonQueryType).attributeMap.is}`);
             }
           }
         }, true);
+      console.log(`classifyPerson ${entry.attributeMap.id} result ${isTrue}`)
       return isTrue;
     })
     .map(value => value.attributeMap.id);

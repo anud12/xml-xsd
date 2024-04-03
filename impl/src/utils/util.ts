@@ -2,12 +2,12 @@ import {LocationGrid, locationGrid} from "./location/locationGrid";
 import {locationMarkovChainMatrix, LocationMatrix} from "./location/locationMarkovChainMatrix";
 import {markovNext} from "./markovNext";
 import {create} from "./location/create";
-import {JsonSchema, OperationQueryType} from "./JsonSchema";
+import {JsonSchema, OperationQueryType, SelectPersonQueryType} from "./JsonSchema";
 import {newRandom} from "./newRandom";
 import {createOperationFromQueryType} from "./operation/createOperationFromQueryType";
 import {getProperty, PersonQueryType} from "./person/getProperty";
 import {getById} from "./person/getById";
-import {createPerson, CreatePersonArgs} from "./person/createPerson";
+import {createPerson} from "./person/createPerson";
 import {createOperationFromParent} from "./operation/createOperationFromParent";
 import {JsonQueryType} from "../JsonQueryType";
 import {
@@ -16,6 +16,9 @@ import {
   NameTokenQueryTypeChild
 } from "./calculateName";
 import {CreateItemArgs, createItemAt} from "./item/createItemAt";
+import {classifyPerson} from "./person/classifyPerson";
+import {setProperty} from "./person/setProperty";
+import {Position, selectPerson} from "./person/selectPerson";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -50,7 +53,24 @@ export class JsonUtil {
     create: (x: number, y: number) => void,
   }
 
-  randomFromArray = <T>(array: T[]): T => {
+  randomListFromArray = <T>(originalArray: T[], numberOfElements: number = 1): T[] =>{
+    // Create a copy of the array to avoid modifying the original array
+    let array = [...originalArray];
+
+    let currentIndex = array.length;
+    while (currentIndex !== 0) {
+      const randomIndex = Math.floor(this.random() * (currentIndex - 1));
+      currentIndex--;
+
+      // Swap elements
+      const temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+    return array.slice(0, numberOfElements);
+  }
+
+  randomFromArray = <T>(array: T[], numberOfElements: number = 1): T => {
     return array[Math.floor(this.random() * (array.length - 1))];
   }
   questMarkov: () => void;
@@ -109,10 +129,17 @@ export class JsonUtil {
   }
 
   person = {
+    selectPerson: (selectPersonQueryType: SelectPersonQueryType, position:Position) => {
+      return selectPerson(this, selectPersonQueryType, position);
+    },
     getProperty: (personQueryType: PersonQueryType, key) => getProperty(this, personQueryType, key),
+    setProperty: (personQueryType: PersonQueryType, key, value:string) => setProperty(this, personQueryType, key, value),
     getById: memoizeFunction((id: string): PersonQueryType => {
       return getById(this.json, id)
     }),
+    classifyPerson: (personQueryType: PersonQueryType) => {
+      return classifyPerson(this, personQueryType);
+    },
     getDistance: memoizeFunction((personQueryType: PersonQueryType, secondPersonQueryType: PersonQueryType) => {
       const x = Number(personQueryType.query("location").attributeMap.x);
       const y = Number(personQueryType.query("location").attributeMap.y);
@@ -120,7 +147,6 @@ export class JsonUtil {
       const y2 = Number(secondPersonQueryType.query("location").attributeMap.y);
       return Math.sqrt(Math.pow(x - x2, 2) + Math.pow(y - y2, 2));
     }),
-    create: (args: CreatePersonArgs) => createPerson(this, args)
   }
 
   markov = markovNext;

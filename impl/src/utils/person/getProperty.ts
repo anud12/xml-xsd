@@ -6,6 +6,7 @@ type RaceQueryType = RuleGroupQueryType["children"]["race_rule"]["children"]["en
 type Bonus = RaceQueryType["children"]["property_bonus"]
 
 export const getBaseProperty = (readJson: JsonUtil, personQueryType: PersonQueryType, key: string): string => {
+  console.log(`getBaseProperty ${key} for ${personQueryType.attributeMap.id} `)
   try {
     const ruleGroup = readJson.json.query("rule_group");
     return ruleGroup.queryAll("property_rule")
@@ -24,6 +25,7 @@ export const getBaseProperty = (readJson: JsonUtil, personQueryType: PersonQuery
 }
 
 export const getRaceProperty = (readJson: JsonUtil, personQueryType: PersonQueryType, raceQueryType: RaceQueryType, key: string): string => {
+  console.log(`getRaceProperty ${key} from ${raceQueryType.attributeMap.id } for ${personQueryType.attributeMap.id} `)
   const base = getBaseProperty(readJson, personQueryType, key);
   const propertyBonus: Bonus = raceQueryType.queryAllOptional("property_bonus")
     .find(e => e.attributeMap.property_rule_ref === key);
@@ -41,6 +43,7 @@ export type PersonQueryType = JsonSchema["children"]["people"]["children"]["pers
 
 export const getProperty = (readJson: JsonUtil, personQueryType: PersonQueryType, key: string): string => {
   try {
+    console.log(`getProperty ${key} for ${personQueryType.attributeMap.id}`)
     const ruleGroup = readJson.json.query("rule_group");
     let propertyList = personQueryType.queryAllOptional("properties");
     if (propertyList.length === 0) {

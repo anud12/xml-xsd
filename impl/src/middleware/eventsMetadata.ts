@@ -10,8 +10,8 @@ type ThenQueryType = EventQueryType["children"]["then"]
 
 type Origin = {
   thenList: ThenQueryType[]
-  self: { $x: string, $y: string },
-  target: { $x: string, $y: string },
+  self: { x: string, y: string },
+  target: { x: string, y: string },
 }
 
 const applyFromPersonActionUsed = (readJson: JsonUtil, event: EventQueryType): Origin[] => {
@@ -33,12 +33,12 @@ const applyFromPersonActionUsed = (readJson: JsonUtil, event: EventQueryType): O
       return {
         thenList: event.queryAllOptional("then"),
         self: {
-          $x: selfLocation.attributeMap.x,
-          $y: selfLocation.attributeMap.y,
+          x: selfLocation.attributeMap.x,
+          y: selfLocation.attributeMap.y,
         },
         target: {
-          $x: targetLocation.attributeMap.x,
-          $y: targetLocation.attributeMap.y,
+          x: targetLocation.attributeMap.x,
+          y: targetLocation.attributeMap.y,
         }
       }
     });
@@ -49,40 +49,13 @@ const thenCreatePerson = (readJson: JsonUtil, origin: Origin): Array<(util: Json
   const thenList = origin.thenList;
 
   return thenList.flatMap(then => {
-    const radiusElement = then.query("at").query("radius");
-    const radiusResult = readJson.computeOperationFromParent(radiusElement.query("operation"), string => string);
-    const radius = Number(radiusResult)
-
-    const originElement = then.query("at").attributeMap.origin === "self"
-      ? origin.self
-      : origin.target
-
-    return then.queryAllOptional("create_person")
-      .map(create_person =>
+    return then.queryAllOptional("select_person")
+      .map(select_person =>
         (util: JsonUtil) => {
-          const race = create_person.queryOptional("race")?.attributeMap.race_rule_ref;
-          const x = String(Math.floor(readJson.random() * radius * 2) - radius + Number(originElement.$x));
-          const y = String(Math.floor(readJson.random() * radius * 2) - radius + Number(originElement.$y));
-
-          const itemList = create_person.queryAllOptional("inventory")
-          .flatMap(inventory => inventory.queryAllOptional("item"))
-          .flatMap(item => {
-            const item_ref = item.attributeMap.item_rule_ref;
-            const quantity = readJson.computeOperationFromParent(item.queryOptional("quantity").query("operation"), string => string);
-            return {
-              item_rule_ref: item_ref,
-              quantity: String(Math.floor(Number(quantity))),
-            }
-
-          })
-          util.person.create({
-            race: race,
-            location: {
-              x: x,
-              y: y
-            },
-            items: itemList,
-          })
+        const originElement = select_person.attributeMap.origin === "self"
+          ? origin.self
+          : origin.target
+          return util.person.selectPerson(select_person, originElement);
         }
       )
   })

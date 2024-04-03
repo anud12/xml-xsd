@@ -1,54 +1,151 @@
 import {JsonUtil} from "../util";
+import {SelectPersonQueryType} from "../JsonSchema";
+import {PersonQueryType} from "./getProperty";
+import {JsonQueryType} from "../../JsonQueryType";
+import {Position} from "./selectPerson";
 
-export type CreatePersonArgs = {
-  race?: string,
-  location: {
-    x: string,
-    y: string
-  },
-  items?: Array<{
-    item_rule_ref: string,
-    quantity: string,
-  }>
-}
-
-export const createPerson = (jsonSchema: JsonUtil, args: CreatePersonArgs): void => {
-  const ruleGroup = jsonSchema.getRuleGroups();
+const createNewPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType) => {
+  const ruleGroup = jsonUtil.getRuleGroups();
 
   const raceList = ruleGroup.flatMap(ruleGroup => ruleGroup.queryAllOptional("race_rule"))
     .flatMap(e => e.queryAll("entry"));
 
-  const time = jsonSchema.json.query("world_metadata").query("elapsed_time").attributeMap.value;
 
+  const selectRace = selectPerson.queryOptional("race")?.attributeMap?.race_rule_ref;
 
-  const race = raceList.find(race => race.attributeMap.id === args.race)
-    || jsonSchema.randomFromArray(raceList)
+  const race = raceList.find(race => race.attributeMap.id === selectRace)
+    || jsonUtil.randomFromArray(raceList)
 
-  const name = jsonSchema.name.calculateNameFromRefString(race.queryOptional("name")?.attributeMap?.name_rule_ref);
+  const name = jsonUtil.name.calculateNameFromRefString(race.queryOptional("name")?.attributeMap?.name_rule_ref);
 
-  const people = jsonSchema.json.query("people");
-  console.log("createPerson", args);
+  const people = jsonUtil.json.query("people");
   const person = people.appendChild("person", undefined, {
-    id: jsonSchema.getNextId()
+    id: jsonUtil.getNextId()
   });
   if (name) {
     person.attributeMap.name = name;
   }
-  person.appendChild("location", undefined, args.location);
+  person.appendChild("location", undefined, {
+    x: "0",
+    y: "0"
+  });
   person.appendChild("race", undefined, {
     race_rule_ref: race.attributeMap.id
   });
   person.appendChild("classifications", undefined, {});
 
-  if (args.items && args.items.length > 0) {
-    const inventory = person.appendChild("inventory");
-    args.items.forEach(item => {
-      for (let i = 0; i < Number(item.quantity); i++) {
-        jsonSchema.item.createItemAt({
-          item_rule_ref: item.item_rule_ref,
-          parentElement: inventory
-        });
+  return person;
+}
+
+
+const applyClassification = (jsonUtil: JsonUtil, classificationRef: string, person: PersonQueryType) => {
+  const ruleGroup = jsonUtil.getRuleGroups();
+  const classification = ruleGroup.flatMap(ruleGroup => ruleGroup.queryAllOptional("classification_rule"))
+    .flatMap(e => e.queryAllOptional("entry"))
+    .find(e => e.attributeMap.id === classificationRef);
+
+  if (!classification) {
+    return person;
+  }
+
+  classification.queryAllOptional("property")
+    .forEach(classification => {
+      const propertyRef = classification.attributeMap.property_rule_ref;
+      const classificationValue = Number(jsonUtil.computeOperationFromParent(classification.query("operation")))
+      const property = Number(jsonUtil.person.getProperty(person, propertyRef));
+      let computedValue = property;
+      switch (classification.attributeMap.is) {
+        case "lessThan": {
+          computedValue = Math.max(classificationValue - 1, property);
+          break;
+        }
+        case "lessThanOrEqual": {
+          computedValue = Math.max(classificationValue, property);
+          break;
+        }
+        case "greaterThan": {
+          computedValue = Math.min(classificationValue + 1, property);
+          break;
+        }
+        case "greaterThanOrEqual": {
+          computedValue = Math.min(classificationValue, property);
+          break;
+        }
+        case "equal": {
+          computedValue = classificationValue;
+          break;
+        }
+        default: {
+          throw new Error(`Unknown operation ${(classification.attributeMap.is as JsonQueryType).attributeMap.is}`);
+        }
       }
+      jsonUtil.person.setProperty(person, propertyRef, String(computedValue))
     })
+
+  return person;
+}
+
+const applyProperty = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, person: PersonQueryType) => {
+  selectPerson.queryAllOptional("property").map(property => {
+    let value = Number(jsonUtil.person.getProperty(person, property.attributeMap.property_rule_ref));
+
+    const max = Number(jsonUtil.computeOperationFromParent(property.queryOptional("max")))
+    if (max) {
+      value = Math.min(value, max)
+    }
+    const min = Number(jsonUtil.computeOperationFromParent(property.queryOptional("min")))
+    if (min) {
+      value = Math.max(value, min)
+    }
+    jsonUtil.person.setProperty(person, property.attributeMap.property_rule_ref, String(value));
+  })
+}
+
+const applyLocation = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType,position:Position | undefined, person: PersonQueryType) => {
+  try {
+    const location = person.queryOptional("location")
+    if(!location) {
+      return;
+    }
+    const radius = selectPerson.queryOptional("radius");
+    if(!radius) {
+      return;
+    }
+    if(!position) {
+      throw new Error("position is undefined when radius exists")
+    }
+
+    const radiusX = Number(jsonUtil.computeOperationFromParent(radius));
+    const randomX = jsonUtil.random() - 0.5;
+    const absoluteX = Math.trunc(randomX * radiusX);
+
+    location.attributeMap.x = String(Number(position.x) + absoluteX);
+
+
+    const radiusY = Number(jsonUtil.computeOperationFromParent(radius));
+    const randomY = jsonUtil.random() - 0.5;
+    const absoluteY = Math.trunc(randomY * radiusY);
+    location.attributeMap.y = String(Number(position.y) + absoluteY);
+  } catch (e) {
+    const newError = new Error(`applyLocation failed for ${selectPerson.getPath()}`);
+    newError.stack += '\nCaused by: ' + e.stack;
+    throw newError;
+  }
+
+}
+
+export const createPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, position?:Position) => {
+  try {
+    let person = createNewPerson(jsonUtil, selectPerson);
+    selectPerson.queryAllOptional("classification").forEach(value => {
+      person = applyClassification(jsonUtil, value.attributeMap.classification_rule_ref, person)
+    })
+    applyProperty(jsonUtil, selectPerson, person);
+    applyLocation(jsonUtil, selectPerson, position, person);
+    return person;
+  } catch (e) {
+    const newError = new Error(`createPerson failed for ${selectPerson.getPath()}`);
+    newError.stack += '\nCaused by: ' + e.stack;
+    throw newError;
   }
 }
