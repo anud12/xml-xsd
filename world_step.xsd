@@ -1,13 +1,21 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:include schemaLocation="../types/schema.xsd"/>
+  <xs:attributeGroup name="attributeGroup__range">
+    <xs:attribute name="value" use="required" type="xs:integer"/>
+    <xs:attribute name="max_value" type="xs:integer"/>
+    <xs:attribute name="inclusive" default="true" type="xs:boolean" use="required"/>
+  </xs:attributeGroup>
 
-  <xs:complexType name="type_icon">
+  <xs:complexType name="type__range">
+    <xs:attributeGroup ref="attributeGroup__range"/>
+  </xs:complexType>
+
+  <xs:complexType name="type__icon">
     <xs:simpleContent>
       <xs:extension base="xs:anyType"/>
     </xs:simpleContent>
   </xs:complexType>
 
-  <xs:simpleType name="item_slot">
+  <xs:simpleType name="type__item_slot">
     <xs:restriction base="xs:string">
       <xs:enumeration value="hand"/>
       <xs:enumeration value="chest"/>
@@ -15,7 +23,7 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:complexType name="metadata_classification">
+  <xs:complexType name="type__metadata_classification">
     <xs:sequence>
       <xs:element name="required_property">
         <xs:complexType>
@@ -26,9 +34,9 @@
     <xs:attribute name="name" use="required"/>
   </xs:complexType>
 
-  <xs:complexType name="item_ref">
+  <xs:complexType name="type__item_ref">
     <xs:attribute name="ref" use="required"/>
-    <xs:attribute name="equipped" type="item_slot"/>
+    <xs:attribute name="equipped" type="type__item_slot"/>
   </xs:complexType>
 
   <xs:simpleType name="type_direction">
@@ -95,22 +103,17 @@
       </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="type_item">
+  <xs:complexType name="type__item">
     <xs:sequence>
       <xs:element name="wearable" minOccurs="0">
         <xs:complexType>
-          <xs:attribute name="slot" type="item_slot"/>
+          <xs:attribute name="slot" type="type__item_slot"/>
         </xs:complexType>
       </xs:element>
     </xs:sequence>
     <xs:attribute name="id" use="required"/>
     <xs:attribute name="name" use="required"/>
   </xs:complexType>
-
-  <xs:complexType name="type_item_selection">
-    <xs:attribute name="name"/>
-  </xs:complexType>
-
 
   <xs:simpleType name="type__group__operation__and">
     <xs:restriction base="xs:string">
@@ -324,8 +327,8 @@
                     <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="vision" type="type_range"/>
-                          <xs:element name="movement" type="type_range"/>
+                          <xs:element name="vision" type="type__range"/>
+                          <xs:element name="movement" type="type__range"/>
                           <xs:element name="name" minOccurs="0">
                             <xs:complexType>
                               <xs:attribute name="name_rule_ref" use="required"/>
@@ -338,7 +341,7 @@
                               <xs:attribute name="property_rule_ref"/>
                             </xs:complexType>
                           </xs:element>
-                          <xs:element name="icon" type="type_icon"/>
+                          <xs:element name="icon" type="type__icon"/>
                         </xs:sequence>
                         <xs:attribute name="id" type="xs:string" use="required"/>
                       </xs:complexType>
@@ -449,7 +452,7 @@
                           <xs:element name="wearable" minOccurs="0"
                                       maxOccurs="unbounded">
                             <xs:complexType>
-                              <xs:attribute name="slot" type="item_slot"/>
+                              <xs:attribute name="slot" type="type__item_slot"/>
                             </xs:complexType>
                           </xs:element>
                         </xs:sequence>
@@ -541,7 +544,7 @@
                               </xs:attribute>
                             </xs:complexType>
                           </xs:element>
-                          <xs:element name="icon" type="type_icon"/>
+                          <xs:element name="icon" type="type__icon"/>
                         </xs:sequence>
                         <xs:attribute name="type" use="required"/>
                       </xs:complexType>
@@ -591,7 +594,7 @@
                     <xs:element name="inventory" minOccurs="0">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="item" type="type_item" minOccurs="0" maxOccurs="unbounded"/>
+                          <xs:element name="item" type="type__item" minOccurs="0" maxOccurs="unbounded"/>
                         </xs:sequence>
                       </xs:complexType>
                     </xs:element>
@@ -607,7 +610,7 @@
                         </xs:sequence>
                       </xs:complexType>
                     </xs:element>
-                    <xs:element name="icon" type="type_icon" minOccurs="0"/>
+                    <xs:element name="icon" type="type__icon" minOccurs="0"/>
                   </xs:sequence>
                   <xs:attribute name="id" use="required"/>
                   <xs:attribute name="name"/>
