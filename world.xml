@@ -416,6 +416,11 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
             <max initial="4"/>
             <classification classification_rule_ref="alive"/>
             <race race_rule_ref="human"/>
+            <inventory>
+              <item>
+                <min initial="1"/>
+              </item>
+            </inventory>
           </select_person>
         </then>
       </entry>
@@ -543,7 +548,6 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
       </properties>
       <inventory>
         <item id="0.0" name="Long sword">
-          <weight-kg value="2"/>
           <wearable slot="chest"/>
         </item>
       </inventory>

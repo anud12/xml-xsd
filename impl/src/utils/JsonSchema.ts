@@ -43,6 +43,10 @@ export type ItemQueryType = JsonQueryType<{ id: string, name: string }, {
   wearable: JsonQueryType<{ slot: string }>
 }>
 
+export type SelectItemQueryType = JsonQueryType<{}, {
+  min: OperationQueryType,
+  max: OperationQueryType,
+}>;
 
 export type SelectPersonQueryType = JsonQueryType<{}, {
   radius: OperationQueryType,
@@ -54,6 +58,9 @@ export type SelectPersonQueryType = JsonQueryType<{}, {
   }>,
   classification: JsonQueryType<{classification_rule_ref: string}, {}>,
   race: JsonQueryType<{race_rule_ref: string}, {}>,
+  inventory: JsonQueryType<{}, {
+    item: SelectItemQueryType
+  }>,
 }>;
 
 export type JsonSchema = JsonQueryType<{}, {

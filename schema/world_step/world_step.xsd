@@ -72,23 +72,32 @@
           <xs:attribute name="classification_rule_ref" use="required"/>
         </xs:complexType>
       </xs:element>
-      <xs:element name="race" minOccurs="0" maxOccurs="1">
+      <xs:element name="race" minOccurs="0">
         <xs:complexType>
           <xs:attribute name="race_rule_ref" use="required"/>
         </xs:complexType>
       </xs:element>
+      <xs:element name="inventory" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="item" minOccurs="0" maxOccurs="unbounded" type="type__item_selection"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+
     </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="type__item_selection">
+      <xs:sequence>
+        <xs:element name="min" minOccurs="0" type="type__math_operations"/>
+        <xs:element name="max" minOccurs="0" type="type__math_operations"/>
+      </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="type_item">
     <xs:sequence>
-      <xs:element name="weight-kg" minOccurs="0">
-        <xs:complexType>
-          <xs:attribute name="value"/>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="wearable" minOccurs="0"
-                  maxOccurs="unbounded">
+      <xs:element name="wearable" minOccurs="0">
         <xs:complexType>
           <xs:attribute name="slot" type="item_slot"/>
         </xs:complexType>
@@ -488,7 +497,6 @@
                                     </xs:complexContent>
                                   </xs:complexType>
                                 </xs:element>
-                                <xs:element name="create_person" minOccurs="0"  maxOccurs="unbounded" type="type__person_selection"/>
                               </xs:sequence>
                             </xs:complexType>
                           </xs:element>
