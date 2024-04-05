@@ -1,7 +1,7 @@
-import {Middleware} from "./_type";
+import {MutationMiddleware} from "./_type";
 import {fillNeighbours} from "../utils/location/fillNeighbours";
 
-export const personVision: Middleware = (readJson) => {
+export const personVision: MutationMiddleware = (readJson) => {
   try {
     const persons = readJson.json.query("people").queryAll("person");
     const ruleGroup = readJson.getRuleGroups();
