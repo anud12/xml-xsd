@@ -250,11 +250,11 @@
                     <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="default">
+                          <xs:element name="person_default">
                             <xs:complexType>
-                              <xs:choice>
-                                <xs:group ref="group__math_operations"/>
-                              </xs:choice>
+                              <xs:complexContent>
+                                <xs:extension base="type__math_operations"/>
+                              </xs:complexContent>
                             </xs:complexType>
                           </xs:element>
                           <xs:element name="property-threshold" minOccurs="0"

@@ -120,36 +120,26 @@
     <!--_-->
     <property_rule>
       <entry id="athletics" units="points">
-        <default>
-          <operation initial="0">
-            <and do="add_dice" value="6"/>
-            <and do="add" value="-1"/>
-          </operation>
-        </default>
+        <person_default initial="0">
+          <and do="add_dice" value="6"/>
+          <and do="add" value="-1"/>
+        </person_default>
       </entry>
       <entry id="strength" units="points">
-        <default>
-          <operation initial="0">
-            <and do="add_dice" value="12"/>
-            <and do="add" value="8"/>
-          </operation>
-        </default>
+        <person_default initial="0">
+        </person_default>
       </entry>
       <entry id="constitution" units="points">
-        <default>
-          <operation initial="0">
-            <and do="add_dice" value="12"/>
-            <and do="add" value="8"/>
-          </operation>
-        </default>
+        <person_default initial="0">
+          <and do="add_dice" value="12"/>
+          <and do="add" value="8"/>
+        </person_default>
       </entry>
       <entry id="health" units="points">
-        <default>
-          <operation initial="0">
-            <add_property property_rule_ref="constitution"/>
-            <and do="add" value="8"/>
-          </operation>
-        </default>
+        <person_default initial="0">
+          <add_property property_rule_ref="constitution"/>
+          <and do="add" value="8"/>
+        </person_default>
       </entry>
     </property_rule>
     <!--_-->
