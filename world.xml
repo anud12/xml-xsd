@@ -1,6 +1,6 @@
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="schema/world_step/world_step.xsd">
+        xsi:noNamespaceSchemaLocation="world_step.xsd">
   <world_metadata>
     <next_world_step>./world_1</next_world_step>
     <elapsed_time value="0"/>
@@ -140,6 +140,10 @@
           <add_property property_rule_ref="constitution"/>
           <and do="add" value="8"/>
         </person_default>
+      </entry>
+
+      <entry id="durability" units="">
+        <item_default initial="100"/>
       </entry>
     </property_rule>
     <!--_-->
