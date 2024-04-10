@@ -1,21 +1,21 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:attributeGroup name="attributeGroup__range">
+
+  <xs:attributeGroup name="attributeGroup_range">
     <xs:attribute name="value" use="required" type="xs:integer"/>
     <xs:attribute name="max_value" type="xs:integer"/>
     <xs:attribute name="inclusive" default="true" type="xs:boolean" use="required"/>
   </xs:attributeGroup>
-
-  <xs:complexType name="type__range">
-    <xs:attributeGroup ref="attributeGroup__range"/>
+  <xs:complexType name="type_range">
+    <xs:attributeGroup ref="attributeGroup_range"/>
   </xs:complexType>
-
-  <xs:complexType name="type__icon">
+  
+  <xs:complexType name="type_icon">
     <xs:simpleContent>
       <xs:extension base="xs:anyType"/>
     </xs:simpleContent>
   </xs:complexType>
 
-  <xs:simpleType name="type__item_slot">
+  <xs:simpleType name="item_slot">
     <xs:restriction base="xs:string">
       <xs:enumeration value="hand"/>
       <xs:enumeration value="chest"/>
@@ -23,7 +23,7 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:complexType name="type__metadata_classification">
+  <xs:complexType name="metadata_classification">
     <xs:sequence>
       <xs:element name="required_property">
         <xs:complexType>
@@ -34,9 +34,9 @@
     <xs:attribute name="name" use="required"/>
   </xs:complexType>
 
-  <xs:complexType name="type__item_ref">
+  <xs:complexType name="item_ref">
     <xs:attribute name="ref" use="required"/>
-    <xs:attribute name="equipped" type="type__item_slot"/>
+    <xs:attribute name="equipped" type="item_slot"/>
   </xs:complexType>
 
   <xs:simpleType name="type_direction">
@@ -103,17 +103,22 @@
       </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="type__item">
+  <xs:complexType name="type_item">
     <xs:sequence>
       <xs:element name="wearable" minOccurs="0">
         <xs:complexType>
-          <xs:attribute name="slot" type="type__item_slot"/>
+          <xs:attribute name="slot" type="item_slot"/>
         </xs:complexType>
       </xs:element>
     </xs:sequence>
     <xs:attribute name="id" use="required"/>
     <xs:attribute name="name" use="required"/>
   </xs:complexType>
+
+  <xs:complexType name="type_item_selection">
+    <xs:attribute name="name"/>
+  </xs:complexType>
+
 
   <xs:simpleType name="type__group__operation__and">
     <xs:restriction base="xs:string">
@@ -128,6 +133,15 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:complexType name="type__trigger">
+    <xs:sequence>
+      <xs:element name="person_action_used">
+        <xs:complexType>
+          <xs:attribute name="action_rule_ref" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
 
   <xs:group name="group__operation__and">
     <xs:sequence>
@@ -244,11 +258,18 @@
                     <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="default">
+                          <xs:element name="person_default" minOccurs="0">
                             <xs:complexType>
-                              <xs:choice>
-                                <xs:group ref="group__math_operations"/>
-                              </xs:choice>
+                              <xs:complexContent>
+                                <xs:extension base="type__math_operations"/>
+                              </xs:complexContent>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="item_default" minOccurs="0">
+                            <xs:complexType>
+                              <xs:complexContent>
+                                <xs:extension base="type__math_operations"/>
+                              </xs:complexContent>
                             </xs:complexType>
                           </xs:element>
                           <xs:element name="property-threshold" minOccurs="0"
@@ -327,8 +348,8 @@
                     <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="vision" type="type__range"/>
-                          <xs:element name="movement" type="type__range"/>
+                          <xs:element name="vision" type="type_range"/>
+                          <xs:element name="movement" type="type_range"/>
                           <xs:element name="name" minOccurs="0">
                             <xs:complexType>
                               <xs:attribute name="name_rule_ref" use="required"/>
@@ -341,7 +362,7 @@
                               <xs:attribute name="property_rule_ref"/>
                             </xs:complexType>
                           </xs:element>
-                          <xs:element name="icon" type="type__icon"/>
+                          <xs:element name="icon" type="type_icon"/>
                         </xs:sequence>
                         <xs:attribute name="id" type="xs:string" use="required"/>
                       </xs:complexType>
@@ -357,7 +378,7 @@
                     <xs:element name="person_to_person" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="max_range" minOccurs="1">
+                          <xs:element name="max_range">
                             <xs:complexType>
                               <xs:group ref="group__math_operations"/>
                             </xs:complexType>
@@ -452,7 +473,7 @@
                           <xs:element name="wearable" minOccurs="0"
                                       maxOccurs="unbounded">
                             <xs:complexType>
-                              <xs:attribute name="slot" type="type__item_slot"/>
+                              <xs:attribute name="slot" type="item_slot"/>
                             </xs:complexType>
                           </xs:element>
                         </xs:sequence>
@@ -470,17 +491,7 @@
                     <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="when" maxOccurs="unbounded">
-                            <xs:complexType>
-                              <xs:choice>
-                                <xs:element name="person_action_used">
-                                  <xs:complexType>
-                                    <xs:attribute name="action_rule_ref" use="required"/>
-                                  </xs:complexType>
-                                </xs:element>
-                              </xs:choice>
-                            </xs:complexType>
-                          </xs:element>
+                          <xs:element name="when" maxOccurs="unbounded" type="type__trigger"/>
                           <xs:element name="then" maxOccurs="unbounded">
                             <xs:complexType>
                               <xs:sequence>
@@ -544,7 +555,7 @@
                               </xs:attribute>
                             </xs:complexType>
                           </xs:element>
-                          <xs:element name="icon" type="type__icon"/>
+                          <xs:element name="icon" type="type_icon"/>
                         </xs:sequence>
                         <xs:attribute name="type" use="required"/>
                       </xs:complexType>
@@ -594,7 +605,7 @@
                     <xs:element name="inventory" minOccurs="0">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="item" type="type__item" minOccurs="0" maxOccurs="unbounded"/>
+                          <xs:element name="item" type="type_item" minOccurs="0" maxOccurs="unbounded"/>
                         </xs:sequence>
                       </xs:complexType>
                     </xs:element>
@@ -610,7 +621,7 @@
                         </xs:sequence>
                       </xs:complexType>
                     </xs:element>
-                    <xs:element name="icon" type="type__icon" minOccurs="0"/>
+                    <xs:element name="icon" type="type_icon" minOccurs="0"/>
                   </xs:sequence>
                   <xs:attribute name="id" use="required"/>
                   <xs:attribute name="name"/>

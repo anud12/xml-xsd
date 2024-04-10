@@ -1,6 +1,6 @@
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="./world_step.xsd">
+        xsi:noNamespaceSchemaLocation="world_step.xsd">
   <world_metadata>
     <next_world_step>./world_1</next_world_step>
     <elapsed_time value="0"/>
@@ -120,36 +120,30 @@
     <!--_-->
     <property_rule>
       <entry id="athletics" units="points">
-        <default>
-          <operation initial="0">
-            <and do="add_dice" value="6"/>
-            <and do="add" value="-1"/>
-          </operation>
-        </default>
+        <person_default initial="0">
+          <and do="add_dice" value="6"/>
+          <and do="add" value="-1"/>
+        </person_default>
       </entry>
       <entry id="strength" units="points">
-        <default>
-          <operation initial="0">
-            <and do="add_dice" value="12"/>
-            <and do="add" value="8"/>
-          </operation>
-        </default>
+        <person_default initial="0">
+        </person_default>
       </entry>
       <entry id="constitution" units="points">
-        <default>
-          <operation initial="0">
-            <and do="add_dice" value="12"/>
-            <and do="add" value="8"/>
-          </operation>
-        </default>
+        <person_default initial="0">
+          <and do="add_dice" value="12"/>
+          <and do="add" value="8"/>
+        </person_default>
       </entry>
       <entry id="health" units="points">
-        <default>
-          <operation initial="0">
-            <add_property property_rule_ref="constitution"/>
-            <and do="add" value="8"/>
-          </operation>
-        </default>
+        <person_default initial="0">
+          <add_property property_rule_ref="constitution"/>
+          <and do="add" value="8"/>
+        </person_default>
+      </entry>
+
+      <entry id="durability" units="">
+        <item_default initial="100"/>
       </entry>
     </property_rule>
     <!--_-->
@@ -597,5 +591,9 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
   <!--_-->
   <!--Actions-->
   <!--_-->
-  <actions/>
+  <actions>
+    <by person_ref="dd">
+      <do action_ref="dd" person_ref=""/>
+    </by>
+  </actions>
 </world_step>

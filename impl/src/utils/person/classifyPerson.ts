@@ -43,7 +43,7 @@ export const classifyPerson = (readJson: JsonUtil, personQueryType: PersonQueryT
     })
     .map(value => value.attributeMap.id);
 
-    const staticClassificationId = personQueryType.queryAll("classifications").flatMap(classifications => classifications.queryAllOptional("classification"))
+    const staticClassificationId = personQueryType.queryAllOptional("classifications").flatMap(classifications => classifications.queryAllOptional("classification"))
       .filter(classification => {
         return !propertyBasedClassificationList.map(entry => entry.attributeMap.id)
           .includes(classification.attributeMap.classification_rule_ref);

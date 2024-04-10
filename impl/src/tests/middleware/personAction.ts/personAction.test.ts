@@ -18,18 +18,14 @@ describe("personAction" , () => {
   <rule_group>
   <property_rule>
     <entry id="strength" units="points">
-      <default>
-        <operation>
-          <and do="add" value="10"/>
-        </operation>
-      </default>
+      <person_default>
+        <and do="add" value="10" />
+      </person_default>
     </entry>
     <entry id="health" units="points">
-      <default>
-        <operation>
-          <and do="add" value="10"/>
-        </operation>
-      </default>
+      <person_default>
+        <and do="add" value="10" />
+      </person_default>
     </entry>
   </property_rule>
   
@@ -110,18 +106,14 @@ describe("personAction" , () => {
   <rule_group>
     <property_rule>
       <entry id="strength" units="points">
-        <default>
-          <operation>
-            <and do="add" value="10" />
-          </operation>
-        </default>
+        <person_default>
+          <and do="add" value="10" />
+        </person_default>
       </entry>
       <entry id="health" units="points">
-        <default>
-          <operation>
-            <and do="add" value="10" />
-          </operation>
-        </default>
+        <person_default>
+          <and do="add" value="10" />
+        </person_default>
       </entry>
     </property_rule>
     <race_rule>

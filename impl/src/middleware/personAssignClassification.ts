@@ -1,8 +1,8 @@
-import {Middleware} from "./_type";
+import {MutationMiddleware} from "./_type";
 import { classifyPerson } from "../utils/person/classifyPerson";
 
 // for person in people add a classifications
-export const personAssignClassification: Middleware = (readJson) => {
+export const personAssignClassification: MutationMiddleware = (readJson) => {
   const personList = readJson.json.queryAll("people").flatMap(e => e.queryAll("person"));
   const classificationListByPersonId = personList.map(person => {
     const classificationList = classifyPerson(readJson, person);

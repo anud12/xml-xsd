@@ -63,6 +63,10 @@ export type SelectPersonQueryType = JsonQueryType<{}, {
   }>,
 }>;
 
+export type TriggerQueryType = JsonQueryType<{}, {
+  person_action_used: JsonQueryType<{ action_rule_ref: string }>
+}>
+
 export type JsonSchema = JsonQueryType<{}, {
 
   world_metadata: JsonQueryType<{}, {
@@ -76,9 +80,8 @@ export type JsonSchema = JsonQueryType<{}, {
   rule_group: JsonQueryType<{}, {
     property_rule: JsonQueryType<{}, {
       entry: JsonQueryType<{ id: string, default: string, value: string, max_value: string }, {
-        default: JsonQueryType<{}, {
-          operation: OperationQueryType
-        }>
+        person_default: OperationQueryType
+        item_default: OperationQueryType
       }>
     }>,
     classification_rule: JsonQueryType<{}, {
@@ -141,9 +144,7 @@ export type JsonSchema = JsonQueryType<{}, {
     }>,
     events_rule: JsonQueryType<{}, {
       entry: JsonQueryType<{ id: string }, {
-        when: JsonQueryType<{}, {
-          person_action_used: JsonQueryType<{ action_rule_ref: string }>
-        }>,
+        when: TriggerQueryType,
         then: JsonQueryType<{}, {
           select_person?: SelectPersonQueryType & JsonQueryType<{origin: "target" | "self"}>
         }>
@@ -180,8 +181,8 @@ export type JsonSchema = JsonQueryType<{}, {
   }>,
 
   actions: JsonQueryType<{}, {
-    by: JsonQueryType<{ person_rule_ref: string }, {
-      do: JsonQueryType<{ action_rule_ref: string, person_rule_ref: string }>,
+    by: JsonQueryType<{ person_ref: string }, {
+      do: JsonQueryType<{ action_rule_ref: string, person_ref: string }>,
       move_towards: JsonQueryType<{ x: string, y: string }>
     }>
   }>

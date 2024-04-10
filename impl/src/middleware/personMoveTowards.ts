@@ -1,4 +1,4 @@
-import {Middleware} from "./_type";
+import {MutationMiddleware} from "./_type";
 import {JsonQueryType} from "../JsonQueryType";
 
 type CoordinatesNode = JsonQueryType<{
@@ -41,7 +41,7 @@ const calculateDestinationCoordinate = (initial: CoordinatesNode, destination: C
   }
 }
 
-export const personMoveTowards: Middleware = readUnit => {
+export const personMoveTowards: MutationMiddleware = readUnit => {
   const ruleGroup = readUnit.getRuleGroups();
   const raceMetadata = ruleGroup.flatMap(ruleGroup => ruleGroup.queryAllOptional("race_rule"))
     .flatMap(raceMetadata => raceMetadata.queryAll("entry"))

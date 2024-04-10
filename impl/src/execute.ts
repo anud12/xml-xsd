@@ -9,6 +9,7 @@ import {eventsMetadata} from "./middleware/eventsMetadata";
 import {offsetRandomisationTable} from "./middleware/offsetRandomisationTable";
 import {propertyRefValidator} from "./validators/propertyRef.validator";
 import {raceRefValidator} from "./validators/raceRef.validator";
+import {Dispatcher} from "./utils/triggerDispatcher/dispatcher";
 
 export const executeFromString = async(xmlString:string, log: (...string:any[]) => void) => {
   const oldLog = console.log;
@@ -24,6 +25,7 @@ export const execute = async (readJson:JsonSchema, log: (...string:any[]) => voi
   const oldLog = console.log;
   console.log = log;
 
+  const dispatcher = new Dispatcher();
   const readJsonUtil = new JsonUtil(readJson);
 
   await propertyRefValidator(readJsonUtil);
@@ -35,7 +37,9 @@ export const execute = async (readJson:JsonSchema, log: (...string:any[]) => voi
 
   await personMoveTowardsResult(readJsonUtil);
   await personActionResult(readJsonUtil);
-  await eventsMetadataResult(readJsonUtil);
+
+  await eventsMetadataResult(dispatcher);
+
   await personVision(readJsonUtil)(readJsonUtil);
   await personAssignClassification(readJsonUtil)(readJsonUtil);
   await offsetRandomisationTable(readJsonUtil)(readJsonUtil)
