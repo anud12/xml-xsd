@@ -125,6 +125,15 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:complexType name="type__trigger">
+    <xs:sequence>
+      <xs:element name="person_action_used">
+        <xs:complexType>
+          <xs:attribute name="action_rule_ref" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
 
   <xs:group name="group__operation__and">
     <xs:sequence>
@@ -354,7 +363,7 @@
                     <xs:element name="person_to_person" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="max_range" minOccurs="1">
+                          <xs:element name="max_range">
                             <xs:complexType>
                               <xs:group ref="group__math_operations"/>
                             </xs:complexType>
@@ -467,17 +476,7 @@
                     <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="when" maxOccurs="unbounded">
-                            <xs:complexType>
-                              <xs:choice>
-                                <xs:element name="person_action_used">
-                                  <xs:complexType>
-                                    <xs:attribute name="action_rule_ref" use="required"/>
-                                  </xs:complexType>
-                                </xs:element>
-                              </xs:choice>
-                            </xs:complexType>
-                          </xs:element>
+                          <xs:element name="when" maxOccurs="unbounded" type="type__trigger"/>
                           <xs:element name="then" maxOccurs="unbounded">
                             <xs:complexType>
                               <xs:sequence>

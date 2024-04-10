@@ -1,4 +1,4 @@
-import {Middleware} from "./_type";
+import {MutationMiddleware} from "./_type";
 import {JsonSchema} from "../utils/JsonSchema";
 import {JsonUtil} from "../utils/util";
 
@@ -42,7 +42,7 @@ export const isOutOfRange = (readJson: JsonUtil, personAction: PersonActionMetad
   return (Number(minRangeValue) + 1) > distance;
 }
 
-export const personAction: Middleware = readJson => {
+export const personAction: MutationMiddleware = readJson => {
 
   const actionMetadata = readJson.getRuleGroups()
     .flatMap(e => e.queryAllOptional("action_rule"))

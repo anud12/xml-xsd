@@ -7,14 +7,8 @@ import {newRandom} from "./newRandom";
 import {createOperationFromQueryType} from "./operation/createOperationFromQueryType";
 import {getProperty, PersonQueryType} from "./person/getProperty";
 import {getById} from "./person/getById";
-import {createPerson} from "./person/createPerson";
 import {createOperationFromParent} from "./operation/createOperationFromParent";
-import {JsonQueryType} from "../JsonQueryType";
-import {
-  calculateNameFromChildren,
-  calculateNameFromRefString, NameRuleEntryQueryType,
-  NameTokenQueryTypeChild
-} from "./calculateName";
+import {calculateNameFromChildren, calculateNameFromRefString, NameRuleEntryQueryType} from "./calculateName";
 import {CreateItemArgs, createItemAt} from "./item/createItemAt";
 import {classifyPerson} from "./person/classifyPerson";
 import {setProperty} from "./person/setProperty";
@@ -70,7 +64,7 @@ export class JsonUtil {
     return array.slice(0, numberOfElements);
   }
 
-  randomFromArray = <T>(array: T[], numberOfElements: number = 1): T => {
+  randomFromArray = <T>(array: T[]): T => {
     return array[Math.floor(this.random() * (array.length - 1))];
   }
   questMarkov: () => void;
@@ -154,6 +148,5 @@ export class JsonUtil {
   getRuleGroups = ():Array<JsonSchema["children"]["rule_group"]> => {
     return this.json.queryAll("rule_group");
   }
-
 
 }

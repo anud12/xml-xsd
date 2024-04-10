@@ -3,6 +3,7 @@ import {JsonQuery} from "../../../JSONQuery";
 import {JsonSchema} from "../../../utils/JsonSchema";
 import {describe} from "@jest/globals";
 import {eventsMetadata} from "../../../middleware/eventsMetadata";
+import {Dispatcher} from "../../../utils/triggerDispatcher/dispatcher";
 
 describe("eventsMetadata create person with race containing name", () => {
   it("react to person_action_used and create a person", async () => {
@@ -28,6 +29,9 @@ describe("eventsMetadata create person with race containing name", () => {
         <vision value="1"/>
       </entry>
     </race_rule>
+    <action_rule>
+        <person_to_person id="talk"/>
+    </action_rule>
     <events_rule>
       <entry id="spawn_human">
         <when>
@@ -43,7 +47,7 @@ describe("eventsMetadata create person with race containing name", () => {
     </events_rule>
   </rule_group>
   <people>
-    <person name="person">
+    <person id="1" name="person">
       <race race_rule_ref="race_definition"/>
       <location x="0" y="0"/>
     </person>
@@ -60,14 +64,16 @@ describe("eventsMetadata create person with race containing name", () => {
     <cell x="1" y="1"/>
   </location_layer>
   <actions>
-    <by name="person">
-      <do action_rule_ref="talk" to="person"/>
+    <by person_ref="1">
+      <do action_rule_ref="talk" person_ref="1" />
     </by>
   </actions>
 </world_step>`);
 
     const util = new JsonUtil(query);
-    await eventsMetadata(util)(util);
+    const dispatcher = new Dispatcher();
+    await eventsMetadata(util)(dispatcher);
+    await dispatcher.middleware(util)(util);
 
     expect(query.serialize()).toBe(`
 <world_step
@@ -93,6 +99,9 @@ describe("eventsMetadata create person with race containing name", () => {
         <vision value="1" />
       </entry>
     </race_rule>
+    <action_rule>
+      <person_to_person id="talk" />
+    </action_rule>
     <events_rule>
       <entry id="spawn_human">
         <when>
@@ -108,7 +117,7 @@ describe("eventsMetadata create person with race containing name", () => {
     </events_rule>
   </rule_group>
   <people>
-    <person name="person">
+    <person id="1" name="person">
       <race race_rule_ref="race_definition" />
       <location x="0" y="0" />
     </person>
@@ -130,8 +139,8 @@ describe("eventsMetadata create person with race containing name", () => {
     <cell x="1" y="1" />
   </location_layer>
   <actions>
-    <by name="person">
-      <do action_rule_ref="talk" to="person" />
+    <by person_ref="1">
+      <do action_rule_ref="talk" person_ref="1" />
     </by>
   </actions>
 </world_step>
