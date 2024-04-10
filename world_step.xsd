@@ -1,6 +1,14 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:include schemaLocation="../types/schema.xsd"/>
 
+  <xs:attributeGroup name="attributeGroup_range">
+    <xs:attribute name="value" use="required" type="xs:integer"/>
+    <xs:attribute name="max_value" type="xs:integer"/>
+    <xs:attribute name="inclusive" default="true" type="xs:boolean" use="required"/>
+  </xs:attributeGroup>
+  <xs:complexType name="type_range">
+    <xs:attributeGroup ref="attributeGroup_range"/>
+  </xs:complexType>
+  
   <xs:complexType name="type_icon">
     <xs:simpleContent>
       <xs:extension base="xs:anyType"/>
@@ -250,11 +258,18 @@
                     <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="default">
+                          <xs:element name="person_default" minOccurs="0">
                             <xs:complexType>
-                              <xs:choice>
-                                <xs:group ref="group__math_operations"/>
-                              </xs:choice>
+                              <xs:complexContent>
+                                <xs:extension base="type__math_operations"/>
+                              </xs:complexContent>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="item_default" minOccurs="0">
+                            <xs:complexType>
+                              <xs:complexContent>
+                                <xs:extension base="type__math_operations"/>
+                              </xs:complexContent>
                             </xs:complexType>
                           </xs:element>
                           <xs:element name="property-threshold" minOccurs="0"

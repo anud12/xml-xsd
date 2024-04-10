@@ -10,11 +10,11 @@ export const getBaseProperty = (readJson: JsonUtil, personQueryType: PersonQuery
   try {
     const ruleGroup = readJson.json.query("rule_group");
     return ruleGroup.queryAll("property_rule")
-      .flatMap(e => e.queryAll("entry"))
-      .filter(value => value.attributeMap.id === key)
-      .flatMap(e => e.queryAll("default"))
-      .flatMap(e => e.queryAll("operation"))
-      .flatMap(e => e.childrenList)
+      .flatMap(e => e.queryAllOptional("entry"))
+      .filter(value => value?.attributeMap?.id === key)
+      .flatMap(e => e.queryAllOptional("person_default"))
+      .flatMap(e => e?.childrenList)
+      .filter(e => !!e)
       .map(e => readJson.computeOperation(e, string => getProperty(readJson, personQueryType, string)))
       .reduce((previousValue, currentValue) => currentValue(previousValue), "0");
   } catch (e: any) {

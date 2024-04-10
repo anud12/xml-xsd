@@ -1,6 +1,0 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <xs:include schemaLocation="dice_face.type.xsd"/>
-    <xs:complexType name="type_dice">
-        <xs:attribute name="face" type="type_dice_face"/>
-    </xs:complexType>
-</xs:schema>

@@ -80,9 +80,8 @@ export type JsonSchema = JsonQueryType<{}, {
   rule_group: JsonQueryType<{}, {
     property_rule: JsonQueryType<{}, {
       entry: JsonQueryType<{ id: string, default: string, value: string, max_value: string }, {
-        default: JsonQueryType<{}, {
-          operation: OperationQueryType
-        }>
+        person_default: OperationQueryType
+        item_default: OperationQueryType
       }>
     }>,
     classification_rule: JsonQueryType<{}, {
