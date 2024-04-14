@@ -36,7 +36,7 @@ const applyFromPersonActionUsed = (event: EventQueryType): ((dispatcher:Dispatch
 }
 export const eventsMetadata: EventMiddleware = (readJson) => {
   const ruleGroup = readJson.json.query("rule_group");
-  const eventsMetadata = ruleGroup.queryAll("events_rule").flatMap(e => e.queryAll("entry"));
+  const eventsMetadata = ruleGroup.queryAllOptional("events_rule").flatMap(e => e.queryAll("entry"));
   const listenerList = eventsMetadata.flatMap(event => applyFromPersonActionUsed(event));
 
   return async (dispatcher:Dispatcher) => {

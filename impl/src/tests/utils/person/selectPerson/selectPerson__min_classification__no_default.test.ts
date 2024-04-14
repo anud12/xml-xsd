@@ -4,7 +4,7 @@ import {JsonQuery} from "../../../../JSONQuery";
 import {JsonUtil} from "../../../../utils/util";
 import {selectPerson} from "../../../../utils/person/selectPerson";
 
-it("selectPerson__min_classification", () => {
+it("selectPerson__min_classification__no_default", () => {
   const query = JsonQuery.fromText<JsonSchema>(`<world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../schema/world_step/world_step.xsd"
@@ -21,8 +21,10 @@ it("selectPerson__min_classification", () => {
   <rule_group>
     <property_rule>
       <entry id="property">
-        <person_default initial="10">
-        </person_default>
+        <default>
+          <operation initial="10">
+          </operation>
+        </default>
       </entry>
     </property_rule>
     <race_rule>
@@ -53,14 +55,15 @@ it("selectPerson__min_classification", () => {
 </world_step>
 `);
   const util: JsonUtil = new JsonUtil(query);
+  throw new Error("To be implemented");
   const result = selectPerson(util, query.query("rule_group")
     .query("events_rule")
     .query("entry")
     .query("then")
     .query("select_person"));
   expect(result.map(v => v.serializeRaw())).toEqual([
-    "<person id=\"0.0\"><location x=\"0\" y=\"0\"/><race race_rule_ref=\"race\"/><classifications/><properties><property property_rule_ref=\"property\" value=\"2\"/></properties></person>\n",
-    "<person id=\"0.1\"><location x=\"0\" y=\"0\"/><race race_rule_ref=\"race\"/><classifications/><properties><property property_rule_ref=\"property\" value=\"1\"/></properties></person>\n"
-]);
+    "<person id=\"0.0\"><location x=\"0\" y=\"0\"/><race race_rule_ref=\"race\"/><classifications/><properties><property property_rule_ref=\"property\" value=\"NaN\"/></properties></person>\n",
+    "<person id=\"0.1\"><location x=\"0\" y=\"0\"/><race race_rule_ref=\"race\"/><classifications/><properties><property property_rule_ref=\"property\" value=\"NaN\"/></properties></person>\n"
+  ]);
 
 })

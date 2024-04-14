@@ -350,7 +350,7 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
           </expected>
         </test>
         <property_mutation property_rule_ref="health" on="target">
-          <from participant="self">
+          <from participant="target">
             <operation initial="0">
               <and do="add_dice" value="6"/>
               <and do="add" value="0">
@@ -409,6 +409,10 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
             <radius initial="30"/>
             <min initial="4"/>
             <max initial="4"/>
+            <property property_rule_ref="dd">
+              <min initial="2"/>
+              <max initial="3"/>
+            </property>
             <classification classification_rule_ref="alive"/>
             <race race_rule_ref="human"/>
             <inventory>

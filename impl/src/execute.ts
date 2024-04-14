@@ -20,6 +20,14 @@ export const executeFromString = async(xmlString:string, log: (...string:any[]) 
   return result;
 }
 
+export const executeFromStringToString = async(xmlString:string, log: (...string:any[]) => void) => {
+  const oldLog = console.log;
+  console.log = log;
+  const readJson = JsonQuery.fromText<JsonSchema>(xmlString.toString());
+  const result = execute(readJson, log)
+  console.log = oldLog;
+  return (await result).serializeRaw();
+}
 
 export const execute = async (readJson:JsonSchema, log: (...string:any[]) => void) => {
   const oldLog = console.log;
@@ -45,9 +53,10 @@ export const execute = async (readJson:JsonSchema, log: (...string:any[]) => voi
   await offsetRandomisationTable(readJsonUtil)(readJsonUtil)
 
   const writeWorldMetadata = readJson.query("world_metadata");
-  const iter = Number(writeWorldMetadata.query("next_world_step").body.split("_")?.[1] ?? 0);
+  const tokens = writeWorldMetadata.query("next_world_step").body.split("_")
+  const iter = Number(tokens?.[1] ?? 0);
   const writeNextWorldStep = readJson.query("world_metadata").query("next_world_step")
-  writeNextWorldStep.body = `world_${iter + 1}`
+  writeNextWorldStep.body = `${tokens[0]}_${iter + 1}`
   console.log = oldLog;
   return readJson;
 }
