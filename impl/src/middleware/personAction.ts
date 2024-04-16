@@ -49,9 +49,9 @@ export const personAction: MutationMiddleware = readJson => {
     .flatMap(e => e.queryAll("person_to_person"));
 
 
-  const personList = readJson.json.queryAll("people").flatMap(e => e.queryAll("person"));
+  const personList = readJson.json.queryAllOptional("people").flatMap(e => e.queryAll("person"));
 
-  const actions = readJson.json.queryAll("actions")
+  const actions = readJson.json.queryAllOptional("actions")
     .flatMap(e => e.queryAllOptional("by"))
     .flatMap(by => {
       try {

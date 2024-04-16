@@ -10,8 +10,11 @@ export const createOperationFromQueryType = (
 ): (value: string) => string => {
 
   const wrapper = (func: (value: string) => string) => (value: string) => {
-    if (!value || isNaN(Number(value))) {
+    if (isNaN(Number(value))) {
       throw new Error(`Operation ${operationValue.tag} with ${(operationValue as any).attributeMap.value} failed with value ${value}`);
+    }
+    if(!value) {
+      return undefined;
     }
     return func(value);
   }

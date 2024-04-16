@@ -56,19 +56,19 @@ const applyClassification = (jsonUtil: JsonUtil, classificationRef: string, pers
       let computedValue = property;
       switch (classification.attributeMap.is) {
         case "lessThan": {
-          computedValue = Math.max(classificationValue - 1, property);
+          computedValue = Math.min(classificationValue - 1, property);
           break;
         }
         case "lessThanOrEqual": {
-          computedValue = Math.max(classificationValue, property);
+          computedValue = Math.min(classificationValue, property);
           break;
         }
         case "greaterThan": {
-          computedValue = Math.min(classificationValue + 1, property);
+          computedValue = Math.max(classificationValue + 1, property);
           break;
         }
         case "greaterThanOrEqual": {
-          computedValue = Math.min(classificationValue, property);
+          computedValue = Math.max(classificationValue, property);
           break;
         }
         case "equal": {
@@ -87,7 +87,11 @@ const applyClassification = (jsonUtil: JsonUtil, classificationRef: string, pers
 
 const applyProperty = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, person: PersonQueryType) => {
   selectPerson.queryAllOptional("property").map(property => {
-    let value = Number(jsonUtil.person.getProperty(person, property.attributeMap.property_rule_ref));
+    const stringValue = jsonUtil.person.getProperty(person, property.attributeMap.property_rule_ref);
+    if(!stringValue) {
+      return;
+    }
+    let value = Number(stringValue)
 
     const max = Number(jsonUtil.computeOperationFromParent(property.queryOptional("max")))
     if (max) {

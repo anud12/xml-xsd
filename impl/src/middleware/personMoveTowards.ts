@@ -44,11 +44,11 @@ const calculateDestinationCoordinate = (initial: CoordinatesNode, destination: C
 export const personMoveTowards: MutationMiddleware = readUnit => {
   const ruleGroup = readUnit.getRuleGroups();
   const raceMetadata = ruleGroup.flatMap(ruleGroup => ruleGroup.queryAllOptional("race_rule"))
-    .flatMap(raceMetadata => raceMetadata.queryAll("entry"))
-  const personList = readUnit.json.queryAll("people")
-    .flatMap(people => people.queryAll("person"));
+    .flatMap(raceMetadata => raceMetadata.queryAllOptional("entry"))
+  const personList = readUnit.json.queryAllOptional("people")
+    .flatMap(people => people.queryAllOptional("person"));
 
-  const actions = readUnit.json.queryAll("actions")
+  const actions = readUnit.json.queryAllOptional("actions")
     .flatMap(e => e.queryAllOptional("by"))
     .flatMap(by => {
       return by.queryAllOptional("move_towards").flatMap(moveTowards => {
@@ -69,7 +69,7 @@ export const personMoveTowards: MutationMiddleware = readUnit => {
       })
     })
   return async writeUnit => {
-    const persons = writeUnit.json.queryAll("people").flatMap(e => e.queryAll("person"))
+    const persons = writeUnit.json.queryAllOptional("people").flatMap(e => e.queryAll("person"))
     actions.forEach(mutation => {
       const person = persons.find(e => e.attributeMap.id === mutation.person.attributeMap.id);
       const location = person.query("location")

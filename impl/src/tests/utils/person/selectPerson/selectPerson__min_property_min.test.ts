@@ -23,11 +23,9 @@ it("selectPerson__min_property_min", () => {
   
     <property_rule>
       <entry id="property">
-        <default>
-          <operation initial="0">
-            <and do="add" value="0"/>
-          </operation>
-        </default>
+        <person_default initial="0">
+          <and do="add" value="0"/>
+        </person_default>
       </entry>
     </property_rule>
     <race_rule>

@@ -18,7 +18,7 @@ describe("getProperty", () => {
   <rule_group>
     <property_rule>
       <entry id="constitution" units="points">
-        <person_default>
+        <person_default initial="0">
           <and do="add" value="8" />
         </person_default>
       </entry>
@@ -75,7 +75,7 @@ describe("getProperty", () => {
   <rule_group>
     <property_rule>
       <entry id="constitution" units="points">
-        <person_default>
+        <person_default initial="0">
           <and do="add" value="8" />
         </person_default>
       </entry>
