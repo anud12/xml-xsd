@@ -305,7 +305,6 @@
     </xs:restriction>
   </xs:simpleType>
 
-
   <xs:group name="group__operation__and">
     <xs:sequence>
       <xs:sequence>
@@ -343,25 +342,68 @@
     </xs:sequence>
   </xs:group>
 
+
+  <!--#########-->
+  <!-- Group name -->
+  <!--#########-->
+
   <xs:group name="group__name_token">
+    <xs:annotation>
+      <xs:documentation>
+        Represents rule for name generation.
+      </xs:documentation>
+    </xs:annotation>
     <xs:sequence>
       <xs:element name="name_token" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            Represents a token used in name generation.
+          </xs:documentation>
+        </xs:annotation>
         <xs:complexType>
           <xs:choice>
             <xs:element name="ref" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  Represents a reference to another 'name_rule'.
+                </xs:documentation>
+              </xs:annotation>
               <xs:complexType>
-                <xs:attribute name="name_rule_ref" use="required"/>
+                <xs:attribute name="name_rule_ref" use="required">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Represents the ID of the referenced 'name_rule'.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
               </xs:complexType>
             </xs:element>
             <xs:element name="one_of">
+              <xs:annotation>
+                <xs:documentation>
+                  Represents a single choice between multiple 'name_token' elements.
+                </xs:documentation>
+              </xs:annotation>
               <xs:complexType>
                 <xs:sequence>
-                  <xs:group ref="group__name_token"/>
+                  <xs:group ref="group__name_token">
+                    <xs:annotation>
+                      <xs:documentation>
+                        Represents rule for name generation.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:group>
                 </xs:sequence>
               </xs:complexType>
             </xs:element>
           </xs:choice>
-          <xs:attribute name="prefix" use="required"/>
+          <xs:attribute name="prefix" use="required">
+            <xs:annotation>
+              <xs:documentation>
+                Represents a string that is added to the beginning of the generated name.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
         </xs:complexType>
       </xs:element>
     </xs:sequence>
@@ -544,12 +586,35 @@
 
 
               <xs:element name="name_rule" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>
+                    A 'name_rule' is used to generate a string based on the 'name_token' elements it contains.
+                  </xs:documentation>
+                </xs:annotation>
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element name="entry" minOccurs="0">
+                    <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Represents an entry for a 'name_rule' that is used to generate a string based on the
+                          'name_token' elements it contains.
+                        </xs:documentation>
+                      </xs:annotation>
                       <xs:complexType>
-                        <xs:group ref="group__name_token"/>
-                        <xs:attribute name="id" use="required"/>
+                        <xs:group ref="group__name_token">
+                          <xs:annotation>
+                            <xs:documentation>
+                              The 'group__name_token' is a reference to a group of 'name_token' elements.
+                            </xs:documentation>
+                          </xs:annotation>
+                        </xs:group>
+                        <xs:attribute name="id" use="required">
+                          <xs:annotation>
+                            <xs:documentation>
+                              The 'id' attribute is a required attribute that uniquely identifies each 'entry'.
+                            </xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>

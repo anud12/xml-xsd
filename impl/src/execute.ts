@@ -10,26 +10,65 @@ import {offsetRandomisationTable} from "./middleware/offsetRandomisationTable";
 import {propertyRefValidator} from "./validators/propertyRef.validator";
 import {raceRefValidator} from "./validators/raceRef.validator";
 import {Dispatcher} from "./utils/triggerDispatcher/dispatcher";
+import {calculateNameFromRefString} from "./utils/calculateName";
 
-export const executeFromString = async(xmlString:string, log: (...string:any[]) => void) => {
+type StringParameter<Param extends string> = `${Param} ${string}`
+
+type StringArguments = StringParameter<"--name_rule">;
+
+
+export const executeFromString = async (xmlString: string, log: (...string: any[]) => void, stringArguments: StringArguments[] = []) => {
   const oldLog = console.log;
   console.log = log;
+
+  const argumentResult = parseArguments(xmlString, log, stringArguments)
+
+  if(argumentResult) {
+    return argumentResult;
+  }
+
   const readJson = JsonQuery.fromText<JsonSchema>(xmlString.toString());
   const result = execute(readJson, log)
   console.log = oldLog;
   return result;
 }
 
-export const executeFromStringToString = async(xmlString:string, log: (...string:any[]) => void) => {
+export const executeFromStringToString = async (xmlString: string, log: (...string: any[]) => void, stringArguments: StringArguments[] = []) => {
   const oldLog = console.log;
   console.log = log;
+
+  const argumentResult = await parseArguments(xmlString, log, stringArguments)
+
+  if(argumentResult) {
+    return argumentResult;
+  }
+
   const readJson = JsonQuery.fromText<JsonSchema>(xmlString.toString());
   const result = execute(readJson, log)
   console.log = oldLog;
   return (await result).serializeRaw();
 }
 
-export const execute = async (readJson:JsonSchema, log: (...string:any[]) => void) => {
+const parseArguments = async (xmlString: string, log: (...string: any[]) => void, stringArguments: StringArguments[]): Promise<string | undefined> => {
+
+  if(stringArguments.length === 0) {
+    return;
+  }
+  const readJson = JsonQuery.fromText<JsonSchema>(xmlString.toString());
+
+  if (stringArguments.length > 1) {
+    throw new Error("Only one argument is allowed")
+  }
+  const argument = stringArguments[0];
+  if (argument.startsWith("--name_rule")) {
+    const readJsonUtil = new JsonUtil(readJson);
+    return calculateNameFromRefString(readJsonUtil, argument.replace("--name_rule", "").trim())
+  }
+
+  return;
+}
+
+export const execute = async (readJson: JsonSchema, log: (...string: any[]) => void) => {
   const oldLog = console.log;
   console.log = log;
 
