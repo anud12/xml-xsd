@@ -15,7 +15,10 @@ export const personAssignClassification: MutationMiddleware = (readJson) => {
     const personList = writeJson.json.queryAllOptional("people").flatMap(e => e.queryAll("person"));
     classificationListByPersonId.forEach(({id, classificationList}) => {
       const person = personList.find(e => e.attributeMap.id === id);
-      const classifications = person.query("classifications");
+      let classifications = person.queryOptional("classifications");
+      if(!classifications) {
+        classifications = person.appendChild("classifications");
+      }
       classifications.childrenList = [];
       classificationList.forEach(classification => {
         classifications.appendChild("classification", undefined, {

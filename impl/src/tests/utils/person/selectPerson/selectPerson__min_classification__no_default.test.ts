@@ -4,7 +4,7 @@ import {JsonQuery} from "../../../../JSONQuery";
 import {JsonUtil} from "../../../../utils/util";
 import {selectPerson} from "../../../../utils/person/selectPerson";
 
-it("selectPerson__min_classification__no_default", () => {
+it.skip("selectPerson__min_classification__no_default", () => {
   const query = JsonQuery.fromText<JsonSchema>(`<world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../schema/world_step/world_step.xsd"

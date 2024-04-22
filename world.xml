@@ -597,7 +597,7 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
   <!--_-->
   <actions>
     <by person_ref="dd">
-      <do action_ref="dd" person_ref=""/>
+      <do action_rule_ref="dd" person_ref=""/>
     </by>
   </actions>
 </world_step>

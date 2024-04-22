@@ -39,8 +39,6 @@ export type ClassificationOperationIs = "lessThan"
   | "equal"
 
 export type ItemQueryType = JsonQueryType<{ id: string, name: string }, {
-  weight_kg: JsonQueryType<{ value: string }>
-  wearable: JsonQueryType<{ slot: string }>
 }>
 
 export type SelectItemQueryType = JsonQueryType<{}, {
@@ -147,6 +145,7 @@ export type JsonSchema = JsonQueryType<{}, {
         when: TriggerQueryType,
         then: JsonQueryType<{}, {
           select_person?: SelectPersonQueryType & JsonQueryType<{origin: "target" | "self"}>
+          select_item?: SelectItemQueryType & JsonQueryType<{origin: "target" | "self"}>
         }>
       }>
     }>,
@@ -158,6 +157,9 @@ export type JsonSchema = JsonQueryType<{}, {
     }>,
   }>
 
+  items: JsonQueryType<{}, {
+    item: ItemQueryType,
+  }>,
   people: JsonQueryType<{}, {
     person: JsonQueryType<{ id: string, name: string }, {
       race: JsonQueryType<{ race_rule_ref: string }>,

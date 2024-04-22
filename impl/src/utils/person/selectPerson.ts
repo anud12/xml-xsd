@@ -11,32 +11,32 @@ export type Position = {
 
 type PeopleQueryType = JsonSchema['children']["people"]["children"]["person"];
 
-export const filterPersonMaxQuantity = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, people: Array<PeopleQueryType>): Array<PeopleQueryType> => {
+export const filterPersonMaxQuantity = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, list: Array<PeopleQueryType>): Array<PeopleQueryType> => {
   const maxElement = selectPerson.queryOptional("max");
 
   if (!maxElement) {
-    return people;
+    return list;
   }
   const maxQuantityValue = jsonUtil.computeOperationFromParent(maxElement, () => "0")
-  return jsonUtil.randomListFromArray(people, Number(maxQuantityValue));
+  return jsonUtil.randomListFromArray(list, Number(maxQuantityValue));
 }
 
-export const filterPersonMinQuantity = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, position: Position | undefined, people: Array<PeopleQueryType>): Array<PeopleQueryType> => {
+export const filterPersonMinQuantity = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, position: Position | undefined, list: Array<PeopleQueryType>): Array<PeopleQueryType> => {
   const minValue = Number(jsonUtil.computeOperationFromParent(selectPerson.queryOptional("min")));
-  const difference = people.length - minValue;
+  const difference = list.length - minValue;
   if (difference >= 0) {
-    return people;
+    return list;
   }
   new Array(Math.abs(difference)).fill("")
     .map(() => {
       const person = createPerson(jsonUtil, selectPerson, position);
-      people.push(person);
+      list.push(person);
     })
-  return people;
+  return list;
 }
 
 
-export const selectPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, position?: Position) => {
+export const selectPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, position?: Position):Array<PeopleQueryType> => {
   try {
     let people = queryPerson(jsonUtil, selectPerson)
     .filter(person => filterPerson(jsonUtil, selectPerson, person, position));

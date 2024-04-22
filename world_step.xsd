@@ -791,6 +791,22 @@
                                     </xs:complexContent>
                                   </xs:complexType>
                                 </xs:element>
+                                <xs:element name="select_item" minOccurs="0" maxOccurs="unbounded">
+                                  <xs:complexType>
+                                    <xs:complexContent>
+                                      <xs:extension base="type__item_selection">
+                                        <xs:attribute name="origin" use="required">
+                                          <xs:simpleType>
+                                            <xs:restriction base="xs:string">
+                                              <xs:enumeration value="target"/>
+                                              <xs:enumeration value="self"/>
+                                            </xs:restriction>
+                                          </xs:simpleType>
+                                        </xs:attribute>
+                                      </xs:extension>
+                                    </xs:complexContent>
+                                  </xs:complexType>
+                                </xs:element>
                               </xs:sequence>
                             </xs:complexType>
                           </xs:element>
@@ -850,6 +866,19 @@
         </xs:element>
 
 
+        <xs:element name="items" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="item" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="id" use="required"/>
+                  <xs:attribute name="name"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
         <xs:element name="people" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
@@ -861,8 +890,8 @@
                         <xs:attribute name="race_rule_ref" use="required"/>
                       </xs:complexType>
                     </xs:element>
-                    <xs:element name="location" type="type_cell_ref"/>
-                    <xs:element name="properties">
+                    <xs:element name="location" minOccurs="0" type="type_cell_ref"/>
+                    <xs:element name="properties" minOccurs="0">
                       <xs:complexType>
                         <xs:sequence>
                           <xs:element name="property" minOccurs="0"
@@ -889,7 +918,7 @@
                         </xs:sequence>
                       </xs:complexType>
                     </xs:element>
-                    <xs:element name="classifications">
+                    <xs:element name="classifications" minOccurs="0">
                       <xs:complexType>
                         <xs:sequence>
                           <xs:element name="classification" minOccurs="0"
@@ -910,7 +939,6 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-
 
         <xs:element name="location_layer" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
@@ -936,7 +964,7 @@
                   <xs:choice>
                     <xs:element name="do">
                       <xs:complexType>
-                        <xs:attribute name="action_ref" use="required"/>
+                        <xs:attribute name="action_rule_ref" use="required"/>
                         <xs:attribute name="person_ref" use="required"/>
                       </xs:complexType>
                     </xs:element>

@@ -1,0 +1,65 @@
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../world_step.xsd">
+  <world_metadata>
+    <next_world_step>./data_1</next_world_step>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="1"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <action_rule>
+      <person_to_person id="action_rule">
+        <max_range>
+          <operation initial="0"/>
+        </max_range>
+        <min_range>
+          <operation initial="0"/>
+        </min_range>
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <item_rule>
+      <entry id="item_rule">
+        <name>
+          <name_token prefix="item_name"/>
+        </name>
+      </entry>
+    </item_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_item origin="target">
+            <min initial="1"/>
+          </select_item>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <items>
+    <item id="0.0" name="item_name"/>
+  </items>
+  <people>
+    <person id="1">
+      <classifications/>
+    </person>
+  </people>
+  <actions/>
+</world_step>

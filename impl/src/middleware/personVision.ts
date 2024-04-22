@@ -5,9 +5,11 @@ export const personVision: MutationMiddleware = (readJson) => {
   try {
     const persons = readJson.json.queryOptional("people")?.queryAllOptional("person");
     const ruleGroup = readJson.getRuleGroups();
-    persons?.map(e => {
-      const location = e.query("location");
-
+    persons?.forEach(e => {
+      const location = e.queryOptional("location");
+      if(!location) {
+        return;
+      }
       const x = location.attributeMap.x;
       const y= location.attributeMap.y;
       const race = e.queryOptional("race")?.attributeMap?.race_rule_ref;

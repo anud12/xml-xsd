@@ -60,8 +60,8 @@ export const personAction: MutationMiddleware = readJson => {
           return [];
         }
         const action = actionMetadata.find(action => action.attributeMap.id === personDo.attributeMap.action_rule_ref);
-        const person = personList.find(person => person.attributeMap.id === by.attributeMap.person_rule_ref);
-        const targetPerson = personList.find(person => person.attributeMap.id === personDo.attributeMap.person_rule_ref);
+        const person = personList.find(person => person.attributeMap.id === by.attributeMap.person_ref);
+        const targetPerson = personList.find(person => person.attributeMap.id === personDo.attributeMap.person_ref);
 
         if (isOutOfRange(readJson, action, person, targetPerson)) {
           return [{
@@ -91,8 +91,8 @@ export const personAction: MutationMiddleware = readJson => {
   return async writeJson => {
     actions.forEach(({by: by, personAction, property_mutation_list}) => {
       const personList = writeJson.json.queryAll("people").flatMap(e => e.queryAll("person"));
-      const person = personList.find(e => e.attributeMap.id === by.attributeMap.person_rule_ref);
-      const targetPerson = personList.find(e => e.attributeMap.id === personAction.attributeMap.person_rule_ref);
+      const person = personList.find(e => e.attributeMap.id === by.attributeMap.person_ref);
+      const targetPerson = personList.find(e => e.attributeMap.id === personAction.attributeMap.person_ref);
 
       property_mutation_list.forEach(mutation => {
         const applicablePerson = mutation.property_mutation.attributeMap.on === "target"
