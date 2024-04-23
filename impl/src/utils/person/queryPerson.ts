@@ -1,6 +1,6 @@
-import {Position} from "./selectPerson";
 import {JsonSchema, SelectPersonQueryType} from "../JsonSchema";
 import {JsonUtil} from "../util";
+import {mergeError} from "../../mergeError";
 
 type PeopleQueryType = JsonSchema['children']["people"]["children"]["person"];
 
@@ -10,8 +10,6 @@ export const queryPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryT
       .flatMap(people => people.queryAllOptional("person"));
 
   } catch (e: any) {
-    const newError = new Error(`queryPerson failed for ${selectPerson.getPath()}`);
-    newError.stack += '\nCaused by: ' + e.stack;
-    throw newError;
+    throw mergeError(e, new Error(`queryPerson failed for ${selectPerson.getPath()}`));
   }
 }

@@ -2,7 +2,7 @@ import {LocationGrid, locationGrid} from "./location/locationGrid";
 import {locationMarkovChainMatrix, LocationMatrix} from "./location/locationMarkovChainMatrix";
 import {markovNext} from "./markovNext";
 import {create} from "./location/create";
-import {JsonSchema, OperationQueryType, SelectPersonQueryType} from "./JsonSchema";
+import {JsonSchema, OperationQueryType, SelectItemQueryType, SelectPersonQueryType} from "./JsonSchema";
 import {newRandom} from "./newRandom";
 import {createOperationFromQueryType} from "./operation/createOperationFromQueryType";
 import {getProperty, PersonQueryType} from "./person/getProperty";
@@ -13,6 +13,7 @@ import {CreateItemArgs, createItemAt} from "./item/createItemAt";
 import {classifyPerson} from "./person/classifyPerson";
 import {setProperty} from "./person/setProperty";
 import {Position, selectPerson} from "./person/selectPerson";
+import {selectItem} from "./item/selectItem";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -119,6 +120,9 @@ export class JsonUtil {
   item = {
     createItemAt: (args:CreateItemArgs) => {
       return createItemAt(this, args);
+    },
+    selectItem: (args: SelectItemQueryType, ) => {
+      return selectItem(this, args)
     }
   }
 
@@ -135,11 +139,15 @@ export class JsonUtil {
       return classifyPerson(this, personQueryType);
     },
     getDistance: memoizeFunction((personQueryType: PersonQueryType, secondPersonQueryType: PersonQueryType) => {
-      const x = Number(personQueryType.query("location").attributeMap.x);
-      const y = Number(personQueryType.query("location").attributeMap.y);
-      const x2 = Number(secondPersonQueryType.query("location").attributeMap.x);
-      const y2 = Number(secondPersonQueryType.query("location").attributeMap.y);
-      return Math.sqrt(Math.pow(x - x2, 2) + Math.pow(y - y2, 2));
+      const x = Number(personQueryType.queryOptional("location")?.attributeMap.x);
+      const y = Number(personQueryType.queryOptional("location")?.attributeMap.y);
+      const x2 = Number(secondPersonQueryType.queryOptional("location")?.attributeMap.x);
+      const y2 = Number(secondPersonQueryType.queryOptional("location")?.attributeMap.y);
+      const distance = Math.sqrt(Math.pow(x - x2, 2) + Math.pow(y - y2, 2))
+      if(isNaN(distance)) {
+        return;
+      }
+      return distance;
     }),
   }
 

@@ -1,5 +1,6 @@
 import * as jsdom from "jsdom";
 import {JsonQueryChildren, JsonQueryType} from "./JsonQueryType";
+import {mergeError} from "./mergeError";
 
 const prettier = require("prettier")
 
@@ -31,9 +32,7 @@ const innerSerialize = (dom: jsdom.JSDOM, query: JsonQueryType<Record<string, an
     rootElement.outerHTML;
     return rootElement
   } catch (e: any) {
-    const newError = new Error(`serialize failed for ${query.getPath()}`);
-    newError.stack += '\nCaused by: ' + e.stack;
-    throw newError;
+    throw mergeError(e, new Error(`serialize failed for ${query.getPath()}`));
   }
 }
 

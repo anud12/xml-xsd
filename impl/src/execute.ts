@@ -11,10 +11,11 @@ import {propertyRefValidator} from "./validators/propertyRef.validator";
 import {raceRefValidator} from "./validators/raceRef.validator";
 import {Dispatcher} from "./utils/triggerDispatcher/dispatcher";
 import {calculateNameFromRefString} from "./utils/calculateName";
+import {validate} from "./validate";
 
 type StringParameter<Param extends string> = `${Param} ${string}`
 
-type StringArguments = StringParameter<"--name_rule">;
+export type StringArguments = StringParameter<"--name_rule">;
 
 
 export const executeFromString = async (xmlString: string, log: (...string: any[]) => void, stringArguments: StringArguments[] = []) => {
@@ -68,16 +69,22 @@ const parseArguments = async (xmlString: string, log: (...string: any[]) => void
   return;
 }
 
-export const execute = async (readJson: JsonSchema, log: (...string: any[]) => void) => {
+export const execute = async (readJson: JsonSchema, log: (...string: any[]) => void):Promise<JsonSchema> => {
   const oldLog = console.log;
   console.log = log;
 
   const dispatcher = new Dispatcher();
   const readJsonUtil = new JsonUtil(readJson);
 
+  const errors = await validate(readJsonUtil, log);
+  if(errors?.length) {
+    throw new Error(errors.map(e => e.message).join("\n"));
+  }
   await propertyRefValidator(readJsonUtil);
   await raceRefValidator(readJsonUtil);
 
+
+  const dispatcherResult = dispatcher.middleware(readJsonUtil);
   const personMoveTowardsResult = personMoveTowards(readJsonUtil);
   const personActionResult = personAction(readJsonUtil);
   const eventsMetadataResult = eventsMetadata(readJsonUtil);
@@ -87,15 +94,16 @@ export const execute = async (readJson: JsonSchema, log: (...string: any[]) => v
 
   await eventsMetadataResult(dispatcher);
 
+  await dispatcherResult(readJsonUtil);
   await personVision(readJsonUtil)(readJsonUtil);
   await personAssignClassification(readJsonUtil)(readJsonUtil);
-  await offsetRandomisationTable(readJsonUtil)(readJsonUtil)
+  await offsetRandomisationTable(readJsonUtil)(readJsonUtil);
 
-  const writeWorldMetadata = readJson.query("world_metadata");
+  const writeWorldMetadata = readJsonUtil.json.query("world_metadata");
   const tokens = writeWorldMetadata.query("next_world_step").body.split("_")
   const iter = Number(tokens?.[1] ?? 0);
   const writeNextWorldStep = readJson.query("world_metadata").query("next_world_step")
   writeNextWorldStep.body = `${tokens[0]}_${iter + 1}`
   console.log = oldLog;
-  return readJson;
+  return readJsonUtil.json;
 }
