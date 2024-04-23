@@ -1,5 +1,6 @@
 import {JsonUtil} from "../util";
 import {SelectItemQueryType} from "../JsonSchema";
+import {mergeError} from "../../mergeError";
 
 const createNewItem = (jsonUtil: JsonUtil, selectItem: SelectItemQueryType) => {
   try {
@@ -25,9 +26,7 @@ const createNewItem = (jsonUtil: JsonUtil, selectItem: SelectItemQueryType) => {
     })
     return item;
   } catch (e: any) {
-    const newError = new Error(`createNewItem failed for ${selectItem.getPath()}`);
-    newError.stack += '\nCaused by: ' + e.stack;
-    throw newError;
+    throw mergeError(e, new Error(`createNewItem failed for ${selectItem.getPath()}`));
   }
 }
 
@@ -37,9 +36,7 @@ export const createItem = (jsonUtil: JsonUtil, selectItem: SelectItemQueryType) 
     let item = createNewItem(jsonUtil, selectItem);
     return item;
   } catch (e:any) {
-    const newError = new Error(`createItem failed for ${selectItem.getPath()}`);
-    newError.stack += '\nCaused by: ' + e.stack;
-    throw newError;
+    throw mergeError(e, new Error(`createItem failed for ${selectItem.getPath()}`));
   }
 
 }

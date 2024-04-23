@@ -1,6 +1,7 @@
 import {JsonSchema} from "./JsonSchema";
 import {JsonUtil} from "./util";
 import {JsonQueryType} from "../JsonQueryType";
+import {mergeError} from "../mergeError";
 
 export type NameRuleEntryQueryType = JsonSchema["children"]["rule_group"]["children"]["name_rule"]["children"]["entry"]
 export type NameTokenQueryType = NameRuleEntryQueryType["children"]["name_token"]
@@ -67,9 +68,7 @@ export const calculateNameFromRefString = (readJson: JsonUtil, ref: string): str
 
     return calculateNameFromChildren(readJson, entry);
   } catch (e: any) {
-    const newError = new Error(`calculateNameFromRefString failed for ${ref}`);
-    newError.stack += '\nCaused by: ' + e.stack;
-    throw newError;
+    throw mergeError(e, new Error(`calculateNameFromRefString failed for ${ref}`));
   }
 
 }

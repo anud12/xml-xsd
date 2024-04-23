@@ -15,7 +15,7 @@ import {validate} from "./validate";
 
 type StringParameter<Param extends string> = `${Param} ${string}`
 
-type StringArguments = StringParameter<"--name_rule">;
+export type StringArguments = StringParameter<"--name_rule">;
 
 
 export const executeFromString = async (xmlString: string, log: (...string: any[]) => void, stringArguments: StringArguments[] = []) => {

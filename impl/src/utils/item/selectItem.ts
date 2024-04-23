@@ -3,6 +3,7 @@ import {ItemQueryType, SelectItemQueryType} from "../JsonSchema";
 import {queryItem} from "./queryItem";
 import {filterItem} from "./filterItem";
 import {createItem} from "./createItem";
+import {mergeError} from "../../mergeError";
 
 export const filterItemMaxQuantity = (jsonUtil: JsonUtil, selectItem: SelectItemQueryType, list: Array<ItemQueryType>) => {
   try {
@@ -14,9 +15,7 @@ export const filterItemMaxQuantity = (jsonUtil: JsonUtil, selectItem: SelectItem
     const maxQuantityValue = jsonUtil.computeOperationFromParent(maxElement, () => "0")
     return jsonUtil.randomListFromArray(list, Number(maxQuantityValue));
   } catch (e: any) {
-    const newError = new Error(`filterItemMaxQuantity failed for ${selectItem.getPath()}`);
-    newError.stack += '\nCaused by: ' + e.stack;
-    throw newError;
+    throw mergeError(e, new Error(`filterItemMaxQuantity failed for ${selectItem.getPath()}`));
   }
 }
 
@@ -34,9 +33,7 @@ export const filterItemMinQuantity = (jsonUtil: JsonUtil, selectItem: SelectItem
       })
     return list;
   } catch (e: any) {
-    const newError = new Error(`filterItemMinQuantity failed for ${selectItem.getPath()}`);
-    newError.stack += '\nCaused by: ' + e.stack;
-    throw newError;
+    throw mergeError(e, new Error(`filterItemMinQuantity failed for ${selectItem.getPath()}`));
   }
 }
 
@@ -50,8 +47,6 @@ export const selectItem = (jsonUtil: JsonUtil, selectItem: SelectItemQueryType):
 
     return items;
   } catch (e:any) {
-    const newError = new Error(`selectItem failed for ${selectItem.getPath()}`);
-    newError.stack += '\nCaused by: ' + e.stack;
-    throw newError;
+    throw mergeError(e, new Error(`selectItem failed for ${selectItem.getPath()}`));
   }
 }

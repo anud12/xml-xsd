@@ -2,6 +2,7 @@ import {getProperty, PersonQueryType} from "./getProperty";
 import {createOperationFromParent} from "../operation/createOperationFromParent";
 import {JsonUtil} from "../util";
 import {JsonQueryType} from "../../JsonQueryType";
+import {mergeError} from "../../mergeError";
 
 
 export const classifyPerson = (readJson: JsonUtil, personQueryType: PersonQueryType): string[] => {
@@ -53,9 +54,7 @@ export const classifyPerson = (readJson: JsonUtil, personQueryType: PersonQueryT
 
     return [...computedClassificationIdList, ...staticClassificationId];
   } catch (e: any) {
-    const newError = new Error(`classifyPerson failed for ${personQueryType.attributeMap.id}`);
-    newError.stack += '\nCaused by: ' + e.stack;
-    throw newError;
+    throw mergeError(e, new Error(`classifyPerson failed for ${personQueryType.attributeMap.id}`));
   }
 
 }

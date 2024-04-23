@@ -157,7 +157,8 @@ describe("getProperty", () => {
       );
       throw new Error("")
     } catch (e:any)  {
-      expect(e.message).toBe("getProperty of health failed for //people[0]/person[0]")
+      expect(e.message).toBe("getProperty of health failed for //people[0]/person[0]\n" +
+        "query '//rule_group' returned undefined")
     }
   })
 })

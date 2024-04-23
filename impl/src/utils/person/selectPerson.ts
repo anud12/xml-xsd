@@ -3,6 +3,7 @@ import {JsonSchema, SelectPersonQueryType} from "../JsonSchema";
 import {queryPerson} from "./queryPerson";
 import {createPerson} from "./createPerson";
 import {filterPerson} from "./filterPerson";
+import {mergeError} from "../../mergeError";
 
 export type Position = {
   x: string,
@@ -46,8 +47,6 @@ export const selectPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQuery
 
     return people;
   } catch (e: any) {
-    const newError = new Error(`selectPerson failed for ${selectPerson.getPath()}`);
-    newError.stack += '\nCaused by: ' + e.stack;
-    throw newError;
+    throw mergeError(e, new Error(`selectPerson failed for ${selectPerson.getPath()}`));
   }
 }
