@@ -3,7 +3,7 @@ import {JsonQuery} from "../../../../JSONQuery";
 import {JsonUtil} from "../../../../utils/util";
 import {selectPerson} from "../../../../utils/person/selectPerson";
 
-it("selectPerson__min_empty", () => {
+it("selectPerson__min_race", () => {
   const query = JsonQuery.fromText<JsonSchema>(`<world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../schema/world_step/world_step.xsd"
@@ -15,9 +15,6 @@ it("selectPerson__min_empty", () => {
       <entry value="1"/>
       <entry value="2"/>
       <entry value="3"/>
-      <entry value="4"/>
-      <entry value="5"/>
-      <entry value="6"/>
     </randomization_table>
   </world_metadata>
   <rule_group>
@@ -28,8 +25,8 @@ it("selectPerson__min_empty", () => {
       <entry id="event">
         <then>
           <select_person>
-            <radius initial="100"/>
             <min initial="2"/>
+            <race race_rule_ref="race"/>
           </select_person>
         </then>
       </entry>
@@ -44,10 +41,10 @@ it("selectPerson__min_empty", () => {
     .query("events_rule")
     .query("entry")
     .query("then")
-    .query("select_person"), {x:"0", y:"0"});
+    .query("select_person"));
   expect(result.map(v => v.serializeRaw())).toEqual([
-    "<person id=\"0.0\"><location x=\"-16\" y=\"0\"/><race race_rule_ref=\"race\"/><classifications/></person>\n",
-    "<person id=\"0.1\"><location x=\"33\" y=\"50\"/><race race_rule_ref=\"race\"/><classifications/></person>\n"
+    "<person id=\"0.0\"><race race_rule_ref=\"race\"/><location x=\"0\" y=\"0\"/><properties/><classifications/></person>\n",
+    "<person id=\"0.1\"><race race_rule_ref=\"race\"/><location x=\"0\" y=\"0\"/><properties/><classifications/></person>\n"
   ]);
 
 })

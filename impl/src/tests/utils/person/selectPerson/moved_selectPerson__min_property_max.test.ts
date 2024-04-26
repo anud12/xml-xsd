@@ -1,4 +1,3 @@
-import {describe} from "@jest/globals";
 import {JsonSchema} from "../../../../utils/JsonSchema";
 import {JsonQuery} from "../../../../JSONQuery";
 import {JsonUtil} from "../../../../utils/util";
@@ -57,8 +56,8 @@ it("selectPerson__min_property_max", () => {
     .query("then")
     .query("select_person"));
   expect(result.map(v => v.serializeRaw())).toEqual([
-    "<person id=\"0.0\"><location x=\"0\" y=\"0\"/><race race_rule_ref=\"race\"/><classifications/><properties><property property_rule_ref=\"property\" value=\"3\"/></properties></person>\n",
-    "<person id=\"0.1\"><location x=\"0\" y=\"0\"/><race race_rule_ref=\"race\"/><classifications/><properties><property property_rule_ref=\"property\" value=\"1\"/></properties></person>\n"
+    "<person id=\"0.0\"><race race_rule_ref=\"race\"/><location x=\"0\" y=\"0\"/><properties><property property_rule_ref=\"property\" value=\"3\"/></properties><classifications/></person>\n",
+    "<person id=\"0.1\"><race race_rule_ref=\"race\"/><location x=\"0\" y=\"0\"/><properties><property property_rule_ref=\"property\" value=\"1\"/></properties><classifications/></person>\n"
   ]);
 
 })

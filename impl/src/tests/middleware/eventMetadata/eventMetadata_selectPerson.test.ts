@@ -122,8 +122,9 @@ describe("eventsMetadata create person with race containing name", () => {
       <location x="0" y="0" />
     </person>
     <person id="0.0" name="bob">
-      <location x="5" y="5" />
       <race race_rule_ref="race_definition" />
+      <location x="5" y="5" />
+      <properties />
       <classifications />
     </person>
   </people>
