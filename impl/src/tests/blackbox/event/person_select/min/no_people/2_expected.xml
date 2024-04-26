@@ -1,0 +1,78 @@
+<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <next_world_step>
+      ./data_1
+    </next_world_step>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="2"/>
+    <randomization_table>
+      <entry value="3"/>
+      <entry value="2"/>
+      <entry value="1"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points">
+        <person_default initial="10"/>
+      </entry>
+    </property_rule>
+    <race_rule>
+      <entry id="race">
+        <icon/>
+      </entry>
+      <entry id="second_race">
+        <icon/>
+      </entry>
+    </race_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <max_range>
+          <operation initial="0"/>
+        </max_range>
+        <test>
+          <value target="target">
+            <operation initial="0"/>
+          </value>
+          <expected target="self">
+            <operation initial="0"/>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="event">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="3"/>
+          </select_person>
+        </then>
+      </entry>
+    </events_rule>
+    <locations_markov_chain/>
+  </rule_group>
+  <people>
+    <person id="0">
+      <location x="0" y="0"/>
+      <classifications/>
+    </person>
+    <person id="0.0">
+      <race race_rule_ref="race"/>
+      <location x="0" y="0"/>
+      <properties/>
+      <classifications/>
+    </person>
+    <person id="0.1">
+      <race race_rule_ref="second_race"/>
+      <location x="0" y="0"/>
+      <properties/>
+      <classifications/>
+    </person>
+  </people>
+  <actions/>
+</world_step>

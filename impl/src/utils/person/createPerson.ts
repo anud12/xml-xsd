@@ -25,13 +25,14 @@ const createNewPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType
   if (name) {
     person.attributeMap.name = name;
   }
+  person.appendChild("race", undefined, {
+    race_rule_ref: race.attributeMap.id
+  });
   person.appendChild("location", undefined, {
     x: "0",
     y: "0"
   });
-  person.appendChild("race", undefined, {
-    race_rule_ref: race.attributeMap.id
-  });
+  person.appendChild("properties", undefined, {});
   person.appendChild("classifications", undefined, {});
 
   return person;

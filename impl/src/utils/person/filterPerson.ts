@@ -88,7 +88,7 @@ const filterPersonListBasedOnRace = (jsonUtil: JsonUtil, selectPerson: SelectPer
   }
   const race = person.queryOptional("race");
   const filteredRules = ruleElements.filter(element => {
-    return race.attributeMap.race_rule_ref === element.attributeMap.race_rule_ref
+    return race?.attributeMap?.race_rule_ref === element.attributeMap.race_rule_ref
   })
   return ruleElements.length === filteredRules.length;
 }

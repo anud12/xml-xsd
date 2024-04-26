@@ -175,14 +175,14 @@
             </xs:documentation>
           </xs:annotation>
           <xs:sequence>
-            <xs:element name="min" type="type__math_operations">
+            <xs:element name="min" type="type__math_operations" minOccurs="0">
               <xs:annotation>
                 <xs:documentation>
                   Represents the minimum value of the property inclusive.
                 </xs:documentation>
               </xs:annotation>
             </xs:element>
-            <xs:element name="max" type="type__math_operations">
+            <xs:element name="max" type="type__math_operations" minOccurs="0">
               <xs:annotation>
                 <xs:documentation>
                   Represents the maximum value of the property inclusive.
@@ -628,8 +628,8 @@
                     <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="vision" type="type_range"/>
-                          <xs:element name="movement" type="type_range"/>
+                          <xs:element name="vision" type="type_range" minOccurs="0"/>
+                          <xs:element name="movement" type="type_range" minOccurs="0"/>
                           <xs:element name="name" minOccurs="0">
                             <xs:complexType>
                               <xs:attribute name="name_rule_ref" use="required"/>
@@ -725,7 +725,7 @@
                             </xs:complexType>
                           </xs:element>
                         </xs:sequence>
-                        <xs:attribute name="id"/>
+                        <xs:attribute name="id" use="required"/>
                       </xs:complexType>
                     </xs:element>
 

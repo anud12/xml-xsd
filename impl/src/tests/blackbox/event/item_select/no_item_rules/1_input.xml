@@ -1,11 +1,11 @@
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
   <world_metadata>
-    <next_world_step>./data_1</next_world_step>
+    <next_world_step>./data</next_world_step>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
-    <counter value="1"/>
+    <counter value="0"/>
     <randomization_table>
       <entry value="2"/>
     </randomization_table>
@@ -33,13 +33,6 @@
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -53,13 +46,14 @@
       </entry>
     </events_rule>
   </rule_group>
-  <items>
-    <item id="0.0" name="item_name"/>
-  </items>
+  <items/>
   <people>
     <person id="1">
-      <classifications/>
     </person>
   </people>
-  <actions/>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
 </world_step>
