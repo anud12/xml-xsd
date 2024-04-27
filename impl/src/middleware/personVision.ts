@@ -3,23 +3,27 @@ import {fillNeighbours} from "../utils/location/fillNeighbours";
 
 export const personVision: MutationMiddleware = (readJson) => {
   try {
-    const persons = readJson.json.query("people").queryAll("person");
+    const persons = readJson.json.queryOptional("people")?.queryAllOptional("person");
     const ruleGroup = readJson.getRuleGroups();
-    persons.map(e => {
-      const location = e.query("location");
-
+    persons?.forEach(e => {
+      const location = e.queryOptional("location");
+      if(!location) {
+        return;
+      }
       const x = location.attributeMap.x;
       const y= location.attributeMap.y;
-      const race = e.query("race").attributeMap.race_rule_ref;
+      const race = e.queryOptional("race")?.attributeMap?.race_rule_ref;
 
-      const raceMetadata = ruleGroup.flatMap(ruleGroup => {
+      const raceMetadata = ruleGroup?.flatMap(ruleGroup => {
         return ruleGroup.queryOptional("race_rule")
-          .queryAll("entry")
+          ?.queryAllOptional("entry")
 
       })
-      const radius = raceMetadata.find(e => e.attributeMap.id === race)
-        .queryOptional("vision");
-
+      const radius = raceMetadata.find(e => e?.attributeMap.id === race)
+        ?.queryOptional("vision");
+      if(!radius) {
+        return;
+      }
       readJson.location.create(Number(x), Number(y));
       fillNeighbours(readJson, readJson, readJson.location.grid()[Number(x)][Number(y)], Number(radius.attributeMap.value));
     })

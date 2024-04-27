@@ -1,17 +1,18 @@
 import * as fs from "fs";
-import {execute, executeFromString} from "./execute";
-import {validate} from "./validate";
+import {executeFromString} from "./execute";
+import {validateString} from "./validate";
+import {JsonSchema} from "./utils/JsonSchema";
 
 (async () => {
   const filePath = process.argv[2];
   console.log("Reading from " + filePath);
   const data = fs.readFileSync(filePath)
   const dataString = data.toString();
-  const errors = await validate(dataString, console.log);
+  const errors = await validateString(dataString, console.log);
   if(errors?.length) {
     throw new Error(errors.map(e => e.message).join("\n"));
   }
-  const outJson = await executeFromString(data.toString(), console.log);
+  const outJson = await executeFromString(data.toString(), console.log) as JsonSchema;
   fs.writeFileSync(outJson.query("world_metadata").query("next_world_step").body + ".xml", outJson.serialize());
 
 })()

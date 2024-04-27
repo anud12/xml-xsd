@@ -95,8 +95,8 @@ describe("personAction" , () => {
     </person>
   </people>
   <actions>
-    <by person_rule_ref="Billy">
-      <do action_rule_ref="meleeAttack" person_rule_ref="Bob"/>
+    <by person_ref="Billy">
+      <do action_rule_ref="meleeAttack" person_ref="Bob"/>
     </by>
   </actions>
 </world_step>`);

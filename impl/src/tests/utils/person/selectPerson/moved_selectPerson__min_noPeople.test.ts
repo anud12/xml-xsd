@@ -3,8 +3,7 @@ import {JsonQuery} from "../../../../JSONQuery";
 import {JsonUtil} from "../../../../utils/util";
 import {selectPerson} from "../../../../utils/person/selectPerson";
 
-it("selectPerson__min_reusePerson", () => {
-  //should create only 0.0
+it("selectPerson__min_noPeople", () => {
   const query = JsonQuery.fromText<JsonSchema>(`<world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../schema/world_step/world_step.xsd"
@@ -31,8 +30,6 @@ it("selectPerson__min_reusePerson", () => {
     </events_rule>
   </rule_group>
   <people>
-    <person id="0">
-    </person>
   </people>
 </world_step>
 `);
@@ -43,8 +40,8 @@ it("selectPerson__min_reusePerson", () => {
     .query("then")
     .query("select_person"));
   expect(result.map(v => v.serializeRaw())).toEqual([
-    "<person id=\"0\"/>\n",
-    "<person id=\"0.0\"><location x=\"0\" y=\"0\"/><race race_rule_ref=\"race\"/><classifications/></person>\n",
+    "<person id=\"0.0\"><race race_rule_ref=\"race\"/><location x=\"0\" y=\"0\"/><properties/><classifications/></person>\n",
+    "<person id=\"0.1\"><race race_rule_ref=\"race\"/><location x=\"0\" y=\"0\"/><properties/><classifications/></person>\n"
   ]);
 
 })

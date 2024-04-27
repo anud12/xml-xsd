@@ -10,27 +10,81 @@ import {offsetRandomisationTable} from "./middleware/offsetRandomisationTable";
 import {propertyRefValidator} from "./validators/propertyRef.validator";
 import {raceRefValidator} from "./validators/raceRef.validator";
 import {Dispatcher} from "./utils/triggerDispatcher/dispatcher";
+import {calculateNameFromRefString} from "./utils/calculateName";
+import {validate} from "./validate";
 
-export const executeFromString = async(xmlString:string, log: (...string:any[]) => void) => {
+type StringParameter<Param extends string> = `${Param} ${string}`
+
+export type StringArguments = StringParameter<"--name_rule">;
+
+
+export const executeFromString = async (xmlString: string, log: (...string: any[]) => void, stringArguments: StringArguments[] = []) => {
   const oldLog = console.log;
   console.log = log;
+
+  const argumentResult = parseArguments(xmlString, log, stringArguments)
+
+  if(argumentResult) {
+    return argumentResult;
+  }
+
   const readJson = JsonQuery.fromText<JsonSchema>(xmlString.toString());
   const result = execute(readJson, log)
   console.log = oldLog;
   return result;
 }
 
+export const executeFromStringToString = async (xmlString: string, log: (...string: any[]) => void, stringArguments: StringArguments[] = []) => {
+  const oldLog = console.log;
+  console.log = log;
 
-export const execute = async (readJson:JsonSchema, log: (...string:any[]) => void) => {
+  const argumentResult = await parseArguments(xmlString, log, stringArguments)
+
+  if(argumentResult) {
+    return argumentResult;
+  }
+
+  const readJson = JsonQuery.fromText<JsonSchema>(xmlString.toString());
+  const result = execute(readJson, log)
+  console.log = oldLog;
+  return (await result).serializeRaw();
+}
+
+const parseArguments = async (xmlString: string, log: (...string: any[]) => void, stringArguments: StringArguments[]): Promise<string | undefined> => {
+
+  if(stringArguments.length === 0) {
+    return;
+  }
+  const readJson = JsonQuery.fromText<JsonSchema>(xmlString.toString());
+
+  if (stringArguments.length > 1) {
+    throw new Error("Only one argument is allowed")
+  }
+  const argument = stringArguments[0];
+  if (argument.startsWith("--name_rule")) {
+    const readJsonUtil = new JsonUtil(readJson);
+    return calculateNameFromRefString(readJsonUtil, argument.replace("--name_rule", "").trim())
+  }
+
+  return;
+}
+
+export const execute = async (readJson: JsonSchema, log: (...string: any[]) => void):Promise<JsonSchema> => {
   const oldLog = console.log;
   console.log = log;
 
   const dispatcher = new Dispatcher();
   const readJsonUtil = new JsonUtil(readJson);
 
+  const errors = await validate(readJsonUtil, log);
+  if(errors?.length) {
+    throw new Error(errors.map(e => e.message).join("\n"));
+  }
   await propertyRefValidator(readJsonUtil);
   await raceRefValidator(readJsonUtil);
 
+
+  const dispatcherResult = dispatcher.middleware(readJsonUtil);
   const personMoveTowardsResult = personMoveTowards(readJsonUtil);
   const personActionResult = personAction(readJsonUtil);
   const eventsMetadataResult = eventsMetadata(readJsonUtil);
@@ -40,14 +94,16 @@ export const execute = async (readJson:JsonSchema, log: (...string:any[]) => voi
 
   await eventsMetadataResult(dispatcher);
 
+  await dispatcherResult(readJsonUtil);
   await personVision(readJsonUtil)(readJsonUtil);
   await personAssignClassification(readJsonUtil)(readJsonUtil);
-  await offsetRandomisationTable(readJsonUtil)(readJsonUtil)
+  await offsetRandomisationTable(readJsonUtil)(readJsonUtil);
 
-  const writeWorldMetadata = readJson.query("world_metadata");
-  const iter = Number(writeWorldMetadata.query("next_world_step").body.split("_")?.[1] ?? 0);
+  const writeWorldMetadata = readJsonUtil.json.query("world_metadata");
+  const tokens = writeWorldMetadata.query("next_world_step").body.split("_")
+  const iter = Number(tokens?.[1] ?? 0);
   const writeNextWorldStep = readJson.query("world_metadata").query("next_world_step")
-  writeNextWorldStep.body = `world_${iter + 1}`
+  writeNextWorldStep.body = `${tokens[0]}_${iter + 1}`
   console.log = oldLog;
-  return readJson;
+  return readJsonUtil.json;
 }

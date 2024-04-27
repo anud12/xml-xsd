@@ -1,21 +1,69 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
+  <xs:attribute name="property_rule_ref" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>
+        Represents the reference to a property rule.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+
   <xs:attributeGroup name="attributeGroup_range">
-    <xs:attribute name="value" use="required" type="xs:integer"/>
-    <xs:attribute name="max_value" type="xs:integer"/>
-    <xs:attribute name="inclusive" default="true" type="xs:boolean" use="required"/>
+    <xs:annotation>
+      <xs:documentation>
+        Represents a range with a value, maximum value, and a boolean to indicate
+        if the range is inclusive.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="value" use="required" type="xs:integer">
+      <xs:annotation>
+        <xs:documentation>
+          Represents the current value of the range.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="max_value" type="xs:integer">
+      <xs:annotation>
+        <xs:documentation>
+          Represents the maximum value that the range can have.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="inclusive" default="true" type="xs:boolean" use="required">
+      <xs:annotation>
+        <xs:documentation>
+          Indicates whether the range includes the maximum value or not.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
   </xs:attributeGroup>
   <xs:complexType name="type_range">
+    <xs:annotation>
+      <xs:documentation>
+        Represents a range with a value, maximum value, and a boolean to indicate
+        if the range is inclusive.
+      </xs:documentation>
+    </xs:annotation>
     <xs:attributeGroup ref="attributeGroup_range"/>
   </xs:complexType>
-  
+
   <xs:complexType name="type_icon">
+    <xs:annotation>
+      <xs:documentation>
+        SVG Icon.
+      </xs:documentation>
+    </xs:annotation>
     <xs:simpleContent>
       <xs:extension base="xs:anyType"/>
     </xs:simpleContent>
   </xs:complexType>
 
   <xs:simpleType name="item_slot">
+    <xs:annotation>
+      <xs:documentation>
+        Represents the slots where an item can be equipped.
+      </xs:documentation>
+    </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:enumeration value="hand"/>
       <xs:enumeration value="chest"/>
@@ -23,23 +71,12 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:complexType name="metadata_classification">
-    <xs:sequence>
-      <xs:element name="required_property">
-        <xs:complexType>
-          <xs:attribute name="name" use="required"/>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-    <xs:attribute name="name" use="required"/>
-  </xs:complexType>
-
-  <xs:complexType name="item_ref">
-    <xs:attribute name="ref" use="required"/>
-    <xs:attribute name="equipped" type="item_slot"/>
-  </xs:complexType>
-
   <xs:simpleType name="type_direction">
+    <xs:annotation>
+      <xs:documentation>
+        Represents the possible directions.
+      </xs:documentation>
+    </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:enumeration value="north"/>
       <xs:enumeration value="east"/>
@@ -47,32 +84,113 @@
       <xs:enumeration value="west"/>
     </xs:restriction>
   </xs:simpleType>
+
   <xs:complexType name="type_cell_ref">
-    <xs:attribute name="layer"/>
-    <xs:attribute name="x" use="required" type="xs:integer"/>
-    <xs:attribute name="y" use="required" type="xs:integer"/>
+    <xs:annotation>
+      <xs:documentation>
+        Represents a cell reference in a location layer.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="layer">
+      <xs:annotation>
+        <xs:documentation>
+          Represents the layer of the cell in the location layer.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="x" use="required" type="xs:integer">
+      <xs:annotation>
+        <xs:documentation>
+          Represents the x-coordinate of the cell in the location layer.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="y" use="required" type="xs:integer">
+      <xs:annotation>
+        <xs:documentation>
+          Represents the y-coordinate of the cell in the location layer.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
   </xs:complexType>
+
+
   <xs:simpleType name="type_person_select">
+    <xs:annotation>
+      <xs:documentation>
+        This type represents either 'self' or 'target'.
+      </xs:documentation>
+    </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:enumeration value="self"/>
-      <xs:enumeration value="target"/>
+      <xs:enumeration value="self">
+        <xs:annotation>
+          <xs:documentation>
+            Selects the person that initiates the interaction.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="target">
+        <xs:annotation>
+          <xs:documentation>
+            Selects the person that the interaction applies to.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:complexType name="type__person_selection">
+    <xs:annotation>
+      <xs:documentation>
+        Represents the selection of a person with various attributes.
+      </xs:documentation>
+    </xs:annotation>
     <xs:sequence>
-      <xs:element name="radius" minOccurs="0" type="type__math_operations"/>
-      <xs:element name="min" minOccurs="0" type="type__math_operations"/>
-      <xs:element name="max" minOccurs="0" type="type__math_operations"/>
+      <xs:element name="radius" minOccurs="0" type="type__math_operations">
+        <xs:annotation>
+          <xs:documentation>
+            Represents the radius of the selection.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="min" minOccurs="0" type="type__math_operations">
+        <xs:annotation>
+          <xs:documentation>
+            Represents the minimum number of persons to be selected.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="max" minOccurs="0" type="type__math_operations">
+        <xs:annotation>
+          <xs:documentation>
+            Represents the maximum number of persons to be selected.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
         <xs:complexType>
+          <xs:annotation>
+            <xs:documentation>
+              Represents the properties of the selection.
+            </xs:documentation>
+          </xs:annotation>
           <xs:sequence>
-            <xs:element name="min" type="type__math_operations">
+            <xs:element name="min" type="type__math_operations" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  Represents the minimum value of the property inclusive.
+                </xs:documentation>
+              </xs:annotation>
             </xs:element>
-            <xs:element name="max" type="type__math_operations">
+            <xs:element name="max" type="type__math_operations" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  Represents the maximum value of the property inclusive.
+                </xs:documentation>
+              </xs:annotation>
             </xs:element>
           </xs:sequence>
-          <xs:attribute name="property_rule_ref" use="required"/>
+          <xs:attribute ref="property_rule_ref"/>
         </xs:complexType>
       </xs:element>
       <xs:element name="classification" minOccurs="0" maxOccurs="unbounded">
@@ -97,10 +215,10 @@
   </xs:complexType>
 
   <xs:complexType name="type__item_selection">
-      <xs:sequence>
-        <xs:element name="min" minOccurs="0" type="type__math_operations"/>
-        <xs:element name="max" minOccurs="0" type="type__math_operations"/>
-      </xs:sequence>
+    <xs:sequence>
+      <xs:element name="min" minOccurs="0" type="type__math_operations"/>
+      <xs:element name="max" minOccurs="0" type="type__math_operations"/>
+    </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="type_item">
@@ -119,20 +237,6 @@
     <xs:attribute name="name"/>
   </xs:complexType>
 
-
-  <xs:simpleType name="type__group__operation__and">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="add"/>
-      <xs:enumeration value="add_dice"/>
-      <xs:enumeration value="multiply"/>
-      <xs:enumeration value="multiply_dice"/>
-      <xs:enumeration value="divide"/>
-      <xs:enumeration value="divide_dice"/>
-      <xs:enumeration value="modulo"/>
-      <xs:enumeration value="modulo_dice"/>
-    </xs:restriction>
-  </xs:simpleType>
-
   <xs:complexType name="type__trigger">
     <xs:sequence>
       <xs:element name="person_action_used">
@@ -142,6 +246,64 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
+
+  <!--############-->
+  <!-- Math operations -->
+  <!--############-->
+
+  <xs:simpleType name="type__group__operation__and">
+    <xs:annotation>
+      <xs:documentation>
+        Operation that should be performed.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="add">
+        <xs:annotation>
+          <xs:documentation>Addition operation.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="add_dice">
+        <xs:annotation>
+          <xs:documentation>Addition operation with random a number chosen between 0 and given value inclusive.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="multiply">
+        <xs:annotation>
+          <xs:documentation>Multiplication operation.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="multiply_dice">
+        <xs:annotation>
+          <xs:documentation>Multiplication operation with a random number chosen between 0 and given value inclusive.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="divide">
+        <xs:annotation>
+          <xs:documentation>Standard division operation.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="divide_dice">
+        <xs:annotation>
+          <xs:documentation>Division operation with a with random number chosen between 0 and given value inclusive.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="modulo">
+        <xs:annotation>
+          <xs:documentation>Standard modulo operation.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="modulo_dice">
+        <xs:annotation>
+          <xs:documentation>Modulo operation with a with random number chosen between 0 and given value inclusive.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
 
   <xs:group name="group__operation__and">
     <xs:sequence>
@@ -180,30 +342,72 @@
     </xs:sequence>
   </xs:group>
 
+
+  <!--#########-->
+  <!-- Group name -->
+  <!--#########-->
+
   <xs:group name="group__name_token">
+    <xs:annotation>
+      <xs:documentation>
+        Represents rule for name generation.
+      </xs:documentation>
+    </xs:annotation>
     <xs:sequence>
       <xs:element name="name_token" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            Represents a token used in name generation.
+          </xs:documentation>
+        </xs:annotation>
         <xs:complexType>
           <xs:choice>
             <xs:element name="ref" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  Represents a reference to another 'name_rule'.
+                </xs:documentation>
+              </xs:annotation>
               <xs:complexType>
-                <xs:attribute name="name_rule_ref" use="required"/>
+                <xs:attribute name="name_rule_ref" use="required">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Represents the ID of the referenced 'name_rule'.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
               </xs:complexType>
             </xs:element>
             <xs:element name="one_of">
+              <xs:annotation>
+                <xs:documentation>
+                  Represents a single choice between multiple 'name_token' elements.
+                </xs:documentation>
+              </xs:annotation>
               <xs:complexType>
                 <xs:sequence>
-                  <xs:group ref="group__name_token"/>
+                  <xs:group ref="group__name_token">
+                    <xs:annotation>
+                      <xs:documentation>
+                        Represents rule for name generation.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:group>
                 </xs:sequence>
               </xs:complexType>
             </xs:element>
           </xs:choice>
-          <xs:attribute name="prefix" use="required"/>
+          <xs:attribute name="prefix" use="required">
+            <xs:annotation>
+              <xs:documentation>
+                Represents a string that is added to the beginning of the generated name.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
         </xs:complexType>
       </xs:element>
     </xs:sequence>
   </xs:group>
-
 
 
   <xs:element name="world_step">
@@ -212,30 +416,78 @@
 
 
         <xs:element name="world_metadata">
+          <xs:annotation>
+            <xs:documentation>
+              Configuration of the world step.
+            </xs:documentation>
+          </xs:annotation>
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="previous_world_step" type="xs:anyURI" minOccurs="0"/>
-              <xs:element name="next_world_step" type="xs:anyURI"/>
+              <xs:element name="previous_world_step" type="xs:anyURI" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>
+                    URI of the previous world step.
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="next_world_step" type="xs:anyURI">
+                <xs:annotation>
+                  <xs:documentation>
+                    URI of the next world step.
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
               <xs:element name="elapsed_time">
+                <xs:annotation>
+                  <xs:documentation>
+                    Time that has elapsed since the previous world step similar to unix time.
+                    See https://en.wikipedia.org/wiki/Unix_time
+                  </xs:documentation>
+                </xs:annotation>
                 <xs:complexType>
                   <xs:attribute name="value" type="xs:int" use="required"/>
                 </xs:complexType>
               </xs:element>
               <xs:element name="stepDuration">
+                <xs:annotation>
+                  <xs:documentation>
+                    Time that the next step should advance.
+                  </xs:documentation>
+                </xs:annotation>
                 <xs:complexType>
                   <xs:attribute name="value" type="xs:int" use="required"/>
                 </xs:complexType>
               </xs:element>
               <xs:element name="counter">
                 <xs:complexType>
+                  <xs:annotation>
+                    <xs:documentation>
+                      Free number to use when a unique number is needed in last world step. When is consumed, it is
+                      incremented.
+                    </xs:documentation>
+                  </xs:annotation>
                   <xs:attribute name="value" type="xs:int" use="required"/>
                 </xs:complexType>
               </xs:element>
               <xs:element name="randomization_table">
+                <xs:annotation>
+                  <xs:documentation>
+                    List of numbers to be used by the pseudo-random number generator (PRG).
+                    When a random number is needed, the PGR returns a value between 0 and 1.
+                    The values are computed by using entries sequentially from this list divided by the max value.
+                    After the world step is processed, the PRG should shift the order of the list
+                    by moving the first element to the end to ensure a different sequence of random values.
+                  </xs:documentation>
+                </xs:annotation>
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="entry" maxOccurs="unbounded">
                       <xs:complexType>
+                        <xs:annotation>
+                          <xs:documentation>
+                            Integer to be used by the pseudo-random number generator.
+                          </xs:documentation>
+                        </xs:annotation>
                         <xs:attribute name="value" type="xs:int"/>
                       </xs:complexType>
                     </xs:element>
@@ -248,11 +500,16 @@
 
 
         <xs:element name="rule_group" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>
+              Represents a group of rules that can be applied to the world step.
+            </xs:documentation>
+          </xs:annotation>
           <xs:complexType>
             <xs:sequence>
 
 
-              <xs:element name="property_rule">
+              <xs:element name="property_rule" minOccurs="0">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
@@ -293,7 +550,7 @@
               </xs:element>
 
 
-              <xs:element name="classification_rule">
+              <xs:element name="classification_rule" minOccurs="0">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
@@ -329,12 +586,35 @@
 
 
               <xs:element name="name_rule" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>
+                    A 'name_rule' is used to generate a string based on the 'name_token' elements it contains.
+                  </xs:documentation>
+                </xs:annotation>
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element name="entry" minOccurs="0">
+                    <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Represents an entry for a 'name_rule' that is used to generate a string based on the
+                          'name_token' elements it contains.
+                        </xs:documentation>
+                      </xs:annotation>
                       <xs:complexType>
-                        <xs:group ref="group__name_token"/>
-                        <xs:attribute name="id" use="required"/>
+                        <xs:group ref="group__name_token">
+                          <xs:annotation>
+                            <xs:documentation>
+                              The 'group__name_token' is a reference to a group of 'name_token' elements.
+                            </xs:documentation>
+                          </xs:annotation>
+                        </xs:group>
+                        <xs:attribute name="id" use="required">
+                          <xs:annotation>
+                            <xs:documentation>
+                              The 'id' attribute is a required attribute that uniquely identifies each 'entry'.
+                            </xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>
@@ -342,14 +622,14 @@
               </xs:element>
 
 
-              <xs:element name="race_rule">
+              <xs:element name="race_rule" minOccurs="0">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="vision" type="type_range"/>
-                          <xs:element name="movement" type="type_range"/>
+                          <xs:element name="vision" type="type_range" minOccurs="0"/>
+                          <xs:element name="movement" type="type_range" minOccurs="0"/>
                           <xs:element name="name" minOccurs="0">
                             <xs:complexType>
                               <xs:attribute name="name_rule_ref" use="required"/>
@@ -372,7 +652,7 @@
               </xs:element>
 
 
-              <xs:element name="action_rule">
+              <xs:element name="action_rule" minOccurs="0">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="person_to_person" minOccurs="0" maxOccurs="unbounded">
@@ -445,7 +725,7 @@
                             </xs:complexType>
                           </xs:element>
                         </xs:sequence>
-                        <xs:attribute name="id"/>
+                        <xs:attribute name="id" use="required"/>
                       </xs:complexType>
                     </xs:element>
 
@@ -454,7 +734,7 @@
               </xs:element>
 
 
-              <xs:element name="item_rule">
+              <xs:element name="item_rule" minOccurs="0">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
@@ -485,7 +765,7 @@
               </xs:element>
 
 
-              <xs:element name="events_rule">
+              <xs:element name="events_rule" minOccurs="0">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
@@ -511,6 +791,22 @@
                                     </xs:complexContent>
                                   </xs:complexType>
                                 </xs:element>
+                                <xs:element name="select_item" minOccurs="0" maxOccurs="unbounded">
+                                  <xs:complexType>
+                                    <xs:complexContent>
+                                      <xs:extension base="type__item_selection">
+                                        <xs:attribute name="origin" use="required">
+                                          <xs:simpleType>
+                                            <xs:restriction base="xs:string">
+                                              <xs:enumeration value="target"/>
+                                              <xs:enumeration value="self"/>
+                                            </xs:restriction>
+                                          </xs:simpleType>
+                                        </xs:attribute>
+                                      </xs:extension>
+                                    </xs:complexContent>
+                                  </xs:complexType>
+                                </xs:element>
                               </xs:sequence>
                             </xs:complexType>
                           </xs:element>
@@ -523,7 +819,7 @@
               </xs:element>
 
 
-              <xs:element name="locations_markov_chain" maxOccurs="unbounded">
+              <xs:element name="locations_markov_chain" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="location_markov_link" minOccurs="0"
@@ -570,19 +866,32 @@
         </xs:element>
 
 
-        <xs:element name="people" maxOccurs="unbounded">
+        <xs:element name="items" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="item" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="id" use="required"/>
+                  <xs:attribute name="name"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="people" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="person" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element name="race">
+                    <xs:element name="race" minOccurs="0">
                       <xs:complexType>
                         <xs:attribute name="race_rule_ref" use="required"/>
                       </xs:complexType>
                     </xs:element>
-                    <xs:element name="location" type="type_cell_ref"/>
-                    <xs:element name="properties">
+                    <xs:element name="location" minOccurs="0" type="type_cell_ref"/>
+                    <xs:element name="properties" minOccurs="0">
                       <xs:complexType>
                         <xs:sequence>
                           <xs:element name="property" minOccurs="0"
@@ -609,13 +918,13 @@
                         </xs:sequence>
                       </xs:complexType>
                     </xs:element>
-                    <xs:element name="classifications">
+                    <xs:element name="classifications" minOccurs="0">
                       <xs:complexType>
                         <xs:sequence>
                           <xs:element name="classification" minOccurs="0"
                                       maxOccurs="unbounded">
                             <xs:complexType>
-                              <xs:attribute name="classification_ref" use="required"/>
+                              <xs:attribute name="classification_rule_ref" use="required"/>
                             </xs:complexType>
                           </xs:element>
                         </xs:sequence>
@@ -631,8 +940,7 @@
           </xs:complexType>
         </xs:element>
 
-
-        <xs:element name="location_layer" maxOccurs="unbounded">
+        <xs:element name="location_layer" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="cell" maxOccurs="unbounded">
@@ -648,7 +956,7 @@
             <xs:attribute name="name" default="default"/>
           </xs:complexType>
         </xs:element>
-        <xs:element name="actions">
+        <xs:element name="actions" minOccurs="0">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="by" maxOccurs="unbounded" minOccurs="0">
@@ -656,7 +964,7 @@
                   <xs:choice>
                     <xs:element name="do">
                       <xs:complexType>
-                        <xs:attribute name="action_ref" use="required"/>
+                        <xs:attribute name="action_rule_ref" use="required"/>
                         <xs:attribute name="person_ref" use="required"/>
                       </xs:complexType>
                     </xs:element>

@@ -10,9 +10,23 @@ import {itemRuleRefValidator} from "./validators/itemRuleRef.validator";
 import {JsonUtil} from "./utils/util";
 import {nameRuleRefValidator} from "./validators/nameRuleRef.validator";
 
-export const validate = async (xmlString: string, log: (...string: any[]) => void) => {
+export const validateString = async (xmlString: string, log: (...string: any[]) => void) => {
   const readJson = JsonQuery.fromText<JsonSchema>(xmlString.toString());
   const jsonUtils = new JsonUtil(readJson);
+  const result: Array<ValidationError<any>> = [];
+  result.push(...await propertyRefValidator(jsonUtils));
+  result.push(...await raceRefValidator(jsonUtils));
+  result.push(...await actionRuleRefValidator(jsonUtils));
+  result.push(...await locationRefValidator(jsonUtils));
+  result.push(...await personRefValidator(jsonUtils));
+  result.push(...await itemRuleRefValidator(jsonUtils));
+  result.push(...await nameRuleRefValidator(jsonUtils));
+
+  return validate(jsonUtils, log);
+}
+
+
+export const validate = async (jsonUtils: JsonUtil, log: (...string: any[]) => void) => {
   const result: Array<ValidationError<any>> = [];
   result.push(...await propertyRefValidator(jsonUtils));
   result.push(...await raceRefValidator(jsonUtils));

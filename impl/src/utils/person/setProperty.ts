@@ -1,5 +1,6 @@
 import {JsonSchema} from "../JsonSchema";
 import {JsonUtil} from "../util";
+import {mergeError} from "../../mergeError";
 
 export type PersonQueryType = JsonSchema["children"]["people"]["children"]["person"]
 
@@ -18,9 +19,7 @@ export const setProperty = (readJson: JsonUtil, personQueryType: PersonQueryType
     }
     property.attributeMap.value = value;
   } catch (e: any) {
-    const newError = new Error(`setProperty of ${key} failed for ${personQueryType.getPath()}`);
-    newError.stack += '\nCaused by: ' + e.stack;
-    throw newError;
+    throw mergeError(e, new Error(`setProperty of ${key} failed for ${personQueryType.getPath()}`));
   }
 
 }

@@ -49,9 +49,9 @@ export const personAction: MutationMiddleware = readJson => {
     .flatMap(e => e.queryAll("person_to_person"));
 
 
-  const personList = readJson.json.queryAll("people").flatMap(e => e.queryAll("person"));
+  const personList = readJson.json.queryAllOptional("people").flatMap(e => e.queryAll("person"));
 
-  const actions = readJson.json.queryAll("actions")
+  const actions = readJson.json.queryAllOptional("actions")
     .flatMap(e => e.queryAllOptional("by"))
     .flatMap(by => {
       try {
@@ -60,8 +60,8 @@ export const personAction: MutationMiddleware = readJson => {
           return [];
         }
         const action = actionMetadata.find(action => action.attributeMap.id === personDo.attributeMap.action_rule_ref);
-        const person = personList.find(person => person.attributeMap.id === by.attributeMap.person_rule_ref);
-        const targetPerson = personList.find(person => person.attributeMap.id === personDo.attributeMap.person_rule_ref);
+        const person = personList.find(person => person.attributeMap.id === by.attributeMap.person_ref);
+        const targetPerson = personList.find(person => person.attributeMap.id === personDo.attributeMap.person_ref);
 
         if (isOutOfRange(readJson, action, person, targetPerson)) {
           return [{
@@ -91,8 +91,8 @@ export const personAction: MutationMiddleware = readJson => {
   return async writeJson => {
     actions.forEach(({by: by, personAction, property_mutation_list}) => {
       const personList = writeJson.json.queryAll("people").flatMap(e => e.queryAll("person"));
-      const person = personList.find(e => e.attributeMap.id === by.attributeMap.person_rule_ref);
-      const targetPerson = personList.find(e => e.attributeMap.id === personAction.attributeMap.person_rule_ref);
+      const person = personList.find(e => e.attributeMap.id === by.attributeMap.person_ref);
+      const targetPerson = personList.find(e => e.attributeMap.id === personAction.attributeMap.person_ref);
 
       property_mutation_list.forEach(mutation => {
         const applicablePerson = mutation.property_mutation.attributeMap.on === "target"

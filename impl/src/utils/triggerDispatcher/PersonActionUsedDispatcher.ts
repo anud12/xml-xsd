@@ -52,12 +52,14 @@ export class PersonActionUsedDispatcher {
       })
 
     return async writeUnit => {
-      triggers.map(trigger => {
-        return this.dispatcher.dispatch(trigger.key, {
+
+      for (const trigger of triggers) {
+        await this.dispatcher.dispatch(trigger.key, {
           ...trigger.value,
           writeJson: writeUnit
         })
-      })
+      }
+      return;
     }
   }
 
