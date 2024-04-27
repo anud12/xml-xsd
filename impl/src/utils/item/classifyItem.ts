@@ -1,13 +1,14 @@
-import {getPersonProperty, PersonQueryType} from "./getPersonProperty";
 import {JsonUtil} from "../util";
-import {mergeError} from "../../mergeError";
 import {addClassificationBasedOnProperty} from "../classification/addClassificationBasedOnProperty";
+import {mergeError} from "../../mergeError";
+import {ItemQueryType} from "../JsonSchema";
 
-
-export const classifyPerson = (readJson: JsonUtil, personQueryType: PersonQueryType): string[] => {
+export const classifyItem = (readJson: JsonUtil, itemQueryType: ItemQueryType): string[] => {
   try {
-    console.log(`classifyPerson for ${personQueryType.attributeMap.id}`)
-    const computedClassificationIdList = addClassificationBasedOnProperty(readJson, key => getPersonProperty(readJson, personQueryType, key))
+    console.log(`classifyItem for ${itemQueryType.attributeMap.id}`)
+    const computedClassificationIdList = addClassificationBasedOnProperty(readJson, key => {
+      return readJson.item.getProperty(itemQueryType, key);
+    })
       .map(value => value.attributeMap.id);
 
     const emptyClassificationRules = readJson.getRuleGroups()
@@ -15,7 +16,7 @@ export const classifyPerson = (readJson: JsonUtil, personQueryType: PersonQueryT
       .flatMap(e => e.queryAllOptional("entry"))
       .filter(classificationRuleElement => classificationRuleElement.childrenList.length === 0);
 
-    const staticClassificationId = personQueryType.queryAllOptional("classifications")
+    const staticClassificationId = itemQueryType.queryAllOptional("classifications")
       .flatMap(classifications => classifications.queryAllOptional("classification"))
       .filter(classification => {
         return emptyClassificationRules.map(entry => entry.attributeMap.id)
@@ -26,7 +27,7 @@ export const classifyPerson = (readJson: JsonUtil, personQueryType: PersonQueryT
 
     return [...computedClassificationIdList, ...staticClassificationId];
   } catch (e: any) {
-    throw mergeError(e, new Error(`classifyPerson failed for ${personQueryType.attributeMap.id}`));
+    throw mergeError(e, new Error(`classifyItem failed for ${itemQueryType.attributeMap.id}`));
   }
 
 }

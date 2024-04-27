@@ -22,7 +22,7 @@ export const getBaseProperty = (readJson: JsonUtil, personQueryType: PersonQuery
     if(!personDefaultElement) {
       return
     }
-    return readJson.computeOperationFromParent(personDefaultElement, string => getProperty(readJson, personQueryType, string));
+    return readJson.computeOperationFromParent(personDefaultElement, string => getPersonProperty(readJson, personQueryType, string));
 
   } catch (e: any) {
     throw mergeError(e, new Error(`getBaseProperty of ${key}`));
@@ -39,14 +39,14 @@ export const getRaceProperty = (readJson: JsonUtil, personQueryType: PersonQuery
   const base = getBaseProperty(readJson, personQueryType, key) ?? "0";
   return propertyBonus.queryAll("operation")
     .flatMap(e => e.childrenList)
-    .map(e => readJson.computeOperation(e, string => getProperty(readJson, personQueryType, string)))
+    .map(e => readJson.computeOperation(e, string => getPersonProperty(readJson, personQueryType, string)))
     .reduce((acc, p) => p(acc), base);
 
 }
 
 export type PersonQueryType = JsonSchema["children"]["people"]["children"]["person"]
 
-export const getProperty = (readJson: JsonUtil, personQueryType: PersonQueryType, key: string): string | undefined => {
+export const getPersonProperty = (readJson: JsonUtil, personQueryType: PersonQueryType, key: string): string | undefined => {
   try {
     console.log(`getProperty ${key} for ${personQueryType.attributeMap.id}`)
     const ruleGroup = readJson.json.query("rule_group");

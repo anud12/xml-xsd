@@ -1,7 +1,7 @@
 import {describe, expect} from "@jest/globals";
 import {JsonQuery} from "../../../JSONQuery";
 import {JsonSchema} from "../../../utils/JsonSchema";
-import {getProperty} from "../../../utils/person/getProperty";
+import {getPersonProperty} from "../../../utils/person/getPersonProperty";
 import {JsonUtil} from "../../../utils/util";
 
 describe("getProperty", () => {
@@ -56,7 +56,7 @@ describe("getProperty", () => {
 </world_step>`);
 
     const util = new JsonUtil(query);
-    const value = getProperty(util,
+    const value = getPersonProperty(util,
       query.query("people").query("person"),
       "health"
     );
@@ -151,7 +151,7 @@ describe("getProperty", () => {
 
     try {
       const util = new JsonUtil(query);
-      getProperty(util,
+      getPersonProperty(util,
         query.query("people").query("person"),
         "health"
       );
