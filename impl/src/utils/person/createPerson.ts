@@ -1,6 +1,6 @@
 import {JsonUtil} from "../util";
 import {SelectPersonQueryType} from "../JsonSchema";
-import {PersonQueryType} from "./getProperty";
+import {PersonQueryType} from "./getPersonProperty";
 import {JsonQueryType} from "../../JsonQueryType";
 import {Position} from "./selectPerson";
 

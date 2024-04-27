@@ -871,6 +871,34 @@
             <xs:sequence>
               <xs:element name="item" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="classifications" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="classification" minOccurs="0"
+                                      maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:attribute name="classification_rule_ref" use="required"/>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:element name="properties" minOccurs="0">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="property" minOccurs="0"
+                                    maxOccurs="unbounded">
+                          <xs:complexType>
+                            <xs:attribute name="property_rule_ref" use="required"/>
+                            <xs:attribute name="value"
+                                          use="required"/>
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
                   <xs:attribute name="id" use="required"/>
                   <xs:attribute name="name"/>
                 </xs:complexType>

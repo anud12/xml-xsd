@@ -39,7 +39,7 @@ export const filterItemMinQuantity = (jsonUtil: JsonUtil, selectItem: SelectItem
 
 export const selectItem = (jsonUtil: JsonUtil, selectItem: SelectItemQueryType): Array<ItemQueryType> => {
   try {
-    let items = queryItem(jsonUtil, selectItem)
+    let items = queryItem(jsonUtil)
       .filter(item => filterItem(jsonUtil, selectItem, item))
 
     items = filterItemMaxQuantity(jsonUtil, selectItem, items);

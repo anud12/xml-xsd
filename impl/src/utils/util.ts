@@ -2,10 +2,10 @@ import {LocationGrid, locationGrid} from "./location/locationGrid";
 import {locationMarkovChainMatrix, LocationMatrix} from "./location/locationMarkovChainMatrix";
 import {markovNext} from "./markovNext";
 import {create} from "./location/create";
-import {JsonSchema, OperationQueryType, SelectItemQueryType, SelectPersonQueryType} from "./JsonSchema";
+import {ItemQueryType, JsonSchema, OperationQueryType, SelectItemQueryType, SelectPersonQueryType} from "./JsonSchema";
 import {newRandom} from "./newRandom";
 import {createOperationFromQueryType} from "./operation/createOperationFromQueryType";
-import {getProperty, PersonQueryType} from "./person/getProperty";
+import {getPersonProperty, PersonQueryType} from "./person/getPersonProperty";
 import {getById} from "./person/getById";
 import {createOperationFromParent} from "./operation/createOperationFromParent";
 import {calculateNameFromChildren, calculateNameFromRefString, NameRuleEntryQueryType} from "./calculateName";
@@ -14,6 +14,9 @@ import {classifyPerson} from "./person/classifyPerson";
 import {setProperty} from "./person/setProperty";
 import {Position, selectPerson} from "./person/selectPerson";
 import {selectItem} from "./item/selectItem";
+import {queryItem} from "./item/queryItem";
+import {classifyItem} from "./item/classifyItem";
+import {getItemProperty} from "./item/getItemProperty";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -38,6 +41,7 @@ export class JsonUtil {
   constructor(public json: JsonSchema) {
     this.invalidate();
   }
+
   /**
    * Returns a function that returns a random number between 0 and 1
    */
@@ -48,7 +52,7 @@ export class JsonUtil {
     create: (x: number, y: number) => void,
   }
 
-  randomListFromArray = <T>(originalArray: T[], numberOfElements: number = 1): T[] =>{
+  randomListFromArray = <T>(originalArray: T[], numberOfElements: number = 1): T[] => {
     // Create a copy of the array to avoid modifying the original array
     let array = [...originalArray];
 
@@ -79,7 +83,7 @@ export class JsonUtil {
     const counter = this.json.query("world_metadata").query("counter");
     const attribute = counter.attributeMap.value;
     counter.setAttribute("value", value => {
-      return String(Number(value)+ 1)
+      return String(Number(value) + 1)
     })
     return attribute;
   }
@@ -116,22 +120,32 @@ export class JsonUtil {
     })
   }
 
+  classification: {}
 
   item = {
-    createItemAt: (args:CreateItemArgs) => {
+    classifyItem: (args: ItemQueryType) => {
+      return classifyItem(this, args)
+    },
+    createItemAt: (args: CreateItemArgs) => {
       return createItemAt(this, args);
     },
-    selectItem: (args: SelectItemQueryType, ) => {
+    selectItem: (args: SelectItemQueryType,) => {
       return selectItem(this, args)
+    },
+    queryItem: () => {
+      return queryItem(this)
+    },
+    getProperty: (args: ItemQueryType, key: string) => {
+      return getItemProperty(this, args, key)
     }
   }
 
   person = {
-    selectPerson: (selectPersonQueryType: SelectPersonQueryType, position:Position) => {
+    selectPerson: (selectPersonQueryType: SelectPersonQueryType, position: Position) => {
       return selectPerson(this, selectPersonQueryType, position);
     },
-    getProperty: (personQueryType: PersonQueryType, key) => getProperty(this, personQueryType, key),
-    setProperty: (personQueryType: PersonQueryType, key, value:string) => setProperty(this, personQueryType, key, value),
+    getProperty: (personQueryType: PersonQueryType, key) => getPersonProperty(this, personQueryType, key),
+    setProperty: (personQueryType: PersonQueryType, key, value: string) => setProperty(this, personQueryType, key, value),
     getById: memoizeFunction((id: string): PersonQueryType => {
       return getById(this.json, id)
     }),
@@ -144,7 +158,7 @@ export class JsonUtil {
       const x2 = Number(secondPersonQueryType.queryOptional("location")?.attributeMap.x);
       const y2 = Number(secondPersonQueryType.queryOptional("location")?.attributeMap.y);
       const distance = Math.sqrt(Math.pow(x - x2, 2) + Math.pow(y - y2, 2))
-      if(isNaN(distance)) {
+      if (isNaN(distance)) {
         return;
       }
       return distance;
@@ -153,7 +167,7 @@ export class JsonUtil {
 
   markov = markovNext;
 
-  getRuleGroups = ():Array<JsonSchema["children"]["rule_group"]> => {
+  getRuleGroups = (): Array<JsonSchema["children"]["rule_group"]> => {
     return this.json.queryAll("rule_group");
   }
 

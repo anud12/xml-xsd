@@ -12,6 +12,7 @@ import {raceRefValidator} from "./validators/raceRef.validator";
 import {Dispatcher} from "./utils/triggerDispatcher/dispatcher";
 import {calculateNameFromRefString} from "./utils/calculateName";
 import {validate} from "./validate";
+import {itemAssignClassification} from "./middleware/itemAssignClassification";
 
 type StringParameter<Param extends string> = `${Param} ${string}`
 
@@ -96,6 +97,7 @@ export const execute = async (readJson: JsonSchema, log: (...string: any[]) => v
 
   await dispatcherResult(readJsonUtil);
   await personVision(readJsonUtil)(readJsonUtil);
+  await itemAssignClassification(readJsonUtil)(readJsonUtil);
   await personAssignClassification(readJsonUtil)(readJsonUtil);
   await offsetRandomisationTable(readJsonUtil)(readJsonUtil);
 
