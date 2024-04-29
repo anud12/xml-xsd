@@ -53,7 +53,7 @@ export const personMoveTowards: MutationMiddleware = readUnit => {
     .flatMap(by => {
       return by.queryAllOptional("move_towards").flatMap(moveTowards => {
 
-        const person = personList.find(person => person.attributeMap.id === by.attributeMap.person_rule_ref);
+        const person = personList.find(person => person.attributeMap.id === by.attributeMap.person_ref);
         const race = raceMetadata.find(race => race.attributeMap.id === person.query("race").attributeMap.race_rule_ref)
 
         const movement = race.query("movement").attributeMap.value
@@ -79,7 +79,7 @@ export const personMoveTowards: MutationMiddleware = readUnit => {
       if (location.attributeMap.x === mutation.destinationAttributes.attributeMap.x && location.attributeMap.y === mutation.destinationAttributes.attributeMap.y) {
         writeUnit.json.queryAllOptional("actions")
           .flatMap(actions => actions.queryAllOptional("by"))
-          .filter(by => by.attributeMap.person_rule_ref === mutation.person.attributeMap.id)
+          .filter(by => by.attributeMap.person_ref === mutation.person.attributeMap.id)
           .filter(by => by.queryAllOptional("move_towards"))
           .forEach(e => {
             e.removeFromParent();

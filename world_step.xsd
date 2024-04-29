@@ -71,6 +71,102 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:complexType name="type__properties">
+    <xs:element name="properties" minOccurs="0">
+      <xs:annotation>
+        <xs:documentation>
+          Represents list of properties.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+        <xs:sequence>
+          <xs:element name="property" minOccurs="0"
+                      maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>
+                Represents a property.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:attribute name="property_rule_ref" use="required">
+                <xs:annotation>
+                  <xs:documentation>
+                    Represents the reference to a property rule.
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:attribute>
+              <xs:attribute name="value"
+                            use="required">
+                <xs:annotation>
+                  <xs:documentation>
+                    Represents the value of the property.
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:attribute>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+  </xs:complexType>
+
+
+  <xs:complexType name="type__classifications">
+    <xs:element name="classifications" minOccurs="0">
+      <xs:complexType>
+        <xs:sequence>
+          <xs:element name="classification" minOccurs="0"
+                      maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>
+                Represents list of classifications.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:annotation>
+              <xs:documentation>
+                Represents a classification.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:attribute name="classification_rule_ref" use="required"/>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+  </xs:complexType>
+
+  <!--#####-->
+  <!-- Item  -->
+  <!--#####-->
+
+  <xs:complexType name="type__item_selection">
+    <xs:extension base="type__classifications"/>
+    <xs:extension base="type__properties"/>
+    <xs:annotation>
+      <xs:documentation>
+        Represents the criteria of an item.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:complexType>
+
+  <xs:complexType name="type__item">
+    <xs:annotation>
+      <xs:documentation>
+        Represents an item.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:extension base="type__item_selection"/>
+    <xs:attribute name="id" use="required">
+      <xs:annotation>
+        <xs:documentation>
+          Represents the ID of the item.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="name"/>
+  </xs:complexType>
+
   <xs:simpleType name="type_direction">
     <xs:annotation>
       <xs:documentation>
@@ -221,21 +317,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="type_item">
-    <xs:sequence>
-      <xs:element name="wearable" minOccurs="0">
-        <xs:complexType>
-          <xs:attribute name="slot" type="item_slot"/>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-    <xs:attribute name="id" use="required"/>
-    <xs:attribute name="name" use="required"/>
-  </xs:complexType>
-
-  <xs:complexType name="type_item_selection">
-    <xs:attribute name="name"/>
-  </xs:complexType>
 
   <xs:complexType name="type__trigger">
     <xs:sequence>
@@ -869,40 +950,7 @@
         <xs:element name="items" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="item" minOccurs="0" maxOccurs="unbounded">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="classifications" minOccurs="0">
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element name="classification" minOccurs="0"
-                                      maxOccurs="unbounded">
-                            <xs:complexType>
-                              <xs:attribute name="classification_rule_ref" use="required"/>
-                            </xs:complexType>
-                          </xs:element>
-                        </xs:sequence>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:sequence>
-                  <xs:element name="properties" minOccurs="0">
-                    <xs:complexType>
-                      <xs:sequence>
-                        <xs:element name="property" minOccurs="0"
-                                    maxOccurs="unbounded">
-                          <xs:complexType>
-                            <xs:attribute name="property_rule_ref" use="required"/>
-                            <xs:attribute name="value"
-                                          use="required"/>
-                          </xs:complexType>
-                        </xs:element>
-                      </xs:sequence>
-                    </xs:complexType>
-                  </xs:element>
-                  <xs:attribute name="id" use="required"/>
-                  <xs:attribute name="name"/>
-                </xs:complexType>
-              </xs:element>
+              <xs:element name="item" minOccurs="0" maxOccurs="unbounded" type="type__item"/>
             </xs:sequence>
           </xs:complexType>
         </xs:element>

@@ -37,7 +37,7 @@ describe("personActionMoveTowardsReachedDestination" , () => {
     </person>
   </people>
   <actions>
-    <by person_rule_ref="Billy">
+    <by person_ref="Billy">
       <move_towards x="70" y="70"/>
     </by>
   </actions>

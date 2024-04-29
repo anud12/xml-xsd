@@ -38,14 +38,21 @@ export type ClassificationOperationIs = "lessThan"
   | "greaterThanOrEqual"
   | "equal"
 
-export type ItemQueryType = JsonQueryType<{ id: string, name: string }, {
-  classifications: JsonQueryType<{}, {
-    classification: JsonQueryType<{ classification_rule_ref: string }>
-  }>,
+export type PropertiesQueryType = JsonQueryType<{}, {
   properties: JsonQueryType<{}, {
-    property: JsonQueryType<{ property_rule_ref: string, value: string }>
-  }>,
+    property: JsonQueryType<{property_rule_ref:string, value:string}>
+  }>
 }>
+
+export type ClassificationsQueryType = JsonQueryType<{}, {
+  classifications: JsonQueryType<{}, {
+    classification: JsonQueryType<{classification_rule_ref: string}, {}>
+  }>
+}>
+
+export type ItemSelectionQueryType = PropertiesQueryType & ClassificationsQueryType;
+
+export type ItemQueryType = ItemSelectionQueryType & JsonQueryType<{ id: string, name: string }, {}>
 
 export type SelectItemQueryType = JsonQueryType<{}, {
   min: OperationQueryType,
