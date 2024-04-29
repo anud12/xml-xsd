@@ -2,6 +2,7 @@ import {executeFromStringToString, StringArguments} from "../../execute";
 import xmlFormat from "xml-formatter";
 import * as fs from "fs";
 import * as path from "path";
+import * as xmllint from "xmllint"
 
 export const documentation = `
 The \`testBase\` function is a test runner that takes a directory name and an array of string arguments. It is designed to run tests based on XML files. Here's what a programmer should be aware of:
@@ -14,7 +15,9 @@ The \`testBase\` function is a test runner that takes a directory name and an ar
   - \`1_input.xml\`: This file contains the input data for the test.
   - Files that start with \`2_expected\`: These files contain the expected output of the test.
 
-- **Test Cases**: The function returns an object with two async methods, \`success\` and \`error\`, which represent successful and error test cases respectively.
+- **Test Cases**: The function
+  - validates input xml against xsd schema 
+  - returns an object with two async methods, \`success\` and \`error\`, which represent successful and error test cases respectively.
 
 - **Success Case**: In the \`success\` method, the function reads the \`1_input.xml\` file, executes the \`executeFromStringToString\` function with the input and string arguments, and compares the formatted result with the expected output.
 
@@ -28,7 +31,17 @@ The \`testBase\` function is a test runner that takes a directory name and an ar
 `
 
 export const testBase = (dirname:string, ...stringArguments: Array<StringArguments>) => {
+
+  const schema = fs.readFileSync(`${__dirname}${path.sep}..${path.sep}..${path.sep}..${path.sep}..${path.sep}world_step.xsd`, "utf-8");
+  // const formattedSchema = xmlFormat(schema, {throwOnFailure: false,})
   const input = fs.readFileSync(`${dirname}/1_input.xml`, "utf-8");
+  const validationResult = xmllint.validateXML({
+    xml: input,
+    schema: schema,
+  })
+  if(validationResult.errors?.length > 0) {
+    throw new Error(validationResult.errors.join("\n"))
+  }
   const targetDir = fs.readdirSync(dirname)
     .find(file => file.startsWith('2_expected'));
   const expected = fs.readFileSync(path.join(dirname, targetDir), 'utf8').replace(/\r/g, "");
