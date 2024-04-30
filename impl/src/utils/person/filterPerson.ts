@@ -105,7 +105,8 @@ const filterPersonBasedOnInventory = (jsonUtil: JsonUtil, selectPerson: SelectPe
   }
   return ruleElements.flatMap(ruleElement => ruleElement.queryAllOptional("item"))
     .reduce((result, inventoryRule) => {
-      const itemList = inventory.queryAllOptional("item");
+      const itemList = inventory.queryAllOptional("item")
+      .filter(itemQueryElement => jsonUtil.item.filterItem(inventoryRule, itemQueryElement));
 
       const min = inventoryRule.queryOptional("min");
       if (min) {

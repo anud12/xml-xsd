@@ -2,7 +2,14 @@ import {LocationGrid, locationGrid} from "./location/locationGrid";
 import {locationMarkovChainMatrix, LocationMatrix} from "./location/locationMarkovChainMatrix";
 import {markovNext} from "./markovNext";
 import {create} from "./location/create";
-import {ItemQueryType, JsonSchema, OperationQueryType, SelectItemQueryType, SelectPersonQueryType} from "./JsonSchema";
+import {
+  ItemDataQueryType,
+  ItemQueryType,
+  JsonSchema,
+  OperationQueryType,
+  SelectItemQueryType,
+  SelectPersonQueryType
+} from "./JsonSchema";
 import {newRandom} from "./newRandom";
 import {createOperationFromQueryType} from "./operation/createOperationFromQueryType";
 import {getPersonProperty, PersonQueryType} from "./person/getPersonProperty";
@@ -17,6 +24,7 @@ import {selectItem} from "./item/selectItem";
 import {queryItem} from "./item/queryItem";
 import {classifyItem} from "./item/classifyItem";
 import {getItemProperty} from "./item/getItemProperty";
+import {filterItem} from "./item/filterItem";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -115,9 +123,9 @@ export class JsonUtil {
       return calculateNameFromRefString(this, name);
     }),
 
-    calculateNameFromChildren: memoizeFunction((element: NameRuleEntryQueryType) => {
+    calculateNameFromChildren: (element: NameRuleEntryQueryType) => {
       return calculateNameFromChildren(this, element);
-    })
+    }
   }
 
   classification: {}
@@ -137,6 +145,9 @@ export class JsonUtil {
     },
     getProperty: (args: ItemQueryType, key: string) => {
       return getItemProperty(this, args, key)
+    },
+    filterItem(selectItemQueryType: SelectItemQueryType, itemQueryElement: ItemQueryType) {
+      return filterItem(this, selectItemQueryType, itemQueryElement);
     }
   }
 

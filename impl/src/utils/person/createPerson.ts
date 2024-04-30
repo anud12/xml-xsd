@@ -3,6 +3,7 @@ import {SelectPersonQueryType} from "../JsonSchema";
 import {PersonQueryType} from "./getPersonProperty";
 import {JsonQueryType} from "../../JsonQueryType";
 import {Position} from "./selectPerson";
+import {createItem, createItemsFromSelection} from "../item/createItem";
 
 const createNewPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType) => {
   const ruleGroup = jsonUtil.getRuleGroups();
@@ -33,6 +34,7 @@ const createNewPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType
     y: "0"
   });
   person.appendChild("properties", undefined, {});
+  person.appendChild("inventory", undefined, {});
   person.appendChild("classifications", undefined, {});
 
   return person;
@@ -86,10 +88,10 @@ const applyClassification = (jsonUtil: JsonUtil, classificationRef: string, pers
   return person;
 }
 
-const applyProperty = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, person: PersonQueryType) => {
+const applyProperty = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, person: PersonQueryType): void => {
   selectPerson.queryAllOptional("property").map(property => {
     const stringValue = jsonUtil.person.getProperty(person, property.attributeMap.property_rule_ref);
-    if(!stringValue) {
+    if (!stringValue) {
       return;
     }
     let value = Number(stringValue)
@@ -106,17 +108,17 @@ const applyProperty = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, 
   })
 }
 
-const applyLocation = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType,position:Position | undefined, person: PersonQueryType) => {
+const applyLocation = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, position: Position | undefined, person: PersonQueryType): void => {
   try {
     const location = person.queryOptional("location")
-    if(!location) {
+    if (!location) {
       return;
     }
     const radius = selectPerson.queryOptional("radius");
-    if(!radius) {
+    if (!radius) {
       return;
     }
-    if(!position) {
+    if (!position) {
       throw new Error("position is undefined when radius exists")
     }
 
@@ -139,13 +141,31 @@ const applyLocation = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType,p
 
 }
 
-export const createPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, position?:Position) => {
+
+const applyInventory = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, person: PersonQueryType): void => {
+  const inventoryRule = selectPerson.queryOptional("inventory");
+
+  if (!inventoryRule) {
+    return;
+  }
+
+  let inventory = person.queryOptional("inventory");
+  if (!inventory) {
+    inventory = person.appendChild("inventory");
+  }
+  inventoryRule.queryAllOptional("item")
+    .map(itemElement => createItemsFromSelection(jsonUtil, itemElement, inventory))
+
+};
+
+export const createPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, position?: Position) => {
   try {
     let person = createNewPerson(jsonUtil, selectPerson);
     selectPerson.queryAllOptional("classification").forEach(value => {
       person = applyClassification(jsonUtil, value.attributeMap.classification_rule_ref, person)
     })
     applyProperty(jsonUtil, selectPerson, person);
+    applyInventory(jsonUtil, selectPerson, person);
     applyLocation(jsonUtil, selectPerson, position, person);
     return person;
   } catch (e) {
