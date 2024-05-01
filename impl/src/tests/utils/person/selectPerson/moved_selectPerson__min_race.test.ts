@@ -43,8 +43,8 @@ it("selectPerson__min_race", () => {
     .query("then")
     .query("select_person"));
   expect(result.map(v => v.serializeRaw())).toEqual([
-    "<person id=\"0.0\"><race race_rule_ref=\"race\"/><location x=\"0\" y=\"0\"/><properties/><classifications/></person>\n",
-    "<person id=\"0.1\"><race race_rule_ref=\"race\"/><location x=\"0\" y=\"0\"/><properties/><classifications/></person>\n"
+    "<person id=\"0.0\"><race race_rule_ref=\"race\"/><location x=\"0\" y=\"0\"/><properties/><inventory/><classifications/></person>\n",
+    "<person id=\"0.1\"><race race_rule_ref=\"race\"/><location x=\"0\" y=\"0\"/><properties/><inventory/><classifications/></person>\n"
   ]);
 
 })

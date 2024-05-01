@@ -47,6 +47,22 @@
     <xs:attributeGroup ref="attributeGroup_range"/>
   </xs:complexType>
 
+  <xs:complexType name="type__property_mutation">
+    <xs:sequence>
+      <xs:element name="from" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:group ref="group__math_operations"/>
+          <xs:attribute name="participant"
+                        type="type_person_select"
+                        use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="property_rule_ref" use="required"/>
+    <xs:attribute name="on" type="type_person_select"
+                  use="required"/>
+  </xs:complexType>
+
   <xs:complexType name="type_icon">
     <xs:annotation>
       <xs:documentation>
@@ -402,7 +418,13 @@
 
   <xs:complexType name="type__math_operations">
     <xs:group ref="group__operation__and" minOccurs="0"/>
-    <xs:attribute name="initial" use="required" type="xs:int"/>
+    <xs:attribute name="initial" use="required" type="xs:int">
+      <xs:annotation>
+        <xs:documentation>
+          Represents the initial value of the operation.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
   </xs:complexType>
 
   <xs:group name="group__math_operations">
@@ -764,23 +786,7 @@
                               </xs:sequence>
                             </xs:complexType>
                           </xs:element>
-                          <xs:element name="property_mutation" minOccurs="0">
-                            <xs:complexType>
-                              <xs:sequence>
-                                <xs:element name="from" maxOccurs="unbounded">
-                                  <xs:complexType>
-                                    <xs:group ref="group__math_operations"/>
-                                    <xs:attribute name="participant"
-                                                  type="type_person_select"
-                                                  use="required"/>
-                                  </xs:complexType>
-                                </xs:element>
-                              </xs:sequence>
-                              <xs:attribute name="property_rule_ref"/>
-                              <xs:attribute name="on" type="type_person_select"
-                                            use="required"/>
-                            </xs:complexType>
-                          </xs:element>
+                          <xs:element name="property_mutation" minOccurs="0" type="type__property_mutation"/>
                           <xs:element name="location_mutation" minOccurs="0">
                             <xs:complexType>
                               <xs:sequence>
@@ -876,6 +882,26 @@
                                               <xs:enumeration value="self"/>
                                             </xs:restriction>
                                           </xs:simpleType>
+                                        </xs:attribute>
+                                      </xs:extension>
+                                    </xs:complexContent>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="property_mutation" minOccurs="0">
+                                  <xs:annotation>
+                                    <xs:documentation>
+                                      Represents the value that will be added to the property.
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                  <xs:complexType>
+                                    <xs:complexContent>
+                                      <xs:extension base="type__math_operations">
+                                        <xs:attribute name="property_rule_ref" use="required">
+                                          <xs:annotation>
+                                            <xs:documentation>
+                                              Represents the reference to a property rule.
+                                            </xs:documentation>
+                                          </xs:annotation>
                                         </xs:attribute>
                                       </xs:extension>
                                     </xs:complexContent>

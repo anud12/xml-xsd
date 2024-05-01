@@ -6,7 +6,11 @@ import {mergeError} from "../../mergeError";
 const filterBasedOnProperty = (jsonUtil: JsonUtil, selectItem: SelectItemQueryType, item: ItemQueryType): boolean => {
   try {
     const itemPropertyList = item.queryOptional("properties")?.queryAllOptional("property") ?? [];
-    const selectItemPropertyList = selectItem.queryOptional("properties").queryAllOptional("property");
+    const selectItemPropertyList = selectItem.queryOptional("properties")?.queryAllOptional("property");
+
+    if(!selectItemPropertyList) {
+      return true;
+    }
 
     const applicableItemPropertyList = selectItemPropertyList.filter(propertyRuleElement => {
       const itemProperty = itemPropertyList.find(itemPropertyElement => itemPropertyElement.attributeMap.property_rule_ref === propertyRuleElement.attributeMap.property_rule_ref);

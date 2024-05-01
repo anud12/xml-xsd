@@ -46,6 +46,12 @@ export type ClassificationsListQueryType = JsonQueryType<{}, {
     classification: JsonQueryType<{classification_rule_ref: string}, {}>
 }>
 
+export type PropertyMutationQueryType = JsonQueryType<{}, {}> & JsonQueryType<{ property_rule_ref: string, on: string }, {
+  from: JsonQueryType<{ participant: string }, {
+    operation: OperationQueryType
+  }>
+}>
+
 export type ItemDataQueryType = JsonQueryType<{}, {
   classifications: ClassificationsListQueryType,
   properties: PropertiesListQueryType,
@@ -127,11 +133,7 @@ export type JsonSchema = JsonQueryType<{}, {
             operation: OperationQueryType,
           }>
         }>,
-        property_mutation: JsonQueryType<{ property_rule_ref: string, on: string }, {
-          from: JsonQueryType<{ participant: string }, {
-            operation: OperationQueryType
-          }>
-        }>
+        property_mutation: PropertyMutationQueryType
       }>
     }>
     race_rule: JsonQueryType<{}, {
@@ -158,6 +160,7 @@ export type JsonSchema = JsonQueryType<{}, {
         then: JsonQueryType<{}, {
           select_person?: SelectPersonQueryType & JsonQueryType<{origin: "target" | "self"}>
           select_item?: SelectItemQueryType & JsonQueryType<{origin: "target" | "self"}>
+          property_mutation: PropertyMutationQueryType & OperationQueryType,
         }>
       }>
     }>,
