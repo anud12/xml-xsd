@@ -151,10 +151,10 @@
         Represents the criteria of an item.
       </xs:documentation>
     </xs:annotation>
-    <xs:all>
+    <xs:sequence>
       <xs:element name="classifications" minOccurs="0" type="type__classification_list"/>
       <xs:element name="properties" minOccurs="0" type="type__property_list"/>
-    </xs:all>
+    </xs:sequence>
   </xs:group>
 
 
@@ -162,6 +162,7 @@
     <xs:sequence>
       <xs:element name="min" minOccurs="0" type="type__math_operations"/>
       <xs:element name="max" minOccurs="0" type="type__math_operations"/>
+      <xs:group ref="group__item_data"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -301,7 +302,7 @@
       <xs:element name="inventory" minOccurs="0">
         <xs:complexType>
           <xs:sequence>
-            <xs:element name="item" minOccurs="0" maxOccurs="unbounded" type="type__item"/>
+            <xs:element name="item" minOccurs="0" maxOccurs="unbounded" type="type__item_selection"/>
           </xs:sequence>
         </xs:complexType>
       </xs:element>

@@ -53,7 +53,7 @@ export type ItemDataQueryType = JsonQueryType<{}, {
 
 export type ItemQueryType = ItemDataQueryType & JsonQueryType<{ id: string, name: string }, {}>
 
-export type SelectItemQueryType = JsonQueryType<{}, {
+export type SelectItemQueryType = ItemDataQueryType & JsonQueryType<{}, {
   min: OperationQueryType,
   max: OperationQueryType,
 }>;

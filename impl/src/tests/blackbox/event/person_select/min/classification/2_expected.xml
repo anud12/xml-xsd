@@ -78,6 +78,7 @@
       <properties>
         <property property_rule_ref="property" value="3"/>
       </properties>
+      <inventory/>
       <classifications/>
     </person>
     <person id="0.1">
@@ -86,6 +87,7 @@
       <properties>
         <property property_rule_ref="property" value="2"/>
       </properties>
+      <inventory/>
       <classifications>
         <classification classification_rule_ref="classification"/>
       </classifications>

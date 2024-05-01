@@ -65,12 +65,14 @@
       <race race_rule_ref="race"/>
       <location x="0" y="0"/>
       <properties/>
+      <inventory/>
       <classifications/>
     </person>
     <person id="0.1">
       <race race_rule_ref="second_race"/>
       <location x="0" y="0"/>
       <properties/>
+      <inventory/>
       <classifications/>
     </person>
   </people>
