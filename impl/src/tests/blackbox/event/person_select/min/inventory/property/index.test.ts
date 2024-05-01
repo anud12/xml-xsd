@@ -6,11 +6,13 @@ export const description = `
 
 selecting persons with
   - a \`min\` value of 3
-  - \`inventory\` with a \`min\` value of 4
+  - \`inventory\` with
+    -\`min\` value of 4
+    - \`property\` value of 1
 
 ##It should
 first create a person then its item, only after it should go on the next person
-create 3 persons with random 4 item in inventory
+create 3 persons with random 4 item in inventory with property value of 1
   - person \`0.0\` should have
     - item \`0.1\ with name \`second_item\`
     - item \`0.2\ with name \`third_item\`

@@ -30,11 +30,9 @@ The \`testBase\` function is a test runner that takes a directory name and an ar
 - **Test Name**: The name of the test is derived from the directory name by removing the "tests" string.
 `
 
-export const testBase = (dirname:string, ...stringArguments: Array<StringArguments>) => {
-
-  const schema = fs.readFileSync(`${__dirname}${path.sep}..${path.sep}..${path.sep}..${path.sep}..${path.sep}world_step.xsd`, "utf-8");
-  // const formattedSchema = xmlFormat(schema, {throwOnFailure: false,})
-  const input = fs.readFileSync(`${dirname}/1_input.xml`, "utf-8");
+const schema = fs.readFileSync(`${__dirname}${path.sep}..${path.sep}..${path.sep}..${path.sep}..${path.sep}world_step.xsd`, "utf-8");
+//Might fail when running multiple instances due to xmllint being asm library
+const validateXml = (input:string) => {
   const validationResult = xmllint.validateXML({
     xml: input,
     schema: schema,
@@ -42,6 +40,14 @@ export const testBase = (dirname:string, ...stringArguments: Array<StringArgumen
   if(validationResult.errors?.length > 0) {
     throw new Error(validationResult.errors.join("\n"))
   }
+}
+
+export const testBase = (dirname:string, ...stringArguments: Array<StringArguments>) => {
+
+
+  // const formattedSchema = xmlFormat(schema, {throwOnFailure: false,})
+  const input = fs.readFileSync(`${dirname}/1_input.xml`, "utf-8");
+  validateXml(input);
   const targetDir = fs.readdirSync(dirname)
     .find(file => file.startsWith('2_expected'));
   const expected = fs.readFileSync(path.join(dirname, targetDir), 'utf8').replace(/\r/g, "");

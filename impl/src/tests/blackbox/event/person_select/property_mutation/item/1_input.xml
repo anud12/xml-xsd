@@ -1,6 +1,6 @@
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
   <world_metadata>
     <next_world_step>./data</next_world_step>
     <elapsed_time value="0"/>
@@ -11,6 +11,9 @@
     </randomization_table>
   </world_metadata>
   <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
     <action_rule>
       <person_to_person id="action_rule">
         <max_range>
@@ -46,17 +49,20 @@
           <person_action_used action_rule_ref="action_rule"/>
         </when>
         <then>
-          <select_item origin="target">
+          <select_person origin="target">
             <min initial="1"/>
-          </select_item>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
         </then>
-
       </entry>
     </events_rule>
   </rule_group>
-  <items/>
   <people>
     <person id="1">
+      <location x="0" y="0"/>
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
     </person>
   </people>
   <actions>
