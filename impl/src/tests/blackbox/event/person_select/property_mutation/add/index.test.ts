@@ -7,10 +7,10 @@ export const description = `
   - \`min\` value of 1
 - apply property_mutation to increase \`property\` value by 1
 
-- already having item \`0\` with \`property\` value 1 
+- already having item \`0\`
 
 ##It should
-modify person \`0\` property by adding 1
+modify person \`1\` by adding property with value 1
 `
 const test= testBase(__dirname)
 it(test.name, test.success)
