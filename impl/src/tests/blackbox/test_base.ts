@@ -33,13 +33,13 @@ The \`testBase\` function is a test runner that takes a directory name and an ar
 const schema = fs.readFileSync(`${__dirname}${path.sep}..${path.sep}..${path.sep}..${path.sep}..${path.sep}world_step.xsd`, "utf-8");
 //Might fail when running multiple instances due to xmllint being asm library
 const validateXml = (input:string) => {
-  // const validationResult = xmllint.validateXML({
-  //   xml: input,
-  //   schema: schema,
-  // })
-  // if(validationResult.errors?.length > 0) {
-  //   throw new Error(validationResult.errors.join("\n"))
-  // }
+  const validationResult = xmllint.validateXML({
+    xml: input,
+    schema: schema,
+  })
+  if(validationResult.errors?.length > 0) {
+    throw new Error(validationResult.errors.join("\n"))
+  }
 }
 
 export const testBase = (dirname:string, ...stringArguments: Array<StringArguments>) => {
