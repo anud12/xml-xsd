@@ -1,4 +1,4 @@
-import {testBase} from "../../../../test_base";
+import {testBase} from "../../../../../test_base";
 
 export const description = `
 #Person selection with min values and inventory with min 1 item
