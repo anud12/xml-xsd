@@ -38,7 +38,7 @@ export class PersonActionUsedDispatcher {
         return actionElement.queryAllOptional("by").flatMap(byElement => {
           return byElement.queryAllOptional("do").flatMap(doElement => {
             if (!doElement.attributeMap.action_rule_ref) {
-              throw new Error(`PersonActionUsedDispatcher middleware: action_rule_ref not found for doElement: ${doElement.getPath()} declared at ${doElement.getPath()}`);
+              return undefined;
             }
             return {
               key: doElement.attributeMap.action_rule_ref,
@@ -53,7 +53,7 @@ export class PersonActionUsedDispatcher {
 
     return async writeUnit => {
 
-      for (const trigger of triggers) {
+      for (const trigger of triggers.filter(e => e)) {
         await this.dispatcher.dispatch(trigger.key, {
           ...trigger.value,
           writeJson: writeUnit

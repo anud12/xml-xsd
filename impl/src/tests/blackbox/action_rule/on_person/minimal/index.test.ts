@@ -1,0 +1,16 @@
+import {testBase} from "../../../test_base";
+
+export const description = `
+#Global Action
+##When
+A global action is defined to add 1 to \`property\` on target
+
+Using global action on different person without \`property\`
+
+##It should
+do nothing
+`
+
+const test= testBase(__dirname)
+it(test.name, test.success)
+

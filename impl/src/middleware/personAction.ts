@@ -1,6 +1,7 @@
 import {MutationMiddleware} from "./_type";
 import {JsonSchema} from "../utils/JsonSchema";
 import {JsonUtil} from "../utils/util";
+import {mergeError} from "../mergeError";
 
 type RuleGroupQueryType = JsonSchema["children"]["rule_group"]
 type PersonQueryType = JsonSchema["children"]["people"]["children"]["person"]
@@ -46,7 +47,7 @@ export const personAction: MutationMiddleware = readJson => {
 
   const actionMetadata = readJson.getRuleGroups()
     .flatMap(e => e.queryAllOptional("action_rule"))
-    .flatMap(e => e.queryAll("person_to_person"));
+    .flatMap(e => e.queryAllOptional("person_to_person"));
 
 
   const personList = readJson.json.queryAllOptional("people").flatMap(e => e.queryAll("person"));
@@ -63,6 +64,9 @@ export const personAction: MutationMiddleware = readJson => {
         const person = personList.find(person => person.attributeMap.id === by.attributeMap.person_ref);
         const targetPerson = personList.find(person => person.attributeMap.id === personDo.attributeMap.person_ref);
 
+        if(!action) {
+          return;
+        }
         if (isOutOfRange(readJson, action, person, targetPerson)) {
           return [{
             by: by,
@@ -81,15 +85,13 @@ export const personAction: MutationMiddleware = readJson => {
           property_mutation_list: property_mutation_list
         }]
       } catch (e:any)  {
-        const newError = new Error(`Error computing by element ${by.getPath()}`);
-        newError.stack += '\nCaused by: ' + e.stack;
-        throw newError;
+        throw mergeError(e, new Error(`Error computing by element ${by.getPath()}`));
       }
 
     })
 
   return async writeJson => {
-    actions.forEach(({by: by, personAction, property_mutation_list}) => {
+    actions.filter(e => e).forEach(({by: by, personAction, property_mutation_list}) => {
       const personList = writeJson.json.queryAll("people").flatMap(e => e.queryAll("person"));
       const person = personList.find(e => e.attributeMap.id === by.attributeMap.person_ref);
       const targetPerson = personList.find(e => e.attributeMap.id === personAction.attributeMap.person_ref);
