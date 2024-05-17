@@ -49,9 +49,10 @@
 
   <xs:complexType name="type__property_mutation_on">
     <xs:complexContent>
-      <xs:extension base="type__property_mutation"/>
-      <xs:attribute name="on" type="type_person_select"
-                    use="required"/>
+      <xs:extension base="type__property_mutation">
+        <xs:attribute name="on" type="type_person_select"
+                      use="required"/>
+      </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 

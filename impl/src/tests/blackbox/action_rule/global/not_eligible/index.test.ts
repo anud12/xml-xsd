@@ -3,9 +3,11 @@ import {testBase} from "../../../test_base";
 export const description = `
 #Global Action
 ##When
-A global action is defined to add 1 to \`property\` on target
+A global action is defined with from person selector
 
-Using global action on different person without \`property\`
+Using global action on target
+
+Owner is not eligible to use the action
 
 ##It should
 do nothing

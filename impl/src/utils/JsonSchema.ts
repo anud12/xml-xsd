@@ -52,6 +52,12 @@ export type PropertyMutationOnQueryType = JsonQueryType<{}, {}> & JsonQueryType<
   }>
 }>
 
+export type PropertyMutationQueryType = JsonQueryType<{}, {}> & JsonQueryType<{ property_rule_ref: string}, {
+  from: JsonQueryType<{ participant: "self" | "target" }, {
+    operation: OperationQueryType
+  }>
+}>
+
 export type ItemDataQueryType = JsonQueryType<{}, {
   classifications: ClassificationsListQueryType,
   properties: PropertiesListQueryType,
@@ -87,24 +93,26 @@ export type ActionQueryType = JsonQueryType<{}, {
   from: JsonQueryType<{}, {
     person: JsonQueryType<{}, {
       select: SelectPersonQueryType & JsonQueryType<{}, {}>,
-      property_mutation: PropertyMutationOnQueryType & JsonQueryType<{}, {}>,
+      property_mutation: PropertyMutationQueryType & JsonQueryType<{}, {}>,
     }>
     item: JsonQueryType<{}, {
       select: SelectItemQueryType & JsonQueryType<{}, {}>,
-      property_mutation: PropertyMutationOnQueryType & JsonQueryType<{}, {}>,
+      property_mutation: PropertyMutationQueryType & JsonQueryType<{}, {}>,
     }>
   }>
   on: JsonQueryType<{}, {
     person: JsonQueryType<{}, {
       select: SelectPersonQueryType & JsonQueryType<{}, {}>,
-      property_mutation: PropertyMutationOnQueryType & JsonQueryType<{}, {}>,
+      property_mutation: PropertyMutationQueryType & JsonQueryType<{}, {}>,
     }>
     item: JsonQueryType<{}, {
       select: SelectItemQueryType & JsonQueryType<{}, {}>,
-      property_mutation: PropertyMutationOnQueryType & JsonQueryType<{}, {}>,
+      property_mutation: PropertyMutationQueryType & JsonQueryType<{}, {}>,
     }>
   }>
 }>
+
+export type GlobalActionQueryType = JsonQueryType<{ id: string }, {}> & ActionQueryType
 
 export type JsonSchema = JsonQueryType<{}, {
 
@@ -142,7 +150,7 @@ export type JsonSchema = JsonQueryType<{}, {
     }>
     action_rule: JsonQueryType<{}, {
       global: JsonQueryType<{}, {
-        entry: JsonQueryType<{id:string},{}> & ActionQueryType
+        entry: GlobalActionQueryType
       }>,
       person_to_person: JsonQueryType<{ id: string }, {
         max_range: JsonQueryType<{}, {

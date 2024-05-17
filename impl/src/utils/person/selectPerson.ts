@@ -12,7 +12,10 @@ export type Position = {
 
 type PeopleQueryType = JsonSchema['children']["people"]["children"]["person"];
 
-export const filterPersonMaxQuantity = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, list: Array<PeopleQueryType>): Array<PeopleQueryType> => {
+export const filterPersonMaxQuantity = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType | undefined, list: Array<PeopleQueryType>): Array<PeopleQueryType> => {
+  if(!selectPerson) {
+    return list;
+  }
   const maxElement = selectPerson.queryOptional("max");
 
   if (!maxElement) {
@@ -22,7 +25,10 @@ export const filterPersonMaxQuantity = (jsonUtil: JsonUtil, selectPerson: Select
   return jsonUtil.randomListFromArray(list, Number(maxQuantityValue));
 }
 
-export const filterPersonMinQuantity = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, position: Position | undefined, list: Array<PeopleQueryType>): Array<PeopleQueryType> => {
+export const filterPersonMinQuantity = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType | undefined, position: Position | undefined, list: Array<PeopleQueryType>): Array<PeopleQueryType> => {
+  if(!selectPerson) {
+    return list;
+  }
   const minValue = Number(jsonUtil.computeOperationFromParent(selectPerson.queryOptional("min")));
   const difference = list.length - minValue;
   if (difference >= 0) {
@@ -37,9 +43,9 @@ export const filterPersonMinQuantity = (jsonUtil: JsonUtil, selectPerson: Select
 }
 
 
-export const selectPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, position?: Position):Array<PeopleQueryType> => {
+export const selectPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType | undefined, position?: Position):Array<PeopleQueryType> => {
   try {
-    let people = queryPerson(jsonUtil, selectPerson)
+    let people = queryPerson(jsonUtil)
     .filter(person => filterPerson(jsonUtil, selectPerson, person, position));
 
    people = filterPersonMaxQuantity(jsonUtil, selectPerson, people);
@@ -47,6 +53,6 @@ export const selectPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQuery
 
     return people;
   } catch (e: any) {
-    throw mergeError(e, new Error(`selectPerson failed for ${selectPerson.getPath()}`));
+    throw mergeError(e, new Error(`selectPerson failed for ${selectPerson?.getPath()}`));
   }
 }

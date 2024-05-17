@@ -13,6 +13,7 @@ import {Dispatcher} from "./utils/triggerDispatcher/dispatcher";
 import {calculateNameFromRefString} from "./utils/calculateName";
 import {validate} from "./validate";
 import {itemAssignClassification} from "./middleware/itemAssignClassification";
+import {globalAction} from "./middleware/globalAction";
 
 type StringParameter<Param extends string> = `${Param} ${string}`
 
@@ -88,10 +89,12 @@ export const execute = async (readJson: JsonSchema, log: (...string: any[]) => v
   const dispatcherResult = dispatcher.middleware(readJsonUtil);
   const personMoveTowardsResult = personMoveTowards(readJsonUtil);
   const personActionResult = personAction(readJsonUtil);
+  const globalActionResult = globalAction(readJsonUtil);
   const eventsMetadataResult = eventsMetadata(readJsonUtil);
 
   await personMoveTowardsResult(readJsonUtil);
   await personActionResult(readJsonUtil);
+  await globalActionResult(readJsonUtil);
 
   await eventsMetadataResult(dispatcher);
 

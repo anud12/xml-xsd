@@ -3,10 +3,10 @@ import {locationMarkovChainMatrix, LocationMatrix} from "./location/locationMark
 import {markovNext} from "./markovNext";
 import {create} from "./location/create";
 import {
-  ItemDataQueryType,
   ItemQueryType,
   JsonSchema,
   OperationQueryType,
+  PropertyMutationQueryType,
   SelectItemQueryType,
   SelectPersonQueryType
 } from "./JsonSchema";
@@ -25,6 +25,7 @@ import {queryItem} from "./item/queryItem";
 import {classifyItem} from "./item/classifyItem";
 import {getItemProperty} from "./item/getItemProperty";
 import {filterItem} from "./item/filterItem";
+import {applyPropertyMutation} from "./person/applyPropertyMutation";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -152,8 +153,11 @@ export class JsonUtil {
   }
 
   person = {
-    selectPerson: (selectPersonQueryType: SelectPersonQueryType, position: Position) => {
+    selectPerson: (selectPersonQueryType: SelectPersonQueryType, position?: Position) => {
       return selectPerson(this, selectPersonQueryType, position);
+    },
+    applyPropertyMutation: (personQueryType: PersonQueryType, propertyMutation:PropertyMutationQueryType, getPropertyTarget? :(key:string) => string) => {
+      return applyPropertyMutation(this, personQueryType, propertyMutation, getPropertyTarget)
     },
     getProperty: (personQueryType: PersonQueryType, key) => getPersonProperty(this, personQueryType, key),
     setProperty: (personQueryType: PersonQueryType, key, value: string) => setProperty(this, personQueryType, key, value),
