@@ -550,27 +550,7 @@
                   <xs:element name="property_mutation" minOccurs="0" type="type__property_mutation"/>
                 </xs:sequence>
               </xs:complexType>
-
             </xs:element>
-            <xs:element name="item" minOccurs="0">
-              <xs:annotation>
-                <xs:documentation>
-                  Represents an option that an item can initiate the action.
-                </xs:documentation>
-              </xs:annotation>
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="selection" minOccurs="0" type="type__item_selection">
-                    <xs:annotation>
-                      <xs:documentation>
-                        Represents the conditions to use an item to initiate the action.
-                      </xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                </xs:sequence>
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="property_mutation" minOccurs="0" type="type__property_mutation_on"/>
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -598,25 +578,6 @@
                     </xs:annotation>
                   </xs:element>
                   <xs:element name="property_mutation" minOccurs="0" type="type__property_mutation"/>
-                </xs:sequence>
-              </xs:complexType>
-
-            </xs:element>
-            <xs:element name="item" minOccurs="0">
-              <xs:annotation>
-                <xs:documentation>
-                  Represents an option that an item can apply the action to.
-                </xs:documentation>
-              </xs:annotation>
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="selection" minOccurs="0" type="type__item_selection">
-                    <xs:annotation>
-                      <xs:documentation>
-                        Represents the conditions to use an item to apply the action to.
-                      </xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
                 </xs:sequence>
               </xs:complexType>
             </xs:element>

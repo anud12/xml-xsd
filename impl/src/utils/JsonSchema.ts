@@ -95,18 +95,10 @@ export type ActionQueryType = JsonQueryType<{}, {
       select: SelectPersonQueryType & JsonQueryType<{}, {}>,
       property_mutation: PropertyMutationQueryType & JsonQueryType<{}, {}>,
     }>
-    item: JsonQueryType<{}, {
-      select: SelectItemQueryType & JsonQueryType<{}, {}>,
-      property_mutation: PropertyMutationQueryType & JsonQueryType<{}, {}>,
-    }>
   }>
   on: JsonQueryType<{}, {
     person: JsonQueryType<{}, {
       select: SelectPersonQueryType & JsonQueryType<{}, {}>,
-      property_mutation: PropertyMutationQueryType & JsonQueryType<{}, {}>,
-    }>
-    item: JsonQueryType<{}, {
-      select: SelectItemQueryType & JsonQueryType<{}, {}>,
       property_mutation: PropertyMutationQueryType & JsonQueryType<{}, {}>,
     }>
   }>
