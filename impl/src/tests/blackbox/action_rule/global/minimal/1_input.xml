@@ -1,0 +1,35 @@
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+  <world_metadata>
+    <next_world_step>./data</next_world_step>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="units"/>
+    </property_rule>
+    <action_rule>
+      <global>
+        <entry id="global_action">
+          <from/>
+          <on/>
+        </entry>
+      </global>
+    </action_rule>
+  </rule_group>
+  <items/>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_ref="global_action" person_ref="1" />
+    </by>
+  </actions>
+</world_step>

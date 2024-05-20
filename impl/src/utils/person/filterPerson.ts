@@ -129,9 +129,11 @@ const filterPersonBasedOnInventory = (jsonUtil: JsonUtil, selectPerson: SelectPe
 }
 
 
-export const filterPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, person: PeopleQueryType, position?: Position): boolean => {
+export const filterPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType | undefined, person: PeopleQueryType, position?: Position): boolean => {
   try {
-
+    if(!selectPerson) {
+      return true;
+    }
     return filterPersonListBasedOnPosition(jsonUtil, selectPerson, position, person)
       && filterPersonListBasedOnProperties(jsonUtil, selectPerson, person)
       && filterPersonListBasedOnClassification(jsonUtil, selectPerson, person)
