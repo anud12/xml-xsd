@@ -1,0 +1,5 @@
+type root = {
+  "child": {
+    "grandChild": number;
+  };
+}

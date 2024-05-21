@@ -77,9 +77,9 @@
         SVG Icon.
       </xs:documentation>
     </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="xs:anyType"/>
-    </xs:complexContent>
+    <xs:sequence>
+      <xs:any processContents="skip"/>
+    </xs:sequence>
   </xs:complexType>
 
   <xs:simpleType name="item_slot">
