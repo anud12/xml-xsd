@@ -1,0 +1,2 @@
+type simple_type = string
+type root = simple_type

@@ -65,11 +65,36 @@ function processElementType(sequenceElement: XsdElement | XsdElement[], ident = 
   })
 }
 
+function processSimpleTypeToType(element: XsdElement | XsdElement[], ident:string = ""):Array<string> {
+  if(Array.isArray(element)) {
+    return element.flatMap(subElement => processSimpleTypeToType(subElement));
+  }
+  return processSimpleType(element).map(e => `${ident}type ${element?.name} = ${e}`)
+
+}
+
+function processSimpleType(element: XsdElement | XsdElement[], ident:string = "") {
+  if(Array.isArray(element)) {
+    let result = `{`;
+    element.forEach(subElement => {
+      result += processSimpleType(subElement);
+    })
+    result += `}`;
+    return [result];
+  }
+  const restriction = element["xs:restriction"] as XsdElement
+  if(restriction) {
+    return [mapXsdTypeToTs(restriction.base as unknown as string)]
+  }
+
+  return [mapXsdTypeToTs(undefined)]
+}
+
 function processComplexTypeToType(element: XsdElement | XsdElement[], ident:string = ""):Array<string> {
   if(Array.isArray(element)) {
     return element.flatMap(subElement => processComplexTypeToType(subElement));
   }
-  return processComplexType(element).map(e => `type ${element?.name} = ${e}`)
+  return processComplexType(element).map(e => `${ident}type ${element?.name} = ${e}`)
 
 }
 function processComplexType(element: XsdElement | XsdElement[], ident:string = ""):Array<string>  {
@@ -145,6 +170,9 @@ function generateTypes(schema: any): string {
   if(schema['xs:schema']['xs:complexType']) {
     types = [...types, ...processComplexTypeToType(schema['xs:schema']['xs:complexType'])]
   }
+  if(schema['xs:schema']['xs:simpleType']) {
+    types = [...types, ...processSimpleTypeToType(schema['xs:schema']['xs:simpleType'])]
+  }
   let file = "";
   file +=
   file += `type ${typeName} = `
@@ -173,12 +201,16 @@ function mapXsdTypeToTs(xsdType: string | undefined): string {
 }
 
 // Main function to read XSD file and output TypeScript types
-export function main(path:string) {
+export function main(path:string, output?:string) {
   const schema = parseXsdSchema(path);
   const types = generateTypes(schema);
   console.log(types);
+  if(output) {
+    fs.writeFileSync(output, types);
+  }
+
   return types;
 }
 
 // // Run the main function
-// main("../world_step.xsd");
+main("../world_step.xsd", "output.ts");

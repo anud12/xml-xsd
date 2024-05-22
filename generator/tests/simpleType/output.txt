@@ -1,0 +1,2 @@
+type simple_type = unknown
+type root = simple_type
