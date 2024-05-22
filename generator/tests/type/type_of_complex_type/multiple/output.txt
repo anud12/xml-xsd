@@ -1,2 +1,7 @@
-type root = {
+type complexType = {
+  "complexAttribute": number;
 }
+type secondComplexType = {
+  "secondComplexAttribute": number;
+}
+type root = complexType

@@ -64,6 +64,14 @@ function processElementType(sequenceElement: XsdElement | XsdElement[], ident = 
     return `${ident}"${e.name}": ${type}`;
   })
 }
+
+function processComplexTypeToType(element: XsdElement | XsdElement[], ident:string = ""):Array<string> {
+  if(Array.isArray(element)) {
+    return element.flatMap(subElement => processComplexTypeToType(subElement));
+  }
+  return processComplexType(element).map(e => `type ${element?.name} = ${e}`)
+
+}
 function processComplexType(element: XsdElement | XsdElement[], ident:string = ""):Array<string>  {
   if(Array.isArray(element)) {
     let result = `{`;
@@ -91,27 +99,6 @@ function processComplexType(element: XsdElement | XsdElement[], ident:string = "
   return [types];
 }
 
-// function processElementType(element: XsdElement | XsdElement[], ident:string = ""):Array<string>  {
-//   if(!element) {
-//     return [];
-//   }
-//   if(Array.isArray(element)) {
-//     let result = `{`;
-//     element.forEach(subElement => {
-//       result += processElementType(subElement);
-//     })
-//     result += `}`;
-//     return [result];
-//   }
-//   const rootElement = element['xs:element'];
-//   const typeName = rootElement?.name;
-//   let file = "";
-//   file += `type ${typeName} = `
-//   file += processElement(rootElement, "");
-//   file += "\n";
-//
-//   return [file];
-// }
 
 function processElement(element: XsdElement | XsdElement[], ident:string = ""): Array<string> {
   if(!element) {
@@ -153,12 +140,17 @@ function generateTypes(schema: any): string {
   if(!typeName) {
     return "";
   }
-  let file = "";
 
+  let types = [];
+  if(schema['xs:schema']['xs:complexType']) {
+    types = [...types, ...processComplexTypeToType(schema['xs:schema']['xs:complexType'])]
+  }
+  let file = "";
+  file +=
   file += `type ${typeName} = `
   file += processElement(rootElement, "");
-  file += "\n"
-  return file;
+  types = [...types, file]
+  return types.join("\n") + "\n";
 }
 
 // Helper function to map XSD types to TypeScript types
