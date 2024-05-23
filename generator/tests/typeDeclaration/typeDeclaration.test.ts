@@ -1,4 +1,11 @@
-import {TypeDeclaration, typeDeclarationToString, TypePrimitive, TypeRecursive, TypeComposition} from "../../src/type";
+import {
+  TypeDeclaration,
+  typeDeclarationToString,
+  TypePrimitive,
+  TypeRecursive,
+  TypeComposition,
+  TypeUnion
+} from "../../src/type";
 
 describe('typeDeclarationToString function', () => {
   it('should correctly handle primitive types', async () => {
@@ -10,7 +17,7 @@ describe('typeDeclarationToString function', () => {
       } as TypePrimitive
     };
 
-    const result = await  typeDeclarationToString(typeDeclaration);
+    const result = typeDeclarationToString(typeDeclaration);
     expect(result).toEqual(`type test = string`);
   });
 
@@ -28,7 +35,7 @@ describe('typeDeclarationToString function', () => {
       } as TypeRecursive
     };
 
-    const result = await  typeDeclarationToString(typeDeclaration);
+    const result = typeDeclarationToString(typeDeclaration);
     expect(result).toEqual(`type test = {
   "prop": number;
 }`);
@@ -61,7 +68,7 @@ describe('typeDeclarationToString function', () => {
       } as TypeRecursive
     };
 
-    const result = await typeDeclarationToString(typeDeclaration);
+    const result = typeDeclarationToString(typeDeclaration);
     expect(result).toEqual(`type test = {
   "level1": {
     "level2": boolean;
@@ -71,7 +78,7 @@ describe('typeDeclarationToString function', () => {
 }`);
   });
 
-  it('should correctly handle union types', async () => {
+  it('should correctly handle composition types', async () => {
     const typeDeclaration: TypeDeclaration = {
       name: 'test',
       value: {
@@ -89,12 +96,12 @@ describe('typeDeclarationToString function', () => {
       } as TypeComposition
     };
 
-    const result = await typeDeclarationToString(typeDeclaration);
+    const result = typeDeclarationToString(typeDeclaration);
     expect(result).toEqual(`type test = string
 & number`);
   });
 
-  it('should correctly handle union types with recursive types', async () => {
+  it('should correctly handle composition types with recursive types', async () => {
     const typeDeclaration: TypeDeclaration = {
       name: 'test',
       value: {
@@ -122,12 +129,35 @@ describe('typeDeclarationToString function', () => {
       } as TypeComposition
     };
 
-    const result = await typeDeclarationToString(typeDeclaration);
+    const result = typeDeclarationToString(typeDeclaration);
     expect(result).toEqual(`type test = {
   "prop1": string;
 }
 & {
   "prop2": number;
 }`);
+  });
+
+  it('should correctly handle union types', async () => {
+    const typeDeclaration: TypeDeclaration = {
+      name: 'test',
+      value: {
+        metaType: 'union',
+        value: [
+          {
+            metaType: 'primitive',
+            value: 'string'
+          },
+          {
+            metaType: 'primitive',
+            value: 'number'
+          }
+        ]
+      } as TypeUnion
+    };
+
+    const result = typeDeclarationToString(typeDeclaration);
+    expect(result).toEqual(`type test = string 
+| number`);
   });
 });
