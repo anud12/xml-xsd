@@ -1,4 +1,11 @@
-import {Type, TypeRecursive} from "./type";
+import {
+  Type,
+  typeAddDeclarations, typeDeclarationsToRecursive,
+  typeMerge,
+  TypeRecursive,
+  typeRecursiveAddDeclarations,
+  typeRecursiveMerge
+} from "./type";
 import {XsdElement} from "./src";
 import {processSequenceType} from "./processSequenceType";
 import {mapXsdTypeToTs} from "./mapXsdType";
@@ -16,32 +23,20 @@ export function processComplexType(element: XsdElement | XsdElement[]): Type[] {
   if (element.type) {
     return [mapXsdTypeToTs(element.type)]
   }
-  let type: TypeRecursive = {
+  let type: Type = {
     metaType: "recursive",
     value: {}
-  }
+  } as TypeRecursive;
 
   if (element["xs:sequence"]) {
-    type.value = {
-      ...type.value,
-      ...processSequenceType(element["xs:sequence"]).reduce((acc, value) => {
-        return {
-          ...acc,
-          ...value.value
-        }
-      }, {})
-    }
+    type = typeMerge(type, ...processSequenceType(element["xs:sequence"]));
   }
   if (element["xs:attribute"]) {
-    type.value = {
-      ...type.value,
-      ...processTypeAttribute(element["xs:attribute"]).reduce((acc, value) => {
-        return {
-          ...acc,
-          [value.name]: value.value
-        }
-      }, {})
+    const attributeTypes = processTypeAttribute(element["xs:attribute"]);
+    if(attributeTypes.length > 0) {
+      type = typeMerge(type, typeDeclarationsToRecursive(...attributeTypes));
     }
+
   }
   return [type];
 }

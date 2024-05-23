@@ -1,4 +1,4 @@
-import {TypeDeclaration, typeDeclarationToString, TypePrimitive, TypeRecursive} from "../../src/type";
+import {TypeDeclaration, typeDeclarationToString, TypePrimitive, TypeRecursive, TypeComposition} from "../../src/type";
 
 describe('typeDeclarationToString function', () => {
   it('should correctly handle primitive types', async () => {
@@ -68,6 +68,66 @@ describe('typeDeclarationToString function', () => {
     "anotherLevel2": string;
   };
   "anotherLevel1": number;
+}`);
+  });
+
+  it('should correctly handle union types', async () => {
+    const typeDeclaration: TypeDeclaration = {
+      name: 'test',
+      value: {
+        metaType: 'composition',
+        value: [
+          {
+            metaType: 'primitive',
+            value: 'string'
+          },
+          {
+            metaType: 'primitive',
+            value: 'number'
+          }
+        ]
+      } as TypeComposition
+    };
+
+    const result = await typeDeclarationToString(typeDeclaration);
+    expect(result).toEqual(`type test = string
+& number`);
+  });
+
+  it('should correctly handle union types with recursive types', async () => {
+    const typeDeclaration: TypeDeclaration = {
+      name: 'test',
+      value: {
+        metaType: 'composition',
+        value: [
+          {
+            metaType: 'recursive',
+            value: {
+              prop1: {
+                metaType: 'primitive',
+                value: 'string'
+              }
+            }
+          },
+          {
+            metaType: 'recursive',
+            value: {
+              prop2: {
+                metaType: 'primitive',
+                value: 'number'
+              }
+            }
+          }
+        ]
+      } as TypeComposition
+    };
+
+    const result = await typeDeclarationToString(typeDeclaration);
+    expect(result).toEqual(`type test = {
+  "prop1": string;
+}
+& {
+  "prop2": number;
 }`);
   });
 });

@@ -1,0 +1,7 @@
+type group = {
+  "group_element": number;
+}
+type root = {
+
+}
+& group

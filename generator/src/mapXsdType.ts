@@ -10,6 +10,7 @@ export function mapXsdTypeToTs(xsdType: string | undefined): TypePrimitive {
   let value: string;
   switch (xsdType) {
     case 'xs:string':
+    case 'xs:anyURI':
       value = 'string';
       break;
     case 'xs:int':

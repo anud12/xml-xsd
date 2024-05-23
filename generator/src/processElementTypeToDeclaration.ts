@@ -11,6 +11,9 @@ export function processElementTypeToDeclaration(element: XsdElement | XsdElement
     return result;
   }
 
+  if(!element) {
+    return [];
+  }
   let types: Type[] = processElementType(element);
   return types.map(type => {
     return {

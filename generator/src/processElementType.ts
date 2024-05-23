@@ -22,6 +22,7 @@ export function processElementType(element: XsdElement | XsdElement[], ident = "
   if (element["xs:complexType"]) {
     return processComplexType(element["xs:complexType"])
   }
+
   return [{
     metaType: "primitive",
     value: "unknown"
