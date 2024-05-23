@@ -1,0 +1,3 @@
+type simple_type = "add"
+| "add_dice"
+type root = simple_type

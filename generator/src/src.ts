@@ -9,6 +9,7 @@ import {processGroupToDeclaration} from "./processGroupToDeclaration";
 // Define interface for XML schema element
 export type XsdElement = {
   name: string;
+  value?:string;
   type?: string;
   base?: string;
   ref?:string;

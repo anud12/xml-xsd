@@ -1,4 +1,4 @@
-export type Type = TypeRecursive | TypePrimitive | TypeComposition;
+export type Type = TypeRecursive | TypePrimitive | TypeComposition | TypeUnion;
 
 export type TypeRecursive = {
   metaType: "recursive",
@@ -12,6 +12,10 @@ export type TypePrimitive = {
 }
 export type TypeComposition = {
   metaType: "composition"
+  value: Type[],
+}
+export type TypeUnion = {
+  metaType: "union"
   value: Type[],
 }
 export type TypeDeclaration = {
@@ -29,6 +33,13 @@ export function typeCompositionMerge(first: TypeComposition, ...second: Array<Ty
       ...first.value,
       ...secondValues
     ]
+  }
+}
+
+export function typeUnionCreate(...second: Array<Type>): Type {
+  return {
+    metaType: "union",
+    value: second
   }
 }
 
@@ -129,6 +140,12 @@ function handleCompositionType(type: TypeComposition, indentLevel = 0): string {
   return types.join(`\n${indent}& `);
 }
 
+function handleUnionType(type: TypeUnion, indentLevel = 0): string {
+  const indent = ' '.repeat(indentLevel);
+  const types = type.value.map(t => handleTypes(t, indentLevel));
+  return types.join(`\n${indent}| `);
+}
+
 function handleTypes(type: Type, indentLevel = 0): string {
   let result = ``;
   switch (type.metaType) {
@@ -140,6 +157,9 @@ function handleTypes(type: Type, indentLevel = 0): string {
       break;
     case "composition":
       result += handleCompositionType(type as TypeComposition, indentLevel);
+      break;
+    case "union":
+      result += handleUnionType(type as TypeUnion, indentLevel);
       break;
   }
   return result;
