@@ -18,6 +18,9 @@ export function processElementType(element: XsdElement | XsdElement[]): Type[] {
   if (element.type) {
     return [mapXsdTypeToTs(element.type)];
   }
+  if (element["xs:complexContent"]) {
+    return processComplexType(element["xs:complexContent"])
+  }
 
   if (element["xs:complexType"]) {
     return processComplexType(element["xs:complexType"])

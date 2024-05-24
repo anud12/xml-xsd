@@ -1,0 +1,11 @@
+type complex_type = {
+  "complex_type": number;
+  "complex_attribute": number;
+}
+type root = {
+
+}
+& {
+  "attribute": number;
+}
+& complex_type

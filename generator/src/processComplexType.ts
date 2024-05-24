@@ -11,6 +11,7 @@ import {processSequenceType} from "./processSequenceType";
 import {mapXsdTypeToTs} from "./mapXsdType";
 import {processTypeAttribute} from "./processTypeAttribute";
 import {processAttributeGroup} from "./processAttributeGroup";
+import {processExtension} from "./processExtension";
 
 export function processComplexType(element: XsdElement | XsdElement[]): Type[] {
   if (Array.isArray(element)) {
@@ -28,6 +29,10 @@ export function processComplexType(element: XsdElement | XsdElement[]): Type[] {
     metaType: "recursive",
     value: {}
   } as TypeRecursive;
+
+  if(element["xs:extension"]) {
+    type = typeMerge(type, ...processExtension(element["xs:extension"]))
+  }
 
   if (element["xs:sequence"]) {
     type = typeMerge(type, ...processSequenceType(element["xs:sequence"]));

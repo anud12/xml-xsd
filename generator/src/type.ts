@@ -64,7 +64,7 @@ export function typeMerge(first:Type, ...second: Array<Type>): Type {
   if(first.metaType === "recursive" && second.every(value => value.metaType === "recursive")) {
     return typeRecursiveMerge(first as TypeRecursive, ...second as Array<TypeRecursive>);
   }
-  //Else create unions
+  //Else create composition
   return {
     metaType: "composition",
     value: [first, ...second]
