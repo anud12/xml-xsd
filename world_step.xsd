@@ -405,22 +405,20 @@
 
   <xs:group name="group__operation__and">
     <xs:sequence>
-      <xs:sequence>
-        <xs:element name="add_property" minOccurs="0">
-          <xs:complexType>
-            <xs:attribute name="property_rule_ref" use="required"/>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="and" minOccurs="0" maxOccurs="unbounded">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:group ref="group__operation__and" minOccurs="0"/>
-            </xs:sequence>
-            <xs:attribute name="do" use="required" type="type__group__operation__and"/>
-            <xs:attribute name="value" use="required" type="xs:int"/>
-          </xs:complexType>
-        </xs:element>
-      </xs:sequence>
+      <xs:element name="add_property" minOccurs="0">
+        <xs:complexType>
+          <xs:attribute name="property_rule_ref" use="required"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="and" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:group ref="group__operation__and" minOccurs="0"/>
+          </xs:sequence>
+          <xs:attribute name="do" use="required" type="type__group__operation__and"/>
+          <xs:attribute name="value" use="required" type="xs:int"/>
+        </xs:complexType>
+      </xs:element>
     </xs:sequence>
   </xs:group>
 
