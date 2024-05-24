@@ -3,7 +3,7 @@ import {Type} from "./type";
 import {mapXsdTypeToTs} from "./mapXsdType";
 import {processComplexType} from "./processComplexType";
 
-export function processElementType(element: XsdElement | XsdElement[], ident = "  "): Type[] {
+export function processElementType(element: XsdElement | XsdElement[]): Type[] {
   if (Array.isArray(element)) {
     let result: Type[] = [];
     element.forEach(subElement => {

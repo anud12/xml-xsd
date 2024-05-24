@@ -5,6 +5,8 @@ import {processElementTypeToDeclaration} from "./processElementTypeToDeclaration
 import {processSimpleTypeToDeclaration} from "./processSimpleTypeToDeclaration";
 import {processComplexTypeToDeclaration} from "./processComplexTypeToDeclaration";
 import {processGroupToDeclaration} from "./processGroupToDeclaration";
+import {processAttributeGroup} from "./processAttributeGroup";
+import {processAttributeGroupToDeclaration} from "./processAttributeGroupToDeclaration";
 
 // Define interface for XML schema element
 export type XsdElement = {
@@ -32,8 +34,9 @@ function generateTypes(xml: any): string {
   // Start processing from the root element
   const schema = xml['xs:schema'];
   let types = [];
-  types = [...types, ...processSimpleTypeToDeclaration(schema["xs:simpleType"])];
+  types = [...types, ...processAttributeGroupToDeclaration(schema["xs:attributeGroup"])];
   types = [...types, ...processGroupToDeclaration(schema["xs:group"])];
+  types = [...types, ...processSimpleTypeToDeclaration(schema["xs:simpleType"])];
   types = [...types, ...processComplexTypeToDeclaration(schema["xs:complexType"])];
   types = [...types, ...processElementTypeToDeclaration(schema["xs:element"])];
   return types

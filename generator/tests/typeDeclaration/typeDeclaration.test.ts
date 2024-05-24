@@ -157,7 +157,7 @@ describe('typeDeclarationToString function', () => {
     };
 
     const result = typeDeclarationToString(typeDeclaration);
-    expect(result).toEqual(`type test = string 
+    expect(result).toEqual(`type test = string
 | number`);
   });
 });

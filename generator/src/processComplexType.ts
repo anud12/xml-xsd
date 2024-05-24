@@ -10,6 +10,7 @@ import {XsdElement} from "./src";
 import {processSequenceType} from "./processSequenceType";
 import {mapXsdTypeToTs} from "./mapXsdType";
 import {processTypeAttribute} from "./processTypeAttribute";
+import {processAttributeGroup} from "./processAttributeGroup";
 
 export function processComplexType(element: XsdElement | XsdElement[]): Type[] {
   if (Array.isArray(element)) {
@@ -31,12 +32,14 @@ export function processComplexType(element: XsdElement | XsdElement[]): Type[] {
   if (element["xs:sequence"]) {
     type = typeMerge(type, ...processSequenceType(element["xs:sequence"]));
   }
+  if (element["xs:attributeGroup"]) {
+    type = typeMerge(type, ...processAttributeGroup(element["xs:attributeGroup"]));
+  }
   if (element["xs:attribute"]) {
     const attributeTypes = processTypeAttribute(element["xs:attribute"]);
     if(attributeTypes.length > 0) {
       type = typeMerge(type, typeDeclarationsToRecursive(...attributeTypes));
     }
-
   }
   return [type];
 }

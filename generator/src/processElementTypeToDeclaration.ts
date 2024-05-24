@@ -2,7 +2,7 @@ import {XsdElement} from "./src";
 import {Type, TypeDeclaration} from "./type";
 import {processElementType} from "./processElementType";
 
-export function processElementTypeToDeclaration(element: XsdElement | XsdElement[], ident: string = ""): TypeDeclaration[] {
+export function processElementTypeToDeclaration(element: XsdElement | XsdElement[]): TypeDeclaration[] {
   if (Array.isArray(element)) {
     let result: TypeDeclaration[] = [];
     element.forEach(subElement => {

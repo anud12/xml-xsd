@@ -1,0 +1,7 @@
+type attributeGroup = {
+  "value": number;
+}
+type root = {
+
+}
+& attributeGroup
