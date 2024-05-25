@@ -55,6 +55,7 @@ export function main(path: string, output?: string) {
   console.log(typeString);
   if (output) {
     fs.writeFileSync(output, typeString);
+    fs.writeFileSync(`${output}.json`, JSON.stringify(types, null, 2));
   }
 
   return types;

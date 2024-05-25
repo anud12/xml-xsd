@@ -1,0 +1,52 @@
+[
+  {
+    "name": "extension",
+    "value": {
+      "metaType": "recursive",
+      "value": {
+        "extensionAttribute": {
+          "metaType": "primitive",
+          "value": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "complexType",
+    "value": {
+      "metaType": "composition",
+      "value": [
+        {
+          "metaType": "composition",
+          "value": [
+            {
+              "metaType": "composition",
+              "value": [
+                {
+                  "metaType": "recursive",
+                  "value": {
+                    "attribute": {
+                      "metaType": "primitive",
+                      "value": "string"
+                    }
+                  }
+                },
+                {
+                  "metaType": "primitive",
+                  "value": "extension"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "root",
+    "value": {
+      "metaType": "primitive",
+      "value": "complexType"
+    }
+  }
+]

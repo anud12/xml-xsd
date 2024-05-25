@@ -31,6 +31,9 @@ export function processComplexType(element: XsdElement | XsdElement[]): Type[] {
     value: {}
   } as TypeRecursive;
 
+  if(element["xs:complexContent"]) {
+    type = typeMerge(type, ...processComplexType(element["xs:complexContent"]))
+  }
   if(element["xs:extension"]) {
     type = typeMerge(type, ...processExtension(element["xs:extension"]))
   }

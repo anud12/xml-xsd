@@ -68,7 +68,7 @@
         </xs:complexType>
       </xs:element>
     </xs:sequence>
-    <xs:attribute name="property_rule_ref" use="required"/>
+    <xs:attribute name="property_rule_ref" type="xs:string" use="required"/>
   </xs:complexType>
 
   <xs:complexType name="type_icon">
@@ -105,7 +105,7 @@
           </xs:documentation>
         </xs:annotation>
         <xs:complexType>
-          <xs:attribute name="property_rule_ref" use="required">
+          <xs:attribute name="property_rule_ref" type="xs:string" use="required">
             <xs:annotation>
               <xs:documentation>
                 Represents the reference to a property rule.
@@ -113,6 +113,7 @@
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="value"
+                        type="xs:int"
                         use="required">
             <xs:annotation>
               <xs:documentation>
@@ -141,7 +142,7 @@
           </xs:documentation>
         </xs:annotation>
         <xs:complexType>
-          <xs:attribute name="classification_rule_ref" use="required"/>
+          <xs:attribute name="classification_rule_ref" type="xs:string" use="required"/>
         </xs:complexType>
       </xs:element>
     </xs:sequence>
@@ -310,12 +311,12 @@
               </xs:annotation>
             </xs:element>
           </xs:sequence>
-          <xs:attribute ref="property_rule_ref"/>
+          <xs:attribute ref="property_rule_ref" type="xs:string"/>
         </xs:complexType>
       </xs:element>
       <xs:element name="classification" minOccurs="0" maxOccurs="unbounded">
         <xs:complexType>
-          <xs:attribute name="classification_rule_ref" use="required"/>
+          <xs:attribute name="classification_rule_ref" type="xs:string" use="required"/>
         </xs:complexType>
       </xs:element>
       <xs:element name="race" minOccurs="0">
@@ -736,7 +737,7 @@
                               <xs:sequence>
                                 <xs:group ref="group__math_operations"/>
                               </xs:sequence>
-                              <xs:attribute name="property_rule_ref" use="required"/>
+                              <xs:attribute name="property_rule_ref" type="xs:string" use="required"/>
                               <xs:attribute name="is" use="required">
                                 <xs:simpleType>
                                   <xs:restriction base="xs:string">
@@ -814,7 +815,7 @@
                                       maxOccurs="unbounded">
                             <xs:complexType>
                               <xs:group ref="group__math_operations"/>
-                              <xs:attribute name="property_rule_ref"/>
+                              <xs:attribute name="property_rule_ref" type="xs:string"/>
                             </xs:complexType>
                           </xs:element>
                           <xs:element name="icon" type="type_icon"/>
@@ -990,7 +991,7 @@
                                   <xs:complexType>
                                     <xs:complexContent>
                                       <xs:extension base="type__math_operations">
-                                        <xs:attribute name="property_rule_ref" use="required">
+                                        <xs:attribute name="property_rule_ref" type="xs:string" use="required">
                                           <xs:annotation>
                                             <xs:documentation>
                                               Represents the reference to a property rule.
@@ -1086,7 +1087,7 @@
                           <xs:element name="property" minOccurs="0"
                                       maxOccurs="unbounded">
                             <xs:complexType>
-                              <xs:attribute name="property_rule_ref" use="required"/>
+                              <xs:attribute name="property_rule_ref" type="xs:string" use="required"/>
                               <xs:attribute name="value"
                                             use="required"/>
                             </xs:complexType>
@@ -1113,7 +1114,7 @@
                           <xs:element name="classification" minOccurs="0"
                                       maxOccurs="unbounded">
                             <xs:complexType>
-                              <xs:attribute name="classification_rule_ref" use="required"/>
+                              <xs:attribute name="classification_rule_ref" type="xs:string" use="required"/>
                             </xs:complexType>
                           </xs:element>
                         </xs:sequence>
