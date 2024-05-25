@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import FastXMLParser from 'fast-xml-parser';
-import {typeDeclarationToString} from "./type";
+import {Type, TypeDeclaration, typeDeclarationToString} from "./type";
 import {processElementTypeToDeclaration} from "./processElementTypeToDeclaration";
 import {processSimpleTypeToDeclaration} from "./processSimpleTypeToDeclaration";
 import {processComplexTypeToDeclaration} from "./processComplexTypeToDeclaration";
@@ -30,7 +30,7 @@ function parseXsdSchema(filePath: string): any {
 
 
 // Function to generate TypeScript types from the parsed XSD schema
-function generateTypes(xml: any): string {
+function generateTypes(xml: any): TypeDeclaration[] {
   // Start processing from the root element
   const schema = xml['xs:schema'];
   let types = [];
@@ -39,11 +39,7 @@ function generateTypes(xml: any): string {
   types = [...types, ...processSimpleTypeToDeclaration(schema["xs:simpleType"])];
   types = [...types, ...processComplexTypeToDeclaration(schema["xs:complexType"])];
   types = [...types, ...processElementTypeToDeclaration(schema["xs:element"])];
-  return types
-    .map(value => {
-      return typeDeclarationToString(value)
-    })
-    .join("\n");
+  return types;
 }
 
 
@@ -53,7 +49,11 @@ export function main(path: string, output?: string) {
   const types = generateTypes(schema);
   console.log(types);
   if (output) {
-    fs.writeFileSync(output, types);
+    fs.writeFileSync(output, types
+      .map(value => {
+        return typeDeclarationToString(value)
+      })
+      .join("\n"));
   }
 
   return types;

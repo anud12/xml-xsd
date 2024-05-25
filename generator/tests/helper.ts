@@ -12,5 +12,5 @@ export function test_helper(dirname:string): void {
   const expectedTypes = fs.readFileSync(outputFilePath, 'utf-8');
 
   // Compare the generated types with the expected output using Jest assertions
-  expect(generatedTypes).toEqual(expectedTypes);
+  expect(JSON.stringify(generatedTypes, null, 2)).toEqual(expectedTypes);
 }

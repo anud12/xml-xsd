@@ -6,6 +6,11 @@ export type TypeRecursive = {
     [P: string]: Type
   }
 }
+
+export type TypeUnit = {
+  metaType: "unit",
+}
+
 export type TypePrimitive = {
   metaType: "primitive"
   value: string,

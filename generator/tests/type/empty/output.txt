@@ -1,1 +1,9 @@
-type root = unknown
+[
+  {
+    "name": "root",
+    "value": {
+      "metaType": "primitive",
+      "value": "unknown"
+    }
+  }
+]

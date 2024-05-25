@@ -1,3 +1,14 @@
-type root = {
-  "child": number;
-}
+[
+  {
+    "name": "root",
+    "value": {
+      "metaType": "recursive",
+      "value": {
+        "child": {
+          "metaType": "primitive",
+          "value": "number"
+        }
+      }
+    }
+  }
+]

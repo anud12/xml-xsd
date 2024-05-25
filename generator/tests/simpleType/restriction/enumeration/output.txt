@@ -1,3 +1,25 @@
-type simple_type = "add"
-| "add_dice"
-type root = simple_type
+[
+  {
+    "name": "simple_type",
+    "value": {
+      "metaType": "union",
+      "value": [
+        {
+          "metaType": "primitive",
+          "value": "\"add\""
+        },
+        {
+          "metaType": "primitive",
+          "value": "\"add_dice\""
+        }
+      ]
+    }
+  },
+  {
+    "name": "root",
+    "value": {
+      "metaType": "primitive",
+      "value": "simple_type"
+    }
+  }
+]

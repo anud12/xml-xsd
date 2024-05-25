@@ -1,4 +1,18 @@
-type root = {
-  "attributeName": number;
-  "secondAttributeName": number;
-}
+[
+  {
+    "name": "root",
+    "value": {
+      "metaType": "recursive",
+      "value": {
+        "attributeName": {
+          "metaType": "primitive",
+          "value": "number"
+        },
+        "secondAttributeName": {
+          "metaType": "primitive",
+          "value": "number"
+        }
+      }
+    }
+  }
+]

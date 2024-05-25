@@ -1,2 +1,16 @@
-type simple_type = string
-type root = simple_type
+[
+  {
+    "name": "simple_type",
+    "value": {
+      "metaType": "primitive",
+      "value": "string"
+    }
+  },
+  {
+    "name": "root",
+    "value": {
+      "metaType": "primitive",
+      "value": "simple_type"
+    }
+  }
+]

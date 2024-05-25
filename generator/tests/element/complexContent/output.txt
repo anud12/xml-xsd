@@ -1,11 +1,48 @@
-type complex_type = {
-  "complex_type": number;
-  "complex_attribute": number;
-}
-type root = {
-
-}
-& {
-  "attribute": number;
-}
-& complex_type
+[
+  {
+    "name": "complex_type",
+    "value": {
+      "metaType": "recursive",
+      "value": {
+        "complex_type": {
+          "metaType": "primitive",
+          "value": "number"
+        },
+        "complex_attribute": {
+          "metaType": "primitive",
+          "value": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "root",
+    "value": {
+      "metaType": "composition",
+      "value": [
+        {
+          "metaType": "recursive",
+          "value": {}
+        },
+        {
+          "metaType": "composition",
+          "value": [
+            {
+              "metaType": "recursive",
+              "value": {
+                "attribute": {
+                  "metaType": "primitive",
+                  "value": "number"
+                }
+              }
+            },
+            {
+              "metaType": "primitive",
+              "value": "complex_type"
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

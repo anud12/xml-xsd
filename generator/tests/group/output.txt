@@ -1,7 +1,30 @@
-type group = {
-  "group_element": number;
-}
-type root = {
-
-}
-& group
+[
+  {
+    "name": "group",
+    "value": {
+      "metaType": "recursive",
+      "value": {
+        "group_element": {
+          "metaType": "primitive",
+          "value": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "root",
+    "value": {
+      "metaType": "composition",
+      "value": [
+        {
+          "metaType": "recursive",
+          "value": {}
+        },
+        {
+          "metaType": "primitive",
+          "value": "group"
+        }
+      ]
+    }
+  }
+]

@@ -1,4 +1,21 @@
-type complexType = {
-  "complexAttribute": number;
-}
-type root = complexType
+[
+  {
+    "name": "complexType",
+    "value": {
+      "metaType": "recursive",
+      "value": {
+        "complexAttribute": {
+          "metaType": "primitive",
+          "value": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "root",
+    "value": {
+      "metaType": "primitive",
+      "value": "complexType"
+    }
+  }
+]
