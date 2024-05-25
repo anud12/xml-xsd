@@ -47,17 +47,18 @@ function generateTypes(xml: any): TypeDeclaration[] {
 export function main(path: string, output?: string) {
   const schema = parseXsdSchema(path);
   const types = generateTypes(schema);
-  console.log(types);
+  const typeString =  types
+    .map(value => {
+      return typeDeclarationToString(value)
+    })
+    .join("\n");
+  console.log(typeString);
   if (output) {
-    fs.writeFileSync(output, types
-      .map(value => {
-        return typeDeclarationToString(value)
-      })
-      .join("\n"));
+    fs.writeFileSync(output, typeString);
   }
 
   return types;
 }
 
 // // Run the main function
-main("../world_step.xsd", "output.ts");
+// main("../world_step.xsd", "output.ts");

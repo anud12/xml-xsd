@@ -7,10 +7,6 @@ export type TypeRecursive = {
   }
 }
 
-export type TypeUnit = {
-  metaType: "unit",
-}
-
 export type TypePrimitive = {
   metaType: "primitive"
   value: string,
@@ -65,11 +61,22 @@ export function typeRecursiveMerge(first: TypeRecursive, ...second: Array<TypeRe
 }
 
 export function typeMerge(first:Type, ...second: Array<Type>): Type {
+
+  //filter undefined values
+  second = second.filter(value => value !== undefined);
+  //if first type is recursive but with no values ignore
+  if(first?.metaType === "recursive" && Object.keys(first.value).length === 0) {
+    return typeMerge(second[0], ...second.slice(1));
+  }
+
   //If all elements are recursive execute typeRecursiveMerge
-  if(first.metaType === "recursive" && second.every(value => value.metaType === "recursive")) {
+  if(first?.metaType === "recursive" && second.every(value => value.metaType === "recursive")) {
     return typeRecursiveMerge(first as TypeRecursive, ...second as Array<TypeRecursive>);
   }
-  //Else create composition
+
+
+
+//Else create composition
   return {
     metaType: "composition",
     value: [first, ...second]
@@ -172,6 +179,6 @@ function handleTypes(type: Type, indentLevel = 0): string {
 
 export function typeDeclarationToString(typeDeclaration: TypeDeclaration, indentLevel = 0): string {
   let result = `type ${typeDeclaration.name} = `;
-  result += handleTypes(typeDeclaration.value, indentLevel)
+  result +=   handleTypes(typeDeclaration.value, indentLevel)
   return result;
 }

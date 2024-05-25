@@ -17,10 +17,6 @@
       "metaType": "composition",
       "value": [
         {
-          "metaType": "recursive",
-          "value": {}
-        },
-        {
           "metaType": "primitive",
           "value": "group"
         }
