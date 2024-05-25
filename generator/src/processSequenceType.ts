@@ -2,24 +2,29 @@ import {XsdElement} from "./src";
 import {Type, typeDeclarationsToRecursive} from "./type";
 import {processElementTypeToDeclaration} from "./processElementTypeToDeclaration";
 import {processGroup} from "./processGroup";
+import {mergeError} from "./mergeError";
 
 export function processSequenceType(element: XsdElement | XsdElement[]): Type[] {
-  if (Array.isArray(element)) {
-    let result: Type[] = [];
-    element.forEach(subElement => {
-      result.push(...processSequenceType(subElement));
-    })
-    return result;
-  }
+  try {
+    if (Array.isArray(element)) {
+      let result: Type[] = [];
+      element.forEach(subElement => {
+        result.push(...processSequenceType(subElement));
+      })
+      return result;
+    }
 
-  let types: Type[] = [];
+    let types: Type[] = [];
 
-  if (element["xs:element"]) {
-    const type = typeDeclarationsToRecursive(...processElementTypeToDeclaration(element["xs:element"]));
-    return [type];
+    if (element["xs:element"]) {
+      const type = typeDeclarationsToRecursive(...processElementTypeToDeclaration(element["xs:element"]));
+      return [type];
+    }
+    if (element["xs:group"]) {
+      return processGroup(element["xs:group"]);
+    }
+    return types;
+  } catch (e) {
+    throw mergeError(e, new Error(`processSequenceType failed for ${JSON.stringify(element, null, 2)}`));
   }
-  if (element["xs:group"]) {
-    return processGroup(element["xs:group"]);
-  }
-  return types;
 }

@@ -1,0 +1,23 @@
+[
+  {
+    "name": "root",
+    "value": {
+      "metaType": "recursive",
+      "value": {
+        "attributeName": {
+          "metaType": "union",
+          "value": [
+            {
+              "metaType": "primitive",
+              "value": "\"first\""
+            },
+            {
+              "metaType": "primitive",
+              "value": "\"second\""
+            }
+          ]
+        }
+      }
+    }
+  }
+]

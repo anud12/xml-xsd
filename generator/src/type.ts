@@ -6,7 +6,9 @@ export type TypeRecursive = {
     [P: string]: Type
   }
 }
-
+export type TypeUnknown = {
+  metaType: "unknown"
+}
 export type TypePrimitive = {
   metaType: "primitive"
   value: string,
