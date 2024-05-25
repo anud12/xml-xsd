@@ -60,21 +60,27 @@ export function typeRecursiveMerge(first: TypeRecursive, ...second: Array<TypeRe
   }
 }
 
-export function typeMerge(first:Type, ...second: Array<Type>): Type {
+export function typeMergeAsUnion(first: Type, ...second: Array<Type>): Type {
+  return typeUnionCreate(first, ...second);
+}
+
+export function typeMerge(first: Type, ...second: Array<Type>): Type {
 
   //filter undefined values
   second = second.filter(value => value !== undefined);
   //if first type is recursive but with no values ignore
-  if(first?.metaType === "recursive" && Object.keys(first.value).length === 0) {
+  if (first?.metaType === "recursive" && Object.keys(first.value).length === 0) {
     return typeMerge(second[0], ...second.slice(1));
   }
 
   //If all elements are recursive execute typeRecursiveMerge
-  if(first?.metaType === "recursive" && second.every(value => value.metaType === "recursive")) {
+  if (first?.metaType === "recursive" && second.every(value => value.metaType === "recursive")) {
     return typeRecursiveMerge(first as TypeRecursive, ...second as Array<TypeRecursive>);
   }
-
-
+  //if first type is empty union ignore
+  if (first?.metaType === "union" && first.value.length === 0) {
+    return typeMerge(second[0], ...second.slice(1));
+  }
 
 //Else create composition
   return {
@@ -85,7 +91,7 @@ export function typeMerge(first:Type, ...second: Array<Type>): Type {
 
 export function typeAddDeclarations(first: Type, ...declarations: Array<TypeDeclaration>): Type {
   //If all elements are recursive execute typeRecursiveAddDeclarations
-  if(first.metaType === "recursive" && declarations.every(value => value.value.metaType === "recursive")) {
+  if (first.metaType === "recursive" && declarations.every(value => value.value.metaType === "recursive")) {
     return typeRecursiveAddDeclarations(first as TypeRecursive, ...declarations as Array<TypeDeclaration>);
   }
   //Else create union and add declarations as recursive type
@@ -160,7 +166,7 @@ function handleUnionType(type: TypeUnion, indentLevel = 0): string {
 
 function handleTypes(type: Type, indentLevel = 0): string {
   let result = ``;
-  switch (type.metaType) {
+  switch (type?.metaType) {
     case "primitive":
       result += handlePrimitiveType(type as TypePrimitive);
       break;
@@ -173,12 +179,15 @@ function handleTypes(type: Type, indentLevel = 0): string {
     case "union":
       result += handleUnionType(type as TypeUnion, indentLevel);
       break;
+    default: {
+      result += "unknown"
+    }
   }
   return result;
 }
 
 export function typeDeclarationToString(typeDeclaration: TypeDeclaration, indentLevel = 0): string {
   let result = `type ${typeDeclaration.name} = `;
-  result +=   handleTypes(typeDeclaration.value, indentLevel)
+  result += handleTypes(typeDeclaration.value, indentLevel)
   return result;
 }

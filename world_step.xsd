@@ -407,7 +407,7 @@
     <xs:sequence>
       <xs:element name="add_property" minOccurs="0">
         <xs:complexType>
-          <xs:attribute name="property_rule_ref" use="required"/>
+          <xs:attribute name="property_rule_ref" type="xs:string" use="required"/>
         </xs:complexType>
       </xs:element>
       <xs:element name="and" minOccurs="0" maxOccurs="unbounded">
@@ -471,7 +471,7 @@
                 </xs:documentation>
               </xs:annotation>
               <xs:complexType>
-                <xs:attribute name="name_rule_ref" use="required">
+                <xs:attribute name="name_rule_ref" type="xs:string" use="required">
                   <xs:annotation>
                     <xs:documentation>
                       Represents the ID of the referenced 'name_rule'.
@@ -499,7 +499,7 @@
               </xs:complexType>
             </xs:element>
           </xs:choice>
-          <xs:attribute name="prefix" use="required">
+          <xs:attribute name="prefix" type="xs:string" use="required">
             <xs:annotation>
               <xs:documentation>
                 Represents a string that is added to the beginning of the generated name.
@@ -807,7 +807,7 @@
                           <xs:element name="movement" type="type_range" minOccurs="0"/>
                           <xs:element name="name" minOccurs="0">
                             <xs:complexType>
-                              <xs:attribute name="name_rule_ref" use="required"/>
+                              <xs:attribute name="name_rule_ref" type="xs:string" use="required"/>
                             </xs:complexType>
                           </xs:element>
                           <xs:element name="property_bonus" minOccurs="0"

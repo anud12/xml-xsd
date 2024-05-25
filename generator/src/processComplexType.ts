@@ -12,6 +12,7 @@ import {mapXsdTypeToTs} from "./mapXsdType";
 import {processTypeAttribute} from "./processTypeAttribute";
 import {processAttributeGroup} from "./processAttributeGroup";
 import {processExtension} from "./processExtension";
+import {processChoice} from "./processChoiceType";
 
 export function processComplexType(element: XsdElement | XsdElement[]): Type[] {
   if (Array.isArray(element)) {
@@ -33,7 +34,9 @@ export function processComplexType(element: XsdElement | XsdElement[]): Type[] {
   if(element["xs:extension"]) {
     type = typeMerge(type, ...processExtension(element["xs:extension"]))
   }
-
+  if (element["xs:choice"]) {
+    type = typeMerge(type, ...processChoice(element["xs:choice"]));
+  }
   if (element["xs:sequence"]) {
     type = typeMerge(type, ...processSequenceType(element["xs:sequence"]));
   }

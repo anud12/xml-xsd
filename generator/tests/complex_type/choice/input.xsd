@@ -1,0 +1,11 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="root">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element name="firstChoice" type="xs:string"/>
+        <xs:element name="secondChoice" type="xs:int"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

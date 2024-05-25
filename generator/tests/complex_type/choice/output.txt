@@ -1,0 +1,27 @@
+[
+  {
+    "name": "root",
+    "value": {
+      "metaType": "composition",
+      "value": [
+        {
+          "metaType": "union",
+          "value": [
+            {
+              "metaType": "union",
+              "value": []
+            },
+            {
+              "metaType": "primitive",
+              "value": "string"
+            },
+            {
+              "metaType": "primitive",
+              "value": "number"
+            }
+          ]
+        }
+      ]
+    }
+  }
+]
