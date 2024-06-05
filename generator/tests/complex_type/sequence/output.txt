@@ -2,7 +2,7 @@
   {
     "name": "root",
     "value": {
-      "metaType": "recursive",
+      "metaType": "object",
       "value": {
         "child": {
           "metaType": "primitive",

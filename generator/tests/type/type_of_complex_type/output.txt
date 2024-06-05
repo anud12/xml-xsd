@@ -2,11 +2,15 @@
   {
     "name": "complexType",
     "value": {
-      "metaType": "recursive",
-      "value": {
-        "complexAttribute": {
-          "metaType": "primitive",
-          "value": "number"
+      "metaType": "object",
+      "value": {},
+      "attributes": {
+        "metaType": "object",
+        "value": {
+          "complexAttribute": {
+            "metaType": "primitive",
+            "value": "number"
+          }
         }
       }
     }

@@ -2,11 +2,15 @@
   {
     "name": "attributeGroup",
     "value": {
-      "metaType": "recursive",
-      "value": {
+      "metaType": "object",
+      "value": {},
+      "attributes": {
+        "metaType": "object",
         "value": {
-          "metaType": "primitive",
-          "value": "number"
+          "value": {
+            "metaType": "primitive",
+            "value": "number"
+          }
         }
       }
     }
@@ -14,13 +18,17 @@
   {
     "name": "root",
     "value": {
-      "metaType": "composition",
-      "value": [
-        {
-          "metaType": "primitive",
-          "value": "attributeGroup"
-        }
-      ]
+      "metaType": "object",
+      "value": {},
+      "attributes": {
+        "metaType": "composition",
+        "value": [
+          {
+            "metaType": "primitive",
+            "value": "attributeGroup"
+          }
+        ]
+      }
     }
   }
 ]

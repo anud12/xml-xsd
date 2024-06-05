@@ -2,20 +2,24 @@
   {
     "name": "root",
     "value": {
-      "metaType": "recursive",
-      "value": {
-        "attributeName": {
-          "metaType": "union",
-          "value": [
-            {
-              "metaType": "primitive",
-              "value": "\"first\""
-            },
-            {
-              "metaType": "primitive",
-              "value": "\"second\""
-            }
-          ]
+      "metaType": "object",
+      "value": {},
+      "attributes": {
+        "metaType": "object",
+        "value": {
+          "attributeName": {
+            "metaType": "union",
+            "value": [
+              {
+                "metaType": "primitive",
+                "value": "\"first\""
+              },
+              {
+                "metaType": "primitive",
+                "value": "\"second\""
+              }
+            ]
+          }
         }
       }
     }

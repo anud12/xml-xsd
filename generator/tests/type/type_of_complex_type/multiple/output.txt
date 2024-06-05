@@ -2,11 +2,15 @@
   {
     "name": "complexType",
     "value": {
-      "metaType": "recursive",
-      "value": {
-        "complexAttribute": {
-          "metaType": "primitive",
-          "value": "number"
+      "metaType": "object",
+      "value": {},
+      "attributes": {
+        "metaType": "object",
+        "value": {
+          "complexAttribute": {
+            "metaType": "primitive",
+            "value": "number"
+          }
         }
       }
     }
@@ -14,11 +18,15 @@
   {
     "name": "secondComplexType",
     "value": {
-      "metaType": "recursive",
-      "value": {
-        "secondComplexAttribute": {
-          "metaType": "primitive",
-          "value": "number"
+      "metaType": "object",
+      "value": {},
+      "attributes": {
+        "metaType": "object",
+        "value": {
+          "secondComplexAttribute": {
+            "metaType": "primitive",
+            "value": "number"
+          }
         }
       }
     }

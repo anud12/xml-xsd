@@ -2,11 +2,15 @@
   {
     "name": "root",
     "value": {
-      "metaType": "recursive",
-      "value": {
-        "attributeName": {
-          "metaType": "primitive",
-          "value": "number"
+      "metaType": "object",
+      "value": {},
+      "attributes": {
+        "metaType": "object",
+        "value": {
+          "attributeName": {
+            "metaType": "primitive",
+            "value": "number"
+          }
         }
       }
     }

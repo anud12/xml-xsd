@@ -2,15 +2,20 @@
   {
     "name": "complex_type",
     "value": {
-      "metaType": "recursive",
+      "metaType": "object",
       "value": {
         "complex_type": {
           "metaType": "primitive",
           "value": "number"
-        },
-        "complex_attribute": {
-          "metaType": "primitive",
-          "value": "number"
+        }
+      },
+      "attributes": {
+        "metaType": "object",
+        "value": {
+          "complex_attribute": {
+            "metaType": "primitive",
+            "value": "number"
+          }
         }
       }
     }
@@ -24,11 +29,15 @@
           "metaType": "composition",
           "value": [
             {
-              "metaType": "recursive",
-              "value": {
-                "attribute": {
-                  "metaType": "primitive",
-                  "value": "number"
+              "metaType": "object",
+              "value": {},
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "attribute": {
+                    "metaType": "primitive",
+                    "value": "number"
+                  }
                 }
               }
             },

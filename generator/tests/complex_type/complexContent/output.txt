@@ -2,11 +2,15 @@
   {
     "name": "extension",
     "value": {
-      "metaType": "recursive",
-      "value": {
-        "extensionAttribute": {
-          "metaType": "primitive",
-          "value": "string"
+      "metaType": "object",
+      "value": {},
+      "attributes": {
+        "metaType": "object",
+        "value": {
+          "extensionAttribute": {
+            "metaType": "primitive",
+            "value": "string"
+          }
         }
       }
     }
@@ -23,11 +27,15 @@
               "metaType": "composition",
               "value": [
                 {
-                  "metaType": "recursive",
-                  "value": {
-                    "attribute": {
-                      "metaType": "primitive",
-                      "value": "string"
+                  "metaType": "object",
+                  "value": {},
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "attribute": {
+                        "metaType": "primitive",
+                        "value": "string"
+                      }
                     }
                   }
                 },

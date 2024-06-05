@@ -1,7 +1,12 @@
-export type Type = TypeRecursive | TypePrimitive | TypeComposition | TypeUnion;
+export type Type = (TypeObject | TypePrimitive | TypeComposition | TypeUnion) & TypeAttribute;
 
-export type TypeRecursive = {
-  metaType: "recursive",
+export type TypeAttribute = {
+  attributes?: Type
+}
+
+export type TypeObject = {
+  metaType: "object",
+  attributes?: TypeObject,
   value: {
     [P: string]: Type
   }
@@ -15,10 +20,12 @@ export type TypePrimitive = {
 }
 export type TypeComposition = {
   metaType: "composition"
+  attributes?: TypeObject,
   value: Type[],
 }
 export type TypeUnion = {
   metaType: "union"
+  attributes?: TypeObject,
   value: Type[],
 }
 export type TypeDeclaration = {
@@ -46,7 +53,7 @@ export function typeUnionCreate(...second: Array<Type>): Type {
   }
 }
 
-export function typeRecursiveMerge(first: TypeRecursive, ...second: Array<TypeRecursive>): TypeRecursive {
+export function typeRecursiveMerge(first: TypeObject, ...second: Array<TypeObject>): TypeObject {
   const secondValues = second.reduce((acc, value) => {
     return {
       ...acc,
@@ -54,7 +61,7 @@ export function typeRecursiveMerge(first: TypeRecursive, ...second: Array<TypeRe
     }
   }, {});
   return {
-    metaType: "recursive",
+    metaType: "object",
     value: {
       ...first.value,
       ...secondValues
@@ -71,18 +78,29 @@ export function typeMerge(first: Type, ...second: Array<Type>): Type {
   //filter undefined values
   second = second.filter(value => value !== undefined);
   //if first type is recursive but with no values ignore
-  if (first?.metaType === "recursive" && Object.keys(first.value).length === 0) {
+  if (first?.metaType === "object" && Object.keys(first.value).length === 0) {
     return typeMerge(second[0], ...second.slice(1));
   }
 
   //If all elements are recursive execute typeRecursiveMerge
-  if (first?.metaType === "recursive" && second.every(value => value.metaType === "recursive")) {
-    return typeRecursiveMerge(first as TypeRecursive, ...second as Array<TypeRecursive>);
+  if (first?.metaType === "object" && second.every(value => value.metaType === "object")) {
+    return typeRecursiveMerge(first as TypeObject, ...second as Array<TypeObject>);
   }
   //if first type is empty union ignore
   if (first?.metaType === "union" && first.value.length === 0) {
     return typeMerge(second[0], ...second.slice(1));
   }
+  // if first is undefined ignore
+  if (first === undefined) {
+    return typeMerge(second[0], ...second.slice(1));
+  }
+  //if first is undefined and second length 1 return second
+  if (first === undefined && second.length === 1) {
+    return second[0];
+  }
+
+
+
 
 //Else create composition
   return {
@@ -93,14 +111,14 @@ export function typeMerge(first: Type, ...second: Array<Type>): Type {
 
 export function typeAddDeclarations(first: Type, ...declarations: Array<TypeDeclaration>): Type {
   //If all elements are recursive execute typeRecursiveAddDeclarations
-  if (first.metaType === "recursive" && declarations.every(value => value.value.metaType === "recursive")) {
-    return typeRecursiveAddDeclarations(first as TypeRecursive, ...declarations as Array<TypeDeclaration>);
+  if (first.metaType === "object" && declarations.every(value => value.value.metaType === "object")) {
+    return typeRecursiveAddDeclarations(first as TypeObject, ...declarations as Array<TypeDeclaration>);
   }
   //Else create union and add declarations as recursive type
   return typeCompositionAddRecursive(first, ...declarations);
 }
 
-export function typeRecursiveAddDeclarations(first: TypeRecursive, ...declarations: Array<TypeDeclaration>): TypeRecursive {
+export function typeRecursiveAddDeclarations(first: TypeObject, ...declarations: Array<TypeDeclaration>): TypeObject {
   const declarationsValue = declarations.reduce((acc, value) => {
     return {
       ...acc,
@@ -108,7 +126,7 @@ export function typeRecursiveAddDeclarations(first: TypeRecursive, ...declaratio
     }
   }, {});
   return {
-    metaType: "recursive",
+    metaType: "object",
     value: {
       ...first.value,
       ...declarationsValue
@@ -127,7 +145,7 @@ export function typeCompositionAddRecursive(first: Type, ...declarations: Array<
   };
 }
 
-export function typeDeclarationsToRecursive(...declarations: Array<TypeDeclaration>): TypeRecursive {
+export function typeDeclarationsToRecursive(...declarations: Array<TypeDeclaration>): TypeObject {
   const declarationsValue = declarations.reduce((acc, value) => {
     return {
       ...acc,
@@ -135,7 +153,7 @@ export function typeDeclarationsToRecursive(...declarations: Array<TypeDeclarati
     }
   }, {});
   return {
-    metaType: "recursive",
+    metaType: "object",
     value: declarationsValue
   }
 }
@@ -144,14 +162,19 @@ function handlePrimitiveType(type: TypePrimitive): string {
   return type.value;
 }
 
-function handleRecursiveType(type: TypeRecursive, indentLevel = 0): string {
+function handleObjectType(type: TypeObject, indentLevel = 0): string {
+  const attributes = type.attributes && handleTypes(type.attributes);
   const indent = ' '.repeat(indentLevel);
   const properties = Object.keys(type.value).map(key => {
     const propertyType = type.value[key];
     let propertyTypeString: string = handleTypes(propertyType, indentLevel + 2);
     return `${indent}  "${key}": ${propertyTypeString};`;
   });
-  return `{\n${properties.join('\n')}\n${indent}}`;
+  const body = `{\n${properties.join('\n')}\n${indent}}`;
+  if(attributes) {
+    return `${attributes} & ${body}`
+  }
+  return body;
 }
 
 function handleCompositionType(type: TypeComposition, indentLevel = 0): string {
@@ -172,8 +195,8 @@ function handleTypes(type: Type, indentLevel = 0): string {
     case "primitive":
       result += handlePrimitiveType(type as TypePrimitive);
       break;
-    case "recursive":
-      result += handleRecursiveType(type as TypeRecursive, indentLevel);
+    case "object":
+      result += handleObjectType(type as TypeObject, indentLevel);
       break;
     case "composition":
       result += handleCompositionType(type as TypeComposition, indentLevel);

@@ -2,9 +2,9 @@ import {
   TypeDeclaration,
   typeDeclarationToString,
   TypePrimitive,
-  TypeRecursive,
+  TypeObject,
   TypeComposition,
-  TypeUnion
+  TypeUnion, Type
 } from "../../src/type";
 
 describe('typeDeclarationToString function', () => {
@@ -25,14 +25,14 @@ describe('typeDeclarationToString function', () => {
     const typeDeclaration: TypeDeclaration = {
       name: 'test',
       value: {
-        metaType: 'recursive',
+        metaType: 'object',
         value: {
           prop: {
             metaType: 'primitive',
             value: 'number'
           }
         }
-      } as TypeRecursive
+      } as TypeObject
     };
 
     const result = typeDeclarationToString(typeDeclaration);
@@ -45,10 +45,10 @@ describe('typeDeclarationToString function', () => {
     const typeDeclaration: TypeDeclaration = {
       name: 'test',
       value: {
-        metaType: 'recursive',
+        metaType: 'object',
         value: {
           level1: {
-            metaType: 'recursive',
+            metaType: 'object',
             value: {
               level2: {
                 metaType: 'primitive',
@@ -65,7 +65,7 @@ describe('typeDeclarationToString function', () => {
             value: 'number'
           }
         }
-      } as TypeRecursive
+      } as TypeObject
     };
 
     const result = typeDeclarationToString(typeDeclaration);
@@ -108,7 +108,7 @@ describe('typeDeclarationToString function', () => {
         metaType: 'composition',
         value: [
           {
-            metaType: 'recursive',
+            metaType: 'object',
             value: {
               prop1: {
                 metaType: 'primitive',
@@ -117,7 +117,7 @@ describe('typeDeclarationToString function', () => {
             }
           },
           {
-            metaType: 'recursive',
+            metaType: 'object',
             value: {
               prop2: {
                 metaType: 'primitive',
@@ -160,4 +160,35 @@ describe('typeDeclarationToString function', () => {
     expect(result).toEqual(`type test = string
 | number`);
   });
+
+  it('should correctly handle object type with attributes', async () => {
+    const typeDeclaration: TypeDeclaration = {
+      name: 'test',
+      value: {
+        metaType: 'object',
+        value: {
+          prop: {
+            metaType: 'primitive',
+            value: 'string'
+          }
+        },
+        attributes: {
+          metaType:"object",
+          value: {
+            attr: {
+              metaType: 'primitive',
+              value: 'number'
+            }
+          }
+        }
+      } as Type
+    };
+
+    const result = typeDeclarationToString(typeDeclaration);
+    expect(result).toEqual(`type test = {
+  "attr": number;
+} & {
+  "prop": string;
+}`);
+  })
 });

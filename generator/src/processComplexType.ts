@@ -1,4 +1,4 @@
-import {Type, typeDeclarationsToRecursive, typeMerge, TypeRecursive} from "./type";
+import {Type, typeDeclarationsToRecursive, typeMerge, TypeObject} from "./type";
 import {XsdElement} from "./src";
 import {processSequenceType} from "./processSequenceType";
 import {mapXsdTypeToTs} from "./mapXsdType";
@@ -22,9 +22,9 @@ export function processComplexType(element: XsdElement | XsdElement[]): Type[] {
       return [mapXsdTypeToTs(element.type)]
     }
     let type: Type = {
-      metaType: "recursive",
-      value: {}
-    } as TypeRecursive;
+      metaType: "object",
+      value: {},
+    } as TypeObject;
 
     if (element["xs:complexContent"]) {
       type = typeMerge(type, ...processComplexType(element["xs:complexContent"]))
@@ -39,12 +39,12 @@ export function processComplexType(element: XsdElement | XsdElement[]): Type[] {
       type = typeMerge(type, ...processSequenceType(element["xs:sequence"]));
     }
     if (element["xs:attributeGroup"]) {
-      type = typeMerge(type, ...processAttributeGroup(element["xs:attributeGroup"]));
+      type.attributes = typeMerge(type.attributes, ...processAttributeGroup(element["xs:attributeGroup"]));
     }
     if (element["xs:attribute"]) {
       const attributeTypes = processTypeAttribute(element["xs:attribute"]);
       if (attributeTypes.length > 0) {
-        type = typeMerge(type, typeDeclarationsToRecursive(...attributeTypes));
+        type.attributes = typeMerge(type.attributes, typeDeclarationsToRecursive(...attributeTypes));
       }
     }
     return [type];
