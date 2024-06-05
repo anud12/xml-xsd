@@ -22,7 +22,7 @@ export function processChoice(element: XsdElement | XsdElement[]): Type[] {
       value: []
     };
 
-    if(element["xs:element"]) {
+    if(element["xs:element"] !== undefined) {
       type = typeMergeAsUnion(type, ...processElementType(element["xs:element"]));
     }
 

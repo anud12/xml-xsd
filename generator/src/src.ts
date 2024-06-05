@@ -62,4 +62,3 @@ export function main(path: string, output?: string) {
 }
 
 // // Run the main function
-// main("../world_step.xsd", "output.ts");

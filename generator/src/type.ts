@@ -1,4 +1,6 @@
-export type Type = (TypeObject | TypePrimitive | TypeComposition | TypeUnion) & TypeAttribute;
+import {mergeError} from "./mergeError";
+
+export type Type = (TypeObject | TypePrimitive | TypeComposition | TypeUnion | TypeAny) & TypeAttribute;
 
 export type TypeAttribute = {
   attributes?: Type
@@ -11,8 +13,8 @@ export type TypeObject = {
     [P: string]: Type
   }
 }
-export type TypeUnknown = {
-  metaType: "unknown"
+export type TypeAny = {
+  metaType: "any"
 }
 export type TypePrimitive = {
   metaType: "primitive"
@@ -74,38 +76,46 @@ export function typeMergeAsUnion(first: Type, ...second: Array<Type>): Type {
 }
 
 export function typeMerge(first: Type, ...second: Array<Type>): Type {
+  try {
+    //filter undefined values
+    second = second.filter(value => value !== undefined);
+    //If all elements are recursive execute typeRecursiveMerge
+    if (first?.metaType === "object" && second.every(value => value.metaType === "object")) {
+      return typeRecursiveMerge(first as TypeObject, ...second as Array<TypeObject>);
+    }
+    //if first type is recursive but with no values ignore
+    if (first?.metaType === "object" && Object.keys(first.value).length === 0) {
+      return typeMerge(second[0], ...second.slice(1));
+    }
+    //if first type is empty union ignore
+    if (first?.metaType === "union" && first.value.length === 0) {
+      return typeMerge(second[0], ...second.slice(1));
+    }
+    //if first type is any return any
+    if (first?.metaType === "any") {
+      return first;
+    }
+    // if first is undefined ignore
+    if (first === undefined) {
+      if(second === undefined || second.length === 0) {
+        return {
+          metaType: "union",
+          value: []
+        }
+      }
+      if(second.length === 1) {
+        return second[0];
+      }
 
-  //filter undefined values
-  second = second.filter(value => value !== undefined);
-  //if first type is recursive but with no values ignore
-  if (first?.metaType === "object" && Object.keys(first.value).length === 0) {
-    return typeMerge(second[0], ...second.slice(1));
-  }
-
-  //If all elements are recursive execute typeRecursiveMerge
-  if (first?.metaType === "object" && second.every(value => value.metaType === "object")) {
-    return typeRecursiveMerge(first as TypeObject, ...second as Array<TypeObject>);
-  }
-  //if first type is empty union ignore
-  if (first?.metaType === "union" && first.value.length === 0) {
-    return typeMerge(second[0], ...second.slice(1));
-  }
-  // if first is undefined ignore
-  if (first === undefined) {
-    return typeMerge(second[0], ...second.slice(1));
-  }
-  //if first is undefined and second length 1 return second
-  if (first === undefined && second.length === 1) {
-    return second[0];
-  }
-
-
-
-
-//Else create composition
-  return {
-    metaType: "composition",
-    value: [first, ...second]
+      return typeMerge(second[0], ...second.slice(1));
+    }
+    // create composition
+    return {
+      metaType: "composition",
+      value: [first, ...second]
+    }
+  } catch (e) {
+    throw mergeError(e, new Error(`typeMerge failed for ${JSON.stringify(first, null, 2)} and ${JSON.stringify(second, null, 2)}`))
   }
 }
 
@@ -163,7 +173,7 @@ function handlePrimitiveType(type: TypePrimitive): string {
 }
 
 function handleObjectType(type: TypeObject, indentLevel = 0): string {
-  const attributes = type.attributes && handleTypes(type.attributes);
+  const attributes = type.attributes && handleTypes(type.attributes, indentLevel);
   const indent = ' '.repeat(indentLevel);
   const properties = Object.keys(type.value).map(key => {
     const propertyType = type.value[key];
@@ -189,6 +199,11 @@ function handleUnionType(type: TypeUnion, indentLevel = 0): string {
   return types.join(`\n${indent}| `);
 }
 
+function handleAnyType(type: TypeAny, indentLevel = 0): string {
+  const indent = ' '.repeat(indentLevel);
+  return `${indent}any`;
+}
+
 function handleTypes(type: Type, indentLevel = 0): string {
   let result = ``;
   switch (type?.metaType) {
@@ -203,6 +218,9 @@ function handleTypes(type: Type, indentLevel = 0): string {
       break;
     case "union":
       result += handleUnionType(type as TypeUnion, indentLevel);
+      break;
+    case "any":
+      result += handleAnyType(type as TypeAny, indentLevel);
       break;
     default: {
       result += "unknown"

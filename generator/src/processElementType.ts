@@ -20,11 +20,11 @@ export function processElementType(element: XsdElement | XsdElement[]): Type[] {
     if (element.type) {
       return [mapXsdTypeToTs(element.type)];
     }
-    if (element["xs:complexContent"]) {
+    if (element["xs:complexContent"] !== undefined) {
       return processComplexType(element["xs:complexContent"])
     }
 
-    if (element["xs:complexType"]) {
+    if (element["xs:complexType"] !== undefined) {
       return processComplexType(element["xs:complexType"])
     }
 

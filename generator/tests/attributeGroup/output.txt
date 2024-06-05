@@ -21,13 +21,8 @@
       "metaType": "object",
       "value": {},
       "attributes": {
-        "metaType": "composition",
-        "value": [
-          {
-            "metaType": "primitive",
-            "value": "attributeGroup"
-          }
-        ]
+        "metaType": "primitive",
+        "value": "attributeGroup"
       }
     }
   }

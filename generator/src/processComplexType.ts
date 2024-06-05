@@ -26,26 +26,24 @@ export function processComplexType(element: XsdElement | XsdElement[]): Type[] {
       value: {},
     } as TypeObject;
 
-    if (element["xs:complexContent"]) {
+    if (element["xs:complexContent"] !== undefined) {
       type = typeMerge(type, ...processComplexType(element["xs:complexContent"]))
     }
-    if (element["xs:extension"]) {
+    if (element["xs:extension"] !== undefined) {
       type = typeMerge(type, ...processExtension(element["xs:extension"]))
     }
-    if (element["xs:choice"]) {
+    if (element["xs:choice"] !== undefined) {
       type = typeMerge(type, ...processChoice(element["xs:choice"]));
     }
-    if (element["xs:sequence"]) {
+    if (element["xs:sequence"] !== undefined) {
       type = typeMerge(type, ...processSequenceType(element["xs:sequence"]));
     }
-    if (element["xs:attributeGroup"]) {
+    if (element["xs:attributeGroup"] !== undefined) {
       type.attributes = typeMerge(type.attributes, ...processAttributeGroup(element["xs:attributeGroup"]));
     }
-    if (element["xs:attribute"]) {
-      const attributeTypes = processTypeAttribute(element["xs:attribute"]);
-      if (attributeTypes.length > 0) {
-        type.attributes = typeMerge(type.attributes, typeDeclarationsToRecursive(...attributeTypes));
-      }
+    if (element["xs:attribute"] !== undefined) {
+      type.attributes = typeMerge(type.attributes, ...processTypeAttribute(element["xs:attribute"]));
+
     }
     return [type];
   } catch (e) {

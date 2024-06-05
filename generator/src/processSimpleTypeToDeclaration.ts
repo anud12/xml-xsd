@@ -23,7 +23,7 @@ export function processSimpleTypeToDeclaration(element: XsdElement | XsdElement[
     if (element.type) {
       type = mapXsdTypeToTs(element.type);
     }
-    if (element["xs:restriction"]) {
+    if (element["xs:restriction"] !== undefined) {
       type = processRestriction(element["xs:restriction"])[0];
     }
     return [{

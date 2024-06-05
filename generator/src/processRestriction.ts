@@ -12,9 +12,9 @@ export function processRestriction(element: XsdElement | XsdElement[]): Type[] {
       })
       return result;
     }
-    if (element.base === "xs:string") {
+    if (element.base === "xs:string" !== undefined) {
       let type: Type = mapXsdTypeToTs(element.base);
-      if (element["xs:enumeration"]) {
+      if (element["xs:enumeration"] !== undefined) {
         const enumeration = Array.isArray(element["xs:enumeration"])
           ? element["xs:enumeration"]
           : [element["xs:enumeration"]]

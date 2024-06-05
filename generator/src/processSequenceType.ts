@@ -3,6 +3,7 @@ import {Type, typeDeclarationsToRecursive} from "./type";
 import {processElementTypeToDeclaration} from "./processElementTypeToDeclaration";
 import {processGroup} from "./processGroup";
 import {mergeError} from "./mergeError";
+import {processAny} from "./processAny";
 
 export function processSequenceType(element: XsdElement | XsdElement[]): Type[] {
   try {
@@ -15,12 +16,14 @@ export function processSequenceType(element: XsdElement | XsdElement[]): Type[] 
     }
 
     let types: Type[] = [];
-
-    if (element["xs:element"]) {
+    if(element["xs:any"] !== undefined) {
+      return processAny(element["xs:any"]);
+    }
+    if (element["xs:element"] !== undefined) {
       const type = typeDeclarationsToRecursive(...processElementTypeToDeclaration(element["xs:element"]));
       return [type];
     }
-    if (element["xs:group"]) {
+    if (element["xs:group"] !== undefined) {
       return processGroup(element["xs:group"]);
     }
     return types;
