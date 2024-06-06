@@ -1,0 +1,57 @@
+[
+  {
+    "name": "group",
+    "value": {
+      "metaType": "object",
+      "value": {
+        "firstElement": {
+          "metaType": "object",
+          "value": {},
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "attribute": {
+                "metaType": "primitive",
+                "value": "string"
+              }
+            }
+          }
+        },
+        "secondElement": {
+          "metaType": "composition",
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "attribute": {
+                "metaType": "primitive",
+                "value": "number"
+              },
+              "secondAttribute": {
+                "metaType": "primitive",
+                "value": "number"
+              }
+            }
+          },
+          "value": [
+            {
+              "metaType": "primitive",
+              "value": "group"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "name": "root",
+    "value": {
+      "metaType": "composition",
+      "value": [
+        {
+          "metaType": "primitive",
+          "value": "group"
+        }
+      ]
+    }
+  }
+]

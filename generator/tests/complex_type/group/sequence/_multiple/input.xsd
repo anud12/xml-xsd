@@ -1,0 +1,27 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:group name="group">
+    <xs:sequence>
+      <xs:element name="firstElement" minOccurs="0">
+        <xs:complexType>
+          <xs:attribute name="attribute" type="xs:string" use="required"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="secondElement" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:group ref="group" minOccurs="0"/>
+          </xs:sequence>
+          <xs:attribute name="attribute" use="required" type="xs:int"/>
+          <xs:attribute name="secondAttribute" use="required" type="xs:int"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+  <xs:element name="root">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group ref="group"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

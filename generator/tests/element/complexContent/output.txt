@@ -3,12 +3,6 @@
     "name": "complex_type",
     "value": {
       "metaType": "object",
-      "value": {
-        "complex_type": {
-          "metaType": "primitive",
-          "value": "number"
-        }
-      },
       "attributes": {
         "metaType": "object",
         "value": {
@@ -16,6 +10,12 @@
             "metaType": "primitive",
             "value": "number"
           }
+        }
+      },
+      "value": {
+        "complex_type": {
+          "metaType": "primitive",
+          "value": "number"
         }
       }
     }

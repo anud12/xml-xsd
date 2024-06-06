@@ -1,11 +1,11 @@
 import {
   TypeDeclaration,
-  typeDeclarationToString,
   TypePrimitive,
   TypeObject,
   TypeComposition,
   TypeUnion, Type
 } from "../../src/type";
+import {typeDeclarationToString} from "../../src/typeToString";
 
 describe('typeDeclarationToString function', () => {
   it('should correctly handle primitive types', async () => {
@@ -36,9 +36,9 @@ describe('typeDeclarationToString function', () => {
     };
 
     const result = typeDeclarationToString(typeDeclaration);
-    expect(result).toEqual(`type test = {
+    expect(result).toEqual(`type test = JsonQueryType<{}, {
   "prop": number;
-}`);
+}>`);
   });
 
   it('should correctly handle recursive types with mixed levels of depth', async () => {
@@ -69,13 +69,13 @@ describe('typeDeclarationToString function', () => {
     };
 
     const result = typeDeclarationToString(typeDeclaration);
-    expect(result).toEqual(`type test = {
-  "level1": {
+    expect(result).toEqual(`type test = JsonQueryType<{}, {
+  "level1": JsonQueryType<{}, {
     "level2": boolean;
     "anotherLevel2": string;
-  };
+  }>;
   "anotherLevel1": number;
-}`);
+}>`);
   });
 
   it('should correctly handle composition types', async () => {
@@ -130,12 +130,12 @@ describe('typeDeclarationToString function', () => {
     };
 
     const result = typeDeclarationToString(typeDeclaration);
-    expect(result).toEqual(`type test = {
+    expect(result).toEqual(`type test = JsonQueryType<{}, {
   "prop1": string;
-}
-& {
+}>
+& JsonQueryType<{}, {
   "prop2": number;
-}`);
+}>`);
   });
 
   it('should correctly handle union types', async () => {
@@ -185,10 +185,10 @@ describe('typeDeclarationToString function', () => {
     };
 
     const result = typeDeclarationToString(typeDeclaration);
-    expect(result).toEqual(`type test = {
+    expect(result).toEqual(`type test = JsonQueryType<{
   "attr": number;
-} & {
+}, {
   "prop": string;
-}`);
+}>`);
   })
 });

@@ -7,6 +7,7 @@ import {processAttributeGroup} from "./processAttributeGroup";
 import {processExtension} from "./processExtension";
 import {processChoice} from "./processChoiceType";
 import {mergeError} from "./mergeError";
+import {processGroup} from "./processGroup";
 
 export function processComplexType(element: XsdElement | XsdElement[]): Type[] {
   try {
@@ -38,12 +39,14 @@ export function processComplexType(element: XsdElement | XsdElement[]): Type[] {
     if (element["xs:sequence"] !== undefined) {
       type = typeMerge(type, ...processSequenceType(element["xs:sequence"]));
     }
+    if (element["xs:group"] !== undefined) {
+      type = typeMerge(type, ...processGroup(element["xs:group"]));
+    }
     if (element["xs:attributeGroup"] !== undefined) {
       type.attributes = typeMerge(type.attributes, ...processAttributeGroup(element["xs:attributeGroup"]));
     }
     if (element["xs:attribute"] !== undefined) {
       type.attributes = typeMerge(type.attributes, ...processTypeAttribute(element["xs:attribute"]));
-
     }
     return [type];
   } catch (e) {

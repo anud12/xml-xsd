@@ -1,0 +1,26 @@
+[
+  {
+    "name": "group",
+    "value": {
+      "metaType": "object",
+      "value": {
+        "operation": {
+          "metaType": "primitive",
+          "value": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "root",
+    "value": {
+      "metaType": "composition",
+      "value": [
+        {
+          "metaType": "primitive",
+          "value": "group"
+        }
+      ]
+    }
+  }
+]

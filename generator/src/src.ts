@@ -1,20 +1,20 @@
 import * as fs from 'fs';
 import FastXMLParser from 'fast-xml-parser';
-import {Type, TypeDeclaration, typeDeclarationToString} from "./type";
+import {TypeDeclaration} from "./type";
 import {processElementTypeToDeclaration} from "./processElementTypeToDeclaration";
 import {processSimpleTypeToDeclaration} from "./processSimpleTypeToDeclaration";
 import {processComplexTypeToDeclaration} from "./processComplexTypeToDeclaration";
 import {processGroupToDeclaration} from "./processGroupToDeclaration";
-import {processAttributeGroup} from "./processAttributeGroup";
 import {processAttributeGroupToDeclaration} from "./processAttributeGroupToDeclaration";
+import {typeDeclarationToString} from "./typeToString";
 
 // Define interface for XML schema element
 export type XsdElement = {
   name: string;
-  value?:string;
+  value?: string;
   type?: string;
   base?: string;
-  ref?:string;
+  ref?: string;
   attributes?: { [key: string]: string };
 } & {
   [P in string]: XsdElement | XsdElement[]
@@ -47,14 +47,16 @@ function generateTypes(xml: any): TypeDeclaration[] {
 export function main(path: string, output?: string) {
   const schema = parseXsdSchema(path);
   const types = generateTypes(schema);
-  const typeString =  types
+  const typeString = types
     .map(value => {
       return typeDeclarationToString(value)
     })
     .join("\n");
+  let result = `import {JsonQueryType} from "../impl/src/JsonQueryType"\n`
+  result +=typeString;
   console.log(typeString);
   if (output) {
-    fs.writeFileSync(output, typeString);
+    fs.writeFileSync(output, result);
     fs.writeFileSync(`${output}.json`, JSON.stringify(types, null, 2));
   }
 

@@ -8,7 +8,7 @@ export type TypeAttribute = {
 
 export type TypeObject = {
   metaType: "object",
-  attributes?: TypeObject,
+  attributes?: Type,
   value: {
     [P: string]: Type
   }
@@ -22,30 +22,17 @@ export type TypePrimitive = {
 }
 export type TypeComposition = {
   metaType: "composition"
-  attributes?: TypeObject,
+  attributes?: Type,
   value: Type[],
 }
 export type TypeUnion = {
   metaType: "union"
-  attributes?: TypeObject,
+  attributes?: Type,
   value: Type[],
 }
 export type TypeDeclaration = {
   name: string,
   value: Type
-}
-
-export function typeCompositionMerge(first: TypeComposition, ...second: Array<TypeComposition>): TypeComposition {
-  const secondValues = second.reduce((acc, value) => {
-    return [...acc, ...value.value];
-  }, []);
-  return {
-    metaType: "composition",
-    value: [
-      ...first.value,
-      ...secondValues
-    ]
-  }
 }
 
 export function typeUnionCreate(...second: Array<Type>): Type {
@@ -62,8 +49,11 @@ export function typeRecursiveMerge(first: TypeObject, ...second: Array<TypeObjec
       ...value.value
     }
   }, {});
+  const attributes = typeMerge(first.attributes, ...second.map(value => value.attributes));
+
   return {
     metaType: "object",
+    attributes: attributes,
     value: {
       ...first.value,
       ...secondValues
@@ -75,7 +65,7 @@ export function typeMergeAsUnion(first: Type, ...second: Array<Type>): Type {
   return typeUnionCreate(first, ...second);
 }
 
-export function typeMerge(first: Type, ...second: Array<Type>): Type {
+export function typeMerge(first: Type, ...second: Array<Type>): Type | undefined {
   try {
     //filter undefined values
     second = second.filter(value => value !== undefined);
@@ -98,10 +88,7 @@ export function typeMerge(first: Type, ...second: Array<Type>): Type {
     // if first is undefined ignore
     if (first === undefined) {
       if(second === undefined || second.length === 0) {
-        return {
-          metaType: "union",
-          value: []
-        }
+        return undefined
       }
       if(second.length === 1) {
         return second[0];
@@ -109,9 +96,14 @@ export function typeMerge(first: Type, ...second: Array<Type>): Type {
 
       return typeMerge(second[0], ...second.slice(1));
     }
+
+    //get attributes from first and second
+    const attributes = typeMerge(first.attributes, ...second.map(value => value.attributes));
+
     // create composition
     return {
       metaType: "composition",
+      attributes: attributes,
       value: [first, ...second]
     }
   } catch (e) {
@@ -166,71 +158,4 @@ export function typeDeclarationsToRecursive(...declarations: Array<TypeDeclarati
     metaType: "object",
     value: declarationsValue
   }
-}
-
-function handlePrimitiveType(type: TypePrimitive): string {
-  return type.value;
-}
-
-function handleObjectType(type: TypeObject, indentLevel = 0): string {
-  const attributes = type.attributes && handleTypes(type.attributes, indentLevel);
-  const indent = ' '.repeat(indentLevel);
-  const properties = Object.keys(type.value).map(key => {
-    const propertyType = type.value[key];
-    let propertyTypeString: string = handleTypes(propertyType, indentLevel + 2);
-    return `${indent}  "${key}": ${propertyTypeString};`;
-  });
-  const body = `{\n${properties.join('\n')}\n${indent}}`;
-  if(attributes) {
-    return `${attributes} & ${body}`
-  }
-  return body;
-}
-
-function handleCompositionType(type: TypeComposition, indentLevel = 0): string {
-  const indent = ' '.repeat(indentLevel);
-  const types = type.value.map(t => handleTypes(t, indentLevel));
-  return types.join(`\n${indent}& `);
-}
-
-function handleUnionType(type: TypeUnion, indentLevel = 0): string {
-  const indent = ' '.repeat(indentLevel);
-  const types = type.value.map(t => handleTypes(t, indentLevel));
-  return types.join(`\n${indent}| `);
-}
-
-function handleAnyType(type: TypeAny, indentLevel = 0): string {
-  const indent = ' '.repeat(indentLevel);
-  return `${indent}any`;
-}
-
-function handleTypes(type: Type, indentLevel = 0): string {
-  let result = ``;
-  switch (type?.metaType) {
-    case "primitive":
-      result += handlePrimitiveType(type as TypePrimitive);
-      break;
-    case "object":
-      result += handleObjectType(type as TypeObject, indentLevel);
-      break;
-    case "composition":
-      result += handleCompositionType(type as TypeComposition, indentLevel);
-      break;
-    case "union":
-      result += handleUnionType(type as TypeUnion, indentLevel);
-      break;
-    case "any":
-      result += handleAnyType(type as TypeAny, indentLevel);
-      break;
-    default: {
-      result += "unknown"
-    }
-  }
-  return result;
-}
-
-export function typeDeclarationToString(typeDeclaration: TypeDeclaration, indentLevel = 0): string {
-  let result = `type ${typeDeclaration.name} = `;
-  result += handleTypes(typeDeclaration.value, indentLevel)
-  return result;
 }
