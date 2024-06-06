@@ -97,8 +97,7 @@ describe('typeDeclarationToString function', () => {
     };
 
     const result = typeDeclarationToString(typeDeclaration);
-    expect(result).toEqual(`type test = string
-& number`);
+    expect(result).toEqual(`type test = string & number`);
   });
 
   it('should correctly handle composition types with recursive types', async () => {
@@ -132,8 +131,7 @@ describe('typeDeclarationToString function', () => {
     const result = typeDeclarationToString(typeDeclaration);
     expect(result).toEqual(`type test = JsonQueryType<{}, {
   "prop1": string;
-}>
-& JsonQueryType<{}, {
+}> & JsonQueryType<{}, {
   "prop2": number;
 }>`);
   });
@@ -157,8 +155,7 @@ describe('typeDeclarationToString function', () => {
     };
 
     const result = typeDeclarationToString(typeDeclaration);
-    expect(result).toEqual(`type test = string
-| number`);
+    expect(result).toEqual(`type test = string | number`);
   });
 
   it('should correctly handle object type with attributes', async () => {
@@ -185,9 +182,7 @@ describe('typeDeclarationToString function', () => {
     };
 
     const result = typeDeclarationToString(typeDeclaration);
-    expect(result).toEqual(`type test = JsonQueryType<{
-  "attr": number;
-}, {
+    expect(result).toEqual(`type test = JsonQueryType<{"attr": number;}, {
   "prop": string;
 }>`);
   })

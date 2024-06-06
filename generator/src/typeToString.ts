@@ -1,35 +1,36 @@
 import {Type, TypeAny, TypeComposition, TypeDeclaration, TypeObject, TypePrimitive, TypeUnion} from "./type";
 
-function handleAttributePrimitive(type: TypePrimitive): string {
-  return type.value;
+function handleAttributePrimitive(type: TypePrimitive, indentLevel = 0): string {
+  return ' '.repeat(indentLevel) + type.value;
 }
 
 function handleAttributeObject(type: TypeObject, indentLevel = 0): string {
   const indent = ' '.repeat(indentLevel);
   const properties = Object.keys(type.value).map(key => {
     const propertyType = type.value[key];
-    let propertyTypeString: string = handleAttribute((propertyType as any));
-    return `${indent}  "${key}": ${propertyTypeString};`;
+    let propertyTypeString: string = handleAttribute(propertyType, indentLevel + 2);
+    return `"${key}": ${propertyTypeString};`;
   });
-  if(properties.length === 0) {
-    return "";
-  }
-  const body = `{\n${properties.join('\n')}\n${indent}}`;
+
+  let body = `{${properties.join('  ')}}`;
   return body;
 }
 function handleAttributeCompositionType(type: TypeComposition, indentLevel = 0): string {
-  const indent = ' '.repeat(indentLevel);
+  const indent = ' '.repeat(indentLevel + 2);
   const types = type.value.map(t => handleAttribute(t, indentLevel));
-  return types.join(`\n${indent}& `);
+  return types.join(` & `);
 }
 
 function handleAttributeUnionType(type: TypeUnion, indentLevel = 0): string {
-  const indent = ' '.repeat(indentLevel);
+  const indent = ' '.repeat(indentLevel + 2);
   const types = type.value.map(t => handleAttribute(t, indentLevel));
-  return types.join(`\n${indent}| `);
+  return types.join(` | `);
 }
 
-function handleAttribute(type: Type, indentLevel = 0): string {
+function handleAttribute(type: Type, indentLevel = 0): string | undefined {
+  if(!type) {
+    return undefined;
+  }
   let result = ``;
   switch (type?.metaType) {
     case "primitive":
@@ -55,8 +56,8 @@ function handleAttribute(type: Type, indentLevel = 0): string {
 }
 
 
-function handlePrimitiveType(type: TypePrimitive): string {
-  return type.value
+function handlePrimitiveType(type: TypePrimitive, indentLevel = 0): string {
+  return ' '.repeat(indentLevel) + type.value;
 }
 
 
@@ -66,9 +67,16 @@ function handleObjectType(type: TypeObject, indentLevel = 0): string {
   const properties = Object.keys(type.value).map(key => {
     const propertyType = type.value[key];
     let propertyTypeString: string = handleTypes(propertyType, indentLevel + 2);
-    return `${indent}  "${key}": ${propertyTypeString};`;
+    return `\n${indent}  "${key}": ${propertyTypeString};`;
   });
-  const body = `{\n${properties.join('\n')}\n${indent}}`;
+
+  let body = `{${properties.join('')}`;
+  if(properties.length) {
+    body += `\n${indent}}`
+  }
+  if(!properties.length) {
+    body += `}`
+  }
   if(attributes) {
     return `JsonQueryType<${attributes}, ${body}>`
   }
@@ -76,14 +84,22 @@ function handleObjectType(type: TypeObject, indentLevel = 0): string {
 }
 
 function handleCompositionType(type: TypeComposition, indentLevel = 0): string {
-  const indent = ' '.repeat(indentLevel);
+  const indent = ' '.repeat(indentLevel + 2);
   const types = type.value.map(t => handleTypes(t, indentLevel));
+  const attribute = handleAttribute(type.attributes, indentLevel);
+  if(attribute) {
+    return `JsonQueryType<${attribute}, ${types.join(`\n${indent}| `)}>`
+  }
   return types.join(`\n${indent}& `);
 }
 
 function handleUnionType(type: TypeUnion, indentLevel = 0): string {
-  const indent = ' '.repeat(indentLevel);
+  const indent = ' '.repeat(indentLevel + 2);
   const types = type.value.map(t => handleTypes(t, indentLevel));
+  const attribute = handleAttribute(type.attributes, indentLevel);
+  if(attribute) {
+    return `JsonQueryType<${attribute}, ${types.join(`\n${indent}| `)}>`
+  }
   return types.join(`\n${indent}| `);
 }
 
@@ -92,7 +108,7 @@ function handleAnyType(type: TypeAny, indentLevel = 0): string {
   return `${indent}any`;
 }
 
-function handleTypes(type: Type, indentLevel = 0): string {
+export function handleTypes(type: Type, indentLevel = 0): string {
   let result = ``;
   switch (type?.metaType) {
     case "primitive":

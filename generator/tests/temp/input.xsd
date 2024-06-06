@@ -1,0 +1,83 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:simpleType name="type__group__operation__and">
+    <xs:annotation>
+      <xs:documentation>
+        Operation that should be performed.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="add">
+        <xs:annotation>
+          <xs:documentation>Addition operation.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="add_dice">
+        <xs:annotation>
+          <xs:documentation>Addition operation with random a number chosen between 0 and given value inclusive.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="multiply">
+        <xs:annotation>
+          <xs:documentation>Multiplication operation.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="multiply_dice">
+        <xs:annotation>
+          <xs:documentation>Multiplication operation with a random number chosen between 0 and given value inclusive.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="divide">
+        <xs:annotation>
+          <xs:documentation>Standard division operation.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="divide_dice">
+        <xs:annotation>
+          <xs:documentation>Division operation with a with random number chosen between 0 and given value inclusive.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="modulo">
+        <xs:annotation>
+          <xs:documentation>Standard modulo operation.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="modulo_dice">
+        <xs:annotation>
+          <xs:documentation>Modulo operation with a with random number chosen between 0 and given value inclusive.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:group name="group__operation__and">
+    <xs:sequence>
+      <xs:element name="add_property" minOccurs="0">
+        <xs:complexType>
+          <xs:attribute name="property_rule_ref" type="xs:string" use="required"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="and" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:group ref="group__operation__and" minOccurs="0"/>
+          </xs:sequence>
+          <xs:attribute name="do" use="required" type="type__group__operation__and"/>
+          <xs:attribute name="value" use="required" type="xs:int"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+
+  <xs:element name="root">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group ref="group__operation__and"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
