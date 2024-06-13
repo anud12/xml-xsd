@@ -142,7 +142,7 @@ function handleUnionType(type: TypeUnion, declarationMap: DeclarationMap, parent
   if (attribute) {
     return `JsonQueryType<${attribute}, {}> & ${types.join(`\n${indent}| `)}`
   }
-  return types.join(`\n${indent}| `);
+  return types.join(`\n${indent}& `);
 }
 
 function handleAnyType(type: TypeAny, declarationMap: DeclarationMap, parentScope:ParentScope, indentLevel: number): string {

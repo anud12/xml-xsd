@@ -1,4 +1,4 @@
-import {Type, typeMerge, typeMergeAsUnion, typeUnionCreate} from "./type";
+import {Type, typeMergeAsUnion, TypeObject} from "./type";
 import {XsdElement} from "./src";
 import {processElementType} from "./processElementType";
 import {mergeError} from "./mergeError";
@@ -15,8 +15,8 @@ export function processChoice(element: XsdElement | XsdElement[]): Type[] {
 
     if (element.type) {
       return [{
-        metaType:"primitive",
-        value:element.type
+        metaType: "primitive",
+        value: element.type
       }]
     }
     let type: Type = {
@@ -24,8 +24,16 @@ export function processChoice(element: XsdElement | XsdElement[]): Type[] {
       value: []
     };
 
-    if(element["xs:element"] !== undefined) {
-      type = typeMergeAsUnion(...processElementType(element["xs:element"]));
+    if (element["xs:element"] !== undefined) {
+      const objectType = processElementType(element["xs:element"]).map((type, key) => {
+        return {
+          metaType: "object",
+          value: {
+            [element["xs:element"][key].name]: type
+          },
+        }satisfies TypeObject
+      })
+      type = typeMergeAsUnion(...objectType);
     }
 
     return [type];

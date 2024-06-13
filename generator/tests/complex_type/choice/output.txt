@@ -5,12 +5,22 @@
       "metaType": "union",
       "value": [
         {
-          "metaType": "primitive",
-          "value": "xs:string"
+          "metaType": "object",
+          "value": {
+            "firstChoice": {
+              "metaType": "primitive",
+              "value": "xs:string"
+            }
+          }
         },
         {
-          "metaType": "primitive",
-          "value": "xs:int"
+          "metaType": "object",
+          "value": {
+            "secondChoice": {
+              "metaType": "primitive",
+              "value": "xs:int"
+            }
+          }
         }
       ]
     }

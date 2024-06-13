@@ -1,0 +1,45 @@
+[
+  {
+    "name": "by",
+    "value": {
+      "metaType": "union",
+      "value": [
+        {
+          "metaType": "object",
+          "value": {
+            "do": {
+              "metaType": "object",
+              "value": {}
+            }
+          }
+        },
+        {
+          "metaType": "object",
+          "value": {
+            "move_towards": {
+              "metaType": "object",
+              "value": {},
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "layer": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  },
+                  "x": {
+                    "metaType": "primitive",
+                    "value": "xs:int"
+                  },
+                  "y": {
+                    "metaType": "primitive",
+                    "value": "xs:int"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+]
