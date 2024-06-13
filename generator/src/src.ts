@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import FastXMLParser from 'fast-xml-parser';
-import {TypeDeclaration} from "./type";
+import {Type, TypeDeclaration} from "./type";
 import {processElementTypeToDeclaration} from "./processElementTypeToDeclaration";
 import {processSimpleTypeToDeclaration} from "./processSimpleTypeToDeclaration";
 import {processComplexTypeToDeclaration} from "./processComplexTypeToDeclaration";
@@ -33,12 +33,13 @@ function parseXsdSchema(filePath: string): any {
 function generateTypes(xml: any): TypeDeclaration[] {
   // Start processing from the root element
   const schema = xml['xs:schema'];
-  let types = [];
+  let types: TypeDeclaration[] = [];
   types = [...types, ...processAttributeGroupToDeclaration(schema["xs:attributeGroup"])];
   types = [...types, ...processGroupToDeclaration(schema["xs:group"])];
   types = [...types, ...processSimpleTypeToDeclaration(schema["xs:simpleType"])];
   types = [...types, ...processComplexTypeToDeclaration(schema["xs:complexType"])];
   types = [...types, ...processElementTypeToDeclaration(schema["xs:element"])];
+
   return types;
 }
 
@@ -48,12 +49,12 @@ export function main(path: string, output?: string) {
   const schema = parseXsdSchema(path);
   const types = generateTypes(schema);
   const typeString = types
-    .map(value => {
+    .map((value) => {
       return typeDeclarationToString(value)
     })
     .join("\n");
   let result = `import {JsonQueryType} from "../impl/src/JsonQueryType"\n`
-  result +=typeString;
+  result += typeString;
   console.log(typeString);
   if (output) {
     fs.writeFileSync(output, result);

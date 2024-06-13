@@ -14,13 +14,8 @@
   {
     "name": "root",
     "value": {
-      "metaType": "composition",
-      "value": [
-        {
-          "metaType": "primitive",
-          "value": "group"
-        }
-      ]
+      "metaType": "primitive",
+      "value": "group"
     }
   }
 ]

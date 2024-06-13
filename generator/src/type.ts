@@ -69,18 +69,6 @@ export function typeMerge(first: Type, ...second: Array<Type>): Type | undefined
   try {
     //filter undefined values
     second = second.filter(value => value !== undefined);
-    //If all elements are recursive execute typeRecursiveMerge
-    if (first?.metaType === "object" && second.every(value => value.metaType === "object")) {
-      return typeRecursiveMerge(first as TypeObject, ...second as Array<TypeObject>);
-    }
-    //if first type is recursive but with no values ignore
-    if (first?.metaType === "object" && Object.keys(first.value).length === 0) {
-      return typeMerge(second[0], ...second.slice(1));
-    }
-    //if first type is empty union ignore
-    if (first?.metaType === "union" && first.value.length === 0) {
-      return typeMerge(second[0], ...second.slice(1));
-    }
     //if first type is any return any
     if (first?.metaType === "any") {
       return first;
@@ -94,6 +82,23 @@ export function typeMerge(first: Type, ...second: Array<Type>): Type | undefined
         return second[0];
       }
 
+      return typeMerge(second[0], ...second.slice(1));
+    }
+    //if second is either undefined or empty, return first;
+    if(second === undefined || second.length === 0) {
+      return first;
+    }
+
+    //If all elements are recursive execute typeRecursiveMerge
+    if (first?.metaType === "object" && second.every(value => value.metaType === "object")) {
+      return typeRecursiveMerge(first as TypeObject, ...second as Array<TypeObject>);
+    }
+    //if first type is recursive but with no values ignore
+    if (first?.metaType === "object" && Object.keys(first.value).length === 0) {
+      return typeMerge(second[0], ...second.slice(1));
+    }
+    //if first type is empty union ignore
+    if (first?.metaType === "union" && first.value.length === 0) {
       return typeMerge(second[0], ...second.slice(1));
     }
 

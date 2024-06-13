@@ -21,31 +21,21 @@
       "metaType": "composition",
       "value": [
         {
-          "metaType": "composition",
-          "value": [
-            {
-              "metaType": "composition",
-              "value": [
-                {
-                  "metaType": "object",
-                  "value": {},
-                  "attributes": {
-                    "metaType": "object",
-                    "value": {
-                      "attribute": {
-                        "metaType": "primitive",
-                        "value": "string"
-                      }
-                    }
-                  }
-                },
-                {
-                  "metaType": "primitive",
-                  "value": "extension"
-                }
-              ]
+          "metaType": "object",
+          "value": {},
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "attribute": {
+                "metaType": "primitive",
+                "value": "string"
+              }
             }
-          ]
+          }
+        },
+        {
+          "metaType": "primitive",
+          "value": "extension"
         }
       ]
     }

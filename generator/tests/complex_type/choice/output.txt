@@ -2,24 +2,15 @@
   {
     "name": "root",
     "value": {
-      "metaType": "composition",
+      "metaType": "union",
       "value": [
         {
-          "metaType": "union",
-          "value": [
-            {
-              "metaType": "union",
-              "value": []
-            },
-            {
-              "metaType": "primitive",
-              "value": "string"
-            },
-            {
-              "metaType": "primitive",
-              "value": "number"
-            }
-          ]
+          "metaType": "primitive",
+          "value": "string"
+        },
+        {
+          "metaType": "primitive",
+          "value": "number"
         }
       ]
     }

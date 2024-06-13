@@ -1,7 +1,6 @@
-import {Type, typeDeclarationsToRecursive, typeMerge, TypeObject} from "./type";
+import {Type, typeMerge, TypeObject, TypePrimitive} from "./type";
 import {XsdElement} from "./src";
 import {processSequenceType} from "./processSequenceType";
-import {mapXsdTypeToTs} from "./mapXsdType";
 import {processTypeAttribute} from "./processTypeAttribute";
 import {processAttributeGroup} from "./processAttributeGroup";
 import {processExtension} from "./processExtension";
@@ -20,7 +19,12 @@ export function processComplexType(element: XsdElement | XsdElement[]): Type[] {
     }
 
     if (element.type) {
-      return [mapXsdTypeToTs(element.type)]
+      return [
+        {
+          metaType: 'primitive',
+          value: element.type
+        } as TypePrimitive
+      ]
     }
     let type: Type = {
       metaType: "object",

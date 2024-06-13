@@ -2,5 +2,12 @@ type group__operation__and = JsonQueryType<{}, {
   "add_property": JsonQueryType<{"property_rule_ref": string;}, {}>;
   "and": JsonQueryType<{"do": type__group__operation__and;  "value": number;}, group__operation__and>;
 }>
-type type__group__operation__and = "add" | "add_dice" | "multiply" | "multiply_dice" | "divide" | "divide_dice" | "modulo" | "modulo_dice"
+type type__group__operation__and = "add"
+  | "add_dice"
+  | "multiply"
+  | "multiply_dice"
+  | "divide"
+  | "divide_dice"
+  | "modulo"
+  | "modulo_dice"
 type root = group__operation__and

@@ -26,26 +26,21 @@
       "metaType": "composition",
       "value": [
         {
-          "metaType": "composition",
-          "value": [
-            {
-              "metaType": "object",
-              "value": {},
-              "attributes": {
-                "metaType": "object",
-                "value": {
-                  "attribute": {
-                    "metaType": "primitive",
-                    "value": "number"
-                  }
-                }
+          "metaType": "object",
+          "value": {},
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "attribute": {
+                "metaType": "primitive",
+                "value": "number"
               }
-            },
-            {
-              "metaType": "primitive",
-              "value": "complex_type"
             }
-          ]
+          }
+        },
+        {
+          "metaType": "primitive",
+          "value": "complex_type"
         }
       ]
     }
