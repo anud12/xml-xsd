@@ -1,0 +1,7 @@
+type group__operation__and = JsonQueryType<{}, {
+  "add_property": JsonQueryType<{"property_rule_ref": string;}, {}>;
+  "and": JsonQueryType<{}, {
+    "add_property": JsonQueryType<{"property_rule_ref": string;}, {}>;
+    "and": any;
+  }>;
+}>

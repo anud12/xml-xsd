@@ -48,11 +48,7 @@ function generateTypes(xml: any): TypeDeclaration[] {
 export function main(path: string, output?: string) {
   const schema = parseXsdSchema(path);
   const types = generateTypes(schema);
-  const typeString = types
-    .map((value) => {
-      return typeDeclarationToString(value)
-    })
-    .join("\n");
+  const typeString = typeDeclarationToString(...types);
   let result = `import {JsonQueryType} from "../impl/src/JsonQueryType"\n`
   result += typeString;
   console.log(typeString);
