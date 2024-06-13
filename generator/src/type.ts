@@ -61,8 +61,8 @@ export function typeRecursiveMerge(first: TypeObject, ...second: Array<TypeObjec
   }
 }
 
-export function typeMergeAsUnion(first: Type, ...second: Array<Type>): Type {
-  return typeUnionCreate(first, ...second);
+export function typeMergeAsUnion(...second: Array<Type>): Type {
+  return typeUnionCreate(...second);
 }
 
 export function typeMerge(first: Type, ...second: Array<Type>): Type | undefined {
