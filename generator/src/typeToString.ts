@@ -23,15 +23,13 @@ function mapXsdTypeToTs(xsdType: string | undefined, declarationMap: Declaration
   }
 
   switch (xsdType) {
-    case 'xs:string':
-    case 'xs:anyURI':
-      return  'string';
     case 'xs:int':
     case 'xs:integer':
     case 'xs:decimal':
-      return  'number';
     case 'xs:boolean':
-      return  'boolean';
+    case 'xs:string':
+    case 'xs:anyURI':
+      return  'string';
     case 'unknown':
       return 'any'
     default:
@@ -74,6 +72,9 @@ function handleAttribute(type: Type, declarationMap: DeclarationMap, parentScope
   }
   let result = ``;
   switch (type?.metaType) {
+    case "unknown":
+      result += "any";
+      break;
     case "primitive":
       result += handleAttributePrimitive(type as TypePrimitive, declarationMap, parentScope, indentLevel);
       break;
@@ -98,7 +99,10 @@ function handleAttribute(type: Type, declarationMap: DeclarationMap, parentScope
 
 
 function handlePrimitiveType(type: TypePrimitive, declarationMap: DeclarationMap, parentScope:ParentScope, indentLevel: number): string {
-  const value = mapXsdTypeToTs(type.value, declarationMap, parentScope, indentLevel, handleTypes)
+  const value = mapXsdTypeToTs(type.value, declarationMap, parentScope, indentLevel, handleTypes);
+  if(type.attributes && Object.keys(type.attributes)) {
+    return `JsonQueryType<${handleAttribute(type.attributes, declarationMap, parentScope, indentLevel)}, {}> & ${value}`
+  }
   return value;
 }
 
@@ -130,7 +134,7 @@ function handleCompositionType(type: TypeComposition, declarationMap: Declaratio
   const types = type.value.map(t => handleTypes(t, declarationMap, parentScope, indentLevel));
   const attribute = handleAttribute(type.attributes, declarationMap, parentScope, indentLevel);
   if (attribute) {
-    return `JsonQueryType<${attribute}, ${types.join(`\n${indent}| `)}>`
+    return `JsonQueryType<${attribute}, ${types.join(`\n${indent}& `)}>`
   }
   return types.join(`\n${indent}& `);
 }
@@ -140,9 +144,9 @@ function handleUnionType(type: TypeUnion, declarationMap: DeclarationMap, parent
   const types = type.value.map(t => handleTypes(t, declarationMap, parentScope, indentLevel + 2));
   const attribute = handleAttribute(type.attributes, declarationMap, parentScope, indentLevel);
   if (attribute) {
-    return `JsonQueryType<${attribute}, {}> & ${types.join(`\n${indent}| `)}`
+    return `JsonQueryType<${attribute}, {}> & ${types.join(`\n${indent}& `)}`
   }
-  return types.join(`\n${indent}& `);
+  return types.join(`\n${indent}| `);
 }
 
 function handleAnyType(type: TypeAny, declarationMap: DeclarationMap, parentScope:ParentScope, indentLevel: number): string {
@@ -153,6 +157,9 @@ function handleAnyType(type: TypeAny, declarationMap: DeclarationMap, parentScop
 export function handleTypes(type: Type, declarationMap: DeclarationMap, parentScope:ParentScope, indentLevel: number): string {
   let result = ``;
   switch (type?.metaType) {
+    case "unknown":
+      result += "any";
+      break;
     case "primitive":
       result += handlePrimitiveType(type as TypePrimitive, declarationMap, parentScope, indentLevel);
       break;

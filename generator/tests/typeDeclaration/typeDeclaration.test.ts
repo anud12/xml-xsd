@@ -151,7 +151,7 @@ it('should correctly handle union types', async () => {
 
   const result = typeDeclarationToString(typeDeclaration);
   expect(result).toEqual(`export type test = string
-  | number`);
+  & number`);
 });
 
 it('should correctly handle object type with attributes', async () => {
