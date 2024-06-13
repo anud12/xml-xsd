@@ -183,7 +183,7 @@ export function typeDeclarationToString(...typeDeclaration: Array<TypeDeclaratio
   })
 
   return typeDeclaration.map(type => {
-    let result = `type ${type.name} = `;
+    let result = `export type ${type.name} = `;
     result += handleTypes(type.value, declarationMap, [type.name], 0)
     return result;
   }).join("\n")

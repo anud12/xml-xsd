@@ -11,7 +11,7 @@ it('should correctly handle primitive types', async () => {
   };
 
   const result = typeDeclarationToString(typeDeclaration);
-  expect(result).toEqual(`type test = string`);
+  expect(result).toEqual(`export type test = string`);
 });
 
 it('should correctly handle recursive types', async () => {
@@ -29,7 +29,7 @@ it('should correctly handle recursive types', async () => {
   };
 
   const result = typeDeclarationToString(typeDeclaration);
-  expect(result).toEqual(`type test = JsonQueryType<{}, {
+  expect(result).toEqual(`export type test = JsonQueryType<{}, {
   "prop": number;
 }>`);
 });
@@ -62,7 +62,7 @@ it('should correctly handle recursive types with mixed levels of depth', async (
   };
 
   const result = typeDeclarationToString(typeDeclaration);
-  expect(result).toEqual(`type test = JsonQueryType<{}, {
+  expect(result).toEqual(`export type test = JsonQueryType<{}, {
   "level1": JsonQueryType<{}, {
     "level2": boolean;
     "anotherLevel2": string;
@@ -90,7 +90,7 @@ it('should correctly handle composition types', async () => {
   };
 
   const result = typeDeclarationToString(typeDeclaration);
-  expect(result).toEqual(`type test = string
+  expect(result).toEqual(`export type test = string
   & number`);
 });
 
@@ -123,7 +123,7 @@ it('should correctly handle composition types with recursive types', async () =>
   };
 
   const result = typeDeclarationToString(typeDeclaration);
-  expect(result).toEqual(`type test = JsonQueryType<{}, {
+  expect(result).toEqual(`export type test = JsonQueryType<{}, {
   "prop1": string;
 }>
   & JsonQueryType<{}, {
@@ -150,7 +150,7 @@ it('should correctly handle union types', async () => {
   };
 
   const result = typeDeclarationToString(typeDeclaration);
-  expect(result).toEqual(`type test = string
+  expect(result).toEqual(`export type test = string
   | number`);
 });
 
@@ -178,7 +178,7 @@ it('should correctly handle object type with attributes', async () => {
   };
 
   const result = typeDeclarationToString(typeDeclaration);
-  expect(result).toEqual(`type test = JsonQueryType<{"attr": number;}, {
+  expect(result).toEqual(`export type test = JsonQueryType<{"attr": number;}, {
   "prop": string;
 }>`);
 });

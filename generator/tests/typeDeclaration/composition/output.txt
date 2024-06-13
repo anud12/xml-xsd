@@ -1,8 +1,8 @@
-type group__operation__and = JsonQueryType<{}, {
+export type group__operation__and = JsonQueryType<{}, {
   "add_property": JsonQueryType<{"property_rule_ref": string;}, {}>;
-  "and": JsonQueryType<{"do": type__group__operation__and;  "value": number;}, group__operation__and>;
+  "and": JsonQueryType<{"do": type__group__operation__and;  "value": number;}, group__operation__and | any>;
 }>
-type type__group__operation__and = "add"
+export type type__group__operation__and = "add"
   | "add_dice"
   | "multiply"
   | "multiply_dice"
@@ -10,4 +10,4 @@ type type__group__operation__and = "add"
   | "divide_dice"
   | "modulo"
   | "modulo_dice"
-type root = group__operation__and
+export type root = group__operation__and
