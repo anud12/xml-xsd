@@ -19,7 +19,7 @@ function mapXsdTypeToTs(xsdType: string | undefined, declarationMap: Declaration
 
   const declarationType = declarationMap.get(xsdType);
   if(declarationType) {
-    return `${xsdType} & JsonQueryType`;
+    return `${xsdType} & JsonQueryType<{}, {}>`;
   }
 
   switch (xsdType) {
