@@ -3,7 +3,7 @@
     "name": "simple_type",
     "value": {
       "metaType": "primitive",
-      "value": "string"
+      "value": "xs:string"
     }
   },
   {

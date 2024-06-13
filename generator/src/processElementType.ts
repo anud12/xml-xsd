@@ -1,6 +1,5 @@
 import {XsdElement} from "./src";
 import {Type} from "./type";
-import {mapXsdTypeToTs} from "./mapXsdType";
 import {processComplexType} from "./processComplexType";
 import {mergeError} from "./mergeError";
 
@@ -18,7 +17,10 @@ export function processElementType(element: XsdElement | XsdElement[]): Type[] {
     }
 
     if (element.type) {
-      return [mapXsdTypeToTs(element.type)];
+      return [{
+        metaType:"primitive",
+        value:element.type
+      }];
     }
     if (element["xs:complexContent"] !== undefined) {
       return processComplexType(element["xs:complexContent"])

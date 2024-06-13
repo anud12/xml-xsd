@@ -12,7 +12,7 @@
             "value": {
               "attribute": {
                 "metaType": "primitive",
-                "value": "string"
+                "value": "xs:string"
               }
             }
           }
@@ -25,11 +25,11 @@
             "value": {
               "attribute": {
                 "metaType": "primitive",
-                "value": "number"
+                "value": "xs:int"
               },
               "secondAttribute": {
                 "metaType": "primitive",
-                "value": "number"
+                "value": "xs:int"
               }
             }
           }

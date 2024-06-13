@@ -1,6 +1,5 @@
 import {Type, TypeDeclaration} from "./type";
 import {XsdElement} from "./src";
-import {mapXsdTypeToTs} from "./mapXsdType";
 import {processRestriction} from "./processRestriction";
 import {mergeError} from "./mergeError";
 
@@ -21,7 +20,10 @@ export function processSimpleTypeToDeclaration(element: XsdElement | XsdElement[
       value: "unknown"
     };
     if (element.type) {
-      type = mapXsdTypeToTs(element.type);
+      type = {
+        metaType:"primitive",
+        value:element.type
+      };
     }
     if (element["xs:restriction"] !== undefined) {
       type = processRestriction(element["xs:restriction"])[0];

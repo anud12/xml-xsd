@@ -1,6 +1,5 @@
 import {Type, TypePrimitive, typeUnionCreate} from "./type";
 import {XsdElement} from "./src";
-import {mapXsdTypeToTs} from "./mapXsdType";
 import {mergeError} from "./mergeError";
 
 export function processRestriction(element: XsdElement | XsdElement[]): Type[] {
@@ -13,7 +12,10 @@ export function processRestriction(element: XsdElement | XsdElement[]): Type[] {
       return result;
     }
     if (element.base === "xs:string" !== undefined) {
-      let type: Type = mapXsdTypeToTs(element.base);
+      let type: Type = {
+        metaType:"primitive",
+        value:element.base
+      };
       if (element["xs:enumeration"] !== undefined) {
         const enumeration = Array.isArray(element["xs:enumeration"])
           ? element["xs:enumeration"]

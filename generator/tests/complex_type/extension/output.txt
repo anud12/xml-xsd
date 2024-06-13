@@ -6,7 +6,7 @@
       "value": {
         "child": {
           "metaType": "primitive",
-          "value": "number"
+          "value": "xs:int"
         }
       }
     }

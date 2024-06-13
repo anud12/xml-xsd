@@ -6,7 +6,7 @@
       "value": {
         "group_element": {
           "metaType": "primitive",
-          "value": "number"
+          "value": "xs:int"
         }
       }
     }

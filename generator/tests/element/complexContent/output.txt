@@ -8,14 +8,14 @@
         "value": {
           "complex_attribute": {
             "metaType": "primitive",
-            "value": "number"
+            "value": "xs:int"
           }
         }
       },
       "value": {
         "complex_type": {
           "metaType": "primitive",
-          "value": "number"
+          "value": "xs:int"
         }
       }
     }
@@ -33,7 +33,7 @@
             "value": {
               "attribute": {
                 "metaType": "primitive",
-                "value": "number"
+                "value": "xs:int"
               }
             }
           }

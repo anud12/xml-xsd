@@ -6,7 +6,7 @@
       "value": {
         "operation": {
           "metaType": "primitive",
-          "value": "number"
+          "value": "xs:int"
         }
       }
     }
@@ -21,7 +21,7 @@
         "value": {
           "value": {
             "metaType": "primitive",
-            "value": "number"
+            "value": "xs:int"
           }
         }
       }

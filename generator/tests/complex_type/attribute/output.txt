@@ -9,7 +9,7 @@
         "value": {
           "attributeName": {
             "metaType": "primitive",
-            "value": "number"
+            "value": "xs:int"
           }
         }
       }

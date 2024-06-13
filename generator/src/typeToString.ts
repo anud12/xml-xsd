@@ -1,7 +1,38 @@
 import {Type, TypeAny, TypeComposition, TypeDeclaration, TypeObject, TypePrimitive, TypeUnion} from "./type";
 
+function mapXsdTypeToTs(xsdType: string | undefined): TypePrimitive {
+  if(!xsdType) {
+    return {
+      metaType: 'primitive',
+      value: "unknown"
+    } as TypePrimitive;
+  }
+  let value: string;
+  switch (xsdType) {
+    case 'xs:string':
+    case 'xs:anyURI':
+      value = 'string';
+      break;
+    case 'xs:int':
+    case 'xs:integer':
+    case 'xs:decimal':
+      value = 'number';
+      break;
+    case 'xs:boolean':
+      value = 'boolean';
+      break;
+    default:
+      value = xsdType;
+  }
+  return {
+    metaType: 'primitive',
+    value: value
+  } as TypePrimitive;
+}
+
 function handleAttributePrimitive(type: TypePrimitive, indentLevel = 0): string {
-  return ' '.repeat(indentLevel) + type.value;
+  const value = mapXsdTypeToTs(type.value)
+  return ' '.repeat(indentLevel) + value.value;
 }
 
 function handleAttributeObject(type: TypeObject, indentLevel = 0): string {
@@ -57,7 +88,8 @@ function handleAttribute(type: Type, indentLevel = 0): string | undefined {
 
 
 function handlePrimitiveType(type: TypePrimitive, indentLevel = 0): string {
-  return ' '.repeat(indentLevel) + type.value;
+  const value = mapXsdTypeToTs(type.value)
+  return ' '.repeat(indentLevel) + value.value;
 }
 
 

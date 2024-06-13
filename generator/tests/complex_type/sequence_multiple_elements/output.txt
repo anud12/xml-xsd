@@ -6,11 +6,11 @@
       "value": {
         "child": {
           "metaType": "primitive",
-          "value": "number"
+          "value": "xs:int"
         },
         "secondChild": {
           "metaType": "primitive",
-          "value": "number"
+          "value": "xs:int"
         }
       }
     }

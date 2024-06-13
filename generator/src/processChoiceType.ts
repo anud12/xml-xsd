@@ -1,6 +1,5 @@
 import {Type, typeMerge, typeMergeAsUnion, typeUnionCreate} from "./type";
 import {XsdElement} from "./src";
-import {mapXsdTypeToTs} from "./mapXsdType";
 import {processElementType} from "./processElementType";
 import {mergeError} from "./mergeError";
 
@@ -15,7 +14,10 @@ export function processChoice(element: XsdElement | XsdElement[]): Type[] {
     }
 
     if (element.type) {
-      return [mapXsdTypeToTs(element.type)]
+      return [{
+        metaType:"primitive",
+        value:element.type
+      }]
     }
     let type: Type = {
       metaType: "union",

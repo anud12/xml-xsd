@@ -6,11 +6,11 @@
       "value": [
         {
           "metaType": "primitive",
-          "value": "string"
+          "value": "xs:string"
         },
         {
           "metaType": "primitive",
-          "value": "number"
+          "value": "xs:int"
         }
       ]
     }

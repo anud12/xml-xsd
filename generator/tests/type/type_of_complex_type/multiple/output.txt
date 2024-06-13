@@ -9,7 +9,7 @@
         "value": {
           "complexAttribute": {
             "metaType": "primitive",
-            "value": "number"
+            "value": "xs:int"
           }
         }
       }
@@ -25,7 +25,7 @@
         "value": {
           "secondComplexAttribute": {
             "metaType": "primitive",
-            "value": "number"
+            "value": "xs:int"
           }
         }
       }

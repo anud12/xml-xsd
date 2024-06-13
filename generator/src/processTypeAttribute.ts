@@ -1,45 +1,47 @@
 import {Type, typeDeclarationsToRecursive, TypeObject} from "./type";
 import {XsdElement} from "./src";
-import {mapXsdTypeToTs} from "./mapXsdType";
 import {processSimpleTypeToDeclaration} from "./processSimpleTypeToDeclaration";
 import {mergeError} from "./mergeError";
 
-export function processTypeAttribute(elements: XsdElement[] | XsdElement): TypeObject[] {
+export function processTypeAttribute(element: XsdElement[] | XsdElement): TypeObject[] {
   try {
-    if (Array.isArray(elements)) {
+    if (Array.isArray(element)) {
       let result: TypeObject[] = [];
-      for (const subElement of elements) {
+      for (const subElement of element) {
         result.push(...processTypeAttribute(subElement));
       }
       return result;
     }
-    if (!elements.name) {
+    if (!element.name) {
       return [];
     }
 
-    if (elements.type) {
-      let type: Type = mapXsdTypeToTs(elements.type);
+    if (element.type) {
+      let type: Type = {
+        metaType:"primitive",
+        value:element.type
+      };
       return [{
         metaType: "object",
         value: {
-          [elements.name]: type,
+          [element.name]: type,
         }
       }
       ];
     }
-    if (elements["xs:simpleType"]) {
-      const typeDeclarations = processSimpleTypeToDeclaration(elements["xs:simpleType"]);
+    if (element["xs:simpleType"]) {
+      const typeDeclarations = processSimpleTypeToDeclaration(element["xs:simpleType"]);
       return [{
         metaType:"object",
         value: {
-          [elements.name]: typeDeclarations[0].value
+          [element.name]: typeDeclarations[0].value
         }
       }];
     }
 
     return []
   } catch (e) {
-    throw mergeError(e, new Error(`processTypeAttribute failed for ${JSON.stringify(elements, null, 2)}`));
+    throw mergeError(e, new Error(`processTypeAttribute failed for ${JSON.stringify(element, null, 2)}`));
   }
 
 }
