@@ -60,8 +60,6 @@ describe("personAction" , () => {
         <from participant="self">
           <operation>
             <add_property property_rule_ref="strength"/>
-          </operation>
-          <operation>
             <and do="divide" value="2"/>
           </operation>
         </from>
@@ -118,7 +116,6 @@ describe("personAction" , () => {
     </property_rule>
     <race_rule>
       <entry id="human">
-        <vision value="20" inclusive="true" />
         <movement value="5" inclusive="true" />
       </entry>
     </race_rule>
@@ -145,8 +142,6 @@ describe("personAction" , () => {
           <from participant="self">
             <operation>
               <add_property property_rule_ref="strength" />
-            </operation>
-            <operation>
               <and do="divide" value="2" />
             </operation>
           </from>

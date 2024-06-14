@@ -9,6 +9,6 @@ export const classificationRuleRefValidator: Validator<AttributeNotInValidationE
   const raceMetadataNames = metadata.flatMap(e => e.queryAll("entry").map(e => e.attributeMap.id));
 
   return jsonSchema.json.queryAllRecursiveWithAttributeFrom<QueryType>("classification_rule_ref")
-    .filter((race) => !raceMetadataNames.includes(race.getAttribute("classification_ref")))
+    .filter((race) => !raceMetadataNames.includes(race.attributeMap.classification_rule_ref))
     .map(race => new AttributeNotInValidationError(race, "classification_rule_ref", raceMetadataNames));
 }

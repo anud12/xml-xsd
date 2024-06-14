@@ -12,14 +12,16 @@ export const createOperationFromParent = (
       return "0";
     }
 
-
+    console.log(`createOperationFromParent ${operationList.getPath()}`)
     const result = operationList.childrenList
       .reduce((acc, operation) => {
       const operationValue = createOperationFromQueryType(readJson, operation , getExternalProperty);
-      return (value: string) => operationValue(acc((value)));
-    }, (value: string) => value);
 
-    return result(operationList.attributeMap.initial || "0");
+      return operationValue(acc)
+    }, operationList.attributeMap.initial || "0");
+
+    console.log(`createOperationFromParent ${operationList.getPath()} is '${result}'`)
+    return result;
   } catch (e:any)  {
     const newError = new Error(`createOperationFromParent failed for ${operationList.getPath()}`);
     newError.stack += '\nCaused by: ' + e.stack;

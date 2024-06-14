@@ -818,7 +818,7 @@
                               <xs:attribute name="property_rule_ref" type="xs:string"/>
                             </xs:complexType>
                           </xs:element>
-                          <xs:element name="icon" type="type_icon"/>
+                          <xs:element name="icon" type="type_icon" minOccurs="0"/>
                         </xs:sequence>
                         <xs:attribute name="id" type="xs:string" use="required"/>
                       </xs:complexType>

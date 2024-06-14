@@ -1,0 +1,83 @@
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../world_step.xsd"
+>
+  <world_metadata>
+    <next_world_step>
+      ./data_1
+    </next_world_step>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="strength" units="points">
+        <person_default initial="0">
+          <and do="add" value="10"/>
+        </person_default>
+      </entry>
+      <entry id="health" units="points">
+        <person_default initial="0">
+          <and do="add" value="10"/>
+        </person_default>
+      </entry>
+    </property_rule>
+    <race_rule>
+      <entry id="human">
+        <movement value="5" inclusive="true"/>
+      </entry>
+    </race_rule>
+    <action_rule>
+      <person_to_person id="meleeAttack">
+        <max_range>
+          <operation initial="0">
+            <and do="add" value="1"/>
+          </operation>
+        </max_range>
+        <test>
+          <value target="self">
+            <operation initial="0">
+              <and do="add" value="3"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="3"/>
+            </operation>
+          </expected>
+        </test>
+        <property_mutation property_rule_ref="health" on="target">
+          <from participant="self">
+            <operation initial="0">
+              <add_property property_rule_ref="strength"/>
+              <and do="divide" value="2"/>
+            </operation>
+          </from>
+        </property_mutation>
+      </person_to_person>
+    </action_rule>
+  </rule_group>
+  <people>
+    <person id="Billy">
+      <race race_rule_ref="human"/>
+      <location x="10" y="10"/>
+      <properties>
+        <property property_rule_ref="strength" value="10"/>
+      </properties>
+      <classifications/>
+    </person>
+    <person id="Bob">
+      <race race_rule_ref="human"/>
+      <location x="10" y="10"/>
+      <properties>
+        <property property_rule_ref="health" value="15"/>
+      </properties>
+      <classifications/>
+    </person>
+  </people>
+  <actions/>
+</world_step>

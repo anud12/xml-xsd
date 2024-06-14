@@ -19,7 +19,7 @@ function mapXsdTypeToTs(xsdType: string | undefined, declarationMap: Declaration
 
   const declarationType = declarationMap.get(xsdType);
   if(declarationType) {
-    return `${xsdType} & JsonQueryType<{}, {}>`;
+    return `${xsdType}`;
   }
 
   switch (xsdType) {
@@ -113,7 +113,7 @@ function handleObjectType(type: TypeObject, declarationMap: DeclarationMap, pare
   const properties = Object.keys(type.value).map(key => {
     const propertyType = type.value[key];
     let propertyTypeString: string = handleTypes(propertyType, declarationMap, [key, ...parentScope], indentLevel + 2);
-    return `\n${indent}  "${key}": ${propertyTypeString};`;
+    return `\n${indent}  "${key}": ${propertyTypeString} & JsonQueryType<{}, {}>;`;
   });
 
   let body = `{${properties.join('')}`;

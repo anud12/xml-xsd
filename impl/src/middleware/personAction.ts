@@ -16,13 +16,16 @@ const mutationToValue = (readJson: JsonUtil, mutation: MutationQueryType, person
     const participantPerson = participant === "target"
       ? targetPerson
       : person;
-    return from.queryAll("operation")
-      .flatMap(operation => operation.childrenList)
-      .flatMap(operation => readJson.computeOperation(operation, string => {
-        return readJson.person.getProperty(participantPerson, string)
-      }))
+
+    const list = from.queryAllOptional("operation")
+      .flatMap(operation => {
+        return readJson.computeOperationFromParent(operation, string => {
+          return readJson.person.getProperty(participantPerson, string)
+        })
+      })
+    return list;
   });
-  return operations.reduce((e, op) => op(e), "0");
+  return operations.reduce((e, op) => String(Number(e) + Number(op)), "0");
 }
 
 export const isOutOfRange = (readJson: JsonUtil, personAction: PersonActionMetadataQueryType, person: PersonQueryType, targetPerson: PersonQueryType,) => {
@@ -64,7 +67,7 @@ export const personAction: MutationMiddleware = readJson => {
         const person = personList.find(person => person.attributeMap.id === by.attributeMap.person_ref);
         const targetPerson = personList.find(person => person.attributeMap.id === personDo.attributeMap.person_ref);
 
-        if(!action) {
+        if (!action) {
           return;
         }
         if (isOutOfRange(readJson, action, person, targetPerson)) {
@@ -84,7 +87,7 @@ export const personAction: MutationMiddleware = readJson => {
           personAction: personDo,
           property_mutation_list: property_mutation_list
         }]
-      } catch (e:any)  {
+      } catch (e: any) {
         throw mergeError(e, new Error(`Error computing by element ${by.getPath()}`));
       }
 
