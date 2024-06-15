@@ -20,6 +20,7 @@ export function processAttributeGroupToDeclaration(element: XsdElement | XsdElem
     return types.map(type => {
       return {
         name: element?.name,
+        type: "attributeGroup",
         value: type
       } as TypeDeclaration;
     });

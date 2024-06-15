@@ -20,6 +20,7 @@ export function processElementTypeToDeclaration(element: XsdElement | XsdElement
     return types.map(type => {
       return {
         name: element.name,
+        type: "element",
         value: type
       } as TypeDeclaration;
     });

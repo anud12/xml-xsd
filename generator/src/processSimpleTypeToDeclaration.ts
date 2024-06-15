@@ -30,6 +30,7 @@ export function processSimpleTypeToDeclaration(element: XsdElement | XsdElement[
     }
     return [{
       name: element.name,
+      type: "simple",
       value: type
     }];
   } catch (e) {

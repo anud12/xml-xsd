@@ -1,6 +1,7 @@
 [
   {
     "name": "complex_type",
+    "type": "complex",
     "value": {
       "metaType": "object",
       "attributes": {
@@ -22,6 +23,7 @@
   },
   {
     "name": "root",
+    "type": "element",
     "value": {
       "metaType": "composition",
       "value": [

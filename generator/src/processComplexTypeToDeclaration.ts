@@ -20,6 +20,7 @@ export function processComplexTypeToDeclaration(element: XsdElement | XsdElement
     return types.map(type => {
       return {
         name: element?.name,
+        type: "complex",
         value: type
       } as TypeDeclaration;
     });

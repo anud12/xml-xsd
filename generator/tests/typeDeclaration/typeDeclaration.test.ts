@@ -4,6 +4,7 @@ import {typeDeclarationToString} from "../../src/typeToString";
 it('should correctly handle primitive types', async () => {
   const typeDeclaration: TypeDeclaration = {
     name: 'test',
+    type: "element",
     value: {
       metaType: 'primitive',
       value: 'string'
@@ -17,6 +18,7 @@ it('should correctly handle primitive types', async () => {
 it('should correctly handle recursive types', async () => {
   const typeDeclaration: TypeDeclaration = {
     name: 'test',
+    type: "element",
     value: {
       metaType: 'object',
       value: {
@@ -30,13 +32,14 @@ it('should correctly handle recursive types', async () => {
 
   const result = typeDeclarationToString(typeDeclaration);
   expect(result).toEqual(`export type test = JsonQueryType<{}, {
-  "prop": number;
+  "prop": number & JsonQueryType<{}, {}>;
 }>`);
 });
 
 it('should correctly handle recursive types with mixed levels of depth', async () => {
   const typeDeclaration: TypeDeclaration = {
     name: 'test',
+    type: "element",
     value: {
       metaType: 'object',
       value: {
@@ -64,16 +67,17 @@ it('should correctly handle recursive types with mixed levels of depth', async (
   const result = typeDeclarationToString(typeDeclaration);
   expect(result).toEqual(`export type test = JsonQueryType<{}, {
   "level1": JsonQueryType<{}, {
-    "level2": boolean;
-    "anotherLevel2": string;
-  }>;
-  "anotherLevel1": number;
+    "level2": boolean & JsonQueryType<{}, {}>;
+    "anotherLevel2": string & JsonQueryType<{}, {}>;
+  }> & JsonQueryType<{}, {}>;
+  "anotherLevel1": number & JsonQueryType<{}, {}>;
 }>`);
 });
 
 it('should correctly handle composition types', async () => {
   const typeDeclaration: TypeDeclaration = {
     name: 'test',
+    type: "element",
     value: {
       metaType: 'composition',
       value: [
@@ -97,6 +101,7 @@ it('should correctly handle composition types', async () => {
 it('should correctly handle composition types with recursive types', async () => {
   const typeDeclaration: TypeDeclaration = {
     name: 'test',
+    type: "element",
     value: {
       metaType: 'composition',
       value: [
@@ -124,16 +129,17 @@ it('should correctly handle composition types with recursive types', async () =>
 
   const result = typeDeclarationToString(typeDeclaration);
   expect(result).toEqual(`export type test = JsonQueryType<{}, {
-  "prop1": string;
+  "prop1": string & JsonQueryType<{}, {}>;
 }>
   & JsonQueryType<{}, {
-  "prop2": number;
+  "prop2": number & JsonQueryType<{}, {}>;
 }>`);
 });
 
 it('should correctly handle union types', async () => {
   const typeDeclaration: TypeDeclaration = {
     name: 'test',
+    type: "element",
     value: {
       metaType: 'union',
       value: [
@@ -151,12 +157,13 @@ it('should correctly handle union types', async () => {
 
   const result = typeDeclarationToString(typeDeclaration);
   expect(result).toEqual(`export type test = string
-  & number`);
+  | number`);
 });
 
 it('should correctly handle object type with attributes', async () => {
   const typeDeclaration: TypeDeclaration = {
     name: 'test',
+    type: "element",
     value: {
       metaType: 'object',
       value: {
@@ -179,6 +186,6 @@ it('should correctly handle object type with attributes', async () => {
 
   const result = typeDeclarationToString(typeDeclaration);
   expect(result).toEqual(`export type test = JsonQueryType<{"attr": number;}, {
-  "prop": string;
+  "prop": string & JsonQueryType<{}, {}>;
 }>`);
 });

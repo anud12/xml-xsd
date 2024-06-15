@@ -20,6 +20,7 @@ export function processGroupToDeclaration(element: XsdElement | XsdElement[]): T
 
     return [{
       name: element.name,
+      type: "group",
       value: processGroup(element)[0]
     }]
   } catch (e) {

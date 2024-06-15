@@ -1,6 +1,7 @@
 [
   {
     "name": "by",
+    "type": "element",
     "value": {
       "metaType": "union",
       "value": [

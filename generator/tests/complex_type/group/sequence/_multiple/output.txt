@@ -1,6 +1,7 @@
 [
   {
     "name": "group",
+    "type": "group",
     "value": {
       "metaType": "object",
       "value": {
@@ -39,6 +40,7 @@
   },
   {
     "name": "root",
+    "type": "element",
     "value": {
       "metaType": "primitive",
       "value": "group"

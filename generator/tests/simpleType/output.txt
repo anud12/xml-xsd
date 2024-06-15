@@ -1,6 +1,7 @@
 [
   {
     "name": "simple_type",
+    "type": "simple",
     "value": {
       "metaType": "primitive",
       "value": "unknown"
@@ -8,6 +9,7 @@
   },
   {
     "name": "root",
+    "type": "element",
     "value": {
       "metaType": "primitive",
       "value": "simple_type"

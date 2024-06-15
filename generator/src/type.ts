@@ -39,6 +39,7 @@ export type TypeUnion = {
 }
 export type TypeDeclaration = {
   name: string,
+  type: "simple" | "complex" | "group" | "attributeGroup" | "element",
   value: Type
 }
 
