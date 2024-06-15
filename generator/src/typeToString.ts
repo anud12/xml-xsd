@@ -2,9 +2,9 @@ import {Type, TypeAny, TypeComposition, TypeDeclaration, TypeObject, TypePrimiti
 
 type DeclarationMap = Map<string, Type>;
 type ParentScope = string[];
-type HandleType = (type: Type, declarationMap: DeclarationMap, parentScope:ParentScope, indentLevel?: number) => string;
+type HandleType = (type: Type, declarationMap: DeclarationMap, parentScope: ParentScope, indentLevel?: number) => string;
 
-function mapXsdTypeToTs(xsdType: string | undefined, declarationMap: DeclarationMap, parentScope:ParentScope, indentLevel :number, handleObject:HandleType): string {
+function mapXsdTypeToTs(xsdType: string | undefined, declarationMap: DeclarationMap, parentScope: ParentScope, indentLevel: number, handleObject: HandleType): string {
   if (!xsdType) {
     return "any";
   }
@@ -13,12 +13,12 @@ function mapXsdTypeToTs(xsdType: string | undefined, declarationMap: Declaration
     return type === xsdType
   })
 
-  if(type) {
+  if (type) {
     return `${xsdType} | any`;
   }
 
   const declarationType = declarationMap.get(xsdType);
-  if(declarationType) {
+  if (declarationType) {
     return `${xsdType}`;
   }
 
@@ -29,20 +29,20 @@ function mapXsdTypeToTs(xsdType: string | undefined, declarationMap: Declaration
     case 'xs:boolean':
     case 'xs:string':
     case 'xs:anyURI':
-      return  'string';
+      return 'string';
     case 'unknown':
       return 'any'
     default:
-      return  xsdType;
+      return xsdType;
   }
 }
 
-function handleAttributePrimitive(type: TypePrimitive, declarationMap: DeclarationMap, parentScope:ParentScope, indentLevel: number): string {
+function handleAttributePrimitive(type: TypePrimitive, declarationMap: DeclarationMap, parentScope: ParentScope, indentLevel: number): string {
   const value = mapXsdTypeToTs(type.value, declarationMap, parentScope, indentLevel, handleAttribute)
   return value;
 }
 
-function handleAttributeObject(type: TypeObject, declarationMap: DeclarationMap, parentScope:ParentScope, indentLevel: number): string {
+function handleAttributeObject(type: TypeObject, declarationMap: DeclarationMap, parentScope: ParentScope, indentLevel: number): string {
   const indent = ' '.repeat(indentLevel);
   const properties = Object.keys(type.value).map(key => {
     const propertyType = type.value[key];
@@ -54,19 +54,19 @@ function handleAttributeObject(type: TypeObject, declarationMap: DeclarationMap,
   return body;
 }
 
-function handleAttributeCompositionType(type: TypeComposition, declarationMap: DeclarationMap, parentScope:ParentScope, indentLevel: number): string {
+function handleAttributeCompositionType(type: TypeComposition, declarationMap: DeclarationMap, parentScope: ParentScope, indentLevel: number): string {
   const indent = ' '.repeat(indentLevel + 2);
   const types = type.value.map(t => handleAttribute(t, declarationMap, parentScope, indentLevel));
   return types.join(` & `);
 }
 
-function handleAttributeUnionType(type: TypeUnion, declarationMap: DeclarationMap, parentScope:ParentScope, indentLevel: number): string {
+function handleAttributeUnionType(type: TypeUnion, declarationMap: DeclarationMap, parentScope: ParentScope, indentLevel: number): string {
   const indent = ' '.repeat(indentLevel + 2);
   const types = type.value.map(t => handleAttribute(t, declarationMap, parentScope, indentLevel));
   return types.join(` | `);
 }
 
-function handleAttribute(type: Type, declarationMap: DeclarationMap, parentScope:ParentScope, indentLevel: number): string | undefined {
+function handleAttribute(type: Type, declarationMap: DeclarationMap, parentScope: ParentScope, indentLevel: number): string | undefined {
   if (!type) {
     return undefined;
   }
@@ -98,16 +98,16 @@ function handleAttribute(type: Type, declarationMap: DeclarationMap, parentScope
 }
 
 
-function handlePrimitiveType(type: TypePrimitive, declarationMap: DeclarationMap, parentScope:ParentScope, indentLevel: number): string {
+function handlePrimitiveType(type: TypePrimitive, declarationMap: DeclarationMap, parentScope: ParentScope, indentLevel: number): string {
   const value = mapXsdTypeToTs(type.value, declarationMap, parentScope, indentLevel, handleTypes);
-  if(type.attributes && Object.keys(type.attributes)) {
+  if (type.attributes && Object.keys(type.attributes)) {
     return `JsonQueryType<${handleAttribute(type.attributes, declarationMap, parentScope, indentLevel)}, {}> & ${value}`
   }
   return value;
 }
 
 
-function handleObjectType(type: TypeObject, declarationMap: DeclarationMap, parentScope:ParentScope, indentLevel: number): string {
+function handleObjectType(type: TypeObject, declarationMap: DeclarationMap, parentScope: ParentScope, indentLevel: number): string {
   const attributes = type.attributes && handleAttribute(type.attributes, declarationMap, parentScope, indentLevel);
   const indent = ' '.repeat(indentLevel);
   const properties = Object.keys(type.value).map(key => {
@@ -116,20 +116,20 @@ function handleObjectType(type: TypeObject, declarationMap: DeclarationMap, pare
     return `\n${indent}  "${key}": ${propertyTypeString} & JsonQueryType<{}, {}>;`;
   });
 
-  let body = `{${properties.join('')}`;
+  let body = ``;
+  if(properties.length) {
+    body = `, {${properties.join('')}`;
+  }
   if (properties.length) {
     body += `\n${indent}}`
   }
-  if (!properties.length) {
-    body += `}`
-  }
   if (attributes) {
-    return `JsonQueryType<${attributes}, ${body}>`
+    return `JsonQueryType<${attributes}${body}>`
   }
-  return `JsonQueryType<{}, ${body}>`;
+  return `JsonQueryType<{}${body}>`;
 }
 
-function handleCompositionType(type: TypeComposition, declarationMap: DeclarationMap, parentScope:ParentScope, indentLevel: number): string {
+function handleCompositionType(type: TypeComposition, declarationMap: DeclarationMap, parentScope: ParentScope, indentLevel: number): string {
   const indent = ' '.repeat(indentLevel + 2);
   const types = type.value.map(t => handleTypes(t, declarationMap, parentScope, indentLevel));
   const attribute = handleAttribute(type.attributes, declarationMap, parentScope, indentLevel);
@@ -139,7 +139,7 @@ function handleCompositionType(type: TypeComposition, declarationMap: Declaratio
   return types.join(`\n${indent}& `);
 }
 
-function handleUnionType(type: TypeUnion, declarationMap: DeclarationMap, parentScope:ParentScope, indentLevel: number): string {
+function handleUnionType(type: TypeUnion, declarationMap: DeclarationMap, parentScope: ParentScope, indentLevel: number): string {
   const indent = ' '.repeat(indentLevel + 2);
   const types = type.value.map(t => handleTypes(t, declarationMap, parentScope, indentLevel + 2));
   const attribute = handleAttribute(type.attributes, declarationMap, parentScope, indentLevel);
@@ -149,12 +149,12 @@ function handleUnionType(type: TypeUnion, declarationMap: DeclarationMap, parent
   return types.join(`\n${indent}| `);
 }
 
-function handleAnyType(type: TypeAny, declarationMap: DeclarationMap, parentScope:ParentScope, indentLevel: number): string {
+function handleAnyType(type: TypeAny, declarationMap: DeclarationMap, parentScope: ParentScope, indentLevel: number): string {
   const indent = ' '.repeat(indentLevel);
   return `${indent}any`;
 }
 
-export function handleTypes(type: Type, declarationMap: DeclarationMap, parentScope:ParentScope, indentLevel: number): string {
+export function handleTypes(type: Type, declarationMap: DeclarationMap, parentScope: ParentScope, indentLevel: number): string {
   let result = ``;
   switch (type?.metaType) {
     case "unknown":
@@ -192,6 +192,16 @@ export function typeDeclarationToString(...typeDeclaration: Array<TypeDeclaratio
   return typeDeclaration.map(type => {
     let result = `export type ${type.name} = `;
     result += handleTypes(type.value, declarationMap, [type.name], 0)
+    if (type.type === "attributeGroup") {
+      result = result.replace("JsonQueryType<", "")
+        .split("")
+        .reverse()
+        .join("")
+        .replace(">", "")
+        .split("")
+        .reverse()
+        .join("")
+    }
     return result;
   }).join("\n")
 }

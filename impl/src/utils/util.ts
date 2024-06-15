@@ -3,14 +3,13 @@ import {locationMarkovChainMatrix, LocationMatrix} from "./location/locationMark
 import {markovNext} from "./markovNext";
 import {create} from "./location/create";
 import {
-  group__math_operations,
-  group__operation__and,
+  group__math_operations, group__operation__and,
   ItemQueryType,
   JsonSchema,
-  OperationQueryType,
   PropertyMutationQueryType,
   SelectItemQueryType,
-  SelectPersonQueryType
+  SelectPersonQueryType,
+  type__math_operations
 } from "./JsonSchema";
 import {newRandom} from "./newRandom";
 import {createOperationFromQueryType} from "./operation/createOperationFromQueryType";
@@ -98,10 +97,10 @@ export class JsonUtil {
     })
     return attribute;
   }
-  computeOperation = (operationQueryType: group__math_operations["children"]["operation"], getExternalProperty?: (string: string) => string) => {
+  computeOperation = (operationQueryType: group__operation__and["childrenList"][number], getExternalProperty?: (string: string) => string) => {
     return createOperationFromQueryType(this, operationQueryType, getExternalProperty)
   }
-  computeOperationFromParent = (operationList: OperationQueryType, getExternalProperty?: (string: string) => string) => {
+  computeOperationFromParent = (operationList: type__math_operations, getExternalProperty?: (string: string) => string) => {
     return createOperationFromParent(this, operationList, getExternalProperty)
   }
   invalidate = () => {

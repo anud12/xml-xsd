@@ -1,13 +1,5 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-  <xs:attribute name="property_rule_ref" type="xs:string">
-    <xs:annotation>
-      <xs:documentation>
-        Represents the reference to a property rule.
-      </xs:documentation>
-    </xs:annotation>
-  </xs:attribute>
-
   <xs:attributeGroup name="attributeGroup_range">
     <xs:annotation>
       <xs:documentation>
@@ -311,7 +303,7 @@
               </xs:annotation>
             </xs:element>
           </xs:sequence>
-          <xs:attribute ref="property_rule_ref" type="xs:string"/>
+          <xs:attribute name="property_rule_ref" type="xs:string"/>
         </xs:complexType>
       </xs:element>
       <xs:element name="classification" minOccurs="0" maxOccurs="unbounded">

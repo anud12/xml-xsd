@@ -1,11 +1,11 @@
-import {group__operation__and, OperationQueryType} from "../JsonSchema";
+import {group__operation__and} from "../JsonSchema";
 import {JsonUtil} from "../util";
 import {JsonQueryType} from "../../JsonQueryType";
 
 
 export const createOperationFromQueryType = (
   readJson: JsonUtil,
-  operationValue: group__operation__and,
+  operationValue: group__operation__and["childrenList"][number],
   getExternalProperty: (key: string) => string = () => "0"
 ): (value: string) => string => {
 
@@ -22,68 +22,70 @@ export const createOperationFromQueryType = (
   switch (operationValue.tag) {
     default:
       return (value:string) => {
-        throw new Error(`Unknown tag ${(operationValue as JsonQueryType).tag}`);
+        throw new Error(`Unknown tag ${(andOperationValue as JsonQueryType).tag}`);
         return value;
       };
     case "add_property":
       return wrapper(value => {
-        const propertyRef = operationValue.attributeMap.property_rule_ref;
+        const addPropertyOpeartionValue = andOperationValue as group__operation__and["children"]["add_property"];
+        const propertyRef = addPropertyOpeartionValue.attributeMap.property_rule_ref;
         if (propertyRef === undefined) {
-          throw new Error(`Operation ${operationValue.getPath()} property is undefined`);
+          throw new Error(`Operation ${addPropertyOpeartionValue.getPath()} property is undefined`);
         }
-        console.log(`${operationValue.tag}('${value}', '${operationValue.attributeMap.property_rule_ref}')`)
+        console.log(`${addPropertyOpeartionValue.tag}('${value}', '${addPropertyOpeartionValue.attributeMap.property_rule_ref}')`)
         const newValue = getExternalProperty(propertyRef);
         const result= String(Number(value) + Math.floor(Number(newValue)));
-        console.log(`${operationValue.tag}('${value}', '${operationValue.attributeMap.property_rule_ref}') = '${result}', getExternalProperty = ${newValue}`)
+        console.log(`${addPropertyOpeartionValue.tag}('${value}', '${addPropertyOpeartionValue.attributeMap.property_rule_ref}') = '${result}', getExternalProperty = ${newValue}`)
         return result;
       })
     case "and":
+      let andOperationValue = operationValue as group__operation__and["children"]["and"];
       return wrapper(value => {
-        switch (operationValue.attributeMap.do) {
-          default: throw new Error(`Unknown attribute ${operationValue.attributeMap.do} for ${operationValue.tag} in ${operationValue.getPath()}`);
+        switch (andOperationValue.attributeMap.do) {
+          default: throw new Error(`Unknown attribute ${andOperationValue.attributeMap.do} for ${andOperationValue.tag} in ${andOperationValue.getPath()}`);
           case "add": {
-            const result = String(Math.trunc(Number(value) + Number(operationValue.attributeMap.value)));
-            console.log(`${operationValue.attributeMap.do}('${value}', '${operationValue.attributeMap.value}') = ${result}`)
+            const result = String(Math.trunc(Number(value) + Number(andOperationValue.attributeMap.value)));
+            console.log(`${andOperationValue.attributeMap.do}('${value}', '${andOperationValue.attributeMap.value}') = ${result}`)
             return result;
           }
           case "add_dice": {
-            const randomValue = readJson.random() * Number(operationValue.attributeMap.value);
+            const randomValue = readJson.random() * Number(andOperationValue.attributeMap.value);
             const result = String(Math.trunc(Number(value) + Math.floor(randomValue)));
-            console.log(`${operationValue.attributeMap.do}('${value}', '${operationValue.attributeMap.value}') = ${result}, randomValue:${randomValue}`)
+            console.log(`${andOperationValue.attributeMap.do}('${value}', '${andOperationValue.attributeMap.value}') = ${result}, randomValue:${randomValue}`)
             return result;
           }
           case "multiply": {
-            const result= String(Math.trunc(Number(value) * Number(operationValue.attributeMap.value)))
-            console.log(`${operationValue.attributeMap.do}('${value}', '${operationValue.attributeMap.value}') = ${result}`)
+            const result= String(Math.trunc(Number(value) * Number(andOperationValue.attributeMap.value)))
+            console.log(`${andOperationValue.attributeMap.do}('${value}', '${andOperationValue.attributeMap.value}') = ${result}`)
             return result;
           }
           case "multiply_dice": {
-            const randomValue = readJson.random() * Number(operationValue.attributeMap.value);
+            const randomValue = readJson.random() * Number(andOperationValue.attributeMap.value);
             const result= String(Math.trunc(Number(value) * Math.floor(randomValue)))
-            console.log(`${operationValue.attributeMap.do}('${value}', '${operationValue.attributeMap.value}') = ${result}, randomValue:${randomValue}`)
+            console.log(`${andOperationValue.attributeMap.do}('${value}', '${andOperationValue.attributeMap.value}') = ${result}, randomValue:${randomValue}`)
             return result;
           }
           case "divide": {
-            const result= String(Math.trunc(Number(value) / Number(operationValue.attributeMap.value)))
-            console.log(`${operationValue.attributeMap.do}('${value}', '${operationValue.attributeMap.value}') = ${result}`)
+            const result= String(Math.trunc(Number(value) / Number(andOperationValue.attributeMap.value)))
+            console.log(`${andOperationValue.attributeMap.do}('${value}', '${andOperationValue.attributeMap.value}') = ${result}`)
             return result;
 
           }
           case "divide_dice": {
-            const randomValue = readJson.random() * Number(operationValue.attributeMap.value);
+            const randomValue = readJson.random() * Number(andOperationValue.attributeMap.value);
             const result= String(Math.trunc(Number(value) / Math.floor(randomValue)))
-            console.log(`${operationValue.attributeMap.do}('${value}', '${operationValue.attributeMap.value}') = ${result}, randomValue:${randomValue}`)
+            console.log(`${andOperationValue.attributeMap.do}('${value}', '${andOperationValue.attributeMap.value}') = ${result}, randomValue:${randomValue}`)
             return result;
           }
           case "modulo": {
-            const result= String(Math.trunc(Number(value) % Number(operationValue.attributeMap.value)))
-            console.log(`${operationValue.attributeMap.do}('${value}', '${operationValue.attributeMap.value}') = ${result}`)
+            const result= String(Math.trunc(Number(value) % Number(andOperationValue.attributeMap.value)))
+            console.log(`${andOperationValue.attributeMap.do}('${value}', '${andOperationValue.attributeMap.value}') = ${result}`)
             return result;
           }
           case "modulo_dice": {
-            const randomValue = readJson.random() * Number(operationValue.attributeMap.value);
+            const randomValue = readJson.random() * Number(andOperationValue.attributeMap.value);
             const result= String(Math.trunc(Number(value) % Math.floor(randomValue)))
-            console.log(`${operationValue.attributeMap.do}('${value}', '${operationValue.attributeMap.value}') = ${result}, randomValue:${randomValue}`)
+            console.log(`${andOperationValue.attributeMap.do}('${value}', '${andOperationValue.attributeMap.value}') = ${result}, randomValue:${randomValue}`)
             return result;
           }
         }

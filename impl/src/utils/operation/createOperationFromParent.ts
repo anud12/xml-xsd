@@ -1,10 +1,10 @@
-import {OperationQueryType} from "../JsonSchema";
+import {type__math_operations} from "../JsonSchema";
 import {createOperationFromQueryType} from "./createOperationFromQueryType";
 import {JsonUtil} from "../util";
 
 export const createOperationFromParent = (
   readJson: JsonUtil,
-  operationList: OperationQueryType,
+  operationList: type__math_operations,
   getExternalProperty: (key: string) => string = () => "0"
 ): string => {
   try {
