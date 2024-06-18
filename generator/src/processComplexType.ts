@@ -1,7 +1,7 @@
 import {Type, typeMerge, TypeObject, TypePrimitive} from "./type";
 import {XsdElement} from "./src";
 import {processSequenceType} from "./processSequenceType";
-import {processTypeAttribute} from "./processTypeAttribute";
+import {processAttribute} from "./processAttribute";
 import {processAttributeGroup} from "./processAttributeGroup";
 import {processExtension} from "./processExtension";
 import {processChoice} from "./processChoiceType";
@@ -50,7 +50,7 @@ export function processComplexType(element: XsdElement | XsdElement[]): Type[] {
       type.attributes = typeMerge(type.attributes, ...processAttributeGroup(element["xs:attributeGroup"]));
     }
     if (element["xs:attribute"] !== undefined) {
-      type.attributes = typeMerge(type.attributes, ...processTypeAttribute(element["xs:attribute"]));
+      type.attributes = typeMerge(type.attributes, ...processAttribute(element["xs:attribute"]));
     }
     return [type];
   } catch (e) {

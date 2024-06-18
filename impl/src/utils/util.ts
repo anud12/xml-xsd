@@ -3,7 +3,7 @@ import {locationMarkovChainMatrix, LocationMatrix} from "./location/locationMark
 import {markovNext} from "./markovNext";
 import {create} from "./location/create";
 import {
-  group__math_operations, group__operation__and,
+  group__math_operations, group__name_token, group__operation__and,
   ItemQueryType,
   JsonSchema,
   PropertyMutationQueryType,
@@ -125,7 +125,7 @@ export class JsonUtil {
       return calculateNameFromRefString(this, name);
     }),
 
-    calculateNameFromChildren: (element: NameRuleEntryQueryType) => {
+    calculateNameFromChildren: (element: group__name_token) => {
       return calculateNameFromChildren(this, element);
     }
   }

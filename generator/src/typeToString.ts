@@ -202,6 +202,16 @@ export function typeDeclarationToString(...typeDeclaration: Array<TypeDeclaratio
         .reverse()
         .join("")
     }
+    if (type.type === "attribute") {
+      result = result.replace("JsonQueryType<{}, ", "")
+        .split("")
+        .reverse()
+        .join("")
+        .replace(">", "")
+        .split("")
+        .reverse()
+        .join("")
+    }
     return result;
   }).join("\n")
 }

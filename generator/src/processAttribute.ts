@@ -1,16 +1,24 @@
-import {Type, TypeObject} from "./type";
+import {createPrimitive, Type, TypeObject} from "./type";
 import {XsdElement} from "./src";
 import {processSimpleTypeToDeclaration} from "./processSimpleTypeToDeclaration";
 import {mergeError} from "./mergeError";
 
-export function processTypeAttribute(element: XsdElement[] | XsdElement): TypeObject[] {
+export function processAttribute(element: XsdElement[] | XsdElement): TypeObject[] {
   try {
     if (Array.isArray(element)) {
       let result: TypeObject[] = [];
       for (const subElement of element) {
-        result.push(...processTypeAttribute(subElement));
+        result.push(...processAttribute(subElement));
       }
       return result;
+    }
+    if(element.ref) {
+      return [{
+        metaType: "object",
+        value: {
+          [element.ref]: createPrimitive(element.ref)
+        }
+      }];
     }
     if (!element.name) {
       return [];

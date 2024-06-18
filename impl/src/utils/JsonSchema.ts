@@ -60,12 +60,14 @@ export type PropertyMutationOnQueryType = JsonQueryType<{}, {}> & JsonQueryType<
 // }>
 export type PropertyMutationQueryType = type__property_mutation
 
-export type ItemDataQueryType = JsonQueryType<{}, {
-  classifications: ClassificationsListQueryType,
-  properties: PropertiesListQueryType,
-}>
+// export type ItemDataQueryType = JsonQueryType<{}, {
+//   classifications: ClassificationsListQueryType,
+//   properties: PropertiesListQueryType,
+// }>
+export type ItemDataQueryType = group__item_data;
 
-export type ItemQueryType = ItemDataQueryType & JsonQueryType<{ id: string, name: string }, {}>
+// export type ItemQueryType = ItemDataQueryType & JsonQueryType<{ id: string, name: string }, {}>
+export type ItemQueryType = type__item;
 
 // export type SelectItemQueryType = ItemDataQueryType & JsonQueryType<{}, {
 //   min: OperationQueryType,
@@ -236,6 +238,9 @@ export type JsonSchema = world_step;
 //     }>
 //   }>
 // }>
+export type property_rule_ref = {
+  "property_rule_ref": string & JsonQueryType<{}, {}>;
+}
 export type attributeGroup_range = {"value": string;  "max_value": string;  "inclusive": string;}
 export type group__item_data = JsonQueryType<{}, {
   "classifications": type__classification_list & JsonQueryType<{}, {}>;
@@ -288,9 +293,10 @@ export type type__classification_list = JsonQueryType<{}, {
 }>
 export type type__item = JsonQueryType<{"id": any;  "name": any;}, {}> & group__item_data
 export type type__item_selection = JsonQueryType<{}, {
-  "min": type__math_operations & JsonQueryType<{}, {}>;
-  "max": type__math_operations & JsonQueryType<{}, {}>;
-}>
+    "min": type__math_operations & JsonQueryType<{}, {}>;
+    "max": type__math_operations & JsonQueryType<{}, {}>;
+  }>
+  & group__item_data
 export type type_cell_ref = JsonQueryType<{"layer": any;  "x": string;  "y": string;}>
 export type type__person_selection = JsonQueryType<{}, {
   "radius": type__math_operations & JsonQueryType<{}, {}>;

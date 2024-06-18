@@ -21,10 +21,10 @@ export function processSequenceType(element: XsdElement | XsdElement[]): Type[] 
     }
     if (element["xs:element"] !== undefined) {
       const type = typeDeclarationsToRecursive(...processElementTypeToDeclaration(element["xs:element"]));
-      return [type];
+      types.push(type);
     }
     if (element["xs:group"] !== undefined) {
-      return processGroup(element["xs:group"]);
+      types.push(...processGroup(element["xs:group"]));
     }
     return types;
   } catch (e) {

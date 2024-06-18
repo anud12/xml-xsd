@@ -39,10 +39,16 @@ export type TypeUnion = {
 }
 export type TypeDeclaration = {
   name: string,
-  type: "simple" | "complex" | "group" | "attributeGroup" | "element",
+  type: "simple" | "complex" | "group" | "attribute" |"attributeGroup" | "element",
   value: Type
 }
 
+export function createPrimitive(value:string): TypePrimitive {
+  return {
+    metaType:"primitive",
+    value: value,
+  }
+}
 export function typeUnionCreate(...second: Array<Type>): Type {
   return {
     metaType: "union",
