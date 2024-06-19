@@ -27,7 +27,7 @@ export const createOperationFromQueryType = (
       };
     case "add_property":
       return wrapper(value => {
-        const addPropertyOpeartionValue = andOperationValue as group__operation__and["children"]["add_property"];
+        const addPropertyOpeartionValue = operationValue as group__operation__and["children"]["add_property"];
         const propertyRef = addPropertyOpeartionValue.attributeMap.property_rule_ref;
         if (propertyRef === undefined) {
           throw new Error(`Operation ${addPropertyOpeartionValue.getPath()} property is undefined`);

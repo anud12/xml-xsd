@@ -1137,8 +1137,6 @@
                   <xs:attribute name="location_rule_ref" use="required"/>
                   <xs:attribute name="x" use="required"/>
                   <xs:attribute name="y" use="required"/>
-                  <xs:attribute name="rotation" type="type_direction"
-                                default="north"/>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>

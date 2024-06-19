@@ -30,7 +30,6 @@ export const fillNeighbours = (readJson: JsonUtil, writeJson: JsonUtil, original
             location_rule_ref: type,
             x: String(x + i),
             y: String(y + j),
-            rotation: "east",
           };
           console.log(`Created cell: ${JSON.stringify(cell)}`)
           locationLayer.appendChild("cell", undefined, cell)

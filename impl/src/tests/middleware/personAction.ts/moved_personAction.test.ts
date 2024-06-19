@@ -31,7 +31,6 @@ describe("personAction" , () => {
   
   <race_rule>
     <entry id="human">
-      <vision value="20" inclusive="true"/>
       <movement value="5" inclusive="true"/>
     </entry>
   </race_rule>

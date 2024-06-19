@@ -435,7 +435,7 @@ export type world_step = JsonQueryType<{}, {
     }> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
   "location_layer": JsonQueryType<{"name": any;}, {
-    "cell": JsonQueryType<{"location_rule_ref": any;  "x": any;  "y": any;  "rotation": type_direction;}> & JsonQueryType<{}, {}>;
+    "cell": JsonQueryType<{"location_rule_ref": any;  "x": any;  "y": any;}> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
   "actions": JsonQueryType<{}, {
     "by": JsonQueryType<{"person_ref": any;}, {}> & JsonQueryType<{}, {
