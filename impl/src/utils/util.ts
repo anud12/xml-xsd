@@ -3,13 +3,11 @@ import {locationMarkovChainMatrix, LocationMatrix} from "./location/locationMark
 import {markovNext} from "./markovNext";
 import {create} from "./location/create";
 import {
-  group__math_operations, group__name_token, group__operation__and,
   ItemQueryType,
   JsonSchema,
   PropertyMutationQueryType,
   SelectItemQueryType,
   SelectPersonQueryType,
-  type__math_operations
 } from "./JsonSchema";
 import {newRandom} from "./newRandom";
 import {createOperationFromQueryType} from "./operation/createOperationFromQueryType";
@@ -27,6 +25,7 @@ import {classifyItem} from "./item/classifyItem";
 import {getItemProperty} from "./item/getItemProperty";
 import {filterItem} from "./item/filterItem";
 import {applyPropertyMutation} from "./person/applyPropertyMutation";
+import {group__name_token, group__operation__and, type__math_operations} from "../world_step.schema";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;

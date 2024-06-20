@@ -1,6 +1,7 @@
-import {group__operation__and} from "../JsonSchema";
+
 import {JsonUtil} from "../util";
 import {JsonQueryType} from "../../JsonQueryType";
+import {group__operation__and} from "../../world_step.schema";
 
 
 export const createOperationFromQueryType = (

@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import FastXMLParser from 'fast-xml-parser';
-import {Type, TypeDeclaration} from "./type";
+import {TypeDeclaration} from "./type";
 import {processElementTypeToDeclaration} from "./processElementTypeToDeclaration";
 import {processSimpleTypeToDeclaration} from "./processSimpleTypeToDeclaration";
 import {processComplexTypeToDeclaration} from "./processComplexTypeToDeclaration";
@@ -51,7 +51,7 @@ export function main(path: string, output?: string) {
   const schema = parseXsdSchema(path);
   const types = generateTypes(schema);
   const typeString = typeDeclarationToString(...types);
-  let result = `import {JsonQueryType} from "../impl/src/JsonQueryType"\n`
+  let result = `import {JsonQueryType} from "./JsonQueryType"\n`
   result += typeString;
   console.log(typeString);
   if (output) {

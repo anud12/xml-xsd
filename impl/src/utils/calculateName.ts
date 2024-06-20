@@ -1,7 +1,8 @@
-import {group__name_token, JsonSchema} from "./JsonSchema";
+import {JsonSchema} from "./JsonSchema";
 import {JsonUtil} from "./util";
 import {JsonQueryType} from "../JsonQueryType";
 import {mergeError} from "../mergeError";
+import {group__name_token} from "../world_step.schema";
 
 export type NameRuleEntryQueryType = JsonSchema["children"]["rule_group"]["children"]["name_rule"]["children"]["entry"]
 export type NameTokenQueryType = NameRuleEntryQueryType["children"]["name_token"]

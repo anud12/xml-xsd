@@ -1,6 +1,7 @@
-import {type__math_operations} from "../JsonSchema";
+
 import {createOperationFromQueryType} from "./createOperationFromQueryType";
 import {JsonUtil} from "../util";
+import {type__math_operations} from "../../world_step.schema";
 
 export const createOperationFromParent = (
   readJson: JsonUtil,
