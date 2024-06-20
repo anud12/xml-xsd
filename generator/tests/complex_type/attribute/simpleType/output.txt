@@ -1,0 +1,28 @@
+[
+  {
+    "name": "root",
+    "type": "element",
+    "value": {
+      "metaType": "object",
+      "value": {},
+      "attributes": {
+        "metaType": "object",
+        "value": {
+          "attributeName": {
+            "metaType": "union",
+            "value": [
+              {
+                "metaType": "primitive",
+                "value": "\"first\""
+              },
+              {
+                "metaType": "primitive",
+                "value": "\"second\""
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+]

@@ -7,8 +7,9 @@ type RaceQueryType = RuleGroupQueryType["children"]["race_rule"]["children"]["en
 type Bonus = RaceQueryType["children"]["property_bonus"]
 
 export const getBaseProperty = (readJson: JsonUtil, personQueryType: PersonQueryType, key: string): string | undefined => {
-  console.log(`getBaseProperty ${key} for ${personQueryType.attributeMap.id} `)
+
   try {
+    console.log(`getBaseProperty '${key}' for ${personQueryType.attributeMap.id} `)
     const propertyRuleEntries = readJson.getRuleGroups()
       .flatMap(rulesGroup => {
         return rulesGroup.queryAllOptional("property_rule")
@@ -20,9 +21,12 @@ export const getBaseProperty = (readJson: JsonUtil, personQueryType: PersonQuery
       ?.queryOptional("person_default");
 
     if(!personDefaultElement) {
+      console.log(`getBaseProperty '${key}' for ${personQueryType.attributeMap.id} is 'undefined'`)
       return
     }
-    return readJson.computeOperationFromParent(personDefaultElement, string => getPersonProperty(readJson, personQueryType, string));
+    const value = readJson.computeOperationFromParent(personDefaultElement, string => getPersonProperty(readJson, personQueryType, string));
+    console.log(`getBaseProperty '${key}' for ${personQueryType.attributeMap.id} is '${value}'`)
+    return value;
 
   } catch (e: any) {
     throw mergeError(e, new Error(`getBaseProperty of ${key}`));
@@ -30,17 +34,23 @@ export const getBaseProperty = (readJson: JsonUtil, personQueryType: PersonQuery
 }
 
 export const getRaceProperty = (readJson: JsonUtil, personQueryType: PersonQueryType, raceQueryType: RaceQueryType, key: string): string | undefined => {
-  console.log(`getRaceProperty ${key} from ${raceQueryType.attributeMap.id} for ${personQueryType.attributeMap.id} `)
+
+  console.log(`getRaceProperty for race '${raceQueryType.attributeMap.id}' and key '${key}' for ${personQueryType.attributeMap.id} `)
   const propertyBonus: Bonus = raceQueryType.queryAllOptional("property_bonus")
     .find(e => e.attributeMap.property_rule_ref === key);
   if (!propertyBonus) {
+    console.log(`getRaceProperty for race '${raceQueryType.attributeMap.id}' and key '${key}' for ${personQueryType.attributeMap.id} is 'undefined'`)
     return undefined;
   }
   const base = getBaseProperty(readJson, personQueryType, key) ?? "0";
-  return propertyBonus.queryAll("operation")
+
+  const value = propertyBonus.queryAll("operation")
     .flatMap(e => e.childrenList)
     .map(e => readJson.computeOperation(e, string => getPersonProperty(readJson, personQueryType, string)))
     .reduce((acc, p) => p(acc), base);
+
+  console.log(`getRaceProperty for race '${raceQueryType.attributeMap.id}' and key '${key}' for ${personQueryType.attributeMap.id} is '${value}'`)
+  return value;
 
 }
 
@@ -48,7 +58,7 @@ export type PersonQueryType = JsonSchema["children"]["people"]["children"]["pers
 
 export const getPersonProperty = (readJson: JsonUtil, personQueryType: PersonQueryType, key: string): string | undefined => {
   try {
-    console.log(`getProperty ${key} for ${personQueryType.attributeMap.id}`)
+    console.log(`getProperty key:'${key}' for personId: '${personQueryType.attributeMap.id}'`)
     const ruleGroup = readJson.json.query("rule_group");
     let propertyList = personQueryType.queryAllOptional("properties");
     if (propertyList.length === 0) {
@@ -74,6 +84,7 @@ export const getPersonProperty = (readJson: JsonUtil, personQueryType: PersonQue
       value = getBaseProperty(readJson, personQueryType, key)
     }
     if(!value) {
+      console.log(`getProperty key:'${key}' for personId: '${personQueryType.attributeMap.id}' is undefined`)
       return;
     }
     propertyList.forEach(e => {
@@ -82,6 +93,7 @@ export const getPersonProperty = (readJson: JsonUtil, personQueryType: PersonQue
         value: value
       })
     })
+    console.log(`getProperty key:'${key}' for personId: '${personQueryType.attributeMap.id}' is '${value}'`)
     return value;
   } catch (e: any) {
     throw mergeError(e, new Error(`getProperty of ${key} failed for ${personQueryType.getPath()}`));

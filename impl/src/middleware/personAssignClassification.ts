@@ -19,7 +19,7 @@ export const personAssignClassification: MutationMiddleware = (readJson) => {
       if(!classifications) {
         classifications = person.appendChild("classifications");
       }
-      classifications.childrenList = [];
+      classifications.childrenList = [] as unknown as any;
       classificationList.forEach(classification => {
         classifications.appendChild("classification", undefined, {
           classification_rule_ref: classification

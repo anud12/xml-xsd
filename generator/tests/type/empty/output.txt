@@ -1,0 +1,10 @@
+[
+  {
+    "name": "root",
+    "type": "element",
+    "value": {
+      "metaType": "primitive",
+      "value": "unknown"
+    }
+  }
+]

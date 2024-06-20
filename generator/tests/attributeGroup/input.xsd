@@ -1,0 +1,12 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:attributeGroup name="attributeGroup">
+    <xs:attribute name="value" use="required" type="xs:integer"/>
+  </xs:attributeGroup>
+
+  <xs:element name="root">
+    <xs:complexType>
+      <xs:attributeGroup ref="attributeGroup"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

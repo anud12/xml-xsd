@@ -7,7 +7,6 @@
       </xs:documentation>
     </xs:annotation>
   </xs:attribute>
-
   <xs:attributeGroup name="attributeGroup_range">
     <xs:annotation>
       <xs:documentation>
@@ -68,7 +67,7 @@
         </xs:complexType>
       </xs:element>
     </xs:sequence>
-    <xs:attribute name="property_rule_ref" use="required"/>
+    <xs:attribute name="property_rule_ref" type="xs:string" use="required"/>
   </xs:complexType>
 
   <xs:complexType name="type_icon">
@@ -77,9 +76,9 @@
         SVG Icon.
       </xs:documentation>
     </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="xs:anyType"/>
-    </xs:complexContent>
+    <xs:sequence>
+      <xs:any processContents="skip"/>
+    </xs:sequence>
   </xs:complexType>
 
   <xs:simpleType name="item_slot">
@@ -105,7 +104,7 @@
           </xs:documentation>
         </xs:annotation>
         <xs:complexType>
-          <xs:attribute name="property_rule_ref" use="required">
+          <xs:attribute name="property_rule_ref" type="xs:string" use="required">
             <xs:annotation>
               <xs:documentation>
                 Represents the reference to a property rule.
@@ -113,6 +112,7 @@
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="value"
+                        type="xs:int"
                         use="required">
             <xs:annotation>
               <xs:documentation>
@@ -141,7 +141,7 @@
           </xs:documentation>
         </xs:annotation>
         <xs:complexType>
-          <xs:attribute name="classification_rule_ref" use="required"/>
+          <xs:attribute name="classification_rule_ref" type="xs:string" use="required"/>
         </xs:complexType>
       </xs:element>
     </xs:sequence>
@@ -310,12 +310,12 @@
               </xs:annotation>
             </xs:element>
           </xs:sequence>
-          <xs:attribute ref="property_rule_ref"/>
+          <xs:attribute name="property_rule_ref" type="xs:string"/>
         </xs:complexType>
       </xs:element>
       <xs:element name="classification" minOccurs="0" maxOccurs="unbounded">
         <xs:complexType>
-          <xs:attribute name="classification_rule_ref" use="required"/>
+          <xs:attribute name="classification_rule_ref" type="xs:string" use="required"/>
         </xs:complexType>
       </xs:element>
       <xs:element name="race" minOccurs="0">
@@ -405,22 +405,20 @@
 
   <xs:group name="group__operation__and">
     <xs:sequence>
-      <xs:sequence>
-        <xs:element name="add_property" minOccurs="0">
-          <xs:complexType>
-            <xs:attribute name="property_rule_ref" use="required"/>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="and" minOccurs="0" maxOccurs="unbounded">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:group ref="group__operation__and" minOccurs="0"/>
-            </xs:sequence>
-            <xs:attribute name="do" use="required" type="type__group__operation__and"/>
-            <xs:attribute name="value" use="required" type="xs:int"/>
-          </xs:complexType>
-        </xs:element>
-      </xs:sequence>
+      <xs:element name="add_property" minOccurs="0">
+        <xs:complexType>
+          <xs:attribute name="property_rule_ref" type="xs:string" use="required"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="and" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:group ref="group__operation__and" minOccurs="0"/>
+          </xs:sequence>
+          <xs:attribute name="do" use="required" type="type__group__operation__and"/>
+          <xs:attribute name="value" use="required" type="xs:int"/>
+        </xs:complexType>
+      </xs:element>
     </xs:sequence>
   </xs:group>
 
@@ -473,7 +471,7 @@
                 </xs:documentation>
               </xs:annotation>
               <xs:complexType>
-                <xs:attribute name="name_rule_ref" use="required">
+                <xs:attribute name="name_rule_ref" type="xs:string" use="required">
                   <xs:annotation>
                     <xs:documentation>
                       Represents the ID of the referenced 'name_rule'.
@@ -501,7 +499,7 @@
               </xs:complexType>
             </xs:element>
           </xs:choice>
-          <xs:attribute name="prefix" use="required">
+          <xs:attribute name="prefix" type="xs:string" use="required">
             <xs:annotation>
               <xs:documentation>
                 Represents a string that is added to the beginning of the generated name.
@@ -600,14 +598,14 @@
           </xs:annotation>
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="previous_world_step" type="xs:anyURI" minOccurs="0">
+              <xs:element name="previous_world_step" minOccurs="0">
                 <xs:annotation>
                   <xs:documentation>
                     URI of the previous world step.
                   </xs:documentation>
                 </xs:annotation>
               </xs:element>
-              <xs:element name="next_world_step" type="xs:anyURI">
+              <xs:element name="next_world_step">
                 <xs:annotation>
                   <xs:documentation>
                     URI of the next world step.
@@ -738,7 +736,7 @@
                               <xs:sequence>
                                 <xs:group ref="group__math_operations"/>
                               </xs:sequence>
-                              <xs:attribute name="property_rule_ref" use="required"/>
+                              <xs:attribute name="property_rule_ref" type="xs:string" use="required"/>
                               <xs:attribute name="is" use="required">
                                 <xs:simpleType>
                                   <xs:restriction base="xs:string">
@@ -809,17 +807,17 @@
                           <xs:element name="movement" type="type_range" minOccurs="0"/>
                           <xs:element name="name" minOccurs="0">
                             <xs:complexType>
-                              <xs:attribute name="name_rule_ref" use="required"/>
+                              <xs:attribute name="name_rule_ref" type="xs:string" use="required"/>
                             </xs:complexType>
                           </xs:element>
                           <xs:element name="property_bonus" minOccurs="0"
                                       maxOccurs="unbounded">
                             <xs:complexType>
                               <xs:group ref="group__math_operations"/>
-                              <xs:attribute name="property_rule_ref"/>
+                              <xs:attribute name="property_rule_ref" type="xs:string"/>
                             </xs:complexType>
                           </xs:element>
-                          <xs:element name="icon" type="type_icon"/>
+                          <xs:element name="icon" type="type_icon" minOccurs="0"/>
                         </xs:sequence>
                         <xs:attribute name="id" type="xs:string" use="required"/>
                       </xs:complexType>
@@ -992,7 +990,7 @@
                                   <xs:complexType>
                                     <xs:complexContent>
                                       <xs:extension base="type__math_operations">
-                                        <xs:attribute name="property_rule_ref" use="required">
+                                        <xs:attribute name="property_rule_ref" type="xs:string" use="required">
                                           <xs:annotation>
                                             <xs:documentation>
                                               Represents the reference to a property rule.
@@ -1088,7 +1086,7 @@
                           <xs:element name="property" minOccurs="0"
                                       maxOccurs="unbounded">
                             <xs:complexType>
-                              <xs:attribute name="property_rule_ref" use="required"/>
+                              <xs:attribute name="property_rule_ref" type="xs:string" use="required"/>
                               <xs:attribute name="value"
                                             use="required"/>
                             </xs:complexType>
@@ -1115,7 +1113,7 @@
                           <xs:element name="classification" minOccurs="0"
                                       maxOccurs="unbounded">
                             <xs:complexType>
-                              <xs:attribute name="classification_rule_ref" use="required"/>
+                              <xs:attribute name="classification_rule_ref" type="xs:string" use="required"/>
                             </xs:complexType>
                           </xs:element>
                         </xs:sequence>
@@ -1139,8 +1137,6 @@
                   <xs:attribute name="location_rule_ref" use="required"/>
                   <xs:attribute name="x" use="required"/>
                   <xs:attribute name="y" use="required"/>
-                  <xs:attribute name="rotation" type="type_direction"
-                                default="north"/>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>

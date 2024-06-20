@@ -1,0 +1,50 @@
+[
+  {
+    "name": "complex_type",
+    "type": "complex",
+    "value": {
+      "metaType": "object",
+      "attributes": {
+        "metaType": "object",
+        "value": {
+          "complex_attribute": {
+            "metaType": "primitive",
+            "value": "xs:int"
+          }
+        }
+      },
+      "value": {
+        "complex_type": {
+          "metaType": "primitive",
+          "value": "xs:int"
+        }
+      }
+    }
+  },
+  {
+    "name": "root",
+    "type": "element",
+    "value": {
+      "metaType": "composition",
+      "value": [
+        {
+          "metaType": "object",
+          "value": {},
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "attribute": {
+                "metaType": "primitive",
+                "value": "xs:int"
+              }
+            }
+          }
+        },
+        {
+          "metaType": "primitive",
+          "value": "complex_type"
+        }
+      ]
+    }
+  }
+]

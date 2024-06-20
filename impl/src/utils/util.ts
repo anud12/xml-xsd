@@ -5,10 +5,9 @@ import {create} from "./location/create";
 import {
   ItemQueryType,
   JsonSchema,
-  OperationQueryType,
   PropertyMutationQueryType,
   SelectItemQueryType,
-  SelectPersonQueryType
+  SelectPersonQueryType,
 } from "./JsonSchema";
 import {newRandom} from "./newRandom";
 import {createOperationFromQueryType} from "./operation/createOperationFromQueryType";
@@ -26,6 +25,7 @@ import {classifyItem} from "./item/classifyItem";
 import {getItemProperty} from "./item/getItemProperty";
 import {filterItem} from "./item/filterItem";
 import {applyPropertyMutation} from "./person/applyPropertyMutation";
+import {group__name_token, group__operation__and, type__math_operations} from "../world_step.schema";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -96,10 +96,10 @@ export class JsonUtil {
     })
     return attribute;
   }
-  computeOperation = (operationQueryType: OperationQueryType["childrenList"][number], getExternalProperty?: (string: string) => string) => {
+  computeOperation = (operationQueryType: group__operation__and["childrenList"][number], getExternalProperty?: (string: string) => string) => {
     return createOperationFromQueryType(this, operationQueryType, getExternalProperty)
   }
-  computeOperationFromParent = (operationList: OperationQueryType, getExternalProperty?: (string: string) => string) => {
+  computeOperationFromParent = (operationList: type__math_operations, getExternalProperty?: (string: string) => string) => {
     return createOperationFromParent(this, operationList, getExternalProperty)
   }
   invalidate = () => {
@@ -124,7 +124,7 @@ export class JsonUtil {
       return calculateNameFromRefString(this, name);
     }),
 
-    calculateNameFromChildren: (element: NameRuleEntryQueryType) => {
+    calculateNameFromChildren: (element: group__name_token) => {
       return calculateNameFromChildren(this, element);
     }
   }

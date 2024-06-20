@@ -547,7 +547,6 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
       </properties>
       <inventory>
         <item id="0.0" name="Long sword">
-          <wearable slot="chest"/>
         </item>
       </inventory>
       <classifications/>

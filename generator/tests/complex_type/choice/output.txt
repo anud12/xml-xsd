@@ -1,0 +1,29 @@
+[
+  {
+    "name": "root",
+    "type": "element",
+    "value": {
+      "metaType": "union",
+      "value": [
+        {
+          "metaType": "object",
+          "value": {
+            "firstChoice": {
+              "metaType": "primitive",
+              "value": "xs:string"
+            }
+          }
+        },
+        {
+          "metaType": "object",
+          "value": {
+            "secondChoice": {
+              "metaType": "primitive",
+              "value": "xs:int"
+            }
+          }
+        }
+      ]
+    }
+  }
+]

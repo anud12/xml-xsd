@@ -15,7 +15,7 @@ export type JsonQueryType<
   Tag extends any | never = never,
 > = {
   tag: Tag,
-  body?: string,
+  body?: any,
   attributeMap: Attribute,
   children: Children,
   childrenList: Array<JsonQueryChildren<Children>[keyof JsonQueryChildren<Children>]>,

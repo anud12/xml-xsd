@@ -1,0 +1,68 @@
+[
+  {
+    "name": "by",
+    "type": "element",
+    "value": {
+      "metaType": "union",
+      "value": [
+        {
+          "metaType": "object",
+          "value": {
+            "do": {
+              "metaType": "object",
+              "value": {},
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "action_rule_ref": {
+                    "metaType": "unknown"
+                  },
+                  "action_ref": {
+                    "metaType": "unknown"
+                  },
+                  "person_ref": {
+                    "metaType": "unknown"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "metaType": "object",
+          "value": {
+            "move_towards": {
+              "metaType": "object",
+              "value": {},
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "layer": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  },
+                  "x": {
+                    "metaType": "primitive",
+                    "value": "xs:int"
+                  },
+                  "y": {
+                    "metaType": "primitive",
+                    "value": "xs:int"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "attributes": {
+        "metaType": "object",
+        "value": {
+          "person_ref": {
+            "metaType": "unknown"
+          }
+        }
+      }
+    }
+  }
+]

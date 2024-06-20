@@ -1,0 +1,20 @@
+[
+  {
+    "name": "root",
+    "type": "element",
+    "value": {
+      "metaType": "object",
+      "value": {
+        "child": {
+          "metaType": "object",
+          "value": {
+            "grandChild": {
+              "metaType": "primitive",
+              "value": "xs:int"
+            }
+          }
+        }
+      }
+    }
+  }
+]

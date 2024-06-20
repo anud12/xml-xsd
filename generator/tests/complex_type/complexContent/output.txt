@@ -1,0 +1,53 @@
+[
+  {
+    "name": "extension",
+    "type": "complex",
+    "value": {
+      "metaType": "object",
+      "value": {},
+      "attributes": {
+        "metaType": "object",
+        "value": {
+          "extensionAttribute": {
+            "metaType": "primitive",
+            "value": "xs:string"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "complexType",
+    "type": "complex",
+    "value": {
+      "metaType": "composition",
+      "value": [
+        {
+          "metaType": "object",
+          "value": {},
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "attribute": {
+                "metaType": "primitive",
+                "value": "xs:string"
+              }
+            }
+          }
+        },
+        {
+          "metaType": "primitive",
+          "value": "extension"
+        }
+      ]
+    }
+  },
+  {
+    "name": "root",
+    "type": "element",
+    "value": {
+      "metaType": "primitive",
+      "value": "complexType"
+    }
+  }
+]

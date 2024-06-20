@@ -1,0 +1,15 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="root">
+    <xs:complexType>
+    <xs:attribute name="attributeName">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="first"/>
+          <xs:enumeration value="second"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

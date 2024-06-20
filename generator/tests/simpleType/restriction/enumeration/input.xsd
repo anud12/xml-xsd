@@ -1,0 +1,10 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="simple_type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="add"/>
+      <xs:enumeration value="add_dice"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:element name="root" type="simple_type"/>
+</xs:schema>

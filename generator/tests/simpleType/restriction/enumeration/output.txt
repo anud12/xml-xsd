@@ -1,0 +1,27 @@
+[
+  {
+    "name": "simple_type",
+    "type": "simple",
+    "value": {
+      "metaType": "union",
+      "value": [
+        {
+          "metaType": "primitive",
+          "value": "\"add\""
+        },
+        {
+          "metaType": "primitive",
+          "value": "\"add_dice\""
+        }
+      ]
+    }
+  },
+  {
+    "name": "root",
+    "type": "element",
+    "value": {
+      "metaType": "primitive",
+      "value": "simple_type"
+    }
+  }
+]

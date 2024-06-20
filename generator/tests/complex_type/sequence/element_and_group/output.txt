@@ -1,0 +1,36 @@
+[
+  {
+    "name": "group__item_data",
+    "type": "group",
+    "value": {
+      "metaType": "object",
+      "value": {
+        "classifications": {
+          "metaType": "primitive",
+          "value": "xs:integer"
+        },
+        "properties": {
+          "metaType": "primitive",
+          "value": "xs:integer"
+        }
+      }
+    }
+  },
+  {
+    "name": "type__item_selection",
+    "type": "complex",
+    "value": {
+      "metaType": "object",
+      "value": {
+        "min": {
+          "metaType": "primitive",
+          "value": "xs:integer"
+        },
+        "max": {
+          "metaType": "primitive",
+          "value": "xs:integer"
+        }
+      }
+    }
+  }
+]
