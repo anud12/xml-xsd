@@ -530,6 +530,13 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
         </icon>
       </location_markov_link>
     </locations_markov_chain>
+    <location_graph_rule id="dd">
+      <node id="city">
+        <link_group id="all" angle="0" angleMax="360">
+          <to_option node_ref="city" distance="20" maxDistance="50" quantity="1" adjacent_depth_limit="0"/>
+        </link_group>
+      </node>
+    </location_graph_rule>
   </rule_group>
   <!--_-->
   <!--_-->
@@ -588,6 +595,12 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
     <cell location_rule_ref="plains" x="-1" y="1"/>
     <cell location_rule_ref="plains" x="-1" y="-1"/>
   </location_layer>
+  <location_graph id="world_map">
+    <rule location_graph_rule_ref="location_graph_rule"/>
+    <node id="1">
+      <link to="id" angle="45" distance="12"/>
+    </node>
+  </location_graph>
   <!--_-->
   <!--_-->
   <!--_-->

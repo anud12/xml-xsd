@@ -1261,6 +1261,85 @@
                   }
                 }
               }
+            },
+            "location_graph_rule": {
+              "metaType": "object",
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "id": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  }
+                }
+              },
+              "value": {
+                "node": {
+                  "metaType": "object",
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "id": {
+                        "metaType": "primitive",
+                        "value": "xs:string"
+                      }
+                    }
+                  },
+                  "value": {
+                    "link_group": {
+                      "metaType": "object",
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "id": {
+                            "metaType": "primitive",
+                            "value": "xs:string"
+                          },
+                          "angle": {
+                            "metaType": "primitive",
+                            "value": "xs:int"
+                          },
+                          "angleMax": {
+                            "metaType": "primitive",
+                            "value": "xs:int"
+                          }
+                        }
+                      },
+                      "value": {
+                        "to_option": {
+                          "metaType": "object",
+                          "value": {},
+                          "attributes": {
+                            "metaType": "object",
+                            "value": {
+                              "node_ref": {
+                                "metaType": "primitive",
+                                "value": "xs:string"
+                              },
+                              "distance": {
+                                "metaType": "primitive",
+                                "value": "xs:int"
+                              },
+                              "maxDistance": {
+                                "metaType": "primitive",
+                                "value": "xs:int"
+                              },
+                              "quantity": {
+                                "metaType": "primitive",
+                                "value": "xs:int"
+                              },
+                              "adjacent_depth_limit": {
+                                "metaType": "primitive",
+                                "value": "xs:int"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         },
@@ -1399,6 +1478,68 @@
                   },
                   "y": {
                     "metaType": "unknown"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "location_graph": {
+          "metaType": "object",
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "id": {
+                "metaType": "primitive",
+                "value": "xs:string"
+              }
+            }
+          },
+          "value": {
+            "rule": {
+              "metaType": "object",
+              "value": {},
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "location_graph_rule_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  }
+                }
+              }
+            },
+            "node": {
+              "metaType": "object",
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "id": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  }
+                }
+              },
+              "value": {
+                "link": {
+                  "metaType": "object",
+                  "value": {},
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "to": {
+                        "metaType": "primitive",
+                        "value": "xs:string"
+                      },
+                      "angle": {
+                        "metaType": "primitive",
+                        "value": "xs:string"
+                      },
+                      "distance": {
+                        "metaType": "primitive",
+                        "value": "xs:int"
+                      }
+                    }
                   }
                 }
               }

@@ -1053,12 +1053,100 @@
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
+
+
+              <xs:element name="location_graph_rule" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="node" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="link_group">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Represents a group of links that can be applied to the node.
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="to_option">
+                                  <xs:annotation>
+                                    <xs:documentation>
+                                      Represents the options to go to the next node.
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                  <xs:complexType>
+                                    <xs:attribute name="node_ref" type="xs:string" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation>
+                                          Represents the reference of the target node.
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="distance" type="xs:int" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation>
+                                          Represents the distance between the nodes.
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="maxDistance" type="xs:int">
+                                      <xs:annotation>
+                                        <xs:documentation>
+                                          Represents the maximum distance between the nodes.
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="quantity" type="xs:int">
+                                      <xs:annotation>
+                                        <xs:documentation>
+                                          Represents the weight of being chosen.
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="adjacent_depth_limit" type="xs:int" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation>
+                                          When node is created, it checks all links, recursive at the depth indicated,
+                                          to add links to this node, if applicable based on conditions of
+                                          this node and target node.
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                              <xs:attribute name="id" type="xs:string" use="required"/>
+                              <xs:attribute name="angle" type="xs:int" use="required">
+                                <xs:annotation>
+                                  <xs:documentation>
+                                    Represents the angle of the link group, used as minimum value when creating a link.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="angleMax" type="xs:int" use="required">
+                                <xs:annotation>
+                                  <xs:documentation>
+                                    Represents the maximum angle of the link group, used when creating a link.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="id" type="xs:string" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="id" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
+
             </xs:sequence>
 
             <xs:attribute name="id" use="required"/>
           </xs:complexType>
         </xs:element>
-
 
         <xs:element name="items" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
@@ -1141,6 +1229,34 @@
               </xs:element>
             </xs:sequence>
             <xs:attribute name="name" default="default"/>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="location_graph" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="rule">
+                <xs:complexType>
+                  <xs:attribute name="location_graph_rule_ref" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="node">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="link" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:attribute name="to" use="required" type="xs:string"/>
+                        <xs:attribute name="angle" use="required" type="xs:string"/>
+                        <xs:attribute name="distance" use="required" type="xs:int"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="id" type="xs:string" use="required"/>
+
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string"/>
           </xs:complexType>
         </xs:element>
         <xs:element name="actions" minOccurs="0">

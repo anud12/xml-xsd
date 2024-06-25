@@ -10,6 +10,7 @@ import {itemRuleRefValidator} from "./validators/itemRuleRef.validator";
 import {JsonUtil} from "./utils/util";
 import {nameRuleRefValidator} from "./validators/nameRuleRef.validator";
 import {actionRefValidator} from "./validators/actionRef.validator";
+import {nodeRefValidator} from "./validators/nodeRef.validator";
 
 export const validateString = async (xmlString: string, log: (...string: any[]) => void) => {
   const readJson = JsonQuery.fromText<JsonSchema>(xmlString.toString());
@@ -23,6 +24,7 @@ export const validateString = async (xmlString: string, log: (...string: any[]) 
   result.push(...await personRefValidator(jsonUtils));
   result.push(...await itemRuleRefValidator(jsonUtils));
   result.push(...await nameRuleRefValidator(jsonUtils));
+  result.push(...await nodeRefValidator(jsonUtils));
 
   return validate(jsonUtils, log);
 }
@@ -37,6 +39,7 @@ export const validate = async (jsonUtils: JsonUtil, log: (...string: any[]) => v
   result.push(...await personRefValidator(jsonUtils));
   result.push(...await itemRuleRefValidator(jsonUtils));
   result.push(...await nameRuleRefValidator(jsonUtils));
+  result.push(...await nodeRefValidator(jsonUtils));
 
   return result;
 }
