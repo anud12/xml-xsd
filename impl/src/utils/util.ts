@@ -26,6 +26,8 @@ import {getItemProperty} from "./item/getItemProperty";
 import {filterItem} from "./item/filterItem";
 import {applyPropertyMutation} from "./person/applyPropertyMutation";
 import {group__name_token, group__operation__and, type__math_operations} from "../world_step.schema";
+import {createLocationGraph} from "./locationGraph/createLocationGraph";
+import {createNode, LocationGraphQueryType} from "./locationGraph/createNode";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -149,6 +151,15 @@ export class JsonUtil {
     },
     filterItem(selectItemQueryType: SelectItemQueryType, itemQueryElement: ItemQueryType) {
       return filterItem(this, selectItemQueryType, itemQueryElement);
+    }
+  }
+
+  locationGraph = {
+    createLocationGraph: (ref:string) => {
+      return createLocationGraph(this, ref)
+    },
+    createNode: (locationGraph: LocationGraphQueryType, ref:string) => {
+      return createNode(this, locationGraph, ref)
     }
   }
 

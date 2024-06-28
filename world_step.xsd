@@ -1058,7 +1058,28 @@
               <xs:element name="location_graph_rule" minOccurs="0">
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element name="node" minOccurs="0">
+                    <xs:element name="setup">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Represents the initial setup of the location graph.
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="starting_node">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Represents the initial node of the location graph.
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:attribute name="node_rule_ref" type="xs:string" use="required"/>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="node_rule" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
                           <xs:element name="link_group">
@@ -1076,7 +1097,7 @@
                                     </xs:documentation>
                                   </xs:annotation>
                                   <xs:complexType>
-                                    <xs:attribute name="node_ref" type="xs:string" use="required">
+                                    <xs:attribute name="node_rule_ref" type="xs:string" use="required">
                                       <xs:annotation>
                                         <xs:documentation>
                                           Represents the reference of the target node.
@@ -1137,6 +1158,7 @@
                         <xs:attribute name="id" type="xs:string" use="required"/>
                       </xs:complexType>
                     </xs:element>
+
                   </xs:sequence>
                   <xs:attribute name="id" type="xs:string" use="required"/>
                 </xs:complexType>
@@ -1240,10 +1262,10 @@
                   <xs:attribute name="location_graph_rule_ref" type="xs:string" use="required"/>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="node">
+              <xs:element name="node" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element name="link" maxOccurs="unbounded">
+                    <xs:element name="link" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:attribute name="to" use="required" type="xs:string"/>
                         <xs:attribute name="angle" use="required" type="xs:string"/>
@@ -1251,6 +1273,7 @@
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>
+                  <xs:attribute name="node_rule_ref" type="xs:string"  use="required"/>
                   <xs:attribute name="id" type="xs:string" use="required"/>
 
                 </xs:complexType>
@@ -1281,6 +1304,22 @@
                     </xs:element>
                   </xs:choice>
                   <xs:attribute name="person_ref" use="required"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="create_location_graph">
+                <xs:annotation>
+                  <xs:documentation>
+                    Represents the action to create a location graph.
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="location_graph_rule_ref" type="xs:string" use="required">
+                    <xs:annotation>
+                      <xs:documentation>
+                        Represents the reference to the location graph rule that will be used to create the graph.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>

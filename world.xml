@@ -531,11 +531,15 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
       </location_markov_link>
     </locations_markov_chain>
     <location_graph_rule id="dd">
-      <node id="city">
+      <setup>
+        <starting_node node_rule_ref="city"/>
+      </setup>
+      <node_rule id="city">
         <link_group id="all" angle="0" angleMax="360">
-          <to_option node_ref="city" distance="20" maxDistance="50" quantity="1" adjacent_depth_limit="0"/>
+          <to_option node_rule_ref="city" distance="20" maxDistance="50" quantity="1" adjacent_depth_limit="0"/>
         </link_group>
-      </node>
+      </node_rule>
+
     </location_graph_rule>
   </rule_group>
   <!--_-->

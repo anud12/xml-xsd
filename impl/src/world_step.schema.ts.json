@@ -1274,7 +1274,25 @@
                 }
               },
               "value": {
-                "node": {
+                "setup": {
+                  "metaType": "object",
+                  "value": {
+                    "starting_node": {
+                      "metaType": "object",
+                      "value": {},
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "node_rule_ref": {
+                            "metaType": "primitive",
+                            "value": "xs:string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "node_rule": {
                   "metaType": "object",
                   "attributes": {
                     "metaType": "object",
@@ -1312,7 +1330,7 @@
                           "attributes": {
                             "metaType": "object",
                             "value": {
-                              "node_ref": {
+                              "node_rule_ref": {
                                 "metaType": "primitive",
                                 "value": "xs:string"
                               },
@@ -1514,6 +1532,10 @@
               "attributes": {
                 "metaType": "object",
                 "value": {
+                  "node_rule_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  },
                   "id": {
                     "metaType": "primitive",
                     "value": "xs:string"
@@ -1607,6 +1629,19 @@
                 "value": {
                   "person_ref": {
                     "metaType": "unknown"
+                  }
+                }
+              }
+            },
+            "create_location_graph": {
+              "metaType": "object",
+              "value": {},
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "location_graph_rule_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
                   }
                 }
               }
