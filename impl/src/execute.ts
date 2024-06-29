@@ -14,7 +14,8 @@ import {calculateNameFromRefString} from "./utils/calculateName";
 import {validate} from "./validate";
 import {itemAssignClassification} from "./middleware/itemAssignClassification";
 import {globalAction} from "./middleware/globalAction";
-import {createLocationGraph} from "./middleware/createLocationGraph";
+import {locationGraphCreate} from "./middleware/locationGraph/create";
+import {locationGraphCreateAdjacent} from "./middleware/locationGraph/createAdjacent";
 
 type StringParameter<Param extends string> = `${Param} ${string}`
 
@@ -92,7 +93,8 @@ export const execute = async (readJson: JsonSchema, log: (...string: any[]) => v
   const personActionResult = personAction(readJsonUtil);
   const globalActionResult = globalAction(readJsonUtil);
   const eventsMetadataResult = eventsMetadata(readJsonUtil);
-  const createLocationGraphResult = createLocationGraph(readJsonUtil);
+  const locationGraphCreateResult = locationGraphCreate(readJsonUtil);
+  const locationGraphCreateAdjacentResult = locationGraphCreateAdjacent(readJsonUtil);
 
   await personMoveTowardsResult(readJsonUtil);
   await personActionResult(readJsonUtil);
@@ -100,7 +102,8 @@ export const execute = async (readJson: JsonSchema, log: (...string: any[]) => v
 
   await eventsMetadataResult(dispatcher);
   await dispatcherResult(readJsonUtil);
-  await createLocationGraphResult(readJsonUtil)
+  await locationGraphCreateResult(readJsonUtil);
+  await locationGraphCreateAdjacentResult(readJsonUtil);
   await personVision(readJsonUtil)(readJsonUtil);
   await itemAssignClassification(readJsonUtil)(readJsonUtil);
   await personAssignClassification(readJsonUtil)(readJsonUtil);

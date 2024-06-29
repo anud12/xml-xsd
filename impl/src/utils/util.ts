@@ -28,6 +28,7 @@ import {applyPropertyMutation} from "./person/applyPropertyMutation";
 import {group__name_token, group__operation__and, type__math_operations} from "../world_step.schema";
 import {createLocationGraph} from "./locationGraph/createLocationGraph";
 import {createNode, LocationGraphQueryType} from "./locationGraph/createNode";
+import {createAdjacent} from "./locationGraph/createAdjacent";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -160,6 +161,9 @@ export class JsonUtil {
     },
     createNode: (locationGraph: LocationGraphQueryType, ref:string) => {
       return createNode(this, locationGraph, ref)
+    },
+    createAdjacent: (locationGraphRef: string, nodeRef: string) => {
+      return createAdjacent(this, locationGraphRef, nodeRef)
     }
   }
 

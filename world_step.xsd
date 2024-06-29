@@ -1118,13 +1118,6 @@
                                         </xs:documentation>
                                       </xs:annotation>
                                     </xs:attribute>
-                                    <xs:attribute name="quantity" type="xs:int">
-                                      <xs:annotation>
-                                        <xs:documentation>
-                                          Represents the weight of being chosen.
-                                        </xs:documentation>
-                                      </xs:annotation>
-                                    </xs:attribute>
                                     <xs:attribute name="adjacent_depth_limit" type="xs:int" use="required">
                                       <xs:annotation>
                                         <xs:documentation>
@@ -1145,10 +1138,11 @@
                                   </xs:documentation>
                                 </xs:annotation>
                               </xs:attribute>
-                              <xs:attribute name="angleMax" type="xs:int" use="required">
+                              <xs:attribute name="angleMax" type="xs:int">
                                 <xs:annotation>
                                   <xs:documentation>
                                     Represents the maximum angle of the link group, used when creating a link.
+                                    If unset it defaults to angle value.
                                   </xs:documentation>
                                 </xs:annotation>
                               </xs:attribute>
@@ -1306,7 +1300,7 @@
                   <xs:attribute name="person_ref" use="required"/>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="create_location_graph">
+              <xs:element name="location_graph.create" minOccurs="0" maxOccurs="unbounded">
                 <xs:annotation>
                   <xs:documentation>
                     Represents the action to create a location graph.
@@ -1317,6 +1311,30 @@
                     <xs:annotation>
                       <xs:documentation>
                         Represents the reference to the location graph rule that will be used to create the graph.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="location_graph.node.create_adjacent" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>
+                    Represents the action to create an adjacent node.
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="location_graph_id_ref" type="xs:string" use="required">
+                    <xs:annotation>
+                      <xs:documentation>
+                        Represents the reference to the location graph that will be used to select the node.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="node_id_ref" type="xs:string" use="required">
+                    <xs:annotation>
+                      <xs:documentation>
+                        Represents the reference to the node that is inside the given location_graph_id_ref value,
+                        that will be used to create the adjacent node.
                       </xs:documentation>
                     </xs:annotation>
                   </xs:attribute>

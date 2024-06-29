@@ -1,13 +1,15 @@
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
   <world_metadata>
     <next_world_step>./data</next_world_step>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
     <counter value="0"/>
     <randomization_table>
+      <entry value="1"/>
       <entry value="2"/>
+      <entry value="3"/>
     </randomization_table>
   </world_metadata>
 
@@ -17,14 +19,19 @@
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0" angleMax="360">
+        <link_group id="all" angle="0" angleMax="360 ">
           <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
         </link_group>
       </node_rule>
     </location_graph_rule>
   </rule_group>
-
+  <location_graph id="location_graph_id">
+    <rule location_graph_rule_ref="location_graph_rule_id"/>
+    <node node_rule_ref="node" id="node_id"/>
+  </location_graph>
   <actions>
-    <location_graph.create location_graph_rule_ref="location_graph_rule_id"/>
+    <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
+    <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
+    <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
   </actions>
 </world_step>

@@ -1,8 +1,8 @@
-import {MutationMiddleware} from "./_type";
+import {MutationMiddleware} from "../_type";
 
-export const createLocationGraph: MutationMiddleware = (readJson) => {
+export const locationGraphCreate: MutationMiddleware = (readJson) => {
   const actionList = readJson.json.queryAllOptional("actions")
-    .flatMap(actionsElement => actionsElement.queryAllOptional("create_location_graph"))
+    .flatMap(actionsElement => actionsElement.queryAllOptional("location_graph.create"))
     .flatMap(createElement => readJson.locationGraph.createLocationGraph(createElement.attributeMap.location_graph_rule_ref))
   return async (writeJson) => {
     if(actionList.length === 0) {

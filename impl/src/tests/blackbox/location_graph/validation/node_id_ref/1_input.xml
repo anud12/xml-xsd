@@ -1,6 +1,6 @@
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
   <world_metadata>
     <next_world_step>./data</next_world_step>
     <elapsed_time value="0"/>
@@ -23,8 +23,11 @@
       </node_rule>
     </location_graph_rule>
   </rule_group>
-
+  <location_graph id="location_graph_id">
+    <rule location_graph_rule_ref="location_graph_rule_id"/>
+    <node node_rule_ref="node" id="node_id"/>
+  </location_graph>
   <actions>
-    <location_graph.create location_graph_rule_ref="location_graph_rule_id"/>
+    <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="invalid_node_id"/>
   </actions>
 </world_step>

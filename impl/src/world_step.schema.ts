@@ -221,6 +221,7 @@ export type world_step = JsonQueryType<{}, {
       & JsonQueryType<{}, {
         "move_towards": JsonQueryType<{"layer": string;  "x": string;  "y": string;}> & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
-    "create_location_graph": JsonQueryType<{"location_graph_rule_ref": string;}> & JsonQueryType<{}, {}>;
+    "location_graph.create": JsonQueryType<{"location_graph_rule_ref": string;}> & JsonQueryType<{}, {}>;
+    "location_graph.node.create_adjacent": JsonQueryType<{"location_graph_id_ref": string;  "node_id_ref": string;}> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
 }>
