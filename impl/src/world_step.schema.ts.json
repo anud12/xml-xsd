@@ -1342,10 +1342,6 @@
                                 "metaType": "primitive",
                                 "value": "xs:int"
                               },
-                              "quantity": {
-                                "metaType": "primitive",
-                                "value": "xs:int"
-                              },
                               "adjacent_depth_limit": {
                                 "metaType": "primitive",
                                 "value": "xs:int"
@@ -1543,6 +1539,23 @@
                 }
               },
               "value": {
+                "position": {
+                  "metaType": "object",
+                  "value": {},
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "x": {
+                        "metaType": "primitive",
+                        "value": "xs:int"
+                      },
+                      "y": {
+                        "metaType": "primitive",
+                        "value": "xs:int"
+                      }
+                    }
+                  }
+                },
                 "link": {
                   "metaType": "object",
                   "value": {},
@@ -1552,14 +1565,6 @@
                       "to": {
                         "metaType": "primitive",
                         "value": "xs:string"
-                      },
-                      "angle": {
-                        "metaType": "primitive",
-                        "value": "xs:string"
-                      },
-                      "distance": {
-                        "metaType": "primitive",
-                        "value": "xs:int"
                       }
                     }
                   }

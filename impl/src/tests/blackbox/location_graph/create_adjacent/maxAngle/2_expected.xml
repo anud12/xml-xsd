@@ -18,8 +18,8 @@
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0" angleMax="360 ">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
+        <link_group id="all" angle="0" angleMax="360">
+          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="100"/>
         </link_group>
       </node_rule>
     </location_graph_rule>
@@ -27,12 +27,19 @@
   <location_graph id="location_graph_id">
     <rule location_graph_rule_ref="location_graph_rule_id"/>
     <node node_rule_ref="node" id="node_id">
-      <link angle="120" distance="0" to="0.0"/>
-      <link angle="360" distance="0" to="0.1"/>
-      <link angle="240" distance="0" to="0.2"/>
+      <position x="0" y="0"/>
+      <link to="0.0"/>
+      <link to="0.1"/>
+      <link to="0.2"/>
     </node>
-    <node node_rule_ref="node" id="0.0"/>
-    <node node_rule_ref="node" id="0.1"/>
-    <node node_rule_ref="node" id="0.2"/>
+    <node node_rule_ref="node" id="0.0">
+      <position x="-50" y="-86"/>
+    </node>
+    <node node_rule_ref="node" id="0.1">
+      <position x="100" y="0"/>
+    </node>
+    <node node_rule_ref="node" id="0.2">
+      <position x="-50" y="86"/>
+    </node>
   </location_graph>
 </world_step>

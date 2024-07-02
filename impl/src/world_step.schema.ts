@@ -180,7 +180,7 @@ export type world_step = JsonQueryType<{}, {
       }> & JsonQueryType<{}, {}>;
       "node_rule": JsonQueryType<{"id": string;}, {
         "link_group": JsonQueryType<{"id": string;  "angle": string;  "angleMax": string;}, {
-          "to_option": JsonQueryType<{"node_rule_ref": string;  "distance": string;  "maxDistance": string;  "quantity": string;  "adjacent_depth_limit": string;}> & JsonQueryType<{}, {}>;
+          "to_option": JsonQueryType<{"node_rule_ref": string;  "distance": string;  "maxDistance": string;  "adjacent_depth_limit": string;}> & JsonQueryType<{}, {}>;
         }> & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
@@ -211,7 +211,8 @@ export type world_step = JsonQueryType<{}, {
   "location_graph": JsonQueryType<{"id": string;}, {
     "rule": JsonQueryType<{"location_graph_rule_ref": string;}> & JsonQueryType<{}, {}>;
     "node": JsonQueryType<{"node_rule_ref": string;  "id": string;}, {
-      "link": JsonQueryType<{"to": string;  "angle": string;  "distance": string;}> & JsonQueryType<{}, {}>;
+      "position": JsonQueryType<{"x": string;  "y": string;}> & JsonQueryType<{}, {}>;
+      "link": JsonQueryType<{"to": string;}> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
   "actions": JsonQueryType<{}, {

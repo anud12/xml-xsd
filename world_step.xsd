@@ -1259,11 +1259,15 @@
               <xs:element name="node" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>
+                    <xs:element name="position">
+                      <xs:complexType>
+                        <xs:attribute name="x" type="xs:int" use="required"/>
+                        <xs:attribute name="y" type="xs:int" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
                     <xs:element name="link" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:attribute name="to" use="required" type="xs:string"/>
-                        <xs:attribute name="angle" use="required" type="xs:string"/>
-                        <xs:attribute name="distance" use="required" type="xs:int"/>
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>

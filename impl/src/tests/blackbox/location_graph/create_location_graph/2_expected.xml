@@ -26,6 +26,8 @@
   </rule_group>
   <location_graph id="0.0">
     <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="0.1"/>
+    <node node_rule_ref="node" id="0.1">
+      <position x="0" y="0"/>
+    </node>
   </location_graph>
 </world_step>

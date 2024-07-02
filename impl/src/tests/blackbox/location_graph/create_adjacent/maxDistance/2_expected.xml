@@ -27,12 +27,19 @@
   <location_graph id="location_graph_id">
     <rule location_graph_rule_ref="location_graph_rule_id"/>
     <node node_rule_ref="node" id="node_id">
-      <link angle="0" distance="6" to="0.0"/>
-      <link angle="0" distance="3" to="0.1"/>
-      <link angle="0" distance="10" to="0.2"/>
+      <position x="0" y="0"/>
+      <link to="0.0"/>
+      <link to="0.1"/>
+      <link to="0.2"/>
     </node>
-    <node node_rule_ref="node" id="0.0"/>
-    <node node_rule_ref="node" id="0.1"/>
-    <node node_rule_ref="node" id="0.2"/>
+    <node node_rule_ref="node" id="0.0">
+      <position x="10" y="0"/>
+    </node>
+    <node node_rule_ref="node" id="0.1">
+      <position x="6" y="0"/>
+    </node>
+    <node node_rule_ref="node" id="0.2">
+      <position x="3" y="0"/>
+    </node>
   </location_graph>
 </world_step>

@@ -10,10 +10,10 @@ the \`link_group\` has \`angleMax\` attribute set.
 ## Then
 It should create 
   -3 new nodes
-  -3 links for node references by \`node_id_ref\` with different distance values as integers
+  -3 links for node references by \`node_id_ref\` with different \`x\` positions
+    - 10
     - 6 from 6.666666666666666
     - 3 from 3.333333333333333
-    - 10
 `
 const test= testBase(__dirname)
 it(test.name, test.success)

@@ -19,15 +19,17 @@
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0" angleMax="360 ">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
+        <link_group id="all" angle="0" angleMax="360">
+          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="100"/>
         </link_group>
       </node_rule>
     </location_graph_rule>
   </rule_group>
   <location_graph id="location_graph_id">
     <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id"/>
+    <node node_rule_ref="node" id="node_id">
+      <position x="0" y="0"/>
+    </node>
   </location_graph>
   <actions>
     <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
