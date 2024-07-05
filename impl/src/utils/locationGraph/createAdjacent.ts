@@ -30,7 +30,7 @@ const getAdjacentNodes = (jsonUtil: JsonUtil, locationGraph: LocationGraphQueryT
   }
 }
 
-const isDistanceBetweenPoints = (firstNode: NodeQueryType, secondNode: NodeQueryType, minDistance: number, maxDistance = minDistance): boolean => {
+const isDistanceBetweenPointsLessThan = (firstNode: NodeQueryType, secondNode: NodeQueryType, minDistance: number): boolean => {
   const firstPosition = firstNode.queryOptional("position");
   const secondPosition = secondNode.queryOptional("position");
 
@@ -38,8 +38,7 @@ const isDistanceBetweenPoints = (firstNode: NodeQueryType, secondNode: NodeQuery
 
   const positionDistanceSquared = Math.pow(Number(firstPosition.attributeMap.x) - Number(secondPosition.attributeMap.x), 2) + Math.pow(Number(firstPosition.attributeMap.y) - Number(secondPosition.attributeMap.y), 2);
 
-  return Math.pow(minDistance, 2) <= positionDistanceSquared
-    && positionDistanceSquared <= Math.pow(maxDistance, 2);
+  return Math.pow(minDistance, 2) <= positionDistanceSquared;
 }
 
 const createLinkTo = (jsonUtil: JsonUtil, linkGroupElement: LinkGroupQueryType, locationGraphElement: LocationGraphQueryType, nodeGraphElement: NodeQueryType, targetNodeGraphElement: NodeQueryType): (writeUnit: JsonUtil) => Promise<LinkQueryType> => {
@@ -100,11 +99,10 @@ export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nod
     const createGraphNodeResult = createGraphNode(jsonUtil, locationGraphElement, nodeRuleRef, position);
 
     let distance = Number(toOptionElement.attributeMap.distance);
-    let maxDistance = distance;
     if (toOptionElement.attributeMap.maxDistance) {
       const random = jsonUtil.random();
       const maxDistanceDelta = random * Number(toOptionElement.attributeMap.maxDistance)
-      maxDistance = Number(toOptionElement.attributeMap.distance) + maxDistanceDelta;
+      distance = Number(toOptionElement.attributeMap.distance) + maxDistanceDelta;
     }
     const adjacentNodes = getAdjacentNodes(jsonUtil, locationGraphElement, nodeGraphElement, Number(toOptionElement.attributeMap.adjacent_depth_limit) || 0);
 
@@ -118,7 +116,7 @@ export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nod
 
       let link = await createLinkTo(writeUnit, linkGroupElement, locationGraphElement, nodeGraphElement, newGraphNode)(writeUnit);
 
-      const adjacentLinkList = adjacentNodes.filter(node => isDistanceBetweenPoints(node, newGraphNode, distance, maxDistance))
+      const adjacentLinkList = adjacentNodes.filter(node => isDistanceBetweenPointsLessThan(node, newGraphNode, distance))
         .map(node => createLinkTo(writeUnit, linkGroupElement, locationGraphElement, node, newGraphNode)(writeUnit))
       await Promise.all(adjacentLinkList)
     }
