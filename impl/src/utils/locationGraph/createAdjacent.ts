@@ -2,9 +2,10 @@ import {JsonUtil} from "../util";
 import {createGraphNode, LocationGraphQueryType, PositionQueryType} from "./createGraphNode";
 import {JsonSchema} from "../JsonSchema";
 import {mergeError} from "../../mergeError";
+import {keepNotFullLinkGroupElements} from "./filterLinkGroups";
 
-type LinkGroupQueryType = JsonSchema["children"]["rule_group"]["children"]["location_graph_rule"]["children"]["node_rule"]["children"]["link_group"];
-type NodeQueryType = LocationGraphQueryType["children"]["node"];
+export type LinkGroupQueryType = JsonSchema["children"]["rule_group"]["children"]["location_graph_rule"]["children"]["node_rule"]["children"]["link_group"];
+export type NodeQueryType = LocationGraphQueryType["children"]["node"];
 type LinkQueryType = LocationGraphQueryType["children"]["node"]["children"]["link_to"];
 
 const getAdjacentNodes = (jsonUtil: JsonUtil, locationGraph: LocationGraphQueryType, originNode: NodeQueryType, maxDepth: number, excludeNodes: Array<NodeQueryType> = []): Array<NodeQueryType> => {
@@ -54,9 +55,9 @@ const createLinkTo = (jsonUtil: JsonUtil, linkGroupElement: LinkGroupQueryType, 
   }
 }
 
-const positionBasedOnLink = (jsonUtil: JsonUtil, linkGroupElement: LinkGroupQueryType, originNode: NodeQueryType): PositionQueryType["attributeMap"] => {
+const positionBasedOnLink = (jsonUtil: JsonUtil, linkGroupElement: LinkGroupQueryType | undefined, originNode: NodeQueryType): PositionQueryType["attributeMap"] => {
   try {
-    let angle = Number(linkGroupElement.attributeMap.angle);
+    let angle = Number(linkGroupElement?.attributeMap.angle);
     if (linkGroupElement.attributeMap.angleMax) {
       angle = Number(linkGroupElement.attributeMap.angle) + (jsonUtil.random() * Number(linkGroupElement.attributeMap.angleMax));
     }
@@ -89,8 +90,13 @@ export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nod
       .flatMap(element => element.queryAllOptional("node_rule"))
       .find(element => element.attributeMap.id === nodeGraphElement?.attributeMap?.node_rule_ref)
 
-    const linkGroupElementList = nodeRuleElement?.queryAllOptional("link_group")
-    const linkGroupElement = jsonUtil.randomFromArray(linkGroupElementList);
+    const linkGroupElementList = nodeRuleElement?.queryAllOptional("link_group");
+    const notFullLinkGroupElementList = keepNotFullLinkGroupElements(locationGraphElement, nodeGraphElement, linkGroupElementList);
+    const linkGroupElement = jsonUtil.randomFromArray(notFullLinkGroupElementList);
+
+    if(!linkGroupElement) {
+      return async () => {};
+    }
 
     const position = positionBasedOnLink(jsonUtil, linkGroupElement, nodeGraphElement);
 

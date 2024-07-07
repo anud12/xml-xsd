@@ -1082,7 +1082,7 @@
                     <xs:element name="node_rule" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="link_group">
+                          <xs:element name="link_group" maxOccurs="unbounded">
                             <xs:annotation>
                               <xs:documentation>
                                 Represents a group of links that can be applied to the node.
@@ -1143,6 +1143,13 @@
                                   <xs:documentation>
                                     Represents the maximum angle of the link group, used when creating a link.
                                     If unset it defaults to angle value.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="limit" type="xs:int">
+                                <xs:annotation>
+                                  <xs:documentation>
+                                    Represents the maximum number of links that can be created from this group.
                                   </xs:documentation>
                                 </xs:annotation>
                               </xs:attribute>

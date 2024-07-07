@@ -1320,6 +1320,10 @@
                           "angleMax": {
                             "metaType": "primitive",
                             "value": "xs:int"
+                          },
+                          "limit": {
+                            "metaType": "primitive",
+                            "value": "xs:int"
                           }
                         }
                       },
