@@ -212,7 +212,7 @@ export type world_step = JsonQueryType<{}, {
     "rule": JsonQueryType<{"location_graph_rule_ref": string;}> & JsonQueryType<{}, {}>;
     "node": JsonQueryType<{"node_rule_ref": string;  "id": string;}, {
       "position": JsonQueryType<{"x": string;  "y": string;}> & JsonQueryType<{}, {}>;
-      "link": JsonQueryType<{"to": string;}> & JsonQueryType<{}, {}>;
+      "link_to": JsonQueryType<{"node_id_ref": string;}> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
   "actions": JsonQueryType<{}, {

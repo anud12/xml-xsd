@@ -5,7 +5,7 @@ import {mergeError} from "../../mergeError";
 
 type LinkGroupQueryType = JsonSchema["children"]["rule_group"]["children"]["location_graph_rule"]["children"]["node_rule"]["children"]["link_group"];
 type NodeQueryType = LocationGraphQueryType["children"]["node"];
-type LinkQueryType = LocationGraphQueryType["children"]["node"]["children"]["link"];
+type LinkQueryType = LocationGraphQueryType["children"]["node"]["children"]["link_to"];
 
 const getAdjacentNodes = (jsonUtil: JsonUtil, locationGraph: LocationGraphQueryType, originNode: NodeQueryType, maxDepth: number, excludeNodes: Array<NodeQueryType> = []): Array<NodeQueryType> => {
   try {
@@ -16,8 +16,8 @@ const getAdjacentNodes = (jsonUtil: JsonUtil, locationGraph: LocationGraphQueryT
     const allNodes = locationGraph.queryAllOptional("node")
       .filter(node => !excludeNodes.find(element => element.attributeMap.id === node.attributeMap.id));
 
-    const linkedNodes = originNode.queryAllOptional("link")
-      .map(linkElement => allNodes.find(value => value.attributeMap.id === linkElement.attributeMap.to))
+    const linkedNodes = originNode.queryAllOptional("link_to")
+      .map(linkElement => allNodes.find(value => value.attributeMap.id === linkElement.attributeMap.node_id_ref))
       .filter(e => e);
 
     excludeNodes.push(...linkedNodes)
@@ -45,8 +45,8 @@ const createLinkTo = (jsonUtil: JsonUtil, linkGroupElement: LinkGroupQueryType, 
   try {
 
     return async writeUnit => {
-      return nodeGraphElement.appendChild("link", undefined, {
-        to: targetNodeGraphElement.attributeMap.id,
+      return nodeGraphElement.appendChild("link_to", undefined, {
+        node_id_ref: targetNodeGraphElement.attributeMap.id,
       })
     }
   } catch (e) {

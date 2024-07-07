@@ -1265,9 +1265,9 @@
                         <xs:attribute name="y" type="xs:int" use="required"/>
                       </xs:complexType>
                     </xs:element>
-                    <xs:element name="link" minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="link_to" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
-                        <xs:attribute name="to" use="required" type="xs:string"/>
+                        <xs:attribute name="node_id_ref" use="required" type="xs:string"/>
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>
