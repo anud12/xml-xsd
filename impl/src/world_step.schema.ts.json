@@ -1556,13 +1556,13 @@
                     }
                   }
                 },
-                "link": {
+                "link_to": {
                   "metaType": "object",
                   "value": {},
                   "attributes": {
                     "metaType": "object",
                     "value": {
-                      "to": {
+                      "node_id_ref": {
                         "metaType": "primitive",
                         "value": "xs:string"
                       }
