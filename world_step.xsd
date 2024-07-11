@@ -1256,35 +1256,111 @@
         </xs:element>
 
         <xs:element name="location_graph" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              Represents a location graph.
+            </xs:documentation>
+          </xs:annotation>
           <xs:complexType>
             <xs:sequence>
               <xs:element name="rule">
+                <xs:annotation>
+                  <xs:documentation>
+                    Represents the rule that will be used when creating or extending the graph.
+                  </xs:documentation>
+                </xs:annotation>
                 <xs:complexType>
-                  <xs:attribute name="location_graph_rule_ref" type="xs:string" use="required"/>
+                  <xs:attribute name="location_graph_rule_ref" type="xs:string" use="required">
+                    <xs:annotation>
+                      <xs:documentation>
+                        Represents the reference to the location graph rule that will be used to create or extend the graph.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
                 </xs:complexType>
               </xs:element>
               <xs:element name="node" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>
+                    Represents a node in the location graph.
+                  </xs:documentation>
+                </xs:annotation>
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="position">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Represents the position of the node in the graph.
+                        </xs:documentation>
+                      </xs:annotation>
                       <xs:complexType>
                         <xs:attribute name="x" type="xs:int" use="required"/>
                         <xs:attribute name="y" type="xs:int" use="required"/>
                       </xs:complexType>
                     </xs:element>
                     <xs:element name="link_to" minOccurs="0" maxOccurs="unbounded">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Represents the links to other nodes in the graph.
+                        </xs:documentation>
+                      </xs:annotation>
                       <xs:complexType>
-                        <xs:attribute name="node_id_ref" use="required" type="xs:string"/>
+                        <xs:attribute name="node_id_ref" use="required" type="xs:string">
+                          <xs:annotation>
+                            <xs:documentation>
+                              Represents the reference to the node that will be linked to.
+                            </xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="people" minOccurs="0">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Represents the people in the node.
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="person" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:attribute name="person_id_ref" type="xs:string" use="required">
+                                <xs:annotation>
+                                  <xs:documentation>
+                                    Represents the reference to the person that will be in the node.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>
-                  <xs:attribute name="node_rule_ref" type="xs:string"  use="required"/>
-                  <xs:attribute name="id" type="xs:string" use="required"/>
-
+                  <xs:attribute name="node_rule_ref" type="xs:string"  use="required">
+                    <xs:annotation>
+                      <xs:documentation>
+                        Represents the reference to the node rule was used to create the node.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="id" type="xs:string" use="required">
+                    <xs:annotation>
+                      <xs:documentation>
+                        Represents the unique identifier of the node.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
-            <xs:attribute name="id" type="xs:string"/>
+            <xs:attribute name="id" type="xs:string">
+              <xs:annotation>
+                <xs:documentation>
+                  Represents the unique identifier of the location graph.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
           </xs:complexType>
         </xs:element>
         <xs:element name="actions" minOccurs="0">
@@ -1346,6 +1422,47 @@
                       <xs:documentation>
                         Represents the reference to the node that is inside the given location_graph_id_ref value,
                         that will be used to create the adjacent node.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="person.teleport" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>
+                    Represents the action to teleport a person to a location ignoring checks.
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:choice>
+                    <xs:element name="location_graph" minOccurs="0">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Represents the location graph that will be used to teleport the person.
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:attribute name="location_graph_id" type="xs:string" use="required">
+                          <xs:annotation>
+                            <xs:documentation>
+                              Represents the reference to the location group that will be used to teleport the person.
+                            </xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="node_id" type="xs:string" use="required">
+                          <xs:annotation>
+                            <xs:documentation>
+                              Represents the reference to the node that will be used to teleport the person.
+                            </xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:choice>
+                  <xs:attribute name="person_id_ref" type="xs:string" use="required">
+                    <xs:annotation>
+                      <xs:documentation>
+                        Represents the reference to the person that will be teleported.
                       </xs:documentation>
                     </xs:annotation>
                   </xs:attribute>

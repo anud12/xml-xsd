@@ -16,6 +16,7 @@ import {itemAssignClassification} from "./middleware/itemAssignClassification";
 import {globalAction} from "./middleware/globalAction";
 import {locationGraphCreate} from "./middleware/locationGraph/create";
 import {locationGraphCreateAdjacent} from "./middleware/locationGraph/createAdjacent";
+import {personTeleport} from "./middleware/person/personTeleport";
 
 type StringParameter<Param extends string> = `${Param} ${string}`
 
@@ -95,6 +96,8 @@ export const execute = async (readJson: JsonSchema, log: (...string: any[]) => v
   const eventsMetadataResult = eventsMetadata(readJsonUtil);
   const locationGraphCreateResult = locationGraphCreate(readJsonUtil);
   const locationGraphCreateAdjacentResult = locationGraphCreateAdjacent(readJsonUtil);
+  const personTeleportResult = personTeleport(readJsonUtil);
+
 
   await personMoveTowardsResult(readJsonUtil);
   await personActionResult(readJsonUtil);
@@ -104,6 +107,7 @@ export const execute = async (readJson: JsonSchema, log: (...string: any[]) => v
   await dispatcherResult(readJsonUtil);
   await locationGraphCreateResult(readJsonUtil);
   await locationGraphCreateAdjacentResult(readJsonUtil);
+  await personTeleportResult(readJsonUtil);
   await personVision(readJsonUtil)(readJsonUtil);
   await itemAssignClassification(readJsonUtil)(readJsonUtil);
   await personAssignClassification(readJsonUtil)(readJsonUtil);

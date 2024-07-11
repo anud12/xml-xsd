@@ -213,6 +213,9 @@ export type world_step = JsonQueryType<{}, {
     "node": JsonQueryType<{"node_rule_ref": string;  "id": string;}, {
       "position": JsonQueryType<{"x": string;  "y": string;}> & JsonQueryType<{}, {}>;
       "link_to": JsonQueryType<{"node_id_ref": string;}> & JsonQueryType<{}, {}>;
+      "people": JsonQueryType<{}, {
+        "person": JsonQueryType<{"person_id_ref": string;}> & JsonQueryType<{}, {}>;
+      }> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
   "actions": JsonQueryType<{}, {
@@ -224,5 +227,8 @@ export type world_step = JsonQueryType<{}, {
       }> & JsonQueryType<{}, {}>;
     "location_graph.create": JsonQueryType<{"location_graph_rule_ref": string;}> & JsonQueryType<{}, {}>;
     "location_graph.node.create_adjacent": JsonQueryType<{"location_graph_id_ref": string;  "node_id_ref": string;}> & JsonQueryType<{}, {}>;
+    "person.teleport": JsonQueryType<{"person_id_ref": string;}, {}> & JsonQueryType<{}, {
+        "location_graph": JsonQueryType<{"location_graph_id": string;  "node_id": string;}> & JsonQueryType<{}, {}>;
+      }> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
 }>
