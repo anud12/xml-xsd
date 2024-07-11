@@ -1,0 +1,16 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="element" minOccurs="0">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element name="first_choice_element" minOccurs="0">
+          <xs:complexType>
+            <xs:attribute name="first_attribute" type="xs:string" use="required"/>
+            <xs:attribute name="second_attribute" type="xs:string" use="required"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+      <xs:attribute name="attribute" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

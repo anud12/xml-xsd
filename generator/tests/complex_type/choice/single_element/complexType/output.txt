@@ -1,0 +1,42 @@
+[
+  {
+    "name": "element",
+    "type": "element",
+    "value": {
+      "metaType": "union",
+      "value": [
+        {
+          "metaType": "object",
+          "value": {
+            "first_choice_element": {
+              "metaType": "object",
+              "value": {},
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "first_attribute": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  },
+                  "second_attribute": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "attributes": {
+        "metaType": "object",
+        "value": {
+          "attribute": {
+            "metaType": "primitive",
+            "value": "xs:string"
+          }
+        }
+      }
+    }
+  }
+]

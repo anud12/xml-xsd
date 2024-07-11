@@ -1,25 +1,5 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-  <xs:attribute name="property_rule_ref" type="xs:string">
-    <xs:annotation>
-      <xs:documentation>
-        Represents the reference to a property rule.
-      </xs:documentation>
-    </xs:annotation>
-  </xs:attribute>
-
-  <xs:complexType name="type__person_selection">
-    <xs:annotation>
-      <xs:documentation>
-        Represents the selection of a person with various attributes.
-      </xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
-        <xs:complexType>
-          <xs:attribute ref="property_rule_ref"/>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
+  <xs:element name="element" minOccurs="0">
+  </xs:element>
 </xs:schema>
