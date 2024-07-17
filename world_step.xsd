@@ -539,11 +539,11 @@
               <xs:complexType>
                 <xs:sequence>
                   <xs:element name="select" minOccurs="0" type="type__person_selection">
-                  <xs:annotation>
-                    <xs:documentation>
-                      Represents the conditions for a person to use the action.
-                    </xs:documentation>
-                  </xs:annotation>
+                    <xs:annotation>
+                      <xs:documentation>
+                        Represents the conditions for a person to use the action.
+                      </xs:documentation>
+                    </xs:annotation>
                   </xs:element>
                   <xs:element name="property_mutation" minOccurs="0" type="type__property_mutation"/>
                 </xs:sequence>
@@ -848,16 +848,6 @@
                     <xs:element name="person_to_person" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="max_range">
-                            <xs:complexType>
-                              <xs:group ref="group__math_operations"/>
-                            </xs:complexType>
-                          </xs:element>
-                          <xs:element name="min_range" minOccurs="0">
-                            <xs:complexType>
-                              <xs:group ref="group__math_operations"/>
-                            </xs:complexType>
-                          </xs:element>
                           <xs:element name="test">
                             <xs:complexType>
                               <xs:sequence>
@@ -1273,7 +1263,8 @@
                   <xs:attribute name="location_graph_rule_ref" type="xs:string" use="required">
                     <xs:annotation>
                       <xs:documentation>
-                        Represents the reference to the location graph rule that will be used to create or extend the graph.
+                        Represents the reference to the location graph rule that will be used to create or extend the
+                        graph.
                       </xs:documentation>
                     </xs:annotation>
                   </xs:attribute>
@@ -1337,7 +1328,7 @@
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>
-                  <xs:attribute name="node_rule_ref" type="xs:string"  use="required">
+                  <xs:attribute name="node_rule_ref" type="xs:string" use="required">
                     <xs:annotation>
                       <xs:documentation>
                         Represents the reference to the node rule was used to create the node.
@@ -1369,13 +1360,6 @@
               <xs:element name="by" maxOccurs="unbounded" minOccurs="0">
                 <xs:complexType>
                   <xs:choice>
-                    <xs:element name="do">
-                      <xs:complexType>
-                        <xs:attribute name="action_rule_ref"/>
-                        <xs:attribute name="action_ref"/>
-                        <xs:attribute name="person_ref" use="required"/>
-                      </xs:complexType>
-                    </xs:element>
                     <xs:element name="move_towards">
                       <xs:complexType>
                         <xs:attribute name="layer" type="xs:string"/>
@@ -1466,6 +1450,13 @@
                       </xs:documentation>
                     </xs:annotation>
                   </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="person.on_person.property_mutation" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="person_id_ref" type="xs:string" use="required"/>
+                  <xs:attribute name="target_person_id_ref" type="xs:string" use="required"/>
+                  <xs:attribute name="action_property_mutation_rule_ref" type="xs:string" use="required"/>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>

@@ -601,8 +601,9 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
   </location_layer>
   <location_graph id="world_map">
     <rule location_graph_rule_ref="location_graph_rule"/>
-    <node id="1">
-      <link_to node_id_ref="id" angle="45" distance="12"/>
+    <node id="1" node_rule_ref="">
+      <position x="10" y="0"/>
+      <link_to node_id_ref="id"/>
     </node>
   </location_graph>
   <!--_-->
@@ -612,6 +613,7 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
   <!--Actions-->
   <!--_-->
   <actions>
+
     <by person_ref="dd">
       <do action_rule_ref="dd" person_ref=""/>
     </by>

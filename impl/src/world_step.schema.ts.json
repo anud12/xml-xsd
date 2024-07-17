@@ -947,14 +947,6 @@
                     }
                   },
                   "value": {
-                    "max_range": {
-                      "metaType": "primitive",
-                      "value": "group__math_operations"
-                    },
-                    "min_range": {
-                      "metaType": "primitive",
-                      "value": "group__math_operations"
-                    },
                     "test": {
                       "metaType": "object",
                       "value": {
@@ -1604,29 +1596,6 @@
                 {
                   "metaType": "object",
                   "value": {
-                    "do": {
-                      "metaType": "object",
-                      "value": {},
-                      "attributes": {
-                        "metaType": "object",
-                        "value": {
-                          "action_rule_ref": {
-                            "metaType": "unknown"
-                          },
-                          "action_ref": {
-                            "metaType": "unknown"
-                          },
-                          "person_ref": {
-                            "metaType": "unknown"
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                {
-                  "metaType": "object",
-                  "value": {
                     "move_towards": {
                       "metaType": "object",
                       "value": {},
@@ -1720,6 +1689,27 @@
                 "metaType": "object",
                 "value": {
                   "person_id_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  }
+                }
+              }
+            },
+            "person.on_person.property_mutation": {
+              "metaType": "object",
+              "value": {},
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "person_id_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  },
+                  "target_person_id_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  },
+                  "action_property_mutation_rule_ref": {
                     "metaType": "primitive",
                     "value": "xs:string"
                   }

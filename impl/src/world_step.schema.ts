@@ -135,8 +135,6 @@ export type world_step = JsonQueryType<{}, {
           & type__action & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
       "person_to_person": JsonQueryType<{"id": any;}, {
-        "max_range": group__math_operations & JsonQueryType<{}, {}>;
-        "min_range": group__math_operations & JsonQueryType<{}, {}>;
         "test": JsonQueryType<{}, {
           "value": JsonQueryType<{"target": type_person_select;}, {}> & group__math_operations & JsonQueryType<{}, {}>;
           "expected": JsonQueryType<{"target": type_person_select;}, {}> & group__math_operations & JsonQueryType<{}, {}>;
@@ -220,9 +218,6 @@ export type world_step = JsonQueryType<{}, {
   }> & JsonQueryType<{}, {}>;
   "actions": JsonQueryType<{}, {
     "by": JsonQueryType<{"person_ref": any;}, {}> & JsonQueryType<{}, {
-        "do": JsonQueryType<{"action_rule_ref": any;  "action_ref": any;  "person_ref": any;}> & JsonQueryType<{}, {}>;
-      }>
-      & JsonQueryType<{}, {
         "move_towards": JsonQueryType<{"layer": string;  "x": string;  "y": string;}> & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
     "location_graph.create": JsonQueryType<{"location_graph_rule_ref": string;}> & JsonQueryType<{}, {}>;
@@ -230,5 +225,6 @@ export type world_step = JsonQueryType<{}, {
     "person.teleport": JsonQueryType<{"person_id_ref": string;}, {}> & JsonQueryType<{}, {
         "location_graph": JsonQueryType<{"location_graph_id": string;  "node_id": string;}> & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
+    "person.on_person.property_mutation": JsonQueryType<{"person_id_ref": string;  "target_person_id_ref": string;  "action_property_mutation_rule_ref": string;}> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
 }>
