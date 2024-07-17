@@ -1,24 +1,10 @@
 [
   {
-    "name": "type__person_selection",
-    "type": "complex",
+    "name": "element",
+    "type": "element",
     "value": {
-      "metaType": "object",
-      "value": {
-        "property": {
-          "metaType": "object",
-          "value": {
-            "min": {
-              "metaType": "primitive",
-              "value": "type__math_operations"
-            },
-            "max": {
-              "metaType": "primitive",
-              "value": "type__math_operations"
-            }
-          }
-        }
-      }
+      "metaType": "primitive",
+      "value": "unknown"
     }
   }
 ]

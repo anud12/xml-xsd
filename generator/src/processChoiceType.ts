@@ -26,10 +26,11 @@ export function processChoice(element: XsdElement | XsdElement[]): Type[] {
 
     if (element["xs:element"] !== undefined) {
       const objectType = processElementType(element["xs:element"]).map((type, key) => {
+        const xsElement = element["xs:element"][key] ?? element["xs:element"];
         return {
           metaType: "object",
           value: {
-            [element["xs:element"][key].name]: type
+            [xsElement.name]: type
           },
         }satisfies TypeObject
       })

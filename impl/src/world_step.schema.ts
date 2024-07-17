@@ -135,8 +135,6 @@ export type world_step = JsonQueryType<{}, {
           & type__action & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
       "person_to_person": JsonQueryType<{"id": any;}, {
-        "max_range": group__math_operations & JsonQueryType<{}, {}>;
-        "min_range": group__math_operations & JsonQueryType<{}, {}>;
         "test": JsonQueryType<{}, {
           "value": JsonQueryType<{"target": type_person_select;}, {}> & group__math_operations & JsonQueryType<{}, {}>;
           "expected": JsonQueryType<{"target": type_person_select;}, {}> & group__math_operations & JsonQueryType<{}, {}>;
@@ -174,6 +172,16 @@ export type world_step = JsonQueryType<{}, {
         "icon": type_icon & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
+    "location_graph_rule": JsonQueryType<{"id": string;}, {
+      "setup": JsonQueryType<{}, {
+        "starting_node": JsonQueryType<{"node_rule_ref": string;}> & JsonQueryType<{}, {}>;
+      }> & JsonQueryType<{}, {}>;
+      "node_rule": JsonQueryType<{"id": string;}, {
+        "link_group": JsonQueryType<{"id": string;  "angle": string;  "angleMax": string;  "limit": string;}, {
+          "to_option": JsonQueryType<{"node_rule_ref": string;  "distance": string;  "maxDistance": string;  "adjacent_depth_limit": string;}> & JsonQueryType<{}, {}>;
+        }> & JsonQueryType<{}, {}>;
+      }> & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
   "items": JsonQueryType<{}, {
     "item": type__item & JsonQueryType<{}, {}>;
@@ -198,12 +206,25 @@ export type world_step = JsonQueryType<{}, {
   "location_layer": JsonQueryType<{"name": any;}, {
     "cell": JsonQueryType<{"location_rule_ref": any;  "x": any;  "y": any;}> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
+  "location_graph": JsonQueryType<{"id": string;}, {
+    "rule": JsonQueryType<{"location_graph_rule_ref": string;}> & JsonQueryType<{}, {}>;
+    "node": JsonQueryType<{"node_rule_ref": string;  "id": string;}, {
+      "position": JsonQueryType<{"x": string;  "y": string;}> & JsonQueryType<{}, {}>;
+      "link_to": JsonQueryType<{"node_id_ref": string;}> & JsonQueryType<{}, {}>;
+      "people": JsonQueryType<{}, {
+        "person": JsonQueryType<{"person_id_ref": string;}> & JsonQueryType<{}, {}>;
+      }> & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
+  }> & JsonQueryType<{}, {}>;
   "actions": JsonQueryType<{}, {
     "by": JsonQueryType<{"person_ref": any;}, {}> & JsonQueryType<{}, {
-        "do": JsonQueryType<{"action_rule_ref": any;  "action_ref": any;  "person_ref": any;}> & JsonQueryType<{}, {}>;
-      }>
-      & JsonQueryType<{}, {
         "move_towards": JsonQueryType<{"layer": string;  "x": string;  "y": string;}> & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
+    "location_graph.create": JsonQueryType<{"location_graph_rule_ref": string;}> & JsonQueryType<{}, {}>;
+    "location_graph.node.create_adjacent": JsonQueryType<{"location_graph_id_ref": string;  "node_id_ref": string;}> & JsonQueryType<{}, {}>;
+    "person.teleport": JsonQueryType<{"person_id_ref": string;}, {}> & JsonQueryType<{}, {
+        "location_graph": JsonQueryType<{"location_graph_id": string;  "node_id": string;}> & JsonQueryType<{}, {}>;
+      }> & JsonQueryType<{}, {}>;
+    "person.on_person.property_mutation": JsonQueryType<{"person_id_ref": string;  "target_person_id_ref": string;  "action_property_mutation_rule_ref": string;}> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
 }>

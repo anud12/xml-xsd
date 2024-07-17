@@ -12,7 +12,10 @@ export function test_helper(dirname:string): void {
     })
     .join("\n");
   const outputFilePath = `${dirname}/output.txt`;
-  const expectedTypes = fs.readFileSync(outputFilePath, 'utf-8');
+  let expectedTypes = fs.readFileSync(outputFilePath, 'utf-8');
+
+  //replace crlf to ln for expected types string;
+  expectedTypes = expectedTypes.replace(/\r\n/g, '\n');
 
   // Compare the generated types with the expected output using Jest assertions
   expect(typeString).toEqual(expectedTypes);

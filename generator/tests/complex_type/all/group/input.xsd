@@ -1,0 +1,15 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:group name="group">
+    <xs:all>
+      <xs:element name="operation" type="xs:int">
+      </xs:element>
+    </xs:all>
+  </xs:group>
+  <xs:element name="root">
+    <xs:complexType>
+      <xs:all>
+        <xs:group ref="group"/>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

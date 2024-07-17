@@ -1,0 +1,17 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:group name="group__item_data">
+    <xs:all>
+      <xs:element name="classifications" minOccurs="0" type="xs:integer"/>
+      <xs:element name="properties" minOccurs="0" type="xs:integer"/>
+    </xs:all>
+  </xs:group>
+
+  <xs:complexType name="type__item_selection">
+    <xs:all>
+      <xs:element name="min" minOccurs="0" type="xs:integer"/>
+      <xs:element name="max" minOccurs="0" type="xs:integer"/>
+      <xs:group ref="group__item_data"/>
+    </xs:all>
+  </xs:complexType>
+</xs:schema>

@@ -76,8 +76,6 @@
     </person>
   </people>
   <actions>
-    <by person_ref="Billy">
-      <do action_rule_ref="meleeAttack" person_ref="Bob"/>
-    </by>
+    <person.on_person.property_mutation person_id_ref="Billy" target_person_id_ref="Bob" action_property_mutation_rule_ref="meleeAttack"/>
   </actions>
 </world_step>

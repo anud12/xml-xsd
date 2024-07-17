@@ -947,14 +947,6 @@
                     }
                   },
                   "value": {
-                    "max_range": {
-                      "metaType": "primitive",
-                      "value": "group__math_operations"
-                    },
-                    "min_range": {
-                      "metaType": "primitive",
-                      "value": "group__math_operations"
-                    },
                     "test": {
                       "metaType": "object",
                       "value": {
@@ -1261,6 +1253,103 @@
                   }
                 }
               }
+            },
+            "location_graph_rule": {
+              "metaType": "object",
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "id": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  }
+                }
+              },
+              "value": {
+                "setup": {
+                  "metaType": "object",
+                  "value": {
+                    "starting_node": {
+                      "metaType": "object",
+                      "value": {},
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "node_rule_ref": {
+                            "metaType": "primitive",
+                            "value": "xs:string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "node_rule": {
+                  "metaType": "object",
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "id": {
+                        "metaType": "primitive",
+                        "value": "xs:string"
+                      }
+                    }
+                  },
+                  "value": {
+                    "link_group": {
+                      "metaType": "object",
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "id": {
+                            "metaType": "primitive",
+                            "value": "xs:string"
+                          },
+                          "angle": {
+                            "metaType": "primitive",
+                            "value": "xs:int"
+                          },
+                          "angleMax": {
+                            "metaType": "primitive",
+                            "value": "xs:int"
+                          },
+                          "limit": {
+                            "metaType": "primitive",
+                            "value": "xs:int"
+                          }
+                        }
+                      },
+                      "value": {
+                        "to_option": {
+                          "metaType": "object",
+                          "value": {},
+                          "attributes": {
+                            "metaType": "object",
+                            "value": {
+                              "node_rule_ref": {
+                                "metaType": "primitive",
+                                "value": "xs:string"
+                              },
+                              "distance": {
+                                "metaType": "primitive",
+                                "value": "xs:int"
+                              },
+                              "maxDistance": {
+                                "metaType": "primitive",
+                                "value": "xs:int"
+                              },
+                              "adjacent_depth_limit": {
+                                "metaType": "primitive",
+                                "value": "xs:int"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         },
@@ -1405,35 +1494,105 @@
             }
           }
         },
+        "location_graph": {
+          "metaType": "object",
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "id": {
+                "metaType": "primitive",
+                "value": "xs:string"
+              }
+            }
+          },
+          "value": {
+            "rule": {
+              "metaType": "object",
+              "value": {},
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "location_graph_rule_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  }
+                }
+              }
+            },
+            "node": {
+              "metaType": "object",
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "node_rule_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  },
+                  "id": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  }
+                }
+              },
+              "value": {
+                "position": {
+                  "metaType": "object",
+                  "value": {},
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "x": {
+                        "metaType": "primitive",
+                        "value": "xs:int"
+                      },
+                      "y": {
+                        "metaType": "primitive",
+                        "value": "xs:int"
+                      }
+                    }
+                  }
+                },
+                "link_to": {
+                  "metaType": "object",
+                  "value": {},
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "node_id_ref": {
+                        "metaType": "primitive",
+                        "value": "xs:string"
+                      }
+                    }
+                  }
+                },
+                "people": {
+                  "metaType": "object",
+                  "value": {
+                    "person": {
+                      "metaType": "object",
+                      "value": {},
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "person_id_ref": {
+                            "metaType": "primitive",
+                            "value": "xs:string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "actions": {
           "metaType": "object",
           "value": {
             "by": {
               "metaType": "union",
               "value": [
-                {
-                  "metaType": "object",
-                  "value": {
-                    "do": {
-                      "metaType": "object",
-                      "value": {},
-                      "attributes": {
-                        "metaType": "object",
-                        "value": {
-                          "action_rule_ref": {
-                            "metaType": "unknown"
-                          },
-                          "action_ref": {
-                            "metaType": "unknown"
-                          },
-                          "person_ref": {
-                            "metaType": "unknown"
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
                 {
                   "metaType": "object",
                   "value": {
@@ -1466,6 +1625,93 @@
                 "value": {
                   "person_ref": {
                     "metaType": "unknown"
+                  }
+                }
+              }
+            },
+            "location_graph.create": {
+              "metaType": "object",
+              "value": {},
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "location_graph_rule_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  }
+                }
+              }
+            },
+            "location_graph.node.create_adjacent": {
+              "metaType": "object",
+              "value": {},
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "location_graph_id_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  },
+                  "node_id_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  }
+                }
+              }
+            },
+            "person.teleport": {
+              "metaType": "union",
+              "value": [
+                {
+                  "metaType": "object",
+                  "value": {
+                    "location_graph": {
+                      "metaType": "object",
+                      "value": {},
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "location_graph_id": {
+                            "metaType": "primitive",
+                            "value": "xs:string"
+                          },
+                          "node_id": {
+                            "metaType": "primitive",
+                            "value": "xs:string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "person_id_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  }
+                }
+              }
+            },
+            "person.on_person.property_mutation": {
+              "metaType": "object",
+              "value": {},
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "person_id_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  },
+                  "target_person_id_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  },
+                  "action_property_mutation_rule_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
                   }
                 }
               }

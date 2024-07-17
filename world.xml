@@ -530,6 +530,17 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
         </icon>
       </location_markov_link>
     </locations_markov_chain>
+    <location_graph_rule id="dd">
+      <setup>
+        <starting_node node_rule_ref="city"/>
+      </setup>
+      <node_rule id="city">
+        <link_group id="all" angle="0" angleMax="360">
+          <to_option node_rule_ref="city" distance="20" maxDistance="50" quantity="1" adjacent_depth_limit="0"/>
+        </link_group>
+      </node_rule>
+
+    </location_graph_rule>
   </rule_group>
   <!--_-->
   <!--_-->
@@ -588,6 +599,13 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
     <cell location_rule_ref="plains" x="-1" y="1"/>
     <cell location_rule_ref="plains" x="-1" y="-1"/>
   </location_layer>
+  <location_graph id="world_map">
+    <rule location_graph_rule_ref="location_graph_rule"/>
+    <node id="1" node_rule_ref="">
+      <position x="10" y="0"/>
+      <link_to node_id_ref="id"/>
+    </node>
+  </location_graph>
   <!--_-->
   <!--_-->
   <!--_-->
@@ -595,6 +613,7 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
   <!--Actions-->
   <!--_-->
   <actions>
+
     <by person_ref="dd">
       <do action_rule_ref="dd" person_ref=""/>
     </by>
