@@ -1245,7 +1245,7 @@
           </xs:complexType>
         </xs:element>
 
-        <xs:element name="location_graph" minOccurs="0">
+        <xs:element name="location_graph" minOccurs="0" maxOccurs="unbounded">
           <xs:annotation>
             <xs:documentation>
               Represents a location graph.
