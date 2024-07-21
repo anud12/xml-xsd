@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
 <world_step>
   <world_metadata>
-    <next_world_step>../gui-client/data_1721590517.912743</next_world_step>
+    <next_world_step>../gui-client/data_1721590490.8149242</next_world_step>
     <elapsed_time value="0" />
     <stepDuration value="0" />
-    <counter value="7" />
+    <counter value="5" />
     <randomization_table>
+      <entry value="2" />
+      <entry value="8" />
       <entry value="3" />
       <entry value="6" />
       <entry value="5" />
@@ -104,8 +105,6 @@
       <entry value="10" />
       <entry value="4" />
       <entry value="9" />
-      <entry value="2" />
-      <entry value="8" />
     </randomization_table>
   </world_metadata>
   <rule_group id="rule_group_id">
@@ -115,7 +114,11 @@
       </setup>
       <node_rule id="node">
         <link_group id="all" angle="0" angleMax="360">
-          <to_option node_rule_ref="node" adjacent_depth_limit="1" distance="100" />
+          <to_option
+            node_rule_ref="node"
+            adjacent_depth_limit="1"
+            distance="100"
+          />
         </link_group>
       </node_rule>
     </location_graph_rule>
@@ -125,25 +128,13 @@
       <position x="0" y="0" />
       <link_to node_id_ref="0.3" />
       <link_to node_id_ref="0.4" />
-      <link_to node_id_ref="0.5" />
     </node>
     <node id="0.3" node_rule_ref="node">
       <position x="80" y="-58" />
       <link_to node_id_ref="0.4" />
     </node>
-    <node id="0.4" node_rule_ref="node">
+    <node node_rule_ref="node" id="0.4">
       <position x="30" y="95" />
-      <link_to node_id_ref="0.5" />
-    </node>
-    <node id="0.5" node_rule_ref="node">
-      <position x="30" y="-95" />
-      <link_to node_id_ref="0.6" />
-    </node>
-    <node id="0.6" node_rule_ref="node">
-      <position x="0" y="0" />
     </node>
   </location_graph>
-  <actions>
-    <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="0.3" />
-  </actions>
 </world_step>

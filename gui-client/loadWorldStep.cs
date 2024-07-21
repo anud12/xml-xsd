@@ -1,43 +1,51 @@
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Xml;
 using System.Xml.Serialization;
 using Godot;
+using GodotPlugins.Game;
 using WorldStepSchema;
 using Node = Godot.Node;
 
 public class LoadWorldStep {
 
+	public Node node;
+	public LoadWorldStep(Node node) {
+		this.node = node;
+	}	
+
+	public WorldStep worldStep;
 	public static int SCALE = 10;
-	public static System.Collections.Generic.IEnumerable<Node> load(string path) {
+	public void load(string path) {
+
+		GD.Print("Loading: " + path);	
+
 		XmlDocument xmlDocument = new XmlDocument();
 		xmlDocument.Load(path);
 
-		WorldStep worldStep = new WorldStep(xmlDocument.DocumentElement);
+		worldStep = new WorldStep(xmlDocument.DocumentElement);
 		
-		//serialize worldStep to out.xml
-		
-		
-		// //create if not exist the file out.xml
-		// if (!File.Exists("out.xml"))
-		// {
-		// 	File.Create("out.xml").Close();
-		// }
-		// //open file out.xml
-		// using (StreamWriter sw = new StreamWriter("out.xml"))
-		// {
-		// 	var document = new XmlDocument();
-		// 	worldStep.Serialize(document);
-		// 	document.Save(sw);
-		// }
-		
-	
-		return loadNodes(worldStep).Concat(loadLinks(worldStep));
+		 var nodes = loadNodes(worldStep).Concat(loadLinks(worldStep));
 
+		nodes.ToList().ForEach(child => node.AddChild(child));
 	}
 
-	private static System.Collections.Generic.IEnumerable<Node> loadNodes  (WorldStep worldStep) {
-		return worldStep.location_graph.SelectMany(locationGraph => locationGraph.node.Select(node => {
+	public void executeNextStep() {
+		ImplProgram.Main(worldStep);
+		GD.Print("Executing next step");
+		Thread.Sleep(1500);
+		GD.Print("Loading next step");
+
+		node.GetChildren().ToList()
+		.Where(child => child is ColorRect || child is Button || child is Line2D)
+		.ToList()
+		.ForEach(child => node.RemoveChild(child));
+		load("./"+worldStep.world_metadata.next_world_step.world_step_id_ref.Replace("../gui-client/", "") + ".xml");
+	}
+
+	private System.Collections.Generic.IEnumerable<Node> loadNodes  (WorldStep worldStep) {
+		return worldStep.location_graph.SelectMany(locationGraph => locationGraph.node.SelectMany(node => {
 			var position = node.position;
 			var newPosition = new Vector2( position.x * SCALE, position.y * SCALE);
 			var colorRectangle = new ColorRect
@@ -46,10 +54,37 @@ public class LoadWorldStep {
 				Position = newPosition,
 			};
 			colorRectangle.SetSize(new Vector2(SCALE, SCALE));
-			return colorRectangle;
+
+			var button = new Button
+			{
+				Text = "Create Adjacent",
+				Size = new Vector2(SCALE, SCALE),
+				Position = newPosition,
+			};
+			
+			button.Pressed += () => {
+				addAdjacent(locationGraph, node);
+			};
+
+			return new Node[] {button, colorRectangle};
 		}));
 	}
-	private static System.Collections.Generic.IEnumerable<Node> loadLinks  (WorldStep worldStep) {
+
+	private void addAdjacent(WorldStep_LocationGraph locationGraph, WorldStep_LocationGraph_Node node) {
+
+
+		GD.Print("Adding adjacent to " + node.id);
+		if(worldStep.actions == null) {
+			worldStep.actions = new WorldStep_Actions();
+		}
+		worldStep.actions.create_adjacent = new WorldStep_Actions_CreateAdjacent
+		{
+			location_graph_id_ref = locationGraph.id,
+			node_id_ref = node.id,
+		};
+		executeNextStep();
+	}
+	private System.Collections.Generic.IEnumerable<Node> loadLinks  (WorldStep worldStep) {
 		return worldStep.location_graph.SelectMany(locationGraph => locationGraph.node.SelectMany(node => 
 			{
 				GD.Print("node.link_to: " + node.link_to.Count);
@@ -64,7 +99,7 @@ public class LoadWorldStep {
 					DefaultColor = new Color(1, 1, 1, 1),
 					Points = new Vector2[] {start, end},
 				};
-				line2D.Width  = 1;
+				line2D.Width  = 4;
 				return line2D;
 			});
 			}));

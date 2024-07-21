@@ -9,17 +9,32 @@ using Godot;
 namespace WorldStepSchema {
 	public class WorldStepSerializer {
 
-		public Dictionary<string, Type> attributeMap = new Dictionary<string, Type>();
-		public Dictionary<string, Type> elementMap = new Dictionary<string, Type>();
+		public string tagName;
+		public Dictionary<string, (Type, string)> attributeMap = new Dictionary<string, (Type, string)>();
+		public Dictionary<string, (Type, string)> elementMap = new Dictionary<string, (Type, string)>();
 
 		public WorldStepSerializer addAttribute(string attributeName, Type attributeType) {
-			attributeMap.Add(attributeName, attributeType);
+			attributeMap.Add(attributeName, (attributeType, attributeName));
+			return this;
+		}
+
+		public WorldStepSerializer addAttribute(string attributeName, Type attributeType, string fieldName) {
+			attributeMap.Add(attributeName, (attributeType, fieldName));
 			return this;
 		}
 
 		public WorldStepSerializer addElement(string elementName, Type elementType) {
-			elementMap.Add(elementName, elementType);
+			elementMap.Add(elementName, (elementType, elementName));
 			return this;
+		}
+
+		public WorldStepSerializer addElement(string elementName, Type elementType, string fieldName) {
+			elementMap.Add(elementName, (elementType, fieldName));
+			return this;
+		}
+		
+		public WorldStepSerializer(string tagName) {
+			this.tagName = tagName;
 		}
 
 		public void Serialize<T>(XmlNode xmlElement, T obj) {
@@ -31,9 +46,9 @@ namespace WorldStepSchema {
 				var contains= attributeMap.ContainsKey(attributeName);
 				if (contains)
 				{
-					Type attributeType = attributeMap[attributeName];
+					(Type attributeType, string fieldName) = attributeMap[attributeName];
 					object attributeValue = Convert.ChangeType(attribute.Value, attributeType);
-					var property = type.GetFields().Where(p => p.Name == attributeName).FirstOrDefault();
+					var property = type.GetFields().Where(p => p.Name == fieldName).FirstOrDefault();
 					if (property != null)
 					{
 						property.SetValue(obj, attributeValue);
@@ -48,20 +63,20 @@ namespace WorldStepSchema {
 				var contains = elementMap.ContainsKey(elementName);
 				if (contains)
 				{
-					Type elementType = elementMap[elementName];
+					(Type elementType, string fieldName) = elementMap[elementName];
 			
 					// If the element is a List, iterate over the child elements and create a list of objects
 					if (elementType.IsGenericType && elementType.GetGenericTypeDefinition() == typeof(List<>))
 					{
 						var listType = elementType.GetGenericArguments()[0];
-						var list = (IList)obj.GetType().GetField(elementName).GetValue(obj);
+						var list = (IList)obj.GetType().GetField(fieldName).GetValue(obj);
 						object childElementValue = Activator.CreateInstance(listType, element);
 						list.Add(childElementValue);
 						continue;
 					}
 			
 					// If the element is not a List, create an object and set the value
-					var property = type.GetFields().Where(p => p.Name == elementName).FirstOrDefault();
+					var property = type.GetFields().Where(p => p.Name == fieldName).FirstOrDefault();
 					if (property != null)
 					{
 						object elementValue = Activator.CreateInstance(elementType, element);
@@ -71,49 +86,58 @@ namespace WorldStepSchema {
 			}
 		}
 
-		public void Deserialize<T>(XmlElement element, T obj)
+		public void Deserialize<T>(XmlElement element, T obj) where T : WorldStepDeserialize
 		{
 			Type type = obj.GetType();
+			
 			// Deserialize attributes based on the attributeMap
 			foreach (var attribute in attributeMap)
 			{
-				var attributeName = attribute.Key;
-				var attributeType = attribute.Value;
-				var property = type.GetFields().Where(p => p.Name == attributeName).FirstOrDefault();
-				if (property != null)
-				{
-					var attributeValue = property.GetValue(obj);
-					element.SetAttribute(attributeName, attributeValue.ToString());
-				}
+				string attributeName = attribute.Key;
+				string attributeTypeName = attribute.Value.Item2;
+				object attributeValue = type.GetField(attributeTypeName).GetValue(obj);
+				element.SetAttribute(attributeName, attributeValue.ToString());
 			}
 			// Deserialize elements based on the elementMap
 			foreach (var elementMap in elementMap)
 			{
-				var elementName = elementMap.Key;
-				var elementType = elementMap.Value;
-				var property = type.GetFields().Where(p => p.Name == elementName).FirstOrDefault();
-				if (property != null)
-				{
-					var elementValue = property.GetValue(obj);
-					if (elementType.IsGenericType && elementType.GetGenericTypeDefinition() == typeof(List<>))
-					{
-						var list = (IList)elementValue;
-						foreach (var childElement in list)
-						{
-							var childElementValue = (object)childElement;
-							var childElementElement = element.OwnerDocument.CreateElement(elementName);
-							childElementValue.GetType().GetMethod("Deserialize").Invoke(childElementValue, new object[] { childElementElement });
-							element.AppendChild(childElementElement);
-						}
-					}
-					else
-					{
-						var childElementElement = element.OwnerDocument.CreateElement(elementName);
-						elementValue.GetType().GetMethod("Deserialize").Invoke(elementValue, new object[] { childElementElement });
-						element.AppendChild(childElementElement);
-					}
+				string elementName = elementMap.Key;
+				string elementNameTypeName = elementMap.Value.Item2;
+				object elementValue;
+				try {
+					elementValue = type.GetField(elementNameTypeName).GetValue(obj);
+				} catch (Exception e) {
+					GD.PrintErr("elementName: " + elementName + " not found in " + type.Name);
+					continue;
 				}
+				
+
+
+				if (elementValue == null)
+				{
+					continue;
+				}
+				
+
+				// If the element is a List, iterate over the child elements and create a list of objects
+				if (elementValue is IList)
+				{
+					foreach (var childElement in (IList)elementValue)
+					{
+						//create element
+						XmlElement newElementChildList = element.OwnerDocument.CreateElement(elementName);
+						element.AppendChild(newElementChildList);
+						((WorldStepDeserialize)childElement).Deserialize(newElementChildList);
+					}
+					continue;
+				}
+				//create element
+				XmlElement newElementChild = element.OwnerDocument.CreateElement(elementName);
+				element.AppendChild(newElementChild);
+				// If the element is not a List, create an object and set the value
+				((WorldStepDeserialize)elementValue).Deserialize(newElementChild);
 			}
+			
 		}
 	}
 }

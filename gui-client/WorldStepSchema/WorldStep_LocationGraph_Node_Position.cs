@@ -3,7 +3,7 @@ using System.Xml;
 namespace WorldStepSchema {
     public class WorldStep_LocationGraph_Node_Position : WorldStepDeserialize {
 
-        public WorldStepSerializer serializer = new WorldStepSerializer()
+        public WorldStepSerializer serializer = new WorldStepSerializer("position")
             .addAttribute("x", typeof(int))
             .addAttribute("y", typeof(int));
 
@@ -15,10 +15,7 @@ namespace WorldStepSchema {
 
         public void Deserialize(XmlElement element)
         {
-            XmlElement positionElement = element.OwnerDocument.CreateElement("position");
-            positionElement.SetAttribute("x", x.ToString());
-            positionElement.SetAttribute("y", y.ToString());
-            element.AppendChild(positionElement);
+            serializer.Deserialize(element, this);
         }
     }
 }

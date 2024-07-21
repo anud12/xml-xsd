@@ -6,7 +6,7 @@ using System.Xml;
 namespace WorldStepSchema{
 	public class WorldStep_LocationGraph_Node : WorldStepDeserialize{
 
-		public WorldStepSerializer serializer = new WorldStepSerializer()
+		public WorldStepSerializer serializer = new WorldStepSerializer("node")
 			.addAttribute("id", typeof(string))
 			.addAttribute("node_rule_ref", typeof(string))
 			.addElement("position", typeof(WorldStep_LocationGraph_Node_Position))
@@ -23,15 +23,7 @@ namespace WorldStepSchema{
 
 		public void Deserialize(XmlElement element)
 		{
-			XmlElement nodeElement = element.OwnerDocument.CreateElement("node");
-			nodeElement.SetAttribute("id", id);
-			nodeElement.SetAttribute("node_rule_ref", node_rule_ref);
-			element.AppendChild(nodeElement);
-			position.Deserialize(nodeElement);
-			foreach (var l in this.link_to)
-			{
-				l.Deserialize(nodeElement);
-			}
+			serializer.Deserialize(element, this);
 		}
 	}
 }

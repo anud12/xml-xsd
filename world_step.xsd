@@ -1360,6 +1360,13 @@
               <xs:element name="by" maxOccurs="unbounded" minOccurs="0">
                 <xs:complexType>
                   <xs:choice>
+                    <xs:element name="do">
+                      <xs:complexType>
+                        <xs:attribute name="action_rule_ref"/>
+                        <xs:attribute name="action_ref"/>
+                        <xs:attribute name="person_ref" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
                     <xs:element name="move_towards">
                       <xs:complexType>
                         <xs:attribute name="layer" type="xs:string"/>

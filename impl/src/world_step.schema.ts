@@ -218,6 +218,9 @@ export type world_step = JsonQueryType<{}, {
   }> & JsonQueryType<{}, {}>;
   "actions": JsonQueryType<{}, {
     "by": JsonQueryType<{"person_ref": any;}, {}> & JsonQueryType<{}, {
+        "do": JsonQueryType<{"action_rule_ref": any;  "action_ref": any;  "person_ref": any;}> & JsonQueryType<{}, {}>;
+      }>
+      & JsonQueryType<{}, {
         "move_towards": JsonQueryType<{"layer": string;  "x": string;  "y": string;}> & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
     "location_graph.create": JsonQueryType<{"location_graph_rule_ref": string;}> & JsonQueryType<{}, {}>;

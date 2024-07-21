@@ -8,6 +8,13 @@ using System.Xml.Serialization;
 public partial class main : Godot.Node
 {
 	// Called when the node enters the scene tree for the first time.
+
+	public LoadWorldStep loadWorldStep;
+
+	public main() {
+		loadWorldStep = new LoadWorldStep(this);
+	}
+
 	public override void _Ready()
 	{
 		System.Console.WriteLine("Hello, World! 1");
@@ -16,6 +23,8 @@ public partial class main : Godot.Node
 		var load = GetNode<Button>("./UI/Load");
 		
 		load.Pressed += () => _on_Load_pressed();
+
+		var addChild = AddChild;
 	}
 
 	public void _on_Load_pressed()
@@ -26,7 +35,7 @@ public partial class main : Godot.Node
 
 		GD.Print("Loading world step from " + path);
 
-		LoadWorldStep.load(path).ToList().ForEach(child => AddChild(child));
+		loadWorldStep.load(path);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

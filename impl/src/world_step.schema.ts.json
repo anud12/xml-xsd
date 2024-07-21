@@ -1596,6 +1596,29 @@
                 {
                   "metaType": "object",
                   "value": {
+                    "do": {
+                      "metaType": "object",
+                      "value": {},
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "action_rule_ref": {
+                            "metaType": "unknown"
+                          },
+                          "action_ref": {
+                            "metaType": "unknown"
+                          },
+                          "person_ref": {
+                            "metaType": "unknown"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "metaType": "object",
+                  "value": {
                     "move_towards": {
                       "metaType": "object",
                       "value": {},

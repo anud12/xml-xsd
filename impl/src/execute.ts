@@ -28,14 +28,14 @@ export const executeFromString = async (xmlString: string, log: (...string: any[
   const oldLog = console.log;
   console.log = log;
 
-  const argumentResult = parseArguments(xmlString, log, stringArguments)
+  const argumentResult = await parseArguments(xmlString, log, stringArguments)
 
   if(argumentResult) {
     return argumentResult;
   }
 
   const readJson = JsonQuery.fromText<JsonSchema>(xmlString.toString());
-  const result = execute(readJson, log)
+  const result = await execute(readJson, log)
   console.log = oldLog;
   return result;
 }
@@ -117,10 +117,10 @@ export const execute = async (readJson: JsonSchema, log: (...string: any[]) => v
   await offsetRandomisationTable(readJsonUtil)(readJsonUtil);
 
   const writeWorldMetadata = readJsonUtil.json.query("world_metadata");
-  const tokens = writeWorldMetadata.query("next_world_step").body.split("_")
-  const iter = Number(tokens?.[1] ?? 0);
-  const writeNextWorldStep = readJson.query("world_metadata").query("next_world_step")
-  writeNextWorldStep.body = `${tokens[0]}_${iter + 1}`
+  // const tokens = writeWorldMetadata.query("next_world_step").body.split("_")
+  // const iter = Number(tokens?.[1] ?? 0);
+  // const writeNextWorldStep = readJson.query("world_metadata").query("next_world_step")
+  // writeNextWorldStep.body = `${tokens[0]}_${iter + 1}`
   console.log = oldLog;
   return readJsonUtil.json;
 }
