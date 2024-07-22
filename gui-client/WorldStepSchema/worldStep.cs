@@ -7,11 +7,12 @@ namespace WorldStepSchema {
     public class WorldStep:WorldStepDeserialize {
 
         public WorldStepSerializer serializer = new WorldStepSerializer("world_step")
-            .addElement("world_metadata", typeof(WorldStep_WorldMetadata))
-            .addElement("rule_group", typeof(List<WorldStep_RuleGroup>))
-            .addElement("location_graph", typeof(List<WorldStep_LocationGraph>))
-            .addElement("actions", typeof(WorldStep_Actions));
+            .addElement("world_metadata")
+            .addElement("rule_group")
+            .addElement("location_graph")
+            .addElement("actions");
 
+        
         public WorldStep_WorldMetadata world_metadata;
 
         public List<WorldStep_RuleGroup> rule_group = new List<WorldStep_RuleGroup>();

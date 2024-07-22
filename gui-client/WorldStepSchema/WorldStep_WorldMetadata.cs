@@ -5,11 +5,11 @@ namespace WorldStepSchema {
     public class WorldStep_WorldMetadata:WorldStepDeserialize {
         
         public WorldStepSerializer serializer = new WorldStepSerializer("world_metadata")
-            .addElement("next_world_step", typeof(WorldStep_WorldMetadata_NextWorldStep))
-            .addElement("elapsed_time", typeof(WorldStep_WorldMetadata_ElapsedTime))
-            .addElement("stepDuration", typeof(WorldStep_WorldMetadata_StepDuration))
-            .addElement("counter", typeof(WorldStep_WorldMetadata_Counter))
-            .addElement("randomization_table", typeof(WorldStep_WorldMetadata_RandomizationTable));
+            .addElement("next_world_step")
+            .addElement("elapsed_time")
+            .addElement("stepDuration")
+            .addElement("counter")
+            .addElement("randomization_table");
         
 
         public WorldStep_WorldMetadata_NextWorldStep next_world_step;
@@ -30,7 +30,7 @@ namespace WorldStepSchema {
     public class WorldStep_WorldMetadata_Counter:WorldStepDeserialize
     {
         public WorldStepSerializer serializer = new WorldStepSerializer("counter")
-            .addAttribute("value", typeof(int));
+            .addAttribute("value");
         public int value;
         public WorldStep_WorldMetadata_Counter(XmlNode xmlElement)
         {
@@ -45,7 +45,7 @@ namespace WorldStepSchema {
     public class WorldStep_WorldMetadata_StepDuration:WorldStepDeserialize
     {
         public WorldStepSerializer serializer = new WorldStepSerializer("stepDuration")
-            .addAttribute("value", typeof(int));
+            .addAttribute("value");
         public int value;
         public WorldStep_WorldMetadata_StepDuration(XmlNode xmlElement)
         {
@@ -60,7 +60,7 @@ namespace WorldStepSchema {
     public class WorldStep_WorldMetadata_ElapsedTime:WorldStepDeserialize
     {
         public WorldStepSerializer serializer = new WorldStepSerializer("elapsed_time")
-            .addAttribute("value", typeof(int));
+            .addAttribute("value");
         public int value;
         public WorldStep_WorldMetadata_ElapsedTime(XmlNode xmlElement)
         {

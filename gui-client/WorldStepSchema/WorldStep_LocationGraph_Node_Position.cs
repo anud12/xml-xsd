@@ -4,8 +4,8 @@ namespace WorldStepSchema {
     public class WorldStep_LocationGraph_Node_Position : WorldStepDeserialize {
 
         public WorldStepSerializer serializer = new WorldStepSerializer("position")
-            .addAttribute("x", typeof(int))
-            .addAttribute("y", typeof(int));
+            .addAttribute("x")
+            .addAttribute("y");
 
         public int x;
         public int y;

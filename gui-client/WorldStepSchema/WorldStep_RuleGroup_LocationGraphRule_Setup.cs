@@ -4,7 +4,7 @@ namespace WorldStepSchema {
     
     public class WorldStep_RuleGroup_LocationGraphRule_Setup : WorldStepDeserialize {
         public WorldStepSerializer serializer = new WorldStepSerializer("setup")
-            .addElement("starting_node", typeof(WorldStep_RuleGroup_LocationGraphRule_Setup_StartingNode));
+            .addElement("starting_node");
 
         public WorldStep_RuleGroup_LocationGraphRule_Setup_StartingNode starting_node;
 
@@ -20,7 +20,7 @@ namespace WorldStepSchema {
 
     public class WorldStep_RuleGroup_LocationGraphRule_Setup_StartingNode: WorldStepDeserialize {
         public WorldStepSerializer serializer = new WorldStepSerializer("starting_node")
-            .addAttribute("node_rule_ref", typeof(string));
+            .addAttribute("node_rule_ref");
 
         public string node_rule_ref;
 

@@ -7,29 +7,40 @@ using System.Xml.Linq;
 using Godot;
 
 namespace WorldStepSchema {
+
+	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Field)]
+	public class WorldStepSerializerAttribute : Attribute {
+		public string attributeName;
+
+		public WorldStepSerializerAttribute() {
+		}
+		public WorldStepSerializerAttribute(string attributeName) {
+			this.attributeName = attributeName;
+		}
+	}
 	public class WorldStepSerializer {
 
 		public string tagName;
-		public Dictionary<string, (Type, string)> attributeMap = new Dictionary<string, (Type, string)>();
-		public Dictionary<string, (Type, string)> elementMap = new Dictionary<string, (Type, string)>();
+		public Dictionary<string, string> attributeMap = new Dictionary<string, string>();
+		public Dictionary<string, string> elementMap = new Dictionary<string, string>();
 
-		public WorldStepSerializer addAttribute(string attributeName, Type attributeType) {
-			attributeMap.Add(attributeName, (attributeType, attributeName));
+		public WorldStepSerializer addAttribute(string attributeName) {
+			attributeMap.Add(attributeName,  attributeName);
 			return this;
 		}
 
-		public WorldStepSerializer addAttribute(string attributeName, Type attributeType, string fieldName) {
-			attributeMap.Add(attributeName, (attributeType, fieldName));
+		public WorldStepSerializer addAttribute(string attributeName, string fieldName) {
+			attributeMap.Add(attributeName, fieldName);
 			return this;
 		}
 
-		public WorldStepSerializer addElement(string elementName, Type elementType) {
-			elementMap.Add(elementName, (elementType, elementName));
+		public WorldStepSerializer addElement(string elementName) {
+			elementMap.Add(elementName, elementName);
 			return this;
 		}
 
-		public WorldStepSerializer addElement(string elementName, Type elementType, string fieldName) {
-			elementMap.Add(elementName, (elementType, fieldName));
+		public WorldStepSerializer addElement(string elementName, string fieldName) {
+			elementMap.Add(elementName, fieldName);
 			return this;
 		}
 		
@@ -46,9 +57,11 @@ namespace WorldStepSchema {
 				var contains= attributeMap.ContainsKey(attributeName);
 				if (contains)
 				{
-					(Type attributeType, string fieldName) = attributeMap[attributeName];
-					object attributeValue = Convert.ChangeType(attribute.Value, attributeType);
+					string fieldName = attributeMap[attributeName];
 					var property = type.GetFields().Where(p => p.Name == fieldName).FirstOrDefault();
+					Type propertyType = property.FieldType;
+					object attributeValue = Convert.ChangeType(attribute.Value, propertyType);
+					
 					if (property != null)
 					{
 						property.SetValue(obj, attributeValue);
@@ -63,15 +76,17 @@ namespace WorldStepSchema {
 				var contains = elementMap.ContainsKey(elementName);
 				if (contains)
 				{
-					(Type elementType, string fieldName) = elementMap[elementName];
-			
+					string fieldName = elementMap[elementName];
+					Type elementType = obj.GetType().GetField(fieldName).FieldType;
+					
+					
 					// If the element is a List, iterate over the child elements and create a list of objects
 					if (elementType.IsGenericType && elementType.GetGenericTypeDefinition() == typeof(List<>))
 					{
+						var elementValue = (IList)obj.GetType().GetField(fieldName).GetValue(obj);
 						var listType = elementType.GetGenericArguments()[0];
-						var list = (IList)obj.GetType().GetField(fieldName).GetValue(obj);
 						object childElementValue = Activator.CreateInstance(listType, element);
-						list.Add(childElementValue);
+						elementValue.Add(childElementValue);
 						continue;
 					}
 			
@@ -79,8 +94,8 @@ namespace WorldStepSchema {
 					var property = type.GetFields().Where(p => p.Name == fieldName).FirstOrDefault();
 					if (property != null)
 					{
-						object elementValue = Activator.CreateInstance(elementType, element);
-						property.SetValue(obj, elementValue);
+						object elementInstanceValue = Activator.CreateInstance(elementType, element);
+						property.SetValue(obj, elementInstanceValue);
 					}
 				}
 			}
@@ -94,7 +109,7 @@ namespace WorldStepSchema {
 			foreach (var attribute in attributeMap)
 			{
 				string attributeName = attribute.Key;
-				string attributeTypeName = attribute.Value.Item2;
+				string attributeTypeName = attribute.Value;
 				object attributeValue = type.GetField(attributeTypeName).GetValue(obj);
 				element.SetAttribute(attributeName, attributeValue.ToString());
 			}
@@ -102,7 +117,7 @@ namespace WorldStepSchema {
 			foreach (var elementMap in elementMap)
 			{
 				string elementName = elementMap.Key;
-				string elementNameTypeName = elementMap.Value.Item2;
+				string elementNameTypeName = elementMap.Value;
 				object elementValue;
 				try {
 					elementValue = type.GetField(elementNameTypeName).GetValue(obj);

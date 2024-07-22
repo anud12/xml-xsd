@@ -6,8 +6,8 @@ namespace WorldStepSchema {
     public class WorldStep_LocationGraph : WorldStepDeserialize{
 
         public WorldStepSerializer serializer = new WorldStepSerializer("location_graph")
-            .addAttribute("id", typeof(string))
-            .addElement("node", typeof(List<WorldStep_LocationGraph_Node>));
+            .addAttribute("id")
+            .addElement("node");
 
         public string id;
         public List<WorldStep_LocationGraph_Node> node = new List<WorldStep_LocationGraph_Node>();

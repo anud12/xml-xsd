@@ -5,8 +5,8 @@ namespace WorldStepSchema {
   
     public class WorldStep_RuleGroup_LocationGraphRule_NodeRule : WorldStepDeserialize {
         public WorldStepSerializer serializer = new WorldStepSerializer("node_rule")
-            .addAttribute("id", typeof(string))
-            .addElement("link_group", typeof(WorldStep_RuleGroup_LocationGraphRule_NodeRule_LinkGroup));
+            .addAttribute("id")
+            .addElement("link_group");
         
         public string id;
 
@@ -29,10 +29,10 @@ namespace WorldStepSchema {
     */
     public class WorldStep_RuleGroup_LocationGraphRule_NodeRule_LinkGroup: WorldStepDeserialize {
         public WorldStepSerializer serializer = new WorldStepSerializer("link_group")
-            .addAttribute("id", typeof(string))
-            .addAttribute("angle", typeof(int))
-            .addAttribute("angleMax", typeof(int))
-            .addElement("to_option", typeof(List<WorldStep_RuleGroup_LocationGraphRule_NodeRule_LinkGroup_ToOption>));
+            .addAttribute("id")
+            .addAttribute("angle")
+            .addAttribute("angleMax")
+            .addElement("to_option");
         
         public string id;
         public float angle;
@@ -52,9 +52,9 @@ namespace WorldStepSchema {
 
     public class WorldStep_RuleGroup_LocationGraphRule_NodeRule_LinkGroup_ToOption:WorldStepDeserialize {
         public WorldStepSerializer serializer = new WorldStepSerializer("to_option")
-            .addAttribute("node_rule_ref", typeof(string))
-            .addAttribute("adjacent_depth_limit", typeof(int))
-            .addAttribute("distance", typeof(int));
+            .addAttribute("node_rule_ref")
+            .addAttribute("adjacent_depth_limit")
+            .addAttribute("distance");
         
         public string node_rule_ref;
         public int adjacent_depth_limit;
