@@ -5,7 +5,7 @@ namespace WorldStepSchema {
         public WorldStepSerializer serializer = new WorldStepSerializer("actions")
         .addElement("location_graph.node.create_adjacent", "create_adjacent");
 
-        [WorldStepSerializerAttribute()]
+        [Element("create_adjacent")]
         public WorldStep_Actions_CreateAdjacent create_adjacent;
 
         public WorldStep_Actions() {

@@ -9,13 +9,25 @@ using Godot;
 namespace WorldStepSchema {
 
 	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Field)]
-	public class WorldStepSerializerAttribute : Attribute {
-		public string attributeName;
+	public class AttributeAttribute : Attribute {
+		public string name;
 
-		public WorldStepSerializerAttribute() {
+		public AttributeAttribute() {
 		}
-		public WorldStepSerializerAttribute(string attributeName) {
-			this.attributeName = attributeName;
+		public AttributeAttribute(string attributeName) {
+			this.name = attributeName;
+		}
+	}
+
+	
+	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Field)]
+	public class ElementAttribute : Attribute {
+		public string name;
+
+		public ElementAttribute() {
+		}
+		public ElementAttribute(string attributeName) {
+			this.name = attributeName;
 		}
 	}
 	public class WorldStepSerializer {
