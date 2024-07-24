@@ -5,7 +5,7 @@ using System.Xml;
 namespace WorldStepSchema {
     public class WorldStep_LocationGraph_Rule : WorldStepDeserialize{
 
-        public WorldStepSerializer serializer = new WorldStepSerializer("rule");
+        public WorldStepSerializer serializer = new WorldStepSerializer();
 
         [Attribute]
         public string location_graph_rule_ref;

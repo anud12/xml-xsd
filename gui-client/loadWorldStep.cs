@@ -21,6 +21,12 @@ public class LoadWorldStep {
 
 		GD.Print("Loading: " + path);	
 
+		
+		node.GetChildren().ToList()
+		.Where(child => child is ColorRect || child is Button || child is Line2D)
+		.ToList()
+		.ForEach(child => node.RemoveChild(child));
+
 		XmlDocument xmlDocument = new XmlDocument();
 		xmlDocument.Load(path);
 
@@ -37,10 +43,6 @@ public class LoadWorldStep {
 		Thread.Sleep(1500);
 		GD.Print("Loading next step");
 
-		node.GetChildren().ToList()
-		.Where(child => child is ColorRect || child is Button || child is Line2D)
-		.ToList()
-		.ForEach(child => node.RemoveChild(child));
 		load("./"+worldStep.world_metadata.next_world_step.world_step_id_ref.Replace("../gui-client/", "") + ".xml");
 	}
 

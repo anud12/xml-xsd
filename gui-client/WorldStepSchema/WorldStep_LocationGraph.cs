@@ -5,11 +5,15 @@ using System.Xml;
 namespace WorldStepSchema {
     public class WorldStep_LocationGraph : WorldStepDeserialize{
 
-        public WorldStepSerializer serializer = new WorldStepSerializer("location_graph")
-            .addAttribute("id")
-            .addElement("node");
+        public WorldStepSerializer serializer = new WorldStepSerializer();
 
+        [Attribute]
         public string id;
+
+        [Element]
+        public WorldStep_LocationGraph_Rule rule;
+
+        [Element]
         public List<WorldStep_LocationGraph_Node> node = new List<WorldStep_LocationGraph_Node>();
 
         public Dictionary<string, WorldStep_LocationGraph_Node> nodeById = new Dictionary<string, WorldStep_LocationGraph_Node>();

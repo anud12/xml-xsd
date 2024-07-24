@@ -3,8 +3,9 @@ using System.Xml;
 
 namespace WorldStepSchema {
     public class WorldStep_WorldMetadata_RandomizationTable : WorldStepDeserialize {
-        public WorldStepSerializer serializer = new WorldStepSerializer("randomization_table")
-            .addElement("entry");
+        public WorldStepSerializer serializer = new WorldStepSerializer();
+
+        [Element]
         public List<WorldStep_WorldMetadata_RandomizationTable_Entry> entry = new List<WorldStep_WorldMetadata_RandomizationTable_Entry>();
         public WorldStep_WorldMetadata_RandomizationTable(XmlNode xmlElement) {
             serializer.Serialize(xmlElement, this);
@@ -16,8 +17,9 @@ namespace WorldStepSchema {
 
     public class WorldStep_WorldMetadata_RandomizationTable_Entry: WorldStepDeserialize
     {
-        public WorldStepSerializer serializer = new WorldStepSerializer("entry")
-            .addAttribute("value");
+        public WorldStepSerializer serializer = new WorldStepSerializer();
+
+        [Attribute]
         public int value;
         public WorldStep_WorldMetadata_RandomizationTable_Entry(XmlNode xmlElement)
         {

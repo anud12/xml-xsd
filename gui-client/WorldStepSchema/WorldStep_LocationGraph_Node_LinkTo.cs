@@ -5,9 +5,9 @@ namespace WorldStepSchema {
 	
 	public class WorldStep_LocationGraph_Node_LinkTo : WorldStepDeserialize {
 
-		public WorldStepSerializer serializer = new WorldStepSerializer("link_to")
-			.addAttribute("node_id_ref");
-			
+		public WorldStepSerializer serializer = new WorldStepSerializer();
+		
+		[Attribute]
 		public string node_id_ref;
 
 		public WorldStep_LocationGraph_Node_LinkTo(XmlNode xmlElement) {

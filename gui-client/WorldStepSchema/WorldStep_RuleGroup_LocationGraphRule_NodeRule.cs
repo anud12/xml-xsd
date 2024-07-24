@@ -1,15 +1,16 @@
+using System;
 using System.Collections.Generic;
 using System.Xml;
 
 namespace WorldStepSchema {
   
     public class WorldStep_RuleGroup_LocationGraphRule_NodeRule : WorldStepDeserialize {
-        public WorldStepSerializer serializer = new WorldStepSerializer("node_rule")
-            .addAttribute("id")
-            .addElement("link_group");
-        
+        public WorldStepSerializer serializer = new WorldStepSerializer();
+
+        [Attribute]        
         public string id;
 
+        [Element]
         public WorldStep_RuleGroup_LocationGraphRule_NodeRule_LinkGroup link_group;
 
         public WorldStep_RuleGroup_LocationGraphRule_NodeRule(XmlNode xmlElement) {
@@ -28,16 +29,18 @@ namespace WorldStepSchema {
 		</link_group>
     */
     public class WorldStep_RuleGroup_LocationGraphRule_NodeRule_LinkGroup: WorldStepDeserialize {
-        public WorldStepSerializer serializer = new WorldStepSerializer("link_group")
-            .addAttribute("id")
-            .addAttribute("angle")
-            .addAttribute("angleMax")
-            .addElement("to_option");
+        public WorldStepSerializer serializer = new WorldStepSerializer();
         
+        [Attribute]
         public string id;
-        public float angle;
-        public float angleMax;
+        [Attribute]
+        public Int32 angle;
+        [Attribute]
+        public Int32 angleMax;
+        [Attribute]
+        public Int32 limit;
 
+        [Element]
         public List<WorldStep_RuleGroup_LocationGraphRule_NodeRule_LinkGroup_ToOption> to_option = new List<WorldStep_RuleGroup_LocationGraphRule_NodeRule_LinkGroup_ToOption>();
       
         public WorldStep_RuleGroup_LocationGraphRule_NodeRule_LinkGroup(XmlNode xmlElement) {
@@ -51,14 +54,18 @@ namespace WorldStepSchema {
     }
 
     public class WorldStep_RuleGroup_LocationGraphRule_NodeRule_LinkGroup_ToOption:WorldStepDeserialize {
-        public WorldStepSerializer serializer = new WorldStepSerializer("to_option")
-            .addAttribute("node_rule_ref")
-            .addAttribute("adjacent_depth_limit")
-            .addAttribute("distance");
+        public WorldStepSerializer serializer = new WorldStepSerializer();
         
-        public string node_rule_ref;
-        public int adjacent_depth_limit;
-        public int distance;
+        [Attribute]
+        public String node_rule_ref;
+
+        [Attribute]
+        public Int32 adjacent_depth_limit;
+
+        [Attribute]
+        public Int32 distance;
+        [Attribute]
+        public Int32 maxDistance;
 
         
         public WorldStep_RuleGroup_LocationGraphRule_NodeRule_LinkGroup_ToOption(XmlNode xmlElement) {

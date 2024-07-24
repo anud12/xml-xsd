@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Xml;
 using System.Xml.Linq;
 using Godot;
@@ -32,65 +33,84 @@ namespace WorldStepSchema {
 	}
 	public class WorldStepSerializer {
 
-		public string tagName;
-		public Dictionary<string, string> attributeMap = new Dictionary<string, string>();
-		public Dictionary<string, string> elementMap = new Dictionary<string, string>();
-
-		public WorldStepSerializer addAttribute(string attributeName) {
-			attributeMap.Add(attributeName,  attributeName);
-			return this;
-		}
-
-		public WorldStepSerializer addAttribute(string attributeName, string fieldName) {
-			attributeMap.Add(attributeName, fieldName);
-			return this;
-		}
-
-		public WorldStepSerializer addElement(string elementName) {
-			elementMap.Add(elementName, elementName);
-			return this;
-		}
-
-		public WorldStepSerializer addElement(string elementName, string fieldName) {
-			elementMap.Add(elementName, fieldName);
-			return this;
-		}
-		
-		public WorldStepSerializer(string tagName) {
-			this.tagName = tagName;
+		public WorldStepSerializer() {
 		}
 
 		public void Serialize<T>(XmlNode xmlElement, T obj) {
 			Type type = obj.GetType();
-			// Serialize attributes based on the attributeMap        
+			// GD.Print("Serialize - type: " + type.Name);
+			// Serialize attributes  
+			SerializeAttributes(xmlElement, obj);
+			// Serialize elements
+			SerializeElements(xmlElement, obj);
+		}
+
+		private void SerializeAttributes<T>(XmlNode xmlElement, T obj) {
+			Type type = obj.GetType();
+			var fields = type.GetFields();
+
 			foreach (XmlAttribute attribute in xmlElement.Attributes)
 			{
 				string attributeName = attribute.Name;
-				var contains= attributeMap.ContainsKey(attributeName);
-				if (contains)
-				{
-					string fieldName = attributeMap[attributeName];
-					var property = type.GetFields().Where(p => p.Name == fieldName).FirstOrDefault();
-					Type propertyType = property.FieldType;
-					object attributeValue = Convert.ChangeType(attribute.Value, propertyType);
-					
-					if (property != null)
-					{
-						property.SetValue(obj, attributeValue);
+
+				FieldInfo fieldInfo = fields.Where(p => p.GetCustomAttributes(typeof(AttributeAttribute), false).Length > 0)
+				.Where(p => {
+					var attribute = (AttributeAttribute)p.GetCustomAttributes(typeof(AttributeAttribute), false)[0];
+					if(attribute.name != null) {
+						return attribute.name == attributeName;
 					}
+					return p.Name == attributeName;
+
+				}).FirstOrDefault();
+
+				if(fieldInfo == null) {
+					// GD.Print("Serialize - attributeName: " + attributeName + " not found");
+					continue;
+				}
+				if (fieldInfo != null)
+				{
+					string fieldName = fieldInfo.Name; 
+					AttributeAttribute attributeAttribute = (AttributeAttribute)fieldInfo.GetCustomAttribute(typeof(AttributeAttribute));
+					if(attributeAttribute == null) {
+						fieldName = attributeAttribute.name;
+					}
+					var property = fieldInfo;
+					Type propertyType = property.FieldType;
+					object attributeValue = Convert.ChangeType(attribute.Value, property.FieldType);
+					property.SetValue(obj, attributeValue);
 				}
 			}
-			// Serialize elements based on the elementMap
+		}
+
+		private void SerializeElements<T>(XmlNode xmlElement, T obj) {
+			Type type = obj.GetType();
+			var fields = type.GetFields();
 
 			foreach (XmlNode element in xmlElement.ChildNodes)
 			{
 				string elementName = element.Name;
-				var contains = elementMap.ContainsKey(elementName);
-				if (contains)
+				
+				FieldInfo fieldInfo = fields.Where(p => p.GetCustomAttributes(typeof(ElementAttribute), false).Length > 0)
+				.Where(p => {
+					var attribute = (ElementAttribute)p.GetCustomAttributes(typeof(ElementAttribute), false)[0];
+					if(attribute.name != null) {
+						return attribute.name == elementName;
+					}
+					return p.Name == elementName;
+				}).FirstOrDefault();
+				if(fieldInfo == null) {
+					GD.Print("Serialize - elementName: " + elementName + " not found");
+					continue;
+				}
+				if (fieldInfo != null)
 				{
-					string fieldName = elementMap[elementName];
-					Type elementType = obj.GetType().GetField(fieldName).FieldType;
-					
+					// GD.Print("Serialize - elementName: " + elementName + " fieldInfo: " + fieldInfo.Name);
+					string fieldName = fieldInfo.Name;
+					ElementAttribute elementAttribute = (ElementAttribute)fieldInfo.GetCustomAttribute(typeof(ElementAttribute));
+					if(elementAttribute == null) {
+						fieldName = elementAttribute.name;
+					}
+					Type elementType = fieldInfo.FieldType;
 					
 					// If the element is a List, iterate over the child elements and create a list of objects
 					if (elementType.IsGenericType && elementType.GetGenericTypeDefinition() == typeof(List<>))
@@ -103,49 +123,77 @@ namespace WorldStepSchema {
 					}
 			
 					// If the element is not a List, create an object and set the value
-					var property = type.GetFields().Where(p => p.Name == fieldName).FirstOrDefault();
-					if (property != null)
-					{
-						object elementInstanceValue = Activator.CreateInstance(elementType, element);
-						property.SetValue(obj, elementInstanceValue);
-					}
+					var property = fieldInfo;
+					object elementInstanceValue = Activator.CreateInstance(elementType, element);
+					property.SetValue(obj, elementInstanceValue);
 				}
+				// GD.Print("Serialize - elementName: " + elementName + " done");
 			}
 		}
 
-		public void Deserialize<T>(XmlElement element, T obj) where T : WorldStepDeserialize
+
+		public void Deserialize<T>(XmlElement element, T obj)
 		{
 			Type type = obj.GetType();
+			// GD.Print("Deserialize - type: " + type.Name);
 			
-			// Deserialize attributes based on the attributeMap
-			foreach (var attribute in attributeMap)
+			// Deserialize attributes
+			DeserializeAttributes(element, obj);
+			// Deserialize elements
+			DeserializeElements(element, obj);
+			
+			// GD.Print("Deserialize - type: " + type.Name + " done");
+		}
+
+		private void DeserializeAttributes<T>(XmlElement element, T obj) {
+			Type type = obj.GetType();
+			var fields = type.GetFields();
+			var attributeFields = fields.Where(p => p.GetCustomAttributes(typeof(AttributeAttribute), false).Length > 0).ToList();
+
+			foreach (var field in attributeFields)
 			{
-				string attributeName = attribute.Key;
-				string attributeTypeName = attribute.Value;
-				object attributeValue = type.GetField(attributeTypeName).GetValue(obj);
-				element.SetAttribute(attributeName, attributeValue.ToString());
-			}
-			// Deserialize elements based on the elementMap
-			foreach (var elementMap in elementMap)
-			{
-				string elementName = elementMap.Key;
-				string elementNameTypeName = elementMap.Value;
-				object elementValue;
-				try {
-					elementValue = type.GetField(elementNameTypeName).GetValue(obj);
-				} catch (Exception e) {
-					GD.PrintErr("elementName: " + elementName + " not found in " + type.Name);
+				// GD.Print("Deserialize - attribute field: " + field.Name);
+				var attributeName = field.Name;
+				var customAttribute = (AttributeAttribute)field.GetCustomAttribute(typeof(AttributeAttribute), false);
+				if(customAttribute.name != null) {
+					attributeName = customAttribute.name;
+				}
+				object attributeValue = field.GetValue(obj);
+				if(attributeValue == null) {
 					continue;
 				}
-				
+				element.SetAttribute(attributeName, attributeValue.ToString());
+			}
+		}
 
+		private void DeserializeElements<T>(XmlElement element, T obj) {
+			Type type = obj.GetType();
+			var fields = type.GetFields();
+			var elementFields = fields.Where(p => p.GetCustomAttributes(typeof(ElementAttribute), false).Length > 0).ToList();
+
+			// Deserialize elements
+			foreach (var field in elementFields)
+			{
+				// GD.Print("Deserialize - element field: " + field.Name);
+				var elementName = field.Name;
+				if(field.GetCustomAttributes(typeof(ElementAttribute), false).Length > 0) {
+					if(((ElementAttribute)field.GetCustomAttributes(typeof(ElementAttribute), false)[0]).name != null) {
+						elementName = ((ElementAttribute)field.GetCustomAttributes(typeof(ElementAttribute), false)[0]).name;
+					}
+				}
+				object elementValue;
+				try {
+					elementValue = field.GetValue(obj);
+				} catch (Exception e) {
+					// GD.PrintErr("Deserialize - elementName: " + elementName + " not found in " + type.Name);
+					continue;
+				}
 
 				if (elementValue == null)
 				{
 					continue;
 				}
 				
-
 				// If the element is a List, iterate over the child elements and create a list of objects
 				if (elementValue is IList)
 				{
@@ -154,7 +202,8 @@ namespace WorldStepSchema {
 						//create element
 						XmlElement newElementChildList = element.OwnerDocument.CreateElement(elementName);
 						element.AppendChild(newElementChildList);
-						((WorldStepDeserialize)childElement).Deserialize(newElementChildList);
+						Deserialize(newElementChildList, childElement);
+						// ((WorldStepDeserialize)childElement).Deserialize(newElementChildList);
 					}
 					continue;
 				}
@@ -162,9 +211,10 @@ namespace WorldStepSchema {
 				XmlElement newElementChild = element.OwnerDocument.CreateElement(elementName);
 				element.AppendChild(newElementChild);
 				// If the element is not a List, create an object and set the value
-				((WorldStepDeserialize)elementValue).Deserialize(newElementChild);
+				Deserialize(newElementChild, elementValue);
+				// ((WorldStepDeserialize)elementValue).Deserialize(newElementChild);
 			}
-			
 		}
 	}
+	
 }

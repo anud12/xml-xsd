@@ -3,9 +3,9 @@ using System.Xml;
 namespace WorldStepSchema {
     
     public class WorldStep_RuleGroup_LocationGraphRule_Setup : WorldStepDeserialize {
-        public WorldStepSerializer serializer = new WorldStepSerializer("setup")
-            .addElement("starting_node");
+        public WorldStepSerializer serializer = new WorldStepSerializer();
 
+        [Element]
         public WorldStep_RuleGroup_LocationGraphRule_Setup_StartingNode starting_node;
 
         public WorldStep_RuleGroup_LocationGraphRule_Setup(XmlNode xmlElement) {
@@ -19,9 +19,9 @@ namespace WorldStepSchema {
     }
 
     public class WorldStep_RuleGroup_LocationGraphRule_Setup_StartingNode: WorldStepDeserialize {
-        public WorldStepSerializer serializer = new WorldStepSerializer("starting_node")
-            .addAttribute("node_rule_ref");
+        public WorldStepSerializer serializer = new WorldStepSerializer();
 
+        [Attribute]
         public string node_rule_ref;
 
         public WorldStep_RuleGroup_LocationGraphRule_Setup_StartingNode(XmlNode xmlElement) {

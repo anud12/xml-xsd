@@ -6,16 +6,17 @@ using System.Xml;
 namespace WorldStepSchema{
 	public class WorldStep_LocationGraph_Node : WorldStepDeserialize{
 
-		public WorldStepSerializer serializer = new WorldStepSerializer("node")
-			.addAttribute("id")
-			.addAttribute("node_rule_ref")
-			.addElement("position")
-			.addElement("link_to");
+		public WorldStepSerializer serializer = new WorldStepSerializer();
 			
+		[Attribute]
 		public string id;
+		[Attribute]
 		public string node_rule_ref;
 
+		[Element]
 		public WorldStep_LocationGraph_Node_Position position;
+
+		[Element]
 		public List<WorldStep_LocationGraph_Node_LinkTo> link_to = new List<WorldStep_LocationGraph_Node_LinkTo>();
 		public WorldStep_LocationGraph_Node(XmlNode xmlElement) {
 			serializer.Serialize(xmlElement, this);
