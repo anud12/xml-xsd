@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Xml;
 
 namespace WorldStepSchema {
-    public class WorldStep_WorldMetadata:WorldStepDeserialize {
+    public class WorldStep_WorldMetadata {
         
         public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -18,15 +18,12 @@ namespace WorldStepSchema {
         public WorldStep_WorldMetadata_RandomizationTable randomization_table;
         
         public WorldStep_WorldMetadata(XmlNode xmlElement) {
-            serializer.Serialize(xmlElement, this);
+            serializer.Deserialize(xmlElement, this);
         }
         
-        public void Deserialize(XmlElement element) {
-            serializer.Deserialize(element, this);
-        }
     }
 
-    public class WorldStep_WorldMetadata_Counter:WorldStepDeserialize
+    public class WorldStep_WorldMetadata_Counter
     {
         public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -34,15 +31,11 @@ namespace WorldStepSchema {
         public int value;
         public WorldStep_WorldMetadata_Counter(XmlNode xmlElement)
         {
-            serializer.Serialize(xmlElement, this);
-        }
-        public void Deserialize(XmlElement element)
-        {
-            serializer.Deserialize(element, this);
+            serializer.Deserialize(xmlElement, this);
         }
     }
 
-    public class WorldStep_WorldMetadata_StepDuration:WorldStepDeserialize
+    public class WorldStep_WorldMetadata_StepDuration
     {
         public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -50,15 +43,11 @@ namespace WorldStepSchema {
         public int value;
         public WorldStep_WorldMetadata_StepDuration(XmlNode xmlElement)
         {
-            serializer.Serialize(xmlElement, this);
-        }
-        public void Deserialize(XmlElement element)
-        {
-            serializer.Deserialize(element, this);
+            serializer.Deserialize(xmlElement, this);
         }
     }
 
-    public class WorldStep_WorldMetadata_ElapsedTime:WorldStepDeserialize
+    public class WorldStep_WorldMetadata_ElapsedTime
     {
         
         public WorldStepSerializer serializer = new WorldStepSerializer();
@@ -66,24 +55,19 @@ namespace WorldStepSchema {
         public int value;
         public WorldStep_WorldMetadata_ElapsedTime(XmlNode xmlElement)
         {
-            serializer.Serialize(xmlElement, this);
-        }
-        public void Deserialize(XmlElement element)
-        {
-            serializer.Deserialize(element, this);
+            serializer.Deserialize(xmlElement, this);
         }
     }
 
-    public class WorldStep_WorldMetadata_NextWorldStep:WorldStepDeserialize {
+    public class WorldStep_WorldMetadata_NextWorldStep:ManualSerializer {
         public WorldStepSerializer serializer = new WorldStepSerializer();
         public string world_step_id_ref = "../gui-client/data_" + System.DateTime.UtcNow.Subtract(new System.DateTime(1970, 1, 1)).TotalSeconds;
         public WorldStep_WorldMetadata_NextWorldStep(XmlNode xmlElement) {
-            serializer.Serialize(xmlElement, this);
+            serializer.Deserialize(xmlElement, this);
         }
-        public void Deserialize(XmlElement element) {
-            serializer.Deserialize(element, this);
-            //add to element string body with value "./data_" + unix timestamp
+        public void Serialize(XmlElement element) {
             element.InnerText = world_step_id_ref;
         }
+
     }
 }

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Xml;
 
 namespace WorldStepSchema {
-    public class WorldStep_LocationGraph_Rule : WorldStepDeserialize{
+    public class WorldStep_LocationGraph_Rule{
 
         public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -12,12 +12,7 @@ namespace WorldStepSchema {
 
         
         public WorldStep_LocationGraph_Rule(XmlNode locationGraph) {
-            serializer.Serialize(locationGraph, this);
-        }
-
-        public void Deserialize(XmlElement element)
-        {
-            serializer.Deserialize(element, this);
+            serializer.Deserialize(locationGraph, this);
         }
     }
 }

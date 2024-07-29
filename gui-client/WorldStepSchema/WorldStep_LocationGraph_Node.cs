@@ -4,7 +4,7 @@ using System.Linq;
 using System.Xml;
 
 namespace WorldStepSchema{
-	public class WorldStep_LocationGraph_Node : WorldStepDeserialize{
+	public class WorldStep_LocationGraph_Node{
 
 		public WorldStepSerializer serializer = new WorldStepSerializer();
 			
@@ -19,12 +19,7 @@ namespace WorldStepSchema{
 		[Element]
 		public List<WorldStep_LocationGraph_Node_LinkTo> link_to = new List<WorldStep_LocationGraph_Node_LinkTo>();
 		public WorldStep_LocationGraph_Node(XmlNode xmlElement) {
-			serializer.Serialize(xmlElement, this);
-		}
-
-		public void Deserialize(XmlElement element)
-		{
-			serializer.Deserialize(element, this);
+			serializer.Deserialize(xmlElement, this);
 		}
 	}
 }

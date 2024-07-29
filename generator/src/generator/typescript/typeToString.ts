@@ -1,4 +1,4 @@
-import {Type, TypeAny, TypeComposition, TypeDeclaration, TypeObject, TypePrimitive, TypeUnion} from "./type";
+import {Type, TypeAny, TypeComposition, TypeDeclaration, TypeObject, TypePrimitive, TypeUnion} from "../../type";
 
 type DeclarationMap = Map<string, Type>;
 type ParentScope = string[];

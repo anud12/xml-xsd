@@ -7,7 +7,7 @@ using System.Xml;
 using System.Xml.Linq;
 using Godot;
 
-namespace WorldStepSchema {
+namespace XSD {
 
 	[AttributeUsage(AttributeTargets.Field)]
 	public class AttributeAttribute : Attribute {

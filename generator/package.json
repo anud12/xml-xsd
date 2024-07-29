@@ -1,9 +1,12 @@
 {
   "scripts": {
-    "start": "npx ts-node ./src/run.ts"
+    "start": "npx ts-node ./src/run.ts",
+    "start_csharp": "npx ts-node ./src/run_csharp.ts"
   },
   "dependencies": {
-    "fast-xml-parser": "^4.4.0"
+    "dedent": "^0.7.0",
+    "fast-xml-parser": "^4.4.0",
+    "ts-dedent": "^2.2.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",

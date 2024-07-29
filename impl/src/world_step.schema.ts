@@ -93,8 +93,8 @@ export type type__action = JsonQueryType<{}, {
 }>
 export type world_step = JsonQueryType<{}, {
   "world_metadata": JsonQueryType<{}, {
-    "previous_world_step": any & JsonQueryType<{}, {}>;
-    "next_world_step": any & JsonQueryType<{}, {}>;
+    "previous_world_step": JsonQueryType<{"value": string;}> & JsonQueryType<{}, {}>;
+    "next_world_step": JsonQueryType<{"value": string;}> & JsonQueryType<{}, {}>;
     "elapsed_time": JsonQueryType<{"value": string;}> & JsonQueryType<{}, {}>;
     "stepDuration": JsonQueryType<{"value": string;}> & JsonQueryType<{}, {}>;
     "counter": JsonQueryType<{"value": string;}> & JsonQueryType<{}, {}>;

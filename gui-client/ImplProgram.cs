@@ -3,10 +3,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Xml;
 using Godot;
-using WorldStepSchema;
+using XSD;
 
 public class ImplProgram {
-    static public void Main(WorldStep worldStep)
+    static public void Main(world_step worldStep)
     {
 
         //create if not exist the file out.xml
@@ -18,7 +18,9 @@ public class ImplProgram {
 		using (StreamWriter sw = new StreamWriter("out.xml"))
 		{
 			var document = new XmlDocument();
-			worldStep.Serialize(document);
+            XmlElement worldStepElement = document.CreateElement("world_step");
+            document.AppendChild(worldStepElement);
+			worldStep.Serialize(worldStepElement);
 			document.Save(sw);
 		}
 

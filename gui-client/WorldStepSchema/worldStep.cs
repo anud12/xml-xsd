@@ -4,7 +4,7 @@ using System.Linq;
 using System.Xml;
 
 namespace WorldStepSchema {
-    public class WorldStep:WorldStepDeserialize {
+    public class WorldStep {
 
         public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -22,12 +22,12 @@ namespace WorldStepSchema {
         public WorldStep_Actions actions;
 
         public WorldStep(XmlNode xmlNode) {
-            serializer.Serialize(xmlNode, this);
+            serializer.Deserialize(xmlNode, this);
         }
 
         public void Deserialize(XmlElement element)
         {
-            serializer.Deserialize(element, this);
+            serializer.Serialize(element, this);
         }
 
         public void Serialize(XmlDocument document)

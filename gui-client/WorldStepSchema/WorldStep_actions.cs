@@ -1,7 +1,7 @@
 using System.Xml;
 
 namespace WorldStepSchema {
-    public class WorldStep_Actions : WorldStepDeserialize {
+    public class WorldStep_Actions {
         public WorldStepSerializer serializer = new WorldStepSerializer();
 
         [Element("location_graph.node.create_adjacent")]
@@ -10,14 +10,11 @@ namespace WorldStepSchema {
         public WorldStep_Actions() {
         }
         public WorldStep_Actions(XmlNode xmlElement) {
-            serializer.Serialize(xmlElement, this);
-        }
-        public void Deserialize(XmlElement element) {
-            serializer.Deserialize(element, this);
+            serializer.Deserialize(xmlElement, this);
         }
     }
 
-    public class WorldStep_Actions_CreateAdjacent:WorldStepDeserialize {
+    public class WorldStep_Actions_CreateAdjacent {
         public WorldStepSerializer serializer = new WorldStepSerializer();
 
         [Attribute]
@@ -29,12 +26,7 @@ namespace WorldStepSchema {
         }
 
         public WorldStep_Actions_CreateAdjacent(XmlNode xmlElement) {
-            serializer.Serialize(xmlElement, this);
-        }
-
-        public void Deserialize(XmlElement element)
-        {
-            serializer.Deserialize(element, this);
+            serializer.Deserialize(xmlElement, this);
         }
     }
 }

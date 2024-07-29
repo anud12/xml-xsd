@@ -3,7 +3,7 @@ using System.Linq;
 using System.Xml;
 
 namespace WorldStepSchema {
-    public class WorldStep_LocationGraph : WorldStepDeserialize{
+    public class WorldStep_LocationGraph{
 
         public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -19,13 +19,10 @@ namespace WorldStepSchema {
         public Dictionary<string, WorldStep_LocationGraph_Node> nodeById = new Dictionary<string, WorldStep_LocationGraph_Node>();
 
         public WorldStep_LocationGraph(XmlNode locationGraph) {
-            serializer.Serialize(locationGraph, this);
+            serializer.Deserialize(locationGraph, this);
             nodeById = node.ToDictionary(n => n.id);
         }
-
-        public void Deserialize(XmlElement element)
-        {
-            serializer.Deserialize(element, this);
-        }
     }
+
+    
 }

@@ -604,6 +604,9 @@
                     URI of the previous world step.
                   </xs:documentation>
                 </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:string"/>
+                </xs:complexType>
               </xs:element>
               <xs:element name="next_world_step">
                 <xs:annotation>
@@ -611,6 +614,9 @@
                     URI of the next world step.
                   </xs:documentation>
                 </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:string"/>
+                </xs:complexType>
               </xs:element>
               <xs:element name="elapsed_time">
                 <xs:annotation>

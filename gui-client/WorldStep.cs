@@ -5,13 +5,13 @@ using System.Reflection.Metadata;
 using System.Xml;
 using System.Xml.Serialization;
 
-public partial class main : Godot.Node
+public partial class WorldStep : Godot.Node
 {
 	// Called when the node enters the scene tree for the first time.
 
 	public LoadWorldStep loadWorldStep;
 
-	public main() {
+	public WorldStep() {
 		loadWorldStep = new LoadWorldStep(this);
 	}
 

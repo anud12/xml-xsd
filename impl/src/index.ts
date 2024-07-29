@@ -14,7 +14,7 @@ import {JsonSchema} from "./utils/JsonSchema";
   }
   const outJson = await executeFromString(data.toString(), console.log) as JsonSchema;
   const outPath = outJson.query("world_metadata").query("next_world_step")
-  const outFileName = outPath.body + ".xml";
+  const outFileName = outPath.attributeMap.value + ".xml";
   console.log("Writing output to " + outFileName);
   fs.writeFileSync(outFileName, outJson.serialize());
 
