@@ -16,14 +16,13 @@ public class LoadWorldStep {
 	}	
 
 	public world_step worldStep;
-	public static int SCALE = 10;
+	public static int SCALE = LocationGraphNodeComponent.SIZE;
 	public void load(string path) {
 
 		GD.Print("Loading: " + path);	
 
 		GD.Print("Removing children");
-		node.GetChildren().ToList()
-		.Where(child => child is ColorRect || child is Button || child is Line2D)
+		node.GetChildren()
 		.ToList()
 		.ForEach(child => node.RemoveChild(child));
 
@@ -55,26 +54,19 @@ public class LoadWorldStep {
 
 		return worldStep.location_graph.SelectMany(locationGraph => locationGraph.node.SelectMany(node => {
 			var position = node.position.First();
-			var newPosition = new Vector2( position.x * SCALE, position.y * SCALE);
-			var colorRectangle = new ColorRect
-			{
-				Color = new Color(1, 1, 1, 1),
-				Position = newPosition,
-			};
-			colorRectangle.SetSize(new Vector2(SCALE, SCALE));
+			var packedScene =LocationGraphNodeComponent.PackedScene.Instantiate();
+			var locationGraphNodeComponent = packedScene.GetNode<LocationGraphNodeComponent>("./");
 
-			var button = new Button
-			{
-				Text = node.id + ": Create Adjacent",
-				Size = new Vector2(SCALE, SCALE),
-				Position = newPosition,
-			};
 			
-			button.Pressed += () => {
-				addAdjacent(locationGraph, node);
-			};
+			
+			var newPosition = new Vector2(position.x * SCALE, position.y * SCALE);
+			//set position of the node based on the offest returned by getOffset
+			newPosition += locationGraphNodeComponent.getOffset();
+			locationGraphNodeComponent.SetPosition(newPosition);
 
-			return new Node[] {colorRectangle, button};
+			locationGraphNodeComponent.initialize(node, worldStep);
+			locationGraphNodeComponent.setOnActionButtonPressed(node => addAdjacent(locationGraph, node));
+			return new Node[] {locationGraphNodeComponent};
 		}));
 	}
 
@@ -107,10 +99,10 @@ public class LoadWorldStep {
 				var end = new Vector2(endNode.position.First().x * SCALE, endNode.position.First().y * SCALE);
 				var line2D = new Line2D
 				{
-					DefaultColor = new Color(1, 1, 1, 1),
+					DefaultColor = new Color(0,0,0, 1),
 					Points = new Vector2[] {start, end},
 				};
-				line2D.Width  = SCALE;
+				line2D.Width  = SCALE / 10;
 				return line2D;
 			});
 			}));

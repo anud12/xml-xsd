@@ -12,11 +12,11 @@ public partial class WorldStep : Godot.Node
 	public LoadWorldStep loadWorldStep;
 
 	public WorldStep() {
-		loadWorldStep = new LoadWorldStep(this);
 	}
 
 	public override void _Ready()
 	{
+		loadWorldStep = new LoadWorldStep(GetNode<Node>("%WorldContainer"));
 		System.Console.WriteLine("Hello, World! 1");
 		GD.Print("Hello, World! 2");
 		
