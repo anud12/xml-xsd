@@ -61,6 +61,7 @@ const positionBasedOnLink = (jsonUtil: JsonUtil, linkGroupElement: LinkGroupQuer
     if (linkGroupElement.attributeMap.angleMax) {
       angle = Number(linkGroupElement.attributeMap.angle) + (jsonUtil.random() * Number(linkGroupElement.attributeMap.angleMax));
     }
+    angle = Math.floor(angle);
 
     const toOptionElement = jsonUtil.randomFromArray(linkGroupElement.queryAllOptional("to_option"))
     let distance = Number(toOptionElement.attributeMap.distance);

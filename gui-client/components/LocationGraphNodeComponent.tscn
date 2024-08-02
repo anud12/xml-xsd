@@ -1,0 +1,109 @@
+[gd_scene load_steps=5 format=3 uid="uid://c68ihd125qc6n"]
+
+[ext_resource type="Script" path="res://components/LocationGraphNodeComponent.cs" id="1_86syn"]
+[ext_resource type="Theme" uid="uid://dskjtmlounwht" path="res://mainTheme.tres" id="1_fk35y"]
+[ext_resource type="Script" path="res://MapCamera2D.gd" id="3_wr7c1"]
+[ext_resource type="Texture2D" uid="uid://ca5sf0mkx3eyg" path="res://paper-sheet-white-lined-paper-wallpaper-5bb67c5d7301bf49e5e40b49fd5cec70.jpg" id="4_4s42u"]
+
+[node name="Control" type="BoxContainer"]
+theme = ExtResource("1_fk35y")
+script = ExtResource("1_86syn")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+clip_contents = true
+custom_minimum_size = Vector2(1000, 1000)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 92
+text = "Name
+"
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="RuleLabel" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Type: "
+
+[node name="RuleValue" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Type Value
+"
+
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="PanelContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="PanelContainer/VBoxContainer/MarginContainer2/SubViewportContainer"]
+disable_3d = true
+transparent_bg = true
+handle_input_locally = false
+snap_2d_transforms_to_pixel = true
+size = Vector2i(1000, 698)
+render_target_update_mode = 4
+
+[node name="MapCamera2D" type="Camera2D" parent="PanelContainer/VBoxContainer/MarginContainer2/SubViewportContainer/SubViewport"]
+zoom = Vector2(2, 2)
+script = ExtResource("3_wr7c1")
+zoom_max = 2.0
+pan_speed = 0.0
+drag_inertia = 0.0
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer/MarginContainer2/SubViewportContainer/SubViewport/MapCamera2D"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50000.0
+offset_top = -50000.0
+offset_right = 50000.0
+offset_bottom = 50000.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_4s42u")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="PersonContainer" type="VFlowContainer" parent="PanelContainer/VBoxContainer/MarginContainer2/SubViewportContainer/SubViewport"]
+unique_name_in_owner = true
+offset_right = 970.0
+offset_bottom = 667.0
+size_flags_vertical = 3
+theme_override_constants/h_separation = 15
+theme_override_constants/v_separation = 15
+
+[node name="CreateAdjacentButton" type="Button" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 52
+text = "Create adjacent"

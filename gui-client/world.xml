@@ -1,0 +1,178 @@
+<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../world_step.xsd">
+  <world_metadata>
+    <next_world_step value="../gui-client/data"/>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="4"/>
+      <entry value="9"/>
+      <entry value="2"/>
+      <entry value="8"/>
+      <entry value="3"/>
+      <entry value="6"/>
+      <entry value="5"/>
+      <entry value="7"/>
+      <entry value="1"/>
+      <entry value="10"/>
+      <entry value="7"/>
+      <entry value="3"/>
+      <entry value="8"/>
+      <entry value="4"/>
+      <entry value="9"/>
+      <entry value="2"/>
+      <entry value="10"/>
+      <entry value="1"/>
+      <entry value="6"/>
+      <entry value="5"/>
+      <entry value="1"/>
+      <entry value="8"/>
+      <entry value="7"/>
+      <entry value="3"/>
+      <entry value="5"/>
+      <entry value="4"/>
+      <entry value="2"/>
+      <entry value="6"/>
+      <entry value="10"/>
+      <entry value="9"/>
+      <entry value="9"/>
+      <entry value="6"/>
+      <entry value="7"/>
+      <entry value="2"/>
+      <entry value="10"/>
+      <entry value="4"/>
+      <entry value="5"/>
+      <entry value="1"/>
+      <entry value="3"/>
+      <entry value="8"/>
+      <entry value="6"/>
+      <entry value="5"/>
+      <entry value="1"/>
+      <entry value="10"/>
+      <entry value="4"/>
+      <entry value="3"/>
+      <entry value="7"/>
+      <entry value="2"/>
+      <entry value="8"/>
+      <entry value="9"/>
+      <entry value="2"/>
+      <entry value="3"/>
+      <entry value="7"/>
+      <entry value="5"/>
+      <entry value="1"/>
+      <entry value="9"/>
+      <entry value="10"/>
+      <entry value="6"/>
+      <entry value="4"/>
+      <entry value="8"/>
+      <entry value="8"/>
+      <entry value="4"/>
+      <entry value="2"/>
+      <entry value="6"/>
+      <entry value="3"/>
+      <entry value="7"/>
+      <entry value="10"/>
+      <entry value="1"/>
+      <entry value="9"/>
+      <entry value="5"/>
+      <entry value="5"/>
+      <entry value="9"/>
+      <entry value="1"/>
+      <entry value="10"/>
+      <entry value="2"/>
+      <entry value="4"/>
+      <entry value="8"/>
+      <entry value="7"/>
+      <entry value="3"/>
+      <entry value="6"/>
+      <entry value="3"/>
+      <entry value="6"/>
+      <entry value="5"/>
+      <entry value="8"/>
+      <entry value="10"/>
+      <entry value="9"/>
+      <entry value="4"/>
+      <entry value="7"/>
+      <entry value="2"/>
+      <entry value="1"/>
+      <entry value="4"/>
+      <entry value="8"/>
+      <entry value="1"/>
+      <entry value="7"/>
+      <entry value="6"/>
+      <entry value="5"/>
+      <entry value="9"/>
+      <entry value="2"/>
+      <entry value="3"/>
+      <entry value="10"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="strength" units="points"/>
+    </property_rule>
+    <location_graph_rule id="location_graph_rule_id">
+      <setup>
+        <starting_node node_rule_ref="city"/>
+      </setup>
+      <node_rule id="city">
+        <link_group id="all" angle="0" angleMax="360" limit="2">
+          <to_option node_rule_ref="farm" adjacent_depth_limit="1" distance="1" maxDistance="3"/>
+        </link_group>
+      </node_rule>
+      <node_rule id="farm">
+        <link_group id="all" angle="0" angleMax="360" limit="2">
+          <to_option node_rule_ref="city" adjacent_depth_limit="0" distance="1" maxDistance="1"/>
+          <to_option node_rule_ref="farm" adjacent_depth_limit="1" distance="2" maxDistance="1"/>
+          <to_option node_rule_ref="farm" adjacent_depth_limit="1" distance="2" maxDistance="1"/>
+          <to_option node_rule_ref="farm" adjacent_depth_limit="1" distance="2" maxDistance="1"/>
+          <to_option node_rule_ref="farm" adjacent_depth_limit="1" distance="2" maxDistance="1"/>
+          <to_option node_rule_ref="farm" adjacent_depth_limit="1" distance="2" maxDistance="1"/>
+          <to_option node_rule_ref="farm" adjacent_depth_limit="1" distance="2" maxDistance="1"/>
+          <to_option node_rule_ref="plains" adjacent_depth_limit="1" distance="5" maxDistance="20"/>
+          <to_option node_rule_ref="plains" adjacent_depth_limit="1" distance="5" maxDistance="20"/>
+          <to_option node_rule_ref="plains" adjacent_depth_limit="1" distance="5" maxDistance="20"/>
+          <to_option node_rule_ref="plains" adjacent_depth_limit="1" distance="5" maxDistance="20"/>
+          <to_option node_rule_ref="plains" adjacent_depth_limit="1" distance="5" maxDistance="20"/>
+          <to_option node_rule_ref="plains" adjacent_depth_limit="1" distance="5" maxDistance="20"/>
+          <to_option node_rule_ref="plains" adjacent_depth_limit="1" distance="5" maxDistance="20"/>
+          <to_option node_rule_ref="plains" adjacent_depth_limit="1" distance="5" maxDistance="20"/>
+        </link_group>
+      </node_rule>
+      <node_rule id="plains">
+        <link_group id="all" angle="0" angleMax="360" limit="2">
+          <to_option node_rule_ref="farm" adjacent_depth_limit="1" distance="2" maxDistance="1"/>
+          <to_option node_rule_ref="farm" adjacent_depth_limit="1" distance="2" maxDistance="1"/>
+          <to_option node_rule_ref="farm" adjacent_depth_limit="1" distance="2" maxDistance="1"/>
+          <to_option node_rule_ref="farm" adjacent_depth_limit="1" distance="2" maxDistance="1"/>
+          <to_option node_rule_ref="plains" adjacent_depth_limit="1" distance="5" maxDistance="20"/>
+          <to_option node_rule_ref="plains" adjacent_depth_limit="1" distance="5" maxDistance="20"/>
+          <to_option node_rule_ref="plains" adjacent_depth_limit="1" distance="5" maxDistance="20"/>
+          <to_option node_rule_ref="plains" adjacent_depth_limit="1" distance="5" maxDistance="20"/>
+          <to_option node_rule_ref="plains" adjacent_depth_limit="1" distance="5" maxDistance="20"/>
+          <to_option node_rule_ref="plains" adjacent_depth_limit="1" distance="5" maxDistance="20"/>
+          <to_option node_rule_ref="plains" adjacent_depth_limit="1" distance="5" maxDistance="20"/>
+          <to_option node_rule_ref="plains" adjacent_depth_limit="1" distance="5" maxDistance="20"/>
+        </link_group>
+      </node_rule>
+    </location_graph_rule>
+  </rule_group>
+  <people>
+    <person id="0" name="Billy">
+      <properties>
+        <property property_rule_ref="strength" value="10" />
+      </properties>
+    </person>
+  </people>
+  <location_graph id="location_graph_id">
+    <rule location_graph_rule_ref="location_graph_rule_id"/>
+    <node node_rule_ref="city" id="Capital">
+      <position x="0" y="0"/>
+      <people>
+        <person person_id_ref="0"/>
+      </people>
+    </node>
+  </location_graph>
+  <actions>
+  </actions>
+</world_step>

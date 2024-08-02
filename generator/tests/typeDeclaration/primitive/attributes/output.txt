@@ -1,1 +1,0 @@
-export type root = JsonQueryType<{"participant": type_person_select;}, {}> & group__math_operations

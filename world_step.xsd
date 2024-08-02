@@ -604,6 +604,9 @@
                     URI of the previous world step.
                   </xs:documentation>
                 </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:string"/>
+                </xs:complexType>
               </xs:element>
               <xs:element name="next_world_step">
                 <xs:annotation>
@@ -611,6 +614,9 @@
                     URI of the next world step.
                   </xs:documentation>
                 </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:string"/>
+                </xs:complexType>
               </xs:element>
               <xs:element name="elapsed_time">
                 <xs:annotation>
@@ -1245,7 +1251,7 @@
           </xs:complexType>
         </xs:element>
 
-        <xs:element name="location_graph" minOccurs="0">
+        <xs:element name="location_graph" minOccurs="0" maxOccurs="unbounded">
           <xs:annotation>
             <xs:documentation>
               Represents a location graph.
@@ -1360,6 +1366,13 @@
               <xs:element name="by" maxOccurs="unbounded" minOccurs="0">
                 <xs:complexType>
                   <xs:choice>
+                    <xs:element name="do">
+                      <xs:complexType>
+                        <xs:attribute name="action_rule_ref"/>
+                        <xs:attribute name="action_ref"/>
+                        <xs:attribute name="person_ref" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
                     <xs:element name="move_towards">
                       <xs:complexType>
                         <xs:attribute name="layer" type="xs:string"/>

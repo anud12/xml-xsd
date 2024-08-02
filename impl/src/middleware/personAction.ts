@@ -29,21 +29,22 @@ const mutationToValue = (readJson: JsonUtil, mutation: MutationQueryType, person
 }
 
 export const isOutOfRange = (readJson: JsonUtil, personAction: PersonActionMetadataQueryType, person: PersonQueryType, targetPerson: PersonQueryType,) => {
-  const maxRange = personAction.query("max_range");
-  if (!maxRange) {
-    return true;
-  }
-  const maxRangeValue = readJson.computeOperationFromParent(maxRange.query("operation"), string => readJson.person.getProperty(person, string));
-  const distance = readJson.person.getDistance(person, targetPerson);
-  if ((distance + 1) > (Number(maxRangeValue))) {
-    return true;
-  }
-  const minRange = personAction.queryOptional("min_range");
-  if (!minRange) {
-    return false;
-  }
-  const minRangeValue = readJson.computeOperationFromParent(maxRange.query("operation"), string => readJson.person.getProperty(person, string));
-  return (Number(minRangeValue) + 1) > distance;
+  return false;
+  // const maxRange = personAction.query("max_range");
+  // if (!maxRange) {
+  //   return true;
+  // }
+  // const maxRangeValue = readJson.computeOperationFromParent(maxRange.query("operation"), string => readJson.person.getProperty(person, string));
+  // const distance = readJson.person.getDistance(person, targetPerson);
+  // if ((distance + 1) > (Number(maxRangeValue))) {
+  //   return true;
+  // }
+  // const minRange = personAction.queryOptional("min_range");
+  // if (!minRange) {
+  //   return false;
+  // }
+  // const minRangeValue = readJson.computeOperationFromParent(maxRange.query("operation"), string => readJson.person.getProperty(person, string));
+  // return (Number(minRangeValue) + 1) > distance;
 }
 
 export const personAction: MutationMiddleware = readJson => {

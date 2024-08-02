@@ -1,0 +1,1765 @@
+[
+  {
+    "name": "property_rule_ref",
+    "type": "attribute",
+    "value": {
+      "metaType": "object",
+      "value": {
+        "property_rule_ref": {
+          "metaType": "primitive",
+          "value": "xs:string"
+        }
+      }
+    }
+  },
+  {
+    "name": "attributeGroup_range",
+    "type": "attributeGroup",
+    "value": {
+      "metaType": "object",
+      "value": {},
+      "attributes": {
+        "metaType": "object",
+        "value": {
+          "value": {
+            "metaType": "primitive",
+            "value": "xs:integer"
+          },
+          "max_value": {
+            "metaType": "primitive",
+            "value": "xs:integer"
+          },
+          "inclusive": {
+            "metaType": "primitive",
+            "value": "xs:boolean"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "group__item_data",
+    "type": "complex",
+    "value": {
+      "metaType": "object",
+      "value": {
+        "classifications": {
+          "metaType": "primitive",
+          "value": "type__classification_list"
+        },
+        "properties": {
+          "metaType": "primitive",
+          "value": "type__property_list"
+        }
+      }
+    }
+  },
+  {
+    "name": "group__operation__and",
+    "type": "complex",
+    "value": {
+      "metaType": "object",
+      "value": {
+        "add_property": {
+          "metaType": "object",
+          "value": {},
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "property_rule_ref": {
+                "metaType": "primitive",
+                "value": "xs:string"
+              }
+            }
+          }
+        },
+        "and": {
+          "metaType": "primitive",
+          "value": "group__operation__and",
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "do": {
+                "metaType": "primitive",
+                "value": "type__group__operation__and"
+              },
+              "value": {
+                "metaType": "primitive",
+                "value": "xs:int"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "group__math_operations",
+    "type": "complex",
+    "value": {
+      "metaType": "object",
+      "value": {
+        "operation": {
+          "metaType": "primitive",
+          "value": "group__operation__and",
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "initial": {
+                "metaType": "primitive",
+                "value": "xs:int"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "group__name_token",
+    "type": "complex",
+    "value": {
+      "metaType": "object",
+      "value": {
+        "name_token": {
+          "metaType": "union",
+          "value": [
+            {
+              "metaType": "object",
+              "value": {
+                "ref": {
+                  "metaType": "object",
+                  "value": {},
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "name_rule_ref": {
+                        "metaType": "primitive",
+                        "value": "xs:string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "metaType": "object",
+              "value": {
+                "one_of": {
+                  "metaType": "primitive",
+                  "value": "group__name_token"
+                }
+              }
+            }
+          ],
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "prefix": {
+                "metaType": "primitive",
+                "value": "xs:string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "item_slot",
+    "type": "simple",
+    "value": {
+      "metaType": "union",
+      "value": [
+        {
+          "metaType": "primitive",
+          "value": "\"hand\""
+        },
+        {
+          "metaType": "primitive",
+          "value": "\"chest\""
+        },
+        {
+          "metaType": "primitive",
+          "value": "\"legs\""
+        }
+      ]
+    }
+  },
+  {
+    "name": "type_direction",
+    "type": "simple",
+    "value": {
+      "metaType": "union",
+      "value": [
+        {
+          "metaType": "primitive",
+          "value": "\"north\""
+        },
+        {
+          "metaType": "primitive",
+          "value": "\"east\""
+        },
+        {
+          "metaType": "primitive",
+          "value": "\"south\""
+        },
+        {
+          "metaType": "primitive",
+          "value": "\"west\""
+        }
+      ]
+    }
+  },
+  {
+    "name": "type_person_select",
+    "type": "simple",
+    "value": {
+      "metaType": "union",
+      "value": [
+        {
+          "metaType": "primitive",
+          "value": "\"self\""
+        },
+        {
+          "metaType": "primitive",
+          "value": "\"target\""
+        }
+      ]
+    }
+  },
+  {
+    "name": "type__group__operation__and",
+    "type": "simple",
+    "value": {
+      "metaType": "union",
+      "value": [
+        {
+          "metaType": "primitive",
+          "value": "\"add\""
+        },
+        {
+          "metaType": "primitive",
+          "value": "\"add_dice\""
+        },
+        {
+          "metaType": "primitive",
+          "value": "\"multiply\""
+        },
+        {
+          "metaType": "primitive",
+          "value": "\"multiply_dice\""
+        },
+        {
+          "metaType": "primitive",
+          "value": "\"divide\""
+        },
+        {
+          "metaType": "primitive",
+          "value": "\"divide_dice\""
+        },
+        {
+          "metaType": "primitive",
+          "value": "\"modulo\""
+        },
+        {
+          "metaType": "primitive",
+          "value": "\"modulo_dice\""
+        }
+      ]
+    }
+  },
+  {
+    "name": "type_range",
+    "type": "complex",
+    "value": {
+      "metaType": "object",
+      "value": {},
+      "attributes": {
+        "metaType": "primitive",
+        "value": "attributeGroup_range"
+      }
+    }
+  },
+  {
+    "name": "type__property_mutation_on",
+    "type": "complex",
+    "value": {
+      "metaType": "composition",
+      "value": [
+        {
+          "metaType": "object",
+          "value": {},
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "on": {
+                "metaType": "primitive",
+                "value": "type_person_select"
+              }
+            }
+          }
+        },
+        {
+          "metaType": "primitive",
+          "value": "type__property_mutation"
+        }
+      ]
+    }
+  },
+  {
+    "name": "type__property_mutation",
+    "type": "complex",
+    "value": {
+      "metaType": "object",
+      "attributes": {
+        "metaType": "object",
+        "value": {
+          "property_rule_ref": {
+            "metaType": "primitive",
+            "value": "xs:string"
+          }
+        }
+      },
+      "value": {
+        "from": {
+          "metaType": "primitive",
+          "value": "group__math_operations",
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "participant": {
+                "metaType": "primitive",
+                "value": "type_person_select"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "type_icon",
+    "type": "complex",
+    "value": {
+      "metaType": "any"
+    }
+  },
+  {
+    "name": "type__property_list",
+    "type": "complex",
+    "value": {
+      "metaType": "object",
+      "value": {
+        "property": {
+          "metaType": "object",
+          "value": {},
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "property_rule_ref": {
+                "metaType": "primitive",
+                "value": "xs:string"
+              },
+              "value": {
+                "metaType": "primitive",
+                "value": "xs:int"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "type__classification_list",
+    "type": "complex",
+    "value": {
+      "metaType": "object",
+      "value": {
+        "classification": {
+          "metaType": "object",
+          "value": {},
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "classification_rule_ref": {
+                "metaType": "primitive",
+                "value": "xs:string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "type__item",
+    "type": "complex",
+    "value": {
+      "metaType": "primitive",
+      "value": "group__item_data",
+      "attributes": {
+        "metaType": "object",
+        "value": {
+          "id": {
+            "metaType": "unknown"
+          },
+          "name": {
+            "metaType": "unknown"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "type__item_selection",
+    "type": "complex",
+    "value": {
+      "metaType": "composition",
+      "value": [
+        {
+          "metaType": "object",
+          "value": {
+            "min": {
+              "metaType": "primitive",
+              "value": "type__math_operations"
+            },
+            "max": {
+              "metaType": "primitive",
+              "value": "type__math_operations"
+            }
+          }
+        },
+        {
+          "metaType": "primitive",
+          "value": "group__item_data"
+        }
+      ]
+    }
+  },
+  {
+    "name": "type_cell_ref",
+    "type": "complex",
+    "value": {
+      "metaType": "object",
+      "value": {},
+      "attributes": {
+        "metaType": "object",
+        "value": {
+          "layer": {
+            "metaType": "unknown"
+          },
+          "x": {
+            "metaType": "primitive",
+            "value": "xs:integer"
+          },
+          "y": {
+            "metaType": "primitive",
+            "value": "xs:integer"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "type__person_selection",
+    "type": "complex",
+    "value": {
+      "metaType": "object",
+      "value": {
+        "radius": {
+          "metaType": "primitive",
+          "value": "type__math_operations"
+        },
+        "min": {
+          "metaType": "primitive",
+          "value": "type__math_operations"
+        },
+        "max": {
+          "metaType": "primitive",
+          "value": "type__math_operations"
+        },
+        "property": {
+          "metaType": "object",
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "property_rule_ref": {
+                "metaType": "primitive",
+                "value": "xs:string"
+              }
+            }
+          },
+          "value": {
+            "min": {
+              "metaType": "primitive",
+              "value": "type__math_operations"
+            },
+            "max": {
+              "metaType": "primitive",
+              "value": "type__math_operations"
+            }
+          }
+        },
+        "classification": {
+          "metaType": "object",
+          "value": {},
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "classification_rule_ref": {
+                "metaType": "primitive",
+                "value": "xs:string"
+              }
+            }
+          }
+        },
+        "race": {
+          "metaType": "object",
+          "value": {},
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "race_rule_ref": {
+                "metaType": "unknown"
+              }
+            }
+          }
+        },
+        "inventory": {
+          "metaType": "object",
+          "value": {
+            "item": {
+              "metaType": "primitive",
+              "value": "type__item_selection"
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "type__trigger",
+    "type": "complex",
+    "value": {
+      "metaType": "object",
+      "value": {
+        "person_action_used": {
+          "metaType": "object",
+          "value": {},
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "action_rule_ref": {
+                "metaType": "unknown"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "type__math_operations",
+    "type": "complex",
+    "value": {
+      "metaType": "primitive",
+      "value": "group__operation__and",
+      "attributes": {
+        "metaType": "object",
+        "value": {
+          "initial": {
+            "metaType": "primitive",
+            "value": "xs:int"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "type__action",
+    "type": "complex",
+    "value": {
+      "metaType": "object",
+      "value": {
+        "from": {
+          "metaType": "object",
+          "value": {
+            "person": {
+              "metaType": "object",
+              "value": {
+                "select": {
+                  "metaType": "primitive",
+                  "value": "type__person_selection"
+                },
+                "property_mutation": {
+                  "metaType": "primitive",
+                  "value": "type__property_mutation"
+                }
+              }
+            }
+          }
+        },
+        "on": {
+          "metaType": "object",
+          "value": {
+            "person": {
+              "metaType": "object",
+              "value": {
+                "select": {
+                  "metaType": "primitive",
+                  "value": "type__person_selection"
+                },
+                "property_mutation": {
+                  "metaType": "primitive",
+                  "value": "type__property_mutation"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "world_step",
+    "type": "element",
+    "value": {
+      "metaType": "object",
+      "value": {
+        "world_metadata": {
+          "metaType": "object",
+          "value": {
+            "previous_world_step": {
+              "metaType": "object",
+              "value": {},
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "value": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  }
+                }
+              }
+            },
+            "next_world_step": {
+              "metaType": "object",
+              "value": {},
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "value": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  }
+                }
+              }
+            },
+            "elapsed_time": {
+              "metaType": "object",
+              "value": {},
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "value": {
+                    "metaType": "primitive",
+                    "value": "xs:int"
+                  }
+                }
+              }
+            },
+            "stepDuration": {
+              "metaType": "object",
+              "value": {},
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "value": {
+                    "metaType": "primitive",
+                    "value": "xs:int"
+                  }
+                }
+              }
+            },
+            "counter": {
+              "metaType": "object",
+              "value": {},
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "value": {
+                    "metaType": "primitive",
+                    "value": "xs:int"
+                  }
+                }
+              }
+            },
+            "randomization_table": {
+              "metaType": "object",
+              "value": {
+                "entry": {
+                  "metaType": "object",
+                  "value": {},
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "value": {
+                        "metaType": "primitive",
+                        "value": "xs:int"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "rule_group": {
+          "metaType": "object",
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "id": {
+                "metaType": "unknown"
+              }
+            }
+          },
+          "value": {
+            "property_rule": {
+              "metaType": "object",
+              "value": {
+                "entry": {
+                  "metaType": "object",
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "id": {
+                        "metaType": "unknown"
+                      },
+                      "units": {
+                        "metaType": "unknown"
+                      }
+                    }
+                  },
+                  "value": {
+                    "person_default": {
+                      "metaType": "composition",
+                      "value": [
+                        {
+                          "metaType": "object",
+                          "value": {}
+                        },
+                        {
+                          "metaType": "primitive",
+                          "value": "type__math_operations"
+                        }
+                      ]
+                    },
+                    "item_default": {
+                      "metaType": "composition",
+                      "value": [
+                        {
+                          "metaType": "object",
+                          "value": {}
+                        },
+                        {
+                          "metaType": "primitive",
+                          "value": "type__math_operations"
+                        }
+                      ]
+                    },
+                    "property-threshold": {
+                      "metaType": "object",
+                      "value": {},
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "name": {
+                            "metaType": "primitive",
+                            "value": "xs:string"
+                          },
+                          "min-value-inclusive": {
+                            "metaType": "primitive",
+                            "value": "xs:int"
+                          },
+                          "max-value-inclusive": {
+                            "metaType": "primitive",
+                            "value": "xs:int"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "classification_rule": {
+              "metaType": "object",
+              "value": {
+                "entry": {
+                  "metaType": "object",
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "id": {
+                        "metaType": "unknown"
+                      }
+                    }
+                  },
+                  "value": {
+                    "property": {
+                      "metaType": "primitive",
+                      "value": "group__math_operations",
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "property_rule_ref": {
+                            "metaType": "primitive",
+                            "value": "xs:string"
+                          },
+                          "is": {
+                            "metaType": "union",
+                            "value": [
+                              {
+                                "metaType": "primitive",
+                                "value": "\"lessThan\""
+                              },
+                              {
+                                "metaType": "primitive",
+                                "value": "\"lessThanOrEqual\""
+                              },
+                              {
+                                "metaType": "primitive",
+                                "value": "\"greaterThan\""
+                              },
+                              {
+                                "metaType": "primitive",
+                                "value": "\"greaterThanOrEqual\""
+                              },
+                              {
+                                "metaType": "primitive",
+                                "value": "\"equal\""
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "name_rule": {
+              "metaType": "object",
+              "value": {
+                "entry": {
+                  "metaType": "primitive",
+                  "value": "group__name_token",
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "id": {
+                        "metaType": "unknown"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "race_rule": {
+              "metaType": "object",
+              "value": {
+                "entry": {
+                  "metaType": "object",
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "id": {
+                        "metaType": "primitive",
+                        "value": "xs:string"
+                      }
+                    }
+                  },
+                  "value": {
+                    "vision": {
+                      "metaType": "primitive",
+                      "value": "type_range"
+                    },
+                    "movement": {
+                      "metaType": "primitive",
+                      "value": "type_range"
+                    },
+                    "name": {
+                      "metaType": "object",
+                      "value": {},
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "name_rule_ref": {
+                            "metaType": "primitive",
+                            "value": "xs:string"
+                          }
+                        }
+                      }
+                    },
+                    "property_bonus": {
+                      "metaType": "primitive",
+                      "value": "group__math_operations",
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "property_rule_ref": {
+                            "metaType": "primitive",
+                            "value": "xs:string"
+                          }
+                        }
+                      }
+                    },
+                    "icon": {
+                      "metaType": "primitive",
+                      "value": "type_icon"
+                    }
+                  }
+                }
+              }
+            },
+            "action_rule": {
+              "metaType": "object",
+              "value": {
+                "global": {
+                  "metaType": "object",
+                  "value": {
+                    "entry": {
+                      "metaType": "composition",
+                      "value": [
+                        {
+                          "metaType": "object",
+                          "value": {},
+                          "attributes": {
+                            "metaType": "object",
+                            "value": {
+                              "id": {
+                                "metaType": "unknown"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "metaType": "primitive",
+                          "value": "type__action"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "person_to_person": {
+                  "metaType": "object",
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "id": {
+                        "metaType": "unknown"
+                      }
+                    }
+                  },
+                  "value": {
+                    "test": {
+                      "metaType": "object",
+                      "value": {
+                        "value": {
+                          "metaType": "primitive",
+                          "value": "group__math_operations",
+                          "attributes": {
+                            "metaType": "object",
+                            "value": {
+                              "target": {
+                                "metaType": "primitive",
+                                "value": "type_person_select"
+                              }
+                            }
+                          }
+                        },
+                        "expected": {
+                          "metaType": "primitive",
+                          "value": "group__math_operations",
+                          "attributes": {
+                            "metaType": "object",
+                            "value": {
+                              "target": {
+                                "metaType": "primitive",
+                                "value": "type_person_select"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "property_mutation": {
+                      "metaType": "primitive",
+                      "value": "type__property_mutation_on"
+                    },
+                    "location_mutation": {
+                      "metaType": "object",
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "name": {
+                            "metaType": "unknown"
+                          },
+                          "on": {
+                            "metaType": "primitive",
+                            "value": "type_person_select"
+                          }
+                        }
+                      },
+                      "value": {
+                        "from": {
+                          "metaType": "primitive",
+                          "value": "group__math_operations",
+                          "attributes": {
+                            "metaType": "object",
+                            "value": {
+                              "participant": {
+                                "metaType": "primitive",
+                                "value": "type_person_select"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "item_rule": {
+              "metaType": "object",
+              "value": {
+                "entry": {
+                  "metaType": "object",
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "id": {
+                        "metaType": "unknown"
+                      }
+                    }
+                  },
+                  "value": {
+                    "name": {
+                      "metaType": "primitive",
+                      "value": "group__name_token"
+                    },
+                    "weight-kg": {
+                      "metaType": "object",
+                      "value": {},
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "value": {
+                            "metaType": "unknown"
+                          }
+                        }
+                      }
+                    },
+                    "wearable": {
+                      "metaType": "object",
+                      "value": {},
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "slot": {
+                            "metaType": "primitive",
+                            "value": "item_slot"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "events_rule": {
+              "metaType": "object",
+              "value": {
+                "entry": {
+                  "metaType": "object",
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "id": {
+                        "metaType": "primitive",
+                        "value": "xs:string"
+                      }
+                    }
+                  },
+                  "value": {
+                    "when": {
+                      "metaType": "primitive",
+                      "value": "type__trigger"
+                    },
+                    "then": {
+                      "metaType": "object",
+                      "value": {
+                        "select_person": {
+                          "metaType": "composition",
+                          "value": [
+                            {
+                              "metaType": "object",
+                              "value": {},
+                              "attributes": {
+                                "metaType": "object",
+                                "value": {
+                                  "origin": {
+                                    "metaType": "union",
+                                    "value": [
+                                      {
+                                        "metaType": "primitive",
+                                        "value": "\"target\""
+                                      },
+                                      {
+                                        "metaType": "primitive",
+                                        "value": "\"self\""
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "metaType": "primitive",
+                              "value": "type__person_selection"
+                            }
+                          ]
+                        },
+                        "select_item": {
+                          "metaType": "composition",
+                          "value": [
+                            {
+                              "metaType": "object",
+                              "value": {},
+                              "attributes": {
+                                "metaType": "object",
+                                "value": {
+                                  "origin": {
+                                    "metaType": "union",
+                                    "value": [
+                                      {
+                                        "metaType": "primitive",
+                                        "value": "\"target\""
+                                      },
+                                      {
+                                        "metaType": "primitive",
+                                        "value": "\"self\""
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "metaType": "primitive",
+                              "value": "type__item_selection"
+                            }
+                          ]
+                        },
+                        "property_mutation": {
+                          "metaType": "composition",
+                          "value": [
+                            {
+                              "metaType": "object",
+                              "value": {},
+                              "attributes": {
+                                "metaType": "object",
+                                "value": {
+                                  "property_rule_ref": {
+                                    "metaType": "primitive",
+                                    "value": "xs:string"
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "metaType": "primitive",
+                              "value": "type__math_operations"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "locations_markov_chain": {
+              "metaType": "object",
+              "value": {
+                "location_markov_link": {
+                  "metaType": "object",
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "type": {
+                        "metaType": "unknown"
+                      }
+                    }
+                  },
+                  "value": {
+                    "tag": {
+                      "metaType": "object",
+                      "value": {},
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "name": {
+                            "metaType": "unknown"
+                          }
+                        }
+                      }
+                    },
+                    "sibling": {
+                      "metaType": "object",
+                      "value": {},
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "location_rule_ref": {
+                            "metaType": "unknown"
+                          },
+                          "quantity": {
+                            "metaType": "primitive",
+                            "value": "xs:int"
+                          },
+                          "position": {
+                            "metaType": "union",
+                            "value": [
+                              {
+                                "metaType": "primitive",
+                                "value": "\"all\""
+                              },
+                              {
+                                "metaType": "primitive",
+                                "value": "\"fill\""
+                              },
+                              {
+                                "metaType": "primitive",
+                                "value": "\"top\""
+                              },
+                              {
+                                "metaType": "primitive",
+                                "value": "\"right\""
+                              },
+                              {
+                                "metaType": "primitive",
+                                "value": "\"bottom\""
+                              },
+                              {
+                                "metaType": "primitive",
+                                "value": "\"left\""
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "icon": {
+                      "metaType": "primitive",
+                      "value": "type_icon"
+                    }
+                  }
+                }
+              }
+            },
+            "location_graph_rule": {
+              "metaType": "object",
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "id": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  }
+                }
+              },
+              "value": {
+                "setup": {
+                  "metaType": "object",
+                  "value": {
+                    "starting_node": {
+                      "metaType": "object",
+                      "value": {},
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "node_rule_ref": {
+                            "metaType": "primitive",
+                            "value": "xs:string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "node_rule": {
+                  "metaType": "object",
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "id": {
+                        "metaType": "primitive",
+                        "value": "xs:string"
+                      }
+                    }
+                  },
+                  "value": {
+                    "link_group": {
+                      "metaType": "object",
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "id": {
+                            "metaType": "primitive",
+                            "value": "xs:string"
+                          },
+                          "angle": {
+                            "metaType": "primitive",
+                            "value": "xs:int"
+                          },
+                          "angleMax": {
+                            "metaType": "primitive",
+                            "value": "xs:int"
+                          },
+                          "limit": {
+                            "metaType": "primitive",
+                            "value": "xs:int"
+                          }
+                        }
+                      },
+                      "value": {
+                        "to_option": {
+                          "metaType": "object",
+                          "value": {},
+                          "attributes": {
+                            "metaType": "object",
+                            "value": {
+                              "node_rule_ref": {
+                                "metaType": "primitive",
+                                "value": "xs:string"
+                              },
+                              "distance": {
+                                "metaType": "primitive",
+                                "value": "xs:int"
+                              },
+                              "maxDistance": {
+                                "metaType": "primitive",
+                                "value": "xs:int"
+                              },
+                              "adjacent_depth_limit": {
+                                "metaType": "primitive",
+                                "value": "xs:int"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "items": {
+          "metaType": "object",
+          "value": {
+            "item": {
+              "metaType": "primitive",
+              "value": "type__item"
+            }
+          }
+        },
+        "people": {
+          "metaType": "object",
+          "value": {
+            "person": {
+              "metaType": "object",
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "id": {
+                    "metaType": "unknown"
+                  },
+                  "name": {
+                    "metaType": "unknown"
+                  }
+                }
+              },
+              "value": {
+                "race": {
+                  "metaType": "object",
+                  "value": {},
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "race_rule_ref": {
+                        "metaType": "unknown"
+                      }
+                    }
+                  }
+                },
+                "location": {
+                  "metaType": "primitive",
+                  "value": "type_cell_ref"
+                },
+                "properties": {
+                  "metaType": "object",
+                  "value": {
+                    "property": {
+                      "metaType": "object",
+                      "value": {},
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "property_rule_ref": {
+                            "metaType": "primitive",
+                            "value": "xs:string"
+                          },
+                          "value": {
+                            "metaType": "unknown"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "relations": {
+                  "metaType": "object",
+                  "value": {},
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "with": {
+                        "metaType": "unknown"
+                      }
+                    }
+                  }
+                },
+                "inventory": {
+                  "metaType": "object",
+                  "value": {
+                    "item": {
+                      "metaType": "primitive",
+                      "value": "type__item"
+                    }
+                  }
+                },
+                "classifications": {
+                  "metaType": "object",
+                  "value": {
+                    "classification": {
+                      "metaType": "object",
+                      "value": {},
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "classification_rule_ref": {
+                            "metaType": "primitive",
+                            "value": "xs:string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "icon": {
+                  "metaType": "primitive",
+                  "value": "type_icon"
+                }
+              }
+            }
+          }
+        },
+        "location_layer": {
+          "metaType": "object",
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "name": {
+                "metaType": "unknown"
+              }
+            }
+          },
+          "value": {
+            "cell": {
+              "metaType": "object",
+              "value": {},
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "location_rule_ref": {
+                    "metaType": "unknown"
+                  },
+                  "x": {
+                    "metaType": "unknown"
+                  },
+                  "y": {
+                    "metaType": "unknown"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "location_graph": {
+          "metaType": "object",
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "id": {
+                "metaType": "primitive",
+                "value": "xs:string"
+              }
+            }
+          },
+          "value": {
+            "rule": {
+              "metaType": "object",
+              "value": {},
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "location_graph_rule_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  }
+                }
+              }
+            },
+            "node": {
+              "metaType": "object",
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "node_rule_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  },
+                  "id": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  }
+                }
+              },
+              "value": {
+                "position": {
+                  "metaType": "object",
+                  "value": {},
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "x": {
+                        "metaType": "primitive",
+                        "value": "xs:int"
+                      },
+                      "y": {
+                        "metaType": "primitive",
+                        "value": "xs:int"
+                      }
+                    }
+                  }
+                },
+                "link_to": {
+                  "metaType": "object",
+                  "value": {},
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "node_id_ref": {
+                        "metaType": "primitive",
+                        "value": "xs:string"
+                      }
+                    }
+                  }
+                },
+                "people": {
+                  "metaType": "object",
+                  "value": {
+                    "person": {
+                      "metaType": "object",
+                      "value": {},
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "person_id_ref": {
+                            "metaType": "primitive",
+                            "value": "xs:string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "actions": {
+          "metaType": "object",
+          "value": {
+            "by": {
+              "metaType": "union",
+              "value": [
+                {
+                  "metaType": "object",
+                  "value": {
+                    "do": {
+                      "metaType": "object",
+                      "value": {},
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "action_rule_ref": {
+                            "metaType": "unknown"
+                          },
+                          "action_ref": {
+                            "metaType": "unknown"
+                          },
+                          "person_ref": {
+                            "metaType": "unknown"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "metaType": "object",
+                  "value": {
+                    "move_towards": {
+                      "metaType": "object",
+                      "value": {},
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "layer": {
+                            "metaType": "primitive",
+                            "value": "xs:string"
+                          },
+                          "x": {
+                            "metaType": "primitive",
+                            "value": "xs:int"
+                          },
+                          "y": {
+                            "metaType": "primitive",
+                            "value": "xs:int"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "person_ref": {
+                    "metaType": "unknown"
+                  }
+                }
+              }
+            },
+            "location_graph.create": {
+              "metaType": "object",
+              "value": {},
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "location_graph_rule_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  }
+                }
+              }
+            },
+            "location_graph.node.create_adjacent": {
+              "metaType": "object",
+              "value": {},
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "location_graph_id_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  },
+                  "node_id_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  }
+                }
+              }
+            },
+            "person.teleport": {
+              "metaType": "union",
+              "value": [
+                {
+                  "metaType": "object",
+                  "value": {
+                    "location_graph": {
+                      "metaType": "object",
+                      "value": {},
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "location_graph_id": {
+                            "metaType": "primitive",
+                            "value": "xs:string"
+                          },
+                          "node_id": {
+                            "metaType": "primitive",
+                            "value": "xs:string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "person_id_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  }
+                }
+              }
+            },
+            "person.on_person.property_mutation": {
+              "metaType": "object",
+              "value": {},
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "person_id_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  },
+                  "target_person_id_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  },
+                  "action_property_mutation_rule_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+]

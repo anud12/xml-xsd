@@ -632,12 +632,30 @@
           "metaType": "object",
           "value": {
             "previous_world_step": {
-              "metaType": "primitive",
-              "value": "unknown"
+              "metaType": "object",
+              "value": {},
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "value": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  }
+                }
+              }
             },
             "next_world_step": {
-              "metaType": "primitive",
-              "value": "unknown"
+              "metaType": "object",
+              "value": {},
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "value": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  }
+                }
+              }
             },
             "elapsed_time": {
               "metaType": "object",
@@ -1593,6 +1611,29 @@
             "by": {
               "metaType": "union",
               "value": [
+                {
+                  "metaType": "object",
+                  "value": {
+                    "do": {
+                      "metaType": "object",
+                      "value": {},
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "action_rule_ref": {
+                            "metaType": "unknown"
+                          },
+                          "action_ref": {
+                            "metaType": "unknown"
+                          },
+                          "person_ref": {
+                            "metaType": "unknown"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
                 {
                   "metaType": "object",
                   "value": {

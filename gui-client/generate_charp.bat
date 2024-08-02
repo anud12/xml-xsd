@@ -1,0 +1,1 @@
+xsd.exe ..\world_step.xsd /classes 
