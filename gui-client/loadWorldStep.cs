@@ -1,6 +1,8 @@
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using Godot;
@@ -17,19 +19,22 @@ public class LoadWorldStep {
 
 	public world_step worldStep;
 	public static int SCALE = LocationGraphNodeComponent.SIZE;
-	public void load(string path) {
+	public void loadFromPath(string path) {
 
 		GD.Print("Loading: " + path);	
-
+		using (StreamReader sr = new StreamReader(path))
+		{
+			load(sr.ReadToEnd());
+		}
+	}
+	public void load(string data) {
 		GD.Print("Removing children");
 		node.GetChildren()
 		.ToList()
 		.ForEach(child => node.RemoveChild(child));
 
-
-		Godot.GD.Print("Loading world step from " + path);
 		XmlDocument xmlDocument = new XmlDocument();
-		xmlDocument.Load(path);
+		xmlDocument.LoadXml(data);
 
 		GD.Print("Starting deserialization");
 		worldStep = new world_step(xmlDocument.DocumentElement);
@@ -42,12 +47,15 @@ public class LoadWorldStep {
 	}
 
 	public void executeNextStep() {
-		ImplProgram.Main(worldStep);
 		GD.Print("Executing next step");
-		Thread.Sleep(1500);
-		GD.Print("Loading next step");
+		Task<String> result = ImplProgram.Send(worldStep);
+		result.Wait();
+		load(result.Result);
+		// GD.Print("Executing next step");
+		// Thread.Sleep(1500);
+		// GD.Print("Loading next step");
 
-		load("./"+worldStep.world_metadata.First().next_world_step.First().value.Replace("../gui-client/", "") + ".xml");
+		// loadFromPath("./"+worldStep.world_metadata.First().next_world_step.First().value.Replace("../gui-client/", "") + ".xml");
 	}
 
 	private System.Collections.Generic.IEnumerable<Node> loadNodes  (world_step worldStep) {
