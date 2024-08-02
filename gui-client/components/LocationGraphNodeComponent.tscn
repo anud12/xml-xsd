@@ -51,34 +51,54 @@ theme_override_font_sizes/font_size = 40
 text = "Type Value
 "
 
-[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
+[node name="HSplitContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HSplitContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HSplitContainer/VBoxContainer"]
+layout_mode = 2
+text = "People"
+
+[node name="PersonContainer" type="VFlowContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+theme_override_constants/h_separation = 15
+theme_override_constants/v_separation = 15
+
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/VBoxContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 0
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="PanelContainer/VBoxContainer/MarginContainer2"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/MarginContainer2"]
 layout_mode = 2
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="PanelContainer/VBoxContainer/MarginContainer2/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="PanelContainer/VBoxContainer/HSplitContainer/MarginContainer2/SubViewportContainer"]
 disable_3d = true
 transparent_bg = true
 handle_input_locally = false
 snap_2d_transforms_to_pixel = true
-size = Vector2i(1000, 698)
+size = Vector2i(939, 698)
 render_target_update_mode = 4
 
-[node name="MapCamera2D" type="Camera2D" parent="PanelContainer/VBoxContainer/MarginContainer2/SubViewportContainer/SubViewport"]
+[node name="MapCamera2D" type="Camera2D" parent="PanelContainer/VBoxContainer/HSplitContainer/MarginContainer2/SubViewportContainer/SubViewport"]
 zoom = Vector2(2, 2)
 script = ExtResource("3_wr7c1")
 zoom_max = 2.0
 pan_speed = 0.0
 drag_inertia = 0.0
 
-[node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer/MarginContainer2/SubViewportContainer/SubViewport/MapCamera2D"]
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer/HSplitContainer/MarginContainer2/SubViewportContainer/SubViewport/MapCamera2D"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -93,14 +113,6 @@ grow_vertical = 2
 texture = ExtResource("4_4s42u")
 expand_mode = 1
 stretch_mode = 1
-
-[node name="PersonContainer" type="VFlowContainer" parent="PanelContainer/VBoxContainer/MarginContainer2/SubViewportContainer/SubViewport"]
-unique_name_in_owner = true
-offset_right = 970.0
-offset_bottom = 667.0
-size_flags_vertical = 3
-theme_override_constants/h_separation = 15
-theme_override_constants/v_separation = 15
 
 [node name="CreateAdjacentButton" type="Button" parent="PanelContainer/VBoxContainer"]
 unique_name_in_owner = true

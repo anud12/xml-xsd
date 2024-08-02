@@ -3,8 +3,17 @@
     <next_world_step value="../gui-client/data" />
     <elapsed_time value="0" />
     <stepDuration value="0" />
-    <counter value="11" />
+    <counter value="2" />
     <randomization_table>
+      <entry value="2" />
+      <entry value="8" />
+      <entry value="3" />
+      <entry value="6" />
+      <entry value="5" />
+      <entry value="7" />
+      <entry value="1" />
+      <entry value="10" />
+      <entry value="7" />
       <entry value="3" />
       <entry value="8" />
       <entry value="4" />
@@ -96,15 +105,6 @@
       <entry value="10" />
       <entry value="4" />
       <entry value="9" />
-      <entry value="2" />
-      <entry value="8" />
-      <entry value="3" />
-      <entry value="6" />
-      <entry value="5" />
-      <entry value="7" />
-      <entry value="1" />
-      <entry value="10" />
-      <entry value="7" />
     </randomization_table>
   </world_metadata>
   <rule_group id="rule_group_id">
@@ -310,7 +310,6 @@
     <node node_rule_ref="city" id="Capital">
       <position x="0" y="0" />
       <link_to node_id_ref="0.0" />
-      <link_to node_id_ref="0.5" />
       <people>
         <person person_id_ref="0" />
       </people>
@@ -318,44 +317,8 @@
     <node node_rule_ref="farm" id="0.0">
       <position x="2" y="-1" />
       <link_to node_id_ref="0.1" />
-      <link_to node_id_ref="0.6" />
     </node>
     <node node_rule_ref="plains" id="0.1">
-      <position x="5" y="9" />
-      <link_to node_id_ref="0.2" />
-      <link_to node_id_ref="0.6" />
-    </node>
-    <node node_rule_ref="plains" id="0.2">
-      <position x="5" y="6" />
-      <link_to node_id_ref="0.3" />
-    </node>
-    <node node_rule_ref="plains" id="0.3">
-      <position x="0" y="20" />
-      <link_to node_id_ref="0.4" />
-    </node>
-    <node node_rule_ref="farm" id="0.4">
-      <position x="-15" y="8" />
-    </node>
-    <node node_rule_ref="farm" id="0.5">
-      <position x="0" y="-1" />
-      <link_to node_id_ref="0.7" />
-      <link_to node_id_ref="0.8" />
-    </node>
-    <node node_rule_ref="plains" id="0.6">
-      <position x="1" y="-3" />
-    </node>
-    <node node_rule_ref="farm" id="0.7">
-      <position x="15" y="10" />
-    </node>
-    <node node_rule_ref="plains" id="0.8">
-      <position x="11" y="-1" />
-      <link_to node_id_ref="0.9" />
-    </node>
-    <node node_rule_ref="plains" id="0.9">
-      <position x="10" y="-3" />
-      <link_to node_id_ref="0.10" />
-    </node>
-    <node node_rule_ref="plains" id="0.10">
       <position x="5" y="9" />
     </node>
   </location_graph>

@@ -110,13 +110,14 @@
   <rule_group id="rule_group_id">
     <property_rule>
       <entry id="strength" units="points"/>
+      <entry id="dexterity" units="points"/>
     </property_rule>
     <location_graph_rule id="location_graph_rule_id">
       <setup>
         <starting_node node_rule_ref="city"/>
       </setup>
       <node_rule id="city">
-        <link_group id="all" angle="0" angleMax="360" limit="2">
+        <link_group id="all" angle="0" angleMax="360" limit="8">
           <to_option node_rule_ref="farm" adjacent_depth_limit="1" distance="1" maxDistance="3"/>
         </link_group>
       </node_rule>
@@ -125,14 +126,6 @@
           <to_option node_rule_ref="city" adjacent_depth_limit="0" distance="1" maxDistance="1"/>
           <to_option node_rule_ref="farm" adjacent_depth_limit="1" distance="2" maxDistance="1"/>
           <to_option node_rule_ref="farm" adjacent_depth_limit="1" distance="2" maxDistance="1"/>
-          <to_option node_rule_ref="farm" adjacent_depth_limit="1" distance="2" maxDistance="1"/>
-          <to_option node_rule_ref="farm" adjacent_depth_limit="1" distance="2" maxDistance="1"/>
-          <to_option node_rule_ref="farm" adjacent_depth_limit="1" distance="2" maxDistance="1"/>
-          <to_option node_rule_ref="farm" adjacent_depth_limit="1" distance="2" maxDistance="1"/>
-          <to_option node_rule_ref="plains" adjacent_depth_limit="1" distance="5" maxDistance="20"/>
-          <to_option node_rule_ref="plains" adjacent_depth_limit="1" distance="5" maxDistance="20"/>
-          <to_option node_rule_ref="plains" adjacent_depth_limit="1" distance="5" maxDistance="20"/>
-          <to_option node_rule_ref="plains" adjacent_depth_limit="1" distance="5" maxDistance="20"/>
           <to_option node_rule_ref="plains" adjacent_depth_limit="1" distance="5" maxDistance="20"/>
           <to_option node_rule_ref="plains" adjacent_depth_limit="1" distance="5" maxDistance="20"/>
           <to_option node_rule_ref="plains" adjacent_depth_limit="1" distance="5" maxDistance="20"/>
@@ -161,6 +154,7 @@
     <person id="0" name="Billy">
       <properties>
         <property property_rule_ref="strength" value="10" />
+        <property property_rule_ref="dexterity" value="10" />
       </properties>
     </person>
   </people>

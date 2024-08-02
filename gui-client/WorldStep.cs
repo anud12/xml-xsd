@@ -35,7 +35,7 @@ public partial class WorldStep : Godot.Node
 
 		GD.Print("Loading world step from " + path);
 
-		loadWorldStep.load(path);
+		loadWorldStep.loadFromPath(path);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

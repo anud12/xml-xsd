@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Xml;
 
@@ -415,7 +416,12 @@ namespace XSD {
     {
         serializer.Serialize(element, this);
     }
-  }
+
+        internal object Serialize()
+        {
+            throw new NotImplementedException();
+        }
+    }
 
   /*Type: element*/
   public class group__operation__and__add_property {
