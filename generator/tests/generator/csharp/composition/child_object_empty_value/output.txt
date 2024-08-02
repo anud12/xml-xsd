@@ -1,0 +1,65 @@
+
+/*typeDeclarationElementToString: element*/
+public class root {
+  public WorldStepSerializer serializer = new WorldStepSerializer();
+
+  [Element("global")]
+  public List<root__global> global = new List<root__global>();
+
+  public root() {
+  }
+
+  public root (XmlNode xmlElement) {
+    Godot.GD.Print("Deserializing root");
+    serializer.Deserialize(xmlElement, this);
+  }
+
+  public void Serialize(XmlElement element)
+  {
+      serializer.Serialize(element, this);
+  }
+}
+
+/*typeDeclarationElementToString: element*/
+public class root__global {
+  public WorldStepSerializer serializer = new WorldStepSerializer();
+
+  [Element("entry")]
+  public List<root__global__entry> entry = new List<root__global__entry>();
+
+  public root__global() {
+  }
+
+  public root__global (XmlNode xmlElement) {
+    Godot.GD.Print("Deserializing root__global");
+    serializer.Deserialize(xmlElement, this);
+  }
+
+  public void Serialize(XmlElement element)
+  {
+      serializer.Serialize(element, this);
+  }
+}
+
+/*typeDeclarationElementToString: element*/
+public class root__global__entry {
+  public WorldStepSerializer serializer = new WorldStepSerializer();
+
+  //composition-default
+  [Attribute("id")]
+  public string id;
+
+  public root__global__entry() {
+  }
+
+  public root__global__entry (XmlNode xmlElement) {
+    Godot.GD.Print("Deserializing root__global__entry");
+    serializer.Deserialize(xmlElement, this);
+  }
+
+  public void Serialize(XmlElement element)
+  {
+      serializer.Serialize(element, this);
+  }
+}
+

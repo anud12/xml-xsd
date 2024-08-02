@@ -151,7 +151,7 @@
     </location_graph_rule>
   </rule_group>
   <people>
-    <person id="0" name="Billy">
+    <person id="0" name="BillyWithVeryLongName">
       <properties>
         <property property_rule_ref="strength" value="10" />
         <property property_rule_ref="dexterity" value="10" />

@@ -941,7 +941,8 @@
                             "metaType": "object",
                             "value": {
                               "id": {
-                                "metaType": "unknown"
+                                "metaType": "primitive",
+                                "value": "xs:string"
                               }
                             }
                           }
