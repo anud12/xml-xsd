@@ -1,0 +1,23 @@
+[
+  {
+    "name": "group",
+    "type": "group",
+    "value": {
+      "metaType": "object",
+      "value": {
+        "group_element": {
+          "metaType": "primitive",
+          "value": "xs:int"
+        }
+      }
+    }
+  },
+  {
+    "name": "root",
+    "type": "element",
+    "value": {
+      "metaType": "reference",
+      "value": "group"
+    }
+  }
+]

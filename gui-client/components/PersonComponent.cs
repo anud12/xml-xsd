@@ -27,7 +27,7 @@ public partial class PersonComponent : Control
 		nameLabel.Text = (string)person.name;
 		addClassifications();
 		addProperties();
-
+		addActions();
 	}
 
 	private void addActions() {
@@ -36,9 +36,9 @@ public partial class PersonComponent : Control
 		actionsContainer.GetChildren().ToList().ForEach(child => actionsContainer.RemoveChild(child));
 		//if there are actions add them into container
 		worldStep.rule_group.SelectMany(ruleGroup => ruleGroup.action_rule.SelectMany(actionRule => actionRule.global)).ToList().ForEach(global => {
-			global.entry.SelectMany(entry => {
+			global.entry.ForEach(entry => {
 				//add buttons per entry
-				actionsContainer.AddChild(new Button() { Text = entry.action_rule_ref });
+				actionsContainer.AddChild(new Button() { Text = entry.id });
 			});
 		});
 	}

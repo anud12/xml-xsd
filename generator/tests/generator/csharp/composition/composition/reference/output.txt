@@ -1,0 +1,66 @@
+
+/*typeDeclarationElementToString: element*/
+public class root {
+  public WorldStepSerializer serializer = new WorldStepSerializer();
+
+  [Element("person_default")]
+  public List<root__person_default> person_default = new List<root__person_default>();
+
+  public root() {
+  }
+
+  public root (XmlNode xmlElement) {
+    Godot.GD.Print("Deserializing root");
+    serializer.Deserialize(xmlElement, this);
+  }
+
+  public void Serialize(XmlElement element)
+  {
+      serializer.Serialize(element, this);
+  }
+}
+
+/*typeDeclarationElementToString: element*/
+public class type__math_operations__children {
+  public WorldStepSerializer serializer = new WorldStepSerializer();
+
+
+  public type__math_operations__children() {
+  }
+
+  public type__math_operations__children (XmlNode xmlElement) {
+    Godot.GD.Print("Deserializing type__math_operations__children");
+    serializer.Deserialize(xmlElement, this);
+  }
+
+  public void Serialize(XmlElement element)
+  {
+      serializer.Serialize(element, this);
+  }
+}
+
+/*typeDeclarationElementToString: element*/
+public class root__person_default {
+  public WorldStepSerializer serializer = new WorldStepSerializer();
+
+  //composition-default
+  //composition-default
+  [Attribute("initial")]
+  public System.Int32 initial;
+  [Element("children")]
+  public List<type__math_operations__children> children = new List<type__math_operations__children>();
+
+  public root__person_default() {
+  }
+
+  public root__person_default (XmlNode xmlElement) {
+    Godot.GD.Print("Deserializing root__person_default");
+    serializer.Deserialize(xmlElement, this);
+  }
+
+  public void Serialize(XmlElement element)
+  {
+      serializer.Serialize(element, this);
+  }
+}
+

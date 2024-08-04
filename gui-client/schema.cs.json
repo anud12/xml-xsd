@@ -44,11 +44,11 @@
       "metaType": "object",
       "value": {
         "classifications": {
-          "metaType": "primitive",
+          "metaType": "reference",
           "value": "type__classification_list"
         },
         "properties": {
-          "metaType": "primitive",
+          "metaType": "reference",
           "value": "type__property_list"
         }
       }
@@ -74,7 +74,7 @@
           }
         },
         "and": {
-          "metaType": "primitive",
+          "metaType": "reference",
           "value": "group__operation__and",
           "attributes": {
             "metaType": "object",
@@ -100,7 +100,7 @@
       "metaType": "object",
       "value": {
         "operation": {
-          "metaType": "primitive",
+          "metaType": "reference",
           "value": "group__operation__and",
           "attributes": {
             "metaType": "object",
@@ -146,7 +146,7 @@
               "metaType": "object",
               "value": {
                 "one_of": {
-                  "metaType": "primitive",
+                  "metaType": "reference",
                   "value": "group__name_token"
                 }
               }
@@ -276,7 +276,7 @@
       "metaType": "object",
       "value": {},
       "attributes": {
-        "metaType": "primitive",
+        "metaType": "reference",
         "value": "attributeGroup_range"
       }
     }
@@ -323,7 +323,7 @@
       },
       "value": {
         "from": {
-          "metaType": "primitive",
+          "metaType": "reference",
           "value": "group__math_operations",
           "attributes": {
             "metaType": "object",
@@ -397,7 +397,7 @@
     "name": "type__item",
     "type": "complex",
     "value": {
-      "metaType": "primitive",
+      "metaType": "reference",
       "value": "group__item_data",
       "attributes": {
         "metaType": "object",
@@ -422,17 +422,17 @@
           "metaType": "object",
           "value": {
             "min": {
-              "metaType": "primitive",
+              "metaType": "reference",
               "value": "type__math_operations"
             },
             "max": {
-              "metaType": "primitive",
+              "metaType": "reference",
               "value": "type__math_operations"
             }
           }
         },
         {
-          "metaType": "primitive",
+          "metaType": "reference",
           "value": "group__item_data"
         }
       ]
@@ -469,15 +469,15 @@
       "metaType": "object",
       "value": {
         "radius": {
-          "metaType": "primitive",
+          "metaType": "reference",
           "value": "type__math_operations"
         },
         "min": {
-          "metaType": "primitive",
+          "metaType": "reference",
           "value": "type__math_operations"
         },
         "max": {
-          "metaType": "primitive",
+          "metaType": "reference",
           "value": "type__math_operations"
         },
         "property": {
@@ -493,11 +493,11 @@
           },
           "value": {
             "min": {
-              "metaType": "primitive",
+              "metaType": "reference",
               "value": "type__math_operations"
             },
             "max": {
-              "metaType": "primitive",
+              "metaType": "reference",
               "value": "type__math_operations"
             }
           }
@@ -531,7 +531,7 @@
           "metaType": "object",
           "value": {
             "item": {
-              "metaType": "primitive",
+              "metaType": "reference",
               "value": "type__item_selection"
             }
           }
@@ -564,7 +564,7 @@
     "name": "type__math_operations",
     "type": "complex",
     "value": {
-      "metaType": "primitive",
+      "metaType": "reference",
       "value": "group__operation__and",
       "attributes": {
         "metaType": "object",
@@ -590,11 +590,11 @@
               "metaType": "object",
               "value": {
                 "select": {
-                  "metaType": "primitive",
+                  "metaType": "reference",
                   "value": "type__person_selection"
                 },
                 "property_mutation": {
-                  "metaType": "primitive",
+                  "metaType": "reference",
                   "value": "type__property_mutation"
                 }
               }
@@ -608,11 +608,11 @@
               "metaType": "object",
               "value": {
                 "select": {
-                  "metaType": "primitive",
+                  "metaType": "reference",
                   "value": "type__person_selection"
                 },
                 "property_mutation": {
-                  "metaType": "primitive",
+                  "metaType": "reference",
                   "value": "type__property_mutation"
                 }
               }
@@ -810,7 +810,7 @@
                   },
                   "value": {
                     "property": {
-                      "metaType": "primitive",
+                      "metaType": "reference",
                       "value": "group__math_operations",
                       "attributes": {
                         "metaType": "object",
@@ -855,7 +855,7 @@
               "metaType": "object",
               "value": {
                 "entry": {
-                  "metaType": "primitive",
+                  "metaType": "reference",
                   "value": "group__name_token",
                   "attributes": {
                     "metaType": "object",
@@ -884,11 +884,11 @@
                   },
                   "value": {
                     "vision": {
-                      "metaType": "primitive",
+                      "metaType": "reference",
                       "value": "type_range"
                     },
                     "movement": {
-                      "metaType": "primitive",
+                      "metaType": "reference",
                       "value": "type_range"
                     },
                     "name": {
@@ -905,7 +905,7 @@
                       }
                     },
                     "property_bonus": {
-                      "metaType": "primitive",
+                      "metaType": "reference",
                       "value": "group__math_operations",
                       "attributes": {
                         "metaType": "object",
@@ -918,7 +918,7 @@
                       }
                     },
                     "icon": {
-                      "metaType": "primitive",
+                      "metaType": "reference",
                       "value": "type_icon"
                     }
                   }
@@ -970,7 +970,7 @@
                       "metaType": "object",
                       "value": {
                         "value": {
-                          "metaType": "primitive",
+                          "metaType": "reference",
                           "value": "group__math_operations",
                           "attributes": {
                             "metaType": "object",
@@ -983,7 +983,7 @@
                           }
                         },
                         "expected": {
-                          "metaType": "primitive",
+                          "metaType": "reference",
                           "value": "group__math_operations",
                           "attributes": {
                             "metaType": "object",
@@ -998,7 +998,7 @@
                       }
                     },
                     "property_mutation": {
-                      "metaType": "primitive",
+                      "metaType": "reference",
                       "value": "type__property_mutation_on"
                     },
                     "location_mutation": {
@@ -1017,7 +1017,7 @@
                       },
                       "value": {
                         "from": {
-                          "metaType": "primitive",
+                          "metaType": "reference",
                           "value": "group__math_operations",
                           "attributes": {
                             "metaType": "object",
@@ -1050,7 +1050,7 @@
                   },
                   "value": {
                     "name": {
-                      "metaType": "primitive",
+                      "metaType": "reference",
                       "value": "group__name_token"
                     },
                     "weight-kg": {
@@ -1098,7 +1098,7 @@
                   },
                   "value": {
                     "when": {
-                      "metaType": "primitive",
+                      "metaType": "reference",
                       "value": "type__trigger"
                     },
                     "then": {
@@ -1266,7 +1266,7 @@
                       }
                     },
                     "icon": {
-                      "metaType": "primitive",
+                      "metaType": "reference",
                       "value": "type_icon"
                     }
                   }
@@ -1376,7 +1376,7 @@
           "metaType": "object",
           "value": {
             "item": {
-              "metaType": "primitive",
+              "metaType": "reference",
               "value": "type__item"
             }
           }
@@ -1411,7 +1411,7 @@
                   }
                 },
                 "location": {
-                  "metaType": "primitive",
+                  "metaType": "reference",
                   "value": "type_cell_ref"
                 },
                 "properties": {
@@ -1451,7 +1451,7 @@
                   "metaType": "object",
                   "value": {
                     "item": {
-                      "metaType": "primitive",
+                      "metaType": "reference",
                       "value": "type__item"
                     }
                   }
@@ -1475,7 +1475,7 @@
                   }
                 },
                 "icon": {
-                  "metaType": "primitive",
+                  "metaType": "reference",
                   "value": "type_icon"
                 }
               }

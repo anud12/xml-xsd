@@ -123,36 +123,36 @@ text = "classification_name"
 layout_mode = 2
 text = "classification_name"
 
-[node name="ActionContainer" type="FlowContainer" parent="MarginContainer/BoxContainer"]
+[node name="ActionsContainer" type="FlowContainer" parent="MarginContainer/BoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Button" type="Button" parent="MarginContainer/BoxContainer/ActionContainer"]
+[node name="Button" type="Button" parent="MarginContainer/BoxContainer/ActionsContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Do Action"
 
-[node name="Button2" type="Button" parent="MarginContainer/BoxContainer/ActionContainer"]
+[node name="Button2" type="Button" parent="MarginContainer/BoxContainer/ActionsContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Do Action"
 
-[node name="Button3" type="Button" parent="MarginContainer/BoxContainer/ActionContainer"]
+[node name="Button3" type="Button" parent="MarginContainer/BoxContainer/ActionsContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Do Action"
 
-[node name="Button4" type="Button" parent="MarginContainer/BoxContainer/ActionContainer"]
+[node name="Button4" type="Button" parent="MarginContainer/BoxContainer/ActionsContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Do Action"
 
-[node name="Button5" type="Button" parent="MarginContainer/BoxContainer/ActionContainer"]
+[node name="Button5" type="Button" parent="MarginContainer/BoxContainer/ActionsContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Do Action"
 
-[node name="Button6" type="Button" parent="MarginContainer/BoxContainer/ActionContainer"]
+[node name="Button6" type="Button" parent="MarginContainer/BoxContainer/ActionsContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Do Action"

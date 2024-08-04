@@ -18,7 +18,7 @@ export function processElementType(element: XsdElement | XsdElement[]): Type[] {
 
     if (element.type) {
       return [{
-        metaType:"primitive",
+        metaType:"reference",
         value:element.type
       }];
     }

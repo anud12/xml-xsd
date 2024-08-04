@@ -1,16 +1,14 @@
-import {main} from "../../src/src";
 import * as fs from "fs";
-import {typeDeclarationToString} from "../../src/typeToString";
+import {TypeDeclaration} from "../../../src/type";
+import {typeDeclarationToString} from "../../../src/generator/typescript/typeToString";
 
 export function test_helper(dirname:string): void {
   const filePath = `${dirname}/input.json`; // Path to the XSD schema file
-  const inputJson = fs.readFileSync(filePath);
 
-  const typeString = JSON.parse(inputJson.toString())
-    .map(value => {
-      return typeDeclarationToString(value)
-    })
-    .join("\n");
+  const inputJsonString = fs.readFileSync(filePath);
+  const inputJson:Array<TypeDeclaration> = JSON.parse(inputJsonString.toString());
+  const typeString = typeDeclarationToString(...inputJson)
+
   const outputFilePath = `${dirname}/output.txt`;
   let expectedTypes = fs.readFileSync(outputFilePath, 'utf-8');
 

@@ -112,6 +112,24 @@
       <entry id="strength" units="points"/>
       <entry id="dexterity" units="points"/>
     </property_rule>
+    <action_rule>
+      <global>
+        <entry id="action">
+          <from>
+            <person/>
+          </from>
+          <on>
+            <person>
+              <property_mutation property_rule_ref="strength">
+                <from participant="self">
+                  <operation initial="1"/>
+                </from>
+              </property_mutation>
+            </person>
+          </on>
+        </entry>
+      </global>
+    </action_rule>
     <location_graph_rule id="location_graph_rule_id">
       <setup>
         <starting_node node_rule_ref="city"/>
@@ -163,6 +181,9 @@
     <node node_rule_ref="city" id="Capital">
       <position x="0" y="0"/>
       <people>
+        <person person_id_ref="0"/>
+        <person person_id_ref="0"/>
+        <person person_id_ref="0"/>
         <person person_id_ref="0"/>
       </people>
     </node>

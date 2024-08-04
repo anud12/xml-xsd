@@ -160,6 +160,7 @@ export function handleTypes(type: Type, declarationMap: DeclarationMap, parentSc
     case "unknown":
       result += "any";
       break;
+    case "reference":
     case "primitive":
       result += handlePrimitiveType(type as TypePrimitive, declarationMap, parentScope, indentLevel);
       break;
