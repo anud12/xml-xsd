@@ -1,0 +1,48 @@
+[
+  {
+    "name": "type__math_operations",
+    "type": "complex",
+    "value": {
+      "metaType": "object",
+      "value": {
+        "children": {
+          "metaType": "object",
+          "value": {
+
+          }
+        }
+      },
+      "attributes": {
+        "metaType": "object",
+        "value": {
+          "initial": {
+            "metaType": "primitive",
+            "value": "xs:int"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "root",
+    "type": "element",
+    "value": {
+      "metaType": "object",
+      "value": {
+        "person_default": {
+          "metaType": "composition",
+          "value": [
+            {
+              "metaType": "object",
+              "value": {}
+            },
+            {
+              "metaType": "reference",
+              "value": "type__math_operations"
+            }
+          ]
+        }
+      }
+    }
+  }
+]

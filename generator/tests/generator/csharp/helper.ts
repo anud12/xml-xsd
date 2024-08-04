@@ -4,12 +4,8 @@ import {typeDeclarationToString} from "../../../src/generator/csharp/typeToStrin
 export function test_helper(dirname:string): void {
   const filePath = `${dirname}/input.json`; // Path to the XSD schema file
   const inputJson = fs.readFileSync(filePath);
-
-  const typeString = JSON.parse(inputJson.toString())
-    .map(value => {
-      return typeDeclarationToString(value)
-    })
-    .join("\n");
+  const jsonData = JSON.parse(inputJson.toString())
+  const typeString = typeDeclarationToString(...jsonData);
   const outputFilePath = `${dirname}/output.txt`;
   let expectedTypes = fs.readFileSync(outputFilePath, 'utf-8');
 

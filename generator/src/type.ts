@@ -1,6 +1,6 @@
 import {mergeError} from "./mergeError";
 
-export type Type = (TypeObject | TypePrimitive | TypeComposition | TypeUnion | TypeAny | TypeUnknown) & TypeAttribute;
+export type Type = (TypeObject | TypePrimitive | TypeComposition | TypeUnion | TypeAny | TypeUnknown | TypeReference) & TypeAttribute;
 
 export type TypeAttribute = {
   attributes?: Type
@@ -20,6 +20,12 @@ export type TypeAny = {
 
 export type TypeUnknown = {
   metaType: "unknown"
+}
+
+export type TypeReference = {
+  metaType: "reference"
+  attributes?: Type,
+  value: string,
 }
 
 export type TypePrimitive = {

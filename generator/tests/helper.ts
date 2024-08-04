@@ -1,10 +1,11 @@
-import {main} from "../src/src";
+import {generateTypes, parseXsdSchema} from "../src/src";
 import * as fs from "fs";
 
 
 export function test_helper(dirname:string): void {
   const xsdFilePath = `${dirname}/input.xsd`; // Path to the XSD schema file
-  const generatedTypes = main(xsdFilePath);
+  const schema = parseXsdSchema(xsdFilePath);
+  const types = generateTypes(schema);
   //TODO: add comparison with _output.txt content
 
   // Read the contents of the _output.txt file
@@ -15,5 +16,5 @@ export function test_helper(dirname:string): void {
   expectedTypes = expectedTypes.replace(/\r\n/g, '\n');
 
   // Compare the generated types with the expected output using Jest assertions
-  expect(JSON.stringify(generatedTypes, null, 2)).toEqual(expectedTypes);
+  expect(JSON.stringify(types, null, 2)).toEqual(expectedTypes);
 }

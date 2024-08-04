@@ -16,115 +16,143 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="BoxContainer3" type="BoxContainer" parent="MarginContainer"]
-layout_mode = 2
-
-[node name="BoxContainer" type="BoxContainer" parent="MarginContainer/BoxContainer3"]
+[node name="BoxContainer" type="BoxContainer" parent="MarginContainer"]
 layout_mode = 2
 vertical = true
 
-[node name="BoxContainer" type="HBoxContainer" parent="MarginContainer/BoxContainer3/BoxContainer"]
+[node name="BoxContainer" type="HBoxContainer" parent="MarginContainer/BoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="NameLabel" type="Label" parent="MarginContainer/BoxContainer3/BoxContainer/BoxContainer"]
+[node name="NameLabel" type="Label" parent="MarginContainer/BoxContainer/BoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 26
-text = "person_name"
+text = "person_name with a large text with name but it"
 
-[node name="ClassificationContainer" type="HFlowContainer" parent="MarginContainer/BoxContainer3/BoxContainer"]
-unique_name_in_owner = true
+[node name="HBoxContainer" type="BoxContainer" parent="MarginContainer/BoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="MarginContainer/BoxContainer3/BoxContainer/ClassificationContainer"]
-layout_mode = 2
-text = "classification_name"
-
-[node name="Label2" type="Label" parent="MarginContainer/BoxContainer3/BoxContainer/ClassificationContainer"]
-layout_mode = 2
-text = "classification_name"
-
-[node name="Label3" type="Label" parent="MarginContainer/BoxContainer3/BoxContainer/ClassificationContainer"]
-layout_mode = 2
-text = "classification_name"
-
-[node name="Label4" type="Label" parent="MarginContainer/BoxContainer3/BoxContainer/ClassificationContainer"]
-layout_mode = 2
-text = "classification_name"
-
-[node name="Label5" type="Label" parent="MarginContainer/BoxContainer3/BoxContainer/ClassificationContainer"]
-layout_mode = 2
-text = "classification_name"
-
-[node name="Label6" type="Label" parent="MarginContainer/BoxContainer3/BoxContainer/ClassificationContainer"]
-layout_mode = 2
-text = "classification_name"
-
-[node name="BoxContainer2" type="BoxContainer" parent="MarginContainer/BoxContainer3/BoxContainer"]
-layout_mode = 2
-vertical = true
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/BoxContainer3/BoxContainer/BoxContainer2"]
-layout_mode = 2
-
-[node name="PropertiesContainer" type="GridContainer" parent="MarginContainer/BoxContainer3/BoxContainer/BoxContainer2/MarginContainer"]
+[node name="PropertiesContainer" type="GridContainer" parent="MarginContainer/BoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/h_separation = 15
 theme_override_constants/v_separation = 0
 columns = 2
 
-[node name="Container" type="HBoxContainer" parent="MarginContainer/BoxContainer3/BoxContainer/BoxContainer2/MarginContainer/PropertiesContainer"]
+[node name="Container" type="HBoxContainer" parent="MarginContainer/BoxContainer/HBoxContainer/PropertiesContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/BoxContainer3/BoxContainer/BoxContainer2/MarginContainer/PropertiesContainer/Container"]
+[node name="Label" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/PropertiesContainer/Container"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "property_name"
 
-[node name="Label2" type="Label" parent="MarginContainer/BoxContainer3/BoxContainer/BoxContainer2/MarginContainer/PropertiesContainer/Container"]
+[node name="Label2" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/PropertiesContainer/Container"]
 layout_mode = 2
 text = "12"
 
-[node name="Container2" type="HBoxContainer" parent="MarginContainer/BoxContainer3/BoxContainer/BoxContainer2/MarginContainer/PropertiesContainer"]
+[node name="Container2" type="HBoxContainer" parent="MarginContainer/BoxContainer/HBoxContainer/PropertiesContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/BoxContainer3/BoxContainer/BoxContainer2/MarginContainer/PropertiesContainer/Container2"]
+[node name="Label" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/PropertiesContainer/Container2"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "property_name_long_to_strech"
 
-[node name="Label2" type="Label" parent="MarginContainer/BoxContainer3/BoxContainer/BoxContainer2/MarginContainer/PropertiesContainer/Container2"]
+[node name="Label2" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/PropertiesContainer/Container2"]
 layout_mode = 2
 text = "12"
 
-[node name="Container3" type="HBoxContainer" parent="MarginContainer/BoxContainer3/BoxContainer/BoxContainer2/MarginContainer/PropertiesContainer"]
+[node name="Container3" type="HBoxContainer" parent="MarginContainer/BoxContainer/HBoxContainer/PropertiesContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/BoxContainer3/BoxContainer/BoxContainer2/MarginContainer/PropertiesContainer/Container3"]
+[node name="Label" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/PropertiesContainer/Container3"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "property_name_long"
 
-[node name="Label2" type="Label" parent="MarginContainer/BoxContainer3/BoxContainer/BoxContainer2/MarginContainer/PropertiesContainer/Container3"]
+[node name="Label2" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/PropertiesContainer/Container3"]
 layout_mode = 2
 text = "12"
 
-[node name="Container4" type="HBoxContainer" parent="MarginContainer/BoxContainer3/BoxContainer/BoxContainer2/MarginContainer/PropertiesContainer"]
+[node name="Container4" type="HBoxContainer" parent="MarginContainer/BoxContainer/HBoxContainer/PropertiesContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/BoxContainer3/BoxContainer/BoxContainer2/MarginContainer/PropertiesContainer/Container4"]
+[node name="Label" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/PropertiesContainer/Container4"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "property_name"
 
-[node name="Label2" type="Label" parent="MarginContainer/BoxContainer3/BoxContainer/BoxContainer2/MarginContainer/PropertiesContainer/Container4"]
+[node name="Label2" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/PropertiesContainer/Container4"]
 layout_mode = 2
 text = "12"
 
-[node name="ActionContainer" type="GridContainer" parent="MarginContainer/BoxContainer3"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/BoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="ClassificationContainer" type="FlowContainer" parent="MarginContainer/BoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/ClassificationContainer"]
+layout_mode = 2
+text = "classification_name"
+
+[node name="Label2" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/ClassificationContainer"]
+layout_mode = 2
+text = "classification_name"
+
+[node name="Label3" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/ClassificationContainer"]
+layout_mode = 2
+text = "classification_name"
+
+[node name="Label4" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/ClassificationContainer"]
+layout_mode = 2
+text = "classification_name"
+
+[node name="Label5" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/ClassificationContainer"]
+layout_mode = 2
+text = "classification_name"
+
+[node name="Label6" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/ClassificationContainer"]
+layout_mode = 2
+text = "classification_name"
+
+[node name="ActionsContainer" type="FlowContainer" parent="MarginContainer/BoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MarginContainer/BoxContainer/ActionsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Do Action"
+
+[node name="Button2" type="Button" parent="MarginContainer/BoxContainer/ActionsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Do Action"
+
+[node name="Button3" type="Button" parent="MarginContainer/BoxContainer/ActionsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Do Action"
+
+[node name="Button4" type="Button" parent="MarginContainer/BoxContainer/ActionsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Do Action"
+
+[node name="Button5" type="Button" parent="MarginContainer/BoxContainer/ActionsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Do Action"
+
+[node name="Button6" type="Button" parent="MarginContainer/BoxContainer/ActionsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Do Action"

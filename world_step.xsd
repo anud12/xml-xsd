@@ -843,7 +843,7 @@
                             <xs:complexType>
                               <xs:complexContent>
                                 <xs:extension base="type__action">
-                                  <xs:attribute name="id" use="required"/>
+                                  <xs:attribute name="id" use="required" type="xs:string"/>
                                 </xs:extension>
                               </xs:complexContent>
                             </xs:complexType>

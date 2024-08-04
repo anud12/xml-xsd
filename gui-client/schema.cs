@@ -1,391 +1,18 @@
-using System;
 using System.Collections.Generic;
 using System.Xml;
 
 namespace XSD {
-   /*Type: attribute*/
-   using property_rule_ref = System.String;
-   /*Type: simple*/
-   using item_slot = System.String;
-   /*Type: simple*/
-   using type_direction = System.String;
-   /*Type: simple*/
-   using type_person_select = System.String;
-   /*Type: simple*/
-   using type__group__operation__and = System.String;
-  /*Type: complex*/
-  public class group__item_data {
-    public WorldStepSerializer serializer = new WorldStepSerializer();
-
-    [Element("classifications")]
-    public List<type__classification_list> classifications = new List<type__classification_list>();
-    [Element("properties")]
-    public List<type__property_list> properties = new List<type__property_list>();
-
-    public group__item_data() {
-    }
-
-    public group__item_data (XmlNode xmlElement) {
-      Godot.GD.Print("Deserializing group__item_data");
-      serializer.Deserialize(xmlElement, this);
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        serializer.Serialize(element, this);
-    }
-  }
-  /*Type: complex*/
-  public class group__operation__and {
-    public WorldStepSerializer serializer = new WorldStepSerializer();
-
-    [Element("add_property")]
-    public List<group__operation__and__add_property> add_property = new List<group__operation__and__add_property>();
-    [Element("and")]
-    public List<group__operation__and> and = new List<group__operation__and>();
-
-    public group__operation__and() {
-    }
-
-    public group__operation__and (XmlNode xmlElement) {
-      Godot.GD.Print("Deserializing group__operation__and");
-      serializer.Deserialize(xmlElement, this);
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        serializer.Serialize(element, this);
-    }
-  }
-  /*Type: complex*/
-  public class group__math_operations {
-    public WorldStepSerializer serializer = new WorldStepSerializer();
-
-    [Element("operation")]
-    public List<group__operation__and> operation = new List<group__operation__and>();
-
-    public group__math_operations() {
-    }
-
-    public group__math_operations (XmlNode xmlElement) {
-      Godot.GD.Print("Deserializing group__math_operations");
-      serializer.Deserialize(xmlElement, this);
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        serializer.Serialize(element, this);
-    }
-  }
-  /*Type: complex*/
-  public class group__name_token {
-    public WorldStepSerializer serializer = new WorldStepSerializer();
-
-    [Element("name_token")]
-    public List<System.Object> name_token = new List<System.Object>();
-
-    public group__name_token() {
-    }
-
-    public group__name_token (XmlNode xmlElement) {
-      Godot.GD.Print("Deserializing group__name_token");
-      serializer.Deserialize(xmlElement, this);
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        serializer.Serialize(element, this);
-    }
-  }
-  /*Type: complex*/
-  public class type_range {
-    public WorldStepSerializer serializer = new WorldStepSerializer();
-
-    public type_range() {
-    }
-
-    public type_range (XmlNode xmlElement) {
-      Godot.GD.Print("Deserializing type_range");
-      serializer.Deserialize(xmlElement, this);
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        serializer.Serialize(element, this);
-    }
-  }
-  /*Type: complex*/
-  public class type__property_mutation_on {
-    public WorldStepSerializer serializer = new WorldStepSerializer();
-
-    [Attribute("on")]
-    public type_person_select on;
-
-    [Attribute("property_rule_ref")]
-    public string property_rule_ref;
-    [Element("from")]
-    public List<group__math_operations> from = new List<group__math_operations>();
-
-    public type__property_mutation_on() {
-    }
-
-    public type__property_mutation_on (XmlNode xmlElement) {
-      Godot.GD.Print("Deserializing type__property_mutation_on");
-      serializer.Deserialize(xmlElement, this);
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        serializer.Serialize(element, this);
-    }
-  }
-  /*Type: complex*/
-  public class type__property_mutation {
-    public WorldStepSerializer serializer = new WorldStepSerializer();
-
-    [Attribute("property_rule_ref")]
-    public string property_rule_ref;
-    [Element("from")]
-    public List<group__math_operations> from = new List<group__math_operations>();
-
-    public type__property_mutation() {
-    }
-
-    public type__property_mutation (XmlNode xmlElement) {
-      Godot.GD.Print("Deserializing type__property_mutation");
-      serializer.Deserialize(xmlElement, this);
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        serializer.Serialize(element, this);
-    }
-  }
-  /*Type: complex*/
-  public class type_icon {
-    public WorldStepSerializer serializer = new WorldStepSerializer();
-
-    public type_icon() {
-    }
-
-    public type_icon (XmlNode xmlElement) {
-      Godot.GD.Print("Deserializing type_icon");
-      serializer.Deserialize(xmlElement, this);
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        serializer.Serialize(element, this);
-    }
-  }
-  /*Type: complex*/
-  public class type__property_list {
-    public WorldStepSerializer serializer = new WorldStepSerializer();
-
-    [Element("property")]
-    public List<type__property_list__property> property = new List<type__property_list__property>();
-
-    public type__property_list() {
-    }
-
-    public type__property_list (XmlNode xmlElement) {
-      Godot.GD.Print("Deserializing type__property_list");
-      serializer.Deserialize(xmlElement, this);
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        serializer.Serialize(element, this);
-    }
-  }
-  /*Type: complex*/
-  public class type__classification_list {
-    public WorldStepSerializer serializer = new WorldStepSerializer();
-
-    [Element("classification")]
-    public List<type__classification_list__classification> classification = new List<type__classification_list__classification>();
-
-    public type__classification_list() {
-    }
-
-    public type__classification_list (XmlNode xmlElement) {
-      Godot.GD.Print("Deserializing type__classification_list");
-      serializer.Deserialize(xmlElement, this);
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        serializer.Serialize(element, this);
-    }
-  }
-  /*Type: complex*/
-  public class type__item: group__item_data {
-    public WorldStepSerializer serializer = new WorldStepSerializer();
-
-    [Attribute("id")]
-    public System.Object id;
-    [Attribute("name")]
-    public System.Object name;
-
-    public type__item() {
-    }
-
-    public type__item (XmlNode xmlElement): base(xmlElement) {
-      Godot.GD.Print("Deserializing type__item");
-      serializer.Deserialize(xmlElement, this);
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        serializer.Serialize(element, this);
-    }
-  }
-  /*Type: complex*/
-  public class type__item_selection {
-    public WorldStepSerializer serializer = new WorldStepSerializer();
-
-    [Element("min")]
-    public List<type__math_operations> min = new List<type__math_operations>();
-    [Element("max")]
-    public List<type__math_operations> max = new List<type__math_operations>();
-
-    [Element("classifications")]
-    public List<type__classification_list> classifications = new List<type__classification_list>();
-    [Element("properties")]
-    public List<type__property_list> properties = new List<type__property_list>();
-
-    public type__item_selection() {
-    }
-
-    public type__item_selection (XmlNode xmlElement) {
-      Godot.GD.Print("Deserializing type__item_selection");
-      serializer.Deserialize(xmlElement, this);
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        serializer.Serialize(element, this);
-    }
-  }
-  /*Type: complex*/
-  public class type_cell_ref {
-    public WorldStepSerializer serializer = new WorldStepSerializer();
-
-    [Attribute("layer")]
-    public System.Object layer;
-    [Attribute("x")]
-    public System.Int32 x;
-    [Attribute("y")]
-    public System.Int32 y;
-
-    public type_cell_ref() {
-    }
-
-    public type_cell_ref (XmlNode xmlElement) {
-      Godot.GD.Print("Deserializing type_cell_ref");
-      serializer.Deserialize(xmlElement, this);
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        serializer.Serialize(element, this);
-    }
-  }
-  /*Type: complex*/
-  public class type__person_selection {
-    public WorldStepSerializer serializer = new WorldStepSerializer();
-
-    [Element("radius")]
-    public List<type__math_operations> radius = new List<type__math_operations>();
-    [Element("min")]
-    public List<type__math_operations> min = new List<type__math_operations>();
-    [Element("max")]
-    public List<type__math_operations> max = new List<type__math_operations>();
-    [Element("property")]
-    public List<type__person_selection__property> property = new List<type__person_selection__property>();
-    [Element("classification")]
-    public List<type__person_selection__classification> classification = new List<type__person_selection__classification>();
-    [Element("race")]
-    public List<type__person_selection__race> race = new List<type__person_selection__race>();
-    [Element("inventory")]
-    public List<type__person_selection__inventory> inventory = new List<type__person_selection__inventory>();
-
-    public type__person_selection() {
-    }
-
-    public type__person_selection (XmlNode xmlElement) {
-      Godot.GD.Print("Deserializing type__person_selection");
-      serializer.Deserialize(xmlElement, this);
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        serializer.Serialize(element, this);
-    }
-  }
-  /*Type: complex*/
-  public class type__trigger {
-    public WorldStepSerializer serializer = new WorldStepSerializer();
-
-    [Element("person_action_used")]
-    public List<type__trigger__person_action_used> person_action_used = new List<type__trigger__person_action_used>();
-
-    public type__trigger() {
-    }
-
-    public type__trigger (XmlNode xmlElement) {
-      Godot.GD.Print("Deserializing type__trigger");
-      serializer.Deserialize(xmlElement, this);
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        serializer.Serialize(element, this);
-    }
-  }
-  /*Type: complex*/
-  public class type__math_operations: group__operation__and {
-    public WorldStepSerializer serializer = new WorldStepSerializer();
-
-    [Attribute("initial")]
-    public System.Int32 initial;
-
-    public type__math_operations() {
-    }
-
-    public type__math_operations (XmlNode xmlElement): base(xmlElement) {
-      Godot.GD.Print("Deserializing type__math_operations");
-      serializer.Deserialize(xmlElement, this);
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        serializer.Serialize(element, this);
-    }
-  }
-  /*Type: complex*/
-  public class type__action {
-    public WorldStepSerializer serializer = new WorldStepSerializer();
-
-    [Element("from")]
-    public List<type__action__from> from = new List<type__action__from>();
-    [Element("on")]
-    public List<type__action__on> on = new List<type__action__on>();
-
-    public type__action() {
-    }
-
-    public type__action (XmlNode xmlElement) {
-      Godot.GD.Print("Deserializing type__action");
-      serializer.Deserialize(xmlElement, this);
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        serializer.Serialize(element, this);
-    }
-  }
-  /*Type: element*/
+  /*Type: attribute*/
+  using property_rule_ref = System.String;
+  /*Type: simple*/
+  using item_slot = System.String;
+  /*Type: simple*/
+  using type_direction = System.String;
+  /*Type: simple*/
+  using type_person_select = System.String;
+  /*Type: simple*/
+  using type__group__operation__and = System.String;
+  /*typeDeclarationElementToString: element*/
   public class world_step {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -416,14 +43,45 @@ namespace XSD {
     {
         serializer.Serialize(element, this);
     }
+  }
 
-        internal object Serialize()
-        {
-            throw new NotImplementedException();
-        }
+  /*typeDeclarationElementToString: element*/
+  public class type__classification_list {
+    public WorldStepSerializer serializer = new WorldStepSerializer();
+
+    public type__classification_list() {
     }
 
-  /*Type: element*/
+    public type__classification_list (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing type__classification_list");
+      serializer.Deserialize(xmlElement, this);
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        serializer.Serialize(element, this);
+    }
+  }
+
+  /*typeDeclarationElementToString: element*/
+  public class type__property_list {
+    public WorldStepSerializer serializer = new WorldStepSerializer();
+
+    public type__property_list() {
+    }
+
+    public type__property_list (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing type__property_list");
+      serializer.Deserialize(xmlElement, this);
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        serializer.Serialize(element, this);
+    }
+  }
+
+  /*typeDeclarationElementToString: element*/
   public class group__operation__and__add_property {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -444,12 +102,33 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
+  public class group__operation__and {
+    public WorldStepSerializer serializer = new WorldStepSerializer();
+
+    public group__operation__and() {
+    }
+
+    public group__operation__and (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing group__operation__and");
+      serializer.Deserialize(xmlElement, this);
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        serializer.Serialize(element, this);
+    }
+  }
+
+  /*typeDeclarationElementToString: element*/
   public class System__Object {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
+    //composition-default
+
     [Element("ref")]
     public List<System__Object___ref> _ref = new List<System__Object___ref>();
+    //composition-default
 
     [Element("one_of")]
     public List<group__name_token> one_of = new List<group__name_token>();
@@ -468,7 +147,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class System__Object___ref {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -489,7 +168,43 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
+  public class group__name_token {
+    public WorldStepSerializer serializer = new WorldStepSerializer();
+
+    public group__name_token() {
+    }
+
+    public group__name_token (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing group__name_token");
+      serializer.Deserialize(xmlElement, this);
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        serializer.Serialize(element, this);
+    }
+  }
+
+  /*typeDeclarationElementToString: element*/
+  public class group__math_operations {
+    public WorldStepSerializer serializer = new WorldStepSerializer();
+
+    public group__math_operations() {
+    }
+
+    public group__math_operations (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing group__math_operations");
+      serializer.Deserialize(xmlElement, this);
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        serializer.Serialize(element, this);
+    }
+  }
+
+  /*typeDeclarationElementToString: element*/
   public class type__property_list__property {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -512,7 +227,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class type__classification_list__classification {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -533,7 +248,25 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
+  public class type__math_operations {
+    public WorldStepSerializer serializer = new WorldStepSerializer();
+
+    public type__math_operations() {
+    }
+
+    public type__math_operations (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing type__math_operations");
+      serializer.Deserialize(xmlElement, this);
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        serializer.Serialize(element, this);
+    }
+  }
+
+  /*typeDeclarationElementToString: element*/
   public class type__person_selection__property {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -558,7 +291,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class type__person_selection__classification {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -579,7 +312,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class type__person_selection__race {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -600,7 +333,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class type__person_selection__inventory {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -621,7 +354,25 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
+  public class type__item_selection {
+    public WorldStepSerializer serializer = new WorldStepSerializer();
+
+    public type__item_selection() {
+    }
+
+    public type__item_selection (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing type__item_selection");
+      serializer.Deserialize(xmlElement, this);
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        serializer.Serialize(element, this);
+    }
+  }
+
+  /*typeDeclarationElementToString: element*/
   public class type__trigger__person_action_used {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -642,7 +393,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class type__action__from {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -663,7 +414,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class type__action__from__person {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -686,7 +437,43 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
+  public class type__person_selection {
+    public WorldStepSerializer serializer = new WorldStepSerializer();
+
+    public type__person_selection() {
+    }
+
+    public type__person_selection (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing type__person_selection");
+      serializer.Deserialize(xmlElement, this);
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        serializer.Serialize(element, this);
+    }
+  }
+
+  /*typeDeclarationElementToString: element*/
+  public class type__property_mutation {
+    public WorldStepSerializer serializer = new WorldStepSerializer();
+
+    public type__property_mutation() {
+    }
+
+    public type__property_mutation (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing type__property_mutation");
+      serializer.Deserialize(xmlElement, this);
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        serializer.Serialize(element, this);
+    }
+  }
+
+  /*typeDeclarationElementToString: element*/
   public class type__action__on {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -707,7 +494,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class type__action__on__person {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -730,7 +517,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__world_metadata {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -761,7 +548,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__world_metadata__previous_world_step {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -782,7 +569,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__world_metadata__next_world_step {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -803,7 +590,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__world_metadata__elapsed_time {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -824,7 +611,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__world_metadata__stepDuration {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -845,7 +632,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__world_metadata__counter {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -866,7 +653,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__world_metadata__randomization_table {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -887,7 +674,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__world_metadata__randomization_table__entry {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -908,7 +695,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -947,7 +734,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__property_rule {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -968,7 +755,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__property_rule__entry {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -977,9 +764,9 @@ namespace XSD {
     [Attribute("units")]
     public System.Object units;
     [Element("person_default")]
-    public List<System.Object> person_default = new List<System.Object>();
+    public List<world_step__rule_group__property_rule__entry__person_default> person_default = new List<world_step__rule_group__property_rule__entry__person_default>();
     [Element("item_default")]
-    public List<System.Object> item_default = new List<System.Object>();
+    public List<world_step__rule_group__property_rule__entry__item_default> item_default = new List<world_step__rule_group__property_rule__entry__item_default>();
     [Element("property-threshold")]
     public List<world_step__rule_group__property_rule__entry__property_threshold> property_threshold = new List<world_step__rule_group__property_rule__entry__property_threshold>();
 
@@ -997,7 +784,49 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
+  public class world_step__rule_group__property_rule__entry__person_default {
+    public WorldStepSerializer serializer = new WorldStepSerializer();
+
+    //composition-default
+    //composition-primitive
+
+    public world_step__rule_group__property_rule__entry__person_default() {
+    }
+
+    public world_step__rule_group__property_rule__entry__person_default (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing world_step__rule_group__property_rule__entry__person_default");
+      serializer.Deserialize(xmlElement, this);
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        serializer.Serialize(element, this);
+    }
+  }
+
+  /*typeDeclarationElementToString: element*/
+  public class world_step__rule_group__property_rule__entry__item_default {
+    public WorldStepSerializer serializer = new WorldStepSerializer();
+
+    //composition-default
+    //composition-primitive
+
+    public world_step__rule_group__property_rule__entry__item_default() {
+    }
+
+    public world_step__rule_group__property_rule__entry__item_default (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing world_step__rule_group__property_rule__entry__item_default");
+      serializer.Deserialize(xmlElement, this);
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        serializer.Serialize(element, this);
+    }
+  }
+
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__property_rule__entry__property_threshold {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1022,7 +851,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__classification_rule {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1043,7 +872,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__classification_rule__entry {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1066,7 +895,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__name_rule {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1087,7 +916,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__race_rule {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1108,7 +937,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__race_rule__entry {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1139,7 +968,25 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
+  public class type_range {
+    public WorldStepSerializer serializer = new WorldStepSerializer();
+
+    public type_range() {
+    }
+
+    public type_range (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing type_range");
+      serializer.Deserialize(xmlElement, this);
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        serializer.Serialize(element, this);
+    }
+  }
+
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__race_rule__entry__name {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1160,7 +1007,25 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
+  public class type_icon {
+    public WorldStepSerializer serializer = new WorldStepSerializer();
+
+    public type_icon() {
+    }
+
+    public type_icon (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing type_icon");
+      serializer.Deserialize(xmlElement, this);
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        serializer.Serialize(element, this);
+    }
+  }
+
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__action_rule {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1183,12 +1048,12 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__action_rule__global {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
     [Element("entry")]
-    public List<System.Object> entry = new List<System.Object>();
+    public List<world_step__rule_group__action_rule__global__entry> entry = new List<world_step__rule_group__action_rule__global__entry>();
 
     public world_step__rule_group__action_rule__global() {
     }
@@ -1204,18 +1069,25 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
-  public class undefined__from {
+  /*typeDeclarationElementToString: element*/
+  public class world_step__rule_group__action_rule__global__entry {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
-    [Element("person")]
-    public List<undefined__from__person> person = new List<undefined__from__person>();
+    //composition-default
+    [Attribute("id")]
+    public string id;
+    //composition-primitive
 
-    public undefined__from() {
+    [Element("from")]
+    public List<world_step__rule_group__action_rule__global__entry__from> from = new List<world_step__rule_group__action_rule__global__entry__from>();
+    [Element("on")]
+    public List<world_step__rule_group__action_rule__global__entry__on> on = new List<world_step__rule_group__action_rule__global__entry__on>();
+
+    public world_step__rule_group__action_rule__global__entry() {
     }
 
-    public undefined__from (XmlNode xmlElement) {
-      Godot.GD.Print("Deserializing undefined__from");
+    public world_step__rule_group__action_rule__global__entry (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing world_step__rule_group__action_rule__global__entry");
       serializer.Deserialize(xmlElement, this);
     }
 
@@ -1225,8 +1097,29 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
-  public class undefined__from__person {
+  /*typeDeclarationElementToString: element*/
+  public class world_step__rule_group__action_rule__global__entry__from {
+    public WorldStepSerializer serializer = new WorldStepSerializer();
+
+    [Element("person")]
+    public List<world_step__rule_group__action_rule__global__entry__from__person> person = new List<world_step__rule_group__action_rule__global__entry__from__person>();
+
+    public world_step__rule_group__action_rule__global__entry__from() {
+    }
+
+    public world_step__rule_group__action_rule__global__entry__from (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing world_step__rule_group__action_rule__global__entry__from");
+      serializer.Deserialize(xmlElement, this);
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        serializer.Serialize(element, this);
+    }
+  }
+
+  /*typeDeclarationElementToString: element*/
+  public class world_step__rule_group__action_rule__global__entry__from__person {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
     [Element("select")]
@@ -1234,11 +1127,11 @@ namespace XSD {
     [Element("property_mutation")]
     public List<type__property_mutation> property_mutation = new List<type__property_mutation>();
 
-    public undefined__from__person() {
+    public world_step__rule_group__action_rule__global__entry__from__person() {
     }
 
-    public undefined__from__person (XmlNode xmlElement) {
-      Godot.GD.Print("Deserializing undefined__from__person");
+    public world_step__rule_group__action_rule__global__entry__from__person (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing world_step__rule_group__action_rule__global__entry__from__person");
       serializer.Deserialize(xmlElement, this);
     }
 
@@ -1248,18 +1141,18 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
-  public class undefined__on {
+  /*typeDeclarationElementToString: element*/
+  public class world_step__rule_group__action_rule__global__entry__on {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
     [Element("person")]
-    public List<undefined__on__person> person = new List<undefined__on__person>();
+    public List<world_step__rule_group__action_rule__global__entry__on__person> person = new List<world_step__rule_group__action_rule__global__entry__on__person>();
 
-    public undefined__on() {
+    public world_step__rule_group__action_rule__global__entry__on() {
     }
 
-    public undefined__on (XmlNode xmlElement) {
-      Godot.GD.Print("Deserializing undefined__on");
+    public world_step__rule_group__action_rule__global__entry__on (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing world_step__rule_group__action_rule__global__entry__on");
       serializer.Deserialize(xmlElement, this);
     }
 
@@ -1269,8 +1162,8 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
-  public class undefined__on__person {
+  /*typeDeclarationElementToString: element*/
+  public class world_step__rule_group__action_rule__global__entry__on__person {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
     [Element("select")]
@@ -1278,11 +1171,11 @@ namespace XSD {
     [Element("property_mutation")]
     public List<type__property_mutation> property_mutation = new List<type__property_mutation>();
 
-    public undefined__on__person() {
+    public world_step__rule_group__action_rule__global__entry__on__person() {
     }
 
-    public undefined__on__person (XmlNode xmlElement) {
-      Godot.GD.Print("Deserializing undefined__on__person");
+    public world_step__rule_group__action_rule__global__entry__on__person (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing world_step__rule_group__action_rule__global__entry__on__person");
       serializer.Deserialize(xmlElement, this);
     }
 
@@ -1292,7 +1185,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__action_rule__person_to_person {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1319,7 +1212,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__action_rule__person_to_person__test {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1342,7 +1235,25 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
+  public class type__property_mutation_on {
+    public WorldStepSerializer serializer = new WorldStepSerializer();
+
+    public type__property_mutation_on() {
+    }
+
+    public type__property_mutation_on (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing type__property_mutation_on");
+      serializer.Deserialize(xmlElement, this);
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        serializer.Serialize(element, this);
+    }
+  }
+
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__action_rule__person_to_person__location_mutation {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1367,7 +1278,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__item_rule {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1388,7 +1299,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__item_rule__entry {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1415,7 +1326,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__item_rule__entry__weight_kg {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1436,7 +1347,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__item_rule__entry__wearable {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1457,7 +1368,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__events_rule {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1478,7 +1389,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__events_rule__entry {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1503,16 +1414,34 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
+  public class type__trigger {
+    public WorldStepSerializer serializer = new WorldStepSerializer();
+
+    public type__trigger() {
+    }
+
+    public type__trigger (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing type__trigger");
+      serializer.Deserialize(xmlElement, this);
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        serializer.Serialize(element, this);
+    }
+  }
+
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__events_rule__entry__then {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
     [Element("select_person")]
-    public List<System.Object> select_person = new List<System.Object>();
+    public List<world_step__rule_group__events_rule__entry__then__select_person> select_person = new List<world_step__rule_group__events_rule__entry__then__select_person>();
     [Element("select_item")]
-    public List<System.Object> select_item = new List<System.Object>();
+    public List<world_step__rule_group__events_rule__entry__then__select_item> select_item = new List<world_step__rule_group__events_rule__entry__then__select_item>();
     [Element("property_mutation")]
-    public List<System.Object> property_mutation = new List<System.Object>();
+    public List<world_step__rule_group__events_rule__entry__then__property_mutation> property_mutation = new List<world_step__rule_group__events_rule__entry__then__property_mutation>();
 
     public world_step__rule_group__events_rule__entry__then() {
     }
@@ -1528,8 +1457,46 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
-  public class undefined__property {
+  /*typeDeclarationElementToString: element*/
+  public class world_step__rule_group__events_rule__entry__then__select_person {
+    public WorldStepSerializer serializer = new WorldStepSerializer();
+
+    //composition-default
+    [Attribute("origin")]
+    public System.Object origin;
+    //composition-primitive
+
+    [Element("radius")]
+    public List<type__math_operations> radius = new List<type__math_operations>();
+    [Element("min")]
+    public List<type__math_operations> min = new List<type__math_operations>();
+    [Element("max")]
+    public List<type__math_operations> max = new List<type__math_operations>();
+    [Element("property")]
+    public List<world_step__rule_group__events_rule__entry__then__select_person__property> property = new List<world_step__rule_group__events_rule__entry__then__select_person__property>();
+    [Element("classification")]
+    public List<world_step__rule_group__events_rule__entry__then__select_person__classification> classification = new List<world_step__rule_group__events_rule__entry__then__select_person__classification>();
+    [Element("race")]
+    public List<world_step__rule_group__events_rule__entry__then__select_person__race> race = new List<world_step__rule_group__events_rule__entry__then__select_person__race>();
+    [Element("inventory")]
+    public List<world_step__rule_group__events_rule__entry__then__select_person__inventory> inventory = new List<world_step__rule_group__events_rule__entry__then__select_person__inventory>();
+
+    public world_step__rule_group__events_rule__entry__then__select_person() {
+    }
+
+    public world_step__rule_group__events_rule__entry__then__select_person (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing world_step__rule_group__events_rule__entry__then__select_person");
+      serializer.Deserialize(xmlElement, this);
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        serializer.Serialize(element, this);
+    }
+  }
+
+  /*typeDeclarationElementToString: element*/
+  public class world_step__rule_group__events_rule__entry__then__select_person__property {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
     [Attribute("property_rule_ref")]
@@ -1539,11 +1506,11 @@ namespace XSD {
     [Element("max")]
     public List<type__math_operations> max = new List<type__math_operations>();
 
-    public undefined__property() {
+    public world_step__rule_group__events_rule__entry__then__select_person__property() {
     }
 
-    public undefined__property (XmlNode xmlElement) {
-      Godot.GD.Print("Deserializing undefined__property");
+    public world_step__rule_group__events_rule__entry__then__select_person__property (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing world_step__rule_group__events_rule__entry__then__select_person__property");
       serializer.Deserialize(xmlElement, this);
     }
 
@@ -1553,18 +1520,18 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
-  public class undefined__classification {
+  /*typeDeclarationElementToString: element*/
+  public class world_step__rule_group__events_rule__entry__then__select_person__classification {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
     [Attribute("classification_rule_ref")]
     public string classification_rule_ref;
 
-    public undefined__classification() {
+    public world_step__rule_group__events_rule__entry__then__select_person__classification() {
     }
 
-    public undefined__classification (XmlNode xmlElement) {
-      Godot.GD.Print("Deserializing undefined__classification");
+    public world_step__rule_group__events_rule__entry__then__select_person__classification (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing world_step__rule_group__events_rule__entry__then__select_person__classification");
       serializer.Deserialize(xmlElement, this);
     }
 
@@ -1574,18 +1541,18 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
-  public class undefined__race {
+  /*typeDeclarationElementToString: element*/
+  public class world_step__rule_group__events_rule__entry__then__select_person__race {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
     [Attribute("race_rule_ref")]
     public System.Object race_rule_ref;
 
-    public undefined__race() {
+    public world_step__rule_group__events_rule__entry__then__select_person__race() {
     }
 
-    public undefined__race (XmlNode xmlElement) {
-      Godot.GD.Print("Deserializing undefined__race");
+    public world_step__rule_group__events_rule__entry__then__select_person__race (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing world_step__rule_group__events_rule__entry__then__select_person__race");
       serializer.Deserialize(xmlElement, this);
     }
 
@@ -1595,18 +1562,18 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
-  public class undefined__inventory {
+  /*typeDeclarationElementToString: element*/
+  public class world_step__rule_group__events_rule__entry__then__select_person__inventory {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
     [Element("item")]
     public List<type__item_selection> item = new List<type__item_selection>();
 
-    public undefined__inventory() {
+    public world_step__rule_group__events_rule__entry__then__select_person__inventory() {
     }
 
-    public undefined__inventory (XmlNode xmlElement) {
-      Godot.GD.Print("Deserializing undefined__inventory");
+    public world_step__rule_group__events_rule__entry__then__select_person__inventory (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing world_step__rule_group__events_rule__entry__then__select_person__inventory");
       serializer.Deserialize(xmlElement, this);
     }
 
@@ -1616,7 +1583,65 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
+  public class world_step__rule_group__events_rule__entry__then__select_item {
+    public WorldStepSerializer serializer = new WorldStepSerializer();
+
+    //composition-default
+    [Attribute("origin")]
+    public System.Object origin;
+    //composition-primitive
+    //composition-default
+
+    [Element("min")]
+    public List<type__math_operations> min = new List<type__math_operations>();
+    [Element("max")]
+    public List<type__math_operations> max = new List<type__math_operations>();
+    //composition-reference
+
+    [Element("classifications")]
+    public List<type__classification_list> classifications = new List<type__classification_list>();
+    [Element("properties")]
+    public List<type__property_list> properties = new List<type__property_list>();
+
+    public world_step__rule_group__events_rule__entry__then__select_item() {
+    }
+
+    public world_step__rule_group__events_rule__entry__then__select_item (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing world_step__rule_group__events_rule__entry__then__select_item");
+      serializer.Deserialize(xmlElement, this);
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        serializer.Serialize(element, this);
+    }
+  }
+
+  /*typeDeclarationElementToString: element*/
+  public class world_step__rule_group__events_rule__entry__then__property_mutation {
+    public WorldStepSerializer serializer = new WorldStepSerializer();
+
+    //composition-default
+    [Attribute("property_rule_ref")]
+    public string property_rule_ref;
+    //composition-primitive
+
+    public world_step__rule_group__events_rule__entry__then__property_mutation() {
+    }
+
+    public world_step__rule_group__events_rule__entry__then__property_mutation (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing world_step__rule_group__events_rule__entry__then__property_mutation");
+      serializer.Deserialize(xmlElement, this);
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        serializer.Serialize(element, this);
+    }
+  }
+
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__locations_markov_chain {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1637,7 +1662,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__locations_markov_chain__location_markov_link {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1664,7 +1689,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__locations_markov_chain__location_markov_link__tag {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1685,7 +1710,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__locations_markov_chain__location_markov_link__sibling {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1710,7 +1735,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__location_graph_rule {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1735,7 +1760,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__location_graph_rule__setup {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1756,7 +1781,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__location_graph_rule__setup__starting_node {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1777,7 +1802,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__location_graph_rule__node_rule {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1800,7 +1825,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__location_graph_rule__node_rule__link_group {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1829,7 +1854,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__rule_group__location_graph_rule__node_rule__link_group__to_option {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1856,7 +1881,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__items {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1877,7 +1902,25 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
+  public class type__item {
+    public WorldStepSerializer serializer = new WorldStepSerializer();
+
+    public type__item() {
+    }
+
+    public type__item (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing type__item");
+      serializer.Deserialize(xmlElement, this);
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        serializer.Serialize(element, this);
+    }
+  }
+
+  /*typeDeclarationElementToString: element*/
   public class world_step__people {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1898,7 +1941,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__people__person {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1935,7 +1978,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__people__person__race {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1956,7 +1999,25 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
+  public class type_cell_ref {
+    public WorldStepSerializer serializer = new WorldStepSerializer();
+
+    public type_cell_ref() {
+    }
+
+    public type_cell_ref (XmlNode xmlElement) {
+      Godot.GD.Print("Deserializing type_cell_ref");
+      serializer.Deserialize(xmlElement, this);
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        serializer.Serialize(element, this);
+    }
+  }
+
+  /*typeDeclarationElementToString: element*/
   public class world_step__people__person__properties {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -1977,7 +2038,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__people__person__properties__property {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -2000,7 +2061,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__people__person__relations {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -2021,7 +2082,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__people__person__inventory {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -2042,7 +2103,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__people__person__classifications {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -2063,7 +2124,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__people__person__classifications__classification {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -2084,7 +2145,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__location_layer {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -2107,7 +2168,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__location_layer__cell {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -2132,7 +2193,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__location_graph {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -2157,7 +2218,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__location_graph__rule {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -2178,7 +2239,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__location_graph__node {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -2207,7 +2268,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__location_graph__node__position {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -2230,7 +2291,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__location_graph__node__link_to {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -2251,7 +2312,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__location_graph__node__people {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -2272,7 +2333,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__location_graph__node__people__person {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -2293,7 +2354,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__actions {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -2322,7 +2383,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class System__Object__do {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -2347,7 +2408,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class System__Object__move_towards {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -2372,7 +2433,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__actions__location_graph__create {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -2393,7 +2454,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__actions__location_graph__node__create_adjacent {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -2416,7 +2477,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class System__Object__location_graph {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -2439,7 +2500,7 @@ namespace XSD {
     }
   }
 
-  /*Type: element*/
+  /*typeDeclarationElementToString: element*/
   public class world_step__actions__person__on_person__property_mutation {
     public WorldStepSerializer serializer = new WorldStepSerializer();
 
@@ -2463,6 +2524,5 @@ namespace XSD {
         serializer.Serialize(element, this);
     }
   }
-
 
 }

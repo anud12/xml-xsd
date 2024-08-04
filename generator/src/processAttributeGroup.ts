@@ -15,7 +15,7 @@ export function processAttributeGroup(element: XsdElement | XsdElement[]): Type[
 
     if (element.ref) {
       return [{
-        metaType: "primitive",
+        metaType: "reference",
         value: element.ref
       }]
     }
