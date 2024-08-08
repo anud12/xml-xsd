@@ -122,7 +122,7 @@ function typeDeclarationElementToString(dependantType: DependantType): GetObject
             })
             return template()`public List<${type}> ${normalizeName(key)} = new List<${type}>();`
           }
-          if (value.metaType === "union") {
+          if (value.metaType === "union" || value.metaType === "composition") {
             dependantTypeList.push({
               type: "union",
               value: value,
@@ -169,7 +169,7 @@ function typeDeclarationElementToString(dependantType: DependantType): GetObject
         ${dependantType.value.metaType === "object" && dependantType.value.value && template()`
           //Deserialize elements
           ${Object.entries(dependantType.value.value).map(([key, value]) => {
-            if (value.metaType === "object" || value.metaType === "union") {
+            if (value.metaType === "object" || value.metaType === "union" || value.metaType === "composition") {
               return template()`this.${normalizeName(key)} = rawNode.InitializeWithRawNode("${key}", this.${normalizeName(key)});`;
             }
           }).filter(e => e).join("\n")}

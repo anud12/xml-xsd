@@ -27,16 +27,22 @@ public partial class WorldStep : Control
 		mainPersonData.AnchorBottom = 1;
 		mainPersonData.AnchorTop = 1;
 		mainPersonContainer.AddChild(mainPersonData);
-		var unsubscribe = StoreWorld_Step.instance.OnSave(data =>
+		StoreWorld_Step.instance.OnSave((data, unsubscribe) =>
 		{
-			var unsubscribe = StoreSession.mainPersonId.OnSave(mainPersonId =>
+			if(IsInstanceValid(this) == false) {
+				unsubscribe();
+				return;
+			}
+			StoreSession.mainPersonId.OnSave((mainPersonId, unsubscribe) =>
 			{
+				if(IsInstanceValid(this) == false) {
+					unsubscribe();
+					return;
+				}
 				mainPersonData.initializeFromId(mainPersonId);
 
 			});
-			unsubscribeList.Add(unsubscribe);
 		});
-		unsubscribeList.Add(unsubscribe);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -64,8 +70,12 @@ public partial class WorldStep : Control
 
 	private void addLocationGraph()
 	{
-		var unsubscribe = StoreWorld_Step.instance.OnSave(worldStep =>
+		StoreWorld_Step.instance.OnSave((worldStep, unsubscribe) =>
 		{
+			if(IsInstanceValid(this) == false) {
+				unsubscribe();
+				return;
+			}
 			//read location graphs from world_step and add buttons for each into LocationGraphList node
 			var locationGraphList = GetNode<Control>("%LocationGraphList");
 
@@ -95,6 +105,5 @@ public partial class WorldStep : Control
 				locationGraphList.AddChild(button);
 			});
 		});
-		unsubscribeList.Add(unsubscribe);
 	}
 }

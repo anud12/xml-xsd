@@ -33,8 +33,13 @@ public partial class PersonComponent : Control
 		try
 		{
 			var nameLabel = GetNode<Label>("%NameLabel");
-			var unsubscribe = person.OnSave(person =>
+			var unsubscribe = person.OnSave((person, unsubscribe) =>
 			{
+				if(IsInstanceValid(this) == false)
+				{
+					unsubscribe();
+					return;
+				}
 				if (person == null)
 				{
 					return;
@@ -61,16 +66,27 @@ public partial class PersonComponent : Control
 
 	private void addPersonToPersonActions()
 	{
-		var unsubscribe = StoreSession.mainPersonId.OnSave(mainPersonId =>
+		StoreSession.mainPersonId.OnSave((mainPersonId, unsubscribe) =>
 		{
+			if(IsInstanceValid(this) == false)
+			{
+				unsubscribe();
+				return;
+			}
+
 			if (mainPersonId == null)
 			{
 				return;
 			}
 
 
-			var unsubscribe = worldStep.OnSave(worldStep =>
+			worldStep.OnSave((worldStep, unsubscribe) =>
 			{
+				if(IsInstanceValid(this) == false)
+				{
+					unsubscribe();
+					return;
+				}
 				GD.Print("Adding actions");
 				if (worldStep == null)
 				{
@@ -101,9 +117,7 @@ public partial class PersonComponent : Control
 					actionsContainer.AddChild(button);
 				});
 			});
-			unsubscribeList.Add(unsubscribe);
 		});
-		unsubscribeList.Add(unsubscribe);
 
 	}
 
@@ -119,7 +133,7 @@ public partial class PersonComponent : Control
 		{
 			worldStep.actions.Add(new world_step__actions());
 		}
-		
+
 		worldStep.actions.First().person__on_person__property_mutation.Add(new world_step__actions__person__on_person__property_mutation
 		{
 			action_property_mutation_rule_ref = actionId,
@@ -131,8 +145,13 @@ public partial class PersonComponent : Control
 
 	private void addClassifications()
 	{
-		var unsubscribe = person.OnSave(person =>
+		person.OnSave((person, unsubscribe) =>
 		{
+			if(IsInstanceValid(this) == false)
+			{
+				unsubscribe();
+				return;
+			}
 			if (person == null)
 			{
 				return;
@@ -149,13 +168,17 @@ public partial class PersonComponent : Control
 				});
 			}
 		});
-		unsubscribeList.Add(unsubscribe);
 	}
 
 	private void addProperties()
 	{
-		var unsubscribe = person.OnSave(person =>
+		var unsubscribe = person.OnSave((person, unsubscribe) =>
 		{
+			if(IsInstanceValid(this) == false)
+			{
+				unsubscribe();
+				return;
+			}
 			if (person == null)
 			{
 				return;
