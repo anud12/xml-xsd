@@ -1,0 +1,61 @@
+[gd_scene load_steps=4 format=3 uid="uid://dd78o8h4nemba"]
+
+[ext_resource type="Theme" uid="uid://dskjtmlounwht" path="res://mainTheme.tres" id="1_368y6"]
+[ext_resource type="Script" path="res://scenes/LocationGraphScene.cs" id="1_vetda"]
+[ext_resource type="Script" path="res://MapCamera2D.gd" id="2_5cm36"]
+
+[node name="Control" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_368y6")
+script = ExtResource("1_vetda")
+
+[node name="BoxContainer" type="BoxContainer" parent="."]
+layout_mode = 2
+vertical = true
+
+[node name="MarginContainer" type="MarginContainer" parent="BoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Title" type="Label" parent="BoxContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Location graph scene"
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="BoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="BoxContainer/SubViewportContainer"]
+disable_3d = true
+handle_input_locally = false
+size = Vector2i(2, 2)
+render_target_update_mode = 4
+
+[node name="MapCamera2D" type="Camera2D" parent="BoxContainer/SubViewportContainer/SubViewport"]
+zoom = Vector2(0.4, 0.4)
+script = ExtResource("2_5cm36")
+zoom_factor = 1.373
+zoom_min = 0.0
+zoom_max = 100.0
+pan_speed = 0.0
+drag_inertia = 0.0
+
+[node name="Label" type="Label" parent="BoxContainer/SubViewportContainer/SubViewport"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Viewport
+"
+
+[node name="GraphContainer" type="Node" parent="BoxContainer/SubViewportContainer/SubViewport"]
+unique_name_in_owner = true

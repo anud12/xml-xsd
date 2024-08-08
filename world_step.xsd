@@ -839,7 +839,7 @@
                     <xs:element name="global" minOccurs="0">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="entry">
+                          <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
                             <xs:complexType>
                               <xs:complexContent>
                                 <xs:extension base="type__action">
@@ -895,7 +895,7 @@
                             </xs:complexType>
                           </xs:element>
                         </xs:sequence>
-                        <xs:attribute name="id" use="required"/>
+                        <xs:attribute name="id" use="required" type="xs:string"/>
                       </xs:complexType>
                     </xs:element>
 
@@ -1086,7 +1086,7 @@
                             </xs:annotation>
                             <xs:complexType>
                               <xs:sequence>
-                                <xs:element name="to_option">
+                                <xs:element name="to_option" minOccurs="0" maxOccurs="unbounded">
                                   <xs:annotation>
                                     <xs:documentation>
                                       Represents the options to go to the next node.
@@ -1228,8 +1228,8 @@
                     </xs:element>
                     <xs:element name="icon" type="type_icon" minOccurs="0"/>
                   </xs:sequence>
-                  <xs:attribute name="id" use="required"/>
-                  <xs:attribute name="name"/>
+                  <xs:attribute name="id" use="required" type="xs:string"/>
+                  <xs:attribute name="name" type="xs:string"/>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>

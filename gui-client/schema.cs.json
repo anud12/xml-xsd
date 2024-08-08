@@ -961,7 +961,8 @@
                     "metaType": "object",
                     "value": {
                       "id": {
-                        "metaType": "unknown"
+                        "metaType": "primitive",
+                        "value": "xs:string"
                       }
                     }
                   },
@@ -1390,10 +1391,12 @@
                 "metaType": "object",
                 "value": {
                   "id": {
-                    "metaType": "unknown"
+                    "metaType": "primitive",
+                    "value": "xs:string"
                   },
                   "name": {
-                    "metaType": "unknown"
+                    "metaType": "primitive",
+                    "value": "xs:string"
                   }
                 }
               },

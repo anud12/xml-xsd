@@ -14,7 +14,8 @@ export function main(path: string, output: string = "./type.cs") {
   let result = template()`
   using System.Collections.Generic;
   using System.Xml;
-  
+  using System.Linq;
+  using Godot;
   namespace XSD {
     ${typeString}
   }
