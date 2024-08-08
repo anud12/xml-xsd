@@ -209,12 +209,25 @@
     </node>
   </location_graph>
 
+  <location_graph id="first world">
+    <rule location_graph_rule_ref="location_graph_rule_id" />
+    <node node_rule_ref="city" id="Capital">
+      <position x="0" y="0" />
+      <link_to node_id_ref="0.0" />
+      <people>
+        <person person_id_ref="0" />
+        <person person_id_ref="1" />
+      </people>
+    </node>
+    <node node_rule_ref="farm" id="0.0">
+      <position x="0" y="1" />
+    </node>
+  </location_graph>
   <location_graph id="second world with long name">
     <rule location_graph_rule_ref="location_graph_rule_id" />
     <node node_rule_ref="farm" id="Farm">
       <position x="0" y="0" />
-      <people>
-      </people>
+      <people />
     </node>
   </location_graph>
   <actions>

@@ -32,9 +32,9 @@ public partial class LocationGraphScene : Control
 		var unsubscribe = StoreWorld_Step.instance.OnSave(data =>
 		{
 			//clear the viewport container
-			
+
 			viewportContainer.GetChildren().ToList().ForEach(child => viewportContainer.RemoveChild(child));
-			if(data == null)
+			if (data == null)
 			{
 				return;
 			}
@@ -76,6 +76,7 @@ public partial class LocationGraphScene : Control
 
 						locationGraphNodeComponent.initialize(node, worldStep);
 						locationGraphNodeComponent.setOnCreateAdjacentButtonPressed(node => addAdjacent(location_graph, node, worldStep));
+						locationGraphNodeComponent.setOnTeleportToButtonPressed(node => teleportTo(location_graph, node, worldStep));
 						return new Node[] { locationGraphNodeComponent };
 					});
 		});
@@ -99,11 +100,35 @@ public partial class LocationGraphScene : Control
 		worldStep.actions.First().location_graph__node__create_adjacent.Add(createAdjacent);
 		LoadWorldStep.executeNextStep();
 	}
+
+	private void teleportTo(world_step__location_graph locationGraph, world_step__location_graph__node node, world_step worldStep)
+	{
+		GD.Print("Teleporting to " + node.id);
+
+		var teleport = new world_step__actions__person__teleport {
+			person_id_ref = StoreSession.mainPersonId.data,
+		};
+		teleport.location_graph = new List<world_step__actions__person__teleport__location_graph> {
+			new world_step__actions__person__teleport__location_graph
+			{
+				location_graph_id = locationGraph.id,
+				node_id = node.id,
+			}
+		 };
+
+		if (worldStep.actions.Count == 0)
+		{
+			worldStep.actions.Add(new world_step__actions());
+		}
+		worldStep.actions.First().person__teleport.Add(teleport);
+		LoadWorldStep.executeNextStep();
+	}
 	private System.Collections.Generic.IEnumerable<Node> loadLinks(world_step worldStep)
 	{
 		var nodeById = worldStep.location_graph.SelectMany(locationGraph => locationGraph.node).ToDictionary(node => node.id);
 
-		return worldStep.location_graph.Where(location_graph => location_graph.id == this.locationGraphId).SelectMany(location_graph => {
+		return worldStep.location_graph.Where(location_graph => location_graph.id == this.locationGraphId).SelectMany(location_graph =>
+		{
 			return location_graph.node.SelectMany(node =>
 			{
 				GD.Print("node.link_to: " + node.link_to.Count);
