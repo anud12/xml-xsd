@@ -4,8 +4,8 @@
 [ext_resource type="Script" path="res://components/PersonComponent.cs" id="1_k120c"]
 
 [node name="PanelContainer" type="PanelContainer"]
-offset_right = 530.0
-offset_bottom = 178.0
+offset_right = 582.0
+offset_bottom = 210.0
 theme = ExtResource("1_hgkv0")
 script = ExtResource("1_k120c")
 
@@ -28,12 +28,44 @@ theme_override_constants/separation = 0
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 26
+theme_type_variation = &"Title"
 text = "person_name with a large text with name but it"
 
 [node name="HBoxContainer" type="BoxContainer" parent="MarginContainer/BoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="ClassificationContainer" type="FlowContainer" parent="MarginContainer/BoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="Label" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/ClassificationContainer"]
+layout_mode = 2
+text = "classification_name"
+
+[node name="Label2" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/ClassificationContainer"]
+layout_mode = 2
+text = "classification_name"
+
+[node name="Label3" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/ClassificationContainer"]
+layout_mode = 2
+text = "classification_name"
+
+[node name="Label4" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/ClassificationContainer"]
+layout_mode = 2
+text = "classification_name"
+
+[node name="Label5" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/ClassificationContainer"]
+layout_mode = 2
+text = "classification_name"
+
+[node name="Label6" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/ClassificationContainer"]
+layout_mode = 2
+text = "classification_name"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/BoxContainer/HBoxContainer"]
+layout_mode = 2
 
 [node name="PropertiesContainer" type="GridContainer" parent="MarginContainer/BoxContainer/HBoxContainer"]
 unique_name_in_owner = true
@@ -90,42 +122,10 @@ text = "property_name"
 layout_mode = 2
 text = "12"
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/BoxContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="ClassificationContainer" type="FlowContainer" parent="MarginContainer/BoxContainer/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-
-[node name="Label" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/ClassificationContainer"]
-layout_mode = 2
-text = "classification_name"
-
-[node name="Label2" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/ClassificationContainer"]
-layout_mode = 2
-text = "classification_name"
-
-[node name="Label3" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/ClassificationContainer"]
-layout_mode = 2
-text = "classification_name"
-
-[node name="Label4" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/ClassificationContainer"]
-layout_mode = 2
-text = "classification_name"
-
-[node name="Label5" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/ClassificationContainer"]
-layout_mode = 2
-text = "classification_name"
-
-[node name="Label6" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/ClassificationContainer"]
-layout_mode = 2
-text = "classification_name"
-
 [node name="ActionsContainer" type="FlowContainer" parent="MarginContainer/BoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+alignment = 2
 
 [node name="Button" type="Button" parent="MarginContainer/BoxContainer/ActionsContainer"]
 layout_mode = 2

@@ -18,8 +18,8 @@ export function processElementType(element: XsdElement | XsdElement[]): Type[] {
 
     if (element.type) {
       return [{
-        metaType:"reference",
-        value:element.type
+        metaType: "reference",
+        value: element.type
       }];
     }
     if (element["xs:complexContent"] !== undefined) {

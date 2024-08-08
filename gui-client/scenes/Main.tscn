@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://cd5b7er130ego"]
+[gd_scene load_steps=3 format=3 uid="uid://cd5b7er130ego"]
 
+[ext_resource type="Theme" uid="uid://dskjtmlounwht" path="res://mainTheme.tres" id="1_glgu6"]
 [ext_resource type="Script" path="res://scenes/Main.cs" id="1_pb6be"]
 
 [node name="Control" type="PanelContainer"]
@@ -8,6 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_glgu6")
 script = ExtResource("1_pb6be")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -25,7 +27,8 @@ layout_mode = 2
 layout_mode = 2
 text = "Server Url: "
 
-[node name="TextEdit" type="TextEdit" parent="MarginContainer/VBoxContainer/BoxContainer2"]
+[node name="ServerUrlInput" type="TextEdit" parent="MarginContainer/VBoxContainer/BoxContainer2"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 36)
 layout_mode = 2
 text = "http://localhost:8080"
@@ -37,11 +40,13 @@ layout_mode = 2
 layout_mode = 2
 text = "File path: "
 
-[node name="TextEdit" type="TextEdit" parent="MarginContainer/VBoxContainer/BoxContainer"]
+[node name="FilePathInput" type="TextEdit" parent="MarginContainer/VBoxContainer/BoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 36)
 layout_mode = 2
 text = "./world.xml"
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="LoadFromDisk" type="Button" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Load From Disk"

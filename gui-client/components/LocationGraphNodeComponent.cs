@@ -8,7 +8,7 @@ public partial class LocationGraphNodeComponent : BoxContainer
 {
 
 	public static PackedScene PackedScene = GD.Load<PackedScene>("res://components/LocationGraphNodeComponent.tscn");
-	public static int SIZE = 1000;
+	public static int SIZE = 350;
 	private world_step__location_graph__node node;
 	private world_step worldStep;
 	//populate the node with the data from the graph node
@@ -19,14 +19,19 @@ public partial class LocationGraphNodeComponent : BoxContainer
 		node.people.SelectMany(person => person.person).ToList().ForEach(person => {
 			var packedScene = PersonComponent.PackedScene.Instantiate();
 			var personComponent = packedScene.GetNode<PersonComponent>("./");
-			personComponent.initializeFromId(person.person_id_ref, worldStep);
+			personComponent.initializeFromId(person.person_id_ref);
+			personComponent.Scale = new Vector2(0.5f, 0.5f);
 			personContainer.AddChild(personComponent);
 		});
 	}
 
 	//setter that takes a callback and it calls it when action button is pressed
-	public void setOnActionButtonPressed(Action<world_step__location_graph__node> callback) {
+	public void setOnCreateAdjacentButtonPressed(Action<world_step__location_graph__node> callback) {
 		var actionButton = GetNode<Button>("%CreateAdjacentButton");
+		actionButton.Pressed += () => callback(node);
+	}
+		public void setOnTeleportToButtonPressed(Action<world_step__location_graph__node> callback) {
+		var actionButton = GetNode<Button>("%TeleportToButton");
 		actionButton.Pressed += () => callback(node);
 	}
 

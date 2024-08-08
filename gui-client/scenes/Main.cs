@@ -1,3 +1,4 @@
+using dataStore;
 using Godot;
 using System;
 using System.Net.WebSockets;
@@ -5,35 +6,27 @@ using System.Text;
 using System.Threading;
 public partial class Main : Control
 {
-	public LoadWorldStep loadWorldStep;
-    
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-        loadWorldStep = new LoadWorldStep(GetNode<Node>("%WorldContainer"));
-		System.Console.WriteLine("Hello, World! 1");
-		GD.Print("Hello, World! 2");
-		
-		var load = GetNode<Button>("%LoadFromDisk");
-		
-		load.Pressed += () => _on_Load_pressed();
+    public static PackedScene PackedScene = GD.Load<PackedScene>("res://scenes/Main.tscn");
+    public LoadWorldStep loadWorldStep;
 
-		var addChild = AddChild;
-	}
+    // Called when the node enters the scene tree for the first time.
+    public override void _Ready()
+    {
+        var load = GetNode<Button>("%LoadFromDisk");
+        this.loadWorldStep = new LoadWorldStep(this);
 
-	public void _on_Load_pressed()
-	{
-		var path = GetNode<TextEdit>("./UI/Path").Text;
-		
-		// var worldStep = LoadWorldStep.load(path);
+        load.Pressed += () =>
+        {
+            var path = GetNode<TextEdit>("%FilePathInput").Text;
+            GD.Print("Loading world step from " + path);
+            StoreWorld_Step.instance.data = loadWorldStep.deserializeFromPath(path);
+            GetTree().ChangeSceneToPacked(SelectMainPerson.PackedScene);
+        };
+    }
 
-		GD.Print("Loading world step from " + path);
 
-		loadWorldStep.loadFromPath(path);
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(double delta)
+    {
+    }
 }

@@ -5,13 +5,13 @@ using System.Reflection.Metadata;
 using System.Xml;
 using System.Xml.Serialization;
 
-public partial class WorldStep : Godot.Node
+public partial class WorldStep2 : Godot.Node
 {
 	// Called when the node enters the scene tree for the first time.
 
-	public LoadWorldStep loadWorldStep;
+	public LoadWorldStep? loadWorldStep;
 
-	public WorldStep() {
+	public WorldStep2() {
 	}
 
 	public override void _Ready()
@@ -35,7 +35,7 @@ public partial class WorldStep : Godot.Node
 
 		GD.Print("Loading world step from " + path);
 
-		loadWorldStep.loadFromPath(path);
+		loadWorldStep?.loadFromPath(path);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

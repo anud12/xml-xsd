@@ -1,0 +1,119 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfcl0ch64pt2k"]
+
+[ext_resource type="Script" path="res://scenes/WorldStep.cs" id="1_nceax"]
+[ext_resource type="Theme" uid="uid://dskjtmlounwht" path="res://mainTheme.tres" id="1_thifx"]
+
+[node name="Control" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_thifx")
+script = ExtResource("1_nceax")
+
+[node name="BoxContainer" type="BoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+vertical = true
+
+[node name="BoxContainer2" type="BoxContainer" parent="BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="BoxContainer/BoxContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 2
+
+[node name="BoxContainer" type="BoxContainer" parent="BoxContainer/BoxContainer2/MarginContainer"]
+layout_mode = 2
+vertical = true
+
+[node name="MenuButton" type="Button" parent="BoxContainer/BoxContainer2/MarginContainer/BoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Menu
+"
+
+[node name="Label" type="Label" parent="BoxContainer/BoxContainer2/MarginContainer/BoxContainer"]
+layout_mode = 2
+text = "Location Graphs"
+
+[node name="LocationGraphList" type="VBoxContainer" parent="BoxContainer/BoxContainer2/MarginContainer/BoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Button" type="Button" parent="BoxContainer/BoxContainer2/MarginContainer/BoxContainer/LocationGraphList"]
+layout_mode = 2
+text = "First
+"
+
+[node name="Button2" type="Button" parent="BoxContainer/BoxContainer2/MarginContainer/BoxContainer/LocationGraphList"]
+layout_mode = 2
+text = "First
+"
+
+[node name="Button3" type="Button" parent="BoxContainer/BoxContainer2/MarginContainer/BoxContainer/LocationGraphList"]
+layout_mode = 2
+text = "First
+"
+
+[node name="Button4" type="Button" parent="BoxContainer/BoxContainer2/MarginContainer/BoxContainer/LocationGraphList"]
+layout_mode = 2
+text = "First
+"
+
+[node name="Button5" type="Button" parent="BoxContainer/BoxContainer2/MarginContainer/BoxContainer/LocationGraphList"]
+layout_mode = 2
+text = "First
+"
+
+[node name="Button6" type="Button" parent="BoxContainer/BoxContainer2/MarginContainer/BoxContainer/LocationGraphList"]
+layout_mode = 2
+text = "First
+"
+
+[node name="Button7" type="Button" parent="BoxContainer/BoxContainer2/MarginContainer/BoxContainer/LocationGraphList"]
+layout_mode = 2
+text = "First
+"
+
+[node name="Control" type="Control" parent="BoxContainer/BoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+
+[node name="Panel" type="Panel" parent="BoxContainer/BoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LocationGraphSceneContainer" type="BoxContainer" parent="BoxContainer/BoxContainer2/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="MainPersonContainer" type="BoxContainer" parent="BoxContainer/BoxContainer2/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -100.0
+offset_right = 100.0
+grow_vertical = 0
+alignment = 2

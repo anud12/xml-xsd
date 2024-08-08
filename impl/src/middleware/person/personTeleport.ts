@@ -19,7 +19,7 @@ export const personTeleport: MutationMiddleware = (readJson) => {
         return locationGraphElement.queryAllOptional("node").find(nodeElement => {
           nodeElement.queryAllOptional("people").find(peopleElement => {
             const personElement = peopleElement.queryAllOptional("person").find(personElement => personElement.attributeMap.person_id_ref === personIdRef);
-            personElement.removeFromParent();
+            personElement?.removeFromParent();
           })
         })
       })
