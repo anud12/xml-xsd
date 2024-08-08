@@ -19,18 +19,21 @@ namespace dataStore
             }
         }
 
-        private List<Action<T?>> callbackList = new List<Action<T?>>();
+        private List<Action<T?, Action>> callbackList = new List<Action<T?, Action>>();
 
         private void ExecuteCallbacks()
         {
-            callbackList.ToList().ForEach(callback => callback(data));
+            callbackList.ToList().ForEach(callback => callback(data, () => callbackList.Remove(callback)));
         }
-        public Action OnSave(Action<T?> callback)
+        public Action OnSave(Action<T?, Action> callback)
         {
+            var unsubscribe = () => {
+                callbackList.Remove(callback);
+            };
             callbackList.Add(callback);
             if(data != null)
             {
-                callback(data);
+                callback(data, unsubscribe);
             }
             return () => callbackList.Remove(callback);
         }

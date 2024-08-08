@@ -29,8 +29,12 @@ public partial class LocationGraphScene : Control
 		title.Text = "Location Graph: " + locationGraphId;
 
 		var viewportContainer = GetNode<Node>("%GraphContainer");
-		var unsubscribe = StoreWorld_Step.instance.OnSave(data =>
+		StoreWorld_Step.instance.OnSave((data, unsubscribe) =>
 		{
+			if(IsInstanceValid(this) == false) {
+				unsubscribe();
+				return;
+			}
 			//clear the viewport container
 
 			viewportContainer.GetChildren().ToList().ForEach(child => viewportContainer.RemoveChild(child));
@@ -42,7 +46,6 @@ public partial class LocationGraphScene : Control
 			loadNodes(data).ToList().ForEach(node => viewportContainer.AddChild(node));
 
 		});
-		unsubscribeList.Add(unsubscribe);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -76,7 +79,7 @@ public partial class LocationGraphScene : Control
 
 						locationGraphNodeComponent.initialize(node, worldStep);
 						locationGraphNodeComponent.setOnCreateAdjacentButtonPressed(node => addAdjacent(location_graph, node, worldStep));
-						locationGraphNodeComponent.setOnTeleportToButtonPressed(node => teleportTo(location_graph, node, worldStep));
+						locationGraphNodeComponent.setOnTeleportToButtonPressed(node => TeleportTo(location_graph, node, worldStep));
 						return new Node[] { locationGraphNodeComponent };
 					});
 		});
@@ -84,8 +87,6 @@ public partial class LocationGraphScene : Control
 
 	private void addAdjacent(world_step__location_graph locationGraph, world_step__location_graph__node node, world_step worldStep)
 	{
-
-
 		GD.Print("Adding adjacent to " + node.id);
 
 		var createAdjacent = new world_step__actions__location_graph__node__create_adjacent
@@ -101,7 +102,7 @@ public partial class LocationGraphScene : Control
 		LoadWorldStep.executeNextStep();
 	}
 
-	private void teleportTo(world_step__location_graph locationGraph, world_step__location_graph__node node, world_step worldStep)
+	private void TeleportTo(world_step__location_graph locationGraph, world_step__location_graph__node node, world_step worldStep)
 	{
 		GD.Print("Teleporting to " + node.id);
 
@@ -125,10 +126,11 @@ public partial class LocationGraphScene : Control
 	}
 	private System.Collections.Generic.IEnumerable<Node> loadLinks(world_step worldStep)
 	{
-		var nodeById = worldStep.location_graph.SelectMany(locationGraph => locationGraph.node).ToDictionary(node => node.id);
+		
 
 		return worldStep.location_graph.Where(location_graph => location_graph.id == this.locationGraphId).SelectMany(location_graph =>
 		{
+			var nodeById =  location_graph.node.ToDictionary(node => node.id);
 			return location_graph.node.SelectMany(node =>
 			{
 				GD.Print("node.link_to: " + node.link_to.Count);
