@@ -201,9 +201,6 @@
           <ref name_rule_ref="banditFactions"/>
         </name_token>
       </entry>
-    </name_rule>
-
-    <name_rule>
       <entry id="banditFactions">
         <name_token prefix="">
           <one_of>

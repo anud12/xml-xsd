@@ -687,7 +687,7 @@
             </xs:documentation>
           </xs:annotation>
           <xs:complexType>
-            <xs:sequence>
+            <xs:all>
 
 
               <xs:element name="property_rule" minOccurs="0">
@@ -766,7 +766,7 @@
               </xs:element>
 
 
-              <xs:element name="name_rule" minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="name_rule" minOccurs="0">
                 <xs:annotation>
                   <xs:documentation>
                     A 'name_rule' is used to generate a string based on the 'name_token' elements it contains.
@@ -1009,7 +1009,7 @@
               </xs:element>
 
 
-              <xs:element name="locations_markov_chain" minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="locations_markov_chain" minOccurs="0">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="location_markov_link" minOccurs="0"
@@ -1161,7 +1161,7 @@
                 </xs:complexType>
               </xs:element>
 
-            </xs:sequence>
+            </xs:all>
 
             <xs:attribute name="id" use="required"/>
           </xs:complexType>
