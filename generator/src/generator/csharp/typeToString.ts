@@ -59,29 +59,33 @@ type GetObjectBodyReturn = {
 }
 
 function unionTypeDeclarationToString(dependantType:DependantType):GetObjectBodyReturn {
-  if(dependantType.type === "union" && dependantType.value.metaType === "union") {
-    const value = dependantType.value.value.flatMap(e => {
-      if(e.metaType === "object") {
-        return Object.entries(e.value)
+  if(dependantType.type === "union") {
+    if(dependantType.value.metaType === "union" || dependantType.value.metaType  === "composition") {
+      const value = dependantType.value.value.flatMap(e => {
+        if(e.metaType === "object") {
+          return Object.entries(e.value)
+        }
+        return [];
+      }) .reduce((acc, [key, value]) => {
+        return {
+          ...acc,
+          [key]: value,
+        }
+      }, {} as TypeObject["value"])
+      const type:Type = {
+        metaType: "object",
+        attributes: dependantType.value.attributes,
+        value: value
       }
-      return [];
-    }) .reduce((acc, [key, value]) => {
-      return {
-        ...acc,
-        [key]: value,
-      }
-    }, {} as TypeObject["value"])
-    const type:Type = {
-      metaType: "object",
-      attributes: dependantType.value.attributes,
-      value: value
+      return typeDeclarationElementToString({
+        type: "element",
+        value: type,
+        name: dependantType.name
+      })
     }
-    return typeDeclarationElementToString({
-      type: "element",
-      value: type,
-      name: dependantType.name
-    })
+
   }
+  throw Error(`Invalid ${JSON.stringify(dependantType, null ,2)}`);
 }
 
 function typeDeclarationElementToString(dependantType: DependantType): GetObjectBodyReturn {

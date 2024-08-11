@@ -1595,8 +1595,8 @@ namespace XSD {
     /* ignored attribute key={key} of type=System.Object*/
 
     //Children elements
-    /* ignored children key:person_default of type:world_step__rule_group__property_rule__entry__person_default*/
-    /* ignored children key:item_default of type:world_step__rule_group__property_rule__entry__item_default*/
+    public List<world_step__rule_group__property_rule__entry__person_default> person_default = new List<world_step__rule_group__property_rule__entry__person_default>();
+    public List<world_step__rule_group__property_rule__entry__item_default> item_default = new List<world_step__rule_group__property_rule__entry__item_default>();
     public List<world_step__rule_group__property_rule__entry__property_threshold> property_threshold = new List<world_step__rule_group__property_rule__entry__property_threshold>();
 
     public world_step__rule_group__property_rule__entry() {
@@ -1617,6 +1617,8 @@ namespace XSD {
       //Deserialize arguments
 
       //Deserialize elements
+      this.person_default = rawNode.InitializeWithRawNode("person_default", this.person_default);
+      this.item_default = rawNode.InitializeWithRawNode("item_default", this.item_default);
       this.property_threshold = rawNode.InitializeWithRawNode("property-threshold", this.property_threshold);
     }
 
@@ -1737,7 +1739,7 @@ namespace XSD {
     public RawNode rawNode = new RawNode();
 
     //Children elements
-    /* ignored children key:entry of type:world_step__rule_group__action_rule__global__entry*/
+    public List<world_step__rule_group__action_rule__global__entry> entry = new List<world_step__rule_group__action_rule__global__entry>();
 
     public world_step__rule_group__action_rule__global() {
     }
@@ -1755,7 +1757,7 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__rule_group__action_rule__global");
       //Deserialize elements
-
+      this.entry = rawNode.InitializeWithRawNode("entry", this.entry);
     }
 
     public RawNode SerializeIntoRawNode() {
@@ -2576,6 +2578,82 @@ namespace XSD {
     }
   }
   /*typeDeclarationElementToString= element*/
+  public class world_step__rule_group__property_rule__entry__person_default {
+    public RawNode rawNode = new RawNode();
+
+    //Children elements
+
+    public world_step__rule_group__property_rule__entry__person_default() {
+    }
+
+    public world_step__rule_group__property_rule__entry__person_default(RawNode rawNode) {
+      Deserialize(rawNode);
+    }
+
+    public world_step__rule_group__property_rule__entry__person_default(XmlElement xmlElement) {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode) {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing world_step__rule_group__property_rule__entry__person_default");
+      //Deserialize elements
+
+    }
+
+    public RawNode SerializeIntoRawNode() {
+      //Serialize elements
+
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing world_step__rule_group__property_rule__entry__person_default");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToString= element*/
+  public class world_step__rule_group__property_rule__entry__item_default {
+    public RawNode rawNode = new RawNode();
+
+    //Children elements
+
+    public world_step__rule_group__property_rule__entry__item_default() {
+    }
+
+    public world_step__rule_group__property_rule__entry__item_default(RawNode rawNode) {
+      Deserialize(rawNode);
+    }
+
+    public world_step__rule_group__property_rule__entry__item_default(XmlElement xmlElement) {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode) {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing world_step__rule_group__property_rule__entry__item_default");
+      //Deserialize elements
+
+    }
+
+    public RawNode SerializeIntoRawNode() {
+      //Serialize elements
+
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing world_step__rule_group__property_rule__entry__item_default");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToString= element*/
   public class world_step__rule_group__property_rule__entry__property_threshold {
     public RawNode rawNode = new RawNode();
     //Attributes
@@ -2685,6 +2763,44 @@ namespace XSD {
     public void Serialize(XmlElement element)
     {
         Godot.GD.Print("Serializing world_step__rule_group__race_rule__entry__name");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToString= element*/
+  public class world_step__rule_group__action_rule__global__entry {
+    public RawNode rawNode = new RawNode();
+
+    //Children elements
+
+    public world_step__rule_group__action_rule__global__entry() {
+    }
+
+    public world_step__rule_group__action_rule__global__entry(RawNode rawNode) {
+      Deserialize(rawNode);
+    }
+
+    public world_step__rule_group__action_rule__global__entry(XmlElement xmlElement) {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode) {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing world_step__rule_group__action_rule__global__entry");
+      //Deserialize elements
+
+    }
+
+    public RawNode SerializeIntoRawNode() {
+      //Serialize elements
+
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing world_step__rule_group__action_rule__global__entry");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -2874,9 +2990,9 @@ namespace XSD {
     public RawNode rawNode = new RawNode();
 
     //Children elements
-    /* ignored children key:select_person of type:world_step__rule_group__events_rule__entry__then__select_person*/
-    /* ignored children key:select_item of type:world_step__rule_group__events_rule__entry__then__select_item*/
-    /* ignored children key:property_mutation of type:world_step__rule_group__events_rule__entry__then__property_mutation*/
+    public List<world_step__rule_group__events_rule__entry__then__select_person> select_person = new List<world_step__rule_group__events_rule__entry__then__select_person>();
+    public List<world_step__rule_group__events_rule__entry__then__select_item> select_item = new List<world_step__rule_group__events_rule__entry__then__select_item>();
+    public List<world_step__rule_group__events_rule__entry__then__property_mutation> property_mutation = new List<world_step__rule_group__events_rule__entry__then__property_mutation>();
 
     public world_step__rule_group__events_rule__entry__then() {
     }
@@ -2894,7 +3010,9 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__rule_group__events_rule__entry__then");
       //Deserialize elements
-
+      this.select_person = rawNode.InitializeWithRawNode("select_person", this.select_person);
+      this.select_item = rawNode.InitializeWithRawNode("select_item", this.select_item);
+      this.property_mutation = rawNode.InitializeWithRawNode("property_mutation", this.property_mutation);
     }
 
     public RawNode SerializeIntoRawNode() {
@@ -3270,6 +3388,120 @@ namespace XSD {
     public void Serialize(XmlElement element)
     {
         Godot.GD.Print("Serializing world_step__location_graph__node__people__person");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToString= element*/
+  public class world_step__rule_group__events_rule__entry__then__select_person {
+    public RawNode rawNode = new RawNode();
+
+    //Children elements
+
+    public world_step__rule_group__events_rule__entry__then__select_person() {
+    }
+
+    public world_step__rule_group__events_rule__entry__then__select_person(RawNode rawNode) {
+      Deserialize(rawNode);
+    }
+
+    public world_step__rule_group__events_rule__entry__then__select_person(XmlElement xmlElement) {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode) {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing world_step__rule_group__events_rule__entry__then__select_person");
+      //Deserialize elements
+
+    }
+
+    public RawNode SerializeIntoRawNode() {
+      //Serialize elements
+
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing world_step__rule_group__events_rule__entry__then__select_person");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToString= element*/
+  public class world_step__rule_group__events_rule__entry__then__select_item {
+    public RawNode rawNode = new RawNode();
+
+    //Children elements
+
+    public world_step__rule_group__events_rule__entry__then__select_item() {
+    }
+
+    public world_step__rule_group__events_rule__entry__then__select_item(RawNode rawNode) {
+      Deserialize(rawNode);
+    }
+
+    public world_step__rule_group__events_rule__entry__then__select_item(XmlElement xmlElement) {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode) {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing world_step__rule_group__events_rule__entry__then__select_item");
+      //Deserialize elements
+
+    }
+
+    public RawNode SerializeIntoRawNode() {
+      //Serialize elements
+
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing world_step__rule_group__events_rule__entry__then__select_item");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToString= element*/
+  public class world_step__rule_group__events_rule__entry__then__property_mutation {
+    public RawNode rawNode = new RawNode();
+
+    //Children elements
+
+    public world_step__rule_group__events_rule__entry__then__property_mutation() {
+    }
+
+    public world_step__rule_group__events_rule__entry__then__property_mutation(RawNode rawNode) {
+      Deserialize(rawNode);
+    }
+
+    public world_step__rule_group__events_rule__entry__then__property_mutation(XmlElement xmlElement) {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode) {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing world_step__rule_group__events_rule__entry__then__property_mutation");
+      //Deserialize elements
+
+    }
+
+    public RawNode SerializeIntoRawNode() {
+      //Serialize elements
+
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing world_step__rule_group__events_rule__entry__then__property_mutation");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
