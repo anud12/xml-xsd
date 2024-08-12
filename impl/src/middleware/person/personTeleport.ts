@@ -11,7 +11,7 @@ export const personTeleport: MutationMiddleware = (readJson) => {
 
   const actions = actionList.map(action => {
     const personIdRef = action.attributeMap.person_id_ref;
-    const targetLocationGraphId = action.queryOptional("location_graph")?.attributeMap.location_graph_id;
+    const targetLocationGraphId = action.queryOptional("location_graph")?.attributeMap.location_graph_id_ref;
     return async (writeJson:JsonUtil) => {
       action.removeFromParent();
 
@@ -32,7 +32,7 @@ export const personTeleport: MutationMiddleware = (readJson) => {
         return;
       }
 
-      const targetNodeId = action.queryOptional("location_graph")?.attributeMap.node_id;
+      const targetNodeId = action.queryOptional("location_graph")?.attributeMap.node_id_ref;
       const node = locationGraph.queryAllOptional("node").find(node => node.attributeMap.id === targetNodeId);
       if(!node) {
         return;

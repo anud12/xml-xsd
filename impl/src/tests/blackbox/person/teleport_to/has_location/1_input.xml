@@ -2,7 +2,6 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
   <world_metadata>
-    <next_world_step>./data</next_world_step>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
     <counter value="0"/>
@@ -43,7 +42,7 @@
   </location_graph>
   <actions>
     <person.teleport person_id_ref="person_id">
-      <location_graph location_graph_id="location_graph_id" node_id="second_node_id"/>
+      <location_graph location_graph_id_ref="location_graph_id" node_id_ref="second_node_id"/>
     </person.teleport>
   </actions>
 </world_step>

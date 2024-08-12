@@ -1716,11 +1716,11 @@
                       "attributes": {
                         "metaType": "object",
                         "value": {
-                          "location_graph_id": {
+                          "location_graph_id_ref": {
                             "metaType": "primitive",
                             "value": "xs:string"
                           },
-                          "node_id": {
+                          "node_id_ref": {
                             "metaType": "primitive",
                             "value": "xs:string"
                           }

@@ -2528,8 +2528,8 @@ namespace XSD {
   public class world_step__actions__person__teleport__location_graph {
     public RawNode rawNode = new RawNode();
     //Attributes
-    public System.String location_graph_id;
-    public System.String node_id;
+    public System.String location_graph_id_ref;
+    public System.String node_id_ref;
 
     //Children elements
 
@@ -2549,21 +2549,21 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__actions__person__teleport__location_graph");
       //Deserialize arguments
-      this.location_graph_id = rawNode.attributes["location_graph_id"];
-      this.node_id = rawNode.attributes["node_id"];
+      this.location_graph_id_ref = rawNode.attributes["location_graph_id_ref"];
+      this.node_id_ref = rawNode.attributes["node_id_ref"];
       //Deserialize elements
 
     }
 
     public RawNode SerializeIntoRawNode() {
       //Serialize arguments
-      if(this.location_graph_id != null)
+      if(this.location_graph_id_ref != null)
       {
-        rawNode.attributes["location_graph_id"] = this.location_graph_id.ToString();
+        rawNode.attributes["location_graph_id_ref"] = this.location_graph_id_ref.ToString();
       }
-      if(this.node_id != null)
+      if(this.node_id_ref != null)
       {
-        rawNode.attributes["node_id"] = this.node_id.ToString();
+        rawNode.attributes["node_id_ref"] = this.node_id_ref.ToString();
       }
       //Serialize elements
 

@@ -39,7 +39,7 @@ export type type__group__operation__and = "add"
   | "divide_dice"
   | "modulo"
   | "modulo_dice"
-export type type_range = JsonQueryType<attributeGroup_range>
+export type type_range = JsonQueryType<unknown>
 export type type__property_mutation_on = JsonQueryType<{"on": type_person_select;}>
   & type__property_mutation
 export type type__property_mutation = JsonQueryType<{"property_rule_ref": string;}, {
@@ -226,7 +226,7 @@ export type world_step = JsonQueryType<{}, {
     "location_graph.create": JsonQueryType<{"location_graph_rule_ref": string;}> & JsonQueryType<{}, {}>;
     "location_graph.node.create_adjacent": JsonQueryType<{"location_graph_id_ref": string;  "node_id_ref": string;}> & JsonQueryType<{}, {}>;
     "person.teleport": JsonQueryType<{"person_id_ref": string;}, {}> & JsonQueryType<{}, {
-        "location_graph": JsonQueryType<{"location_graph_id": string;  "node_id": string;}> & JsonQueryType<{}, {}>;
+        "location_graph": JsonQueryType<{"location_graph_id_ref": string;  "node_id_ref": string;}> & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
     "person.on_person.property_mutation": JsonQueryType<{"person_id_ref": string;  "target_person_id_ref": string;  "action_property_mutation_rule_ref": string;}> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
