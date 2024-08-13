@@ -597,7 +597,7 @@
             </xs:documentation>
           </xs:annotation>
           <xs:complexType>
-            <xs:sequence>
+            <xs:all>
               <xs:element name="previous_world_step" minOccurs="0">
                 <xs:annotation>
                   <xs:documentation>
@@ -608,7 +608,7 @@
                   <xs:attribute name="value" type="xs:string"/>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="next_world_step">
+              <xs:element name="next_world_step" minOccurs="0">
                 <xs:annotation>
                   <xs:documentation>
                     URI of the next world step.
@@ -675,7 +675,7 @@
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
-            </xs:sequence>
+            </xs:all>
           </xs:complexType>
         </xs:element>
 
@@ -1439,14 +1439,14 @@
                         </xs:documentation>
                       </xs:annotation>
                       <xs:complexType>
-                        <xs:attribute name="location_graph_id" type="xs:string" use="required">
+                        <xs:attribute name="location_graph_id_ref" type="xs:string" use="required">
                           <xs:annotation>
                             <xs:documentation>
                               Represents the reference to the location group that will be used to teleport the person.
                             </xs:documentation>
                           </xs:annotation>
                         </xs:attribute>
-                        <xs:attribute name="node_id" type="xs:string" use="required">
+                        <xs:attribute name="node_id_ref" type="xs:string" use="required">
                           <xs:annotation>
                             <xs:documentation>
                               Represents the reference to the node that will be used to teleport the person.

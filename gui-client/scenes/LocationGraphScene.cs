@@ -112,8 +112,8 @@ public partial class LocationGraphScene : Control
 		teleport.location_graph = new List<world_step__actions__person__teleport__location_graph> {
 			new world_step__actions__person__teleport__location_graph
 			{
-				location_graph_id = locationGraph.id,
-				node_id = node.id,
+				location_graph_id_ref = locationGraph.id,
+				node_id_ref = node.id,
 			}
 		 };
 
