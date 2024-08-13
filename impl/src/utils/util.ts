@@ -14,7 +14,7 @@ import {createOperationFromQueryType} from "./operation/createOperationFromQuery
 import {getPersonProperty, PersonQueryType} from "./person/getPersonProperty";
 import {getById} from "./person/getById";
 import {createOperationFromParent} from "./operation/createOperationFromParent";
-import {calculateNameFromChildren, calculateNameFromRefString, NameRuleEntryQueryType} from "./calculateName";
+import {calculateNameFromChildren, calculateNameFromRefString} from "./calculateName";
 import {CreateItemArgs, createItemAt} from "./item/createItemAt";
 import {classifyPerson} from "./person/classifyPerson";
 import {setProperty} from "./person/setProperty";
@@ -29,6 +29,7 @@ import {group__name_token, group__operation__and, type__math_operations} from ".
 import {createLocationGraph} from "./locationGraph/createLocationGraph";
 import {createGraphNode, LocationGraphQueryType} from "./locationGraph/createGraphNode";
 import {createAdjacent} from "./locationGraph/createAdjacent";
+import {createPerson} from "./person/createPerson";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -170,6 +171,9 @@ export class JsonUtil {
   person = {
     selectPerson: (selectPersonQueryType: SelectPersonQueryType, position?: Position) => {
       return selectPerson(this, selectPersonQueryType, position);
+    },
+    createPerson: (selectPersonQueryType: SelectPersonQueryType, position?: Position) => {
+      return createPerson(this, selectPersonQueryType, position);
     },
     applyPropertyMutation: (personQueryType: PersonQueryType, propertyMutation:PropertyMutationQueryType, getPropertyTarget? :(key:string) => string) => {
       return applyPropertyMutation(this, personQueryType, propertyMutation, getPropertyTarget)
