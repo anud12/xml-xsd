@@ -54,7 +54,7 @@ export const personOnPersonPropertyMutation: MutationMiddleware =readJson => {
     .flatMap(e => e.queryAllOptional("person_to_person"));
 
 
-  const personList = readJson.json.queryAllOptional("people").flatMap(e => e.queryAll("person"));
+  const personList = readJson.json.queryAllOptional("people").flatMap(e => e.queryAllOptional("person"));
 
   const actions = readJson.json.queryAllOptional("actions")
     .flatMap(e => e.queryAllOptional("person.on_person.property_mutation"))

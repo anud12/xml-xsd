@@ -1760,6 +1760,10 @@
                   }
                 }
               }
+            },
+            "person.create": {
+              "metaType": "reference",
+              "value": "type__person_selection"
             }
           }
         }

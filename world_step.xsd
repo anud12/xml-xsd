@@ -1472,6 +1472,7 @@
                   <xs:attribute name="action_property_mutation_rule_ref" type="xs:string" use="required"/>
                 </xs:complexType>
               </xs:element>
+              <xs:element name="person.create" minOccurs="0" maxOccurs="unbounded" type="type__person_selection"/>
             </xs:sequence>
           </xs:complexType>
         </xs:element>

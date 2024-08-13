@@ -229,5 +229,6 @@ export type world_step = JsonQueryType<{}, {
         "location_graph": JsonQueryType<{"location_graph_id_ref": string;  "node_id_ref": string;}> & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
     "person.on_person.property_mutation": JsonQueryType<{"person_id_ref": string;  "target_person_id_ref": string;  "action_property_mutation_rule_ref": string;}> & JsonQueryType<{}, {}>;
+    "person.create": type__person_selection & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
 }>

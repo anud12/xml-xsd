@@ -18,6 +18,7 @@ import {locationGraphCreateAdjacent} from "./middleware/locationGraph/createAdja
 import {personTeleport} from "./middleware/person/personTeleport";
 import {personOnPersonPropertyMutation} from "./middleware/action/personOnPersonPropertyMutation";
 import {personAction} from "./middleware/personAction";
+import {personCreateAction} from "./middleware/action/personCreateAction";
 
 type StringParameter<Param extends string> = `${Param} ${string}`
 
@@ -93,16 +94,19 @@ export const execute = async (readJson: JsonSchema, log: (...string: any[]) => v
   const dispatcherResult = dispatcher.middleware(readJsonUtil);
   const personMoveTowardsResult = personMoveTowards(readJsonUtil);
   const personOnPersonPropertyMutationResult = personOnPersonPropertyMutation(readJsonUtil);
+  const personCreateActionResult = personCreateAction(readJsonUtil);
   const personActionResult = personAction(readJsonUtil);
   const globalActionResult = globalAction(readJsonUtil);
   const eventsMetadataResult = eventsMetadata(readJsonUtil);
   const locationGraphCreateResult = locationGraphCreate(readJsonUtil);
+
   const locationGraphCreateAdjacentResult = locationGraphCreateAdjacent(readJsonUtil);
   const personTeleportResult = personTeleport(readJsonUtil);
 
 
   await personMoveTowardsResult(readJsonUtil);
   await personOnPersonPropertyMutationResult(readJsonUtil);
+  await personCreateActionResult(readJsonUtil);
   await personActionResult(readJsonUtil);
   await globalActionResult(readJsonUtil);
 

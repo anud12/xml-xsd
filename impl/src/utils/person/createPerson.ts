@@ -3,7 +3,7 @@ import {SelectPersonQueryType} from "../JsonSchema";
 import {PersonQueryType} from "./getPersonProperty";
 import {JsonQueryType} from "../../JsonQueryType";
 import {Position} from "./selectPerson";
-import {createItem, createItemsFromSelection} from "../item/createItem";
+import {createItemsFromSelection} from "../item/createItem";
 
 const createNewPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType) => {
   const ruleGroup = jsonUtil.getRuleGroups();
@@ -17,18 +17,24 @@ const createNewPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType
   const race = raceList.find(race => race.attributeMap.id === selectRace)
     || jsonUtil.randomFromArray(raceList)
 
-  const name = jsonUtil.name.calculateNameFromRefString(race.queryOptional("name")?.attributeMap?.name_rule_ref);
+  const name = jsonUtil.name.calculateNameFromRefString(race?.queryOptional("name")?.attributeMap?.name_rule_ref);
 
-  const people = jsonUtil.json.query("people");
+  let people = jsonUtil.json.queryOptional("people");
+  if(!people) {
+    jsonUtil.json.appendChild("people", undefined, {});
+    people = jsonUtil.json.queryOptional("people");
+  }
   const person = people.appendChild("person", undefined, {
     id: jsonUtil.getNextId()
   });
   if (name) {
     person.attributeMap.name = name;
   }
-  person.appendChild("race", undefined, {
-    race_rule_ref: race.attributeMap.id
-  });
+  if(race) {
+    person.appendChild("race", undefined, {
+      race_rule_ref: race.attributeMap.id
+    });
+  }
   person.appendChild("location", undefined, {
     x: "0",
     y: "0"
