@@ -14,14 +14,14 @@
         if the range is inclusive.
       </xs:documentation>
     </xs:annotation>
-    <xs:attribute name="value" use="required" type="xs:integer">
+    <xs:attribute name="value" use="required" type="xs:int">
       <xs:annotation>
         <xs:documentation>
           Represents the current value of the range.
         </xs:documentation>
       </xs:annotation>
     </xs:attribute>
-    <xs:attribute name="max_value" type="xs:integer">
+    <xs:attribute name="max_value" type="xs:int">
       <xs:annotation>
         <xs:documentation>
           Represents the maximum value that the range can have.
@@ -218,14 +218,14 @@
         </xs:documentation>
       </xs:annotation>
     </xs:attribute>
-    <xs:attribute name="x" use="required" type="xs:integer">
+    <xs:attribute name="x" use="required" type="xs:int">
       <xs:annotation>
         <xs:documentation>
           Represents the x-coordinate of the cell in the location layer.
         </xs:documentation>
       </xs:annotation>
     </xs:attribute>
-    <xs:attribute name="y" use="required" type="xs:integer">
+    <xs:attribute name="y" use="required" type="xs:int">
       <xs:annotation>
         <xs:documentation>
           Represents the y-coordinate of the cell in the location layer.

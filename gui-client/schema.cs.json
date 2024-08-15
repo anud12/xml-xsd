@@ -23,11 +23,11 @@
         "value": {
           "value": {
             "metaType": "primitive",
-            "value": "xs:integer"
+            "value": "xs:int"
           },
           "max_value": {
             "metaType": "primitive",
-            "value": "xs:integer"
+            "value": "xs:int"
           },
           "inclusive": {
             "metaType": "primitive",
@@ -452,11 +452,11 @@
           },
           "x": {
             "metaType": "primitive",
-            "value": "xs:integer"
+            "value": "xs:int"
           },
           "y": {
             "metaType": "primitive",
-            "value": "xs:integer"
+            "value": "xs:int"
           }
         }
       }
@@ -1760,6 +1760,10 @@
                   }
                 }
               }
+            },
+            "person.create": {
+              "metaType": "reference",
+              "value": "type__person_selection"
             }
           }
         }
