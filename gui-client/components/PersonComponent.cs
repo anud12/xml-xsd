@@ -33,7 +33,7 @@ public partial class PersonComponent : Control
 		try
 		{
 			var nameLabel = GetNode<Label>("%NameLabel");
-			var unsubscribe = person.OnSave((person, unsubscribe) =>
+			var unsubscribe = person.OnSet((person, unsubscribe) =>
 			{
 				if(IsInstanceValid(this) == false)
 				{
@@ -66,7 +66,7 @@ public partial class PersonComponent : Control
 
 	private void addPersonToPersonActions()
 	{
-		StoreSession.mainPersonId.OnSave((mainPersonId, unsubscribe) =>
+		StoreSession.mainPersonId.OnSet((mainPersonId, unsubscribe) =>
 		{
 			if(IsInstanceValid(this) == false)
 			{
@@ -80,14 +80,13 @@ public partial class PersonComponent : Control
 			}
 
 
-			worldStep.OnSave((worldStep, unsubscribe) =>
+			worldStep.OnSet((worldStep, unsubscribe) =>
 			{
 				if(IsInstanceValid(this) == false)
 				{
 					unsubscribe();
 					return;
 				}
-				GD.Print("Adding actions");
 				if (worldStep == null)
 				{
 					return;
@@ -145,7 +144,7 @@ public partial class PersonComponent : Control
 
 	private void addClassifications()
 	{
-		person.OnSave((person, unsubscribe) =>
+		person.OnSet((person, unsubscribe) =>
 		{
 			if(IsInstanceValid(this) == false)
 			{
@@ -172,7 +171,7 @@ public partial class PersonComponent : Control
 
 	private void addProperties()
 	{
-		var unsubscribe = person.OnSave((person, unsubscribe) =>
+		var unsubscribe = person.OnSet((person, unsubscribe) =>
 		{
 			if(IsInstanceValid(this) == false)
 			{

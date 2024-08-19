@@ -9,13 +9,15 @@ namespace dataStore
     {
         private T? _data;
 
+        /// <summary>
+        /// The data stored in the data store, setting the data will execute all the callbacks if the data is not equal to the previous data
+        /// </summary>
         public T? data {
             get {
                 return _data;
             }
             set {
-                _data = value;
-                this.ExecuteCallbacks();
+                this.Set(value);
             }
         }
 
@@ -25,7 +27,21 @@ namespace dataStore
         {
             callbackList.ToList().ForEach(callback => callback(data, () => callbackList.Remove(callback)));
         }
-        public Action OnSave(Action<T?, Action> callback)
+
+        /// <summary>
+        /// Set the data and execute the callbacks ignoring if the data is the same
+        /// </summary>
+        /// <param name="data"></param>
+        public void Set(T? data)
+        {
+            if(data != null && data.Equals(_data))
+            {
+                return;
+            }
+            this._data = data;
+            this.ExecuteCallbacks();
+        }
+        public Action OnSet(Action<T?, Action> callback)
         {
             var unsubscribe = () => {
                 callbackList.Remove(callback);

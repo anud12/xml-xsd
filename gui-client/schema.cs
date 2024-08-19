@@ -501,7 +501,7 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__items");
       //Deserialize elements
-
+      this.item = rawNode.InitializeWithRawNode("item", this.item);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -862,6 +862,7 @@ namespace XSD {
       this.location_graph__node__create_adjacent = rawNode.InitializeWithRawNode("location_graph.node.create_adjacent", this.location_graph__node__create_adjacent);
       this.person__teleport = rawNode.InitializeWithRawNode("person.teleport", this.person__teleport);
       this.person__on_person__property_mutation = rawNode.InitializeWithRawNode("person.on_person.property_mutation", this.person__on_person__property_mutation);
+      this.person__create = rawNode.InitializeWithRawNode("person.create", this.person__create);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -1513,7 +1514,7 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__rule_group__name_rule");
       //Deserialize elements
-
+      this.entry = rawNode.InitializeWithRawNode("entry", this.entry);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -2162,10 +2163,12 @@ namespace XSD {
       this.name = rawNode.attributes["name"];
       //Deserialize elements
       this.race = rawNode.InitializeWithRawNode("race", this.race);
+      this.location = rawNode.InitializeWithRawNode("location", this.location);
       this.properties = rawNode.InitializeWithRawNode("properties", this.properties);
       this.relations = rawNode.InitializeWithRawNode("relations", this.relations);
       this.inventory = rawNode.InitializeWithRawNode("inventory", this.inventory);
       this.classifications = rawNode.InitializeWithRawNode("classifications", this.classifications);
+      this.icon = rawNode.InitializeWithRawNode("icon", this.icon);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -3024,6 +3027,9 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing type__person_selection");
       //Deserialize elements
+      this.radius = rawNode.InitializeWithRawNode("radius", this.radius);
+      this.min = rawNode.InitializeWithRawNode("min", this.min);
+      this.max = rawNode.InitializeWithRawNode("max", this.max);
       this.property = rawNode.InitializeWithRawNode("property", this.property);
       this.classification = rawNode.InitializeWithRawNode("classification", this.classification);
       this.race = rawNode.InitializeWithRawNode("race", this.race);
@@ -3284,7 +3290,7 @@ namespace XSD {
       //Deserialize arguments
 
       //Deserialize elements
-
+      this.property = rawNode.InitializeWithRawNode("property", this.property);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -3475,7 +3481,11 @@ namespace XSD {
       //Deserialize arguments
       this.id = rawNode.attributes["id"];
       //Deserialize elements
+      this.vision = rawNode.InitializeWithRawNode("vision", this.vision);
+      this.movement = rawNode.InitializeWithRawNode("movement", this.movement);
       this.name = rawNode.InitializeWithRawNode("name", this.name);
+      this.property_bonus = rawNode.InitializeWithRawNode("property_bonus", this.property_bonus);
+      this.icon = rawNode.InitializeWithRawNode("icon", this.icon);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -3652,6 +3662,7 @@ namespace XSD {
       this.id = rawNode.attributes["id"];
       //Deserialize elements
       this.test = rawNode.InitializeWithRawNode("test", this.test);
+      this.property_mutation = rawNode.InitializeWithRawNode("property_mutation", this.property_mutation);
       this.location_mutation = rawNode.InitializeWithRawNode("location_mutation", this.location_mutation);
     }
 
@@ -3752,6 +3763,7 @@ namespace XSD {
       //Deserialize arguments
 
       //Deserialize elements
+      this.name = rawNode.InitializeWithRawNode("name", this.name);
       this.weight_kg = rawNode.InitializeWithRawNode("weight-kg", this.weight_kg);
       this.wearable = rawNode.InitializeWithRawNode("wearable", this.wearable);
     }
@@ -3848,6 +3860,7 @@ namespace XSD {
       //Deserialize arguments
       this.id = rawNode.attributes["id"];
       //Deserialize elements
+      this.when = rawNode.InitializeWithRawNode("when", this.when);
       this.then = rawNode.InitializeWithRawNode("then", this.then);
     }
 
@@ -3949,6 +3962,7 @@ namespace XSD {
       //Deserialize elements
       this.tag = rawNode.InitializeWithRawNode("tag", this.tag);
       this.sibling = rawNode.InitializeWithRawNode("sibling", this.sibling);
+      this.icon = rawNode.InitializeWithRawNode("icon", this.icon);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -4459,7 +4473,7 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__people__person__inventory");
       //Deserialize elements
-
+      this.item = rawNode.InitializeWithRawNode("item", this.item);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -5243,7 +5257,8 @@ namespace XSD {
       //Deserialize arguments
       this.property_rule_ref = rawNode.attributes["property_rule_ref"];
       //Deserialize elements
-
+      this.min = rawNode.InitializeWithRawNode("min", this.min);
+      this.max = rawNode.InitializeWithRawNode("max", this.max);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -5452,7 +5467,7 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing type__person_selection__inventory");
       //Deserialize elements
-
+      this.item = rawNode.InitializeWithRawNode("item", this.item);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -5742,7 +5757,7 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing group__math_operations");
       //Deserialize elements
-
+      this.operation = rawNode.InitializeWithRawNode("operation", this.operation);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -5834,6 +5849,7 @@ namespace XSD {
       this.prefix = rawNode.attributes["prefix"];
       //Deserialize elements
       this._ref = rawNode.InitializeWithRawNode("ref", this._ref);
+      this.one_of = rawNode.InitializeWithRawNode("one_of", this.one_of);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -6100,7 +6116,8 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__rule_group__action_rule__person_to_person__test");
       //Deserialize elements
-
+      this.value = rawNode.InitializeWithRawNode("value", this.value);
+      this.expected = rawNode.InitializeWithRawNode("expected", this.expected);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -6229,7 +6246,7 @@ namespace XSD {
       //Deserialize arguments
       this.on = rawNode.attributes["on"];
       //Deserialize elements
-
+      this.from = rawNode.InitializeWithRawNode("from", this.from);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -7244,6 +7261,7 @@ namespace XSD {
       Godot.GD.Print("Deserializing group__operation__and");
       //Deserialize elements
       this.add_property = rawNode.InitializeWithRawNode("add_property", this.add_property);
+      this.and = rawNode.InitializeWithRawNode("and", this.and);
     }
 
     public RawNode SerializeIntoRawNode()

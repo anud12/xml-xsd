@@ -150,7 +150,7 @@ function typeDeclarationElementToClassString(dependantType: DependantType, exten
         ${dependantType.value.metaType === "object" && dependantType.value.value && template()`
           //Deserialize elements
           ${Object.entries(dependantType.value.value).map(([key, value]) => {
-            if (value.metaType === "object" || value.metaType === "union" || value.metaType === "composition") {
+            if (value.metaType === "object" || value.metaType === "union" || value.metaType === "composition" || value.metaType === "reference") {
               return template()`this.${normalizeName(key)} = rawNode.InitializeWithRawNode("${key}", this.${normalizeName(key)});`;
             }
           }).filter(e => e).join("\n")}

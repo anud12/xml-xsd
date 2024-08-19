@@ -25,7 +25,7 @@ export const personVision: MutationMiddleware = (readJson) => {
         return;
       }
       readJson.location.create(Number(x), Number(y));
-      fillNeighbours(readJson, readJson, readJson.location.grid()[Number(x)][Number(y)], Number(radius.attributeMap.value));
+      // fillNeighbours(readJson, readJson, readJson.location.grid()[Number(x)][Number(y)], Number(radius.attributeMap.value));
     })
 
     return async () => {
