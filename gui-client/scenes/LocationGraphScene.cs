@@ -29,7 +29,7 @@ public partial class LocationGraphScene : Control
 		title.Text = "Location Graph: " + locationGraphId;
 
 		var viewportContainer = GetNode<Node>("%GraphContainer");
-		StoreWorld_Step.instance.OnSave((data, unsubscribe) =>
+		StoreWorld_Step.instance.OnSet((data, unsubscribe) =>
 		{
 			if(IsInstanceValid(this) == false) {
 				unsubscribe();

@@ -19,9 +19,9 @@ size_flags_vertical = 4
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "Select main person scene
-"
+text = "Select main"
 
 [node name="PersonContainer" type="BoxContainer" parent="VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+vertical = true

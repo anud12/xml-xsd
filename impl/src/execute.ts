@@ -120,11 +120,6 @@ export const execute = async (readJson: JsonSchema, log: (...string: any[]) => v
   await personAssignClassification(readJsonUtil)(readJsonUtil);
   await offsetRandomisationTable(readJsonUtil)(readJsonUtil);
 
-  const writeWorldMetadata = readJsonUtil.json.query("world_metadata");
-  // const tokens = writeWorldMetadata.query("next_world_step").body.split("_")
-  // const iter = Number(tokens?.[1] ?? 0);
-  // const writeNextWorldStep = readJson.query("world_metadata").query("next_world_step")
-  // writeNextWorldStep.body = `${tokens[0]}_${iter + 1}`
   console.log = oldLog;
   return readJsonUtil.json;
 }

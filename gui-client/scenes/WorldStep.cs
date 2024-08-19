@@ -27,13 +27,13 @@ public partial class WorldStep : Control
 		mainPersonData.AnchorBottom = 1;
 		mainPersonData.AnchorTop = 1;
 		mainPersonContainer.AddChild(mainPersonData);
-		StoreWorld_Step.instance.OnSave((data, unsubscribe) =>
+		StoreWorld_Step.instance.OnSet((data, unsubscribe) =>
 		{
 			if(IsInstanceValid(this) == false) {
 				unsubscribe();
 				return;
 			}
-			StoreSession.mainPersonId.OnSave((mainPersonId, unsubscribe) =>
+			StoreSession.mainPersonId.OnSet((mainPersonId, unsubscribe) =>
 			{
 				if(IsInstanceValid(this) == false) {
 					unsubscribe();
@@ -70,7 +70,7 @@ public partial class WorldStep : Control
 
 	private void addLocationGraph()
 	{
-		StoreWorld_Step.instance.OnSave((worldStep, unsubscribe) =>
+		StoreWorld_Step.instance.OnSet((worldStep, unsubscribe) =>
 		{
 			if(IsInstanceValid(this) == false) {
 				unsubscribe();
@@ -81,12 +81,10 @@ public partial class WorldStep : Control
 
 			//clear LocationGraphList
 			locationGraphList.GetChildren().ToList().ForEach(child => locationGraphList.RemoveChild(child));
-			worldStep?.location_graph?.ForEach(locationGraph =>
+			var rootLocationGraphNode = GetNode<ButtonWithDropdownNode>("%RootLocationGraph");
+			rootLocationGraphNode.options.Clear();
+			rootLocationGraphNode.OnClick(locationGraphId =>
 			{
-				var button = new Button();
-				button.Text = locationGraph.id;
-				button.Pressed += () =>
-				{
 					//clear LocationGraphSceneContainer
 					var locationGraphSceneContainer = GetNode<Control>("%LocationGraphSceneContainer");
 					locationGraphSceneContainer.GetChildren().ToList().ForEach(child => locationGraphSceneContainer.RemoveChild(child));
@@ -96,13 +94,16 @@ public partial class WorldStep : Control
 
 					var locationGraphScene = LocationGraphScene.PackedScene.Instantiate<LocationGraphScene>();
 
-					locationGraphScene.setLocationGraphId(locationGraph.id);
+					locationGraphScene.setLocationGraphId(locationGraphId);
 					unsubscribeList.Add(() => locationGraphScene.ClearSubscriptions());
 
 					//add LocationGraphScene to LocationGraphSceneContainer
 					GetNode<Control>("%LocationGraphSceneContainer").AddChild(locationGraphScene);
-				};
-				locationGraphList.AddChild(button);
+			});
+			worldStep?.location_graph?.ForEach(locationGraph =>
+			{
+				rootLocationGraphNode.options.Add(locationGraph.id);
+				rootLocationGraphNode.options = rootLocationGraphNode.options;
 			});
 		});
 	}
