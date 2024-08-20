@@ -23,6 +23,14 @@ namespace dataStore
 
         private List<Action<T?, Action>> callbackList = new List<Action<T?, Action>>();
 
+        public DataStore()
+        {
+        }
+        public DataStore(T? data)
+        {
+            this._data = data;
+        }
+
         private void ExecuteCallbacks()
         {
             callbackList.ToList().ForEach(callback => callback(data, () => callbackList.Remove(callback)));

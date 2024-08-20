@@ -1,4 +1,5 @@
 using dataStore;
+using Dependencies;
 using Godot;
 using System;
 using System.Net.WebSockets;
@@ -22,6 +23,24 @@ public partial class Main : Control
             StoreWorld_Step.instance.data = loadWorldStep.deserializeFromPath(path);
             GetTree().ChangeSceneToPacked(SelectMainPerson.PackedScene);
         };
+        NodeDependency.ReadFromOs();
+        var startServer = GetNode<Button>("%StartServerButton");
+        startServer.Pressed += () =>
+        {
+            NodeDependency.Start();
+        };
+        var serverStatusLabel = GetNode<Label>("%ServerStatusLabel");
+        NodeDependency.isRunning.OnSet((isRunning, unsubscribe) =>
+        {
+            if(isRunning == true)
+            {
+                serverStatusLabel.Text = "Running";
+            }
+            else
+            {
+                serverStatusLabel.Text = "Stopped";
+            }
+        });
     }
 
 
