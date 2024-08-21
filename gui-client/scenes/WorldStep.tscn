@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cfcl0ch64pt2k"]
+[gd_scene load_steps=6 format=3 uid="uid://cfcl0ch64pt2k"]
 
 [ext_resource type="Script" path="res://scenes/WorldStep.cs" id="1_nceax"]
 [ext_resource type="Theme" uid="uid://dskjtmlounwht" path="res://mainTheme.tres" id="1_thifx"]
 [ext_resource type="Script" path="res://components/nodes/MainPersonSelect.cs" id="3_7q138"]
+[ext_resource type="Script" path="res://components/nodes/ServerToggle.cs" id="3_djd6i"]
 [ext_resource type="Script" path="res://components/nodes/ButtonWithDropdownNode.cs" id="4_703po"]
 
 [node name="Control" type="Panel"]
@@ -44,6 +45,11 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Menu
 "
+
+[node name="ServerToggle" type="Button" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Start Server"
+script = ExtResource("3_djd6i")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer"]
 layout_mode = 2
