@@ -36,7 +36,6 @@
     <node node_rule_ref="node" id="C">
       <position x="100" y="100"/>
       <link_to node_id_ref="D"/>
-      <link_to node_id_ref="0.0"/>
     </node>
     <node node_rule_ref="node" id="D">
       <position x="0" y="100"/>

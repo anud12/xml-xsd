@@ -23,11 +23,11 @@
         "value": {
           "value": {
             "metaType": "primitive",
-            "value": "xs:integer"
+            "value": "xs:int"
           },
           "max_value": {
             "metaType": "primitive",
-            "value": "xs:integer"
+            "value": "xs:int"
           },
           "inclusive": {
             "metaType": "primitive",
@@ -452,11 +452,11 @@
           },
           "x": {
             "metaType": "primitive",
-            "value": "xs:integer"
+            "value": "xs:int"
           },
           "y": {
             "metaType": "primitive",
-            "value": "xs:integer"
+            "value": "xs:int"
           }
         }
       }
@@ -1359,6 +1359,14 @@
                                 "value": "xs:int"
                               },
                               "adjacent_depth_limit": {
+                                "metaType": "primitive",
+                                "value": "xs:int"
+                              },
+                              "adjacent_distance_max": {
+                                "metaType": "primitive",
+                                "value": "xs:int"
+                              },
+                              "adjacent_distance_min": {
                                 "metaType": "primitive",
                                 "value": "xs:int"
                               }

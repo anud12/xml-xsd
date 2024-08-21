@@ -198,10 +198,10 @@
     </person>
     <person id="1" name="Bandit">
       <properties>
-        <property property_rule_ref="health" value="5" />
+        <property property_rule_ref="health" value="0" />
       </properties>
       <classifications>
-        <classification classification_rule_ref="alive" />
+        <classification classification_rule_ref="dead" />
       </classifications>
     </person>
   </people>
@@ -227,6 +227,7 @@
     </node>
   </location_graph>
   <actions>
+    <person.on_person.property_mutation person_id_ref="0" target_person_id_ref="1" action_property_mutation_rule_ref="meleeAttack" />
     <person.on_person.property_mutation person_id_ref="0" target_person_id_ref="1" action_property_mutation_rule_ref="meleeAttack" />
   </actions>
 </world_step>

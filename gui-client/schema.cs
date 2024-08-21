@@ -7593,6 +7593,10 @@ namespace XSD {
     public void Set_maxDistance(System.Int32 value);
     public System.Int32 Get_adjacent_depth_limit();
     public void Set_adjacent_depth_limit(System.Int32 value);
+    public System.Int32 Get_adjacent_distance_max();
+    public void Set_adjacent_distance_max(System.Int32 value);
+    public System.Int32 Get_adjacent_distance_min();
+    public void Set_adjacent_distance_min(System.Int32 value);
 
     //Children elements
 
@@ -7643,6 +7647,24 @@ namespace XSD {
     {
       this.adjacent_depth_limit = value;
     }
+    public System.Int32 adjacent_distance_max;
+    public System.Int32 Get_adjacent_distance_max()
+    {
+      return this.adjacent_distance_max;
+    }
+    public void Set_adjacent_distance_max(System.Int32 value)
+    {
+      this.adjacent_distance_max = value;
+    }
+    public System.Int32 adjacent_distance_min;
+    public System.Int32 Get_adjacent_distance_min()
+    {
+      return this.adjacent_distance_min;
+    }
+    public void Set_adjacent_distance_min(System.Int32 value)
+    {
+      this.adjacent_distance_min = value;
+    }
 
     //Children elements
 
@@ -7682,6 +7704,16 @@ namespace XSD {
       {
         this.adjacent_depth_limit = attribute_adjacent_depth_limit.ToInt();
       }
+      var attribute_adjacent_distance_max = rawNode.attributes["adjacent_distance_max"];
+      if(attribute_adjacent_distance_max != null)
+      {
+        this.adjacent_distance_max = attribute_adjacent_distance_max.ToInt();
+      }
+      var attribute_adjacent_distance_min = rawNode.attributes["adjacent_distance_min"];
+      if(attribute_adjacent_distance_min != null)
+      {
+        this.adjacent_distance_min = attribute_adjacent_distance_min.ToInt();
+      }
       //Deserialize elements
 
     }
@@ -7704,6 +7736,14 @@ namespace XSD {
       if(this.adjacent_depth_limit != null)
       {
         rawNode.attributes["adjacent_depth_limit"] = this.adjacent_depth_limit.ToString();
+      }
+      if(this.adjacent_distance_max != null)
+      {
+        rawNode.attributes["adjacent_distance_max"] = this.adjacent_distance_max.ToString();
+      }
+      if(this.adjacent_distance_min != null)
+      {
+        rawNode.attributes["adjacent_distance_min"] = this.adjacent_distance_min.ToString();
       }
       //Serialize elements
 
