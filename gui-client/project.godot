@@ -25,6 +25,10 @@ window/stretch/mode="viewport"
 
 project/assembly_name="Gui-client"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/dependencybincopyplugin/plugin.cfg")
+
 [gui]
 
 theme/default_font_antialiasing=2

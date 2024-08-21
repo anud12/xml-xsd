@@ -10,17 +10,31 @@ namespace Dependencies
     public class NodeDependency
     {
         private static string ExecutableRelativePath = "dependencies_bin" + System.IO.Path.DirectorySeparatorChar + "node" + System.IO.Path.DirectorySeparatorChar + "windows" + System.IO.Path.DirectorySeparatorChar + "gui_client_node.exe";
-        private static string ScriptRelativePath =  "dependencies_bin/node/bundle.js";
+        private static string ScriptRelativePath = "dependencies_bin/node/bundle.js";
         public static DataStore<bool> isRunning = new DataStore<bool>(false);
         public static DataStore<Process> process = new DataStore<Process>(null);
 
-        public static void ReadFromOs() {
+        public static void ReadFromOs()
+        {
             // Read if a process named gui_client_node is running
             Process[] processes = Process.GetProcessesByName("gui_client_node");
-            if (processes.Length > 0) {
+            if (processes.Length > 0)
+            {
+                var runningProcess = processes[0];
                 isRunning.data = true;
-                process.data = processes[0];
-            } else {
+
+                process.data = runningProcess;
+                runningProcess.Exited += new EventHandler((sender, e) =>
+                {
+                    new Thread(() =>
+                    {
+                        isRunning.data = false;
+                        NodeDependency.process.data = null;
+                    }).Start();
+                });
+            }
+            else
+            {
                 isRunning.data = false;
                 process.data = null;
             }
@@ -33,10 +47,10 @@ namespace Dependencies
                 process.data = null;
             }
         }
-
         public static void Start()
         {
-            try {
+            try
+            {
                 // Create a new process instance
                 Process process = new Process();
 
@@ -65,7 +79,9 @@ namespace Dependencies
 
                 // Wait for the process to exit
                 // process.WaitForExit();
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 isRunning.data = false;
                 NodeDependency.process.data = null;
                 throw e;
