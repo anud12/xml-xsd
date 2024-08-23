@@ -4,8 +4,13 @@
     <next_world_step value="../gui-client/data" />
     <elapsed_time value="0" />
     <stepDuration value="0" />
-    <counter value="16" />
+    <counter value="3" />
     <randomization_table>
+      <entry value="1" />
+      <entry value="10" />
+      <entry value="7" />
+      <entry value="3" />
+      <entry value="8" />
       <entry value="4" />
       <entry value="9" />
       <entry value="2" />
@@ -101,11 +106,6 @@
       <entry value="6" />
       <entry value="5" />
       <entry value="7" />
-      <entry value="1" />
-      <entry value="10" />
-      <entry value="7" />
-      <entry value="3" />
-      <entry value="8" />
     </randomization_table>
   </world_metadata>
   <rule_group id="rule_group_id">
@@ -153,50 +153,18 @@
         <starting_node node_rule_ref="city" />
       </setup>
       <node_rule id="city">
-        <link_group id="all" angle="0" angleMax="360" limit="8">
-          <to_option node_rule_ref="farm" adjacent_depth_limit="100" distance="1" maxDistance="3" adjacent_distance_max="1" adjacent_distance_min="0" />
+        <link_group id="0" angle="0" angleMax="0" limit="1">
+          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="3" adjacent_distance_max="1" adjacent_distance_min="0" />
         </link_group>
-      </node_rule>
-      <node_rule id="farm">
-        <link_group id="all" angle="0" angleMax="360" limit="2">
-          <to_option node_rule_ref="city" adjacent_depth_limit="0" distance="1" maxDistance="4" adjacent_distance_max="1" adjacent_distance_min="0" />
-          <to_option node_rule_ref="farm" adjacent_depth_limit="100" distance="3" maxDistance="4" adjacent_distance_max="1" adjacent_distance_min="0" />
-          <to_option node_rule_ref="farm" adjacent_depth_limit="100" distance="3" maxDistance="4" adjacent_distance_max="1" adjacent_distance_min="0" />
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="5" maxDistance="20" adjacent_distance_max="2" adjacent_distance_min="0" />
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="5" maxDistance="20" adjacent_distance_max="2" adjacent_distance_min="0" />
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="5" maxDistance="20" adjacent_distance_max="2" adjacent_distance_min="0" />
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="5" maxDistance="20" adjacent_distance_max="2" adjacent_distance_min="0" />
+        <link_group id="90" angle="90" angleMax="90" limit="1">
+          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="3" adjacent_distance_max="1" adjacent_distance_min="0" />
+        </link_group>
+        <link_group id="270" angle="270" angleMax="270" limit="1">
+          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="3" adjacent_distance_max="1" adjacent_distance_min="0" />
         </link_group>
       </node_rule>
       <node_rule id="plains">
-        <link_group id="all" angle="0" angleMax="90" limit="1">
-          <to_option node_rule_ref="farm" adjacent_depth_limit="100" distance="2" maxDistance="4" adjacent_distance_max="1" adjacent_distance_min="0" />
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="5" maxDistance="20" adjacent_distance_min="5" adjacent_distance_max="5" />
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="5" maxDistance="20" adjacent_distance_min="5" adjacent_distance_max="5" />
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="5" maxDistance="20" adjacent_distance_min="5" adjacent_distance_max="5" />
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="5" maxDistance="20" adjacent_distance_min="5" adjacent_distance_max="5" />
-        </link_group>
-        <link_group id="all" angle="90" angleMax="180" limit="1">
-          <to_option node_rule_ref="farm" adjacent_depth_limit="100" distance="2" maxDistance="4" adjacent_distance_max="1" adjacent_distance_min="0" />
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="5" maxDistance="20" adjacent_distance_min="5" adjacent_distance_max="5" />
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="5" maxDistance="20" adjacent_distance_min="5" adjacent_distance_max="5" />
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="5" maxDistance="20" adjacent_distance_min="5" adjacent_distance_max="5" />
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="5" maxDistance="20" adjacent_distance_min="5" adjacent_distance_max="5" />
-        </link_group>
-        <link_group id="all" angle="180" angleMax="270" limit="1">
-          <to_option node_rule_ref="farm" adjacent_depth_limit="100" distance="2" maxDistance="4" adjacent_distance_max="1" adjacent_distance_min="0" />
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="5" maxDistance="20" adjacent_distance_min="5" adjacent_distance_max="5" />
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="5" maxDistance="20" adjacent_distance_min="5" adjacent_distance_max="5" />
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="5" maxDistance="20" adjacent_distance_min="5" adjacent_distance_max="5" />
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="5" maxDistance="20" adjacent_distance_min="5" adjacent_distance_max="5" />
-        </link_group>
-        <link_group id="all" angle="270" angleMax="0" limit="1">
-          <to_option node_rule_ref="farm" adjacent_depth_limit="100" distance="2" maxDistance="4" adjacent_distance_max="1" adjacent_distance_min="0" />
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="5" maxDistance="20" adjacent_distance_min="5" adjacent_distance_max="5" />
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="5" maxDistance="20" adjacent_distance_min="5" adjacent_distance_max="5" />
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="5" maxDistance="20" adjacent_distance_min="5" adjacent_distance_max="5" />
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="5" maxDistance="20" adjacent_distance_min="5" adjacent_distance_max="5" />
-        </link_group>
+        <link_group id="all" angle="0" angleMax="0" limit="10" />
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -222,89 +190,22 @@
     <rule location_graph_rule_ref="location_graph_rule_id" />
     <node node_rule_ref="city" id="Capital">
       <position x="0" y="0" />
-      <link_to node_id_ref="Farm" />
-      <link_to node_id_ref="0.0" />
       <people>
         <person person_id_ref="0" />
         <person person_id_ref="1" />
       </people>
-    </node>
-    <node node_rule_ref="farm" id="Farm">
-      <position x="0" y="1" />
-    </node>
-    <node node_rule_ref="farm" id="0.0">
-      <position x="-1" y="0" />
+      <link_to node_id_ref="0.0" />
       <link_to node_id_ref="0.1" />
+      <link_to node_id_ref="0.2" />
+    </node>
+    <node node_rule_ref="plains" id="0.0">
+      <position x="1" y="0" />
     </node>
     <node node_rule_ref="plains" id="0.1">
-      <position x="4" y="3" />
-      <link_to node_id_ref="0.2" />
-      <link_to node_id_ref="0.3" />
-      <link_to node_id_ref="0.4" />
-      <link_to node_id_ref="0.6" />
+      <position x="0" y="3" />
     </node>
     <node node_rule_ref="plains" id="0.2">
-      <position x="4" y="14" />
-      <link_to node_id_ref="0.5" />
-      <link_to node_id_ref="0.10" />
-      <link_to node_id_ref="0.13" />
-    </node>
-    <node node_rule_ref="plains" id="0.3">
-      <position x="1" y="-11" />
-      <link_to node_id_ref="0.7" />
-    </node>
-    <node node_rule_ref="plains" id="0.4">
-      <position x="4" y="-8" />
-    </node>
-    <node node_rule_ref="farm" id="0.5">
-      <position x="2" y="8" />
-      <link_to node_id_ref="0.10" />
-      <link_to node_id_ref="0.14" />
-      <link_to node_id_ref="0.15" />
-    </node>
-    <node node_rule_ref="plains" id="0.6">
-      <position x="-12" y="-5" />
-    </node>
-    <node node_rule_ref="plains" id="0.7">
-      <position x="-13" y="9" />
-      <link_to node_id_ref="0.8" />
-      <link_to node_id_ref="0.9" />
-    </node>
-    <node node_rule_ref="plains" id="0.8">
-      <position x="-17" y="5" />
-    </node>
-    <node node_rule_ref="plains" id="0.9">
-      <position x="2" y="16" />
-      <link_to node_id_ref="0.11" />
-      <link_to node_id_ref="0.12" />
-    </node>
-    <node node_rule_ref="farm" id="0.10">
-      <position x="4" y="-5" />
-      <link_to node_id_ref="0.14" />
-      <link_to node_id_ref="0.15" />
-    </node>
-    <node node_rule_ref="plains" id="0.11">
-      <position x="-9" y="0" />
-    </node>
-    <node node_rule_ref="plains" id="0.12">
-      <position x="0" y="3" />
-    </node>
-    <node node_rule_ref="plains" id="0.13">
-      <position x="4" y="18" />
-    </node>
-    <node node_rule_ref="farm" id="0.14">
-      <position x="0" y="3" />
-      <link_to node_id_ref="0.15" />
-    </node>
-    <node node_rule_ref="plains" id="0.15">
-      <position x="25" y="8" />
-    </node>
-  </location_graph>
-  <location_graph id="second world with long name">
-    <rule location_graph_rule_ref="location_graph_rule_id" />
-    <node node_rule_ref="farm" id="Farm">
-      <position x="0" y="0" />
-      <people />
+      <position x="0" y="-3" />
     </node>
   </location_graph>
   <actions>

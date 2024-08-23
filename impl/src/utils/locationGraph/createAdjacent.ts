@@ -118,16 +118,25 @@ const positionBasedOnLink = (jsonUtil: JsonUtil, linkGroupElement: LinkGroupQuer
   try {
     let angle = Number(linkGroupElement?.attributeMap.angle);
     if (linkGroupElement.attributeMap.angleMax) {
-      angle = Number(linkGroupElement.attributeMap.angle) + (jsonUtil.random() * Number(linkGroupElement.attributeMap.angleMax));
+      if(linkGroupElement.attributeMap.angleMax === linkGroupElement.attributeMap.angle) {
+        angle = Number(linkGroupElement.attributeMap.angle);
+      } else {
+        angle = Number(linkGroupElement.attributeMap.angle) + (jsonUtil.random() * Number(linkGroupElement.attributeMap.angleMax));
+      }
     }
     angle = Math.floor(angle) % 360;
 
     const toOptionElement = jsonUtil.randomFromArray(linkGroupElement.queryAllOptional("to_option"))
     let distance = Number(toOptionElement.attributeMap.distance);
     if (toOptionElement.attributeMap.maxDistance) {
-      const random = jsonUtil.random();
-      const maxDistance = random * Number(toOptionElement.attributeMap.maxDistance)
-      distance = Number(toOptionElement.attributeMap.distance) + maxDistance;
+      if(toOptionElement.attributeMap.maxDistance === toOptionElement.attributeMap.distance) {
+        distance = Number(toOptionElement.attributeMap.distance);
+      } else {
+        const random = jsonUtil.random();
+        const maxDistance = random * Number(toOptionElement.attributeMap.maxDistance)
+        distance = Number(toOptionElement.attributeMap.distance) + maxDistance;
+      }
+
     }
     const originPosition = originNode.queryOptional("position").attributeMap;
     try {
