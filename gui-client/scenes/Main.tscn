@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://dskjtmlounwht" path="res://mainTheme.tres" id="1_glgu6"]
 [ext_resource type="Script" path="res://scenes/Main.cs" id="1_pb6be"]
 
-[node name="Control" type="PanelContainer"]
+[node name="Control2" type="PanelContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

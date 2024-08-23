@@ -1,6 +1,6 @@
 import {JsonUtil} from "../util";
 import {LocationGraphNodeQueryType, LocationGraphQueryType} from "./createGraphNode";
-import {LinkGroupQueryType, NodeQueryType} from "./createAdjacent";
+import {isDistanceBetweenPointsGreaterThan, LinkGroupQueryType, NodeQueryType} from "./createAdjacent";
 import {mergeError} from "../../mergeError";
 
 function isAngleBetweenPointsLessThanGivenAngle(firstNode: NodeQueryType, secondNode: NodeQueryType, givenAngle) {
@@ -76,21 +76,24 @@ export const keepNotFullLinkGroupElements = (locationGraph:LocationGraphQueryTyp
         return true;
       }
 
+      // Check if any of the adjacent nodes are allowed
       const minAngle = Number(linkGroup.attributeMap.angle);
       const maxAngle = Number(linkGroup.attributeMap.angleMax) ?? minAngle;
       const allowedRuleList = linkGroupList.flatMap(element => element.queryAllOptional("to_option"))
         .flatMap(element => element.attributeMap.node_rule_ref);
       const adjacentNodeList = originNode.queryAllOptional("link_to")
         .map(linkToElement => nodeMap.get(linkToElement.attributeMap.node_id_ref))
+        .filter(linkToElement => {
+          return allowedRuleList?.includes(linkToElement?.attributeMap.node_rule_ref);
+        })
+
       .filter(e => e);
       if(adjacentNodeList.length === 0) {
         return true;
       }
 
-      const validNodes = adjacentNodeList.filter(adjacentNode => {
-        if(!allowedRuleList.includes(adjacentNode.attributeMap.node_rule_ref)) {
-          return false;
-        }
+      // Filter out the nodes with invalid angles
+      const validAngleNodes = adjacentNodeList.filter(adjacentNode => {
         const angle = angleBetweenPoints(originNode, adjacentNode);
         if(angle > maxAngle) {
           return false;
@@ -101,7 +104,28 @@ export const keepNotFullLinkGroupElements = (locationGraph:LocationGraphQueryTyp
 
         return true;
       })
-      validNodes.forEach(node => nodeMap.delete(node.attributeMap.id));
+      validAngleNodes.forEach(node => nodeMap.delete(node.attributeMap.id));
+
+      // Filter out the nodes with invalid distances
+      const toOptionList = linkGroup.queryAllOptional("to_option");
+      const validDistanceNodes = adjacentNodeList.filter(adjacentNode => {
+        toOptionList.filter(toOption => toOption.attributeMap.node_rule_ref === adjacentNode.attributeMap.node_rule_ref);
+        if(!toOptionList.length) {
+          return false;
+        }
+        const distance = Number(toOptionList[0].attributeMap.distance);
+        if(isDistanceBetweenPointsGreaterThan(originNode, adjacentNode, distance)) {
+          return false;
+        }
+        const maxDistance = Number(toOptionList[0].attributeMap.maxDistance) ?? distance;
+        if(!isDistanceBetweenPointsGreaterThan(originNode, adjacentNode, maxDistance)) {
+          return false;
+        }
+        return true;
+      })
+      validDistanceNodes.forEach(node => nodeMap.delete(node.attributeMap.id));
+
+      const validNodes = [...validAngleNodes, ...validDistanceNodes];
       return validNodes.length < limit;
     })
 
