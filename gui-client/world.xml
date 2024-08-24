@@ -154,13 +154,10 @@
       </setup>
       <node_rule id="city">
         <link_group id="0" angle="0" angleMax="0" limit="1">
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="3" adjacent_distance_max="1"/>
+          <to_option node_rule_ref="city" adjacent_depth_limit="100" distance="1" maxDistance="2"/>
         </link_group>
         <link_group id="90" angle="90" angleMax="90" limit="1">
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="3" adjacent_distance_max="1"/>
-        </link_group>
-        <link_group id="270" angle="270" angleMax="270" limit="1">
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="3" adjacent_distance_max="1"/>
+          <to_option node_rule_ref="city" adjacent_depth_limit="100" distance="1" maxDistance="2"/>
         </link_group>
       </node_rule>
       <node_rule id="plains">

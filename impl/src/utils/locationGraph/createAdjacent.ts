@@ -32,32 +32,27 @@ const getAdjacentNodes = (jsonUtil: JsonUtil, locationGraph: LocationGraphQueryT
   }
 }
 
-export const isDistanceBetweenPointsLessThan = (firstNode: NodeQueryType, secondNode: NodeQueryType, minDistance: number): boolean => {
-  if (minDistance === 0) {
-    return true;
-  }
+export const isDistanceBetweenPointsLessThan = (firstNode: NodeQueryType, secondNode: NodeQueryType, maxDistance: number): boolean => {
   const firstPosition = firstNode.queryOptional("position");
   const secondPosition = secondNode.queryOptional("position");
 
   //compute distance between firstPosition and secondPosition
 
   const positionDistanceSquared = Math.pow(Number(firstPosition.attributeMap.x) - Number(secondPosition.attributeMap.x), 2) + Math.pow(Number(firstPosition.attributeMap.y) - Number(secondPosition.attributeMap.y), 2);
-
-  return Math.pow(minDistance, 2) <= positionDistanceSquared;
+  const maxDistanceSquared = Math.pow(maxDistance, 2);
+  return maxDistanceSquared <= positionDistanceSquared;
 }
 
 export const isDistanceBetweenPointsGreaterThan = (firstNode: NodeQueryType, secondNode: NodeQueryType, minDistance: number): boolean => {
-  if (minDistance === 0) {
-    return true;
-  }
+
   const firstPosition = firstNode.queryOptional("position");
   const secondPosition = secondNode.queryOptional("position");
 
   //compute distance between firstPosition and secondPosition
 
   const positionDistanceSquared = Math.pow(Number(firstPosition.attributeMap.x) - Number(secondPosition.attributeMap.x), 2) + Math.pow(Number(firstPosition.attributeMap.y) - Number(secondPosition.attributeMap.y), 2);
-
-  return Math.pow(minDistance, 2) >= positionDistanceSquared;
+  const minDistanceSquared = Math.pow(minDistance, 2);
+  return minDistanceSquared >= positionDistanceSquared;
 }
 
 const canCreateLinkBetween = (jsonUtil: JsonUtil, locationGraph: LocationGraphQueryType, nodeGraphElement: NodeQueryType, targetNodeGraphElement: NodeQueryType): boolean => {
@@ -66,7 +61,7 @@ const canCreateLinkBetween = (jsonUtil: JsonUtil, locationGraph: LocationGraphQu
     .flatMap(element => element.queryAllOptional("node_rule"))
     .find(element => element.attributeMap.id === nodeGraphElement?.attributeMap.node_rule_ref);
 
-  const notFullLinkGroupElementList = keepNotFullLinkGroupElements(locationGraph, nodeGraphElement, nodeRule?.queryAllOptional("link_group") || []);
+  const notFullLinkGroupElementList = keepNotFullLinkGroupElements(locationGraph, nodeGraphElement, nodeRule?.queryAllOptional("link_group") || [], "adjacent");
   if (notFullLinkGroupElementList.length === 0) {
     return false;
   }
@@ -84,7 +79,7 @@ const canCreateLinkBetween = (jsonUtil: JsonUtil, locationGraph: LocationGraphQu
   const targetNodeRule = jsonUtil.getRuleGroups().flatMap(element => element.queryAllOptional("location_graph_rule"))
     .flatMap(element => element.queryAllOptional("node_rule"))
     .find(element => element.attributeMap.id === nodeGraphElement?.attributeMap.node_rule_ref);
-  const targetNotFullLinkGroupElementList = keepNotFullLinkGroupElements(locationGraph, targetNodeGraphElement, targetNodeRule?.queryAllOptional("link_group") || []);
+  const targetNotFullLinkGroupElementList = keepNotFullLinkGroupElements(locationGraph, targetNodeGraphElement, targetNodeRule?.queryAllOptional("link_group") || [], "adjacent");
   if (targetNotFullLinkGroupElementList.length === 0) {
     return false;
   }
@@ -165,7 +160,7 @@ export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nod
       .find(element => element.attributeMap.id === nodeGraphElement?.attributeMap?.node_rule_ref)
 
     const linkGroupElementList = nodeRuleElement?.queryAllOptional("link_group");
-    const notFullLinkGroupElementList = keepNotFullLinkGroupElements(locationGraphElement, nodeGraphElement, linkGroupElementList);
+    const notFullLinkGroupElementList = keepNotFullLinkGroupElements(locationGraphElement, nodeGraphElement, linkGroupElementList, "normal");
     const linkGroupElement = jsonUtil.randomFromArray(notFullLinkGroupElementList);
 
     if (!linkGroupElement) {
@@ -179,8 +174,8 @@ export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nod
     const nodeRuleRef = toOptionElement.attributeMap.node_rule_ref;
     const createGraphNodeResult = createGraphNode(jsonUtil, locationGraphElement, nodeRuleRef, position);
 
-    let adjacentDistance = Number(toOptionElement.attributeMap.adjacent_distance_max);
-    const adjacentDistanceMin = adjacentDistance = Number(toOptionElement.attributeMap.adjacent_distance_min) ?? 0;
+    let adjacentDistance = Number(toOptionElement.attributeMap.maxDistance);
+    const adjacentDistanceMin = Number(toOptionElement.attributeMap.distance ?? "0");
     if (!adjacentDistance) {
       adjacentDistance = Number(toOptionElement.attributeMap.maxDistance) || Number(toOptionElement.attributeMap.distance);
     }
@@ -195,11 +190,15 @@ export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nod
       const newGraphNode = await createGraphNodeResult(writeUnit);
 
       await createLinkTo(writeUnit, nodeGraphElement, newGraphNode)(writeUnit);
+      await createLinkTo(writeUnit, newGraphNode, nodeGraphElement)(writeUnit);
 
+      const validAdjacentNodeList = adjacentNodes
+        .filter(node => {
+          return isDistanceBetweenPointsLessThan(node, newGraphNode, adjacentDistanceMin) &&
+            isDistanceBetweenPointsGreaterThan(node, newGraphNode, adjacentDistance)
+        })
 
-      const adjacentLinkList = adjacentNodes
-        .filter(node => isDistanceBetweenPointsLessThan(node, newGraphNode, adjacentDistance))
-        .filter(node => isDistanceBetweenPointsGreaterThan(node, newGraphNode, adjacentDistanceMin))
+      const adjacentLinkList = validAdjacentNodeList
         .map(node => {
           if(canCreateLinkBetween(jsonUtil, locationGraphElement, node, newGraphNode)) {
             createLinkTo(writeUnit, node, newGraphNode)(writeUnit)

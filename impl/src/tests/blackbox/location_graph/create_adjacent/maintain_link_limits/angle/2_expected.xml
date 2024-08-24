@@ -2,7 +2,7 @@
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
-    <counter value="1"/>
+    <counter value="0"/>
     <randomization_table>
       <entry value="2"/>
       <entry value="3"/>
@@ -16,13 +16,13 @@
       </setup>
       <node_rule id="city">
         <link_group id="0" angle="0" limit="1">
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="1" adjacent_distance_max="1"/>
+          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="3"/>
         </link_group>
         <link_group id="90" angle="90" limit="1">
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="3" adjacent_distance_max="1"/>
+          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="3"/>
         </link_group>
         <link_group id="270" angle="270" limit="1">
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="3" adjacent_distance_max="1"/>
+          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="3"/>
         </link_group>
       </node_rule>
       <node_rule id="plains">
@@ -36,7 +36,7 @@
       <position x="0" y="0"/>
       <link_to node_id_ref="1.0"/>
       <link_to node_id_ref="1.1"/>
-      <link_to node_id_ref="0.0"/>
+      <link_to node_id_ref="1.2"/>
     </node>
     <node node_rule_ref="plains" id="1.0">
       <position x="0" y="-1"/>
@@ -44,8 +44,8 @@
     <node node_rule_ref="plains" id="1.1">
       <position x="0" y="1"/>
     </node>
-    <node node_rule_ref="plains" id="0.0">
-      <position x="2" y="0"/>
+    <node node_rule_ref="plains" id="1.2">
+      <position x="1" y="0"/>
     </node>
   </location_graph>
 </world_step>

@@ -1,4 +1,4 @@
-import {testBase} from "../../../test_base";
+import {testBase} from "../../../../test_base";
 
 export const description = `
 # \`location_graph.node.create_adjacent\` action should maintain link limits when adding adjacent links

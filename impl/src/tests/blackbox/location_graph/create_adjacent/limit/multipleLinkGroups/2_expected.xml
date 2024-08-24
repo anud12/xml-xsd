@@ -38,6 +38,7 @@
     </node>
     <node node_rule_ref="node" id="0.0">
       <position x="100" y="0"/>
+      <link_to node_id_ref="node_id"/>
     </node>
   </location_graph>
 </world_step>

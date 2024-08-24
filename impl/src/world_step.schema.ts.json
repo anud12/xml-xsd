@@ -1361,14 +1361,6 @@
                               "adjacent_depth_limit": {
                                 "metaType": "primitive",
                                 "value": "xs:int"
-                              },
-                              "adjacent_distance_max": {
-                                "metaType": "primitive",
-                                "value": "xs:int"
-                              },
-                              "adjacent_distance_min": {
-                                "metaType": "primitive",
-                                "value": "xs:int"
                               }
                             }
                           }
