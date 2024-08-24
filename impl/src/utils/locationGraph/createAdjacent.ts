@@ -4,6 +4,7 @@ import {JsonSchema} from "../JsonSchema";
 import {mergeError} from "../../mergeError";
 import {keepNotFullLinkGroupElements} from "./filterLinkGroups";
 
+export type NodeRuleQueryType = JsonSchema["children"]["rule_group"]["children"]["location_graph_rule"]["children"]["node_rule"];
 export type LinkGroupQueryType = JsonSchema["children"]["rule_group"]["children"]["location_graph_rule"]["children"]["node_rule"]["children"]["link_group"];
 export type NodeQueryType = LocationGraphQueryType["children"]["node"];
 type LinkQueryType = LocationGraphQueryType["children"]["node"]["children"]["link_to"];
@@ -31,44 +32,80 @@ const getAdjacentNodes = (jsonUtil: JsonUtil, locationGraph: LocationGraphQueryT
   }
 }
 
-const isDistanceBetweenPointsLessThan = (firstNode: NodeQueryType, secondNode: NodeQueryType, minDistance: number): boolean => {
-  if(minDistance === 0) {
-    return true;
-  }
+export const isDistanceBetweenPointsLessThan = (firstNode: NodeQueryType, secondNode: NodeQueryType, maxDistance: number): boolean => {
   const firstPosition = firstNode.queryOptional("position");
   const secondPosition = secondNode.queryOptional("position");
 
   //compute distance between firstPosition and secondPosition
 
   const positionDistanceSquared = Math.pow(Number(firstPosition.attributeMap.x) - Number(secondPosition.attributeMap.x), 2) + Math.pow(Number(firstPosition.attributeMap.y) - Number(secondPosition.attributeMap.y), 2);
-
-  return Math.pow(minDistance, 2) <= positionDistanceSquared;
+  const maxDistanceSquared = Math.pow(maxDistance, 2);
+  return maxDistanceSquared <= positionDistanceSquared;
 }
 
-const isDistanceBetweenPointsGreaterThan = (firstNode: NodeQueryType, secondNode: NodeQueryType, minDistance: number): boolean => {
-  if(minDistance === 0) {
-    return true;
-  }
+export const isDistanceBetweenPointsGreaterThan = (firstNode: NodeQueryType, secondNode: NodeQueryType, minDistance: number): boolean => {
+
   const firstPosition = firstNode.queryOptional("position");
   const secondPosition = secondNode.queryOptional("position");
 
   //compute distance between firstPosition and secondPosition
 
   const positionDistanceSquared = Math.pow(Number(firstPosition.attributeMap.x) - Number(secondPosition.attributeMap.x), 2) + Math.pow(Number(firstPosition.attributeMap.y) - Number(secondPosition.attributeMap.y), 2);
-
-  return Math.pow(minDistance, 2) >= positionDistanceSquared;
+  const minDistanceSquared = Math.pow(minDistance, 2);
+  return minDistanceSquared >= positionDistanceSquared;
 }
 
-const createLinkTo = (jsonUtil: JsonUtil, linkGroupElement: LinkGroupQueryType, locationGraphElement: LocationGraphQueryType, nodeGraphElement: NodeQueryType, targetNodeGraphElement: NodeQueryType): (writeUnit: JsonUtil) => Promise<LinkQueryType> => {
+const canCreateLinkBetween = (jsonUtil: JsonUtil, locationGraph: LocationGraphQueryType, nodeGraphElement: NodeQueryType, targetNodeGraphElement: NodeQueryType): boolean => {
+
+  const nodeRule = jsonUtil.getRuleGroups().flatMap(element => element.queryAllOptional("location_graph_rule"))
+    .flatMap(element => element.queryAllOptional("node_rule"))
+    .find(element => element.attributeMap.id === nodeGraphElement?.attributeMap.node_rule_ref);
+
+  const notFullLinkGroupElementList = keepNotFullLinkGroupElements(locationGraph, nodeGraphElement, nodeRule?.queryAllOptional("link_group") || [], "adjacent");
+  if (notFullLinkGroupElementList.length === 0) {
+    return false;
+  }
+
+  const applicableLinkGroup = notFullLinkGroupElementList.find(linkGroupElement => {
+    return linkGroupElement.queryAllOptional("to_option").find(toOptionElement => {
+      const nodeRuleRef = toOptionElement.attributeMap.node_rule_ref;
+      return nodeRuleRef === targetNodeGraphElement.attributeMap.node_rule_ref;
+    });
+  })
+  if(!applicableLinkGroup) {
+    return false;
+  }
+
+  const targetNodeRule = jsonUtil.getRuleGroups().flatMap(element => element.queryAllOptional("location_graph_rule"))
+    .flatMap(element => element.queryAllOptional("node_rule"))
+    .find(element => element.attributeMap.id === nodeGraphElement?.attributeMap.node_rule_ref);
+  const targetNotFullLinkGroupElementList = keepNotFullLinkGroupElements(locationGraph, targetNodeGraphElement, targetNodeRule?.queryAllOptional("link_group") || [], "adjacent");
+  if (targetNotFullLinkGroupElementList.length === 0) {
+    return false;
+  }
+
+  const targetApplicableLinkGroup = targetNotFullLinkGroupElementList.find(linkGroupElement => {
+    return linkGroupElement.queryAllOptional("to_option").find(toOptionElement => {
+      const nodeRuleRef = toOptionElement.attributeMap.node_rule_ref;
+      return nodeRuleRef === nodeGraphElement.attributeMap.node_rule_ref;
+    });
+  });
+
+  if(!targetApplicableLinkGroup) {
+    return false;
+  }
+  return true;
+}
+
+const createLinkTo = (jsonUtil: JsonUtil, nodeGraphElement: NodeQueryType, targetNodeGraphElement: NodeQueryType): (writeUnit: JsonUtil) => Promise<LinkQueryType> => {
   try {
-
     return async () => {
       return nodeGraphElement.appendChild("link_to", undefined, {
         node_id_ref: targetNodeGraphElement.attributeMap.id,
       })
     }
   } catch (e) {
-    throw mergeError(e, new Error(`Error in createLinkTo failed for linkGroupElement:${linkGroupElement?.getPath()} and locationGraphElement:${locationGraphElement?.getPath()} and nodeGraphElement:${nodeGraphElement?.getPath()} and targetNodeGraphElement:${targetNodeGraphElement?.getPath()}`));
+    throw mergeError(e, new Error(`Error in createLinkTo failed for nodeGraphElement:${nodeGraphElement?.getPath()} and targetNodeGraphElement:${targetNodeGraphElement?.getPath()}`));
   }
 }
 
@@ -76,24 +113,38 @@ const positionBasedOnLink = (jsonUtil: JsonUtil, linkGroupElement: LinkGroupQuer
   try {
     let angle = Number(linkGroupElement?.attributeMap.angle);
     if (linkGroupElement.attributeMap.angleMax) {
-      angle = Number(linkGroupElement.attributeMap.angle) + (jsonUtil.random() * Number(linkGroupElement.attributeMap.angleMax));
+      if(linkGroupElement.attributeMap.angleMax === linkGroupElement.attributeMap.angle) {
+        angle = Number(linkGroupElement.attributeMap.angle);
+      } else {
+        angle = Number(linkGroupElement.attributeMap.angle) + (jsonUtil.random() * Number(linkGroupElement.attributeMap.angleMax));
+      }
     }
-    angle = Math.floor(angle);
+    angle = Math.floor(angle) % 360;
 
     const toOptionElement = jsonUtil.randomFromArray(linkGroupElement.queryAllOptional("to_option"))
     let distance = Number(toOptionElement.attributeMap.distance);
     if (toOptionElement.attributeMap.maxDistance) {
-      const random = jsonUtil.random();
-      const maxDistance = random * Number(toOptionElement.attributeMap.maxDistance)
-      distance = Number(toOptionElement.attributeMap.distance) + maxDistance;
+      if(toOptionElement.attributeMap.maxDistance === toOptionElement.attributeMap.distance) {
+        distance = Number(toOptionElement.attributeMap.distance);
+      } else {
+        const random = jsonUtil.random();
+        const maxDistance = random * Number(toOptionElement.attributeMap.maxDistance)
+        distance = Number(toOptionElement.attributeMap.distance) + maxDistance;
+      }
+
     }
     const originPosition = originNode.queryOptional("position").attributeMap;
-    const newX = Number(originPosition.x) + (distance * precomputeTrig[angle].cos);
-    const newY = Number(originPosition.y) + (distance * precomputeTrig[angle].sin);
-    return {
-      x: String(Math.trunc(newX)),
-      y: String(Math.trunc(newY)),
+    try {
+      const newX = Number(originPosition.x) + (distance * precomputeTrig[angle].cos);
+      const newY = Number(originPosition.y) + (distance * precomputeTrig[angle].sin);
+      return {
+        x: String(Math.trunc(newX)),
+        y: String(Math.trunc(newY)),
+      }
+    } catch (e) {
+      throw mergeError(e, new Error(`Error in positionBasedOnLink failed for linkGroupElement:${linkGroupElement?.getPath()} and originNode:${originNode?.getPath()} and angle:${angle} and distance:${distance}`));
     }
+
 
   } catch (e) {
     throw mergeError(e, new Error(`Error in positionBasedOnLink failed for linkGroupElement:${linkGroupElement?.getPath()} and originNode:${originNode?.getPath()}`));
@@ -109,11 +160,12 @@ export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nod
       .find(element => element.attributeMap.id === nodeGraphElement?.attributeMap?.node_rule_ref)
 
     const linkGroupElementList = nodeRuleElement?.queryAllOptional("link_group");
-    const notFullLinkGroupElementList = keepNotFullLinkGroupElements(locationGraphElement, nodeGraphElement, linkGroupElementList);
+    const notFullLinkGroupElementList = keepNotFullLinkGroupElements(locationGraphElement, nodeGraphElement, linkGroupElementList, "normal");
     const linkGroupElement = jsonUtil.randomFromArray(notFullLinkGroupElementList);
 
-    if(!linkGroupElement) {
-      return async () => {};
+    if (!linkGroupElement) {
+      return async () => {
+      };
     }
 
     const position = positionBasedOnLink(jsonUtil, linkGroupElement, nodeGraphElement);
@@ -122,9 +174,9 @@ export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nod
     const nodeRuleRef = toOptionElement.attributeMap.node_rule_ref;
     const createGraphNodeResult = createGraphNode(jsonUtil, locationGraphElement, nodeRuleRef, position);
 
-    let adjacentDistance = Number(toOptionElement.attributeMap.adjacent_distance_max);
-    const adjacentDistanceMin = adjacentDistance = Number(toOptionElement.attributeMap.adjacent_distance_min) ?? 0;
-    if(!adjacentDistance) {
+    let adjacentDistance = Number(toOptionElement.attributeMap.maxDistance);
+    const adjacentDistanceMin = Number(toOptionElement.attributeMap.distance ?? "0");
+    if (!adjacentDistance) {
       adjacentDistance = Number(toOptionElement.attributeMap.maxDistance) || Number(toOptionElement.attributeMap.distance);
     }
     const adjacentNodes = getAdjacentNodes(jsonUtil, locationGraphElement, nodeGraphElement, Number(toOptionElement.attributeMap.adjacent_depth_limit) || 0);
@@ -137,14 +189,21 @@ export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nod
 
       const newGraphNode = await createGraphNodeResult(writeUnit);
 
-      await createLinkTo(writeUnit, linkGroupElement, locationGraphElement, nodeGraphElement, newGraphNode)(writeUnit);
+      await createLinkTo(writeUnit, nodeGraphElement, newGraphNode)(writeUnit);
+      await createLinkTo(writeUnit, newGraphNode, nodeGraphElement)(writeUnit);
 
+      const validAdjacentNodeList = adjacentNodes
+        .filter(node => {
+          return isDistanceBetweenPointsLessThan(node, newGraphNode, adjacentDistanceMin) &&
+            isDistanceBetweenPointsGreaterThan(node, newGraphNode, adjacentDistance)
+        })
 
-
-      const adjacentLinkList = adjacentNodes
-        .filter(node => isDistanceBetweenPointsLessThan(node, newGraphNode, adjacentDistance))
-        .filter(node => isDistanceBetweenPointsGreaterThan(node, newGraphNode, adjacentDistanceMin))
-        .map(node => createLinkTo(writeUnit, linkGroupElement, locationGraphElement, node, newGraphNode)(writeUnit))
+      const adjacentLinkList = validAdjacentNodeList
+        .map(node => {
+          if(canCreateLinkBetween(jsonUtil, locationGraphElement, node, newGraphNode)) {
+            createLinkTo(writeUnit, node, newGraphNode)(writeUnit)
+          }
+        })
       await Promise.all(adjacentLinkList)
     }
   } catch (e) {

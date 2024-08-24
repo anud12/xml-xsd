@@ -728,7 +728,11 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__location_graph");
       //Deserialize arguments
-      this.id = rawNode.attributes["id"];
+      if(rawNode.attributes.ContainsKey("id"))
+      {
+        var attribute_id = rawNode.attributes["id"];
+        this.id = rawNode.attributes["id"];
+      }
       //Deserialize elements
       this.rule = rawNode.InitializeWithRawNode("rule", this.rule);
       this.node = rawNode.InitializeWithRawNode("node", this.node);
@@ -935,7 +939,11 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__world_metadata__previous_world_step");
       //Deserialize arguments
-      this.value = rawNode.attributes["value"];
+      if(rawNode.attributes.ContainsKey("value"))
+      {
+        var attribute_value = rawNode.attributes["value"];
+        this.value = rawNode.attributes["value"];
+      }
       //Deserialize elements
 
     }
@@ -1010,7 +1018,11 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__world_metadata__next_world_step");
       //Deserialize arguments
-      this.value = rawNode.attributes["value"];
+      if(rawNode.attributes.ContainsKey("value"))
+      {
+        var attribute_value = rawNode.attributes["value"];
+        this.value = rawNode.attributes["value"];
+      }
       //Deserialize elements
 
     }
@@ -1085,9 +1097,9 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__world_metadata__elapsed_time");
       //Deserialize arguments
-      var attribute_value = rawNode.attributes["value"];
-      if(attribute_value != null)
+      if(rawNode.attributes.ContainsKey("value"))
       {
+        var attribute_value = rawNode.attributes["value"];
         this.value = attribute_value.ToInt();
       }
       //Deserialize elements
@@ -1164,9 +1176,9 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__world_metadata__stepDuration");
       //Deserialize arguments
-      var attribute_value = rawNode.attributes["value"];
-      if(attribute_value != null)
+      if(rawNode.attributes.ContainsKey("value"))
       {
+        var attribute_value = rawNode.attributes["value"];
         this.value = attribute_value.ToInt();
       }
       //Deserialize elements
@@ -1243,9 +1255,9 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__world_metadata__counter");
       //Deserialize arguments
-      var attribute_value = rawNode.attributes["value"];
-      if(attribute_value != null)
+      if(rawNode.attributes.ContainsKey("value"))
       {
+        var attribute_value = rawNode.attributes["value"];
         this.value = attribute_value.ToInt();
       }
       //Deserialize elements
@@ -1941,7 +1953,11 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule");
       //Deserialize arguments
-      this.id = rawNode.attributes["id"];
+      if(rawNode.attributes.ContainsKey("id"))
+      {
+        var attribute_id = rawNode.attributes["id"];
+        this.id = rawNode.attributes["id"];
+      }
       //Deserialize elements
       this.setup = rawNode.InitializeWithRawNode("setup", this.setup);
       this.node_rule = rawNode.InitializeWithRawNode("node_rule", this.node_rule);
@@ -2159,8 +2175,16 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__people__person");
       //Deserialize arguments
-      this.id = rawNode.attributes["id"];
-      this.name = rawNode.attributes["name"];
+      if(rawNode.attributes.ContainsKey("id"))
+      {
+        var attribute_id = rawNode.attributes["id"];
+        this.id = rawNode.attributes["id"];
+      }
+      if(rawNode.attributes.ContainsKey("name"))
+      {
+        var attribute_name = rawNode.attributes["name"];
+        this.name = rawNode.attributes["name"];
+      }
       //Deserialize elements
       this.race = rawNode.InitializeWithRawNode("race", this.race);
       this.location = rawNode.InitializeWithRawNode("location", this.location);
@@ -2318,7 +2342,11 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__location_graph__rule");
       //Deserialize arguments
-      this.location_graph_rule_ref = rawNode.attributes["location_graph_rule_ref"];
+      if(rawNode.attributes.ContainsKey("location_graph_rule_ref"))
+      {
+        var attribute_location_graph_rule_ref = rawNode.attributes["location_graph_rule_ref"];
+        this.location_graph_rule_ref = rawNode.attributes["location_graph_rule_ref"];
+      }
       //Deserialize elements
 
     }
@@ -2436,8 +2464,16 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__location_graph__node");
       //Deserialize arguments
-      this.node_rule_ref = rawNode.attributes["node_rule_ref"];
-      this.id = rawNode.attributes["id"];
+      if(rawNode.attributes.ContainsKey("node_rule_ref"))
+      {
+        var attribute_node_rule_ref = rawNode.attributes["node_rule_ref"];
+        this.node_rule_ref = rawNode.attributes["node_rule_ref"];
+      }
+      if(rawNode.attributes.ContainsKey("id"))
+      {
+        var attribute_id = rawNode.attributes["id"];
+        this.id = rawNode.attributes["id"];
+      }
       //Deserialize elements
       this.position = rawNode.InitializeWithRawNode("position", this.position);
       this.link_to = rawNode.InitializeWithRawNode("link_to", this.link_to);
@@ -2606,7 +2642,11 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__actions__location_graph__create");
       //Deserialize arguments
-      this.location_graph_rule_ref = rawNode.attributes["location_graph_rule_ref"];
+      if(rawNode.attributes.ContainsKey("location_graph_rule_ref"))
+      {
+        var attribute_location_graph_rule_ref = rawNode.attributes["location_graph_rule_ref"];
+        this.location_graph_rule_ref = rawNode.attributes["location_graph_rule_ref"];
+      }
       //Deserialize elements
 
     }
@@ -2692,8 +2732,16 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__actions__location_graph__node__create_adjacent");
       //Deserialize arguments
-      this.location_graph_id_ref = rawNode.attributes["location_graph_id_ref"];
-      this.node_id_ref = rawNode.attributes["node_id_ref"];
+      if(rawNode.attributes.ContainsKey("location_graph_id_ref"))
+      {
+        var attribute_location_graph_id_ref = rawNode.attributes["location_graph_id_ref"];
+        this.location_graph_id_ref = rawNode.attributes["location_graph_id_ref"];
+      }
+      if(rawNode.attributes.ContainsKey("node_id_ref"))
+      {
+        var attribute_node_id_ref = rawNode.attributes["node_id_ref"];
+        this.node_id_ref = rawNode.attributes["node_id_ref"];
+      }
       //Deserialize elements
 
     }
@@ -2782,7 +2830,11 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__actions__person__teleport");
       //Deserialize arguments
-      this.person_id_ref = rawNode.attributes["person_id_ref"];
+      if(rawNode.attributes.ContainsKey("person_id_ref"))
+      {
+        var attribute_person_id_ref = rawNode.attributes["person_id_ref"];
+        this.person_id_ref = rawNode.attributes["person_id_ref"];
+      }
       //Deserialize elements
       this.location_graph = rawNode.InitializeWithRawNode("location_graph", this.location_graph);
     }
@@ -2879,9 +2931,21 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__actions__person__on_person__property_mutation");
       //Deserialize arguments
-      this.person_id_ref = rawNode.attributes["person_id_ref"];
-      this.target_person_id_ref = rawNode.attributes["target_person_id_ref"];
-      this.action_property_mutation_rule_ref = rawNode.attributes["action_property_mutation_rule_ref"];
+      if(rawNode.attributes.ContainsKey("person_id_ref"))
+      {
+        var attribute_person_id_ref = rawNode.attributes["person_id_ref"];
+        this.person_id_ref = rawNode.attributes["person_id_ref"];
+      }
+      if(rawNode.attributes.ContainsKey("target_person_id_ref"))
+      {
+        var attribute_target_person_id_ref = rawNode.attributes["target_person_id_ref"];
+        this.target_person_id_ref = rawNode.attributes["target_person_id_ref"];
+      }
+      if(rawNode.attributes.ContainsKey("action_property_mutation_rule_ref"))
+      {
+        var attribute_action_property_mutation_rule_ref = rawNode.attributes["action_property_mutation_rule_ref"];
+        this.action_property_mutation_rule_ref = rawNode.attributes["action_property_mutation_rule_ref"];
+      }
       //Deserialize elements
 
     }
@@ -3107,9 +3171,9 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__world_metadata__randomization_table__entry");
       //Deserialize arguments
-      var attribute_value = rawNode.attributes["value"];
-      if(attribute_value != null)
+      if(rawNode.attributes.ContainsKey("value"))
       {
+        var attribute_value = rawNode.attributes["value"];
         this.value = attribute_value.ToInt();
       }
       //Deserialize elements
@@ -3479,7 +3543,11 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__rule_group__race_rule__entry");
       //Deserialize arguments
-      this.id = rawNode.attributes["id"];
+      if(rawNode.attributes.ContainsKey("id"))
+      {
+        var attribute_id = rawNode.attributes["id"];
+        this.id = rawNode.attributes["id"];
+      }
       //Deserialize elements
       this.vision = rawNode.InitializeWithRawNode("vision", this.vision);
       this.movement = rawNode.InitializeWithRawNode("movement", this.movement);
@@ -3659,7 +3727,11 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__rule_group__action_rule__person_to_person");
       //Deserialize arguments
-      this.id = rawNode.attributes["id"];
+      if(rawNode.attributes.ContainsKey("id"))
+      {
+        var attribute_id = rawNode.attributes["id"];
+        this.id = rawNode.attributes["id"];
+      }
       //Deserialize elements
       this.test = rawNode.InitializeWithRawNode("test", this.test);
       this.property_mutation = rawNode.InitializeWithRawNode("property_mutation", this.property_mutation);
@@ -3858,7 +3930,11 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__rule_group__events_rule__entry");
       //Deserialize arguments
-      this.id = rawNode.attributes["id"];
+      if(rawNode.attributes.ContainsKey("id"))
+      {
+        var attribute_id = rawNode.attributes["id"];
+        this.id = rawNode.attributes["id"];
+      }
       //Deserialize elements
       this.when = rawNode.InitializeWithRawNode("when", this.when);
       this.then = rawNode.InitializeWithRawNode("then", this.then);
@@ -4109,7 +4185,11 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__node_rule");
       //Deserialize arguments
-      this.id = rawNode.attributes["id"];
+      if(rawNode.attributes.ContainsKey("id"))
+      {
+        var attribute_id = rawNode.attributes["id"];
+        this.id = rawNode.attributes["id"];
+      }
       //Deserialize elements
       this.link_group = rawNode.InitializeWithRawNode("link_group", this.link_group);
     }
@@ -4260,14 +4340,14 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing type_cell_ref");
       //Deserialize arguments
-      var attribute_x = rawNode.attributes["x"];
-      if(attribute_x != null)
+      if(rawNode.attributes.ContainsKey("x"))
       {
+        var attribute_x = rawNode.attributes["x"];
         this.x = attribute_x.ToInt();
       }
-      var attribute_y = rawNode.attributes["y"];
-      if(attribute_y != null)
+      if(rawNode.attributes.ContainsKey("y"))
       {
+        var attribute_y = rawNode.attributes["y"];
         this.y = attribute_y.ToInt();
       }
       //Deserialize elements
@@ -4663,14 +4743,14 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__location_graph__node__position");
       //Deserialize arguments
-      var attribute_x = rawNode.attributes["x"];
-      if(attribute_x != null)
+      if(rawNode.attributes.ContainsKey("x"))
       {
+        var attribute_x = rawNode.attributes["x"];
         this.x = attribute_x.ToInt();
       }
-      var attribute_y = rawNode.attributes["y"];
-      if(attribute_y != null)
+      if(rawNode.attributes.ContainsKey("y"))
       {
+        var attribute_y = rawNode.attributes["y"];
         this.y = attribute_y.ToInt();
       }
       //Deserialize elements
@@ -4751,7 +4831,11 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__location_graph__node__link_to");
       //Deserialize arguments
-      this.node_id_ref = rawNode.attributes["node_id_ref"];
+      if(rawNode.attributes.ContainsKey("node_id_ref"))
+      {
+        var attribute_node_id_ref = rawNode.attributes["node_id_ref"];
+        this.node_id_ref = rawNode.attributes["node_id_ref"];
+      }
       //Deserialize elements
 
     }
@@ -4980,15 +5064,19 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__actions__by__move_towards");
       //Deserialize arguments
-      this.layer = rawNode.attributes["layer"];
-      var attribute_x = rawNode.attributes["x"];
-      if(attribute_x != null)
+      if(rawNode.attributes.ContainsKey("layer"))
       {
+        var attribute_layer = rawNode.attributes["layer"];
+        this.layer = rawNode.attributes["layer"];
+      }
+      if(rawNode.attributes.ContainsKey("x"))
+      {
+        var attribute_x = rawNode.attributes["x"];
         this.x = attribute_x.ToInt();
       }
-      var attribute_y = rawNode.attributes["y"];
-      if(attribute_y != null)
+      if(rawNode.attributes.ContainsKey("y"))
       {
+        var attribute_y = rawNode.attributes["y"];
         this.y = attribute_y.ToInt();
       }
       //Deserialize elements
@@ -5084,8 +5172,16 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__actions__person__teleport__location_graph");
       //Deserialize arguments
-      this.location_graph_id_ref = rawNode.attributes["location_graph_id_ref"];
-      this.node_id_ref = rawNode.attributes["node_id_ref"];
+      if(rawNode.attributes.ContainsKey("location_graph_id_ref"))
+      {
+        var attribute_location_graph_id_ref = rawNode.attributes["location_graph_id_ref"];
+        this.location_graph_id_ref = rawNode.attributes["location_graph_id_ref"];
+      }
+      if(rawNode.attributes.ContainsKey("node_id_ref"))
+      {
+        var attribute_node_id_ref = rawNode.attributes["node_id_ref"];
+        this.node_id_ref = rawNode.attributes["node_id_ref"];
+      }
       //Deserialize elements
 
     }
@@ -5159,9 +5255,9 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing type__math_operations");
       //Deserialize arguments
-      var attribute_initial = rawNode.attributes["initial"];
-      if(attribute_initial != null)
+      if(rawNode.attributes.ContainsKey("initial"))
       {
+        var attribute_initial = rawNode.attributes["initial"];
         this.initial = attribute_initial.ToInt();
       }
     }
@@ -5255,7 +5351,11 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing type__person_selection__property");
       //Deserialize arguments
-      this.property_rule_ref = rawNode.attributes["property_rule_ref"];
+      if(rawNode.attributes.ContainsKey("property_rule_ref"))
+      {
+        var attribute_property_rule_ref = rawNode.attributes["property_rule_ref"];
+        this.property_rule_ref = rawNode.attributes["property_rule_ref"];
+      }
       //Deserialize elements
       this.min = rawNode.InitializeWithRawNode("min", this.min);
       this.max = rawNode.InitializeWithRawNode("max", this.max);
@@ -5332,7 +5432,11 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing type__person_selection__classification");
       //Deserialize arguments
-      this.classification_rule_ref = rawNode.attributes["classification_rule_ref"];
+      if(rawNode.attributes.ContainsKey("classification_rule_ref"))
+      {
+        var attribute_classification_rule_ref = rawNode.attributes["classification_rule_ref"];
+        this.classification_rule_ref = rawNode.attributes["classification_rule_ref"];
+      }
       //Deserialize elements
 
     }
@@ -5667,15 +5771,19 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__rule_group__property_rule__entry__property_threshold");
       //Deserialize arguments
-      this.name = rawNode.attributes["name"];
-      var attribute_min_value_inclusive = rawNode.attributes["min-value-inclusive"];
-      if(attribute_min_value_inclusive != null)
+      if(rawNode.attributes.ContainsKey("name"))
       {
+        var attribute_name = rawNode.attributes["name"];
+        this.name = rawNode.attributes["name"];
+      }
+      if(rawNode.attributes.ContainsKey("min-value-inclusive"))
+      {
+        var attribute_min_value_inclusive = rawNode.attributes["min-value-inclusive"];
         this.min_value_inclusive = attribute_min_value_inclusive.ToInt();
       }
-      var attribute_max_value_inclusive = rawNode.attributes["max-value-inclusive"];
-      if(attribute_max_value_inclusive != null)
+      if(rawNode.attributes.ContainsKey("max-value-inclusive"))
       {
+        var attribute_max_value_inclusive = rawNode.attributes["max-value-inclusive"];
         this.max_value_inclusive = attribute_max_value_inclusive.ToInt();
       }
       //Deserialize elements
@@ -5846,7 +5954,11 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing group__name_token__name_token");
       //Deserialize arguments
-      this.prefix = rawNode.attributes["prefix"];
+      if(rawNode.attributes.ContainsKey("prefix"))
+      {
+        var attribute_prefix = rawNode.attributes["prefix"];
+        this.prefix = rawNode.attributes["prefix"];
+      }
       //Deserialize elements
       this._ref = rawNode.InitializeWithRawNode("ref", this._ref);
       this.one_of = rawNode.InitializeWithRawNode("one_of", this.one_of);
@@ -5978,7 +6090,11 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__rule_group__race_rule__entry__name");
       //Deserialize arguments
-      this.name_rule_ref = rawNode.attributes["name_rule_ref"];
+      if(rawNode.attributes.ContainsKey("name_rule_ref"))
+      {
+        var attribute_name_rule_ref = rawNode.attributes["name_rule_ref"];
+        this.name_rule_ref = rawNode.attributes["name_rule_ref"];
+      }
       //Deserialize elements
 
     }
@@ -6244,7 +6360,11 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__rule_group__action_rule__person_to_person__location_mutation");
       //Deserialize arguments
-      this.on = rawNode.attributes["on"];
+      if(rawNode.attributes.ContainsKey("on"))
+      {
+        var attribute_on = rawNode.attributes["on"];
+        this.on = rawNode.attributes["on"];
+      }
       //Deserialize elements
       this.from = rawNode.InitializeWithRawNode("from", this.from);
     }
@@ -6382,7 +6502,11 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__rule_group__item_rule__entry__wearable");
       //Deserialize arguments
-      this.slot = rawNode.attributes["slot"];
+      if(rawNode.attributes.ContainsKey("slot"))
+      {
+        var attribute_slot = rawNode.attributes["slot"];
+        this.slot = rawNode.attributes["slot"];
+      }
       //Deserialize elements
 
     }
@@ -6680,9 +6804,9 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__rule_group__locations_markov_chain__location_markov_link__sibling");
       //Deserialize arguments
-      var attribute_quantity = rawNode.attributes["quantity"];
-      if(attribute_quantity != null)
+      if(rawNode.attributes.ContainsKey("quantity"))
       {
+        var attribute_quantity = rawNode.attributes["quantity"];
         this.quantity = attribute_quantity.ToInt();
       }
       //Deserialize elements
@@ -6759,7 +6883,11 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__setup__starting_node");
       //Deserialize arguments
-      this.node_rule_ref = rawNode.attributes["node_rule_ref"];
+      if(rawNode.attributes.ContainsKey("node_rule_ref"))
+      {
+        var attribute_node_rule_ref = rawNode.attributes["node_rule_ref"];
+        this.node_rule_ref = rawNode.attributes["node_rule_ref"];
+      }
       //Deserialize elements
 
     }
@@ -6877,20 +7005,24 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__node_rule__link_group");
       //Deserialize arguments
-      this.id = rawNode.attributes["id"];
-      var attribute_angle = rawNode.attributes["angle"];
-      if(attribute_angle != null)
+      if(rawNode.attributes.ContainsKey("id"))
       {
+        var attribute_id = rawNode.attributes["id"];
+        this.id = rawNode.attributes["id"];
+      }
+      if(rawNode.attributes.ContainsKey("angle"))
+      {
+        var attribute_angle = rawNode.attributes["angle"];
         this.angle = attribute_angle.ToInt();
       }
-      var attribute_angleMax = rawNode.attributes["angleMax"];
-      if(attribute_angleMax != null)
+      if(rawNode.attributes.ContainsKey("angleMax"))
       {
+        var attribute_angleMax = rawNode.attributes["angleMax"];
         this.angleMax = attribute_angleMax.ToInt();
       }
-      var attribute_limit = rawNode.attributes["limit"];
-      if(attribute_limit != null)
+      if(rawNode.attributes.ContainsKey("limit"))
       {
+        var attribute_limit = rawNode.attributes["limit"];
         this.limit = attribute_limit.ToInt();
       }
       //Deserialize elements
@@ -6981,7 +7113,11 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__people__person__properties__property");
       //Deserialize arguments
-      this.property_rule_ref = rawNode.attributes["property_rule_ref"];
+      if(rawNode.attributes.ContainsKey("property_rule_ref"))
+      {
+        var attribute_property_rule_ref = rawNode.attributes["property_rule_ref"];
+        this.property_rule_ref = rawNode.attributes["property_rule_ref"];
+      }
       //Deserialize elements
 
     }
@@ -7056,7 +7192,11 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__people__person__classifications__classification");
       //Deserialize arguments
-      this.classification_rule_ref = rawNode.attributes["classification_rule_ref"];
+      if(rawNode.attributes.ContainsKey("classification_rule_ref"))
+      {
+        var attribute_classification_rule_ref = rawNode.attributes["classification_rule_ref"];
+        this.classification_rule_ref = rawNode.attributes["classification_rule_ref"];
+      }
       //Deserialize elements
 
     }
@@ -7131,7 +7271,11 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__location_graph__node__people__person");
       //Deserialize arguments
-      this.person_id_ref = rawNode.attributes["person_id_ref"];
+      if(rawNode.attributes.ContainsKey("person_id_ref"))
+      {
+        var attribute_person_id_ref = rawNode.attributes["person_id_ref"];
+        this.person_id_ref = rawNode.attributes["person_id_ref"];
+      }
       //Deserialize elements
 
     }
@@ -7330,7 +7474,11 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing group__name_token__name_token__ref");
       //Deserialize arguments
-      this.name_rule_ref = rawNode.attributes["name_rule_ref"];
+      if(rawNode.attributes.ContainsKey("name_rule_ref"))
+      {
+        var attribute_name_rule_ref = rawNode.attributes["name_rule_ref"];
+        this.name_rule_ref = rawNode.attributes["name_rule_ref"];
+      }
       //Deserialize elements
 
     }
@@ -7593,10 +7741,6 @@ namespace XSD {
     public void Set_maxDistance(System.Int32 value);
     public System.Int32 Get_adjacent_depth_limit();
     public void Set_adjacent_depth_limit(System.Int32 value);
-    public System.Int32 Get_adjacent_distance_max();
-    public void Set_adjacent_distance_max(System.Int32 value);
-    public System.Int32 Get_adjacent_distance_min();
-    public void Set_adjacent_distance_min(System.Int32 value);
 
     //Children elements
 
@@ -7647,24 +7791,6 @@ namespace XSD {
     {
       this.adjacent_depth_limit = value;
     }
-    public System.Int32 adjacent_distance_max;
-    public System.Int32 Get_adjacent_distance_max()
-    {
-      return this.adjacent_distance_max;
-    }
-    public void Set_adjacent_distance_max(System.Int32 value)
-    {
-      this.adjacent_distance_max = value;
-    }
-    public System.Int32 adjacent_distance_min;
-    public System.Int32 Get_adjacent_distance_min()
-    {
-      return this.adjacent_distance_min;
-    }
-    public void Set_adjacent_distance_min(System.Int32 value)
-    {
-      this.adjacent_distance_min = value;
-    }
 
     //Children elements
 
@@ -7688,31 +7814,25 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__node_rule__link_group__to_option");
       //Deserialize arguments
-      this.node_rule_ref = rawNode.attributes["node_rule_ref"];
-      var attribute_distance = rawNode.attributes["distance"];
-      if(attribute_distance != null)
+      if(rawNode.attributes.ContainsKey("node_rule_ref"))
       {
+        var attribute_node_rule_ref = rawNode.attributes["node_rule_ref"];
+        this.node_rule_ref = rawNode.attributes["node_rule_ref"];
+      }
+      if(rawNode.attributes.ContainsKey("distance"))
+      {
+        var attribute_distance = rawNode.attributes["distance"];
         this.distance = attribute_distance.ToInt();
       }
-      var attribute_maxDistance = rawNode.attributes["maxDistance"];
-      if(attribute_maxDistance != null)
+      if(rawNode.attributes.ContainsKey("maxDistance"))
       {
+        var attribute_maxDistance = rawNode.attributes["maxDistance"];
         this.maxDistance = attribute_maxDistance.ToInt();
       }
-      var attribute_adjacent_depth_limit = rawNode.attributes["adjacent_depth_limit"];
-      if(attribute_adjacent_depth_limit != null)
+      if(rawNode.attributes.ContainsKey("adjacent_depth_limit"))
       {
+        var attribute_adjacent_depth_limit = rawNode.attributes["adjacent_depth_limit"];
         this.adjacent_depth_limit = attribute_adjacent_depth_limit.ToInt();
-      }
-      var attribute_adjacent_distance_max = rawNode.attributes["adjacent_distance_max"];
-      if(attribute_adjacent_distance_max != null)
-      {
-        this.adjacent_distance_max = attribute_adjacent_distance_max.ToInt();
-      }
-      var attribute_adjacent_distance_min = rawNode.attributes["adjacent_distance_min"];
-      if(attribute_adjacent_distance_min != null)
-      {
-        this.adjacent_distance_min = attribute_adjacent_distance_min.ToInt();
       }
       //Deserialize elements
 
@@ -7736,14 +7856,6 @@ namespace XSD {
       if(this.adjacent_depth_limit != null)
       {
         rawNode.attributes["adjacent_depth_limit"] = this.adjacent_depth_limit.ToString();
-      }
-      if(this.adjacent_distance_max != null)
-      {
-        rawNode.attributes["adjacent_distance_max"] = this.adjacent_distance_max.ToString();
-      }
-      if(this.adjacent_distance_min != null)
-      {
-        rawNode.attributes["adjacent_distance_min"] = this.adjacent_distance_min.ToString();
       }
       //Serialize elements
 
@@ -7808,7 +7920,11 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing group__operation__and__add_property");
       //Deserialize arguments
-      this.property_rule_ref = rawNode.attributes["property_rule_ref"];
+      if(rawNode.attributes.ContainsKey("property_rule_ref"))
+      {
+        var attribute_property_rule_ref = rawNode.attributes["property_rule_ref"];
+        this.property_rule_ref = rawNode.attributes["property_rule_ref"];
+      }
       //Deserialize elements
 
     }

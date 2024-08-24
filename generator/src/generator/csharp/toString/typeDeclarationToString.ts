@@ -136,14 +136,20 @@ function typeDeclarationElementToClassString(dependantType: DependantType, exten
             if (value.metaType === "primitive") {
               if (value.value === "xs:int") {
                 return template()`
-                  var attribute_${normalizeName(key)} = rawNode.attributes["${key}"];
-                  if(attribute_${normalizeName(key)} != null)
+                  if(rawNode.attributes.ContainsKey("${key}"))
                   {
+                    var attribute_${normalizeName(key)} = rawNode.attributes["${key}"];
                     this.${normalizeName(key)} = attribute_${normalizeName(key)}.ToInt();
                   }
                   `;
               }
-              return template()`this.${normalizeName(key)} = rawNode.attributes["${key}"];`;
+              return template()`
+                if(rawNode.attributes.ContainsKey("${key}"))
+                {
+                  var attribute_${normalizeName(key)} = rawNode.attributes["${key}"];
+                  this.${normalizeName(key)} = rawNode.attributes["${key}"];
+                }
+                `;
             }
           }).filter(e => e).join("\n")}
         `}

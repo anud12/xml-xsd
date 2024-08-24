@@ -1124,22 +1124,6 @@
                                         </xs:documentation>
                                       </xs:annotation>
                                     </xs:attribute>
-                                    <xs:attribute name="adjacent_distance_max" type="xs:int" >
-                                      <xs:annotation>
-                                        <xs:documentation>
-                                          Represents the maximum distance between the nodes to be considered adjacent.
-                                          If unset it defaults to maxDistance value.
-                                        </xs:documentation>
-                                      </xs:annotation>
-                                    </xs:attribute>
-                                    <xs:attribute name="adjacent_distance_min" type="xs:int" >
-                                      <xs:annotation>
-                                        <xs:documentation>
-                                          Represents the maximum distance between the nodes to be considered adjacent.
-                                          If unset it defaults to 0.
-                                        </xs:documentation>
-                                      </xs:annotation>
-                                    </xs:attribute>
                                   </xs:complexType>
                                 </xs:element>
                               </xs:sequence>
