@@ -1316,6 +1316,24 @@
                     }
                   },
                   "value": {
+                    "classifications": {
+                      "metaType": "object",
+                      "value": {
+                        "classification": {
+                          "metaType": "object",
+                          "value": {},
+                          "attributes": {
+                            "metaType": "object",
+                            "value": {
+                              "location_classification_rule_ref": {
+                                "metaType": "primitive",
+                                "value": "xs:string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
                     "link_group": {
                       "metaType": "object",
                       "attributes": {
@@ -1365,6 +1383,24 @@
                             }
                           }
                         }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "location_classification_rule": {
+              "metaType": "object",
+              "value": {
+                "entry": {
+                  "metaType": "object",
+                  "value": {},
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "id": {
+                        "metaType": "primitive",
+                        "value": "xs:string"
                       }
                     }
                   }
@@ -1570,6 +1606,24 @@
                       "y": {
                         "metaType": "primitive",
                         "value": "xs:int"
+                      }
+                    }
+                  }
+                },
+                "classifications": {
+                  "metaType": "object",
+                  "value": {
+                    "classification": {
+                      "metaType": "object",
+                      "value": {},
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "location_classification_rule_ref": {
+                            "metaType": "primitive",
+                            "value": "xs:string"
+                          }
+                        }
                       }
                     }
                   }

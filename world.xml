@@ -521,11 +521,20 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
         </icon>
       </location_markov_link>
     </locations_markov_chain>
+
+
+    <location_classification_rule>
+      <entry id="city"/>
+    </location_classification_rule>
+
     <location_graph_rule id="dd">
       <setup>
         <starting_node node_rule_ref="city"/>
       </setup>
       <node_rule id="city">
+        <classifications>
+          <classification location_classification_rule_ref="city"/>
+        </classifications>
         <link_group id="all" angle="0" angleMax="360">
           <to_option node_rule_ref="city" distance="20" maxDistance="50" adjacent_depth_limit="0"/>
         </link_group>
