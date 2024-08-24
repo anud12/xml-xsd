@@ -1078,6 +1078,19 @@
                     <xs:element name="node_rule" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
+                          <xs:element name="classifications" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="classification" minOccurs="0"
+                                            maxOccurs="unbounded">
+                                  <xs:complexType>
+                                    <xs:attribute name="location_classification_rule_ref" type="xs:string"
+                                                  use="required"/>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
                           <xs:element name="link_group" maxOccurs="unbounded">
                             <xs:annotation>
                               <xs:documentation>
@@ -1161,6 +1174,20 @@
                   <xs:attribute name="id" type="xs:string" use="required"/>
                 </xs:complexType>
               </xs:element>
+
+
+              <xs:element name="location_classification_rule" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="entry">
+                      <xs:complexType>
+                        <xs:attribute name="id" type="xs:string" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
 
             </xs:all>
 
@@ -1294,6 +1321,17 @@
                       <xs:complexType>
                         <xs:attribute name="x" type="xs:int" use="required"/>
                         <xs:attribute name="y" type="xs:int" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="classifications" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="classification" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:attribute name="location_classification_rule_ref" type="xs:string" use="required"/>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
                       </xs:complexType>
                     </xs:element>
                     <xs:element name="link_to" minOccurs="0" maxOccurs="unbounded">

@@ -300,6 +300,8 @@ namespace XSD {
     public void Set_locations_markov_chain(List<world_step__rule_group__locations_markov_chain> value);
     public List<world_step__rule_group__location_graph_rule> Get_location_graph_rule();
     public void Set_location_graph_rule(List<world_step__rule_group__location_graph_rule> value);
+    public List<world_step__rule_group__location_classification_rule> Get_location_classification_rule();
+    public void Set_location_classification_rule(List<world_step__rule_group__location_classification_rule> value);
     public void Deserialize (RawNode rawNode);
 
     public RawNode SerializeIntoRawNode();
@@ -395,6 +397,15 @@ namespace XSD {
     {
       this.location_graph_rule = value;
     }
+    public List<world_step__rule_group__location_classification_rule> location_classification_rule = new List<world_step__rule_group__location_classification_rule>();
+    public List<world_step__rule_group__location_classification_rule> Get_location_classification_rule()
+    {
+      return this.location_classification_rule;
+    }
+    public void Set_location_classification_rule(List<world_step__rule_group__location_classification_rule> value)
+    {
+      this.location_classification_rule = value;
+    }
 
     public world_step__rule_group()
     {
@@ -427,6 +438,7 @@ namespace XSD {
       this.events_rule = rawNode.InitializeWithRawNode("events_rule", this.events_rule);
       this.locations_markov_chain = rawNode.InitializeWithRawNode("locations_markov_chain", this.locations_markov_chain);
       this.location_graph_rule = rawNode.InitializeWithRawNode("location_graph_rule", this.location_graph_rule);
+      this.location_classification_rule = rawNode.InitializeWithRawNode("location_classification_rule", this.location_classification_rule);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -443,6 +455,7 @@ namespace XSD {
       rawNode.children["events_rule"] = events_rule.Select(x => x.SerializeIntoRawNode()).ToList();
       rawNode.children["locations_markov_chain"] = locations_markov_chain.Select(x => x.SerializeIntoRawNode()).ToList();
       rawNode.children["location_graph_rule"] = location_graph_rule.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["location_classification_rule"] = location_classification_rule.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 
@@ -1984,6 +1997,71 @@ namespace XSD {
     }
   }
   /*typeDeclarationElementToInterfaceString= element*/
+  public interface Iworld_step__rule_group__location_classification_rule {
+
+    //Children elements
+    public List<world_step__rule_group__location_classification_rule__entry> Get_entry();
+    public void Set_entry(List<world_step__rule_group__location_classification_rule__entry> value);
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class world_step__rule_group__location_classification_rule: Iworld_step__rule_group__location_classification_rule {
+    public RawNode rawNode = new RawNode();
+
+    //Children elements
+    public List<world_step__rule_group__location_classification_rule__entry> entry = new List<world_step__rule_group__location_classification_rule__entry>();
+    public List<world_step__rule_group__location_classification_rule__entry> Get_entry()
+    {
+      return this.entry;
+    }
+    public void Set_entry(List<world_step__rule_group__location_classification_rule__entry> value)
+    {
+      this.entry = value;
+    }
+
+    public world_step__rule_group__location_classification_rule()
+    {
+    }
+
+    public world_step__rule_group__location_classification_rule(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public world_step__rule_group__location_classification_rule(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing world_step__rule_group__location_classification_rule");
+      //Deserialize elements
+      this.entry = rawNode.InitializeWithRawNode("entry", this.entry);
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize elements
+      rawNode.children["entry"] = entry.Select(x => x.SerializeIntoRawNode()).ToList();
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing world_step__rule_group__location_classification_rule");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
   public interface Itype__item {
     //Attributes
     /* ignored attribute key={key} of type=System.Object*/
@@ -2381,6 +2459,8 @@ namespace XSD {
     //Children elements
     public List<world_step__location_graph__node__position> Get_position();
     public void Set_position(List<world_step__location_graph__node__position> value);
+    public List<world_step__location_graph__node__classifications> Get_classifications();
+    public void Set_classifications(List<world_step__location_graph__node__classifications> value);
     public List<world_step__location_graph__node__link_to> Get_link_to();
     public void Set_link_to(List<world_step__location_graph__node__link_to> value);
     public List<world_step__location_graph__node__people> Get_people();
@@ -2424,6 +2504,15 @@ namespace XSD {
     public void Set_position(List<world_step__location_graph__node__position> value)
     {
       this.position = value;
+    }
+    public List<world_step__location_graph__node__classifications> classifications = new List<world_step__location_graph__node__classifications>();
+    public List<world_step__location_graph__node__classifications> Get_classifications()
+    {
+      return this.classifications;
+    }
+    public void Set_classifications(List<world_step__location_graph__node__classifications> value)
+    {
+      this.classifications = value;
     }
     public List<world_step__location_graph__node__link_to> link_to = new List<world_step__location_graph__node__link_to>();
     public List<world_step__location_graph__node__link_to> Get_link_to()
@@ -2476,6 +2565,7 @@ namespace XSD {
       }
       //Deserialize elements
       this.position = rawNode.InitializeWithRawNode("position", this.position);
+      this.classifications = rawNode.InitializeWithRawNode("classifications", this.classifications);
       this.link_to = rawNode.InitializeWithRawNode("link_to", this.link_to);
       this.people = rawNode.InitializeWithRawNode("people", this.people);
     }
@@ -2493,6 +2583,7 @@ namespace XSD {
       }
       //Serialize elements
       rawNode.children["position"] = position.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["classifications"] = classifications.Select(x => x.SerializeIntoRawNode()).ToList();
       rawNode.children["link_to"] = link_to.Select(x => x.SerializeIntoRawNode()).ToList();
       rawNode.children["people"] = people.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
@@ -4131,6 +4222,8 @@ namespace XSD {
     public void Set_id(System.String value);
 
     //Children elements
+    public List<world_step__rule_group__location_graph_rule__node_rule__classifications> Get_classifications();
+    public void Set_classifications(List<world_step__rule_group__location_graph_rule__node_rule__classifications> value);
     public List<world_step__rule_group__location_graph_rule__node_rule__link_group> Get_link_group();
     public void Set_link_group(List<world_step__rule_group__location_graph_rule__node_rule__link_group> value);
     public void Deserialize (RawNode rawNode);
@@ -4155,6 +4248,15 @@ namespace XSD {
     }
 
     //Children elements
+    public List<world_step__rule_group__location_graph_rule__node_rule__classifications> classifications = new List<world_step__rule_group__location_graph_rule__node_rule__classifications>();
+    public List<world_step__rule_group__location_graph_rule__node_rule__classifications> Get_classifications()
+    {
+      return this.classifications;
+    }
+    public void Set_classifications(List<world_step__rule_group__location_graph_rule__node_rule__classifications> value)
+    {
+      this.classifications = value;
+    }
     public List<world_step__rule_group__location_graph_rule__node_rule__link_group> link_group = new List<world_step__rule_group__location_graph_rule__node_rule__link_group>();
     public List<world_step__rule_group__location_graph_rule__node_rule__link_group> Get_link_group()
     {
@@ -4191,6 +4293,7 @@ namespace XSD {
         this.id = rawNode.attributes["id"];
       }
       //Deserialize elements
+      this.classifications = rawNode.InitializeWithRawNode("classifications", this.classifications);
       this.link_group = rawNode.InitializeWithRawNode("link_group", this.link_group);
     }
 
@@ -4202,6 +4305,7 @@ namespace XSD {
         rawNode.attributes["id"] = this.id.ToString();
       }
       //Serialize elements
+      rawNode.children["classifications"] = classifications.Select(x => x.SerializeIntoRawNode()).ToList();
       rawNode.children["link_group"] = link_group.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
@@ -4209,6 +4313,85 @@ namespace XSD {
     public void Serialize(XmlElement element)
     {
         Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__node_rule");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
+  public interface Iworld_step__rule_group__location_classification_rule__entry {
+    //Attributes
+    public System.String Get_id();
+    public void Set_id(System.String value);
+
+    //Children elements
+
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class world_step__rule_group__location_classification_rule__entry: Iworld_step__rule_group__location_classification_rule__entry {
+    public RawNode rawNode = new RawNode();
+    //Attributes
+    public System.String id;
+    public System.String Get_id()
+    {
+      return this.id;
+    }
+    public void Set_id(System.String value)
+    {
+      this.id = value;
+    }
+
+    //Children elements
+
+    public world_step__rule_group__location_classification_rule__entry()
+    {
+    }
+
+    public world_step__rule_group__location_classification_rule__entry(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public world_step__rule_group__location_classification_rule__entry(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing world_step__rule_group__location_classification_rule__entry");
+      //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("id"))
+      {
+        var attribute_id = rawNode.attributes["id"];
+        this.id = rawNode.attributes["id"];
+      }
+      //Deserialize elements
+
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize arguments
+      if(this.id != null)
+      {
+        rawNode.attributes["id"] = this.id.ToString();
+      }
+      //Serialize elements
+
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing world_step__rule_group__location_classification_rule__entry");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -4776,6 +4959,71 @@ namespace XSD {
     public void Serialize(XmlElement element)
     {
         Godot.GD.Print("Serializing world_step__location_graph__node__position");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
+  public interface Iworld_step__location_graph__node__classifications {
+
+    //Children elements
+    public List<world_step__location_graph__node__classifications__classification> Get_classification();
+    public void Set_classification(List<world_step__location_graph__node__classifications__classification> value);
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class world_step__location_graph__node__classifications: Iworld_step__location_graph__node__classifications {
+    public RawNode rawNode = new RawNode();
+
+    //Children elements
+    public List<world_step__location_graph__node__classifications__classification> classification = new List<world_step__location_graph__node__classifications__classification>();
+    public List<world_step__location_graph__node__classifications__classification> Get_classification()
+    {
+      return this.classification;
+    }
+    public void Set_classification(List<world_step__location_graph__node__classifications__classification> value)
+    {
+      this.classification = value;
+    }
+
+    public world_step__location_graph__node__classifications()
+    {
+    }
+
+    public world_step__location_graph__node__classifications(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public world_step__location_graph__node__classifications(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing world_step__location_graph__node__classifications");
+      //Deserialize elements
+      this.classification = rawNode.InitializeWithRawNode("classification", this.classification);
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize elements
+      rawNode.children["classification"] = classification.Select(x => x.SerializeIntoRawNode()).ToList();
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing world_step__location_graph__node__classifications");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -6912,6 +7160,71 @@ namespace XSD {
     }
   }
   /*typeDeclarationElementToInterfaceString= element*/
+  public interface Iworld_step__rule_group__location_graph_rule__node_rule__classifications {
+
+    //Children elements
+    public List<world_step__rule_group__location_graph_rule__node_rule__classifications__classification> Get_classification();
+    public void Set_classification(List<world_step__rule_group__location_graph_rule__node_rule__classifications__classification> value);
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class world_step__rule_group__location_graph_rule__node_rule__classifications: Iworld_step__rule_group__location_graph_rule__node_rule__classifications {
+    public RawNode rawNode = new RawNode();
+
+    //Children elements
+    public List<world_step__rule_group__location_graph_rule__node_rule__classifications__classification> classification = new List<world_step__rule_group__location_graph_rule__node_rule__classifications__classification>();
+    public List<world_step__rule_group__location_graph_rule__node_rule__classifications__classification> Get_classification()
+    {
+      return this.classification;
+    }
+    public void Set_classification(List<world_step__rule_group__location_graph_rule__node_rule__classifications__classification> value)
+    {
+      this.classification = value;
+    }
+
+    public world_step__rule_group__location_graph_rule__node_rule__classifications()
+    {
+    }
+
+    public world_step__rule_group__location_graph_rule__node_rule__classifications(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public world_step__rule_group__location_graph_rule__node_rule__classifications(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__node_rule__classifications");
+      //Deserialize elements
+      this.classification = rawNode.InitializeWithRawNode("classification", this.classification);
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize elements
+      rawNode.children["classification"] = classification.Select(x => x.SerializeIntoRawNode()).ToList();
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__node_rule__classifications");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
   public interface Iworld_step__rule_group__location_graph_rule__node_rule__link_group {
     //Attributes
     public System.String Get_id();
@@ -7216,6 +7529,85 @@ namespace XSD {
     public void Serialize(XmlElement element)
     {
         Godot.GD.Print("Serializing world_step__people__person__classifications__classification");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
+  public interface Iworld_step__location_graph__node__classifications__classification {
+    //Attributes
+    public System.String Get_location_classification_rule_ref();
+    public void Set_location_classification_rule_ref(System.String value);
+
+    //Children elements
+
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class world_step__location_graph__node__classifications__classification: Iworld_step__location_graph__node__classifications__classification {
+    public RawNode rawNode = new RawNode();
+    //Attributes
+    public System.String location_classification_rule_ref;
+    public System.String Get_location_classification_rule_ref()
+    {
+      return this.location_classification_rule_ref;
+    }
+    public void Set_location_classification_rule_ref(System.String value)
+    {
+      this.location_classification_rule_ref = value;
+    }
+
+    //Children elements
+
+    public world_step__location_graph__node__classifications__classification()
+    {
+    }
+
+    public world_step__location_graph__node__classifications__classification(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public world_step__location_graph__node__classifications__classification(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing world_step__location_graph__node__classifications__classification");
+      //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("location_classification_rule_ref"))
+      {
+        var attribute_location_classification_rule_ref = rawNode.attributes["location_classification_rule_ref"];
+        this.location_classification_rule_ref = rawNode.attributes["location_classification_rule_ref"];
+      }
+      //Deserialize elements
+
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize arguments
+      if(this.location_classification_rule_ref != null)
+      {
+        rawNode.attributes["location_classification_rule_ref"] = this.location_classification_rule_ref.ToString();
+      }
+      //Serialize elements
+
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing world_step__location_graph__node__classifications__classification");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -7726,6 +8118,85 @@ namespace XSD {
     public void Serialize(XmlElement element)
     {
         Godot.GD.Print("Serializing world_step__rule_group__events_rule__entry__then__property_mutation");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
+  public interface Iworld_step__rule_group__location_graph_rule__node_rule__classifications__classification {
+    //Attributes
+    public System.String Get_location_classification_rule_ref();
+    public void Set_location_classification_rule_ref(System.String value);
+
+    //Children elements
+
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class world_step__rule_group__location_graph_rule__node_rule__classifications__classification: Iworld_step__rule_group__location_graph_rule__node_rule__classifications__classification {
+    public RawNode rawNode = new RawNode();
+    //Attributes
+    public System.String location_classification_rule_ref;
+    public System.String Get_location_classification_rule_ref()
+    {
+      return this.location_classification_rule_ref;
+    }
+    public void Set_location_classification_rule_ref(System.String value)
+    {
+      this.location_classification_rule_ref = value;
+    }
+
+    //Children elements
+
+    public world_step__rule_group__location_graph_rule__node_rule__classifications__classification()
+    {
+    }
+
+    public world_step__rule_group__location_graph_rule__node_rule__classifications__classification(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public world_step__rule_group__location_graph_rule__node_rule__classifications__classification(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__node_rule__classifications__classification");
+      //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("location_classification_rule_ref"))
+      {
+        var attribute_location_classification_rule_ref = rawNode.attributes["location_classification_rule_ref"];
+        this.location_classification_rule_ref = rawNode.attributes["location_classification_rule_ref"];
+      }
+      //Deserialize elements
+
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize arguments
+      if(this.location_classification_rule_ref != null)
+      {
+        rawNode.attributes["location_classification_rule_ref"] = this.location_classification_rule_ref.ToString();
+      }
+      //Serialize elements
+
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__node_rule__classifications__classification");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }

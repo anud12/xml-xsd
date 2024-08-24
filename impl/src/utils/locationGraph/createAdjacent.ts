@@ -169,10 +169,11 @@ export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nod
     }
 
     const position = positionBasedOnLink(jsonUtil, linkGroupElement, nodeGraphElement);
+    const classificationLocationList = nodeRuleElement.queryAllOptional("classifications")?.flatMap(element => element.queryAllOptional("classification").map(e => e.attributeMap.location_classification_rule_ref));
 
     const toOptionElement = jsonUtil.randomFromArray(linkGroupElement.queryAllOptional("to_option"))
     const nodeRuleRef = toOptionElement.attributeMap.node_rule_ref;
-    const createGraphNodeResult = createGraphNode(jsonUtil, locationGraphElement, nodeRuleRef, position);
+    const createGraphNodeResult = createGraphNode(jsonUtil, locationGraphElement, nodeRuleRef, position, classificationLocationList);
 
     let adjacentDistance = Number(toOptionElement.attributeMap.maxDistance);
     const adjacentDistanceMin = Number(toOptionElement.attributeMap.distance ?? "0");
