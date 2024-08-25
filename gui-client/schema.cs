@@ -781,6 +781,8 @@ namespace XSD {
     public void Set_location_graph__create(List<world_step__actions__location_graph__create> value);
     public List<world_step__actions__location_graph__node__create_adjacent> Get_location_graph__node__create_adjacent();
     public void Set_location_graph__node__create_adjacent(List<world_step__actions__location_graph__node__create_adjacent> value);
+    public List<world_step__actions__location_graph__node__add_classification> Get_location_graph__node__add_classification();
+    public void Set_location_graph__node__add_classification(List<world_step__actions__location_graph__node__add_classification> value);
     public List<world_step__actions__person__teleport> Get_person__teleport();
     public void Set_person__teleport(List<world_step__actions__person__teleport> value);
     public List<world_step__actions__person__on_person__property_mutation> Get_person__on_person__property_mutation();
@@ -825,6 +827,15 @@ namespace XSD {
     public void Set_location_graph__node__create_adjacent(List<world_step__actions__location_graph__node__create_adjacent> value)
     {
       this.location_graph__node__create_adjacent = value;
+    }
+    public List<world_step__actions__location_graph__node__add_classification> location_graph__node__add_classification = new List<world_step__actions__location_graph__node__add_classification>();
+    public List<world_step__actions__location_graph__node__add_classification> Get_location_graph__node__add_classification()
+    {
+      return this.location_graph__node__add_classification;
+    }
+    public void Set_location_graph__node__add_classification(List<world_step__actions__location_graph__node__add_classification> value)
+    {
+      this.location_graph__node__add_classification = value;
     }
     public List<world_step__actions__person__teleport> person__teleport = new List<world_step__actions__person__teleport>();
     public List<world_step__actions__person__teleport> Get_person__teleport()
@@ -877,6 +888,7 @@ namespace XSD {
       this.by = rawNode.InitializeWithRawNode("by", this.by);
       this.location_graph__create = rawNode.InitializeWithRawNode("location_graph.create", this.location_graph__create);
       this.location_graph__node__create_adjacent = rawNode.InitializeWithRawNode("location_graph.node.create_adjacent", this.location_graph__node__create_adjacent);
+      this.location_graph__node__add_classification = rawNode.InitializeWithRawNode("location_graph.node.add_classification", this.location_graph__node__add_classification);
       this.person__teleport = rawNode.InitializeWithRawNode("person.teleport", this.person__teleport);
       this.person__on_person__property_mutation = rawNode.InitializeWithRawNode("person.on_person.property_mutation", this.person__on_person__property_mutation);
       this.person__create = rawNode.InitializeWithRawNode("person.create", this.person__create);
@@ -888,6 +900,7 @@ namespace XSD {
       rawNode.children["by"] = by.Select(x => x.SerializeIntoRawNode()).ToList();
       rawNode.children["location_graph.create"] = location_graph__create.Select(x => x.SerializeIntoRawNode()).ToList();
       rawNode.children["location_graph.node.create_adjacent"] = location_graph__node__create_adjacent.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["location_graph.node.add_classification"] = location_graph__node__add_classification.Select(x => x.SerializeIntoRawNode()).ToList();
       rawNode.children["person.teleport"] = person__teleport.Select(x => x.SerializeIntoRawNode()).ToList();
       rawNode.children["person.on_person.property_mutation"] = person__on_person__property_mutation.Select(x => x.SerializeIntoRawNode()).ToList();
       rawNode.children["person.create"] = person__create.Select(x => x.SerializeIntoRawNode()).ToList();
@@ -2856,6 +2869,84 @@ namespace XSD {
     public void Serialize(XmlElement element)
     {
         Godot.GD.Print("Serializing world_step__actions__location_graph__node__create_adjacent");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
+  public interface Iworld_step__actions__location_graph__node__add_classification {
+
+    //Children elements
+    public List<type__node_graph__selection> Get_node_graph_selection();
+    public void Set_node_graph_selection(List<type__node_graph__selection> value);
+    public List<world_step__actions__location_graph__node__add_classification__to_be_added__classification> Get_to_be_added__classification();
+    public void Set_to_be_added__classification(List<world_step__actions__location_graph__node__add_classification__to_be_added__classification> value);
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class world_step__actions__location_graph__node__add_classification: Iworld_step__actions__location_graph__node__add_classification {
+    public RawNode rawNode = new RawNode();
+
+    //Children elements
+    public List<type__node_graph__selection> node_graph_selection = new List<type__node_graph__selection>();
+    public List<type__node_graph__selection> Get_node_graph_selection()
+    {
+      return this.node_graph_selection;
+    }
+    public void Set_node_graph_selection(List<type__node_graph__selection> value)
+    {
+      this.node_graph_selection = value;
+    }
+    public List<world_step__actions__location_graph__node__add_classification__to_be_added__classification> to_be_added__classification = new List<world_step__actions__location_graph__node__add_classification__to_be_added__classification>();
+    public List<world_step__actions__location_graph__node__add_classification__to_be_added__classification> Get_to_be_added__classification()
+    {
+      return this.to_be_added__classification;
+    }
+    public void Set_to_be_added__classification(List<world_step__actions__location_graph__node__add_classification__to_be_added__classification> value)
+    {
+      this.to_be_added__classification = value;
+    }
+
+    public world_step__actions__location_graph__node__add_classification()
+    {
+    }
+
+    public world_step__actions__location_graph__node__add_classification(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public world_step__actions__location_graph__node__add_classification(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing world_step__actions__location_graph__node__add_classification");
+      //Deserialize elements
+      this.node_graph_selection = rawNode.InitializeWithRawNode("node_graph_selection", this.node_graph_selection);
+      this.to_be_added__classification = rawNode.InitializeWithRawNode("to_be_added__classification", this.to_be_added__classification);
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize elements
+      rawNode.children["node_graph_selection"] = node_graph_selection.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["to_be_added__classification"] = to_be_added__classification.Select(x => x.SerializeIntoRawNode()).ToList();
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing world_step__actions__location_graph__node__add_classification");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -5359,6 +5450,173 @@ namespace XSD {
     }
   }
   /*typeDeclarationElementToInterfaceString= element*/
+  public interface Itype__node_graph__selection {
+
+    //Children elements
+    public List<type__node_graph__selection__in__location_graph> Get_in__location_graph();
+    public void Set_in__location_graph(List<type__node_graph__selection__in__location_graph> value);
+    public List<type__node_graph__selection__has__node_graph_id> Get_has__node_graph_id();
+    public void Set_has__node_graph_id(List<type__node_graph__selection__has__node_graph_id> value);
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class type__node_graph__selection: Itype__node_graph__selection {
+    public RawNode rawNode = new RawNode();
+
+    //Children elements
+    public List<type__node_graph__selection__in__location_graph> in__location_graph = new List<type__node_graph__selection__in__location_graph>();
+    public List<type__node_graph__selection__in__location_graph> Get_in__location_graph()
+    {
+      return this.in__location_graph;
+    }
+    public void Set_in__location_graph(List<type__node_graph__selection__in__location_graph> value)
+    {
+      this.in__location_graph = value;
+    }
+    public List<type__node_graph__selection__has__node_graph_id> has__node_graph_id = new List<type__node_graph__selection__has__node_graph_id>();
+    public List<type__node_graph__selection__has__node_graph_id> Get_has__node_graph_id()
+    {
+      return this.has__node_graph_id;
+    }
+    public void Set_has__node_graph_id(List<type__node_graph__selection__has__node_graph_id> value)
+    {
+      this.has__node_graph_id = value;
+    }
+
+    public type__node_graph__selection()
+    {
+    }
+
+    public type__node_graph__selection(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public type__node_graph__selection(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing type__node_graph__selection");
+      //Deserialize elements
+      this.in__location_graph = rawNode.InitializeWithRawNode("in__location_graph", this.in__location_graph);
+      this.has__node_graph_id = rawNode.InitializeWithRawNode("has__node_graph_id", this.has__node_graph_id);
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize elements
+      rawNode.children["in__location_graph"] = in__location_graph.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["has__node_graph_id"] = has__node_graph_id.Select(x => x.SerializeIntoRawNode()).ToList();
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing type__node_graph__selection");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
+  public interface Iworld_step__actions__location_graph__node__add_classification__to_be_added__classification {
+    //Attributes
+    public System.String Get_location_classification_rule_ref();
+    public void Set_location_classification_rule_ref(System.String value);
+
+    //Children elements
+    public List<world_step__actions__location_graph__node__add_classification__to_be_added__classification__and> Get_and();
+    public void Set_and(List<world_step__actions__location_graph__node__add_classification__to_be_added__classification__and> value);
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class world_step__actions__location_graph__node__add_classification__to_be_added__classification: Iworld_step__actions__location_graph__node__add_classification__to_be_added__classification {
+    public RawNode rawNode = new RawNode();
+    //Attributes
+    public System.String location_classification_rule_ref;
+    public System.String Get_location_classification_rule_ref()
+    {
+      return this.location_classification_rule_ref;
+    }
+    public void Set_location_classification_rule_ref(System.String value)
+    {
+      this.location_classification_rule_ref = value;
+    }
+
+    //Children elements
+    public List<world_step__actions__location_graph__node__add_classification__to_be_added__classification__and> and = new List<world_step__actions__location_graph__node__add_classification__to_be_added__classification__and>();
+    public List<world_step__actions__location_graph__node__add_classification__to_be_added__classification__and> Get_and()
+    {
+      return this.and;
+    }
+    public void Set_and(List<world_step__actions__location_graph__node__add_classification__to_be_added__classification__and> value)
+    {
+      this.and = value;
+    }
+
+    public world_step__actions__location_graph__node__add_classification__to_be_added__classification()
+    {
+    }
+
+    public world_step__actions__location_graph__node__add_classification__to_be_added__classification(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public world_step__actions__location_graph__node__add_classification__to_be_added__classification(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing world_step__actions__location_graph__node__add_classification__to_be_added__classification");
+      //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("location_classification_rule_ref"))
+      {
+        var attribute_location_classification_rule_ref = rawNode.attributes["location_classification_rule_ref"];
+        this.location_classification_rule_ref = rawNode.attributes["location_classification_rule_ref"];
+      }
+      //Deserialize elements
+      this.and = rawNode.InitializeWithRawNode("and", this.and);
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize arguments
+      if(this.location_classification_rule_ref != null)
+      {
+        rawNode.attributes["location_classification_rule_ref"] = this.location_classification_rule_ref.ToString();
+      }
+      //Serialize elements
+      rawNode.children["and"] = and.Select(x => x.SerializeIntoRawNode()).ToList();
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing world_step__actions__location_graph__node__add_classification__to_be_added__classification");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
   public interface Iworld_step__actions__person__teleport__location_graph {
     //Attributes
     public System.String Get_location_graph_id_ref();
@@ -7692,6 +7950,239 @@ namespace XSD {
     }
   }
   /*typeDeclarationElementToInterfaceString= element*/
+  public interface Itype__node_graph__selection__in__location_graph {
+
+    //Children elements
+    public List<type__node_graph__selection__in__location_graph__has__location_graph_id> Get_has__location_graph_id();
+    public void Set_has__location_graph_id(List<type__node_graph__selection__in__location_graph__has__location_graph_id> value);
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class type__node_graph__selection__in__location_graph: Itype__node_graph__selection__in__location_graph {
+    public RawNode rawNode = new RawNode();
+
+    //Children elements
+    public List<type__node_graph__selection__in__location_graph__has__location_graph_id> has__location_graph_id = new List<type__node_graph__selection__in__location_graph__has__location_graph_id>();
+    public List<type__node_graph__selection__in__location_graph__has__location_graph_id> Get_has__location_graph_id()
+    {
+      return this.has__location_graph_id;
+    }
+    public void Set_has__location_graph_id(List<type__node_graph__selection__in__location_graph__has__location_graph_id> value)
+    {
+      this.has__location_graph_id = value;
+    }
+
+    public type__node_graph__selection__in__location_graph()
+    {
+    }
+
+    public type__node_graph__selection__in__location_graph(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public type__node_graph__selection__in__location_graph(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing type__node_graph__selection__in__location_graph");
+      //Deserialize elements
+      this.has__location_graph_id = rawNode.InitializeWithRawNode("has__location_graph_id", this.has__location_graph_id);
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize elements
+      rawNode.children["has__location_graph_id"] = has__location_graph_id.Select(x => x.SerializeIntoRawNode()).ToList();
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing type__node_graph__selection__in__location_graph");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
+  public interface Itype__node_graph__selection__has__node_graph_id {
+    //Attributes
+    public System.String Get_node_graph_id_ref();
+    public void Set_node_graph_id_ref(System.String value);
+
+    //Children elements
+    public List<type__node_graph__selection__has__node_graph_id__or> Get_or();
+    public void Set_or(List<type__node_graph__selection__has__node_graph_id__or> value);
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class type__node_graph__selection__has__node_graph_id: Itype__node_graph__selection__has__node_graph_id {
+    public RawNode rawNode = new RawNode();
+    //Attributes
+    public System.String node_graph_id_ref;
+    public System.String Get_node_graph_id_ref()
+    {
+      return this.node_graph_id_ref;
+    }
+    public void Set_node_graph_id_ref(System.String value)
+    {
+      this.node_graph_id_ref = value;
+    }
+
+    //Children elements
+    public List<type__node_graph__selection__has__node_graph_id__or> or = new List<type__node_graph__selection__has__node_graph_id__or>();
+    public List<type__node_graph__selection__has__node_graph_id__or> Get_or()
+    {
+      return this.or;
+    }
+    public void Set_or(List<type__node_graph__selection__has__node_graph_id__or> value)
+    {
+      this.or = value;
+    }
+
+    public type__node_graph__selection__has__node_graph_id()
+    {
+    }
+
+    public type__node_graph__selection__has__node_graph_id(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public type__node_graph__selection__has__node_graph_id(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing type__node_graph__selection__has__node_graph_id");
+      //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("node_graph_id_ref"))
+      {
+        var attribute_node_graph_id_ref = rawNode.attributes["node_graph_id_ref"];
+        this.node_graph_id_ref = rawNode.attributes["node_graph_id_ref"];
+      }
+      //Deserialize elements
+      this.or = rawNode.InitializeWithRawNode("or", this.or);
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize arguments
+      if(this.node_graph_id_ref != null)
+      {
+        rawNode.attributes["node_graph_id_ref"] = this.node_graph_id_ref.ToString();
+      }
+      //Serialize elements
+      rawNode.children["or"] = or.Select(x => x.SerializeIntoRawNode()).ToList();
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing type__node_graph__selection__has__node_graph_id");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
+  public interface Iworld_step__actions__location_graph__node__add_classification__to_be_added__classification__and {
+    //Attributes
+    public System.String Get_location_classification_rule_ref();
+    public void Set_location_classification_rule_ref(System.String value);
+
+    //Children elements
+
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class world_step__actions__location_graph__node__add_classification__to_be_added__classification__and: Iworld_step__actions__location_graph__node__add_classification__to_be_added__classification__and {
+    public RawNode rawNode = new RawNode();
+    //Attributes
+    public System.String location_classification_rule_ref;
+    public System.String Get_location_classification_rule_ref()
+    {
+      return this.location_classification_rule_ref;
+    }
+    public void Set_location_classification_rule_ref(System.String value)
+    {
+      this.location_classification_rule_ref = value;
+    }
+
+    //Children elements
+
+    public world_step__actions__location_graph__node__add_classification__to_be_added__classification__and()
+    {
+    }
+
+    public world_step__actions__location_graph__node__add_classification__to_be_added__classification__and(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public world_step__actions__location_graph__node__add_classification__to_be_added__classification__and(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing world_step__actions__location_graph__node__add_classification__to_be_added__classification__and");
+      //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("location_classification_rule_ref"))
+      {
+        var attribute_location_classification_rule_ref = rawNode.attributes["location_classification_rule_ref"];
+        this.location_classification_rule_ref = rawNode.attributes["location_classification_rule_ref"];
+      }
+      //Deserialize elements
+
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize arguments
+      if(this.location_classification_rule_ref != null)
+      {
+        rawNode.attributes["location_classification_rule_ref"] = this.location_classification_rule_ref.ToString();
+      }
+      //Serialize elements
+
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing world_step__actions__location_graph__node__add_classification__to_be_added__classification__and");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
   public interface Itype__item_selection {
     public void Deserialize (RawNode rawNode);
 
@@ -8341,6 +8832,174 @@ namespace XSD {
     }
   }
   /*typeDeclarationElementToInterfaceString= element*/
+  public interface Itype__node_graph__selection__in__location_graph__has__location_graph_id {
+    //Attributes
+    public System.String Get_location_graph_id_ref();
+    public void Set_location_graph_id_ref(System.String value);
+
+    //Children elements
+    public List<type__node_graph__selection__in__location_graph__has__location_graph_id__or> Get_or();
+    public void Set_or(List<type__node_graph__selection__in__location_graph__has__location_graph_id__or> value);
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class type__node_graph__selection__in__location_graph__has__location_graph_id: Itype__node_graph__selection__in__location_graph__has__location_graph_id {
+    public RawNode rawNode = new RawNode();
+    //Attributes
+    public System.String location_graph_id_ref;
+    public System.String Get_location_graph_id_ref()
+    {
+      return this.location_graph_id_ref;
+    }
+    public void Set_location_graph_id_ref(System.String value)
+    {
+      this.location_graph_id_ref = value;
+    }
+
+    //Children elements
+    public List<type__node_graph__selection__in__location_graph__has__location_graph_id__or> or = new List<type__node_graph__selection__in__location_graph__has__location_graph_id__or>();
+    public List<type__node_graph__selection__in__location_graph__has__location_graph_id__or> Get_or()
+    {
+      return this.or;
+    }
+    public void Set_or(List<type__node_graph__selection__in__location_graph__has__location_graph_id__or> value)
+    {
+      this.or = value;
+    }
+
+    public type__node_graph__selection__in__location_graph__has__location_graph_id()
+    {
+    }
+
+    public type__node_graph__selection__in__location_graph__has__location_graph_id(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public type__node_graph__selection__in__location_graph__has__location_graph_id(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing type__node_graph__selection__in__location_graph__has__location_graph_id");
+      //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("location_graph_id_ref"))
+      {
+        var attribute_location_graph_id_ref = rawNode.attributes["location_graph_id_ref"];
+        this.location_graph_id_ref = rawNode.attributes["location_graph_id_ref"];
+      }
+      //Deserialize elements
+      this.or = rawNode.InitializeWithRawNode("or", this.or);
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize arguments
+      if(this.location_graph_id_ref != null)
+      {
+        rawNode.attributes["location_graph_id_ref"] = this.location_graph_id_ref.ToString();
+      }
+      //Serialize elements
+      rawNode.children["or"] = or.Select(x => x.SerializeIntoRawNode()).ToList();
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing type__node_graph__selection__in__location_graph__has__location_graph_id");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
+  public interface Itype__node_graph__selection__has__node_graph_id__or {
+    //Attributes
+    public System.String Get_node_graph_id_ref();
+    public void Set_node_graph_id_ref(System.String value);
+
+    //Children elements
+
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class type__node_graph__selection__has__node_graph_id__or: Itype__node_graph__selection__has__node_graph_id__or {
+    public RawNode rawNode = new RawNode();
+    //Attributes
+    public System.String node_graph_id_ref;
+    public System.String Get_node_graph_id_ref()
+    {
+      return this.node_graph_id_ref;
+    }
+    public void Set_node_graph_id_ref(System.String value)
+    {
+      this.node_graph_id_ref = value;
+    }
+
+    //Children elements
+
+    public type__node_graph__selection__has__node_graph_id__or()
+    {
+    }
+
+    public type__node_graph__selection__has__node_graph_id__or(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public type__node_graph__selection__has__node_graph_id__or(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing type__node_graph__selection__has__node_graph_id__or");
+      //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("node_graph_id_ref"))
+      {
+        var attribute_node_graph_id_ref = rawNode.attributes["node_graph_id_ref"];
+        this.node_graph_id_ref = rawNode.attributes["node_graph_id_ref"];
+      }
+      //Deserialize elements
+
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize arguments
+      if(this.node_graph_id_ref != null)
+      {
+        rawNode.attributes["node_graph_id_ref"] = this.node_graph_id_ref.ToString();
+      }
+      //Serialize elements
+
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing type__node_graph__selection__has__node_graph_id__or");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
   public interface Igroup__operation__and__add_property {
     //Attributes
     public System.String Get_property_rule_ref();
@@ -8415,6 +9074,85 @@ namespace XSD {
     public void Serialize(XmlElement element)
     {
         Godot.GD.Print("Serializing group__operation__and__add_property");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
+  public interface Itype__node_graph__selection__in__location_graph__has__location_graph_id__or {
+    //Attributes
+    public System.String Get_location_graph_id_ref();
+    public void Set_location_graph_id_ref(System.String value);
+
+    //Children elements
+
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class type__node_graph__selection__in__location_graph__has__location_graph_id__or: Itype__node_graph__selection__in__location_graph__has__location_graph_id__or {
+    public RawNode rawNode = new RawNode();
+    //Attributes
+    public System.String location_graph_id_ref;
+    public System.String Get_location_graph_id_ref()
+    {
+      return this.location_graph_id_ref;
+    }
+    public void Set_location_graph_id_ref(System.String value)
+    {
+      this.location_graph_id_ref = value;
+    }
+
+    //Children elements
+
+    public type__node_graph__selection__in__location_graph__has__location_graph_id__or()
+    {
+    }
+
+    public type__node_graph__selection__in__location_graph__has__location_graph_id__or(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public type__node_graph__selection__in__location_graph__has__location_graph_id__or(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing type__node_graph__selection__in__location_graph__has__location_graph_id__or");
+      //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("location_graph_id_ref"))
+      {
+        var attribute_location_graph_id_ref = rawNode.attributes["location_graph_id_ref"];
+        this.location_graph_id_ref = rawNode.attributes["location_graph_id_ref"];
+      }
+      //Deserialize elements
+
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize arguments
+      if(this.location_graph_id_ref != null)
+      {
+        rawNode.attributes["location_graph_id_ref"] = this.location_graph_id_ref.ToString();
+      }
+      //Serialize elements
+
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing type__node_graph__selection__in__location_graph__has__location_graph_id__or");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }

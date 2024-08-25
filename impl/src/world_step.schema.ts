@@ -91,6 +91,16 @@ export type type__action = JsonQueryType<{}, {
     }> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
 }>
+export type type__node_graph__selection = JsonQueryType<{}, {
+  "in__location_graph": JsonQueryType<{}, {
+    "has__location_graph_id": JsonQueryType<{"location_graph_id_ref": string;}, {
+      "or": JsonQueryType<{"location_graph_id_ref": string;}> & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
+  }> & JsonQueryType<{}, {}>;
+  "has__node_graph_id": JsonQueryType<{"node_graph_id_ref": string;}, {
+    "or": JsonQueryType<{"node_graph_id_ref": string;}> & JsonQueryType<{}, {}>;
+  }> & JsonQueryType<{}, {}>;
+}>
 export type world_step = JsonQueryType<{}, {
   "world_metadata": JsonQueryType<{}, {
     "previous_world_step": JsonQueryType<{"value": string;}> & JsonQueryType<{}, {}>;
@@ -234,6 +244,12 @@ export type world_step = JsonQueryType<{}, {
       }> & JsonQueryType<{}, {}>;
     "location_graph.create": JsonQueryType<{"location_graph_rule_ref": string;}> & JsonQueryType<{}, {}>;
     "location_graph.node.create_adjacent": JsonQueryType<{"location_graph_id_ref": string;  "node_id_ref": string;}> & JsonQueryType<{}, {}>;
+    "location_graph.node.add_classification": JsonQueryType<{}, {
+      "node_graph_selection": type__node_graph__selection & JsonQueryType<{}, {}>;
+      "to_be_added__classification": JsonQueryType<{"location_classification_rule_ref": string;}, {
+        "and": JsonQueryType<{"location_classification_rule_ref": string;}> & JsonQueryType<{}, {}>;
+      }> & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
     "person.teleport": JsonQueryType<{"person_id_ref": string;}, {}> & JsonQueryType<{}, {
         "location_graph": JsonQueryType<{"location_graph_id_ref": string;  "node_id_ref": string;}> & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;

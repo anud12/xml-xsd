@@ -2,7 +2,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="world_step.xsd">
   <world_metadata>
-    <next_world_step>./world_1</next_world_step>
+    <next_world_step value="./world_1"/>
     <elapsed_time value="0"/>
     <stepDuration value="1"/>
     <counter value="0"/>
@@ -613,5 +613,11 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
   <!--Actions-->
   <!--_-->
   <actions>
+    <location_graph.node.add_classification>
+      <node_graph_selection>
+        <has__node_graph_id node_graph_id_ref="dd"/>
+      </node_graph_selection>
+      <to_be_added__classification location_classification_rule_ref="my_classification"/>
+    </location_graph.node.add_classification>
   </actions>
 </world_step>

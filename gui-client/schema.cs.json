@@ -623,6 +623,74 @@
     }
   },
   {
+    "name": "type__node_graph__selection",
+    "type": "complex",
+    "value": {
+      "metaType": "object",
+      "value": {
+        "in__location_graph": {
+          "metaType": "object",
+          "value": {
+            "has__location_graph_id": {
+              "metaType": "object",
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "location_graph_id_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  }
+                }
+              },
+              "value": {
+                "or": {
+                  "metaType": "object",
+                  "value": {},
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "location_graph_id_ref": {
+                        "metaType": "primitive",
+                        "value": "xs:string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "has__node_graph_id": {
+          "metaType": "object",
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "node_graph_id_ref": {
+                "metaType": "primitive",
+                "value": "xs:string"
+              }
+            }
+          },
+          "value": {
+            "or": {
+              "metaType": "object",
+              "value": {},
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "node_graph_id_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
     "name": "world_step",
     "type": "element",
     "value": {
@@ -1754,6 +1822,42 @@
                   "node_id_ref": {
                     "metaType": "primitive",
                     "value": "xs:string"
+                  }
+                }
+              }
+            },
+            "location_graph.node.add_classification": {
+              "metaType": "object",
+              "value": {
+                "node_graph_selection": {
+                  "metaType": "reference",
+                  "value": "type__node_graph__selection"
+                },
+                "to_be_added__classification": {
+                  "metaType": "object",
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "location_classification_rule_ref": {
+                        "metaType": "primitive",
+                        "value": "xs:string"
+                      }
+                    }
+                  },
+                  "value": {
+                    "and": {
+                      "metaType": "object",
+                      "value": {},
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "location_classification_rule_ref": {
+                            "metaType": "primitive",
+                            "value": "xs:string"
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               }
