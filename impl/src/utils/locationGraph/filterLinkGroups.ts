@@ -152,11 +152,11 @@ const filterLinkGroupElementsDistance = (locationGraph: LocationGraphQueryType, 
 
 
 
-export const keepNotFullLinkGroupElements = (locationGraph: LocationGraphQueryType, originNode: LocationGraphNodeQueryType, linkGroupList: LinkGroupQueryType[], isAdjacent: "adjacent" | "normal") => {
+export const keepNotFullLinkGroupElements = (locationGraph: LocationGraphQueryType, originNode: LocationGraphNodeQueryType, linkGroupList: LinkGroupQueryType[]) => {
 
   try {
     const validAngleList = filterLinkGroupElementsAngle(locationGraph, originNode, linkGroupList);
-    const validDistanceList = filterLinkGroupElementsDistance(locationGraph, originNode, validAngleList, isAdjacent);
+    const validDistanceList = filterLinkGroupElementsDistance(locationGraph, originNode, validAngleList);
     return validDistanceList;
   } catch (e) {
     throw mergeError(e, new Error(`Error in keepNotFullLinkGroupElements for ${originNode.attributeMap.id}`));

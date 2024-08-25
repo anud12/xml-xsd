@@ -6,7 +6,7 @@ import {
   ItemQueryType,
   JsonSchema,
   PropertyMutationQueryType,
-  SelectItemQueryType,
+  SelectItemQueryType, SelectNodeGraphQueryType,
   SelectPersonQueryType,
 } from "./JsonSchema";
 import {newRandom} from "./newRandom";
@@ -30,6 +30,7 @@ import {createLocationGraph} from "./locationGraph/createLocationGraph";
 import {createGraphNode, LocationGraphQueryType} from "./locationGraph/createGraphNode";
 import {createAdjacent} from "./locationGraph/createAdjacent";
 import {createPerson} from "./person/createPerson";
+import {selectNodeGraph} from "./locationGraph/selectNodeGraph";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -165,6 +166,9 @@ export class JsonUtil {
     },
     createAdjacent: (locationGraphRef: string, nodeRef: string) => {
       return createAdjacent(this, locationGraphRef, nodeRef)
+    },
+    selectNodeGraph: (selectNodeGraphQueryType: SelectNodeGraphQueryType) => {
+      return selectNodeGraph(this, selectNodeGraphQueryType)
     }
   }
 

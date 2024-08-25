@@ -19,6 +19,7 @@ import {personTeleport} from "./middleware/person/personTeleport";
 import {personOnPersonPropertyMutation} from "./middleware/action/personOnPersonPropertyMutation";
 import {personAction} from "./middleware/personAction";
 import {personCreateAction} from "./middleware/action/personCreateAction";
+import {locationGraphAddClassification} from "./middleware/locationGraph/addClassificationt";
 
 type StringParameter<Param extends string> = `${Param} ${string}`
 
@@ -95,6 +96,7 @@ export const execute = async (readJson: JsonSchema, log: (...string: any[]) => v
   const personMoveTowardsResult = personMoveTowards(readJsonUtil);
   const personOnPersonPropertyMutationResult = personOnPersonPropertyMutation(readJsonUtil);
   const personCreateActionResult = personCreateAction(readJsonUtil);
+  const locationGraphAddClassificationResult = locationGraphAddClassification(readJsonUtil);
   const personActionResult = personAction(readJsonUtil);
   const globalActionResult = globalAction(readJsonUtil);
   const eventsMetadataResult = eventsMetadata(readJsonUtil);
@@ -106,6 +108,7 @@ export const execute = async (readJson: JsonSchema, log: (...string: any[]) => v
 
   await personMoveTowardsResult(readJsonUtil);
   await personOnPersonPropertyMutationResult(readJsonUtil);
+  await locationGraphAddClassificationResult(readJsonUtil);
   await personCreateActionResult(readJsonUtil);
   await personActionResult(readJsonUtil);
   await globalActionResult(readJsonUtil);

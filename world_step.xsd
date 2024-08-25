@@ -585,6 +585,65 @@
     </xs:sequence>
   </xs:complexType>
 
+  <!--############-->
+  <!-- Location Graph -->
+  <!--############-->
+
+  <xs:complexType name="type__node_graph__selection">
+    <xs:all>
+      <xs:element name="in__location_graph" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Represents the location graph. If unset it defaults the current location graph.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:all>
+            <xs:element name="has__location_graph_id" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  Represents a list of location graph IDs to choose from.
+                </xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="or" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                      <xs:attribute name="location_graph_id_ref" type="xs:string"/>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+                <xs:attribute name="location_graph_id_ref" type="xs:string" use="required"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:all>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="has__node_graph_id" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Represents a list of node graph IDs to choose from.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="or" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>
+                  Represents other elements that can be selected.
+                </xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="node_graph_id_ref" type="xs:string"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="node_graph_id_ref" type="xs:string" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:all>
+  </xs:complexType>
+
   <xs:element name="world_step">
     <xs:complexType>
       <xs:sequence>
@@ -1179,7 +1238,7 @@
               <xs:element name="location_classification_rule" minOccurs="0">
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element name="entry">
+                    <xs:element name="entry" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:attribute name="id" type="xs:string" use="required"/>
                       </xs:complexType>
@@ -1461,6 +1520,30 @@
                       </xs:documentation>
                     </xs:annotation>
                   </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="location_graph.node.add_classification" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>
+                    Represents the action to create an adjacent node.
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:all>
+                    <xs:element name="node_graph_selection" type="type__node_graph__selection"/>
+                    <xs:element name="to_be_added__classification">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="and" minOccurs="0">
+                            <xs:complexType>
+                              <xs:attribute name="location_classification_rule_ref" type="xs:string" use="required"/>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="location_classification_rule_ref" type="xs:string" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:all>
                 </xs:complexType>
               </xs:element>
               <xs:element name="person.teleport" minOccurs="0">

@@ -6,7 +6,7 @@ export type LocationGraphQueryType = JsonSchema["children"]["location_graph"]
 export type LocationGraphNodeQueryType = LocationGraphQueryType["children"]["node"];
 export type PositionQueryType = LocationGraphNodeQueryType["children"]["position"];
 
-export const createGraphNode = (readJson: JsonUtil, locationQueryGraph: LocationGraphQueryType, ref: string,position: PositionQueryType["attributeMap"] = {x: "0", y: "0"}, classificationLocation: string[]): (writeUnit: JsonUtil) => Promise<LocationGraphNodeQueryType> => {
+export const createGraphNode = (readJson: JsonUtil, locationQueryGraph: LocationGraphQueryType, ref: string,position: PositionQueryType["attributeMap"] = {x: "0", y: "0"}, classificationLocation: string[] = []): (writeUnit: JsonUtil) => Promise<LocationGraphNodeQueryType> => {
   try {
     return async (writeUnit) => {
       const nodeElement = locationQueryGraph.appendChild("node", undefined, {
