@@ -33,6 +33,6 @@ export const locationGraphAddClassification: MutationMiddleware = (readJson) => 
       .forEach(addClassificationElement => {
         addClassificationElement.removeFromParent();
       });
-    actionList.forEach(actionList => actionList(writeJson));
+    actionList.forEach(actionList => actionList());
   }
 }
