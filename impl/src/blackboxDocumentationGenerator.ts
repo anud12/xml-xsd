@@ -44,14 +44,14 @@ const sideBySideTable = (path:string) => {
 <th>2_expected.xml</th>
 </tr>
 <tr>
-<td>
+<td style="vertical-align:top">
   
 \`\`\`xml
 ${inputXmlFile}
 \`\`\`
   
 </td>
-<td>
+<td style="vertical-align:top">
 
 \`\`\`xml
 ${expectedXmlFile}
