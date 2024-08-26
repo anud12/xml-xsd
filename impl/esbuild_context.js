@@ -29,20 +29,24 @@ const context = esbuild.context({
 });
 
 
-const replaceContent = () => {
+const replaceContent = (filePath) => {
+    if(!filePath) {
+        filePath = exportPath;
+    }
     console.log("Replacing syncWorkerFile require statement with null");
-    const file = readFileSync(exportPath, 'utf-8')
+    const file = readFileSync(filePath, 'utf-8')
 
     const newFile = file.replaceAll(
         "    var syncWorkerFile = require.resolve ? require.resolve(\"./xhr-sync-worker.js\") : null;",
         "    var syncWorkerFile = null"
     );
     //replace file content
-    writeFileSync(exportPath, newFile, {encoding: 'utf-8', flag: 'w'});
+    writeFileSync(filePath, newFile, {encoding: 'utf-8', flag: 'w'});
 }
 
 module.exports = {
     context,
-    replaceContent
+    replaceContent,
+    replaceContentPlugin
 }
 
