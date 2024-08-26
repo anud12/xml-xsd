@@ -24,16 +24,19 @@ fs.mkdirSync(outputPath);
 writeFileSync(indexFile, `# Index\n\n`, {flag: "w"});
 
 
+const inputRelativePath = `1_input.xml`
+const expectedRelativePath = `2_expected.xml`
+
 const sideBySideTable = (path:string) => {
-  if(!fs.existsSync(`${path}/1_input.xml`)) {
+  if(!fs.existsSync(`${path}/${inputRelativePath}`)) {
     return "";
   }
-  if(!fs.existsSync(`${path}/2_expected.xml`)) {
+  if(!fs.existsSync(`${path}/${expectedRelativePath}`)) {
     return "";
   }
 
-  const inputXmlFile = readFileSync(`${path}/1_input.xml`, "utf-8");
-  const expectedXmlFile = readFileSync(`${path}/2_expected.xml`, "utf-8");
+  const inputXmlFile = readFileSync(`${path}/${inputRelativePath}`, "utf-8");
+  const expectedXmlFile = readFileSync(`${path}/${expectedRelativePath}`, "utf-8");
   return `
 <table>
 <tr>
@@ -57,7 +60,7 @@ ${expectedXmlFile}
 </td>
 </tr>
 </table>
-\``
+`
 }
 
 
@@ -78,7 +81,10 @@ const readDirectory = (path: string) => {
         fileContent += sideBySideTable(path);
         writeFileSync(`${outputPath}/${fileName}`, fileContent, {flag: "w"});
 
-        writeFileSync(indexFile, `## [${path.replace("/src/tests/blackbox", "")}](./${fileName})\n\n### Tags:\n${tags}\n\n`, {flag: "a"});
+        const inputXmlFile = readFileSync(`${path}/${inputRelativePath}`, "utf-8").toString();
+        const inputXmlString = `#### Input XML\n\`\`\`xml\n${inputXmlFile}\n\`\`\``;
+
+        writeFileSync(indexFile, `## [${path.replace("/src/tests/blackbox", "")}](./${fileName})\n\n#### Tags:\n${tags}\n\n${inputXmlString}\n\n`, {flag: "a"});
       }
 
     }
