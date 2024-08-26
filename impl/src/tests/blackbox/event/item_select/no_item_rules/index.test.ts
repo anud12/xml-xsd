@@ -1,14 +1,17 @@
 import {testBase} from "../../../test_base";
 
-export const description = `
-#Item selection
-##When
-selecting items with a \`min\` value of 1 and no item rules
+/*description
+# Item selection
+## When
+selecting items with a `min` value of 1 and no item rules
 
-##It should
+## It should
 throw error
-`
+ */
 
+/*tags
+- item
+ */
 const test= testBase(__dirname)
 it(test.name, test.error)
 

@@ -1371,7 +1371,7 @@
                 </xs:annotation>
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element name="position">
+                    <xs:element name="position" minOccurs="0">
                       <xs:annotation>
                         <xs:documentation>
                           Represents the position of the node in the graph.

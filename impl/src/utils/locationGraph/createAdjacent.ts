@@ -61,7 +61,7 @@ const canCreateLinkBetween = (jsonUtil: JsonUtil, locationGraph: LocationGraphQu
     .flatMap(element => element.queryAllOptional("node_rule"))
     .find(element => element.attributeMap.id === nodeGraphElement?.attributeMap.node_rule_ref);
 
-  const notFullLinkGroupElementList = keepNotFullLinkGroupElements(locationGraph, nodeGraphElement, nodeRule?.queryAllOptional("link_group") || [], "adjacent");
+  const notFullLinkGroupElementList = keepNotFullLinkGroupElements(locationGraph, nodeGraphElement, nodeRule?.queryAllOptional("link_group") || []);
   if (notFullLinkGroupElementList.length === 0) {
     return false;
   }
@@ -79,7 +79,7 @@ const canCreateLinkBetween = (jsonUtil: JsonUtil, locationGraph: LocationGraphQu
   const targetNodeRule = jsonUtil.getRuleGroups().flatMap(element => element.queryAllOptional("location_graph_rule"))
     .flatMap(element => element.queryAllOptional("node_rule"))
     .find(element => element.attributeMap.id === nodeGraphElement?.attributeMap.node_rule_ref);
-  const targetNotFullLinkGroupElementList = keepNotFullLinkGroupElements(locationGraph, targetNodeGraphElement, targetNodeRule?.queryAllOptional("link_group") || [], "adjacent");
+  const targetNotFullLinkGroupElementList = keepNotFullLinkGroupElements(locationGraph, targetNodeGraphElement, targetNodeRule?.queryAllOptional("link_group") || []);
   if (targetNotFullLinkGroupElementList.length === 0) {
     return false;
   }
@@ -160,7 +160,7 @@ export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nod
       .find(element => element.attributeMap.id === nodeGraphElement?.attributeMap?.node_rule_ref)
 
     const linkGroupElementList = nodeRuleElement?.queryAllOptional("link_group");
-    const notFullLinkGroupElementList = keepNotFullLinkGroupElements(locationGraphElement, nodeGraphElement, linkGroupElementList, "normal");
+    const notFullLinkGroupElementList = keepNotFullLinkGroupElements(locationGraphElement, nodeGraphElement, linkGroupElementList);
     const linkGroupElement = jsonUtil.randomFromArray(notFullLinkGroupElementList);
 
     if (!linkGroupElement) {

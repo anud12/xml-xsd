@@ -22,6 +22,7 @@
     "test": "jest",
     "build": "node esbuild.config.js",
     "build-watch": "node esbuild_watch.config.js",
+    "generate_documentation": "ts-node ./src/blackboxDocumentationGenerator.ts",
     "start": "ts-node src/index.ts",
     "start-debug": "ts-node src/index.ts ../gui-client/world.xml"
   },

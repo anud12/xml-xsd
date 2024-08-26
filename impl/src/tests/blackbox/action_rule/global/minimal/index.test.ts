@@ -1,16 +1,19 @@
 import {testBase} from "../../../test_base";
 
-export const description = `
-#Global Action
-##When
+/*description
+# Global Action
+## When
 A global action is defined
 
 Using global action on self
 
-##It should
+## It should
 do nothing
-`
+ */
 
+/*tags
+- action_rule
+ */
 const test= testBase(__dirname)
 it(test.name, test.success)
 
