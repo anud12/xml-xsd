@@ -1369,6 +1369,41 @@
                           }
                         }
                       }
+                    },
+                    "necessary_node": {
+                      "metaType": "object",
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "node_rule_ref": {
+                            "metaType": "primitive",
+                            "value": "xs:string"
+                          },
+                          "min": {
+                            "metaType": "primitive",
+                            "value": "xs:int"
+                          },
+                          "max": {
+                            "metaType": "primitive",
+                            "value": "xs:int"
+                          }
+                        }
+                      },
+                      "value": {
+                        "or": {
+                          "metaType": "object",
+                          "value": {},
+                          "attributes": {
+                            "metaType": "object",
+                            "value": {
+                              "node_rule_ref": {
+                                "metaType": "primitive",
+                                "value": "xs:string"
+                              }
+                            }
+                          }
+                        }
+                      }
                     }
                   }
                 },

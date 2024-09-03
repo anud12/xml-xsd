@@ -185,6 +185,9 @@ export type world_step = JsonQueryType<{}, {
     "location_graph_rule": JsonQueryType<{"id": string;}, {
       "setup": JsonQueryType<{}, {
         "starting_node": JsonQueryType<{"node_rule_ref": string;}> & JsonQueryType<{}, {}>;
+        "necessary_node": JsonQueryType<{"node_rule_ref": string;  "min": string;  "max": string;}, {
+          "or": JsonQueryType<{"node_rule_ref": string;}> & JsonQueryType<{}, {}>;
+        }> & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
       "node_rule": JsonQueryType<{"id": string;}, {
         "classifications": JsonQueryType<{}, {
