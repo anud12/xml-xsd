@@ -77,7 +77,7 @@ const canCreateLinkBetween = (jsonUtil: JsonUtil, locationGraph: LocationGraphQu
       return nodeRuleRef === targetNodeGraphElement.attributeMap.node_rule_ref;
     });
   })
-  if(!applicableLinkGroup) {
+  if (!applicableLinkGroup) {
     return false;
   }
 
@@ -96,7 +96,7 @@ const canCreateLinkBetween = (jsonUtil: JsonUtil, locationGraph: LocationGraphQu
     });
   });
 
-  if(!targetApplicableLinkGroup) {
+  if (!targetApplicableLinkGroup) {
     return false;
   }
   return true;
@@ -118,7 +118,7 @@ const positionBasedOnLink = (jsonUtil: JsonUtil, linkGroupElement: LinkGroupQuer
   try {
     let angle = Number(linkGroupElement?.attributeMap.angle);
     if (linkGroupElement.attributeMap.angleMax) {
-      if(linkGroupElement.attributeMap.angleMax === linkGroupElement.attributeMap.angle) {
+      if (linkGroupElement.attributeMap.angleMax === linkGroupElement.attributeMap.angle) {
         angle = Number(linkGroupElement.attributeMap.angle);
       } else {
         angle = Number(linkGroupElement.attributeMap.angle) + (jsonUtil.random() * Number(linkGroupElement.attributeMap.angleMax));
@@ -129,7 +129,7 @@ const positionBasedOnLink = (jsonUtil: JsonUtil, linkGroupElement: LinkGroupQuer
     const toOptionElement = jsonUtil.randomFromArray(linkGroupElement.queryAllOptional("to_option"))
     let distance = Number(toOptionElement.attributeMap.distance);
     if (toOptionElement.attributeMap.maxDistance) {
-      if(toOptionElement.attributeMap.maxDistance === toOptionElement.attributeMap.distance) {
+      if (toOptionElement.attributeMap.maxDistance === toOptionElement.attributeMap.distance) {
         distance = Number(toOptionElement.attributeMap.distance);
       } else {
         const random = jsonUtil.random();
@@ -188,6 +188,7 @@ export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nod
     }
     const adjacentNodes = getAdjacentNodes(jsonUtil, locationGraphElement, nodeGraphElement, Number(toOptionElement.attributeMap.adjacent_depth_limit) || 0);
 
+    const existingPersonRule = nodeRuleElement.queryOptional("existing_person");
 
     return async (writeUnit: JsonUtil) => {
       if (!locationGraphElement || !nodeGraphElement || !linkGroupElement) {
@@ -196,8 +197,25 @@ export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nod
 
       const newGraphNode = await createGraphNodeResult(writeUnit);
 
+
       await createLinkTo(writeUnit, nodeGraphElement, newGraphNode)(writeUnit);
       await createLinkTo(writeUnit, newGraphNode, nodeGraphElement)(writeUnit);
+
+
+      existingPersonRule?.queryAllOptional("person_selection").forEach(personElement => {
+        const min = existingPersonRule.attributeMap.min;
+        let max = existingPersonRule.attributeMap.max ?? min;
+        const iterations = writeUnit.randomBetweenInt(Number(min), Number(max));
+
+
+        let peopleElement = newGraphNode.appendChild("people");
+        for (let i = 0; i < iterations; i++) {
+          const person = writeUnit.person.createPerson(personElement);
+          peopleElement.appendChild("person", undefined, {
+            person_id_ref: person.attributeMap.id
+          });
+        }
+      })
 
       const validAdjacentNodeList = adjacentNodes
         .filter(node => {
@@ -207,7 +225,7 @@ export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nod
 
       const adjacentLinkList = validAdjacentNodeList
         .map(node => {
-          if(canCreateLinkBetween(jsonUtil, locationGraphElement, node, newGraphNode)) {
+          if (canCreateLinkBetween(jsonUtil, locationGraphElement, node, newGraphNode)) {
             createLinkTo(writeUnit, node, newGraphNode)(writeUnit)
           }
         })

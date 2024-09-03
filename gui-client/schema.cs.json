@@ -1487,6 +1487,28 @@
                           }
                         }
                       }
+                    },
+                    "existing_person": {
+                      "metaType": "object",
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "min": {
+                            "metaType": "primitive",
+                            "value": "xs:int"
+                          },
+                          "max": {
+                            "metaType": "primitive",
+                            "value": "xs:int"
+                          }
+                        }
+                      },
+                      "value": {
+                        "person_selection": {
+                          "metaType": "reference",
+                          "value": "type__person_selection"
+                        }
+                      }
                     }
                   }
                 }

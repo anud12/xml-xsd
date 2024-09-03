@@ -1256,6 +1256,33 @@
                               </xs:attribute>
                             </xs:complexType>
                           </xs:element>
+                          <xs:element name="existing_person" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Represents the persons in the node at the moment of creation.
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:all>
+                                <xs:element name="person_selection" type="type__person_selection"/>
+                              </xs:all>
+                              <xs:attribute name="min" type="xs:int" use="required">
+                                <xs:annotation>
+                                  <xs:documentation>
+                                    Represents the minimum number of persons that must exist at the moment of creation.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="max" type="xs:int">
+                                <xs:annotation>
+                                  <xs:documentation>
+                                    Represents the maximum number of persons that must exist at the moment of creation.
+                                    If unset it defaults to min value.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                            </xs:complexType>
+                          </xs:element>
                         </xs:sequence>
                         <xs:attribute name="id" type="xs:string" use="required"/>
                       </xs:complexType>
