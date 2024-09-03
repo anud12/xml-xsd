@@ -594,7 +594,7 @@
       <xs:element name="in__location_graph" minOccurs="0">
         <xs:annotation>
           <xs:documentation>
-            Represents the location graph. If unset it defaults the current location graph.
+            Represents the selection of a node_graph in a location_graph.
           </xs:documentation>
         </xs:annotation>
         <xs:complexType>
@@ -1150,7 +1150,7 @@
                               </xs:sequence>
                             </xs:complexType>
                           </xs:element>
-                          <xs:element name="link_group" maxOccurs="unbounded">
+                          <xs:element name="link_group" minOccurs="0" maxOccurs="unbounded">
                             <xs:annotation>
                               <xs:documentation>
                                 Represents a group of links that can be applied to the node.
@@ -1594,7 +1594,14 @@
                   <xs:attribute name="action_property_mutation_rule_ref" type="xs:string" use="required"/>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="person.create" minOccurs="0" maxOccurs="unbounded" type="type__person_selection"/>
+              <xs:element name="person.create" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                      <xs:element name="node_graph__selection" type="type__node_graph__selection"/>
+                      <xs:element name="person__selection" type="type__person_selection"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>

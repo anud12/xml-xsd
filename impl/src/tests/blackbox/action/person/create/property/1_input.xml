@@ -15,12 +15,26 @@
         <person_default initial="1"/>
       </entry>
     </property_rule>
+    <location_graph_rule id="">
+      <setup>
+        <starting_node node_rule_ref="node_rule_ref"/>
+      </setup>
+      <node_rule id="node_rule_ref"/>
+    </location_graph_rule>
   </rule_group>
   <people/>
+  <location_graph>
+    <rule location_graph_rule_ref=""/>
+    <node node_rule_ref="node_rule_ref" id="">
+    </node>
+  </location_graph>
   <actions>
     <person.create>
-      <property property_rule_ref="property_ref">
-      </property>
+      <node_graph__selection/>
+      <person__selection>
+        <property property_rule_ref="property_ref">
+        </property>
+      </person__selection>
     </person.create>
   </actions>
 </world_step>

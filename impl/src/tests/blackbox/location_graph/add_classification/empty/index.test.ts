@@ -1,12 +1,12 @@
 import {testBase} from "../../../test_base";
 
 /*description
-# `location_graph.node.add_classificationt` action with empty selection
+# `location_graph.node.add_classification` action with empty selection
 ## Given
-- `location_graph.node.add_classificationt` action with empty selection
+- `location_graph.node.add_classification` action with empty selection
 -
 ## Then
-It should do nothing.
+It should add classification to all nodes.
  */
 
 /*tags
