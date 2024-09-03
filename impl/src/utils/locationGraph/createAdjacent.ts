@@ -1,5 +1,10 @@
 import {JsonUtil} from "../util";
-import {createGraphNode, LocationGraphQueryType, PositionQueryType} from "./createGraphNode";
+import {
+  createGraphNode,
+  LocationGraphNodeQueryType,
+  LocationGraphQueryType,
+  PositionQueryType
+} from "./createGraphNode";
 import {JsonSchema} from "../JsonSchema";
 import {mergeError} from "../../mergeError";
 import {keepNotFullLinkGroupElements} from "./filterLinkGroups";
@@ -151,7 +156,7 @@ const positionBasedOnLink = (jsonUtil: JsonUtil, linkGroupElement: LinkGroupQuer
   }
 }
 
-export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nodeRef: string): (writeUnit: JsonUtil) => Promise<void> => {
+export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nodeRef: string): (writeUnit: JsonUtil) => Promise<LocationGraphNodeQueryType | undefined> => {
   try {
     const locationGraphElement = jsonUtil.json.queryAllOptional("location_graph").find(locationGraphElement => locationGraphElement.attributeMap.id === locationGraphRef);
     const nodeGraphElement = locationGraphElement?.queryAllOptional("node").find(nodeElement => nodeElement.attributeMap.id === nodeRef);
@@ -165,6 +170,7 @@ export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nod
 
     if (!linkGroupElement) {
       return async () => {
+        return undefined;
       };
     }
 
@@ -206,6 +212,7 @@ export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nod
           }
         })
       await Promise.all(adjacentLinkList)
+      return newGraphNode;
     }
   } catch (e) {
     throw mergeError(e, new Error(`Error in createAdjacent failed for locationGraphRef:${locationGraphRef} and nodeRef:${nodeRef}`));

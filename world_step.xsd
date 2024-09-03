@@ -1116,7 +1116,7 @@
                     <xs:element name="setup">
                       <xs:annotation>
                         <xs:documentation>
-                          Represents the initial setup of the location graph.
+                          Represents the initial generation of the location graph.
                         </xs:documentation>
                       </xs:annotation>
                       <xs:complexType>
@@ -1124,11 +1124,43 @@
                           <xs:element name="starting_node">
                             <xs:annotation>
                               <xs:documentation>
-                                Represents the initial node of the location graph.
+                                Represents the starting node of the location graph.
                               </xs:documentation>
                             </xs:annotation>
                             <xs:complexType>
                               <xs:attribute name="node_rule_ref" type="xs:string" use="required"/>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="necessary_node" minOccurs="0" maxOccurs="unbounded">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Represents options of nodes that must exists in the location graph.
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="or" minOccurs="0" maxOccurs="unbounded">
+                                  <xs:complexType>
+                                    <xs:attribute name="node_rule_ref" type="xs:string" use="required"/>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                              <xs:attribute name="node_rule_ref" type="xs:string" use="required"/>
+                              <xs:attribute name="min" type="xs:int" use="required">
+                                <xs:annotation>
+                                  <xs:documentation>
+                                    Represents the minimum number of nodes that must exist.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="max" type="xs:int">
+                                <xs:annotation>
+                                  <xs:documentation>
+                                    Represents the maximum number of nodes that must exist.
+                                    If unset it defaults to min value.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
                             </xs:complexType>
                           </xs:element>
                         </xs:sequence>
@@ -1597,8 +1629,8 @@
               <xs:element name="person.create" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>
-                      <xs:element name="node_graph__selection" type="type__node_graph__selection"/>
-                      <xs:element name="person__selection" type="type__person_selection"/>
+                    <xs:element name="node_graph__selection" type="type__node_graph__selection"/>
+                    <xs:element name="person__selection" type="type__person_selection"/>
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>

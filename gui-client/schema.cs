@@ -4182,6 +4182,8 @@ namespace XSD {
     //Children elements
     public List<world_step__rule_group__location_graph_rule__setup__starting_node> Get_starting_node();
     public void Set_starting_node(List<world_step__rule_group__location_graph_rule__setup__starting_node> value);
+    public List<world_step__rule_group__location_graph_rule__setup__necessary_node> Get_necessary_node();
+    public void Set_necessary_node(List<world_step__rule_group__location_graph_rule__setup__necessary_node> value);
     public void Deserialize (RawNode rawNode);
 
     public RawNode SerializeIntoRawNode();
@@ -4202,6 +4204,15 @@ namespace XSD {
     public void Set_starting_node(List<world_step__rule_group__location_graph_rule__setup__starting_node> value)
     {
       this.starting_node = value;
+    }
+    public List<world_step__rule_group__location_graph_rule__setup__necessary_node> necessary_node = new List<world_step__rule_group__location_graph_rule__setup__necessary_node>();
+    public List<world_step__rule_group__location_graph_rule__setup__necessary_node> Get_necessary_node()
+    {
+      return this.necessary_node;
+    }
+    public void Set_necessary_node(List<world_step__rule_group__location_graph_rule__setup__necessary_node> value)
+    {
+      this.necessary_node = value;
     }
 
     public world_step__rule_group__location_graph_rule__setup()
@@ -4225,12 +4236,14 @@ namespace XSD {
       Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__setup");
       //Deserialize elements
       this.starting_node = rawNode.InitializeWithRawNode("starting_node", this.starting_node);
+      this.necessary_node = rawNode.InitializeWithRawNode("necessary_node", this.necessary_node);
     }
 
     public RawNode SerializeIntoRawNode()
     {
       //Serialize elements
       rawNode.children["starting_node"] = starting_node.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["necessary_node"] = necessary_node.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 
@@ -7117,6 +7130,135 @@ namespace XSD {
     }
   }
   /*typeDeclarationElementToInterfaceString= element*/
+  public interface Iworld_step__rule_group__location_graph_rule__setup__necessary_node {
+    //Attributes
+    public System.String Get_node_rule_ref();
+    public void Set_node_rule_ref(System.String value);
+    public System.Int32 Get_min();
+    public void Set_min(System.Int32 value);
+    public System.Int32 Get_max();
+    public void Set_max(System.Int32 value);
+
+    //Children elements
+    public List<world_step__rule_group__location_graph_rule__setup__necessary_node__or> Get_or();
+    public void Set_or(List<world_step__rule_group__location_graph_rule__setup__necessary_node__or> value);
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class world_step__rule_group__location_graph_rule__setup__necessary_node: Iworld_step__rule_group__location_graph_rule__setup__necessary_node {
+    public RawNode rawNode = new RawNode();
+    //Attributes
+    public System.String node_rule_ref;
+    public System.String Get_node_rule_ref()
+    {
+      return this.node_rule_ref;
+    }
+    public void Set_node_rule_ref(System.String value)
+    {
+      this.node_rule_ref = value;
+    }
+    public System.Int32 min;
+    public System.Int32 Get_min()
+    {
+      return this.min;
+    }
+    public void Set_min(System.Int32 value)
+    {
+      this.min = value;
+    }
+    public System.Int32 max;
+    public System.Int32 Get_max()
+    {
+      return this.max;
+    }
+    public void Set_max(System.Int32 value)
+    {
+      this.max = value;
+    }
+
+    //Children elements
+    public List<world_step__rule_group__location_graph_rule__setup__necessary_node__or> or = new List<world_step__rule_group__location_graph_rule__setup__necessary_node__or>();
+    public List<world_step__rule_group__location_graph_rule__setup__necessary_node__or> Get_or()
+    {
+      return this.or;
+    }
+    public void Set_or(List<world_step__rule_group__location_graph_rule__setup__necessary_node__or> value)
+    {
+      this.or = value;
+    }
+
+    public world_step__rule_group__location_graph_rule__setup__necessary_node()
+    {
+    }
+
+    public world_step__rule_group__location_graph_rule__setup__necessary_node(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public world_step__rule_group__location_graph_rule__setup__necessary_node(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__setup__necessary_node");
+      //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("node_rule_ref"))
+      {
+        var attribute_node_rule_ref = rawNode.attributes["node_rule_ref"];
+        this.node_rule_ref = rawNode.attributes["node_rule_ref"];
+      }
+      if(rawNode.attributes.ContainsKey("min"))
+      {
+        var attribute_min = rawNode.attributes["min"];
+        this.min = attribute_min.ToInt();
+      }
+      if(rawNode.attributes.ContainsKey("max"))
+      {
+        var attribute_max = rawNode.attributes["max"];
+        this.max = attribute_max.ToInt();
+      }
+      //Deserialize elements
+      this.or = rawNode.InitializeWithRawNode("or", this.or);
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize arguments
+      if(this.node_rule_ref != null)
+      {
+        rawNode.attributes["node_rule_ref"] = this.node_rule_ref.ToString();
+      }
+      if(this.min != null)
+      {
+        rawNode.attributes["min"] = this.min.ToString();
+      }
+      if(this.max != null)
+      {
+        rawNode.attributes["max"] = this.max.ToString();
+      }
+      //Serialize elements
+      rawNode.children["or"] = or.Select(x => x.SerializeIntoRawNode()).ToList();
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__setup__necessary_node");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
   public interface Iworld_step__rule_group__location_graph_rule__node_rule__classifications {
 
     //Children elements
@@ -8641,6 +8783,85 @@ namespace XSD {
     public void Serialize(XmlElement element)
     {
         Godot.GD.Print("Serializing world_step__rule_group__events_rule__entry__then__property_mutation");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
+  public interface Iworld_step__rule_group__location_graph_rule__setup__necessary_node__or {
+    //Attributes
+    public System.String Get_node_rule_ref();
+    public void Set_node_rule_ref(System.String value);
+
+    //Children elements
+
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class world_step__rule_group__location_graph_rule__setup__necessary_node__or: Iworld_step__rule_group__location_graph_rule__setup__necessary_node__or {
+    public RawNode rawNode = new RawNode();
+    //Attributes
+    public System.String node_rule_ref;
+    public System.String Get_node_rule_ref()
+    {
+      return this.node_rule_ref;
+    }
+    public void Set_node_rule_ref(System.String value)
+    {
+      this.node_rule_ref = value;
+    }
+
+    //Children elements
+
+    public world_step__rule_group__location_graph_rule__setup__necessary_node__or()
+    {
+    }
+
+    public world_step__rule_group__location_graph_rule__setup__necessary_node__or(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public world_step__rule_group__location_graph_rule__setup__necessary_node__or(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__setup__necessary_node__or");
+      //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("node_rule_ref"))
+      {
+        var attribute_node_rule_ref = rawNode.attributes["node_rule_ref"];
+        this.node_rule_ref = rawNode.attributes["node_rule_ref"];
+      }
+      //Deserialize elements
+
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize arguments
+      if(this.node_rule_ref != null)
+      {
+        rawNode.attributes["node_rule_ref"] = this.node_rule_ref.ToString();
+      }
+      //Serialize elements
+
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__setup__necessary_node__or");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }

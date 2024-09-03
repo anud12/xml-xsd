@@ -3651,6 +3651,47 @@ undefined
 </world_step>
 ```
 
+## [./location_graph/create_location_graph/necesary_node](./.__documentation__location_graph__create_location_graph__necesary_node.md)
+
+#### Tags:
+- location_graph
+- location_graph.create
+- necessary_node
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+
+  <rule_group id="rule_group_id">
+    <location_graph_rule id="location_graph_rule_id">
+      <setup>
+        <starting_node node_rule_ref="node"/>
+        <necessary_node node_rule_ref="node" min="3"/>
+      </setup>
+      <node_rule id="node">
+        <link_group id="all" angle="0" angleMax="360">
+          <to_option node_rule_ref="node" adjacent_depth_limit="1" distance="0"/>
+        </link_group>
+      </node_rule>
+    </location_graph_rule>
+  </rule_group>
+
+  <actions>
+    <location_graph.create location_graph_rule_ref="location_graph_rule_id"/>
+  </actions>
+</world_step>
+```
+
 ## [./location_graph/validation/node_graph_id_ref](./.__documentation__location_graph__validation__node_graph_id_ref.md)
 
 #### Tags:
