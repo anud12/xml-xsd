@@ -196,6 +196,9 @@ export type world_step = JsonQueryType<{}, {
         "link_group": JsonQueryType<{"id": string;  "angle": string;  "angleMax": string;  "limit": string;}, {
           "to_option": JsonQueryType<{"node_rule_ref": string;  "distance": string;  "maxDistance": string;  "adjacent_depth_limit": string;}> & JsonQueryType<{}, {}>;
         }> & JsonQueryType<{}, {}>;
+        "existing_person": JsonQueryType<{"min": string;  "max": string;}, {
+          "person_selection": type__person_selection & JsonQueryType<{}, {}>;
+        }> & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
     "location_classification_rule": JsonQueryType<{}, {

@@ -146,7 +146,7 @@ public partial class LocationGraphScene : Control
 						DefaultColor = new Color(0, 0, 0, 1),
 						Points = new Vector2[] { start, end },
 					};
-					line2D.Width = SCALE / 10;
+					line2D.Width = SCALE / 2;
 					return line2D;
 				});
 			});

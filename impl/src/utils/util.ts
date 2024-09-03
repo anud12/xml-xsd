@@ -60,6 +60,12 @@ export class JsonUtil {
    * Returns a function that returns a random number between 0 and 1
    */
   random: () => number;
+  randomBetween = (min: number, max: number) => {
+    return this.random() % (max + 1 - min) + min;
+  }
+  randomBetweenInt = (min: number, max: number) => {
+    return Math.floor(this.randomBetween(min, max));
+  }
   location: {
     grid: () => LocationGrid,
     markovChainMatrix: (direction: string) => LocationMatrix,
@@ -158,10 +164,10 @@ export class JsonUtil {
   }
 
   locationGraph = {
-    createLocationGraph: (ref:string) => {
+    createLocationGraph: (ref: string) => {
       return createLocationGraph(this, ref)
     },
-    createGraphNode: (locationGraph: LocationGraphQueryType, ref:string) => {
+    createGraphNode: (locationGraph: LocationGraphQueryType, ref: string) => {
       return createGraphNode(this, locationGraph, ref)
     },
     createAdjacent: (locationGraphRef: string, nodeRef: string) => {
@@ -179,7 +185,7 @@ export class JsonUtil {
     createPerson: (selectPersonQueryType: SelectPersonQueryType, position?: Position) => {
       return createPerson(this, selectPersonQueryType, position);
     },
-    applyPropertyMutation: (personQueryType: PersonQueryType, propertyMutation:PropertyMutationQueryType, getPropertyTarget? :(key:string) => string) => {
+    applyPropertyMutation: (personQueryType: PersonQueryType, propertyMutation: PropertyMutationQueryType, getPropertyTarget?: (key: string) => string) => {
       return applyPropertyMutation(this, personQueryType, propertyMutation, getPropertyTarget)
     },
     getProperty: (personQueryType: PersonQueryType, key) => getPersonProperty(this, personQueryType, key),

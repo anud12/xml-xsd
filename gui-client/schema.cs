@@ -4265,6 +4265,8 @@ namespace XSD {
     public void Set_classifications(List<world_step__rule_group__location_graph_rule__node_rule__classifications> value);
     public List<world_step__rule_group__location_graph_rule__node_rule__link_group> Get_link_group();
     public void Set_link_group(List<world_step__rule_group__location_graph_rule__node_rule__link_group> value);
+    public List<world_step__rule_group__location_graph_rule__node_rule__existing_person> Get_existing_person();
+    public void Set_existing_person(List<world_step__rule_group__location_graph_rule__node_rule__existing_person> value);
     public void Deserialize (RawNode rawNode);
 
     public RawNode SerializeIntoRawNode();
@@ -4305,6 +4307,15 @@ namespace XSD {
     {
       this.link_group = value;
     }
+    public List<world_step__rule_group__location_graph_rule__node_rule__existing_person> existing_person = new List<world_step__rule_group__location_graph_rule__node_rule__existing_person>();
+    public List<world_step__rule_group__location_graph_rule__node_rule__existing_person> Get_existing_person()
+    {
+      return this.existing_person;
+    }
+    public void Set_existing_person(List<world_step__rule_group__location_graph_rule__node_rule__existing_person> value)
+    {
+      this.existing_person = value;
+    }
 
     public world_step__rule_group__location_graph_rule__node_rule()
     {
@@ -4334,6 +4345,7 @@ namespace XSD {
       //Deserialize elements
       this.classifications = rawNode.InitializeWithRawNode("classifications", this.classifications);
       this.link_group = rawNode.InitializeWithRawNode("link_group", this.link_group);
+      this.existing_person = rawNode.InitializeWithRawNode("existing_person", this.existing_person);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -4346,6 +4358,7 @@ namespace XSD {
       //Serialize elements
       rawNode.children["classifications"] = classifications.Select(x => x.SerializeIntoRawNode()).ToList();
       rawNode.children["link_group"] = link_group.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["existing_person"] = existing_person.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 
@@ -7468,6 +7481,115 @@ namespace XSD {
     public void Serialize(XmlElement element)
     {
         Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__node_rule__link_group");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
+  public interface Iworld_step__rule_group__location_graph_rule__node_rule__existing_person {
+    //Attributes
+    public System.Int32 Get_min();
+    public void Set_min(System.Int32 value);
+    public System.Int32 Get_max();
+    public void Set_max(System.Int32 value);
+
+    //Children elements
+    public List<type__person_selection> Get_person_selection();
+    public void Set_person_selection(List<type__person_selection> value);
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class world_step__rule_group__location_graph_rule__node_rule__existing_person: Iworld_step__rule_group__location_graph_rule__node_rule__existing_person {
+    public RawNode rawNode = new RawNode();
+    //Attributes
+    public System.Int32 min;
+    public System.Int32 Get_min()
+    {
+      return this.min;
+    }
+    public void Set_min(System.Int32 value)
+    {
+      this.min = value;
+    }
+    public System.Int32 max;
+    public System.Int32 Get_max()
+    {
+      return this.max;
+    }
+    public void Set_max(System.Int32 value)
+    {
+      this.max = value;
+    }
+
+    //Children elements
+    public List<type__person_selection> person_selection = new List<type__person_selection>();
+    public List<type__person_selection> Get_person_selection()
+    {
+      return this.person_selection;
+    }
+    public void Set_person_selection(List<type__person_selection> value)
+    {
+      this.person_selection = value;
+    }
+
+    public world_step__rule_group__location_graph_rule__node_rule__existing_person()
+    {
+    }
+
+    public world_step__rule_group__location_graph_rule__node_rule__existing_person(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public world_step__rule_group__location_graph_rule__node_rule__existing_person(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__node_rule__existing_person");
+      //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("min"))
+      {
+        var attribute_min = rawNode.attributes["min"];
+        this.min = attribute_min.ToInt();
+      }
+      if(rawNode.attributes.ContainsKey("max"))
+      {
+        var attribute_max = rawNode.attributes["max"];
+        this.max = attribute_max.ToInt();
+      }
+      //Deserialize elements
+      this.person_selection = rawNode.InitializeWithRawNode("person_selection", this.person_selection);
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize arguments
+      if(this.min != null)
+      {
+        rawNode.attributes["min"] = this.min.ToString();
+      }
+      if(this.max != null)
+      {
+        rawNode.attributes["max"] = this.max.ToString();
+      }
+      //Serialize elements
+      rawNode.children["person_selection"] = person_selection.Select(x => x.SerializeIntoRawNode()).ToList();
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__node_rule__existing_person");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
