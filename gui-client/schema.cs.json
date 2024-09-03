@@ -1920,8 +1920,17 @@
               }
             },
             "person.create": {
-              "metaType": "reference",
-              "value": "type__person_selection"
+              "metaType": "object",
+              "value": {
+                "node_graph__selection": {
+                  "metaType": "reference",
+                  "value": "type__node_graph__selection"
+                },
+                "person__selection": {
+                  "metaType": "reference",
+                  "value": "type__person_selection"
+                }
+              }
             }
           }
         }

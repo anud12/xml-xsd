@@ -787,8 +787,8 @@ namespace XSD {
     public void Set_person__teleport(List<world_step__actions__person__teleport> value);
     public List<world_step__actions__person__on_person__property_mutation> Get_person__on_person__property_mutation();
     public void Set_person__on_person__property_mutation(List<world_step__actions__person__on_person__property_mutation> value);
-    public List<type__person_selection> Get_person__create();
-    public void Set_person__create(List<type__person_selection> value);
+    public List<world_step__actions__person__create> Get_person__create();
+    public void Set_person__create(List<world_step__actions__person__create> value);
     public void Deserialize (RawNode rawNode);
 
     public RawNode SerializeIntoRawNode();
@@ -855,12 +855,12 @@ namespace XSD {
     {
       this.person__on_person__property_mutation = value;
     }
-    public List<type__person_selection> person__create = new List<type__person_selection>();
-    public List<type__person_selection> Get_person__create()
+    public List<world_step__actions__person__create> person__create = new List<world_step__actions__person__create>();
+    public List<world_step__actions__person__create> Get_person__create()
     {
       return this.person__create;
     }
-    public void Set_person__create(List<type__person_selection> value)
+    public void Set_person__create(List<world_step__actions__person__create> value)
     {
       this.person__create = value;
     }
@@ -3160,23 +3160,13 @@ namespace XSD {
     }
   }
   /*typeDeclarationElementToInterfaceString= element*/
-  public interface Itype__person_selection {
+  public interface Iworld_step__actions__person__create {
 
     //Children elements
-    public List<type__math_operations> Get_radius();
-    public void Set_radius(List<type__math_operations> value);
-    public List<type__math_operations> Get_min();
-    public void Set_min(List<type__math_operations> value);
-    public List<type__math_operations> Get_max();
-    public void Set_max(List<type__math_operations> value);
-    public List<type__person_selection__property> Get_property();
-    public void Set_property(List<type__person_selection__property> value);
-    public List<type__person_selection__classification> Get_classification();
-    public void Set_classification(List<type__person_selection__classification> value);
-    public List<type__person_selection__race> Get_race();
-    public void Set_race(List<type__person_selection__race> value);
-    public List<type__person_selection__inventory> Get_inventory();
-    public void Set_inventory(List<type__person_selection__inventory> value);
+    public List<type__node_graph__selection> Get_node_graph__selection();
+    public void Set_node_graph__selection(List<type__node_graph__selection> value);
+    public List<type__person_selection> Get_person__selection();
+    public void Set_person__selection(List<type__person_selection> value);
     public void Deserialize (RawNode rawNode);
 
     public RawNode SerializeIntoRawNode();
@@ -3185,84 +3175,39 @@ namespace XSD {
   }
 
   /*typeDeclarationElementToString= element*/
-  public class type__person_selection: Itype__person_selection {
+  public class world_step__actions__person__create: Iworld_step__actions__person__create {
     public RawNode rawNode = new RawNode();
 
     //Children elements
-    public List<type__math_operations> radius = new List<type__math_operations>();
-    public List<type__math_operations> Get_radius()
+    public List<type__node_graph__selection> node_graph__selection = new List<type__node_graph__selection>();
+    public List<type__node_graph__selection> Get_node_graph__selection()
     {
-      return this.radius;
+      return this.node_graph__selection;
     }
-    public void Set_radius(List<type__math_operations> value)
+    public void Set_node_graph__selection(List<type__node_graph__selection> value)
     {
-      this.radius = value;
+      this.node_graph__selection = value;
     }
-    public List<type__math_operations> min = new List<type__math_operations>();
-    public List<type__math_operations> Get_min()
+    public List<type__person_selection> person__selection = new List<type__person_selection>();
+    public List<type__person_selection> Get_person__selection()
     {
-      return this.min;
+      return this.person__selection;
     }
-    public void Set_min(List<type__math_operations> value)
+    public void Set_person__selection(List<type__person_selection> value)
     {
-      this.min = value;
-    }
-    public List<type__math_operations> max = new List<type__math_operations>();
-    public List<type__math_operations> Get_max()
-    {
-      return this.max;
-    }
-    public void Set_max(List<type__math_operations> value)
-    {
-      this.max = value;
-    }
-    public List<type__person_selection__property> property = new List<type__person_selection__property>();
-    public List<type__person_selection__property> Get_property()
-    {
-      return this.property;
-    }
-    public void Set_property(List<type__person_selection__property> value)
-    {
-      this.property = value;
-    }
-    public List<type__person_selection__classification> classification = new List<type__person_selection__classification>();
-    public List<type__person_selection__classification> Get_classification()
-    {
-      return this.classification;
-    }
-    public void Set_classification(List<type__person_selection__classification> value)
-    {
-      this.classification = value;
-    }
-    public List<type__person_selection__race> race = new List<type__person_selection__race>();
-    public List<type__person_selection__race> Get_race()
-    {
-      return this.race;
-    }
-    public void Set_race(List<type__person_selection__race> value)
-    {
-      this.race = value;
-    }
-    public List<type__person_selection__inventory> inventory = new List<type__person_selection__inventory>();
-    public List<type__person_selection__inventory> Get_inventory()
-    {
-      return this.inventory;
-    }
-    public void Set_inventory(List<type__person_selection__inventory> value)
-    {
-      this.inventory = value;
+      this.person__selection = value;
     }
 
-    public type__person_selection()
+    public world_step__actions__person__create()
     {
     }
 
-    public type__person_selection(RawNode rawNode)
+    public world_step__actions__person__create(RawNode rawNode)
     {
       Deserialize(rawNode);
     }
 
-    public type__person_selection(XmlElement xmlElement)
+    public world_step__actions__person__create(XmlElement xmlElement)
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
@@ -3271,33 +3216,23 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__person_selection");
+      Godot.GD.Print("Deserializing world_step__actions__person__create");
       //Deserialize elements
-      this.radius = rawNode.InitializeWithRawNode("radius", this.radius);
-      this.min = rawNode.InitializeWithRawNode("min", this.min);
-      this.max = rawNode.InitializeWithRawNode("max", this.max);
-      this.property = rawNode.InitializeWithRawNode("property", this.property);
-      this.classification = rawNode.InitializeWithRawNode("classification", this.classification);
-      this.race = rawNode.InitializeWithRawNode("race", this.race);
-      this.inventory = rawNode.InitializeWithRawNode("inventory", this.inventory);
+      this.node_graph__selection = rawNode.InitializeWithRawNode("node_graph__selection", this.node_graph__selection);
+      this.person__selection = rawNode.InitializeWithRawNode("person__selection", this.person__selection);
     }
 
     public RawNode SerializeIntoRawNode()
     {
       //Serialize elements
-      rawNode.children["radius"] = radius.Select(x => x.SerializeIntoRawNode()).ToList();
-      rawNode.children["min"] = min.Select(x => x.SerializeIntoRawNode()).ToList();
-      rawNode.children["max"] = max.Select(x => x.SerializeIntoRawNode()).ToList();
-      rawNode.children["property"] = property.Select(x => x.SerializeIntoRawNode()).ToList();
-      rawNode.children["classification"] = classification.Select(x => x.SerializeIntoRawNode()).ToList();
-      rawNode.children["race"] = race.Select(x => x.SerializeIntoRawNode()).ToList();
-      rawNode.children["inventory"] = inventory.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["node_graph__selection"] = node_graph__selection.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["person__selection"] = person__selection.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing type__person_selection");
+        Godot.GD.Print("Serializing world_step__actions__person__create");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -5716,86 +5651,23 @@ namespace XSD {
     }
   }
   /*typeDeclarationElementToInterfaceString= element*/
-  public interface Itype__math_operations {
-    //Attributes
-    public System.Int32 Get_initial();
-    public void Set_initial(System.Int32 value);
-    public void Deserialize (RawNode rawNode);
-
-    public RawNode SerializeIntoRawNode();
-
-    public void Serialize(XmlElement element);
-  }
-
-  /*typeDeclarationElementToString= element*/
-  public class type__math_operations: Itype__math_operations {
-    public RawNode rawNode = new RawNode();
-    //Attributes
-    public System.Int32 initial;
-    public System.Int32 Get_initial()
-    {
-      return this.initial;
-    }
-    public void Set_initial(System.Int32 value)
-    {
-      this.initial = value;
-    }
-
-    public type__math_operations()
-    {
-    }
-
-    public type__math_operations(RawNode rawNode)
-    {
-      Deserialize(rawNode);
-    }
-
-    public type__math_operations(XmlElement xmlElement)
-    {
-      this.rawNode.Deserialize(xmlElement);
-      Deserialize(rawNode);
-    }
-
-    public void Deserialize (RawNode rawNode)
-    {
-      this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__math_operations");
-      //Deserialize arguments
-      if(rawNode.attributes.ContainsKey("initial"))
-      {
-        var attribute_initial = rawNode.attributes["initial"];
-        this.initial = attribute_initial.ToInt();
-      }
-    }
-
-    public RawNode SerializeIntoRawNode()
-    {
-      //Serialize arguments
-      if(this.initial != null)
-      {
-        rawNode.attributes["initial"] = this.initial.ToString();
-      }
-      return rawNode;
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        Godot.GD.Print("Serializing type__math_operations");
-        var updatedRawNode = SerializeIntoRawNode();
-        updatedRawNode.Serialize(element);
-    }
-  }
-  /*typeDeclarationElementToInterfaceString= element*/
-  public interface Itype__person_selection__property {
-    //Attributes
-    public System.String Get_property_rule_ref();
-    public void Set_property_rule_ref(System.String value);
+  public interface Itype__person_selection {
 
     //Children elements
+    public List<type__math_operations> Get_radius();
+    public void Set_radius(List<type__math_operations> value);
     public List<type__math_operations> Get_min();
     public void Set_min(List<type__math_operations> value);
     public List<type__math_operations> Get_max();
     public void Set_max(List<type__math_operations> value);
+    public List<type__person_selection__property> Get_property();
+    public void Set_property(List<type__person_selection__property> value);
+    public List<type__person_selection__classification> Get_classification();
+    public void Set_classification(List<type__person_selection__classification> value);
+    public List<type__person_selection__race> Get_race();
+    public void Set_race(List<type__person_selection__race> value);
+    public List<type__person_selection__inventory> Get_inventory();
+    public void Set_inventory(List<type__person_selection__inventory> value);
     public void Deserialize (RawNode rawNode);
 
     public RawNode SerializeIntoRawNode();
@@ -5804,20 +5676,19 @@ namespace XSD {
   }
 
   /*typeDeclarationElementToString= element*/
-  public class type__person_selection__property: Itype__person_selection__property {
+  public class type__person_selection: Itype__person_selection {
     public RawNode rawNode = new RawNode();
-    //Attributes
-    public System.String property_rule_ref;
-    public System.String Get_property_rule_ref()
-    {
-      return this.property_rule_ref;
-    }
-    public void Set_property_rule_ref(System.String value)
-    {
-      this.property_rule_ref = value;
-    }
 
     //Children elements
+    public List<type__math_operations> radius = new List<type__math_operations>();
+    public List<type__math_operations> Get_radius()
+    {
+      return this.radius;
+    }
+    public void Set_radius(List<type__math_operations> value)
+    {
+      this.radius = value;
+    }
     public List<type__math_operations> min = new List<type__math_operations>();
     public List<type__math_operations> Get_min()
     {
@@ -5836,17 +5707,53 @@ namespace XSD {
     {
       this.max = value;
     }
+    public List<type__person_selection__property> property = new List<type__person_selection__property>();
+    public List<type__person_selection__property> Get_property()
+    {
+      return this.property;
+    }
+    public void Set_property(List<type__person_selection__property> value)
+    {
+      this.property = value;
+    }
+    public List<type__person_selection__classification> classification = new List<type__person_selection__classification>();
+    public List<type__person_selection__classification> Get_classification()
+    {
+      return this.classification;
+    }
+    public void Set_classification(List<type__person_selection__classification> value)
+    {
+      this.classification = value;
+    }
+    public List<type__person_selection__race> race = new List<type__person_selection__race>();
+    public List<type__person_selection__race> Get_race()
+    {
+      return this.race;
+    }
+    public void Set_race(List<type__person_selection__race> value)
+    {
+      this.race = value;
+    }
+    public List<type__person_selection__inventory> inventory = new List<type__person_selection__inventory>();
+    public List<type__person_selection__inventory> Get_inventory()
+    {
+      return this.inventory;
+    }
+    public void Set_inventory(List<type__person_selection__inventory> value)
+    {
+      this.inventory = value;
+    }
 
-    public type__person_selection__property()
+    public type__person_selection()
     {
     }
 
-    public type__person_selection__property(RawNode rawNode)
+    public type__person_selection(RawNode rawNode)
     {
       Deserialize(rawNode);
     }
 
-    public type__person_selection__property(XmlElement xmlElement)
+    public type__person_selection(XmlElement xmlElement)
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
@@ -5855,241 +5762,33 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__person_selection__property");
-      //Deserialize arguments
-      if(rawNode.attributes.ContainsKey("property_rule_ref"))
-      {
-        var attribute_property_rule_ref = rawNode.attributes["property_rule_ref"];
-        this.property_rule_ref = rawNode.attributes["property_rule_ref"];
-      }
+      Godot.GD.Print("Deserializing type__person_selection");
       //Deserialize elements
+      this.radius = rawNode.InitializeWithRawNode("radius", this.radius);
       this.min = rawNode.InitializeWithRawNode("min", this.min);
       this.max = rawNode.InitializeWithRawNode("max", this.max);
+      this.property = rawNode.InitializeWithRawNode("property", this.property);
+      this.classification = rawNode.InitializeWithRawNode("classification", this.classification);
+      this.race = rawNode.InitializeWithRawNode("race", this.race);
+      this.inventory = rawNode.InitializeWithRawNode("inventory", this.inventory);
     }
 
     public RawNode SerializeIntoRawNode()
     {
-      //Serialize arguments
-      if(this.property_rule_ref != null)
-      {
-        rawNode.attributes["property_rule_ref"] = this.property_rule_ref.ToString();
-      }
       //Serialize elements
+      rawNode.children["radius"] = radius.Select(x => x.SerializeIntoRawNode()).ToList();
       rawNode.children["min"] = min.Select(x => x.SerializeIntoRawNode()).ToList();
       rawNode.children["max"] = max.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["property"] = property.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["classification"] = classification.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["race"] = race.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["inventory"] = inventory.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing type__person_selection__property");
-        var updatedRawNode = SerializeIntoRawNode();
-        updatedRawNode.Serialize(element);
-    }
-  }
-  /*typeDeclarationElementToInterfaceString= element*/
-  public interface Itype__person_selection__classification {
-    //Attributes
-    public System.String Get_classification_rule_ref();
-    public void Set_classification_rule_ref(System.String value);
-
-    //Children elements
-
-    public void Deserialize (RawNode rawNode);
-
-    public RawNode SerializeIntoRawNode();
-
-    public void Serialize(XmlElement element);
-  }
-
-  /*typeDeclarationElementToString= element*/
-  public class type__person_selection__classification: Itype__person_selection__classification {
-    public RawNode rawNode = new RawNode();
-    //Attributes
-    public System.String classification_rule_ref;
-    public System.String Get_classification_rule_ref()
-    {
-      return this.classification_rule_ref;
-    }
-    public void Set_classification_rule_ref(System.String value)
-    {
-      this.classification_rule_ref = value;
-    }
-
-    //Children elements
-
-    public type__person_selection__classification()
-    {
-    }
-
-    public type__person_selection__classification(RawNode rawNode)
-    {
-      Deserialize(rawNode);
-    }
-
-    public type__person_selection__classification(XmlElement xmlElement)
-    {
-      this.rawNode.Deserialize(xmlElement);
-      Deserialize(rawNode);
-    }
-
-    public void Deserialize (RawNode rawNode)
-    {
-      this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__person_selection__classification");
-      //Deserialize arguments
-      if(rawNode.attributes.ContainsKey("classification_rule_ref"))
-      {
-        var attribute_classification_rule_ref = rawNode.attributes["classification_rule_ref"];
-        this.classification_rule_ref = rawNode.attributes["classification_rule_ref"];
-      }
-      //Deserialize elements
-
-    }
-
-    public RawNode SerializeIntoRawNode()
-    {
-      //Serialize arguments
-      if(this.classification_rule_ref != null)
-      {
-        rawNode.attributes["classification_rule_ref"] = this.classification_rule_ref.ToString();
-      }
-      //Serialize elements
-
-      return rawNode;
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        Godot.GD.Print("Serializing type__person_selection__classification");
-        var updatedRawNode = SerializeIntoRawNode();
-        updatedRawNode.Serialize(element);
-    }
-  }
-  /*typeDeclarationElementToInterfaceString= element*/
-  public interface Itype__person_selection__race {
-    //Attributes
-    /* ignored attribute key={key} of type=System.Object*/
-
-    //Children elements
-
-    public void Deserialize (RawNode rawNode);
-
-    public RawNode SerializeIntoRawNode();
-
-    public void Serialize(XmlElement element);
-  }
-
-  /*typeDeclarationElementToString= element*/
-  public class type__person_selection__race: Itype__person_selection__race {
-    public RawNode rawNode = new RawNode();
-    //Attributes
-    /* ignored attribute key={key} of type=System.Object*/
-
-    //Children elements
-
-    public type__person_selection__race()
-    {
-    }
-
-    public type__person_selection__race(RawNode rawNode)
-    {
-      Deserialize(rawNode);
-    }
-
-    public type__person_selection__race(XmlElement xmlElement)
-    {
-      this.rawNode.Deserialize(xmlElement);
-      Deserialize(rawNode);
-    }
-
-    public void Deserialize (RawNode rawNode)
-    {
-      this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__person_selection__race");
-      //Deserialize arguments
-
-      //Deserialize elements
-
-    }
-
-    public RawNode SerializeIntoRawNode()
-    {
-      //Serialize arguments
-
-      //Serialize elements
-
-      return rawNode;
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        Godot.GD.Print("Serializing type__person_selection__race");
-        var updatedRawNode = SerializeIntoRawNode();
-        updatedRawNode.Serialize(element);
-    }
-  }
-  /*typeDeclarationElementToInterfaceString= element*/
-  public interface Itype__person_selection__inventory {
-
-    //Children elements
-    public List<type__item_selection> Get_item();
-    public void Set_item(List<type__item_selection> value);
-    public void Deserialize (RawNode rawNode);
-
-    public RawNode SerializeIntoRawNode();
-
-    public void Serialize(XmlElement element);
-  }
-
-  /*typeDeclarationElementToString= element*/
-  public class type__person_selection__inventory: Itype__person_selection__inventory {
-    public RawNode rawNode = new RawNode();
-
-    //Children elements
-    public List<type__item_selection> item = new List<type__item_selection>();
-    public List<type__item_selection> Get_item()
-    {
-      return this.item;
-    }
-    public void Set_item(List<type__item_selection> value)
-    {
-      this.item = value;
-    }
-
-    public type__person_selection__inventory()
-    {
-    }
-
-    public type__person_selection__inventory(RawNode rawNode)
-    {
-      Deserialize(rawNode);
-    }
-
-    public type__person_selection__inventory(XmlElement xmlElement)
-    {
-      this.rawNode.Deserialize(xmlElement);
-      Deserialize(rawNode);
-    }
-
-    public void Deserialize (RawNode rawNode)
-    {
-      this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__person_selection__inventory");
-      //Deserialize elements
-      this.item = rawNode.InitializeWithRawNode("item", this.item);
-    }
-
-    public RawNode SerializeIntoRawNode()
-    {
-      //Serialize elements
-      rawNode.children["item"] = item.Select(x => x.SerializeIntoRawNode()).ToList();
-      return rawNode;
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        Godot.GD.Print("Serializing type__person_selection__inventory");
+        Godot.GD.Print("Serializing type__person_selection");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -8183,7 +7882,10 @@ namespace XSD {
     }
   }
   /*typeDeclarationElementToInterfaceString= element*/
-  public interface Itype__item_selection {
+  public interface Itype__math_operations {
+    //Attributes
+    public System.Int32 Get_initial();
+    public void Set_initial(System.Int32 value);
     public void Deserialize (RawNode rawNode);
 
     public RawNode SerializeIntoRawNode();
@@ -8192,19 +7894,29 @@ namespace XSD {
   }
 
   /*typeDeclarationElementToString= element*/
-  public class type__item_selection: Itype__item_selection {
+  public class type__math_operations: Itype__math_operations {
     public RawNode rawNode = new RawNode();
+    //Attributes
+    public System.Int32 initial;
+    public System.Int32 Get_initial()
+    {
+      return this.initial;
+    }
+    public void Set_initial(System.Int32 value)
+    {
+      this.initial = value;
+    }
 
-    public type__item_selection()
+    public type__math_operations()
     {
     }
 
-    public type__item_selection(RawNode rawNode)
+    public type__math_operations(RawNode rawNode)
     {
       Deserialize(rawNode);
     }
 
-    public type__item_selection(XmlElement xmlElement)
+    public type__math_operations(XmlElement xmlElement)
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
@@ -8213,17 +7925,337 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__item_selection");
+      Godot.GD.Print("Deserializing type__math_operations");
+      //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("initial"))
+      {
+        var attribute_initial = rawNode.attributes["initial"];
+        this.initial = attribute_initial.ToInt();
+      }
     }
 
     public RawNode SerializeIntoRawNode()
     {
+      //Serialize arguments
+      if(this.initial != null)
+      {
+        rawNode.attributes["initial"] = this.initial.ToString();
+      }
       return rawNode;
     }
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing type__item_selection");
+        Godot.GD.Print("Serializing type__math_operations");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
+  public interface Itype__person_selection__property {
+    //Attributes
+    public System.String Get_property_rule_ref();
+    public void Set_property_rule_ref(System.String value);
+
+    //Children elements
+    public List<type__math_operations> Get_min();
+    public void Set_min(List<type__math_operations> value);
+    public List<type__math_operations> Get_max();
+    public void Set_max(List<type__math_operations> value);
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class type__person_selection__property: Itype__person_selection__property {
+    public RawNode rawNode = new RawNode();
+    //Attributes
+    public System.String property_rule_ref;
+    public System.String Get_property_rule_ref()
+    {
+      return this.property_rule_ref;
+    }
+    public void Set_property_rule_ref(System.String value)
+    {
+      this.property_rule_ref = value;
+    }
+
+    //Children elements
+    public List<type__math_operations> min = new List<type__math_operations>();
+    public List<type__math_operations> Get_min()
+    {
+      return this.min;
+    }
+    public void Set_min(List<type__math_operations> value)
+    {
+      this.min = value;
+    }
+    public List<type__math_operations> max = new List<type__math_operations>();
+    public List<type__math_operations> Get_max()
+    {
+      return this.max;
+    }
+    public void Set_max(List<type__math_operations> value)
+    {
+      this.max = value;
+    }
+
+    public type__person_selection__property()
+    {
+    }
+
+    public type__person_selection__property(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public type__person_selection__property(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing type__person_selection__property");
+      //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("property_rule_ref"))
+      {
+        var attribute_property_rule_ref = rawNode.attributes["property_rule_ref"];
+        this.property_rule_ref = rawNode.attributes["property_rule_ref"];
+      }
+      //Deserialize elements
+      this.min = rawNode.InitializeWithRawNode("min", this.min);
+      this.max = rawNode.InitializeWithRawNode("max", this.max);
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize arguments
+      if(this.property_rule_ref != null)
+      {
+        rawNode.attributes["property_rule_ref"] = this.property_rule_ref.ToString();
+      }
+      //Serialize elements
+      rawNode.children["min"] = min.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["max"] = max.Select(x => x.SerializeIntoRawNode()).ToList();
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing type__person_selection__property");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
+  public interface Itype__person_selection__classification {
+    //Attributes
+    public System.String Get_classification_rule_ref();
+    public void Set_classification_rule_ref(System.String value);
+
+    //Children elements
+
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class type__person_selection__classification: Itype__person_selection__classification {
+    public RawNode rawNode = new RawNode();
+    //Attributes
+    public System.String classification_rule_ref;
+    public System.String Get_classification_rule_ref()
+    {
+      return this.classification_rule_ref;
+    }
+    public void Set_classification_rule_ref(System.String value)
+    {
+      this.classification_rule_ref = value;
+    }
+
+    //Children elements
+
+    public type__person_selection__classification()
+    {
+    }
+
+    public type__person_selection__classification(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public type__person_selection__classification(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing type__person_selection__classification");
+      //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("classification_rule_ref"))
+      {
+        var attribute_classification_rule_ref = rawNode.attributes["classification_rule_ref"];
+        this.classification_rule_ref = rawNode.attributes["classification_rule_ref"];
+      }
+      //Deserialize elements
+
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize arguments
+      if(this.classification_rule_ref != null)
+      {
+        rawNode.attributes["classification_rule_ref"] = this.classification_rule_ref.ToString();
+      }
+      //Serialize elements
+
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing type__person_selection__classification");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
+  public interface Itype__person_selection__race {
+    //Attributes
+    /* ignored attribute key={key} of type=System.Object*/
+
+    //Children elements
+
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class type__person_selection__race: Itype__person_selection__race {
+    public RawNode rawNode = new RawNode();
+    //Attributes
+    /* ignored attribute key={key} of type=System.Object*/
+
+    //Children elements
+
+    public type__person_selection__race()
+    {
+    }
+
+    public type__person_selection__race(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public type__person_selection__race(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing type__person_selection__race");
+      //Deserialize arguments
+
+      //Deserialize elements
+
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize arguments
+
+      //Serialize elements
+
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing type__person_selection__race");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
+  public interface Itype__person_selection__inventory {
+
+    //Children elements
+    public List<type__item_selection> Get_item();
+    public void Set_item(List<type__item_selection> value);
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class type__person_selection__inventory: Itype__person_selection__inventory {
+    public RawNode rawNode = new RawNode();
+
+    //Children elements
+    public List<type__item_selection> item = new List<type__item_selection>();
+    public List<type__item_selection> Get_item()
+    {
+      return this.item;
+    }
+    public void Set_item(List<type__item_selection> value)
+    {
+      this.item = value;
+    }
+
+    public type__person_selection__inventory()
+    {
+    }
+
+    public type__person_selection__inventory(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public type__person_selection__inventory(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing type__person_selection__inventory");
+      //Deserialize elements
+      this.item = rawNode.InitializeWithRawNode("item", this.item);
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize elements
+      rawNode.children["item"] = item.Select(x => x.SerializeIntoRawNode()).ToList();
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing type__person_selection__inventory");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -8995,6 +9027,52 @@ namespace XSD {
     public void Serialize(XmlElement element)
     {
         Godot.GD.Print("Serializing type__node_graph__selection__has__node_graph_id__or");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
+  public interface Itype__item_selection {
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class type__item_selection: Itype__item_selection {
+    public RawNode rawNode = new RawNode();
+
+    public type__item_selection()
+    {
+    }
+
+    public type__item_selection(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public type__item_selection(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing type__item_selection");
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing type__item_selection");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }

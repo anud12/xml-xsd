@@ -1,15 +1,15 @@
 # Index
 
-## [./action/person/create](./.__documentation__action__person__create.md)
+## [./action/person/create/empty](./.__documentation__action__person__create__empty.md)
 
 #### Tags:
-action,person,person.create
+action,person,person.create,
 
 #### Input XML
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -23,6 +23,8 @@ action,person,person.create
   <people/>
   <actions>
     <person.create>
+      <node_graph__selection/>
+      <person__selection/>
     </person.create>
   </actions>
 </world_step>
@@ -55,12 +57,26 @@ action,person,person.create
         <person_default initial="1"/>
       </entry>
     </property_rule>
+    <location_graph_rule id="">
+      <setup>
+        <starting_node node_rule_ref="node_rule_ref"/>
+      </setup>
+      <node_rule id="node_rule_ref"/>
+    </location_graph_rule>
   </rule_group>
   <people/>
+  <location_graph>
+    <rule location_graph_rule_ref=""/>
+    <node node_rule_ref="node_rule_ref" id="">
+    </node>
+  </location_graph>
   <actions>
     <person.create>
-      <property property_rule_ref="property_ref">
-      </property>
+      <node_graph__selection/>
+      <person__selection>
+        <property property_rule_ref="property_ref">
+        </property>
+      </person__selection>
     </person.create>
   </actions>
 </world_step>

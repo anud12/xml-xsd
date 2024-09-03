@@ -3,7 +3,7 @@ import { classifyPerson } from "../utils/person/classifyPerson";
 
 // for person in people add a classifications
 export const personAssignClassification: MutationMiddleware = (readJson) => {
-  const personList = readJson.json.queryAllOptional("people").flatMap(e => e.queryAll("person"));
+  const personList = readJson.json.queryAllOptional("people").flatMap(e => e.queryAllOptional("person"));
   const classificationListByPersonId = personList.map(person => {
     const classificationList = classifyPerson(readJson, person);
     return {
@@ -12,7 +12,7 @@ export const personAssignClassification: MutationMiddleware = (readJson) => {
     }
   })
   return async writeJson => {
-    const personList = writeJson.json.queryAllOptional("people").flatMap(e => e.queryAll("person"));
+    const personList = writeJson.json.queryAllOptional("people").flatMap(e => e.queryAllOptional("person"));
     classificationListByPersonId.forEach(({id, classificationList}) => {
       const person = personList.find(e => e.attributeMap.id === id);
       let classifications = person.queryOptional("classifications");

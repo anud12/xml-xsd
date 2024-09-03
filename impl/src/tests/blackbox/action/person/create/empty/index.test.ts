@@ -1,17 +1,17 @@
-import {testBase} from "../../../test_base";
+import {testBase} from "../../../../test_base";
 
 
 /*description
 # person.create
 ## When
-person.create action is used with no children
+person.create action is used with no parameters
 
 ## It should
 create an empty person
  */
 
 /*tags
-  action,person,person.create
+  action,person,person.create,
  */
 
 const test= testBase(__dirname)

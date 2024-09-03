@@ -1,9 +1,11 @@
 import {JsonUtil} from "../util";
-import {SelectPersonQueryType} from "../JsonSchema";
+import {JsonSchema, SelectPersonQueryType} from "../JsonSchema";
 import {PersonQueryType} from "./getPersonProperty";
 import {JsonQueryType} from "../../JsonQueryType";
 import {Position} from "./selectPerson";
 import {createItemsFromSelection} from "../item/createItem";
+
+export type PersonQueryElement = JsonSchema["children"]["people"]["children"]["person"];
 
 const createNewPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType) => {
   const ruleGroup = jsonUtil.getRuleGroups();
@@ -164,7 +166,7 @@ const applyInventory = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType,
 
 };
 
-export const createPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, position?: Position) => {
+export const createPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, position?: Position): PersonQueryElement => {
   try {
     let person = createNewPerson(jsonUtil, selectPerson);
     selectPerson.queryAllOptional("classification").forEach(value => {

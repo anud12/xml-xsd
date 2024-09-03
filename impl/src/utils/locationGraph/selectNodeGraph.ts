@@ -34,7 +34,12 @@ const filterLocationGraph = (selectNodeGraphQueryType: SelectNodeGraphQueryType,
 
 const filterNodeGraph = (selectNodeGraphQueryType: SelectNodeGraphQueryType, nodeGraph: NodeGraphQueryType): boolean => {
   try {
-    const hasNodeGraphIdResult = selectNodeGraphQueryType.queryAllOptional("has__node_graph_id")
+
+    const hasNodeGraphIdList = selectNodeGraphQueryType.queryAllOptional("has__node_graph_id");
+    if(hasNodeGraphIdList.length === 0) {
+      return true;
+    }
+    const hasNodeGraphIdResult = hasNodeGraphIdList
       .map(hasNodeGraphId => {
         return hasNodeGraphId.attributeMap.node_graph_id_ref
       })
