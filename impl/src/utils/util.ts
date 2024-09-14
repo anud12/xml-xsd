@@ -31,6 +31,7 @@ import {createGraphNode, LocationGraphQueryType} from "./locationGraph/createGra
 import {createAdjacent} from "./locationGraph/createAdjacent";
 import {createPerson} from "./person/createPerson";
 import {selectNodeGraph} from "./locationGraph/selectNodeGraph";
+import {selectLinkTo, SelectLinkToQueryType} from "./locationGraph/selectLinkTo";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -175,6 +176,9 @@ export class JsonUtil {
     },
     selectNodeGraph: (selectNodeGraphQueryType: SelectNodeGraphQueryType) => {
       return selectNodeGraph(this, selectNodeGraphQueryType)
+    },
+    selectLinkTo: (selectLinkToQueryType: SelectLinkToQueryType) => {
+      return selectLinkTo(this, selectLinkToQueryType)
     }
   }
 

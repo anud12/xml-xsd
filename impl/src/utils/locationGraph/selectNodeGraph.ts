@@ -1,6 +1,7 @@
 import {JsonUtil} from "../util";
 import {NodeGraphQueryType, SelectNodeGraphQueryType} from "../JsonSchema";
 import {LocationGraphQueryType} from "./createGraphNode";
+import {mergeError} from "../../mergeError";
 
 
 const filterLocationGraph = (selectNodeGraphQueryType: SelectNodeGraphQueryType, locationGraph: LocationGraphQueryType): boolean => {
@@ -28,7 +29,7 @@ const filterLocationGraph = (selectNodeGraphQueryType: SelectNodeGraphQueryType,
 
     return applicableLocationGraphList.length > 0;
   } catch (e) {
-    throw new Error(`Error in filterLocationGraph failed for selectNodeGraphQueryType:${selectNodeGraphQueryType?.getPath()} and locationGraph:${locationGraph?.getPath()}`);
+    throw mergeError(e, new Error(`Error in filterLocationGraph failed for selectNodeGraphQueryType:${selectNodeGraphQueryType?.getPath()} and locationGraph:${locationGraph?.getPath()}`));
   }
 }
 
@@ -36,7 +37,7 @@ const filterNodeGraph = (selectNodeGraphQueryType: SelectNodeGraphQueryType, nod
   try {
 
     const hasNodeGraphIdList = selectNodeGraphQueryType.queryAllOptional("has__node_graph_id");
-    if(hasNodeGraphIdList.length === 0) {
+    if (hasNodeGraphIdList.length === 0) {
       return true;
     }
     const hasNodeGraphIdResult = hasNodeGraphIdList
@@ -51,7 +52,7 @@ const filterNodeGraph = (selectNodeGraphQueryType: SelectNodeGraphQueryType, nod
 
     return true;
   } catch (e) {
-    throw new Error(`Error in filterNodeGraph failed for selectNodeGraphQueryType:${selectNodeGraphQueryType?.getPath()} and nodeGraph:${nodeGraph?.getPath()}`);
+    throw mergeError(e, new Error(`Error in filterNodeGraph failed for selectNodeGraphQueryType:${selectNodeGraphQueryType?.getPath()} and nodeGraph:${nodeGraph?.getPath()}`));
   }
 
 }
@@ -59,7 +60,7 @@ const filterNodeGraph = (selectNodeGraphQueryType: SelectNodeGraphQueryType, nod
 export const selectNodeGraph = (jsonUtil: JsonUtil, selectNodeGraphQueryType?: SelectNodeGraphQueryType): Array<NodeGraphQueryType> => {
 
   try {
-    if(!selectNodeGraphQueryType) {
+    if (!selectNodeGraphQueryType) {
       return [];
     }
     const locationGraphList = jsonUtil.json.queryAllOptional("location_graph")
@@ -71,7 +72,7 @@ export const selectNodeGraph = (jsonUtil: JsonUtil, selectNodeGraphQueryType?: S
         .filter(nodeGraph => filterNodeGraph(selectNodeGraphQueryType, nodeGraph));
     });
   } catch (e) {
-    throw new Error(`Error in selectNodeGraph failed for selectNodeGraphQueryType:${selectNodeGraphQueryType?.getPath()}`);
+    throw mergeError(e, new Error(`Error in selectNodeGraph failed for selectNodeGraphQueryType:${selectNodeGraphQueryType?.getPath()}`));
   }
 
 }

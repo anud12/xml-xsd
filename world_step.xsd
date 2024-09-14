@@ -644,6 +644,18 @@
     </xs:all>
   </xs:complexType>
 
+  <xs:complexType name="type__link_to__selection">
+    <xs:annotation>
+      <xs:documentation>
+        Represents the selection of link_to.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:all>
+      <xs:element name="origin__node_graph__selection" minOccurs="0" type="type__node_graph__selection"/>
+      <xs:element name="destination__node_graph__selection" minOccurs="0" type="type__node_graph__selection"/>
+    </xs:all>
+  </xs:complexType>
+
   <xs:element name="world_step">
     <xs:complexType>
       <xs:sequence>
@@ -1459,10 +1471,39 @@
                         </xs:documentation>
                       </xs:annotation>
                       <xs:complexType>
+                        <xs:all>
+                          <xs:element name="people" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="person" minOccurs="0" maxOccurs="unbounded">
+                                  <xs:complexType>
+                                    <xs:attribute name="person_id_ref" type="xs:string" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation>
+                                          Represents the reference to the person that will be linked to.
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="accumulated_distance">
+
+                                    </xs:attribute>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:all>
                         <xs:attribute name="node_id_ref" use="required" type="xs:string">
                           <xs:annotation>
                             <xs:documentation>
                               Represents the reference to the node that will be linked to.
+                            </xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="distance" type="xs:int">
+                          <xs:annotation>
+                            <xs:documentation>
+                              Represents the distance between the nodes.
                             </xs:documentation>
                           </xs:annotation>
                         </xs:attribute>
@@ -1634,6 +1675,14 @@
                             </xs:documentation>
                           </xs:annotation>
                         </xs:attribute>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="link_to">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="selection"  type="type__link_to__selection"/>
+                        </xs:sequence>
+                        <xs:attribute name="distance" type="xs:int" use="required"/>
                       </xs:complexType>
                     </xs:element>
                   </xs:choice>

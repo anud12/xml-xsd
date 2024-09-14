@@ -101,6 +101,10 @@ export type type__node_graph__selection = JsonQueryType<{}, {
     "or": JsonQueryType<{"node_graph_id_ref": string;}> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
 }>
+export type type__link_to__selection = JsonQueryType<{}, {
+  "origin__node_graph__selection": type__node_graph__selection & JsonQueryType<{}, {}>;
+  "destination__node_graph__selection": type__node_graph__selection & JsonQueryType<{}, {}>;
+}>
 export type world_step = JsonQueryType<{}, {
   "world_metadata": JsonQueryType<{}, {
     "previous_world_step": JsonQueryType<{"value": string;}> & JsonQueryType<{}, {}>;
@@ -235,7 +239,11 @@ export type world_step = JsonQueryType<{}, {
       "classifications": JsonQueryType<{}, {
         "classification": JsonQueryType<{"location_classification_rule_ref": string;}> & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
-      "link_to": JsonQueryType<{"node_id_ref": string;}> & JsonQueryType<{}, {}>;
+      "link_to": JsonQueryType<{"node_id_ref": string;  "distance": string;}, {
+        "people": JsonQueryType<{}, {
+          "person": JsonQueryType<{"person_id_ref": string;  "accumulated_distance": any;}> & JsonQueryType<{}, {}>;
+        }> & JsonQueryType<{}, {}>;
+      }> & JsonQueryType<{}, {}>;
       "people": JsonQueryType<{}, {
         "person": JsonQueryType<{"person_id_ref": string;}> & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
@@ -258,6 +266,11 @@ export type world_step = JsonQueryType<{}, {
     }> & JsonQueryType<{}, {}>;
     "person.teleport": JsonQueryType<{"person_id_ref": string;}, {}> & JsonQueryType<{}, {
         "location_graph": JsonQueryType<{"location_graph_id_ref": string;  "node_id_ref": string;}> & JsonQueryType<{}, {}>;
+      }>
+      & JsonQueryType<{}, {
+        "link_to": JsonQueryType<{"distance": string;}, {
+          "selection": type__link_to__selection & JsonQueryType<{}, {}>;
+        }> & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
     "person.on_person.property_mutation": JsonQueryType<{"person_id_ref": string;  "target_person_id_ref": string;  "action_property_mutation_rule_ref": string;}> & JsonQueryType<{}, {}>;
     "person.create": JsonQueryType<{}, {
