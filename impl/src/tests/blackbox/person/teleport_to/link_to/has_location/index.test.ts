@@ -1,11 +1,9 @@
-import {testBase} from "../../../test_base";
+import {testBase} from "../../../../test_base";
 
 /*description
-# `person.teleport` action on person to a `link_to`
+# `person.teleport` action when a person is located on a `link_to`
 
-Having an empty person
-It should teleport person `person_id` to `link_to` under `location_graph_id > node`
-with given `accumulated_distance`
+Having an empty person with `person_id_ref` under a `link_to` under a `node`
 
 ## Given
 - 1 `person`
