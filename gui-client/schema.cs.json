@@ -691,6 +691,23 @@
     }
   },
   {
+    "name": "type__link_to__selection",
+    "type": "complex",
+    "value": {
+      "metaType": "object",
+      "value": {
+        "origin__node_graph__selection": {
+          "metaType": "reference",
+          "value": "type__node_graph__selection"
+        },
+        "destination__node_graph__selection": {
+          "metaType": "reference",
+          "value": "type__node_graph__selection"
+        }
+      }
+    }
+  },
+  {
     "name": "world_step",
     "type": "element",
     "value": {
@@ -1755,13 +1772,39 @@
                 },
                 "link_to": {
                   "metaType": "object",
-                  "value": {},
                   "attributes": {
                     "metaType": "object",
                     "value": {
                       "node_id_ref": {
                         "metaType": "primitive",
                         "value": "xs:string"
+                      },
+                      "distance": {
+                        "metaType": "primitive",
+                        "value": "xs:int"
+                      }
+                    }
+                  },
+                  "value": {
+                    "people": {
+                      "metaType": "object",
+                      "value": {
+                        "person": {
+                          "metaType": "object",
+                          "value": {},
+                          "attributes": {
+                            "metaType": "object",
+                            "value": {
+                              "person_id_ref": {
+                                "metaType": "primitive",
+                                "value": "xs:string"
+                              },
+                              "accumulated_distance": {
+                                "metaType": "unknown"
+                              }
+                            }
+                          }
+                        }
                       }
                     }
                   }
@@ -1939,6 +1982,29 @@
                             "metaType": "primitive",
                             "value": "xs:string"
                           }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "metaType": "object",
+                  "value": {
+                    "link_to": {
+                      "metaType": "object",
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "distance": {
+                            "metaType": "primitive",
+                            "value": "xs:int"
+                          }
+                        }
+                      },
+                      "value": {
+                        "selection": {
+                          "metaType": "reference",
+                          "value": "type__link_to__selection"
                         }
                       }
                     }
