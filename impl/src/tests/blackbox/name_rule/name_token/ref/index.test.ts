@@ -1,4 +1,4 @@
-import {testBase} from "../../../test_base";
+import {testBase, testEndpoints} from "../../../test_base";
 
 /* description
 # `name_rule` `ref`
@@ -27,5 +27,5 @@ that references another `name_rule` entry with the id "name_metadata_ref".
 /* tags
 - name_rule
  */
-const test= testBase(__dirname, "--name_rule name_rule")
+const test= testBase(__dirname, testEndpoints.analyzeNameRule("name_rule"));
 it(test.name, test.success)

@@ -14,4 +14,4 @@ It should throw an error.
 - location_graph_id_ref
  */
 const test= testBase(__dirname)
-it(test.name, test.error)
+it(test.name, test.validationError)

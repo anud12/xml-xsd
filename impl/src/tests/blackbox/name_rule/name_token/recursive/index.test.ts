@@ -1,4 +1,4 @@
-import {testBase} from "../../../test_base";
+import {testBase, testEndpoints} from "../../../test_base";
 
 /*description
 # `name_rule` `recursive`
@@ -36,5 +36,5 @@ Then
 /*tags
 - name_rule
  */
-const test= testBase(__dirname, "--name_rule name_rule")
-it(test.name, test.success)
+const test= testBase(__dirname, testEndpoints.analyzeNameRule("name_rule"));
+it(test.name, test.success);
