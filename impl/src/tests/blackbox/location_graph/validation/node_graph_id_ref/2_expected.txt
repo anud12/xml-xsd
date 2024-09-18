@@ -1,1 +1,0 @@
-ValidationError: invalid_location_graph_id at //actions[0]/location_graph.node.create_adjacent[0]@location_graph_id_ref not in [location_graph_id]
