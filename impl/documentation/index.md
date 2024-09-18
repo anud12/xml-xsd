@@ -1,6 +1,6 @@
 # Index
 
-## [./action/person/create/empty](./.__documentation__action__person__create__empty.md)
+## [../specification-test/src/test/java/com/example/blackbox/action/person/create/empty](./..__specification-test__src__test__java__com__example__blackbox__action__person__create__empty.md)
 
 #### Tags:
 action,person,person.create,
@@ -9,7 +9,7 @@ action,person,person.create,
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -30,7 +30,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [./action/person/create/property](./.__documentation__action__person__create__property.md)
+## [../specification-test/src/test/java/com/example/blackbox/action/person/create/property](./..__specification-test__src__test__java__com__example__blackbox__action__person__create__property.md)
 
 #### Tags:
 - action
@@ -42,7 +42,7 @@ action,person,person.create,
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -82,7 +82,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [./action_rule/global/minimal](./.__documentation__action_rule__global__minimal.md)
+## [../specification-test/src/test/java/com/example/blackbox/action_rule/global/minimal](./..__specification-test__src__test__java__com__example__blackbox__action_rule__global__minimal.md)
 
 #### Tags:
 - action_rule
@@ -91,7 +91,7 @@ action,person,person.create,
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -125,7 +125,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [./action_rule/global/person/from/property_mutation/add_to_existing](./.__documentation__action_rule__global__person__from__property_mutation__add_to_existing.md)
+## [../specification-test/src/test/java/com/example/blackbox/action_rule/global/person/from/property_mutation/add_to_existing](./..__specification-test__src__test__java__com__example__blackbox__action_rule__global__person__from__property_mutation__add_to_existing.md)
 
 #### Tags:
 - global_action
@@ -135,7 +135,7 @@ action,person,person.create,
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -186,7 +186,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [./action_rule/global/person/from/property_mutation/existing](./.__documentation__action_rule__global__person__from__property_mutation__existing.md)
+## [../specification-test/src/test/java/com/example/blackbox/action_rule/global/person/from/property_mutation/existing](./..__specification-test__src__test__java__com__example__blackbox__action_rule__global__person__from__property_mutation__existing.md)
 
 #### Tags:
 - global_action
@@ -196,7 +196,7 @@ action,person,person.create,
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -245,7 +245,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [./action_rule/global/person/from/property_mutation/no_property](./.__documentation__action_rule__global__person__from__property_mutation__no_property.md)
+## [../specification-test/src/test/java/com/example/blackbox/action_rule/global/person/from/property_mutation/no_property](./..__specification-test__src__test__java__com__example__blackbox__action_rule__global__person__from__property_mutation__no_property.md)
 
 #### Tags:
 - global_action
@@ -255,7 +255,7 @@ action,person,person.create,
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -300,7 +300,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [./action_rule/global/person/from/selection/apply](./.__documentation__action_rule__global__person__from__selection__apply.md)
+## [../specification-test/src/test/java/com/example/blackbox/action_rule/global/person/from/selection/apply](./..__specification-test__src__test__java__com__example__blackbox__action_rule__global__person__from__selection__apply.md)
 
 #### Tags:
 - global_action
@@ -311,7 +311,7 @@ action,person,person.create,
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -369,7 +369,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [./action_rule/global/person/from/selection/exclude](./.__documentation__action_rule__global__person__from__selection__exclude.md)
+## [../specification-test/src/test/java/com/example/blackbox/action_rule/global/person/from/selection/exclude](./..__specification-test__src__test__java__com__example__blackbox__action_rule__global__person__from__selection__exclude.md)
 
 #### Tags:
 - global_action
@@ -380,7 +380,7 @@ action,person,person.create,
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -435,7 +435,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [./action_rule/global/person/not_eligible](./.__documentation__action_rule__global__person__not_eligible.md)
+## [../specification-test/src/test/java/com/example/blackbox/action_rule/global/person/not_eligible](./..__specification-test__src__test__java__com__example__blackbox__action_rule__global__person__not_eligible.md)
 
 #### Tags:
 - action_rule
@@ -446,7 +446,7 @@ action,person,person.create,
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -504,7 +504,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [./action_rule/global/person/on/property_mutation/add_to_existing](./.__documentation__action_rule__global__person__on__property_mutation__add_to_existing.md)
+## [../specification-test/src/test/java/com/example/blackbox/action_rule/global/person/on/property_mutation/add_to_existing](./..__specification-test__src__test__java__com__example__blackbox__action_rule__global__person__on__property_mutation__add_to_existing.md)
 
 #### Tags:
 - global_action
@@ -515,7 +515,7 @@ action,person,person.create,
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -566,7 +566,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [./action_rule/global/person/on/property_mutation/existing](./.__documentation__action_rule__global__person__on__property_mutation__existing.md)
+## [../specification-test/src/test/java/com/example/blackbox/action_rule/global/person/on/property_mutation/existing](./..__specification-test__src__test__java__com__example__blackbox__action_rule__global__person__on__property_mutation__existing.md)
 
 #### Tags:
 - global_action
@@ -577,7 +577,7 @@ action,person,person.create,
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -626,7 +626,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [./action_rule/global/person/on/property_mutation/no_property](./.__documentation__action_rule__global__person__on__property_mutation__no_property.md)
+## [../specification-test/src/test/java/com/example/blackbox/action_rule/global/person/on/property_mutation/no_property](./..__specification-test__src__test__java__com__example__blackbox__action_rule__global__person__on__property_mutation__no_property.md)
 
 #### Tags:
 - global_action
@@ -637,7 +637,7 @@ action,person,person.create,
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -682,7 +682,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [./action_rule/global/person/on/selection/apply](./.__documentation__action_rule__global__person__on__selection__apply.md)
+## [../specification-test/src/test/java/com/example/blackbox/action_rule/global/person/on/selection/apply](./..__specification-test__src__test__java__com__example__blackbox__action_rule__global__person__on__selection__apply.md)
 
 #### Tags:
 - global_action
@@ -693,7 +693,7 @@ action,person,person.create,
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -751,7 +751,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [./action_rule/global/person/on/selection/exclude](./.__documentation__action_rule__global__person__on__selection__exclude.md)
+## [../specification-test/src/test/java/com/example/blackbox/action_rule/global/person/on/selection/exclude](./..__specification-test__src__test__java__com__example__blackbox__action_rule__global__person__on__selection__exclude.md)
 
 #### Tags:
 - global_action
@@ -762,7 +762,7 @@ action,person,person.create,
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -817,7 +817,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [./action_rule/person_to_person](./.__documentation__action_rule__person_to_person.md)
+## [../specification-test/src/test/java/com/example/blackbox/action_rule/person_to_person](./..__specification-test__src__test__java__com__example__blackbox__action_rule__person_to_person.md)
 
 #### Tags:
 - person_to_person
@@ -826,7 +826,7 @@ action,person,person.create,
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../world_step.xsd"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../world_step.xsd"
 >
   <world_metadata>
     <elapsed_time value="0"/>
@@ -858,11 +858,6 @@ action,person,person.create,
 
     <action_rule>
       <person_to_person id="meleeAttack">
-        <max_range>
-          <operation initial="0">
-            <and do="add" value="1"/>
-          </operation>
-        </max_range>
         <test>
           <value target="self">
             <operation initial="0">
@@ -906,7 +901,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [./classification/item/add/compute_property](./.__documentation__classification__item__add__compute_property.md)
+## [../specification-test/src/test/java/com/example/blackbox/classification/item/add/compute_property](./..__specification-test__src__test__java__com__example__blackbox__classification__item__add__compute_property.md)
 
 #### Tags:
 - item
@@ -917,7 +912,7 @@ action,person,person.create,
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -949,7 +944,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [./classification/item/add/property_exists](./.__documentation__classification__item__add__property_exists.md)
+## [../specification-test/src/test/java/com/example/blackbox/classification/item/add/property_exists](./..__specification-test__src__test__java__com__example__blackbox__classification__item__add__property_exists.md)
 
 #### Tags:
 - item
@@ -960,7 +955,7 @@ action,person,person.create,
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -993,7 +988,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [./classification/item/dont_add/compute_property](./.__documentation__classification__item__dont_add__compute_property.md)
+## [../specification-test/src/test/java/com/example/blackbox/classification/item/dont_add/compute_property](./..__specification-test__src__test__java__com__example__blackbox__classification__item__dont_add__compute_property.md)
 
 #### Tags:
 - item
@@ -1004,7 +999,7 @@ action,person,person.create,
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -1035,7 +1030,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [./classification/item/keep](./.__documentation__classification__item__keep.md)
+## [../specification-test/src/test/java/com/example/blackbox/classification/item/keep](./..__specification-test__src__test__java__com__example__blackbox__classification__item__keep.md)
 
 #### Tags:
 - item
@@ -1045,7 +1040,7 @@ action,person,person.create,
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -1071,7 +1066,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [./classification/person/empty property_rule](./.__documentation__classification__person__empty property_rule.md)
+## [../specification-test/src/test/java/com/example/blackbox/classification/person/empty__property_rule](./..__specification-test__src__test__java__com__example__blackbox__classification__person__empty__property_rule.md)
 
 #### Tags:
 - person
@@ -1082,7 +1077,7 @@ action,person,person.create,
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -1115,7 +1110,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [./classification/person/property_rule with person_default](./.__documentation__classification__person__property_rule with person_default.md)
+## [../specification-test/src/test/java/com/example/blackbox/classification/person/property_rule__with__person_default](./..__specification-test__src__test__java__com__example__blackbox__classification__person__property_rule__with__person_default.md)
 
 #### Tags:
 - person
@@ -1126,7 +1121,7 @@ action,person,person.create,
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -1176,7 +1171,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [./empty](./.__documentation__empty.md)
+## [../specification-test/src/test/java/com/example/blackbox/empty](./..__specification-test__src__test__java__com__example__blackbox__empty.md)
 
 #### Tags:
 undefined
@@ -1185,7 +1180,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -1198,7 +1193,7 @@ undefined
 </world_step>
 ```
 
-## [./event/item_select/any_item](./.__documentation__event__item_select__any_item.md)
+## [../specification-test/src/test/java/com/example/blackbox/event/item_select/any_item](./..__specification-test__src__test__java__com__example__blackbox__event__item_select__any_item.md)
 
 #### Tags:
 - item
@@ -1207,7 +1202,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -1219,12 +1214,6 @@ undefined
   <rule_group id="rule_group_id">
     <action_rule>
       <person_to_person id="action_rule">
-        <max_range>
-          <operation initial="0"/>
-        </max_range>
-        <min_range>
-          <operation initial="0"/>
-        </min_range>
         <test>
           <value target="target">
             <operation initial="0">
@@ -1273,7 +1262,7 @@ undefined
 </world_step>
 ```
 
-## [./event/item_select/no_item_rules](./.__documentation__event__item_select__no_item_rules.md)
+## [../specification-test/src/test/java/com/example/blackbox/event/item_select/no_item_rules](./..__specification-test__src__test__java__com__example__blackbox__event__item_select__no_item_rules.md)
 
 #### Tags:
 - item
@@ -1282,7 +1271,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -1294,12 +1283,6 @@ undefined
   <rule_group id="rule_group_id">
     <action_rule>
       <person_to_person id="action_rule">
-        <max_range>
-          <operation initial="0"/>
-        </max_range>
-        <min_range>
-          <operation initial="0"/>
-        </min_range>
         <test>
           <value target="target">
             <operation initial="0">
@@ -1340,7 +1323,7 @@ undefined
 </world_step>
 ```
 
-## [./event/item_select/property_mutation/add](./.__documentation__event__item_select__property_mutation__add.md)
+## [../specification-test/src/test/java/com/example/blackbox/event/item_select/property_mutation/add](./..__specification-test__src__test__java__com__example__blackbox__event__item_select__property_mutation__add.md)
 
 #### Tags:
 - item
@@ -1350,7 +1333,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -1365,12 +1348,6 @@ undefined
     </property_rule>
     <action_rule>
       <person_to_person id="action_rule">
-        <max_range>
-          <operation initial="0"/>
-        </max_range>
-        <min_range>
-          <operation initial="0"/>
-        </min_range>
         <test>
           <value target="target">
             <operation initial="0">
@@ -1421,7 +1398,7 @@ undefined
 </world_step>
 ```
 
-## [./event/item_select/property_mutation/item](./.__documentation__event__item_select__property_mutation__item.md)
+## [../specification-test/src/test/java/com/example/blackbox/event/item_select/property_mutation/item](./..__specification-test__src__test__java__com__example__blackbox__event__item_select__property_mutation__item.md)
 
 #### Tags:
 - item
@@ -1431,7 +1408,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -1446,12 +1423,6 @@ undefined
     </property_rule>
     <action_rule>
       <person_to_person id="action_rule">
-        <max_range>
-          <operation initial="0"/>
-        </max_range>
-        <min_range>
-          <operation initial="0"/>
-        </min_range>
         <test>
           <value target="target">
             <operation initial="0">
@@ -1506,7 +1477,7 @@ undefined
 </world_step>
 ```
 
-## [./event/item_select/property_mutation/modify](./.__documentation__event__item_select__property_mutation__modify.md)
+## [../specification-test/src/test/java/com/example/blackbox/event/item_select/property_mutation/modify](./..__specification-test__src__test__java__com__example__blackbox__event__item_select__property_mutation__modify.md)
 
 #### Tags:
 - item
@@ -1516,7 +1487,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -1531,12 +1502,6 @@ undefined
     </property_rule>
     <action_rule>
       <person_to_person id="action_rule">
-        <max_range>
-          <operation initial="0"/>
-        </max_range>
-        <min_range>
-          <operation initial="0"/>
-        </min_range>
         <test>
           <value target="target">
             <operation initial="0">
@@ -1591,7 +1556,7 @@ undefined
 </world_step>
 ```
 
-## [./event/person_select/min/classification](./.__documentation__event__person_select__min__classification.md)
+## [../specification-test/src/test/java/com/example/blackbox/event/person_select/min/classification](./..__specification-test__src__test__java__com__example__blackbox__event__person_select__min__classification.md)
 
 #### Tags:
 - person_select
@@ -1600,7 +1565,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -1629,14 +1594,10 @@ undefined
     </classification_rule>
     <race_rule>
       <entry id="race">
-        <icon/>
       </entry>
     </race_rule>
     <action_rule>
       <person_to_person id="action_rule">
-        <max_range>
-          <operation initial="0"/>
-        </max_range>
         <test>
           <value target="target">
             <operation initial="0"/>
@@ -1675,7 +1636,7 @@ undefined
 </world_step>
 ```
 
-## [./event/person_select/min/inventory/empty](./.__documentation__event__person_select__min__inventory__empty.md)
+## [../specification-test/src/test/java/com/example/blackbox/event/person_select/min/inventory/empty](./..__specification-test__src__test__java__com__example__blackbox__event__person_select__min__inventory__empty.md)
 
 #### Tags:
 - person_select
@@ -1684,7 +1645,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -1704,14 +1665,10 @@ undefined
     </property_rule>
     <race_rule>
       <entry id="race">
-        <icon/>
       </entry>
     </race_rule>
     <action_rule>
       <person_to_person id="action_rule">
-        <max_range>
-          <operation initial="0"/>
-        </max_range>
         <test>
           <value target="target">
             <operation initial="0"/>
@@ -1771,7 +1728,7 @@ undefined
 </world_step>
 ```
 
-## [./event/person_select/min/inventory/property](./.__documentation__event__person_select__min__inventory__property.md)
+## [../specification-test/src/test/java/com/example/blackbox/event/person_select/min/inventory/property](./..__specification-test__src__test__java__com__example__blackbox__event__person_select__min__inventory__property.md)
 
 #### Tags:
 - person_select
@@ -1780,7 +1737,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -1800,14 +1757,10 @@ undefined
     </property_rule>
     <race_rule>
       <entry id="race">
-        <icon/>
       </entry>
     </race_rule>
     <action_rule>
       <person_to_person id="action_rule">
-        <max_range>
-          <operation initial="0"/>
-        </max_range>
         <test>
           <value target="target">
             <operation initial="0"/>
@@ -1870,7 +1823,7 @@ undefined
 </world_step>
 ```
 
-## [./event/person_select/min/no_people](./.__documentation__event__person_select__min__no_people.md)
+## [../specification-test/src/test/java/com/example/blackbox/event/person_select/min/no_people](./..__specification-test__src__test__java__com__example__blackbox__event__person_select__min__no_people.md)
 
 #### Tags:
 - person_select
@@ -1879,7 +1832,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -1899,17 +1852,12 @@ undefined
     </property_rule>
     <race_rule>
       <entry id="race">
-        <icon/>
       </entry>
       <entry id="second_race">
-        <icon/>
       </entry>
     </race_rule>
     <action_rule>
       <person_to_person id="action_rule">
-        <max_range>
-          <operation initial="0"/>
-        </max_range>
         <test>
           <value target="target">
             <operation initial="0"/>
@@ -1947,7 +1895,7 @@ undefined
 </world_step>
 ```
 
-## [./event/person_select/min/property/max](./.__documentation__event__person_select__min__property__max.md)
+## [../specification-test/src/test/java/com/example/blackbox/event/person_select/min/property/max](./..__specification-test__src__test__java__com__example__blackbox__event__person_select__min__property__max.md)
 
 #### Tags:
 - person_select
@@ -1956,7 +1904,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -1976,17 +1924,12 @@ undefined
     </property_rule>
     <race_rule>
       <entry id="race">
-        <icon/>
       </entry>
       <entry id="second_race">
-        <icon/>
       </entry>
     </race_rule>
     <action_rule>
       <person_to_person id="action_rule">
-        <max_range>
-          <operation initial="0"/>
-        </max_range>
         <test>
           <value target="target">
             <operation initial="0"/>
@@ -2029,7 +1972,7 @@ undefined
 </world_step>
 ```
 
-## [./event/person_select/min/property/min](./.__documentation__event__person_select__min__property__min.md)
+## [../specification-test/src/test/java/com/example/blackbox/event/person_select/min/property/min](./..__specification-test__src__test__java__com__example__blackbox__event__person_select__min__property__min.md)
 
 #### Tags:
 - person_select
@@ -2038,7 +1981,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -2058,17 +2001,12 @@ undefined
     </property_rule>
     <race_rule>
       <entry id="race">
-        <icon/>
       </entry>
       <entry id="second_race">
-        <icon/>
       </entry>
     </race_rule>
     <action_rule>
       <person_to_person id="action_rule">
-        <max_range>
-          <operation initial="0"/>
-        </max_range>
         <test>
           <value target="target">
             <operation initial="0"/>
@@ -2111,7 +2049,7 @@ undefined
 </world_step>
 ```
 
-## [./event/person_select/min/race](./.__documentation__event__person_select__min__race.md)
+## [../specification-test/src/test/java/com/example/blackbox/event/person_select/min/race](./..__specification-test__src__test__java__com__example__blackbox__event__person_select__min__race.md)
 
 #### Tags:
 - person_select
@@ -2120,7 +2058,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -2134,17 +2072,12 @@ undefined
   <rule_group id="rule_group_id">
     <race_rule>
       <entry id="race">
-        <icon/>
       </entry>
       <entry id="second_race">
-        <icon/>
       </entry>
     </race_rule>
     <action_rule>
       <person_to_person id="action_rule">
-        <max_range>
-          <operation initial="0"/>
-        </max_range>
         <test>
           <value target="target">
             <operation initial="0"/>
@@ -2183,7 +2116,7 @@ undefined
 </world_step>
 ```
 
-## [./event/person_select/min/radius](./.__documentation__event__person_select__min__radius.md)
+## [../specification-test/src/test/java/com/example/blackbox/event/person_select/min/radius](./..__specification-test__src__test__java__com__example__blackbox__event__person_select__min__radius.md)
 
 #### Tags:
 - person_select
@@ -2192,7 +2125,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -2209,14 +2142,10 @@ undefined
   <rule_group id="rule_group_id">
     <race_rule>
       <entry id="race">
-        <icon/>
       </entry>
     </race_rule>
     <action_rule>
       <person_to_person id="action_rule">
-        <max_range>
-          <operation initial="0"/>
-        </max_range>
         <test>
           <value target="target">
             <operation initial="0"/>
@@ -2255,7 +2184,7 @@ undefined
 </world_step>
 ```
 
-## [./event/person_select/min/reuse_person](./.__documentation__event__person_select__min__reuse_person.md)
+## [../specification-test/src/test/java/com/example/blackbox/event/person_select/min/reuse_person](./..__specification-test__src__test__java__com__example__blackbox__event__person_select__min__reuse_person.md)
 
 #### Tags:
 - person_select
@@ -2264,7 +2193,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -2276,17 +2205,12 @@ undefined
   <rule_group id="rule_group_id">
     <race_rule>
       <entry id="race">
-        <icon/>
       </entry>
       <entry id="second_race">
-        <icon/>
       </entry>
     </race_rule>
     <action_rule>
       <person_to_person id="action_rule">
-        <max_range>
-          <operation initial="0"/>
-        </max_range>
         <test>
           <value target="target">
             <operation initial="0"/>
@@ -2324,7 +2248,7 @@ undefined
 </world_step>
 ```
 
-## [./event/person_select/property_mutation/add](./.__documentation__event__person_select__property_mutation__add.md)
+## [../specification-test/src/test/java/com/example/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__com__example__blackbox__event__person_select__property_mutation__add.md)
 
 #### Tags:
 - person_select
@@ -2333,7 +2257,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -2348,12 +2272,6 @@ undefined
     </property_rule>
     <action_rule>
       <person_to_person id="action_rule">
-        <max_range>
-          <operation initial="0"/>
-        </max_range>
-        <min_range>
-          <operation initial="0"/>
-        </min_range>
         <test>
           <value target="target">
             <operation initial="0">
@@ -2402,7 +2320,7 @@ undefined
 </world_step>
 ```
 
-## [./event/person_select/property_mutation/item](./.__documentation__event__person_select__property_mutation__item.md)
+## [../specification-test/src/test/java/com/example/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__com__example__blackbox__event__person_select__property_mutation__item.md)
 
 #### Tags:
 - person_select
@@ -2411,7 +2329,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -2426,93 +2344,6 @@ undefined
     </property_rule>
     <action_rule>
       <person_to_person id="action_rule">
-        <max_range>
-          <operation initial="0"/>
-        </max_range>
-        <min_range>
-          <operation initial="0"/>
-        </min_range>
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1">
-      <location x="0" y="0"/>
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [./event/person_select/property_mutation/modify](./.__documentation__event__person_select__property_mutation__modify.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <max_range>
-          <operation initial="0"/>
-        </max_range>
-        <min_range>
-          <operation initial="0"/>
-        </min_range>
         <test>
           <value target="target">
             <operation initial="0">
@@ -2564,7 +2395,82 @@ undefined
 </world_step>
 ```
 
-## [./location_graph/add_classification/append_classification](./.__documentation__location_graph__add_classification__append_classification.md)
+## [../specification-test/src/test/java/com/example/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__com__example__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <item_rule>
+      <entry id="item_rule">
+        <name>
+          <name_token prefix="item_name"/>
+        </name>
+      </entry>
+    </item_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <location x="0" y="0"/>
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/com/example/blackbox/location_graph/add_classification/append_classification](./..__specification-test__src__test__java__com__example__blackbox__location_graph__add_classification__append_classification.md)
 
 #### Tags:
 - location_graph
@@ -2575,7 +2481,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -2625,7 +2531,7 @@ undefined
 </world_step>
 ```
 
-## [./location_graph/add_classification/empty](./.__documentation__location_graph__add_classification__empty.md)
+## [../specification-test/src/test/java/com/example/blackbox/location_graph/add_classification/empty](./..__specification-test__src__test__java__com__example__blackbox__location_graph__add_classification__empty.md)
 
 #### Tags:
 - location_graph
@@ -2636,7 +2542,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -2677,7 +2583,7 @@ undefined
 </world_step>
 ```
 
-## [./location_graph/add_classification/location_graph_id](./.__documentation__location_graph__add_classification__location_graph_id.md)
+## [../specification-test/src/test/java/com/example/blackbox/location_graph/add_classification/location_graph_id](./..__specification-test__src__test__java__com__example__blackbox__location_graph__add_classification__location_graph_id.md)
 
 #### Tags:
 - location_graph
@@ -2688,7 +2594,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -2746,7 +2652,7 @@ undefined
 </world_step>
 ```
 
-## [./location_graph/add_classification/node_id](./.__documentation__location_graph__add_classification__node_id.md)
+## [../specification-test/src/test/java/com/example/blackbox/location_graph/add_classification/node_id](./..__specification-test__src__test__java__com__example__blackbox__location_graph__add_classification__node_id.md)
 
 #### Tags:
 - location_graph
@@ -2757,7 +2663,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -2812,7 +2718,7 @@ undefined
 </world_step>
 ```
 
-## [./location_graph/create_adjacent/adjacentDepthLimit_2](./.__documentation__location_graph__create_adjacent__adjacentDepthLimit_2.md)
+## [../specification-test/src/test/java/com/example/blackbox/location_graph/create_adjacent/adjacentDepthLimit_2](./..__specification-test__src__test__java__com__example__blackbox__location_graph__create_adjacent__adjacentDepthLimit_2.md)
 
 #### Tags:
 - location_graph
@@ -2820,7 +2726,7 @@ undefined
 
 #### Input XML
 ```xml
-<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -2868,7 +2774,7 @@ undefined
 </world_step>
 ```
 
-## [./location_graph/create_adjacent/classification_location](./.__documentation__location_graph__create_adjacent__classification_location.md)
+## [../specification-test/src/test/java/com/example/blackbox/location_graph/create_adjacent/classification_location](./..__specification-test__src__test__java__com__example__blackbox__location_graph__create_adjacent__classification_location.md)
 
 #### Tags:
 - location_graph
@@ -2878,7 +2784,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -2920,7 +2826,7 @@ undefined
 </world_step>
 ```
 
-## [./location_graph/create_adjacent/existing_person](./.__documentation__location_graph__create_adjacent__existing_person.md)
+## [../specification-test/src/test/java/com/example/blackbox/location_graph/create_adjacent/existing_person](./..__specification-test__src__test__java__com__example__blackbox__location_graph__create_adjacent__existing_person.md)
 
 #### Tags:
 - location_graph
@@ -2930,7 +2836,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -2970,7 +2876,7 @@ undefined
 </world_step>
 ```
 
-## [./location_graph/create_adjacent](./.__documentation__location_graph__create_adjacent.md)
+## [../specification-test/src/test/java/com/example/blackbox/location_graph/create_adjacent](./..__specification-test__src__test__java__com__example__blackbox__location_graph__create_adjacent.md)
 
 #### Tags:
 - location_graph
@@ -2980,7 +2886,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -3018,7 +2924,7 @@ undefined
 </world_step>
 ```
 
-## [./location_graph/create_adjacent/limit/batch](./.__documentation__location_graph__create_adjacent__limit__batch.md)
+## [../specification-test/src/test/java/com/example/blackbox/location_graph/create_adjacent/limit/batch](./..__specification-test__src__test__java__com__example__blackbox__location_graph__create_adjacent__limit__batch.md)
 
 #### Tags:
 - location_graph
@@ -3028,7 +2934,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -3065,7 +2971,7 @@ undefined
 </world_step>
 ```
 
-## [./location_graph/create_adjacent/limit](./.__documentation__location_graph__create_adjacent__limit.md)
+## [../specification-test/src/test/java/com/example/blackbox/location_graph/create_adjacent/limit](./..__specification-test__src__test__java__com__example__blackbox__location_graph__create_adjacent__limit.md)
 
 #### Tags:
 - location_graph
@@ -3075,7 +2981,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -3115,16 +3021,17 @@ undefined
 </world_step>
 ```
 
-## [./location_graph/create_adjacent/limit/multipleLinkGroups](./.__documentation__location_graph__create_adjacent__limit__multipleLinkGroups.md)
+## [../specification-test/src/test/java/com/example/blackbox/location_graph/create_adjacent/limit/multipleLinkGroups](./..__specification-test__src__test__java__com__example__blackbox__location_graph__create_adjacent__limit__multipleLinkGroups.md)
 
 #### Tags:
-undefined
+- location_graph
+- location_graph.node.create_adjacent
 
 #### Input XML
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -3167,7 +3074,7 @@ undefined
 </world_step>
 ```
 
-## [./location_graph/create_adjacent/maintain_link_limits/adjacent_depth_limit](./.__documentation__location_graph__create_adjacent__maintain_link_limits__adjacent_depth_limit.md)
+## [../specification-test/src/test/java/com/example/blackbox/location_graph/create_adjacent/maintain_link_limits/adjacent_depth_limit](./..__specification-test__src__test__java__com__example__blackbox__location_graph__create_adjacent__maintain_link_limits__adjacent_depth_limit.md)
 
 #### Tags:
 - location_graph
@@ -3177,7 +3084,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <next_world_step value="../gui-client/data"/>
     <elapsed_time value="0"/>
@@ -3342,7 +3249,7 @@ undefined
 </world_step>
 ```
 
-## [./location_graph/create_adjacent/maintain_link_limits/angle](./.__documentation__location_graph__create_adjacent__maintain_link_limits__angle.md)
+## [../specification-test/src/test/java/com/example/blackbox/location_graph/create_adjacent/maintain_link_limits/angle](./..__specification-test__src__test__java__com__example__blackbox__location_graph__create_adjacent__maintain_link_limits__angle.md)
 
 #### Tags:
 - location_graph
@@ -3352,7 +3259,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -3410,17 +3317,16 @@ undefined
 </world_step>
 ```
 
-## [./location_graph/create_adjacent/maintain_link_limits/angle/no_op](./.__documentation__location_graph__create_adjacent__maintain_link_limits__angle__no_op.md)
+## [../specification-test/src/test/java/com/example/blackbox/location_graph/create_adjacent/maintain_link_limits/angle/no_op](./..__specification-test__src__test__java__com__example__blackbox__location_graph__create_adjacent__maintain_link_limits__angle__no_op.md)
 
 #### Tags:
-- location_graph
-- location_graph.node.create_adjacent
+undefined
 
 #### Input XML
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <next_world_step value="../gui-client/data" />
     <elapsed_time value="0" />
@@ -3536,10 +3442,10 @@ undefined
       </setup>
       <node_rule id="city">
         <link_group id="0" angle="0" limit="1">
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="1" adjacent_distance_max="1" adjacent_distance_min="0" />
+          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="1" />
         </link_group>
         <link_group id="90" angle="90" limit="1">
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="1" adjacent_distance_max="1" adjacent_distance_min="0" />
+          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="1" />
         </link_group>
       </node_rule>
       <node_rule id="plains">
@@ -3567,7 +3473,7 @@ undefined
 </world_step>
 ```
 
-## [./location_graph/create_adjacent/maxAngle](./.__documentation__location_graph__create_adjacent__maxAngle.md)
+## [../specification-test/src/test/java/com/example/blackbox/location_graph/create_adjacent/maxAngle](./..__specification-test__src__test__java__com__example__blackbox__location_graph__create_adjacent__maxAngle.md)
 
 #### Tags:
 - location_graph
@@ -3577,7 +3483,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -3615,16 +3521,17 @@ undefined
 </world_step>
 ```
 
-## [./location_graph/create_adjacent/maxDistance](./.__documentation__location_graph__create_adjacent__maxDistance.md)
+## [../specification-test/src/test/java/com/example/blackbox/location_graph/create_adjacent/maxDistance](./..__specification-test__src__test__java__com__example__blackbox__location_graph__create_adjacent__maxDistance.md)
 
 #### Tags:
-undefined
+- location_graph
+- location_graph.node.create_adjacent
 
 #### Input XML
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -3662,7 +3569,7 @@ undefined
 </world_step>
 ```
 
-## [./location_graph/create_location_graph](./.__documentation__location_graph__create_location_graph.md)
+## [../specification-test/src/test/java/com/example/blackbox/location_graph/create_location_graph](./..__specification-test__src__test__java__com__example__blackbox__location_graph__create_location_graph.md)
 
 #### Tags:
 - location_graph
@@ -3672,7 +3579,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -3701,7 +3608,7 @@ undefined
 </world_step>
 ```
 
-## [./location_graph/create_location_graph/necesary_node](./.__documentation__location_graph__create_location_graph__necesary_node.md)
+## [../specification-test/src/test/java/com/example/blackbox/location_graph/create_location_graph/necesary_node](./..__specification-test__src__test__java__com__example__blackbox__location_graph__create_location_graph__necesary_node.md)
 
 #### Tags:
 - location_graph
@@ -3712,7 +3619,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -3742,7 +3649,7 @@ undefined
 </world_step>
 ```
 
-## [./location_graph/validation/node_graph_id_ref](./.__documentation__location_graph__validation__node_graph_id_ref.md)
+## [../specification-test/src/test/java/com/example/blackbox/location_graph/validation/node_graph_id_ref](./..__specification-test__src__test__java__com__example__blackbox__location_graph__validation__node_graph_id_ref.md)
 
 #### Tags:
 - validation
@@ -3752,7 +3659,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -3784,7 +3691,7 @@ undefined
 </world_step>
 ```
 
-## [./location_graph/validation/node_id_ref](./.__documentation__location_graph__validation__node_id_ref.md)
+## [../specification-test/src/test/java/com/example/blackbox/location_graph/validation/node_id_ref](./..__specification-test__src__test__java__com__example__blackbox__location_graph__validation__node_id_ref.md)
 
 #### Tags:
 - validation
@@ -3794,7 +3701,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -3826,7 +3733,7 @@ undefined
 </world_step>
 ```
 
-## [./location_graph/validation/node_rule_ref](./.__documentation__location_graph__validation__node_rule_ref.md)
+## [../specification-test/src/test/java/com/example/blackbox/location_graph/validation/node_rule_ref](./..__specification-test__src__test__java__com__example__blackbox__location_graph__validation__node_rule_ref.md)
 
 #### Tags:
 - validation
@@ -3836,7 +3743,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -3860,7 +3767,7 @@ undefined
 </world_step>
 ```
 
-## [./name_rule/name_token/one_of](./.__documentation__name_rule__name_token__one_of.md)
+## [../specification-test/src/test/java/com/example/blackbox/name_rule/name_token/one_of](./..__specification-test__src__test__java__com__example__blackbox__name_rule__name_token__one_of.md)
 
 #### Tags:
 - name_rule
@@ -3869,7 +3776,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -3892,16 +3799,16 @@ undefined
 </world_step>
 ```
 
-## [./name_rule/name_token/prefix](./.__documentation__name_rule__name_token__prefix.md)
+## [../specification-test/src/test/java/com/example/blackbox/name_rule/name_token/prefix](./..__specification-test__src__test__java__com__example__blackbox__name_rule__name_token__prefix.md)
 
 #### Tags:
-- name_rule
+undefined
 
 #### Input XML
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -3920,16 +3827,16 @@ undefined
 </world_step>
 ```
 
-## [./name_rule/name_token/recursive](./.__documentation__name_rule__name_token__recursive.md)
+## [../specification-test/src/test/java/com/example/blackbox/name_rule/name_token/recursive](./..__specification-test__src__test__java__com__example__blackbox__name_rule__name_token__recursive.md)
 
 #### Tags:
-- name_rule
+undefined
 
 #### Input XML
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -3961,7 +3868,7 @@ undefined
 </world_step>
 ```
 
-## [./name_rule/name_token/ref](./.__documentation__name_rule__name_token__ref.md)
+## [../specification-test/src/test/java/com/example/blackbox/name_rule/name_token/ref](./..__specification-test__src__test__java__com__example__blackbox__name_rule__name_token__ref.md)
 
 #### Tags:
 undefined
@@ -3970,7 +3877,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -3994,7 +3901,7 @@ undefined
 </world_step>
 ```
 
-## [./person/teleport_to/has_location](./.__documentation__person__teleport_to__has_location.md)
+## [../specification-test/src/test/java/com/example/blackbox/person/teleport_to/has_location](./..__specification-test__src__test__java__com__example__blackbox__person__teleport_to__has_location.md)
 
 #### Tags:
 - person
@@ -4004,7 +3911,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -4052,7 +3959,7 @@ undefined
 </world_step>
 ```
 
-## [./person/teleport_to](./.__documentation__person__teleport_to.md)
+## [../specification-test/src/test/java/com/example/blackbox/person/teleport_to](./..__specification-test__src__test__java__com__example__blackbox__person__teleport_to.md)
 
 #### Tags:
 - person
@@ -4062,7 +3969,7 @@ undefined
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -4104,17 +4011,16 @@ undefined
 </world_step>
 ```
 
-## [./person/teleport_to/link_to/has_location](./.__documentation__person__teleport_to__link_to__has_location.md)
+## [../specification-test/src/test/java/com/example/blackbox/person/teleport_to/link_to/has_location](./..__specification-test__src__test__java__com__example__blackbox__person__teleport_to__link_to__has_location.md)
 
 #### Tags:
-- person
-- person.teleport
+undefined
 
 #### Input XML
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -4171,17 +4077,16 @@ undefined
 </world_step>
 ```
 
-## [./person/teleport_to/link_to](./.__documentation__person__teleport_to__link_to.md)
+## [../specification-test/src/test/java/com/example/blackbox/person/teleport_to/link_to](./..__specification-test__src__test__java__com__example__blackbox__person__teleport_to__link_to.md)
 
 #### Tags:
-- person
-- person.teleport
+undefined
 
 #### Input XML
 ```xml
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
