@@ -1,0 +1,5 @@
+selectItem failed for //rule_group[0]/events_rule[0]/entry[0]/then[0]/select_item[0]
+filterItemMinQuantity failed for //rule_group[0]/events_rule[0]/entry[0]/then[0]/select_item[0]
+createItem failed for //rule_group[0]/events_rule[0]/entry[0]/then[0]/select_item[0]
+createNewItem failed for //rule_group[0]/events_rule[0]/entry[0]/then[0]/select_item[0]
+No item rules found

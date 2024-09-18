@@ -67,6 +67,7 @@ app.post(`/analyze/execute/name_rule/:name_rule`, async (req, res) => {
     res.setHeader("Content-Type", "text/plain");
     if(typeof outJson === "string") {
       res.send(outJson);
+      return;
     }
     res.send(outJson.serialize());
   } catch (e) {

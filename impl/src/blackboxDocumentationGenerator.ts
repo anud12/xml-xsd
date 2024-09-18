@@ -64,13 +64,13 @@ ${expectedXmlFile}
 }
 
 
-const readDirectory = (path: string) => {
+const readDirectory = (path: string, fileName:string) => {
   const directory = readdirSync(path, {withFileTypes: true});
   directory?.forEach(dirent => {
     if (dirent.isDirectory()) {
-      readDirectory(`${path}/${dirent.name}`)
+      readDirectory(`${path}/${dirent.name}`, fileName)
     } else {
-      if (dirent.name === "index.test.ts") {
+      if (dirent.name === fileName) {
 
         const testFile = readFileSync(`${path}/${dirent.name}`, "utf-8");
         const description = testFile?.split("/*description")[1]?.split("*/")[0]?.trim();
@@ -90,4 +90,4 @@ const readDirectory = (path: string) => {
     }
   })
 }
-readDirectory("./src/tests/blackbox");
+readDirectory("../specification-test/src/test/java/com/example/blackbox", "IndexTest.java");
