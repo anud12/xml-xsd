@@ -1,6 +1,6 @@
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../world_step.xsd"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd"
 >
   <world_metadata>
     <elapsed_time value="0"/>

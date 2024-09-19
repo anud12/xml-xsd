@@ -40,7 +40,7 @@ public class RequestTest {
     }
 
     public static final class AnalyzeExecuteNameRule extends Endpoints {
-        private String name;
+        private final String name;
 
         public AnalyzeExecuteNameRule(String name) {
             this.name = name;
@@ -143,7 +143,7 @@ public class RequestTest {
 
 
     static public DynamicTest validateExecution(
-            Class<?> clazz,
+            Class<?> runningTestClass,
             RequestTest.Endpoints endpoints,
             int expectedCode) {
         return DynamicTest.dynamicTest("Validating execution to endpoint" + endpoints.getEndpoint(), () -> {
@@ -152,7 +152,7 @@ public class RequestTest {
                 var port = getFreePort();
                 process = launchChildProcess(port);
                 waitForHeartbeat("http://localhost:" + port + "/health");
-                String relativePath = Paths.get(clazz.getResource("").toURI()).toString();
+                String relativePath = Paths.get(runningTestClass.getResource("").toURI()).toString();
                 String input = new String(Files.readAllBytes(Path.of(relativePath, "/1_input.xml")));
 
                 HttpResponse<String> response = sendRequest(port, endpoints.getEndpoint(), input);

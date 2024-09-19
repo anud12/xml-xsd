@@ -1,4 +1,4 @@
-<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
+<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <next_world_step value="../gui-client/data"/>
     <elapsed_time value="0"/>

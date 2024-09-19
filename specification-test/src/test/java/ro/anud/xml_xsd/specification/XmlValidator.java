@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DynamicTest;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -13,6 +14,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.regex.Pattern;
 
 public class XmlValidator {
     private static boolean validateXMLSchema(String xsdPath, String xmlString) throws SAXException, IOException {
@@ -24,9 +26,17 @@ public class XmlValidator {
         return true;
     }
 
-    public static DynamicTest validateXmlString(String displayName, String xmlFile) {
+    public static DynamicTest validateXmlString(Class<?> runningTestClass, String displayName, String xmlFile) {
         return DynamicTest.dynamicTest(displayName, () -> {
-            Assertions.assertThat(validateXMLSchema("./../world_step.xsd", xmlFile))
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            var document = documentBuilderFactory.newDocumentBuilder().parse(new ByteArrayInputStream(xmlFile.getBytes(StandardCharsets.UTF_8)));
+            var schemaPathString = document.getDocumentElement().getAttribute("xsi:noNamespaceSchemaLocation");
+            var runningTestClassPath = runningTestClass.getResource("").getPath().replaceFirst("/..", "");
+            var rootRelativePathString = runningTestClassPath + schemaPathString;
+            rootRelativePathString = rootRelativePathString.replaceFirst(Pattern.quote("/.."),"");
+//            Assertions.assertThat(validateXMLSchema("./../world_step.xsd", xmlFile))
+//                    .isEqualTo(true);
+            Assertions.assertThat(validateXMLSchema(rootRelativePathString, xmlFile))
                     .isEqualTo(true);
         });
     }

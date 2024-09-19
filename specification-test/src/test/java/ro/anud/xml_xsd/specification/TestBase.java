@@ -63,11 +63,11 @@ public class TestBase {
         }
     }
 
-    static public Collection<DynamicTest> runTestRelativeToClass(Class<?> clazz, RequestTest.Endpoints endpoints, int expectedCode) {
+    static public Collection<DynamicTest> runTestRelativeToClass(Class<?> runningTestClass, RequestTest.Endpoints endpoints, int expectedCode) {
 
         return Arrays.asList(
-                XmlValidator.validateXmlString("Validating input xml",getInputXmlRelativeToClass(clazz)),
-                RequestTest.validateExecution(clazz,endpoints,expectedCode)
+                XmlValidator.validateXmlString(runningTestClass, "Validating input xml",getInputXmlRelativeToClass(runningTestClass)),
+                RequestTest.validateExecution(runningTestClass,endpoints,expectedCode)
         );
     }
 
