@@ -90,4 +90,4 @@ const readDirectory = (path: string, fileName:string) => {
     }
   })
 }
-readDirectory("../specification-test/src/test/java/com/example/blackbox", "IndexTest.java");
+readDirectory("../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox", "IndexTest.java");

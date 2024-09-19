@@ -1480,7 +1480,6 @@
                       "value": {
                         "to_option": {
                           "metaType": "object",
-                          "value": {},
                           "attributes": {
                             "metaType": "object",
                             "value": {
@@ -1500,6 +1499,12 @@
                                 "metaType": "primitive",
                                 "value": "xs:int"
                               }
+                            }
+                          },
+                          "value": {
+                            "distance_to_progress_multiplier": {
+                              "metaType": "reference",
+                              "value": "type__math_operations"
                             }
                           }
                         }
@@ -1779,7 +1784,7 @@
                         "metaType": "primitive",
                         "value": "xs:string"
                       },
-                      "distance": {
+                      "total_progress": {
                         "metaType": "primitive",
                         "value": "xs:int"
                       }
@@ -1799,7 +1804,7 @@
                                 "metaType": "primitive",
                                 "value": "xs:string"
                               },
-                              "accumulated_distance": {
+                              "accumulated_progress": {
                                 "metaType": "unknown"
                               }
                             }
@@ -1995,7 +2000,7 @@
                       "attributes": {
                         "metaType": "object",
                         "value": {
-                          "distance": {
+                          "accumulated_progress": {
                             "metaType": "primitive",
                             "value": "xs:int"
                           }

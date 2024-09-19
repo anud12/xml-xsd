@@ -11,6 +11,7 @@ import {keepNotFullLinkGroupElements} from "./filterLinkGroups";
 
 export type NodeRuleQueryType = JsonSchema["children"]["rule_group"]["children"]["location_graph_rule"]["children"]["node_rule"];
 export type LinkGroupQueryType = JsonSchema["children"]["rule_group"]["children"]["location_graph_rule"]["children"]["node_rule"]["children"]["link_group"];
+export type ToOptionQueryType = JsonSchema["children"]["rule_group"]["children"]["location_graph_rule"]["children"]["node_rule"]["children"]["link_group"]["children"]["to_option"];
 export type NodeQueryType = LocationGraphQueryType["children"]["node"];
 type LinkQueryType = LocationGraphQueryType["children"]["node"]["children"]["link_to"];
 
@@ -48,6 +49,16 @@ export const isDistanceBetweenPointsLessThan = (firstNode: NodeQueryType, second
   return maxDistanceSquared <= positionDistanceSquared;
 }
 
+const distanceBetweenPoints = (firstNode: NodeQueryType, secondNode: NodeQueryType): number => {
+  const firstPosition = firstNode.queryOptional("position");
+  const secondPosition = secondNode.queryOptional("position");
+
+  //compute distance between firstPosition and secondPosition
+
+  const positionDistanceSquared = Math.pow(Number(firstPosition.attributeMap.x) - Number(secondPosition.attributeMap.x), 2) + Math.pow(Number(firstPosition.attributeMap.y) - Number(secondPosition.attributeMap.y), 2);
+  return Math.sqrt(positionDistanceSquared);
+}
+
 export const isDistanceBetweenPointsGreaterThan = (firstNode: NodeQueryType, secondNode: NodeQueryType, minDistance: number): boolean => {
 
   const firstPosition = firstNode.queryOptional("position");
@@ -60,7 +71,7 @@ export const isDistanceBetweenPointsGreaterThan = (firstNode: NodeQueryType, sec
   return minDistanceSquared >= positionDistanceSquared;
 }
 
-const canCreateLinkBetween = (jsonUtil: JsonUtil, locationGraph: LocationGraphQueryType, nodeGraphElement: NodeQueryType, targetNodeGraphElement: NodeQueryType): boolean => {
+const canCreateLinkBetween = (jsonUtil: JsonUtil, locationGraph: LocationGraphQueryType, nodeGraphElement: NodeQueryType, targetNodeGraphElement: NodeQueryType): ToOptionQueryType | undefined => {
 
   const nodeRule = jsonUtil.getRuleGroups().flatMap(element => element.queryAllOptional("location_graph_rule"))
     .flatMap(element => element.queryAllOptional("node_rule"))
@@ -68,7 +79,7 @@ const canCreateLinkBetween = (jsonUtil: JsonUtil, locationGraph: LocationGraphQu
 
   const notFullLinkGroupElementList = keepNotFullLinkGroupElements(locationGraph, nodeGraphElement, nodeRule?.queryAllOptional("link_group") || []);
   if (notFullLinkGroupElementList.length === 0) {
-    return false;
+    return undefined;
   }
 
   const applicableLinkGroup = notFullLinkGroupElementList.find(linkGroupElement => {
@@ -78,7 +89,7 @@ const canCreateLinkBetween = (jsonUtil: JsonUtil, locationGraph: LocationGraphQu
     });
   })
   if (!applicableLinkGroup) {
-    return false;
+    return undefined;
   }
 
   const targetNodeRule = jsonUtil.getRuleGroups().flatMap(element => element.queryAllOptional("location_graph_rule"))
@@ -86,27 +97,34 @@ const canCreateLinkBetween = (jsonUtil: JsonUtil, locationGraph: LocationGraphQu
     .find(element => element.attributeMap.id === nodeGraphElement?.attributeMap.node_rule_ref);
   const targetNotFullLinkGroupElementList = keepNotFullLinkGroupElements(locationGraph, targetNodeGraphElement, targetNodeRule?.queryAllOptional("link_group") || []);
   if (targetNotFullLinkGroupElementList.length === 0) {
-    return false;
+    return undefined;
   }
 
-  const targetApplicableLinkGroup = targetNotFullLinkGroupElementList.find(linkGroupElement => {
-    return linkGroupElement.queryAllOptional("to_option").find(toOptionElement => {
+  let foundOption: ToOptionQueryType = undefined;
+  targetNotFullLinkGroupElementList.find(linkGroupElement => {
+
+    foundOption = linkGroupElement.queryAllOptional("to_option").find(toOptionElement => {
       const nodeRuleRef = toOptionElement.attributeMap.node_rule_ref;
       return nodeRuleRef === nodeGraphElement.attributeMap.node_rule_ref;
     });
+
+    return foundOption;
   });
 
-  if (!targetApplicableLinkGroup) {
-    return false;
-  }
-  return true;
+  return foundOption;
 }
 
-const createLinkTo = (jsonUtil: JsonUtil, nodeGraphElement: NodeQueryType, targetNodeGraphElement: NodeQueryType): (writeUnit: JsonUtil) => Promise<LinkQueryType> => {
+const createLinkTo = (jsonUtil: JsonUtil, toOptionElement: ToOptionQueryType, nodeGraphElement: NodeQueryType, targetNodeGraphElement: NodeQueryType): (writeUnit: JsonUtil) => Promise<LinkQueryType> => {
   try {
+    let ratio = "0";
+    const multiplier = toOptionElement.queryOptional("distance_to_progress_multiplier")
+    if(multiplier) {
+      ratio = jsonUtil.computeOperationFromParent(multiplier);
+    }
     return async () => {
       return nodeGraphElement.appendChild("link_to", undefined, {
         node_id_ref: targetNodeGraphElement.attributeMap.id,
+        total_progress: String(distanceBetweenPoints(nodeGraphElement, targetNodeGraphElement) * Number(ratio)),
       })
     }
   } catch (e) {
@@ -198,8 +216,8 @@ export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nod
       const newGraphNode = await createGraphNodeResult(writeUnit);
 
 
-      await createLinkTo(writeUnit, nodeGraphElement, newGraphNode)(writeUnit);
-      await createLinkTo(writeUnit, newGraphNode, nodeGraphElement)(writeUnit);
+      await createLinkTo(writeUnit, toOptionElement, nodeGraphElement, newGraphNode)(writeUnit);
+      await createLinkTo(writeUnit, toOptionElement, newGraphNode, nodeGraphElement)(writeUnit);
 
 
       existingPersonRule?.queryAllOptional("person_selection").forEach(personElement => {
@@ -225,8 +243,9 @@ export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nod
 
       const adjacentLinkList = validAdjacentNodeList
         .map(node => {
-          if (canCreateLinkBetween(jsonUtil, locationGraphElement, node, newGraphNode)) {
-            createLinkTo(writeUnit, node, newGraphNode)(writeUnit)
+          const option = canCreateLinkBetween(jsonUtil, locationGraphElement, node, newGraphNode);
+          if (option) {
+            createLinkTo(writeUnit, option, node, newGraphNode)(writeUnit)
           }
         })
       await Promise.all(adjacentLinkList)

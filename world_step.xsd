@@ -1209,6 +1209,9 @@
                                     </xs:documentation>
                                   </xs:annotation>
                                   <xs:complexType>
+                                    <xs:all>
+                                      <xs:element name="distance_to_progress_multiplier" minOccurs="0" type="type__math_operations"/>
+                                    </xs:all>
                                     <xs:attribute name="node_rule_ref" type="xs:string" use="required">
                                       <xs:annotation>
                                         <xs:documentation>
@@ -1484,7 +1487,7 @@
                                         </xs:documentation>
                                       </xs:annotation>
                                     </xs:attribute>
-                                    <xs:attribute name="accumulated_distance">
+                                    <xs:attribute name="accumulated_progress">
 
                                     </xs:attribute>
                                   </xs:complexType>
@@ -1500,10 +1503,10 @@
                             </xs:documentation>
                           </xs:annotation>
                         </xs:attribute>
-                        <xs:attribute name="distance" type="xs:int">
+                        <xs:attribute name="total_progress" type="xs:int" use="required">
                           <xs:annotation>
                             <xs:documentation>
-                              Represents the distance between the nodes.
+                              Represents the invested time to reach the node.
                             </xs:documentation>
                           </xs:annotation>
                         </xs:attribute>
@@ -1682,7 +1685,7 @@
                         <xs:sequence>
                           <xs:element name="selection"  type="type__link_to__selection"/>
                         </xs:sequence>
-                        <xs:attribute name="distance" type="xs:int" use="required"/>
+                        <xs:attribute name="accumulated_progress" type="xs:int" use="required"/>
                       </xs:complexType>
                     </xs:element>
                   </xs:choice>

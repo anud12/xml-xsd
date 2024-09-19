@@ -30,15 +30,15 @@
     <rule location_graph_rule_ref="location_graph_rule_id"/>
     <node node_rule_ref="node" id="node_id">
       <position x="0" y="0"/>
-      <link_to node_id_ref="second_node"/>
-      <link_to node_id_ref="0.0"/>
+      <link_to node_id_ref="second_node" total_progress="0"/>
+      <link_to node_id_ref="0.0" total_progress="0"/>
     </node>
     <node node_rule_ref="node" id="second_node">
       <position x="100" y="0"/>
     </node>
     <node node_rule_ref="node" id="0.0">
       <position x="100" y="0"/>
-      <link_to node_id_ref="node_id"/>
+      <link_to node_id_ref="node_id" total_progress="0"/>
     </node>
   </location_graph>
 </world_step>
