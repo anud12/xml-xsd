@@ -198,7 +198,9 @@ export type world_step = JsonQueryType<{}, {
           "classification": JsonQueryType<{"location_classification_rule_ref": string;}> & JsonQueryType<{}, {}>;
         }> & JsonQueryType<{}, {}>;
         "link_group": JsonQueryType<{"id": string;  "angle": string;  "angleMax": string;  "limit": string;}, {
-          "to_option": JsonQueryType<{"node_rule_ref": string;  "distance": string;  "maxDistance": string;  "adjacent_depth_limit": string;}> & JsonQueryType<{}, {}>;
+          "to_option": JsonQueryType<{"node_rule_ref": string;  "distance": string;  "maxDistance": string;  "adjacent_depth_limit": string;}, {
+            "distance_to_progress_multiplier": type__math_operations & JsonQueryType<{}, {}>;
+          }> & JsonQueryType<{}, {}>;
         }> & JsonQueryType<{}, {}>;
         "existing_person": JsonQueryType<{"min": string;  "max": string;}, {
           "person_selection": type__person_selection & JsonQueryType<{}, {}>;
@@ -239,9 +241,9 @@ export type world_step = JsonQueryType<{}, {
       "classifications": JsonQueryType<{}, {
         "classification": JsonQueryType<{"location_classification_rule_ref": string;}> & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
-      "link_to": JsonQueryType<{"node_id_ref": string;  "distance": string;}, {
+      "link_to": JsonQueryType<{"node_id_ref": string;  "total_progress": string;}, {
         "people": JsonQueryType<{}, {
-          "person": JsonQueryType<{"person_id_ref": string;  "accumulated_distance": any;}> & JsonQueryType<{}, {}>;
+          "person": JsonQueryType<{"person_id_ref": string;  "accumulated_progress": any;}> & JsonQueryType<{}, {}>;
         }> & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
       "people": JsonQueryType<{}, {
@@ -268,7 +270,7 @@ export type world_step = JsonQueryType<{}, {
         "location_graph": JsonQueryType<{"location_graph_id_ref": string;  "node_id_ref": string;}> & JsonQueryType<{}, {}>;
       }>
       & JsonQueryType<{}, {
-        "link_to": JsonQueryType<{"distance": string;}, {
+        "link_to": JsonQueryType<{"accumulated_progress": string;}, {
           "selection": type__link_to__selection & JsonQueryType<{}, {}>;
         }> & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;

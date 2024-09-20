@@ -67,8 +67,11 @@ export const createOperationFromQueryType = (
             return result;
           }
           case "divide": {
-            const result= String(Math.trunc(Number(value) / Number(andOperationValue.attributeMap.value)))
+            const result= String(Math.trunc(Number(value) / Number(andOperationValue.attributeMap.value)));
             console.log(`${andOperationValue.attributeMap.do}('${value}', '${andOperationValue.attributeMap.value}') = ${result}`)
+            if(result === "Infinity") {
+              return "0";
+            }
             return result;
 
           }
@@ -76,6 +79,9 @@ export const createOperationFromQueryType = (
             const randomValue = readJson.random() * Number(andOperationValue.attributeMap.value);
             const result= String(Math.trunc(Number(value) / Math.floor(randomValue)))
             console.log(`${andOperationValue.attributeMap.do}('${value}', '${andOperationValue.attributeMap.value}') = ${result}, randomValue:${randomValue}`)
+            if(result === "Infinity") {
+              return "0";
+            }
             return result;
           }
           case "modulo": {

@@ -146,7 +146,57 @@ public partial class LocationGraphScene : Control
 						DefaultColor = new Color(0, 0, 0, 1),
 						Points = new Vector2[] { start, end },
 					};
-					line2D.Width = SCALE / 2;
+
+					//write hello world labels equal to total_progress on the line2D on equidistant points
+					var totalProgress = linkTo.total_progress;
+
+					float totalLength = (start - end).Length();
+					float interval = totalLength / (totalProgress);
+					Vector2 direction = (end - start).Normalized();
+
+					for (int i = 0; i < (totalProgress ); i++)
+					{
+						Vector2 position = start + direction * (i * interval);
+						var label = new Label
+						{
+							Text = linkTo.total_progress.ToString(),
+							Size = new Vector2(SCALE, SCALE),
+						};
+						line2D.AddChild(label);
+						label.Position = position;
+						label.Set("theme_override_font_sizes/font_size", SCALE/2);
+					}
+
+
+					// var totalProgress = linkTo.total_progress;
+					// var totalProgressLength = totalProgress * SCALE;
+					// var dividerSize = SCALE / 2;
+					// var dividerStep = (start + end) / totalProgress;
+					// Enumerable.Range(0, totalProgress).ToList().ForEach(i =>
+					// {
+
+					// 	var label = new Label
+					// 	{
+					// 		Text = linkTo.total_progress.ToString(),
+					// 	};
+					// 	line2D.AddChild(label);
+					// 	//set position of the label to the middle of the line2D
+					// 	// label.Position = (start + end) / 2;
+
+					// 	label.Position = start + dividerStep * i;
+					// 	var totalProgressDirection = (end - start).Normalized();
+					// 	var totalProgressStart = start + totalProgressDirection * totalProgressLength;
+					// 	var totalProgressEnd = end - totalProgressDirection * totalProgressLength;
+					// 	var totalProgressLine2D = new Line2D
+					// 	{
+					// 		DefaultColor = new Color(1, 1, 1, 1),
+					// 		Points = new Vector2[] { totalProgressStart, totalProgressEnd },
+					// 	};
+					// 	line2D.AddChild(totalProgressLine2D);
+
+
+					// });
+					line2D.Width = SCALE /2;
 					return line2D;
 				});
 			});

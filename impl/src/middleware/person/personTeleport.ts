@@ -71,7 +71,7 @@ const linkToNode = (readJson: JsonUtil, action: PersonTeleportQueryType) => {
     const people = linkTo.queryOptional("people") ?? linkTo.appendChild("people");
     people.appendChild("person", undefined, {
       person_id_ref: personIdRef,
-      accumulated_distance: linkToAction.attributeMap.distance
+      accumulated_progress: linkToAction.attributeMap.accumulated_progress
     })
   }
 }

@@ -163,19 +163,51 @@
           <to_option node_rule_ref="city" distance="1" maxDistance="20" adjacent_depth_limit="5" />
           <to_option node_rule_ref="farm" distance="1" maxDistance="20" adjacent_depth_limit="5" />
           <to_option node_rule_ref="farm" distance="1" maxDistance="20" adjacent_depth_limit="5" />
-          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5" />
-          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5" />
-          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5" />
-          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5" />
-          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5" />
+          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5">
+            <distance_to_progress_multiplier initial="1">
+              <and do="multiply_dice" value="3" />
+            </distance_to_progress_multiplier>
+          </to_option>
+          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5">
+            <distance_to_progress_multiplier initial="1">
+              <and do="multiply_dice" value="3" />
+            </distance_to_progress_multiplier>
+          </to_option>
+          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5" >
+            <distance_to_progress_multiplier initial="1">
+              <and do="multiply_dice" value="3" />
+            </distance_to_progress_multiplier>
+          </to_option>
+          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5">
+            <distance_to_progress_multiplier initial="1">
+              <and do="multiply_dice" value="3" />
+            </distance_to_progress_multiplier>
+          </to_option>
+          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5">
+            <distance_to_progress_multiplier initial="1">
+              <and do="multiply_dice" value="3" />
+            </distance_to_progress_multiplier>
+          </to_option>
         </link_group>
       </node_rule>
       <node_rule id="forest">
         <link_group id="all" angle="0" angleMax="360" limit="3">
           <to_option node_rule_ref="farm" distance="1" maxDistance="20" adjacent_depth_limit="5" />
-          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5" />
-          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5" />
-          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5" />
+          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5">
+            <distance_to_progress_multiplier initial="1">
+              <and do="multiply_dice" value="3" />
+            </distance_to_progress_multiplier>
+          </to_option>
+          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5">
+            <distance_to_progress_multiplier initial="1">
+              <and do="multiply_dice" value="3" />
+            </distance_to_progress_multiplier>
+          </to_option>
+          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5">
+            <distance_to_progress_multiplier initial="1">
+              <and do="multiply_dice" value="3" />
+            </distance_to_progress_multiplier>
+          </to_option>
         </link_group>
       </node_rule>
     </location_graph_rule>
@@ -196,10 +228,25 @@
     <rule location_graph_rule_ref="location_graph_rule_id" />
     <node node_rule_ref="city" id="Capital">
       <position x="0" y="0" />
+      <link_to node_id_ref="0.42" total_progress="1" />
       <people>
         <person person_id_ref="0" />
         <person person_id_ref="1" />
       </people>
+    </node>
+    <node node_rule_ref="farm" id="0.42">
+      <position x="0" y="-1" />
+      <link_to node_id_ref="Capital" total_progress="1" />
+      <link_to node_id_ref="0.43" total_progress="2" />
+    </node>
+    <node node_rule_ref="forest" id="0.43">
+      <position x="58" y="41" />
+      <link_to node_id_ref="0.42" total_progress="2" />
+      <link_to node_id_ref="0.44" total_progress="3" />
+    </node>
+    <node node_rule_ref="forest" id="0.44">
+      <position x="40" y="96" />
+      <link_to node_id_ref="0.43" total_progress="3" />
     </node>
   </location_graph>
   <actions>

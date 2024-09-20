@@ -5098,8 +5098,8 @@ namespace XSD {
     //Attributes
     public System.String Get_node_id_ref();
     public void Set_node_id_ref(System.String value);
-    public System.Int32 Get_distance();
-    public void Set_distance(System.Int32 value);
+    public System.Int32 Get_total_progress();
+    public void Set_total_progress(System.Int32 value);
 
     //Children elements
     public List<world_step__location_graph__node__link_to__people> Get_people();
@@ -5124,14 +5124,14 @@ namespace XSD {
     {
       this.node_id_ref = value;
     }
-    public System.Int32 distance;
-    public System.Int32 Get_distance()
+    public System.Int32 total_progress;
+    public System.Int32 Get_total_progress()
     {
-      return this.distance;
+      return this.total_progress;
     }
-    public void Set_distance(System.Int32 value)
+    public void Set_total_progress(System.Int32 value)
     {
-      this.distance = value;
+      this.total_progress = value;
     }
 
     //Children elements
@@ -5170,10 +5170,10 @@ namespace XSD {
         var attribute_node_id_ref = rawNode.attributes["node_id_ref"];
         this.node_id_ref = rawNode.attributes["node_id_ref"];
       }
-      if(rawNode.attributes.ContainsKey("distance"))
+      if(rawNode.attributes.ContainsKey("total_progress"))
       {
-        var attribute_distance = rawNode.attributes["distance"];
-        this.distance = attribute_distance.ToInt();
+        var attribute_total_progress = rawNode.attributes["total_progress"];
+        this.total_progress = attribute_total_progress.ToInt();
       }
       //Deserialize elements
       this.people = rawNode.InitializeWithRawNode("people", this.people);
@@ -5186,9 +5186,9 @@ namespace XSD {
       {
         rawNode.attributes["node_id_ref"] = this.node_id_ref.ToString();
       }
-      if(this.distance != null)
+      if(this.total_progress != null)
       {
-        rawNode.attributes["distance"] = this.distance.ToString();
+        rawNode.attributes["total_progress"] = this.total_progress.ToString();
       }
       //Serialize elements
       rawNode.children["people"] = people.Select(x => x.SerializeIntoRawNode()).ToList();
@@ -5722,8 +5722,8 @@ namespace XSD {
   /*typeDeclarationElementToInterfaceString= element*/
   public interface Iworld_step__actions__person__teleport__link_to {
     //Attributes
-    public System.Int32 Get_distance();
-    public void Set_distance(System.Int32 value);
+    public System.Int32 Get_accumulated_progress();
+    public void Set_accumulated_progress(System.Int32 value);
 
     //Children elements
     public List<type__link_to__selection> Get_selection();
@@ -5739,14 +5739,14 @@ namespace XSD {
   public class world_step__actions__person__teleport__link_to: Iworld_step__actions__person__teleport__link_to {
     public RawNode rawNode = new RawNode();
     //Attributes
-    public System.Int32 distance;
-    public System.Int32 Get_distance()
+    public System.Int32 accumulated_progress;
+    public System.Int32 Get_accumulated_progress()
     {
-      return this.distance;
+      return this.accumulated_progress;
     }
-    public void Set_distance(System.Int32 value)
+    public void Set_accumulated_progress(System.Int32 value)
     {
-      this.distance = value;
+      this.accumulated_progress = value;
     }
 
     //Children elements
@@ -5780,10 +5780,10 @@ namespace XSD {
       this.rawNode = rawNode;
       Godot.GD.Print("Deserializing world_step__actions__person__teleport__link_to");
       //Deserialize arguments
-      if(rawNode.attributes.ContainsKey("distance"))
+      if(rawNode.attributes.ContainsKey("accumulated_progress"))
       {
-        var attribute_distance = rawNode.attributes["distance"];
-        this.distance = attribute_distance.ToInt();
+        var attribute_accumulated_progress = rawNode.attributes["accumulated_progress"];
+        this.accumulated_progress = attribute_accumulated_progress.ToInt();
       }
       //Deserialize elements
       this.selection = rawNode.InitializeWithRawNode("selection", this.selection);
@@ -5792,9 +5792,9 @@ namespace XSD {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.distance != null)
+      if(this.accumulated_progress != null)
       {
-        rawNode.attributes["distance"] = this.distance.ToString();
+        rawNode.attributes["accumulated_progress"] = this.accumulated_progress.ToString();
       }
       //Serialize elements
       rawNode.children["selection"] = selection.Select(x => x.SerializeIntoRawNode()).ToList();
@@ -9355,7 +9355,8 @@ namespace XSD {
     public void Set_adjacent_depth_limit(System.Int32 value);
 
     //Children elements
-
+    public List<type__math_operations> Get_distance_to_progress_multiplier();
+    public void Set_distance_to_progress_multiplier(List<type__math_operations> value);
     public void Deserialize (RawNode rawNode);
 
     public RawNode SerializeIntoRawNode();
@@ -9405,6 +9406,15 @@ namespace XSD {
     }
 
     //Children elements
+    public List<type__math_operations> distance_to_progress_multiplier = new List<type__math_operations>();
+    public List<type__math_operations> Get_distance_to_progress_multiplier()
+    {
+      return this.distance_to_progress_multiplier;
+    }
+    public void Set_distance_to_progress_multiplier(List<type__math_operations> value)
+    {
+      this.distance_to_progress_multiplier = value;
+    }
 
     public world_step__rule_group__location_graph_rule__node_rule__link_group__to_option()
     {
@@ -9447,7 +9457,7 @@ namespace XSD {
         this.adjacent_depth_limit = attribute_adjacent_depth_limit.ToInt();
       }
       //Deserialize elements
-
+      this.distance_to_progress_multiplier = rawNode.InitializeWithRawNode("distance_to_progress_multiplier", this.distance_to_progress_multiplier);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -9470,7 +9480,7 @@ namespace XSD {
         rawNode.attributes["adjacent_depth_limit"] = this.adjacent_depth_limit.ToString();
       }
       //Serialize elements
-
+      rawNode.children["distance_to_progress_multiplier"] = distance_to_progress_multiplier.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 

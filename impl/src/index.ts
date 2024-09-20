@@ -2,10 +2,11 @@ import {WebSocketServer} from 'ws';
 import {validateString} from "./validate";
 import {executeFromString} from "./execute";
 import {JsonSchema} from "./utils/JsonSchema";
+
 const express = require("express");
 
 const launchWebsocket = (onMessage: (string: string) => Promise<string>) => {
-  const wss = new WebSocketServer({port: 8081});
+  const wss = new WebSocketServer({port: 8080});
 
   wss.on('connection', (ws) => {
     console.log('Client connected');
@@ -65,7 +66,7 @@ app.post(`/analyze/execute/name_rule/:name_rule`, async (req, res) => {
     }
     const outJson = await executeFromString(req.body, console.log, [`--name_rule ${req.params.name_rule}`]) as JsonSchema;
     res.setHeader("Content-Type", "text/plain");
-    if(typeof outJson === "string") {
+    if (typeof outJson === "string") {
       res.send(outJson);
       return;
     }
@@ -81,13 +82,16 @@ app.listen(port, () => {
 });
 
 (async () => {
-  // launchWebsocket(async data => {
-  //   const dataString = data.toString();
-  //   const errors = await validateString(dataString, console.log);
-  //   if (errors?.length) {
-  //     throw new Error(errors.map(e => e.message).join("\n"));
-  //   }
-  //   const outJson = await executeFromString(data.toString(), console.log) as JsonSchema;
-  //   return outJson.serialize();
-  // })
+  if(port) {
+    return;
+  }
+  launchWebsocket(async data => {
+    const dataString = data.toString();
+    const errors = await validateString(dataString, console.log);
+    if (errors?.length) {
+      throw new Error(errors.map(e => e.message).join("\n"));
+    }
+    const outJson = await executeFromString(data.toString(), console.log) as JsonSchema;
+    return outJson.serialize();
+  })
 })()

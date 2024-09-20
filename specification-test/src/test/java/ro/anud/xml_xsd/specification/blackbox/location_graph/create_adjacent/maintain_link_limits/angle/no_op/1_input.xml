@@ -131,8 +131,8 @@
     <rule location_graph_rule_ref="location_graph_rule_id" />
     <node node_rule_ref="city" id="Capital">
       <position x="0" y="0" />
-      <link_to node_id_ref="1.0" />
-      <link_to node_id_ref="1.1" />
+      <link_to node_id_ref="1.0" total_progress="0" />
+      <link_to node_id_ref="1.1" total_progress="0" />
     </node>
     <node node_rule_ref="plains" id="1.0">
       <position x="1" y="0" />

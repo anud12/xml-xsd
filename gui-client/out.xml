@@ -4,10 +4,8 @@
     <next_world_step value="../gui-client/data" />
     <elapsed_time value="0" />
     <stepDuration value="0" />
-    <counter value="0" />
+    <counter value="73" />
     <randomization_table>
-      <entry value="4" />
-      <entry value="9" />
       <entry value="2" />
       <entry value="8" />
       <entry value="3" />
@@ -106,6 +104,8 @@
       <entry value="2" />
       <entry value="3" />
       <entry value="10" />
+      <entry value="4" />
+      <entry value="9" />
     </randomization_table>
   </world_metadata>
   <rule_group id="rule_group_id">
@@ -163,19 +163,51 @@
           <to_option node_rule_ref="city" distance="1" maxDistance="20" adjacent_depth_limit="5" />
           <to_option node_rule_ref="farm" distance="1" maxDistance="20" adjacent_depth_limit="5" />
           <to_option node_rule_ref="farm" distance="1" maxDistance="20" adjacent_depth_limit="5" />
-          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5" />
-          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5" />
-          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5" />
-          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5" />
-          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5" />
+          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5">
+            <distance_to_progress_multiplier initial="1">
+              <and do="multiply_dice" value="3" />
+            </distance_to_progress_multiplier>
+          </to_option>
+          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5">
+            <distance_to_progress_multiplier initial="1">
+              <and do="multiply_dice" value="3" />
+            </distance_to_progress_multiplier>
+          </to_option>
+          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5">
+            <distance_to_progress_multiplier initial="1">
+              <and do="multiply_dice" value="3" />
+            </distance_to_progress_multiplier>
+          </to_option>
+          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5">
+            <distance_to_progress_multiplier initial="1">
+              <and do="multiply_dice" value="3" />
+            </distance_to_progress_multiplier>
+          </to_option>
+          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5">
+            <distance_to_progress_multiplier initial="1">
+              <and do="multiply_dice" value="3" />
+            </distance_to_progress_multiplier>
+          </to_option>
         </link_group>
       </node_rule>
       <node_rule id="forest">
         <link_group id="all" angle="0" angleMax="360" limit="3">
           <to_option node_rule_ref="farm" distance="1" maxDistance="20" adjacent_depth_limit="5" />
-          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5" />
-          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5" />
-          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5" />
+          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5">
+            <distance_to_progress_multiplier initial="1">
+              <and do="multiply_dice" value="3" />
+            </distance_to_progress_multiplier>
+          </to_option>
+          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5">
+            <distance_to_progress_multiplier initial="1">
+              <and do="multiply_dice" value="3" />
+            </distance_to_progress_multiplier>
+          </to_option>
+          <to_option node_rule_ref="forest" distance="30" maxDistance="70" adjacent_depth_limit="5">
+            <distance_to_progress_multiplier initial="1">
+              <and do="multiply_dice" value="3" />
+            </distance_to_progress_multiplier>
+          </to_option>
         </link_group>
       </node_rule>
     </location_graph_rule>
@@ -185,27 +217,440 @@
       <properties>
         <property property_rule_ref="health" value="10" />
       </properties>
+      <classifications>
+        <classification classification_rule_ref="alive" />
+      </classifications>
     </person>
     <person id="1" name="Bandit">
       <properties>
         <property property_rule_ref="health" value="10" />
       </properties>
+      <classifications>
+        <classification classification_rule_ref="alive" />
+      </classifications>
     </person>
   </people>
   <location_graph id="first world">
     <rule location_graph_rule_ref="location_graph_rule_id" />
     <node node_rule_ref="city" id="Capital">
       <position x="0" y="0" />
+      <link_to node_id_ref="0.42" total_progress="1" />
+      <link_to node_id_ref="0.70" total_progress="2" />
+      <link_to node_id_ref="0.71" total_progress="1" />
       <people>
         <person person_id_ref="0" />
         <person person_id_ref="1" />
       </people>
     </node>
+    <node node_rule_ref="farm" id="0.42">
+      <position x="0" y="-1" />
+      <link_to node_id_ref="Capital" total_progress="1" />
+      <link_to node_id_ref="0.43" total_progress="2" />
+      <link_to node_id_ref="0.70" total_progress="2" />
+    </node>
+    <node node_rule_ref="forest" id="0.43">
+      <position x="58" y="41" />
+      <link_to node_id_ref="0.42" total_progress="2" />
+      <link_to node_id_ref="0.44" total_progress="3" />
+      <link_to node_id_ref="0.72" total_progress="8" />
+    </node>
+    <node node_rule_ref="forest" id="0.44">
+      <position x="40" y="96" />
+      <link_to node_id_ref="0.43" total_progress="3" />
+    </node>
+    <node node_rule_ref="farm" id="0.70">
+      <position x="2" y="-1" />
+      <link_to node_id_ref="Capital" total_progress="2" />
+      <link_to node_id_ref="0.72" total_progress="78" />
+    </node>
+    <node node_rule_ref="farm" id="0.71">
+      <position x="0" y="-1" />
+      <link_to node_id_ref="Capital" total_progress="1" />
+    </node>
+    <node node_rule_ref="farm" id="0.72">
+      <position x="65" y="45" />
+      <link_to node_id_ref="0.70" total_progress="78" />
+    </node>
+  </location_graph>
+  <location_graph id="0.0">
+    <rule location_graph_rule_ref="location_graph_rule_id" />
+    <node node_rule_ref="farm" id="0.1">
+      <position x="0" y="0" />
+      <link_to node_id_ref="0.2" total_progress="0" />
+      <link_to node_id_ref="0.3" total_progress="71" />
+      <link_to node_id_ref="0.4" total_progress="24" />
+    </node>
+    <node node_rule_ref="forest" id="0.2">
+      <position x="-17" y="55" />
+      <link_to node_id_ref="0.1" total_progress="172" />
+      <link_to node_id_ref="0.4" total_progress="48" />
+      <link_to node_id_ref="0.5" total_progress="35" />
+    </node>
+    <node node_rule_ref="forest" id="0.3">
+      <position x="-29" y="-21" />
+      <link_to node_id_ref="0.1" total_progress="0" />
+      <link_to node_id_ref="0.4" total_progress="67" />
+      <link_to node_id_ref="0.6" total_progress="0" />
+    </node>
+    <node node_rule_ref="forest" id="0.4">
+      <position x="-10" y="7" />
+      <link_to node_id_ref="0.1" total_progress="24" />
+      <link_to node_id_ref="0.6" total_progress="0" />
+      <link_to node_id_ref="0.7" total_progress="0" />
+    </node>
+    <node node_rule_ref="farm" id="0.5">
+      <position x="-46" y="76" />
+      <link_to node_id_ref="0.2" total_progress="35" />
+      <link_to node_id_ref="0.7" total_progress="68" />
+      <link_to node_id_ref="0.8" total_progress="58" />
+    </node>
+    <node node_rule_ref="forest" id="0.6">
+      <position x="-29" y="-42" />
+      <link_to node_id_ref="0.3" total_progress="42" />
+      <link_to node_id_ref="0.7" total_progress="202" />
+      <link_to node_id_ref="0.9" total_progress="36" />
+    </node>
+    <node node_rule_ref="forest" id="0.7">
+      <position x="-5" y="21" />
+      <link_to node_id_ref="0.4" total_progress="29" />
+      <link_to node_id_ref="0.10" total_progress="18" />
+      <link_to node_id_ref="0.11" total_progress="192" />
+    </node>
+    <node node_rule_ref="farm" id="0.8">
+      <position x="-28" y="20" />
+      <link_to node_id_ref="0.5" total_progress="58" />
+      <link_to node_id_ref="0.10" total_progress="32" />
+      <link_to node_id_ref="0.11" total_progress="62" />
+    </node>
+    <node node_rule_ref="forest" id="0.9">
+      <position x="-41" y="-76" />
+      <link_to node_id_ref="0.6" total_progress="36" />
+      <link_to node_id_ref="0.12" total_progress="36" />
+      <link_to node_id_ref="0.13" total_progress="42" />
+    </node>
+    <node node_rule_ref="forest" id="0.10">
+      <position x="4" y="21" />
+      <link_to node_id_ref="0.7" total_progress="0" />
+      <link_to node_id_ref="0.11" total_progress="67" />
+      <link_to node_id_ref="0.14" total_progress="74" />
+    </node>
+    <node node_rule_ref="forest" id="0.11">
+      <position x="-25" y="82" />
+      <link_to node_id_ref="0.7" total_progress="128" />
+      <link_to node_id_ref="0.15" total_progress="37" />
+      <link_to node_id_ref="0.16" total_progress="0" />
+    </node>
+    <node node_rule_ref="forest" id="0.12">
+      <position x="-70" y="-54" />
+      <link_to node_id_ref="0.9" total_progress="36" />
+      <link_to node_id_ref="0.13" total_progress="72" />
+      <link_to node_id_ref="0.17" total_progress="43" />
+    </node>
+    <node node_rule_ref="forest" id="0.13">
+      <position x="-34" y="-56" />
+      <link_to node_id_ref="0.9" total_progress="0" />
+      <link_to node_id_ref="0.14" total_progress="110" />
+      <link_to node_id_ref="0.18" total_progress="64" />
+    </node>
+    <node node_rule_ref="forest" id="0.14">
+      <position x="4" y="-16" />
+      <link_to node_id_ref="0.10" total_progress="0" />
+      <link_to node_id_ref="0.19" total_progress="86" />
+      <link_to node_id_ref="0.20" total_progress="19" />
+    </node>
+    <node node_rule_ref="forest" id="0.15">
+      <position x="-13" y="117" />
+      <link_to node_id_ref="0.11" total_progress="0" />
+      <link_to node_id_ref="0.16" total_progress="145" />
+      <link_to node_id_ref="0.21" total_progress="150" />
+    </node>
+    <node node_rule_ref="forest" id="0.16">
+      <position x="-28" y="71" />
+      <link_to node_id_ref="0.11" total_progress="11" />
+      <link_to node_id_ref="0.19" total_progress="0" />
+      <link_to node_id_ref="0.22" total_progress="0" />
+    </node>
+    <node node_rule_ref="forest" id="0.17">
+      <position x="-105" y="-79" />
+      <link_to node_id_ref="0.12" total_progress="43" />
+      <link_to node_id_ref="0.23" total_progress="51" />
+      <link_to node_id_ref="0.24" total_progress="78" />
+    </node>
+    <node node_rule_ref="farm" id="0.18">
+      <position x="-13" y="-117" />
+      <link_to node_id_ref="0.13" total_progress="64" />
+      <link_to node_id_ref="0.25" total_progress="14" />
+      <link_to node_id_ref="0.26" total_progress="0" />
+    </node>
+    <node node_rule_ref="forest" id="0.19">
+      <position x="-9" y="25" />
+      <link_to node_id_ref="0.14" total_progress="0" />
+      <link_to node_id_ref="0.20" total_progress="122" />
+      <link_to node_id_ref="0.27" total_progress="0" />
+    </node>
+    <node node_rule_ref="forest" id="0.20">
+      <position x="4" y="-35" />
+      <link_to node_id_ref="0.14" total_progress="19" />
+      <link_to node_id_ref="0.26" total_progress="0" />
+      <link_to node_id_ref="0.27" total_progress="44" />
+    </node>
+    <node node_rule_ref="forest" id="0.21">
+      <position x="2" y="165" />
+      <link_to node_id_ref="0.15" total_progress="0" />
+      <link_to node_id_ref="0.28" total_progress="0" />
+      <link_to node_id_ref="0.29" total_progress="199" />
+    </node>
+    <node node_rule_ref="forest" id="0.22">
+      <position x="-28" y="34" />
+      <link_to node_id_ref="0.16" total_progress="37" />
+      <link_to node_id_ref="0.27" total_progress="63" />
+      <link_to node_id_ref="0.30" total_progress="65" />
+    </node>
+    <node node_rule_ref="forest" id="0.23">
+      <position x="-120" y="-30" />
+      <link_to node_id_ref="0.17" total_progress="102" />
+      <link_to node_id_ref="0.31" total_progress="35" />
+      <link_to node_id_ref="0.32" total_progress="92" />
+    </node>
+    <node node_rule_ref="farm" id="0.24">
+      <position x="-41" y="-125" />
+      <link_to node_id_ref="0.17" total_progress="78" />
+      <link_to node_id_ref="0.25" total_progress="33" />
+      <link_to node_id_ref="0.26" total_progress="64" />
+    </node>
+    <node node_rule_ref="forest" id="0.25">
+      <position x="-8" y="-131" />
+      <link_to node_id_ref="0.18" total_progress="29" />
+      <link_to node_id_ref="0.33" total_progress="99" />
+      <link_to node_id_ref="0.34" total_progress="12" />
+    </node>
+    <node node_rule_ref="forest" id="0.26">
+      <position x="-30" y="-61" />
+      <link_to node_id_ref="0.18" total_progress="117" />
+      <link_to node_id_ref="0.27" total_progress="0" />
+      <link_to node_id_ref="0.35" total_progress="130" />
+    </node>
+    <node node_rule_ref="forest" id="0.27">
+      <position x="-15" y="5" />
+      <link_to node_id_ref="0.19" total_progress="41" />
+      <link_to node_id_ref="0.35" total_progress="137" />
+      <link_to node_id_ref="0.36" total_progress="0" />
+    </node>
+    <node node_rule_ref="forest" id="0.28">
+      <position x="2" y="148" />
+      <link_to node_id_ref="0.21" total_progress="17" />
+      <link_to node_id_ref="0.37" total_progress="78" />
+      <link_to node_id_ref="0.38" total_progress="35" />
+    </node>
+    <node node_rule_ref="forest" id="0.29">
+      <position x="32" y="260" />
+      <link_to node_id_ref="0.21" total_progress="99" />
+      <link_to node_id_ref="0.39" total_progress="0" />
+      <link_to node_id_ref="0.40" total_progress="78" />
+    </node>
+    <node node_rule_ref="farm" id="0.30">
+      <position x="37" y="34" />
+      <link_to node_id_ref="0.22" total_progress="65" />
+      <link_to node_id_ref="0.41" total_progress="0" />
+      <link_to node_id_ref="0.42" total_progress="74" />
+    </node>
+    <node node_rule_ref="forest" id="0.31">
+      <position x="-149" y="-51" />
+      <link_to node_id_ref="0.23" total_progress="0" />
+      <link_to node_id_ref="0.43" total_progress="186" />
+      <link_to node_id_ref="0.44" total_progress="36" />
+    </node>
+    <node node_rule_ref="farm" id="0.32">
+      <position x="-91" y="58" />
+      <link_to node_id_ref="0.23" total_progress="92" />
+      <link_to node_id_ref="0.45" total_progress="21" />
+      <link_to node_id_ref="0.46" total_progress="0" />
+    </node>
+    <node node_rule_ref="forest" id="0.33">
+      <position x="72" y="-72" />
+      <link_to node_id_ref="0.25" total_progress="198" />
+      <link_to node_id_ref="0.47" total_progress="99" />
+      <link_to node_id_ref="0.48" total_progress="13" />
+    </node>
+    <node node_rule_ref="farm" id="0.34">
+      <position x="-18" y="-123" />
+      <link_to node_id_ref="0.25" total_progress="12" />
+      <link_to node_id_ref="0.49" total_progress="130" />
+      <link_to node_id_ref="0.50" total_progress="78" />
+    </node>
+    <node node_rule_ref="forest" id="0.35">
+      <position x="22" y="-22" />
+      <link_to node_id_ref="0.26" total_progress="0" />
+      <link_to node_id_ref="0.36" total_progress="30" />
+      <link_to node_id_ref="0.42" total_progress="37" />
+    </node>
+    <node node_rule_ref="forest" id="0.36">
+      <position x="0" y="-43" />
+      <link_to node_id_ref="0.27" total_progress="50" />
+      <link_to node_id_ref="0.42" total_progress="55" />
+      <link_to node_id_ref="0.49" total_progress="159" />
+    </node>
+    <node node_rule_ref="farm" id="0.37">
+      <position x="65" y="101" />
+      <link_to node_id_ref="0.28" total_progress="78" />
+      <link_to node_id_ref="0.51" total_progress="93" />
+      <link_to node_id_ref="0.52" total_progress="0" />
+    </node>
+    <node node_rule_ref="forest" id="0.38">
+      <position x="-27" y="169" />
+      <link_to node_id_ref="0.28" total_progress="35" />
+      <link_to node_id_ref="0.53" total_progress="7" />
+      <link_to node_id_ref="0.54" total_progress="27" />
+    </node>
+    <node node_rule_ref="forest" id="0.39">
+      <position x="14" y="315" />
+      <link_to node_id_ref="0.29" total_progress="115" />
+      <link_to node_id_ref="0.55" total_progress="0" />
+      <link_to node_id_ref="0.56" total_progress="72" />
+    </node>
+    <node node_rule_ref="farm" id="0.40">
+      <position x="-31" y="213" />
+      <link_to node_id_ref="0.29" total_progress="78" />
+      <link_to node_id_ref="0.53" total_progress="50" />
+      <link_to node_id_ref="0.54" total_progress="57" />
+    </node>
+    <node node_rule_ref="forest" id="0.41">
+      <position x="19" y="89" />
+      <link_to node_id_ref="0.30" total_progress="173" />
+      <link_to node_id_ref="0.57" total_progress="93" />
+      <link_to node_id_ref="0.58" total_progress="35" />
+    </node>
+    <node node_rule_ref="forest" id="0.42">
+      <position x="7" y="12" />
+      <link_to node_id_ref="0.30" total_progress="0" />
+      <link_to node_id_ref="0.57" total_progress="0" />
+      <link_to node_id_ref="0.59" total_progress="0" />
+    </node>
+    <node node_rule_ref="forest" id="0.43">
+      <position x="-56" y="-51" />
+      <link_to node_id_ref="0.31" total_progress="0" />
+      <link_to node_id_ref="0.60" total_progress="7" />
+      <link_to node_id_ref="0.61" total_progress="116" />
+    </node>
+    <node node_rule_ref="farm" id="0.44">
+      <position x="-178" y="-29" />
+      <link_to node_id_ref="0.31" total_progress="36" />
+      <link_to node_id_ref="0.62" total_progress="36" />
+      <link_to node_id_ref="0.63" total_progress="44" />
+    </node>
+    <node node_rule_ref="farm" id="0.45">
+      <position x="-91" y="37" />
+      <link_to node_id_ref="0.32" total_progress="21" />
+      <link_to node_id_ref="0.64" total_progress="50" />
+      <link_to node_id_ref="0.65" total_progress="43" />
+    </node>
+    <node node_rule_ref="forest" id="0.46">
+      <position x="-96" y="41" />
+      <link_to node_id_ref="0.32" total_progress="0" />
+      <link_to node_id_ref="0.64" total_progress="135" />
+      <link_to node_id_ref="0.66" total_progress="144" />
+    </node>
+    <node node_rule_ref="forest" id="0.47">
+      <position x="152" y="-13" />
+      <link_to node_id_ref="0.33" total_progress="198" />
+      <link_to node_id_ref="0.67" total_progress="15" />
+      <link_to node_id_ref="0.68" total_progress="74" />
+    </node>
+    <node node_rule_ref="farm" id="0.48">
+      <position x="61" y="-64" />
+      <link_to node_id_ref="0.33" total_progress="13" />
+      <link_to node_id_ref="0.49" total_progress="33" />
+      <link_to node_id_ref="0.69" total_progress="20" />
+    </node>
+    <node node_rule_ref="forest" id="0.49">
+      <position x="34" y="-84" />
+      <link_to node_id_ref="0.34" total_progress="0" />
+    </node>
+    <node node_rule_ref="farm" id="0.50">
+      <position x="-81" y="-76" />
+      <link_to node_id_ref="0.34" total_progress="78" />
+    </node>
+    <node node_rule_ref="farm" id="0.51">
+      <position x="93" y="12" />
+      <link_to node_id_ref="0.37" total_progress="93" />
+    </node>
+    <node node_rule_ref="forest" id="0.52">
+      <position x="67" y="109" />
+      <link_to node_id_ref="0.37" total_progress="16" />
+    </node>
+    <node node_rule_ref="forest" id="0.53">
+      <position x="-21" y="164" />
+      <link_to node_id_ref="0.38" total_progress="15" />
+    </node>
+    <node node_rule_ref="forest" id="0.54">
+      <position x="-22" y="156" />
+      <link_to node_id_ref="0.38" total_progress="0" />
+    </node>
+    <node node_rule_ref="forest" id="0.55">
+      <position x="-3" y="370" />
+      <link_to node_id_ref="0.39" total_progress="172" />
+    </node>
+    <node node_rule_ref="forest" id="0.56">
+      <position x="-15" y="293" />
+      <link_to node_id_ref="0.39" total_progress="0" />
+    </node>
+    <node node_rule_ref="forest" id="0.57">
+      <position x="-56" y="34" />
+      <link_to node_id_ref="0.41" total_progress="186" />
+    </node>
+    <node node_rule_ref="farm" id="0.58">
+      <position x="-10" y="110" />
+      <link_to node_id_ref="0.41" total_progress="35" />
+    </node>
+    <node node_rule_ref="forest" id="0.59">
+      <position x="7" y="-9" />
+      <link_to node_id_ref="0.42" total_progress="42" />
+    </node>
+    <node node_rule_ref="forest" id="0.60">
+      <position x="-50" y="-55" />
+      <link_to node_id_ref="0.43" total_progress="0" />
+      <link_to node_id_ref="0.61" total_progress="0" />
+    </node>
+    <node node_rule_ref="forest" id="0.61">
+      <position x="2" y="-51" />
+      <link_to node_id_ref="0.43" total_progress="58" />
+    </node>
+    <node node_rule_ref="forest" id="0.62">
+      <position x="-190" y="-63" />
+      <link_to node_id_ref="0.44" total_progress="36" />
+    </node>
+    <node node_rule_ref="farm" id="0.63">
+      <position x="-142" y="-3" />
+      <link_to node_id_ref="0.44" total_progress="44" />
+    </node>
+    <node node_rule_ref="forest" id="0.64">
+      <position x="-106" y="85" />
+      <link_to node_id_ref="0.45" total_progress="100" />
+      <link_to node_id_ref="0.66" total_progress="0" />
+    </node>
+    <node node_rule_ref="city" id="0.65">
+      <position x="-126" y="62" />
+      <link_to node_id_ref="0.45" total_progress="43" />
+    </node>
+    <node node_rule_ref="forest" id="0.66">
+      <position x="-37" y="83" />
+      <link_to node_id_ref="0.46" total_progress="0" />
+    </node>
+    <node node_rule_ref="farm" id="0.67">
+      <position x="165" y="-22" />
+      <link_to node_id_ref="0.47" total_progress="15" />
+      <link_to node_id_ref="0.68" total_progress="30" />
+    </node>
+    <node node_rule_ref="forest" id="0.68">
+      <position x="152" y="-50" />
+      <link_to node_id_ref="0.47" total_progress="0" />
+    </node>
+    <node node_rule_ref="city" id="0.69">
+      <position x="77" y="-76" />
+      <link_to node_id_ref="0.48" total_progress="20" />
+    </node>
   </location_graph>
   <actions>
-    <location_graph.create location_graph_rule_ref="location_graph_rule_id" />
-    <person.teleport person_id_ref="0">
-      <location_graph location_graph_id_ref="first world" node_id_ref="Capital" />
-    </person.teleport>
+    <location_graph.node.create_adjacent location_graph_id_ref="first world" node_id_ref="0.71" />
   </actions>
 </world_step>

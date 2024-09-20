@@ -12,6 +12,7 @@
     "jsdom": "^22.1.0",
     "prettier": "^2.8.8",
     "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
     "ws": "^8.18.0",
     "xml-formatter": "^3.6.2",
     "xmllint": "^0.1.1"
@@ -25,8 +26,8 @@
     "build": "node esbuild.config.js",
     "build-watch": "node esbuild_watch.config.js",
     "generate_documentation": "ts-node ./src/blackboxDocumentationGenerator.ts",
-    "start": "ts-node src/index.ts",
-    "start-debug": "ts-node src/index.ts ../gui-client/world.xml"
+    "start": "ts-node-dev src/index.ts",
+    "start-debug": "ts-node-dev src/index.ts ../gui-client/world.xml"
   },
   "author": "",
   "license": "ISC",
