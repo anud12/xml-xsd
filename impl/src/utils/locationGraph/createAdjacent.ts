@@ -116,7 +116,7 @@ const canCreateLinkBetween = (jsonUtil: JsonUtil, locationGraph: LocationGraphQu
 
 const createLinkTo = (jsonUtil: JsonUtil, toOptionElement: ToOptionQueryType, nodeGraphElement: NodeQueryType, targetNodeGraphElement: NodeQueryType): (writeUnit: JsonUtil) => Promise<LinkQueryType> => {
   try {
-    let ratio = "0";
+    let ratio = "1";
     const multiplier = toOptionElement.queryOptional("distance_to_progress_multiplier")
     if(multiplier) {
       ratio = jsonUtil.computeOperationFromParent(multiplier);
@@ -124,7 +124,7 @@ const createLinkTo = (jsonUtil: JsonUtil, toOptionElement: ToOptionQueryType, no
     return async () => {
       return nodeGraphElement.appendChild("link_to", undefined, {
         node_id_ref: targetNodeGraphElement.attributeMap.id,
-        total_progress: String(distanceBetweenPoints(nodeGraphElement, targetNodeGraphElement) * Number(ratio)),
+        total_progress: String(Math.trunc(distanceBetweenPoints(nodeGraphElement, targetNodeGraphElement) * Number(ratio))),
       })
     }
   } catch (e) {

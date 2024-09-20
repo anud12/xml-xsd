@@ -94,8 +94,8 @@ public class RequestTest {
     }
 
     static private void waitForHeartbeat(String url) {
-        int maxRetries = 20;
-        int currentDelay = 100;
+        int maxRetries = 10;
+        int currentDelay = 250;
 
         for (int attempt = 1; attempt <= maxRetries; attempt++) {
             try {
@@ -116,7 +116,7 @@ public class RequestTest {
                 Thread.currentThread().interrupt();
                 throw new RuntimeException("Thread was interrupted", e);
             }
-            currentDelay *= 1.5;
+            currentDelay = (int)(currentDelay * 1.5);
         }
         throw new RuntimeException("All heartbeat attempts failed");
 
