@@ -12,6 +12,7 @@ public partial class LocationGraphScene : Control
 
 	public static int SCALE = LocationGraphNodeComponent.SIZE;
 
+
 	private String locationGraphId;
 	private List<Action> unsubscribeList = new List<Action>();
 
@@ -31,7 +32,8 @@ public partial class LocationGraphScene : Control
 		var viewportContainer = GetNode<Node>("%GraphContainer");
 		StoreWorld_Step.instance.OnSet((data, unsubscribe) =>
 		{
-			if(IsInstanceValid(this) == false) {
+			if (IsInstanceValid(this) == false)
+			{
 				unsubscribe();
 				return;
 			}
@@ -62,6 +64,7 @@ public partial class LocationGraphScene : Control
 	private System.Collections.Generic.IEnumerable<Node> loadNodes(world_step worldStep)
 	{
 
+		Dictionary<Vector2, Control> node2DVector2D = new Dictionary<Vector2, Control>();
 		return worldStep.location_graph.Where(location_graph => location_graph.id == this.locationGraphId).SelectMany(location_graph =>
 		{
 			return location_graph.node.SelectMany(node =>
@@ -69,18 +72,46 @@ public partial class LocationGraphScene : Control
 						var position = node.position.First();
 						var packedScene = LocationGraphNodeComponent.PackedScene.Instantiate();
 						var locationGraphNodeComponent = packedScene.GetNode<LocationGraphNodeComponent>("./");
-
-
-
-						var newPosition = new Vector2(position.x * SCALE, position.y * SCALE);
 						//set position of the node based on the offest returned by getOffset
-						newPosition += locationGraphNodeComponent.getOffset();
-						locationGraphNodeComponent.SetPosition(newPosition);
-
 						locationGraphNodeComponent.initialize(node, worldStep);
 						locationGraphNodeComponent.setOnCreateAdjacentButtonPressed(node => addAdjacent(location_graph, node, worldStep));
 						locationGraphNodeComponent.setOnTeleportToButtonPressed(node => TeleportTo(location_graph, node, worldStep));
-						return new Node[] { locationGraphNodeComponent };
+
+						var newPosition = new Vector2(position.x * SCALE, position.y * SCALE);
+						newPosition += locationGraphNodeComponent.getOffset();
+						if (node2DVector2D.ContainsKey(newPosition))
+						{
+							var node2D = node2DVector2D[newPosition];
+							node2D.AddChild(locationGraphNodeComponent);
+							var childrenSize = node2D.GetChildren().Count;
+
+							var tableScale = 1 + (int)Math.Sqrt(childrenSize - 1);
+							GD.Print("tableScale: " + tableScale);
+
+							//iterate over children of node2d with index
+
+							for (int i = 0; i < childrenSize; i++)
+							{
+								var child = node2D.GetChild(i);
+								if (child is LocationGraphNodeComponent)
+								{
+									var chilLocationGraphNodeComponent = (LocationGraphNodeComponent)child;
+									chilLocationGraphNodeComponent.Scale = new Vector2(1f / tableScale, 1f / tableScale);
+									chilLocationGraphNodeComponent.Position = new Vector2(SCALE / tableScale * (i % tableScale), SCALE / tableScale * (i / tableScale));
+								}
+							}
+
+							return new Node[] { };
+						}
+						else
+						{
+							var node2D = new Panel();
+							node2D.Size = new Vector2(SCALE, SCALE);
+							node2D.Position = newPosition;
+							node2D.AddChild(locationGraphNodeComponent);
+							node2DVector2D[newPosition] = node2D;
+							return new Node[] { node2D };
+						}
 					});
 		});
 	}
@@ -106,7 +137,8 @@ public partial class LocationGraphScene : Control
 	{
 		GD.Print("Teleporting to " + node.id);
 
-		var teleport = new world_step__actions__person__teleport {
+		var teleport = new world_step__actions__person__teleport
+		{
 			person_id_ref = StoreSession.mainPersonId.data,
 		};
 		teleport.location_graph = new List<world_step__actions__person__teleport__location_graph> {
@@ -126,11 +158,11 @@ public partial class LocationGraphScene : Control
 	}
 	private System.Collections.Generic.IEnumerable<Node> loadLinks(world_step worldStep)
 	{
-		
+
 
 		return worldStep.location_graph.Where(location_graph => location_graph.id == this.locationGraphId).SelectMany(location_graph =>
 		{
-			var nodeById =  location_graph.node.ToDictionary(node => node.id);
+			var nodeById = location_graph.node.ToDictionary(node => node.id);
 			return location_graph.node.SelectMany(node =>
 			{
 				GD.Print("node.link_to: " + node.link_to.Count);
@@ -154,7 +186,7 @@ public partial class LocationGraphScene : Control
 					float interval = totalLength / (totalProgress);
 					Vector2 direction = (end - start).Normalized();
 
-					for (int i = 0; i < (totalProgress ); i++)
+					for (int i = 0; i < (totalProgress); i++)
 					{
 						Vector2 position = start + direction * (i * interval);
 						var label = new Label
@@ -164,39 +196,9 @@ public partial class LocationGraphScene : Control
 						};
 						line2D.AddChild(label);
 						label.Position = position;
-						label.Set("theme_override_font_sizes/font_size", SCALE/2);
+						label.Set("theme_override_font_sizes/font_size", SCALE / 6);
 					}
-
-
-					// var totalProgress = linkTo.total_progress;
-					// var totalProgressLength = totalProgress * SCALE;
-					// var dividerSize = SCALE / 2;
-					// var dividerStep = (start + end) / totalProgress;
-					// Enumerable.Range(0, totalProgress).ToList().ForEach(i =>
-					// {
-
-					// 	var label = new Label
-					// 	{
-					// 		Text = linkTo.total_progress.ToString(),
-					// 	};
-					// 	line2D.AddChild(label);
-					// 	//set position of the label to the middle of the line2D
-					// 	// label.Position = (start + end) / 2;
-
-					// 	label.Position = start + dividerStep * i;
-					// 	var totalProgressDirection = (end - start).Normalized();
-					// 	var totalProgressStart = start + totalProgressDirection * totalProgressLength;
-					// 	var totalProgressEnd = end - totalProgressDirection * totalProgressLength;
-					// 	var totalProgressLine2D = new Line2D
-					// 	{
-					// 		DefaultColor = new Color(1, 1, 1, 1),
-					// 		Points = new Vector2[] { totalProgressStart, totalProgressEnd },
-					// 	};
-					// 	line2D.AddChild(totalProgressLine2D);
-
-
-					// });
-					line2D.Width = SCALE /2;
+					line2D.Width = SCALE / 6;
 					return line2D;
 				});
 			});

@@ -25,6 +25,10 @@ public partial class LocationGraphNodeComponent : BoxContainer
 		});
 	}
 
+	public void SetScale(float scale) {
+		Scale = new Vector2(scale, scale);
+	}
+
 	//setter that takes a callback and it calls it when action button is pressed
 	public void setOnCreateAdjacentButtonPressed(Action<world_step__location_graph__node> callback) {
 		var actionButton = GetNode<Button>("%CreateAdjacentButton");
