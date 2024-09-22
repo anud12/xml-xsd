@@ -8,6 +8,7 @@ import {
 import {JsonSchema} from "../JsonSchema";
 import {mergeError} from "../../mergeError";
 import {keepNotFullLinkGroupElements} from "./filterLinkGroups";
+import {distanceBetweenNodes} from "./distanceBetweenNodes";
 
 export type NodeRuleQueryType = JsonSchema["children"]["rule_group"]["children"]["location_graph_rule"]["children"]["node_rule"];
 export type LinkGroupQueryType = JsonSchema["children"]["rule_group"]["children"]["location_graph_rule"]["children"]["node_rule"]["children"]["link_group"];
@@ -47,16 +48,6 @@ export const isDistanceBetweenPointsLessThan = (firstNode: NodeQueryType, second
   const positionDistanceSquared = Math.pow(Number(firstPosition.attributeMap.x) - Number(secondPosition.attributeMap.x), 2) + Math.pow(Number(firstPosition.attributeMap.y) - Number(secondPosition.attributeMap.y), 2);
   const maxDistanceSquared = Math.pow(maxDistance, 2);
   return maxDistanceSquared <= positionDistanceSquared;
-}
-
-const distanceBetweenPoints = (firstNode: NodeQueryType, secondNode: NodeQueryType): number => {
-  const firstPosition = firstNode.queryOptional("position");
-  const secondPosition = secondNode.queryOptional("position");
-
-  //compute distance between firstPosition and secondPosition
-
-  const positionDistanceSquared = Math.pow(Number(firstPosition.attributeMap.x) - Number(secondPosition.attributeMap.x), 2) + Math.pow(Number(firstPosition.attributeMap.y) - Number(secondPosition.attributeMap.y), 2);
-  return Math.sqrt(positionDistanceSquared);
 }
 
 export const isDistanceBetweenPointsGreaterThan = (firstNode: NodeQueryType, secondNode: NodeQueryType, minDistance: number): boolean => {
@@ -124,7 +115,7 @@ const createLinkTo = (jsonUtil: JsonUtil, toOptionElement: ToOptionQueryType, no
     return async () => {
       return nodeGraphElement.appendChild("link_to", undefined, {
         node_id_ref: targetNodeGraphElement.attributeMap.id,
-        total_progress: String(Math.trunc(distanceBetweenPoints(nodeGraphElement, targetNodeGraphElement) * Number(ratio))),
+        total_progress: String(Math.trunc(distanceBetweenNodes(nodeGraphElement, targetNodeGraphElement) * Number(ratio))),
       })
     }
   } catch (e) {

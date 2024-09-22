@@ -279,5 +279,11 @@ export type world_step = JsonQueryType<{}, {
       "node_graph__selection": type__node_graph__selection & JsonQueryType<{}, {}>;
       "person__selection": type__person_selection & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
+    "person.move_to": JsonQueryType<{"person_id_ref": string;}, {
+      "find_path_towards": type__node_graph__selection & JsonQueryType<{}, {}>;
+      "path": JsonQueryType<{}, {
+        "node": JsonQueryType<{"node_id_ref": string;}> & JsonQueryType<{}, {}>;
+      }> & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
 }>

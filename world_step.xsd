@@ -1210,7 +1210,8 @@
                                   </xs:annotation>
                                   <xs:complexType>
                                     <xs:all>
-                                      <xs:element name="distance_to_progress_multiplier" minOccurs="0" type="type__math_operations"/>
+                                      <xs:element name="distance_to_progress_multiplier" minOccurs="0"
+                                                  type="type__math_operations"/>
                                     </xs:all>
                                     <xs:attribute name="node_rule_ref" type="xs:string" use="required">
                                       <xs:annotation>
@@ -1683,7 +1684,7 @@
                     <xs:element name="link_to">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="selection"  type="type__link_to__selection"/>
+                          <xs:element name="selection" type="type__link_to__selection"/>
                         </xs:sequence>
                         <xs:attribute name="accumulated_progress" type="xs:int" use="required"/>
                       </xs:complexType>
@@ -1711,6 +1712,25 @@
                     <xs:element name="node_graph__selection" type="type__node_graph__selection"/>
                     <xs:element name="person__selection" type="type__person_selection"/>
                   </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="person.move_to" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:all>
+                    <xs:element name="find_path_towards" type="type__node_graph__selection" minOccurs="0"/>
+                    <xs:element name="path" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="node" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:attribute name="node_id_ref" use="required" type="xs:string"/>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:all>
+                  <xs:attribute name="person_id_ref" type="xs:string" use="required"/>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>

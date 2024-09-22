@@ -4,7 +4,7 @@ import {markovNext} from "./markovNext";
 import {create} from "./location/create";
 import {
   ItemQueryType,
-  JsonSchema,
+  JsonSchema, NodeGraphQueryType,
   PropertyMutationQueryType,
   SelectItemQueryType, SelectNodeGraphQueryType,
   SelectPersonQueryType,
@@ -32,6 +32,7 @@ import {createAdjacent} from "./locationGraph/createAdjacent";
 import {createPerson} from "./person/createPerson";
 import {selectNodeGraph} from "./locationGraph/selectNodeGraph";
 import {selectLinkTo, SelectLinkToQueryType} from "./locationGraph/selectLinkTo";
+import {shortestPathsInGraph, shortestPathsInGraphExcludeStart} from "./locationGraph/shortestPathsInGraph";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -179,6 +180,12 @@ export class JsonUtil {
     },
     selectLinkTo: (selectLinkToQueryType: SelectLinkToQueryType) => {
       return selectLinkTo(this, selectLinkToQueryType)
+    },
+    shortestPathsInGraph: (locationGraph: LocationGraphQueryType, startNode: NodeGraphQueryType, destinationNode: NodeGraphQueryType, numberOfPaths: number) => {
+      return shortestPathsInGraph(this, locationGraph, startNode, destinationNode, numberOfPaths)
+    },
+    shortestPathsInGraphExcludeStart: (locationGraph: LocationGraphQueryType, startNode: NodeGraphQueryType, destinationNode: NodeGraphQueryType, numberOfPaths: number) => {
+      return shortestPathsInGraphExcludeStart(this, locationGraph, startNode, destinationNode, numberOfPaths)
     }
   }
 

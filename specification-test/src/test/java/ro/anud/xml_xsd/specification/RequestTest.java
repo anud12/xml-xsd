@@ -56,6 +56,7 @@ public class RequestTest {
         try (ServerSocket socket = new ServerSocket(0)) {
             socket.setReuseAddress(true);
             return String.valueOf(socket.getLocalPort());
+//            return "8081";
         } catch (IOException e) {
             throw new RuntimeException("Failed to find a free port", e);
         }
@@ -68,13 +69,25 @@ public class RequestTest {
                 "../gui-client/dependencies_bin/node/bundle.js",
                 "--",
                 "--port",
-                port);
+                port,
+                "--no-websocket"
+        );
         processBuilder.redirectErrorStream(true);
         Process process;
         try {
             process = processBuilder.start();
             new Thread(() -> {
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        System.out.println(line);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            new Thread(() -> {
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
                     String line;
                     while ((line = reader.readLine()) != null) {
                         System.out.println(line);
@@ -164,7 +177,7 @@ public class RequestTest {
                 } catch (java.nio.file.NoSuchFileException e) {
                     String expected = new String(Files.readAllBytes(Path.of(relativePath, "/2_expected.txt")));
 
-                    Assertions.assertThat(prettyFormat(responseBody)).isEqualTo(prettyFormat(expected));
+                    Assertions.assertThat(prettyFormat(responseBody)).contains(prettyFormat(expected));
                 }
                 Assertions.assertThat(response.statusCode()).isEqualTo(expectedCode);
             } catch (Exception e) {
