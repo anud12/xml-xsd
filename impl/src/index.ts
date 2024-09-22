@@ -5,9 +5,13 @@ import {JsonSchema} from "./utils/JsonSchema";
 
 const express = require("express");
 
-const port = process.argv.includes('--port') ? process.argv[process.argv.indexOf('--port')] : 8080;
+const port = process.argv.includes('--port') ? process.argv[process.argv.indexOf('--port') + 1] : 8080;
+const noWebSocket = process.argv.includes('--no-websocket');
 
 const launchWebsocket = (onMessage: (string: string) => Promise<string>) => {
+  if(noWebSocket) {
+    return;
+  }
   const wss = new WebSocketServer({port: Number(port)});
 
   wss.on('connection', (ws) => {
@@ -78,7 +82,8 @@ app.post(`/analyze/execute/name_rule/:name_rule`, async (req, res) => {
     res.status(500).send(e.stack);
   }
 });
-app.listen(Number(port) + 1, () => {
+console.log(`Launching http://localhost:${port}`)
+app.listen(port , () => {
   console.log(`Server running on http://localhost:${port}`)
 });
 
