@@ -3950,6 +3950,230 @@ undefined
 </world_step>
 ```
 
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/person/move_to/find_path_towards](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__person__move_to__find_path_towards.md)
+
+#### Tags:
+- person
+- person.move_to
+- find_path_towards
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="1"/>
+      <entry value="2"/>
+      <entry value="3"/>
+    </randomization_table>
+  </world_metadata>
+
+  <rule_group id="rule_group_id">
+    <location_graph_rule id="location_graph_rule_id">
+      <setup>
+        <starting_node node_rule_ref="node"/>
+      </setup>
+      <node_rule id="node">
+        <link_group id="all" angle="0">
+          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
+        </link_group>
+      </node_rule>
+    </location_graph_rule>
+  </rule_group>
+  <people>
+    <person id="person_id">
+    </person>
+  </people>
+  <location_graph id="location_graph_id">
+    <rule location_graph_rule_ref="location_graph_rule_id"/>
+    <node node_rule_ref="node" id="node_id">
+      <position x="0" y="0"/>
+      <link_to node_id_ref="node_id_2" total_progress="1"/>
+      <people>
+        <person person_id_ref="person_id"/>
+      </people>
+    </node>
+    <node node_rule_ref="node" id="node_id_destination">
+      <position x="0" y="1"/>
+    </node>
+    <node node_rule_ref="node" id="node_id_2">
+      <position x="0" y="4"/>
+      <link_to node_id_ref="node_id_3" total_progress="1"/>
+    </node>
+    <node node_rule_ref="node" id="node_id_3">
+      <position x="0" y="3"/>
+      <link_to node_id_ref="node_id_4" total_progress="1"/>
+    </node>
+    <node node_rule_ref="node" id="node_id_4">
+      <position x="0" y="2"/>
+      <link_to node_id_ref="node_id_destination" total_progress="1"/>
+    </node>
+  </location_graph>
+  <actions>
+    <person.move_to person_id_ref="person_id">
+      <find_path_towards>
+        <has__node_graph_id node_graph_id_ref="node_id_destination"/>
+      </find_path_towards>
+    </person.move_to>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/person/move_to/find_path_towards/multiple_paths](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__person__move_to__find_path_towards__multiple_paths.md)
+
+#### Tags:
+- person
+- person.move_to
+- find_path_towards
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="1"/>
+      <entry value="2"/>
+      <entry value="3"/>
+    </randomization_table>
+  </world_metadata>
+
+  <rule_group id="rule_group_id">
+    <location_graph_rule id="location_graph_rule_id">
+      <setup>
+        <starting_node node_rule_ref="node"/>
+      </setup>
+      <node_rule id="node">
+        <link_group id="all" angle="0">
+          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
+        </link_group>
+      </node_rule>
+    </location_graph_rule>
+  </rule_group>
+  <people>
+    <person id="person_id">
+    </person>
+  </people>
+  <location_graph id="location_graph_id">
+    <rule location_graph_rule_ref="location_graph_rule_id"/>
+    <node node_rule_ref="node" id="node_id">
+      <position x="0" y="0"/>
+      <link_to node_id_ref="node_id_2" total_progress="1"/>
+      <link_to node_id_ref="node_id_4" total_progress="1"/>
+      <people>
+        <person person_id_ref="person_id"/>
+      </people>
+    </node>
+    <node node_rule_ref="node" id="node_id_destination">
+      <position x="0" y="1"/>
+    </node>
+    <node node_rule_ref="node" id="node_id_2">
+      <position x="0" y="4"/>
+      <link_to node_id_ref="node_id_3" total_progress="1"/>
+    </node>
+    <node node_rule_ref="node" id="node_id_3">
+      <position x="0" y="3"/>
+      <link_to node_id_ref="node_id_4" total_progress="1"/>
+    </node>
+    <node node_rule_ref="node" id="node_id_4">
+      <position x="0" y="2"/>
+      <link_to node_id_ref="node_id_destination" total_progress="1"/>
+    </node>
+  </location_graph>
+  <actions>
+    <person.move_to person_id_ref="person_id">
+      <find_path_towards>
+        <has__node_graph_id node_graph_id_ref="node_id_destination"/>
+      </find_path_towards>
+    </person.move_to>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/person/move_to/find_path_towards/multiple_paths/multiple_costs](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__person__move_to__find_path_towards__multiple_paths__multiple_costs.md)
+
+#### Tags:
+- person
+- person.move_to
+- find_path_towards
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="1"/>
+      <entry value="2"/>
+      <entry value="3"/>
+    </randomization_table>
+  </world_metadata>
+
+  <rule_group id="rule_group_id">
+    <location_graph_rule id="location_graph_rule_id">
+      <setup>
+        <starting_node node_rule_ref="node"/>
+      </setup>
+      <node_rule id="node">
+        <link_group id="all" angle="0">
+          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
+        </link_group>
+      </node_rule>
+    </location_graph_rule>
+  </rule_group>
+  <people>
+    <person id="person_id">
+    </person>
+  </people>
+  <location_graph id="location_graph_id">
+    <rule location_graph_rule_ref="location_graph_rule_id"/>
+    <node node_rule_ref="node" id="node_id">
+      <position x="0" y="0"/>
+      <link_to node_id_ref="node_id_2" total_progress="1"/>
+      <link_to node_id_ref="node_id_4" total_progress="1000"/>
+      <people>
+        <person person_id_ref="person_id"/>
+      </people>
+    </node>
+    <node node_rule_ref="node" id="node_id_destination">
+      <position x="0" y="1"/>
+    </node>
+    <node node_rule_ref="node" id="node_id_2">
+      <position x="0" y="4"/>
+      <link_to node_id_ref="node_id_3" total_progress="1"/>
+    </node>
+    <node node_rule_ref="node" id="node_id_3">
+      <position x="0" y="3"/>
+      <link_to node_id_ref="node_id_4" total_progress="1"/>
+    </node>
+    <node node_rule_ref="node" id="node_id_4">
+      <position x="0" y="2"/>
+      <link_to node_id_ref="node_id_destination" total_progress="1"/>
+    </node>
+  </location_graph>
+  <actions>
+    <person.move_to person_id_ref="person_id">
+      <find_path_towards>
+        <has__node_graph_id node_graph_id_ref="node_id_destination"/>
+      </find_path_towards>
+    </person.move_to>
+  </actions>
+</world_step>
+```
+
 ## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/person/teleport_to/has_location](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__person__teleport_to__has_location.md)
 
 #### Tags:
