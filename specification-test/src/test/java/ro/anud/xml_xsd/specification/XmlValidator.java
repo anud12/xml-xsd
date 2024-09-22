@@ -34,8 +34,6 @@ public class XmlValidator {
             var runningTestClassPath = runningTestClass.getResource("").getPath().replaceFirst("/..", "");
             var rootRelativePathString = runningTestClassPath + schemaPathString;
             rootRelativePathString = rootRelativePathString.replaceFirst(Pattern.quote("/.."),"");
-//            Assertions.assertThat(validateXMLSchema("./../world_step.xsd", xmlFile))
-//                    .isEqualTo(true);
             Assertions.assertThat(validateXMLSchema(rootRelativePathString, xmlFile))
                     .isEqualTo(true);
         });

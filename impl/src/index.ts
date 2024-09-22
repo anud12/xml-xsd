@@ -5,8 +5,10 @@ import {JsonSchema} from "./utils/JsonSchema";
 
 const express = require("express");
 
+const port = process.argv.includes('--port') ? process.argv[process.argv.indexOf('--port')] : 8080;
+
 const launchWebsocket = (onMessage: (string: string) => Promise<string>) => {
-  const wss = new WebSocketServer({port: 8080});
+  const wss = new WebSocketServer({port: Number(port)});
 
   wss.on('connection', (ws) => {
     console.log('Client connected');
@@ -50,7 +52,7 @@ app.post("/analyze/execute", async (req, res) => {
     res.setHeader("Content-Type", "text/plain");
     res.send(outJson.serialize());
   } catch (e) {
-    res.status(500).send(e.message);
+    res.status(500).send(e.stack);
   }
 });
 
@@ -72,19 +74,15 @@ app.post(`/analyze/execute/name_rule/:name_rule`, async (req, res) => {
     }
     res.send(outJson.serialize());
   } catch (e) {
-    console.log(`Sending ${e.message}`)
-    res.status(500).send(e.message);
+    console.log(`Sending ${e}`)
+    res.status(500).send(e.stack);
   }
 });
-const port = process.argv.includes('--port') ? process.argv[process.argv.indexOf('--port') + 1] : undefined;
-app.listen(port, () => {
+app.listen(Number(port) + 1, () => {
   console.log(`Server running on http://localhost:${port}`)
 });
 
 (async () => {
-  if(port) {
-    return;
-  }
   launchWebsocket(async data => {
     const dataString = data.toString();
     const errors = await validateString(dataString, console.log);

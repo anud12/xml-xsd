@@ -26,7 +26,7 @@
     "build": "node esbuild.config.js",
     "build-watch": "node esbuild_watch.config.js",
     "generate_documentation": "ts-node ./src/blackboxDocumentationGenerator.ts",
-    "start": "ts-node-dev src/index.ts",
+    "start": "ts-node-dev --max_old_space_size=8192 src/index.ts",
     "start-debug": "ts-node-dev src/index.ts ../gui-client/world.xml"
   },
   "author": "",

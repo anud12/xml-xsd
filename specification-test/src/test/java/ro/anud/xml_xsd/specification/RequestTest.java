@@ -55,7 +55,8 @@ public class RequestTest {
     static private String getFreePort() {
         try (ServerSocket socket = new ServerSocket(0)) {
             socket.setReuseAddress(true);
-            return String.valueOf(socket.getLocalPort());
+//            return String.valueOf(socket.getLocalPort());
+            return "8081";
         } catch (IOException e) {
             throw new RuntimeException("Failed to find a free port", e);
         }
@@ -75,6 +76,16 @@ public class RequestTest {
             process = processBuilder.start();
             new Thread(() -> {
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        System.out.println(line);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            new Thread(() -> {
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
                     String line;
                     while ((line = reader.readLine()) != null) {
                         System.out.println(line);

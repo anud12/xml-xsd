@@ -2059,6 +2059,42 @@
                   "value": "type__person_selection"
                 }
               }
+            },
+            "person.move_to": {
+              "metaType": "object",
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "person_id_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string"
+                  }
+                }
+              },
+              "value": {
+                "find_path_towards": {
+                  "metaType": "reference",
+                  "value": "type__node_graph__selection"
+                },
+                "path": {
+                  "metaType": "object",
+                  "value": {
+                    "node": {
+                      "metaType": "object",
+                      "value": {},
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "node_id_ref": {
+                            "metaType": "primitive",
+                            "value": "xs:string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
