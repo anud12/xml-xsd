@@ -8,7 +8,7 @@
 
 
 import {readFileSync} from "fs";
-import {readdirSync, writeFileSync} from "node:fs";
+import {readdirSync, watch, writeFileSync} from "node:fs";
 import * as fs from "fs";
 
 const outputPath = "./documentation";
@@ -16,7 +16,7 @@ const indexFile = `${outputPath}/index.md`
 
 //delete documentation folder
 if (fs.existsSync(outputPath)) {
-  fs.rmdirSync(outputPath, {recursive: true});
+  fs.rmSync(outputPath, {recursive: true});
 }
 //create documentation folder
 fs.mkdirSync(outputPath);
@@ -63,31 +63,46 @@ ${expectedXmlFile}
 `
 }
 
+const watchFolder = (folderPath: string, callback: () => void) => {
+  callback();
+  if (process.argv.includes("-w")) {
+    watch(folderPath, (eventType, filename) => {
+      if (filename) {
+        callback();
+      }
+    });
+  }
+
+};
 
 const readDirectory = (path: string, fileName:string) => {
-  const directory = readdirSync(path, {withFileTypes: true});
-  directory?.forEach(dirent => {
-    if (dirent.isDirectory()) {
-      readDirectory(`${path}/${dirent.name}`, fileName)
-    } else {
-      if (dirent.name === fileName) {
+  console.log("Reading directory:", path);
+  watchFolder(path, () => {
+    const directory = readdirSync(path, {withFileTypes: true});
+    directory?.forEach(dirent => {
+      if (dirent.isDirectory()) {
+        readDirectory(`${path}/${dirent.name}`, fileName)
+      } else {
+        if (dirent.name === fileName) {
 
-        const testFile = readFileSync(`${path}/${dirent.name}`, "utf-8");
-        const description = testFile?.split("/*description")[1]?.split("*/")[0]?.trim();
-        const tags = testFile?.split("/*tags")[1]?.split("*/")[0]?.trim();
+          const testFile = readFileSync(`${path}/${dirent.name}`, "utf-8");
+          const description = testFile?.split("/*description")[1]?.split("*/")[0]?.trim();
+          const tags = testFile?.split("/*tags")[1]?.split("*/")[0]?.trim();
 
-        const fileName = path.replace(/\//g, "__").replace("src__tests__blackbox", "documentation") + ".md";
-        let fileContent = `[Index](./index.md)\n${description ?? ""}`;
-        fileContent += sideBySideTable(path);
-        writeFileSync(`${outputPath}/${fileName}`, fileContent, {flag: "w"});
+          const fileName = path.replace(/\//g, "__").replace("src__tests__blackbox", "documentation") + ".md";
+          let fileContent = `[Index](./index.md)\n${description ?? ""}`;
+          fileContent += sideBySideTable(path);
+          writeFileSync(`${outputPath}/${fileName}`, fileContent, {flag: "w"});
 
-        const inputXmlFile = readFileSync(`${path}/${inputRelativePath}`, "utf-8").toString();
-        const inputXmlString = `#### Input XML\n\`\`\`xml\n${inputXmlFile}\n\`\`\``;
+          const inputXmlFile = readFileSync(`${path}/${inputRelativePath}`, "utf-8").toString();
+          const inputXmlString = `#### Input XML\n\`\`\`xml\n${inputXmlFile}\n\`\`\``;
 
-        writeFileSync(indexFile, `## [${path.replace("/src/tests/blackbox", "")}](./${fileName})\n\n#### Tags:\n${tags}\n\n${inputXmlString}\n\n`, {flag: "a"});
+          writeFileSync(indexFile, `## [${path.replace("/src/tests/blackbox", "")}](./${fileName})\n\n#### Tags:\n${tags}\n\n${inputXmlString}\n\n`, {flag: "a"});
+        }
+
       }
-
-    }
+    })
   })
+
 }
 readDirectory("../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox", "IndexTest.java");

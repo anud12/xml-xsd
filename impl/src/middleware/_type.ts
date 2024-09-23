@@ -6,5 +6,6 @@ import {Dispatcher} from "../utils/triggerDispatcher/dispatcher";
 //   util: JsonUtil,
 // }
 
-export type MutationMiddleware = (readUnit: JsonUtil) => (writeUnit: JsonUtil) => Promise<void>;
+export type MutationMiddleware = (readUnit: JsonUtil) => MutationResult;
+export type MutationResult = (writeUnit:JsonUtil) => Promise<void>
 export type EventMiddleware = (readUnit: JsonUtil) => (dispatcher:Dispatcher) => Promise<void>;

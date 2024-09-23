@@ -200,6 +200,7 @@ export type world_step = JsonQueryType<{}, {
         "link_group": JsonQueryType<{"id": string;  "angle": string;  "angleMax": string;  "limit": string;}, {
           "to_option": JsonQueryType<{"node_rule_ref": string;  "distance": string;  "maxDistance": string;  "adjacent_depth_limit": string;}, {
             "distance_to_progress_multiplier": type__math_operations & JsonQueryType<{}, {}>;
+            "person_progress_property": type__math_operations & JsonQueryType<{}, {}>;
           }> & JsonQueryType<{}, {}>;
         }> & JsonQueryType<{}, {}>;
         "existing_person": JsonQueryType<{"min": string;  "max": string;}, {
@@ -245,6 +246,7 @@ export type world_step = JsonQueryType<{}, {
         "people": JsonQueryType<{}, {
           "person": JsonQueryType<{"person_id_ref": string;  "accumulated_progress": any;}> & JsonQueryType<{}, {}>;
         }> & JsonQueryType<{}, {}>;
+        "person_progress_property": type__math_operations & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
       "people": JsonQueryType<{}, {
         "person": JsonQueryType<{"person_id_ref": string;}> & JsonQueryType<{}, {}>;

@@ -15,7 +15,7 @@ import {itemAssignClassification} from "./middleware/itemAssignClassification";
 import {globalAction} from "./middleware/globalAction";
 import {locationGraphCreate} from "./middleware/locationGraph/create";
 import {locationGraphCreateAdjacent} from "./middleware/locationGraph/createAdjacent";
-import {personTeleport} from "./middleware/person/personTeleport";
+import {personTeleportMiddleware} from "./middleware/person/personTeleportMiddleware";
 import {personOnPersonPropertyMutation} from "./middleware/action/personOnPersonPropertyMutation";
 import {personAction} from "./middleware/personAction";
 import {personCreateAction} from "./middleware/action/personCreateAction";
@@ -105,7 +105,7 @@ export const execute = async (readJson: JsonSchema, log: (...string: any[]) => v
   const locationGraphCreateResult = locationGraphCreate(readJsonUtil);
 
   const locationGraphCreateAdjacentResult = locationGraphCreateAdjacent(readJsonUtil);
-  const personTeleportResult = personTeleport(readJsonUtil);
+  const personTeleportResult = personTeleportMiddleware(readJsonUtil);
 
 
   await personMoveTowardsResult(readJsonUtil);

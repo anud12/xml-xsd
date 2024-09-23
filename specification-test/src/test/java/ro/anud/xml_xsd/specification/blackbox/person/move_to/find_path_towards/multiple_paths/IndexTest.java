@@ -18,7 +18,7 @@ import java.util.Collection;
     - `node_id` to `node_id_4`
     - `node_id_2` to `node_id_3`
     - `node_id_3` to `node_id_4`
-    - `node_id_4` to `node_id_5`
+    - `node_id_4` to `node_id_destination`
 - 1 `actions` with `person.move_to` having `find_path_towards` child element
 ## Then
 It should replace `find_path_towards with `path` element containing in order

@@ -33,6 +33,7 @@ import {createPerson} from "./person/createPerson";
 import {selectNodeGraph} from "./locationGraph/selectNodeGraph";
 import {selectLinkTo, SelectLinkToQueryType} from "./locationGraph/selectLinkTo";
 import {shortestPathsInGraph, shortestPathsInGraphExcludeStart} from "./locationGraph/shortestPathsInGraph";
+import {removePerson} from "./locationGraph/removePerson";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -186,6 +187,9 @@ export class JsonUtil {
     },
     shortestPathsInGraphExcludeStart: (locationGraph: LocationGraphQueryType, startNode: NodeGraphQueryType, destinationNode: NodeGraphQueryType, numberOfPaths: number) => {
       return shortestPathsInGraphExcludeStart(this, locationGraph, startNode, destinationNode, numberOfPaths)
+    },
+    removePerson: (personIdRef: string) => {
+      return removePerson(this, personIdRef)
     }
   }
 
