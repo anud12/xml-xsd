@@ -5219,6 +5219,8 @@ namespace XSD {
     //Children elements
     public List<world_step__location_graph__node__link_to__people> Get_people();
     public void Set_people(List<world_step__location_graph__node__link_to__people> value);
+    public List<type__math_operations> Get_person_progress_property();
+    public void Set_person_progress_property(List<type__math_operations> value);
     public void Deserialize (RawNode rawNode);
 
     public RawNode SerializeIntoRawNode();
@@ -5259,6 +5261,15 @@ namespace XSD {
     {
       this.people = value;
     }
+    public List<type__math_operations> person_progress_property = new List<type__math_operations>();
+    public List<type__math_operations> Get_person_progress_property()
+    {
+      return this.person_progress_property;
+    }
+    public void Set_person_progress_property(List<type__math_operations> value)
+    {
+      this.person_progress_property = value;
+    }
 
     public world_step__location_graph__node__link_to()
     {
@@ -5292,6 +5303,7 @@ namespace XSD {
       }
       //Deserialize elements
       this.people = rawNode.InitializeWithRawNode("people", this.people);
+      this.person_progress_property = rawNode.InitializeWithRawNode("person_progress_property", this.person_progress_property);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -5307,6 +5319,7 @@ namespace XSD {
       }
       //Serialize elements
       rawNode.children["people"] = people.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["person_progress_property"] = person_progress_property.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 
@@ -8211,6 +8224,76 @@ namespace XSD {
     }
   }
   /*typeDeclarationElementToInterfaceString= element*/
+  public interface Itype__math_operations {
+    //Attributes
+    public System.Int32 Get_initial();
+    public void Set_initial(System.Int32 value);
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class type__math_operations: Itype__math_operations {
+    public RawNode rawNode = new RawNode();
+    //Attributes
+    public System.Int32 initial;
+    public System.Int32 Get_initial()
+    {
+      return this.initial;
+    }
+    public void Set_initial(System.Int32 value)
+    {
+      this.initial = value;
+    }
+
+    public type__math_operations()
+    {
+    }
+
+    public type__math_operations(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public type__math_operations(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      Godot.GD.Print("Deserializing type__math_operations");
+      //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("initial"))
+      {
+        var attribute_initial = rawNode.attributes["initial"];
+        this.initial = attribute_initial.ToInt();
+      }
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize arguments
+      if(this.initial != null)
+      {
+        rawNode.attributes["initial"] = this.initial.ToString();
+      }
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        Godot.GD.Print("Serializing type__math_operations");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
   public interface Iworld_step__location_graph__node__people__person {
     //Attributes
     public System.String Get_person_id_ref();
@@ -8596,76 +8679,6 @@ namespace XSD {
     public void Serialize(XmlElement element)
     {
         Godot.GD.Print("Serializing type__link_to__selection");
-        var updatedRawNode = SerializeIntoRawNode();
-        updatedRawNode.Serialize(element);
-    }
-  }
-  /*typeDeclarationElementToInterfaceString= element*/
-  public interface Itype__math_operations {
-    //Attributes
-    public System.Int32 Get_initial();
-    public void Set_initial(System.Int32 value);
-    public void Deserialize (RawNode rawNode);
-
-    public RawNode SerializeIntoRawNode();
-
-    public void Serialize(XmlElement element);
-  }
-
-  /*typeDeclarationElementToString= element*/
-  public class type__math_operations: Itype__math_operations {
-    public RawNode rawNode = new RawNode();
-    //Attributes
-    public System.Int32 initial;
-    public System.Int32 Get_initial()
-    {
-      return this.initial;
-    }
-    public void Set_initial(System.Int32 value)
-    {
-      this.initial = value;
-    }
-
-    public type__math_operations()
-    {
-    }
-
-    public type__math_operations(RawNode rawNode)
-    {
-      Deserialize(rawNode);
-    }
-
-    public type__math_operations(XmlElement xmlElement)
-    {
-      this.rawNode.Deserialize(xmlElement);
-      Deserialize(rawNode);
-    }
-
-    public void Deserialize (RawNode rawNode)
-    {
-      this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__math_operations");
-      //Deserialize arguments
-      if(rawNode.attributes.ContainsKey("initial"))
-      {
-        var attribute_initial = rawNode.attributes["initial"];
-        this.initial = attribute_initial.ToInt();
-      }
-    }
-
-    public RawNode SerializeIntoRawNode()
-    {
-      //Serialize arguments
-      if(this.initial != null)
-      {
-        rawNode.attributes["initial"] = this.initial.ToString();
-      }
-      return rawNode;
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        Godot.GD.Print("Serializing type__math_operations");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -9616,6 +9629,8 @@ namespace XSD {
     //Children elements
     public List<type__math_operations> Get_distance_to_progress_multiplier();
     public void Set_distance_to_progress_multiplier(List<type__math_operations> value);
+    public List<type__math_operations> Get_person_progress_property();
+    public void Set_person_progress_property(List<type__math_operations> value);
     public void Deserialize (RawNode rawNode);
 
     public RawNode SerializeIntoRawNode();
@@ -9674,6 +9689,15 @@ namespace XSD {
     {
       this.distance_to_progress_multiplier = value;
     }
+    public List<type__math_operations> person_progress_property = new List<type__math_operations>();
+    public List<type__math_operations> Get_person_progress_property()
+    {
+      return this.person_progress_property;
+    }
+    public void Set_person_progress_property(List<type__math_operations> value)
+    {
+      this.person_progress_property = value;
+    }
 
     public world_step__rule_group__location_graph_rule__node_rule__link_group__to_option()
     {
@@ -9717,6 +9741,7 @@ namespace XSD {
       }
       //Deserialize elements
       this.distance_to_progress_multiplier = rawNode.InitializeWithRawNode("distance_to_progress_multiplier", this.distance_to_progress_multiplier);
+      this.person_progress_property = rawNode.InitializeWithRawNode("person_progress_property", this.person_progress_property);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -9740,6 +9765,7 @@ namespace XSD {
       }
       //Serialize elements
       rawNode.children["distance_to_progress_multiplier"] = distance_to_progress_multiplier.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["person_progress_property"] = person_progress_property.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 

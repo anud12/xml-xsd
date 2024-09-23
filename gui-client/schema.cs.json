@@ -1505,6 +1505,10 @@
                             "distance_to_progress_multiplier": {
                               "metaType": "reference",
                               "value": "type__math_operations"
+                            },
+                            "person_progress_property": {
+                              "metaType": "reference",
+                              "value": "type__math_operations"
                             }
                           }
                         }
@@ -1811,6 +1815,10 @@
                           }
                         }
                       }
+                    },
+                    "person_progress_property": {
+                      "metaType": "reference",
+                      "value": "type__math_operations"
                     }
                   }
                 },

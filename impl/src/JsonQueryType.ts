@@ -21,6 +21,7 @@ export type JsonQueryType<
   childrenList: Array<JsonQueryChildren<Children>[keyof JsonQueryChildren<Children>]>,
   setAttribute: <T extends keyof Attribute>(name: T, value: Attribute[T] | ((value: Attribute[T]) => Attribute[T])) => JsonQueryType<Attribute, Children, Tag>,
   query: <P extends keyof Children> (p: P) => Children[P],
+  queryOrAppend: <U extends keyof Children>(key: U, element?: string, attributes?: Partial<Children[U]["attributeMap"]>) => Children[U],
   queryOptional: <P extends keyof Children> (p: P) => Children[P] | undefined,
   queryAll: <P extends keyof Children> (p: P) => Array<Children[P]>,
   queryAllOptional: <P extends keyof Children> (p: P) => Array<Children[P]>,
@@ -32,18 +33,4 @@ export type JsonQueryType<
   getPath: () => string,
   serializeRaw: () => string,
   serialize: () => string
-}
-
-export type JsonQueryTypeList<
-  Elements extends JsonQueryType<Attribute, Children, Tag>,
-  Attribute extends Record<string, any> = any,
-  Children extends Record<string, JsonQueryType<any, any, any>> = any,
-  Tag extends any | never = any
-> = {
-  elements: Elements,
-  query: <P extends keyof Children> (p: P) => Children[P],
-  queryOptional: <P extends keyof Children> (p: P) => Children[P] | undefined,
-  queryAll: <P extends keyof Children> (p: P) => Array<Children[P]>,
-  queryAllOptional: <P extends keyof Children> (p: P) => Array<Children[P]>,
-  queryAllRecursiveWithAttributeFrom: <P extends JsonQueryType<any, any>>(attribute: keyof Attribute) => Array<P>,
 }

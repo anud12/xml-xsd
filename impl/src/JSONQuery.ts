@@ -1,6 +1,7 @@
 import * as jsdom from "jsdom";
 import {JsonQueryChildren, JsonQueryType} from "./JsonQueryType";
 import {mergeError} from "./mergeError";
+import {query} from "express";
 
 const prettier = require("prettier")
 
@@ -185,6 +186,13 @@ export class JsonQuery<A extends JsonQueryType<Attribute, Children, Tag>,
     } catch (e: any) {
       return undefined;
     }
+  }
+  queryOrAppend = (key: any, body?: string, attributesArg?: Attribute): any => {
+    let result = this.queryOptional(key);
+    if(result) {
+      return result;
+    }
+    return this.appendChild(key, body, attributesArg);
   }
 
   queryAllRecursiveWithAttributeFrom = (attribute: string | number | symbol): any[] => {

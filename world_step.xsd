@@ -1212,6 +1212,8 @@
                                     <xs:all>
                                       <xs:element name="distance_to_progress_multiplier" minOccurs="0"
                                                   type="type__math_operations"/>
+                                      <xs:element name="person_progress_property" minOccurs="0"
+                                                  type="type__math_operations"/>
                                     </xs:all>
                                     <xs:attribute name="node_rule_ref" type="xs:string" use="required">
                                       <xs:annotation>
@@ -1489,13 +1491,19 @@
                                       </xs:annotation>
                                     </xs:attribute>
                                     <xs:attribute name="accumulated_progress">
-
+                                      <xs:annotation>
+                                        <xs:documentation>
+                                          Represents the accumulated progress of the person in the link.
+                                        </xs:documentation>
+                                      </xs:annotation>
                                     </xs:attribute>
                                   </xs:complexType>
                                 </xs:element>
                               </xs:sequence>
                             </xs:complexType>
                           </xs:element>
+                          <xs:element name="person_progress_property" minOccurs="0"
+                                      type="type__math_operations"/>
                         </xs:all>
                         <xs:attribute name="node_id_ref" use="required" type="xs:string">
                           <xs:annotation>
