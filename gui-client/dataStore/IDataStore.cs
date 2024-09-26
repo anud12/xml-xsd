@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace dataStore
 {
@@ -21,7 +22,7 @@ namespace dataStore
             }
         }
 
-        private List<Action<T?, Action>> callbackList = new List<Action<T?, Action>>();
+        private List<(Action<T?, Action>, ExecutionContext?)> callbackList = new List<(Action<T?, Action>, ExecutionContext?)>();
 
         public DataStore()
         {
@@ -33,7 +34,16 @@ namespace dataStore
 
         private void ExecuteCallbacks()
         {
-            callbackList.ToList().ForEach(callback => callback(data, () => callbackList.Remove(callback)));
+            callbackList.ToList().ForEach(callback => {
+                callback.Item1(_data, () => {
+                    callbackList.Remove(callback);
+                });
+                // ExecutionContext.Run(callback.Item2, (object? state) => {
+                //     callback.Item1(_data, () => {
+                //         callbackList.Remove(callback);
+                //     });
+                // }, null);
+            });
         }
 
         /// <summary>
@@ -51,15 +61,16 @@ namespace dataStore
         }
         public Action OnSet(Action<T?, Action> callback)
         {
+            var context = ExecutionContext.Capture();
             var unsubscribe = () => {
-                callbackList.Remove(callback);
+                callbackList.Remove((callback, context));
             };
-            callbackList.Add(callback);
+            callbackList.Add((callback, context));
             if(data != null)
             {
                 callback(data, unsubscribe);
             }
-            return () => callbackList.Remove(callback);
+            return () => callbackList.Remove((callback, context));
         }
     }
 }

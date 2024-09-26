@@ -35,14 +35,14 @@ const applyFindPath = (readJson: JsonUtil, personMoveToElement: PersonMoveToQuer
     originNode = readJson.json.queryAllOptional("location_graph")
       .flatMap(locationGraphElement =>
         locationGraphElement.queryAllOptional("node")
-          )
+      )
       .find(nodeElement => {
         return nodeElement.queryAllOptional("link_to")
           .flatMap(linkToELement => linkToELement.queryAllOptional("people"))
           .flatMap(peopleElement => peopleElement.queryAllOptional("person"))
           .find(personElement => personElement.attributeMap.person_id_ref === person_id_ref)
       })
-    if(!originNode){
+    if (!originNode) {
       return
     }
 
@@ -86,8 +86,23 @@ const applyFindPath = (readJson: JsonUtil, personMoveToElement: PersonMoveToQuer
 const applyPathRecursiveFromLink = (readJson: JsonUtil, pathElement: PathQueryElement, destinationNodeList: Array<PathNodeQueryElement>, person_id_ref: string): MutationResult | undefined => {
 
   let personLinkElement: LinkToPersonQueryElement;
-  let linkElement = readJson.json.queryAllOptional("location_graph").flatMap(locationGraphElement => locationGraphElement.queryAllOptional("node"))
-    .flatMap(nodeElement => nodeElement.queryAllOptional("link_to"))
+  let personNodeElement = readJson.json.queryAllOptional("location_graph").flatMap(locationGraphElement => locationGraphElement.queryAllOptional("node"))
+    .find(nodeElement => nodeElement.queryAllOptional("link_to")
+      .find(linkToElement => {
+          const person = linkToElement.queryAllOptional("people")
+            .flatMap(peopleElement => peopleElement.queryAllOptional("person"))
+            .find(personElement => personElement.attributeMap.person_id_ref === person_id_ref)
+          personLinkElement = person;
+          return person;
+        }
+      )
+    )
+
+  if (!personNodeElement) {
+    return;
+  }
+
+  let linkElement = personNodeElement.queryAllOptional("link_to")
     .find(linkToElement => {
         const person = linkToElement.queryAllOptional("people")
           .flatMap(peopleElement => peopleElement.queryAllOptional("person"))
@@ -96,6 +111,8 @@ const applyPathRecursiveFromLink = (readJson: JsonUtil, pathElement: PathQueryEl
         return person;
       }
     )
+
+
   if (!linkElement) {
     return;
   }
@@ -112,27 +129,40 @@ const applyPathRecursiveFromLink = (readJson: JsonUtil, pathElement: PathQueryEl
 
   console.log("applyPathRecursiveFromLink Progress value", progressValue, totalProgress);
 
-  if (progressValue >= totalProgress) {
-    const nextRemainingProgressFraction = (progressValue - totalProgress) / progressValue;
-    console.log("applyPathRecursiveFromLink Next remaining progress fraction", nextRemainingProgressFraction);
-    return applyPathRecursive(readJson, pathElement, linkElement.attributeMap.node_id_ref, destinationNodeList, person_id_ref, nextRemainingProgressFraction);
-  }
-  return async writeJson => {
-    writeJson.locationGraph.removePerson(person_id_ref);
+  let mutationResult: MutationResult = async writeUnit => {
+    writeUnit.locationGraph.removePerson(person_id_ref);
     const peopleElement = linkElement.queryOrAppend("people");
     peopleElement.appendChild("person", null, {
       person_id_ref: person_id_ref,
       accumulated_progress: Math.trunc(progressValue)
     })
+  };
 
+
+  if (progressValue >= totalProgress) {
+    const nextRemainingProgressFraction = (progressValue - totalProgress) / progressValue;
+    const filterDestinationNodeList = destinationNodeList.filter(nodeElement => nodeElement.attributeMap.node_id_ref !== personNodeElement.attributeMap.id)
+    console.log("applyPathRecursiveFromLink Next remaining progress fraction", nextRemainingProgressFraction);
+    mutationResult = applyPathRecursive(readJson, pathElement, linkElement.attributeMap.node_id_ref, filterDestinationNodeList, person_id_ref, nextRemainingProgressFraction);
   }
+  return async writeUnit => {
+    console.log("Removing ", personNodeElement.attributeMap.id)
+    pathElement.queryAllOptional("node")
+      .filter(nodeElement => nodeElement.attributeMap.node_id_ref === personNodeElement.attributeMap.id)
+      .forEach(nodeElement => nodeElement.removeFromParent());
+    await mutationResult?.(writeUnit)
+  };
 }
 
-const applyPathRecursive = (readJson: JsonUtil, pathElement: PathQueryElement, currentNodeId: string, destinationNodeList: Array<PathNodeQueryElement>, person_id_ref: string, remainingProgressFraction: number) => {
+const applyPathRecursive = (readJson: JsonUtil, pathElement: PathQueryElement, currentNodeId: string, destinationNodeList: Array<PathNodeQueryElement>, person_id_ref: string, remainingProgressFraction: number): MutationResult => {
 
   try {
     console.log("applyPathRecursive", currentNodeId, destinationNodeList.map(e => e.attributeMap.node_id_ref), person_id_ref, remainingProgressFraction);
     const destinationNode = destinationNodeList.shift();
+
+    if (!destinationNode) {
+      return;
+    }
 
     const originNode = readJson.json.queryAllOptional("location_graph").flatMap(locationGraphElement => locationGraphElement.queryAllOptional("node"))
       .find(nodeElement => nodeElement.attributeMap.id === currentNodeId);
@@ -205,7 +235,9 @@ const applyPath = (readJson: JsonUtil, personMoveToElement: PersonMoveToQueryEle
 
     const destinationNode = pathElement.queryAllOptional("node").filter(element => element)
 
-    if (!destinationNode) {
+    console.log("Destination node", destinationNode);
+
+    if ((destinationNode?.length ?? 0) === 0) {
       return async (writeUnit) => {
         personMoveToElement.removeFromParent();
       };
@@ -232,10 +264,15 @@ const applyPath = (readJson: JsonUtil, personMoveToElement: PersonMoveToQueryEle
       return;
     }
 
+    const filteredDestinationNode = destinationNode.filter(node => node.attributeMap.node_id_ref !== originNode.attributeMap.id)
+
 
     return async writeUnit => {
-      applyPathRecursive(writeUnit, pathElement, originNode.attributeMap.id, destinationNode, person_id_ref, 1);
-      if (pathElement.queryAllOptional("node").length === 0) {
+      applyPathRecursive(writeUnit, pathElement, originNode.attributeMap.id, filteredDestinationNode, person_id_ref, 1);
+      const nodes = pathElement.queryAllOptional("node");
+      nodes.filter(nodeElement => nodeElement.attributeMap.node_id_ref === originNode.attributeMap.id)
+        .forEach(nodeElement => nodeElement.removeFromParent())
+      if (nodes.length === 0) {
         pathElement.removeFromParent();
       }
     }

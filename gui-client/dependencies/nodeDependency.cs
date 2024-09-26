@@ -18,19 +18,23 @@ namespace Dependencies
         {
             // Read if a process named gui_client_node is running
             Process[] processes = Process.GetProcessesByName("gui_client_node");
+            
+            //redirect standard output and standard error of process to be read by the application
+            
+
+
             if (processes.Length > 0)
             {
                 var runningProcess = processes[0];
-                isRunning.data = true;
 
+                isRunning.data = true;
+                runningProcess.EnableRaisingEvents = true;
                 process.data = runningProcess;
                 runningProcess.Exited += new EventHandler((sender, e) =>
                 {
-                    new Thread(() =>
-                    {
-                        isRunning.data = false;
-                        NodeDependency.process.data = null;
-                    }).Start();
+                    Console.WriteLine("nodeDependency Exited");
+                    isRunning.data = false;
+                    NodeDependency.process.data = null;
                 });
             }
             else
@@ -58,8 +62,8 @@ namespace Dependencies
                 process.StartInfo.FileName = ExecutableRelativePath;
                 process.StartInfo.Arguments = ScriptRelativePath;
                 process.StartInfo.UseShellExecute = false;
-                // process.StartInfo.RedirectStandardOutput = true;
-                // process.StartInfo.RedirectStandardError = true;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.RedirectStandardError = true;
 
                 // Register the event handler for process exit
                 process.Exited += new EventHandler((sender, e) =>
@@ -72,6 +76,24 @@ namespace Dependencies
                 // Start the process
                 process.Start();
                 NodeDependency.process.data = process;
+
+                //thread to read from standard output
+                new Thread(() =>
+                {
+                    while (process.HasExited == false)
+                    {
+                        GD.Print("nodeDependency: " + process.StandardOutput.ReadLine());
+                    }
+                }).Start();
+                //thread to read from standard error
+                new Thread(() =>
+                {
+                    while (process.HasExited == false)
+                    {
+                        GD.Print("nodeDependency [Error]: " + process.StandardError.ReadLine());
+                    }
+                }).Start();
+
                 isRunning.data = true;
                 // Optionally, read the output
                 // string output = process.StandardOutput.ReadToEnd();

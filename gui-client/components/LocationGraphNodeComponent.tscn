@@ -132,6 +132,11 @@ vertical = true
 layout_mode = 2
 alignment = 2
 
+[node name="PathToButton" type="Button" parent="PanelContainer/VBoxContainer/ActionsContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Path To"
+
 [node name="TeleportToButton" type="Button" parent="PanelContainer/VBoxContainer/ActionsContainer"]
 unique_name_in_owner = true
 layout_mode = 2

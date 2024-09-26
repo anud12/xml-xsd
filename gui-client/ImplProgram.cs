@@ -29,7 +29,7 @@ public class ImplProgram
             var documentString = stringWriter.GetStringBuilder().ToString();
 
             // Save the document string to a file
-            using (StreamWriter sw = new StreamWriter("out.xml"))
+            using (StreamWriter sw = new StreamWriter("request.xml"))
             {
                 document.Save(sw);
             }
@@ -49,6 +49,12 @@ public class ImplProgram
                 string receivedMessageTask = ReceiveMessagesAsync(ws, bytesToSend.Length);
                 string receivedMessage = receivedMessageTask;
                 GD.Print($"Received: {receivedMessage}");
+
+                //write the received message to a file
+                using (StreamWriter sw = new StreamWriter("response.xml"))
+                {
+                    sw.Write(receivedMessage);
+                }
 
                 ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", CancellationToken.None);
                 GD.Print("Connection closed");
@@ -85,12 +91,11 @@ public class ImplProgram
     {
 
         //create if not exist the file out.xml
-        if (!File.Exists("out.xml"))
+        if (!File.Exists("request.xml"))
         {
-            File.Create("out.xml").Close();
+            File.Create("request.xml").Close();
         }
-        //open file out.xml
-        using (StreamWriter sw = new StreamWriter("out.xml"))
+        using (StreamWriter sw = new StreamWriter("request.xml"))
         {
             var document = new XmlDocument();
             XmlElement worldStepElement = document.CreateElement("world_step");

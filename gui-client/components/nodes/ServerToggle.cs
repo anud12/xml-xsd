@@ -1,8 +1,8 @@
+using System;
 using Dependencies;
 using Godot;
 
 [GlobalClass]
-[Tool]
 public partial class ServerToggle: Button {
 
     [Export]
@@ -31,9 +31,5 @@ public partial class ServerToggle: Button {
             }
             CallDeferred(Button.MethodName.SetText, isRunning ? StopText : StartText);
         });
-    }
-    public override void _Ready() {
-        NodeDependency.ReadFromOs();
-        
     }
 }

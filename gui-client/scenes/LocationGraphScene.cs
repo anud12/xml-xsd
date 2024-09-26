@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 using XSD;
@@ -76,6 +77,7 @@ public partial class LocationGraphScene : Control
 						locationGraphNodeComponent.initialize(node, worldStep);
 						locationGraphNodeComponent.setOnCreateAdjacentButtonPressed(node => addAdjacent(location_graph, node, worldStep));
 						locationGraphNodeComponent.setOnTeleportToButtonPressed(node => TeleportTo(location_graph, node, worldStep));
+						locationGraphNodeComponent.setOnPathToButtonPressed(node => PathTo(location_graph, node, worldStep));
 
 						var newPosition = new Vector2(position.x * SCALE, position.y * SCALE);
 						newPosition += locationGraphNodeComponent.getOffset();
@@ -86,7 +88,6 @@ public partial class LocationGraphScene : Control
 							var childrenSize = node2D.GetChildren().Count;
 
 							var tableScale = 1 + (int)Math.Sqrt(childrenSize - 1);
-							GD.Print("tableScale: " + tableScale);
 
 							//iterate over children of node2d with index
 
@@ -156,6 +157,32 @@ public partial class LocationGraphScene : Control
 		worldStep.actions.First().person__teleport.Add(teleport);
 		LoadWorldStep.executeNextStep();
 	}
+	private void PathTo(world_step__location_graph locationGraph, world_step__location_graph__node node, world_step worldStep)
+	{
+		GD.Print("Teleporting to " + node.id);
+
+		var action = new world_step__actions__person__move_to()
+		{
+			person_id_ref = StoreSession.mainPersonId.data,
+		};
+
+		action.find_path_towards.Add(new type__node_graph__selection
+		{
+			has__node_graph_id = new List<type__node_graph__selection__has__node_graph_id>{
+				new type__node_graph__selection__has__node_graph_id
+				{
+					node_graph_id_ref = node.id,
+				}
+			}
+		});
+
+		if (worldStep.actions.Count == 0)
+		{
+			worldStep.actions.Add(new world_step__actions());
+		}
+		worldStep.actions.First().person__move_to.Add(action);
+		LoadWorldStep.executeNextStep();
+	}
 	private System.Collections.Generic.IEnumerable<Node> loadLinks(world_step worldStep)
 	{
 
@@ -179,29 +206,91 @@ public partial class LocationGraphScene : Control
 						Points = new Vector2[] { start, end },
 					};
 
-					//write hello world labels equal to total_progress on the line2D on equidistant points
-					var totalProgress = linkTo.total_progress;
-
-					float totalLength = (start - end).Length();
-					float interval = totalLength / (totalProgress);
-					Vector2 direction = (end - start).Normalized();
-
-					for (int i = 0; i < (totalProgress); i++)
-					{
-						Vector2 position = start + direction * (i * interval);
-						var label = new Label
-						{
-							Text = linkTo.total_progress.ToString(),
-							Size = new Vector2(SCALE, SCALE),
-						};
-						line2D.AddChild(label);
-						label.Position = position;
-						label.Set("theme_override_font_sizes/font_size", SCALE / 6);
-					}
+					addSteps(line2D, linkTo);
+					addPersons(line2D, linkTo, worldStep);
 					line2D.Width = SCALE / 6;
 					return line2D;
 				});
 			});
 		});
+	}
+
+	private void addSteps(Line2D line2D, world_step__location_graph__node__link_to linkTo)
+	{
+		var totalProgress = linkTo.total_progress - 1;
+
+		var start = line2D.Points[0];
+		var end = line2D.Points[1];
+
+		float totalLength = (start - end).Length();
+		float interval = totalLength / totalProgress;
+		Vector2 direction = (end - start).Normalized();
+
+		for (int i = 0; i < (totalProgress); i++)
+		{
+			Vector2 position = start + direction * (i * interval);
+			var label = new Label
+			{
+				Text = linkTo.total_progress.ToString() + "(" + i + ")",
+				// Text = "",
+				Size = new Vector2(SCALE, SCALE),
+			};
+			line2D.AddChild(label);
+			label.Position = position;
+			label.HorizontalAlignment = HorizontalAlignment.Center;
+			label.Set("theme_override_font_sizes/font_size", SCALE / 6);
+		}
+	}
+
+	private void addPersons(Line2D line2D, world_step__location_graph__node__link_to linkTo, world_step world_Step)
+	{
+		var totalProgress = (linkTo.total_progress - 1) * 2;
+
+		var start = line2D.Points[0];
+		var end = line2D.Points[1];
+
+		float totalLength = (start - end).Length();
+		float interval = totalLength / totalProgress;
+		Vector2 direction = (end - start).Normalized();
+
+		for (int i = 0; i < (totalProgress); i++)
+		{
+			if (i % 2 == 0)
+			{
+				continue;
+			}
+			Vector2 position = start + direction * (i * interval);
+			var label = new Label
+			{
+				Text = "",
+				Size = new Vector2(SCALE, SCALE),
+			};
+			line2D.AddChild(label);
+			linkTo.people?.SelectMany(people => people.person).ToList().ForEach(person =>
+			{
+				string personId = person.person_id_ref;
+				int progress = int.Parse(person.rawNode.attributes["accumulated_progress"]);
+				var relativeProgress = (i +2 ) / 2;
+				GD.Print("progress: " + progress + " Iteration: " + i + " Relative Progress: "+ relativeProgress +" Total Progress: " + totalProgress);
+
+				if(progress != relativeProgress)
+				{
+					return;
+				}
+
+				var personData = world_Step.people.SelectMany(people => people.person).Where(person => person.id == personId).First();
+				if (personData != null)
+				{
+					string personName = personData.name.ToString() + "(" + progress + ")" + "(" + relativeProgress + ")";
+					label.Text = personName.ToString();
+				}
+			});
+
+
+
+			label.Position = position;
+			label.HorizontalAlignment = HorizontalAlignment.Center;
+			label.Set("theme_override_font_sizes/font_size", SCALE / 6);
+		}
 	}
 }

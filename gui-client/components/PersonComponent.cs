@@ -35,7 +35,7 @@ public partial class PersonComponent : Control
 			var nameLabel = GetNode<Label>("%NameLabel");
 			var unsubscribe = person.OnSet((person, unsubscribe) =>
 			{
-				if(IsInstanceValid(this) == false)
+				if (IsInstanceValid(this) == false)
 				{
 					unsubscribe();
 					return;
@@ -68,7 +68,7 @@ public partial class PersonComponent : Control
 	{
 		StoreSession.mainPersonId.OnSet((mainPersonId, unsubscribe) =>
 		{
-			if(IsInstanceValid(this) == false)
+			if (IsInstanceValid(this) == false)
 			{
 				unsubscribe();
 				return;
@@ -82,7 +82,7 @@ public partial class PersonComponent : Control
 
 			worldStep.OnSet((worldStep, unsubscribe) =>
 			{
-				if(IsInstanceValid(this) == false)
+				if (IsInstanceValid(this) == false)
 				{
 					unsubscribe();
 					return;
@@ -128,7 +128,7 @@ public partial class PersonComponent : Control
 		{
 			return;
 		}
-		if(worldStep.actions.Count == 0)
+		if (worldStep.actions.Count == 0)
 		{
 			worldStep.actions.Add(new world_step__actions());
 		}
@@ -146,7 +146,7 @@ public partial class PersonComponent : Control
 	{
 		person.OnSet((person, unsubscribe) =>
 		{
-			if(IsInstanceValid(this) == false)
+			if (IsInstanceValid(this) == false)
 			{
 				unsubscribe();
 				return;
@@ -173,7 +173,7 @@ public partial class PersonComponent : Control
 	{
 		var unsubscribe = person.OnSet((person, unsubscribe) =>
 		{
-			if(IsInstanceValid(this) == false)
+			if (IsInstanceValid(this) == false)
 			{
 				unsubscribe();
 				return;

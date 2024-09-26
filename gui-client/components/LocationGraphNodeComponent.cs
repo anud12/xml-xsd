@@ -12,11 +12,13 @@ public partial class LocationGraphNodeComponent : BoxContainer
 	private world_step__location_graph__node node;
 	private world_step worldStep;
 	//populate the node with the data from the graph node
-	public void initialize(world_step__location_graph__node node, world_step worldStep) {
+	public void initialize(world_step__location_graph__node node, world_step worldStep)
+	{
 		this.node = node;
 		this.worldStep = worldStep;
 		var personContainer = GetNode<Control>("%PersonContainer");
-		node.people.SelectMany(person => person.person).ToList().ForEach(person => {
+		node.people.SelectMany(person => person.person).ToList().ForEach(person =>
+		{
 			var packedScene = PersonComponent.PackedScene.Instantiate();
 			var personComponent = packedScene.GetNode<PersonComponent>("./");
 			personComponent.initializeFromId(person.person_id_ref);
@@ -25,19 +27,30 @@ public partial class LocationGraphNodeComponent : BoxContainer
 		});
 	}
 
-	public void SetScale(float scale) {
+	public void SetScale(float scale)
+	{
 		Scale = new Vector2(scale, scale);
 	}
 
 	//setter that takes a callback and it calls it when action button is pressed
-	public void setOnCreateAdjacentButtonPressed(Action<world_step__location_graph__node> callback) {
+	public void setOnCreateAdjacentButtonPressed(Action<world_step__location_graph__node> callback)
+	{
 		var actionButton = GetNode<Button>("%CreateAdjacentButton");
 		actionButton.Pressed += () => callback(node);
 	}
-		public void setOnTeleportToButtonPressed(Action<world_step__location_graph__node> callback) {
+	public void setOnTeleportToButtonPressed(Action<world_step__location_graph__node> callback)
+	{
 		var actionButton = GetNode<Button>("%TeleportToButton");
 		actionButton.Pressed += () => callback(node);
 	}
+
+
+	public void setOnPathToButtonPressed(Action<world_step__location_graph__node> callback)
+	{
+		var actionButton = GetNode<Button>("%PathToButton");
+		actionButton.Pressed += () => callback(node);
+	}
+
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -52,8 +65,9 @@ public partial class LocationGraphNodeComponent : BoxContainer
 	}
 
 	// returns offest to align positions based on DataContainer size
-	public Vector2 getOffset() {
-		
+	public Vector2 getOffset()
+	{
+
 		return new Vector2(-SIZE / 2, -SIZE / 2);
 	}
 
