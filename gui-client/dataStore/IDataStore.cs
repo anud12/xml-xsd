@@ -35,14 +35,14 @@ namespace dataStore
         private void ExecuteCallbacks()
         {
             callbackList.ToList().ForEach(callback => {
-                callback.Item1(_data, () => {
-                    callbackList.Remove(callback);
-                });
-                // ExecutionContext.Run(callback.Item2, (object? state) => {
-                //     callback.Item1(_data, () => {
-                //         callbackList.Remove(callback);
-                //     });
-                // }, null);
+                // callback.Item1(_data, () => {
+                //     callbackList.Remove(callback);
+                // });
+                ExecutionContext.Run(callback.Item2, (object? state) => {
+                    callback.Item1(_data, () => {
+                        callbackList.Remove(callback);
+                    });
+                }, null);
             });
         }
 

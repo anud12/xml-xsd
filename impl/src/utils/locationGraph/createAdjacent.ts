@@ -9,6 +9,7 @@ import {JsonSchema} from "../JsonSchema";
 import {mergeError} from "../../mergeError";
 import {keepNotFullLinkGroupElements} from "./filterLinkGroups";
 import {distanceBetweenNodes} from "./distanceBetweenNodes";
+import {JsonQueryType} from "../../JsonQueryType";
 
 export type NodeRuleQueryType = JsonSchema["children"]["rule_group"]["children"]["location_graph_rule"]["children"]["node_rule"];
 export type LinkGroupQueryType = JsonSchema["children"]["rule_group"]["children"]["location_graph_rule"]["children"]["node_rule"]["children"]["link_group"];
@@ -113,10 +114,21 @@ const createLinkTo = (jsonUtil: JsonUtil, toOptionElement: ToOptionQueryType, no
       ratio = jsonUtil.computeOperationFromParent(multiplier);
     }
     return async () => {
-      return nodeGraphElement.appendChild("link_to", undefined, {
+      const linkToElement = nodeGraphElement.appendChild("link_to", undefined, {
         node_id_ref: targetNodeGraphElement.attributeMap.id,
         total_progress: String(Math.trunc(distanceBetweenNodes(nodeGraphElement, targetNodeGraphElement) * Number(ratio))),
-      })
+      });
+
+      const personProgressProperty = toOptionElement.queryOptional("person_progress_property");
+
+      if(personProgressProperty) {
+        linkToElement.appendChild("person_progress_property", personProgressProperty?.childrenList.map(e => (e as JsonQueryType).serializeRaw()).join(""), {
+          ...personProgressProperty?.attributeMap || {}
+        });
+      }
+
+
+      return linkToElement;
     }
   } catch (e) {
     throw mergeError(e, new Error(`Error in createLinkTo failed for nodeGraphElement:${nodeGraphElement?.getPath()} and targetNodeGraphElement:${targetNodeGraphElement?.getPath()}`));
