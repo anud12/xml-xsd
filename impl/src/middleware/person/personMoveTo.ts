@@ -1,9 +1,7 @@
 import {MutationMiddleware, MutationResult} from "../_type";
 import {JsonUtil} from "../../utils/util";
-import {JsonSchema, NodeGraphQueryType} from "../../utils/JsonSchema";
+import {JsonSchema} from "../../utils/JsonSchema";
 import {LinkToQueryType} from "../../utils/locationGraph/selectLinkTo";
-import {NodeQueryType} from "../../utils/locationGraph/createAdjacent";
-import e from "express";
 import {mergeError} from "../../mergeError";
 
 type PersonMoveToQueryElement = JsonSchema["children"]["actions"]["children"]["person.move_to"]
@@ -85,6 +83,7 @@ const applyFindPath = (readJson: JsonUtil, personMoveToElement: PersonMoveToQuer
 
 const applyPathRecursiveFromLink = (readJson: JsonUtil, pathElement: PathQueryElement, destinationNodeList: Array<PathNodeQueryElement>, person_id_ref: string): MutationResult | undefined => {
 
+  console.log("applyPathRecursiveFromLink path:", destinationNodeList.map(e => e.attributeMap.node_id_ref), "person_id_ref:", person_id_ref);
   let personLinkElement: LinkToPersonQueryElement;
   let personNodeElement = readJson.json.queryAllOptional("location_graph").flatMap(locationGraphElement => locationGraphElement.queryAllOptional("node"))
     .find(nodeElement => nodeElement.queryAllOptional("link_to")
@@ -141,7 +140,13 @@ const applyPathRecursiveFromLink = (readJson: JsonUtil, pathElement: PathQueryEl
 
   if (progressValue >= totalProgress) {
     const nextRemainingProgressFraction = (progressValue - totalProgress) / progressValue;
-    const filterDestinationNodeList = destinationNodeList.filter(nodeElement => nodeElement.attributeMap.node_id_ref !== personNodeElement.attributeMap.id)
+    const filterDestinationNodeList = destinationNodeList.filter(nodeElement => {
+      const keep = nodeElement.attributeMap.node_id_ref !== personNodeElement.attributeMap.id;
+      if (!keep) {
+        console.log("applyPathRecursiveFromLink Removing ", nodeElement.attributeMap.node_id_ref)
+      }
+      return keep;
+    })
     console.log("applyPathRecursiveFromLink Next remaining progress fraction", nextRemainingProgressFraction);
     mutationResult = applyPathRecursive(readJson, pathElement, linkElement.attributeMap.node_id_ref, filterDestinationNodeList, person_id_ref, nextRemainingProgressFraction);
   }
@@ -157,10 +162,12 @@ const applyPathRecursiveFromLink = (readJson: JsonUtil, pathElement: PathQueryEl
 const applyPathRecursive = (readJson: JsonUtil, pathElement: PathQueryElement, currentNodeId: string, destinationNodeList: Array<PathNodeQueryElement>, person_id_ref: string, remainingProgressFraction: number): MutationResult => {
 
   try {
-    console.log("applyPathRecursive", currentNodeId, destinationNodeList.map(e => e.attributeMap.node_id_ref), person_id_ref, remainingProgressFraction);
-    const destinationNode = destinationNodeList.shift();
+    const preLog = `applyPathRecursive (path: [${destinationNodeList.map(e => e.attributeMap.node_id_ref)}]): `;
+    console.log(preLog, "called with", "person_id_ref:", person_id_ref, "remainingProgressFraction:", remainingProgressFraction);
+    const destinationNode = destinationNodeList[0];
 
     if (!destinationNode) {
+      console.log(preLog, "destinationNode not found");
       return;
     }
 
@@ -175,7 +182,7 @@ const applyPathRecursive = (readJson: JsonUtil, pathElement: PathQueryElement, c
 
       readJson.locationGraph.removePerson(person_id_ref);
 
-      console.log("applyPathRecursive linkElement not found", destinationNode?.attributeMap.node_id_ref);
+      console.log(preLog, "linkElement not found", destinationNode?.attributeMap.node_id_ref);
       originNode.queryOrAppend("people").appendChild("person", null, {
         person_id_ref: person_id_ref
       })
@@ -183,17 +190,25 @@ const applyPathRecursive = (readJson: JsonUtil, pathElement: PathQueryElement, c
     }
     const progressProperty = linkElement.queryOptional("person_progress_property");
     if (!progressProperty) {
-      console.log("applyPathRecursive progressProperty not found");
+      console.log(preLog, "progressProperty not found");
       return;
     }
     const progressValue = Number(readJson.computeOperationFromParent(progressProperty)) * remainingProgressFraction;
     const totalProgress = Number(linkElement.attributeMap.total_progress);
 
     if (progressValue === 0) {
+      console.log(preLog, "reached destination");
       readJson.locationGraph.removePerson(person_id_ref);
-      const endNode = readJson.json.queryAllOptional("location_graph").flatMap(locationGraphElement => locationGraphElement.queryAllOptional("node"))
-        .find(e => e.attributeMap.id === destinationNode.attributeMap.node_id_ref);
-      console.log("applyPathRecursive progressValue === 0");
+      const endNode = readJson.json.queryAllOptional("location_graph")
+        .flatMap(locationGraphElement => locationGraphElement.queryAllOptional("node"))
+        .find(e => {
+          const keep = e.attributeMap.id === destinationNode.attributeMap.node_id_ref;
+          if(!keep) {
+            console.log(preLog, "Removing node:", e.attributeMap.id)
+          }
+          return keep
+        });
+      console.log(preLog, "progressValue === 0");
       endNode.queryOrAppend("people").appendChild("person", null, {
         person_id_ref: person_id_ref
       })
@@ -202,21 +217,48 @@ const applyPathRecursive = (readJson: JsonUtil, pathElement: PathQueryElement, c
     }
 
     if (progressValue >= totalProgress) {
+      console.log(preLog, `progressValue(${progressValue}) >= totalProgress(${totalProgress})`);
       const nextRemainingProgressFraction = (progressValue - totalProgress) / progressValue;
       destinationNode.removeFromParent();
-
-      console.log("applyPathRecursive progressValue >= totalProgress nextRemainingProgressFraction", nextRemainingProgressFraction);
-      return applyPathRecursive(readJson, pathElement, destinationNode.attributeMap.node_id_ref, destinationNodeList, person_id_ref, nextRemainingProgressFraction)
+      const filteredDestinationNodeList = destinationNodeList.filter(e => {
+        const keep = e.attributeMap.node_id_ref !== destinationNode.attributeMap.node_id_ref;
+        if (!keep) {
+          console.log(preLog, "Removing node: ", e.attributeMap.node_id_ref)
+        }
+        return keep;
+      })
+      const result = applyPathRecursive(readJson, pathElement, destinationNode.attributeMap.node_id_ref, filteredDestinationNodeList, person_id_ref, nextRemainingProgressFraction);
+      if(!result) {
+        console.log(preLog, `reached destination to node: "${destinationNode.attributeMap.node_id_ref}" due result is undefined `);
+        return async writeUnit => {
+          console.log(preLog, `dd test`);
+          writeUnit.locationGraph.removePerson(person_id_ref);
+          const endNode = writeUnit.json.queryAllOptional("location_graph")
+            .flatMap(locationGraphElement => locationGraphElement.queryAllOptional("node"))
+            .find(e => e.attributeMap.id === destinationNode.attributeMap.node_id_ref);
+          endNode.queryOrAppend("people").appendChild("person", null, {
+            person_id_ref: person_id_ref
+          })
+        }
+      }
+      return result
     }
 
-    readJson.locationGraph.removePerson(person_id_ref);
-    const peopleElement = linkElement.queryOrAppend("people");
-    const accumulated_progress = Math.trunc(progressValue);
-    console.log(`applyPathRecursive on link ${linkElement.attributeMap.node_id_ref} with accumulated_progress ${accumulated_progress} truncated from ${progressValue}`);
-    peopleElement.appendChild("person", null, {
-      person_id_ref: person_id_ref,
-      accumulated_progress: accumulated_progress
-    })
+    console.log(preLog, `reach destination to link_to: ${originNode.attributeMap.id} -> ${linkElement.attributeMap.node_id_ref}, with progressValue: ${progressValue}`);
+    return async writeUnit => {
+
+      writeUnit.locationGraph.removePerson(person_id_ref);
+      const peopleElement = linkElement.queryOrAppend("people");
+      const accumulated_progress = Math.trunc(progressValue);
+      console.log(preLog, `on link ${linkElement.attributeMap.node_id_ref} with accumulated_progress ${accumulated_progress} truncated from ${progressValue}`);
+      peopleElement.appendChild("person", null, {
+        person_id_ref: person_id_ref,
+        accumulated_progress: accumulated_progress
+      })
+    }
+
+
+
   } catch (e) {
     throw mergeError(e, new Error(`Error in applyPathRecursive computing by element ${pathElement.getPath()}`));
   }
@@ -235,7 +277,6 @@ const applyPath = (readJson: JsonUtil, personMoveToElement: PersonMoveToQueryEle
 
     const destinationNode = pathElement.queryAllOptional("node").filter(element => element)
 
-    console.log("Destination node", destinationNode);
 
     if ((destinationNode?.length ?? 0) === 0) {
       return async (writeUnit) => {
@@ -266,9 +307,9 @@ const applyPath = (readJson: JsonUtil, personMoveToElement: PersonMoveToQueryEle
 
     const filteredDestinationNode = destinationNode.filter(node => node.attributeMap.node_id_ref !== originNode.attributeMap.id)
 
-
+    const result = applyPathRecursive(readJson, pathElement, originNode.attributeMap.id, filteredDestinationNode, person_id_ref, 1);
     return async writeUnit => {
-      applyPathRecursive(writeUnit, pathElement, originNode.attributeMap.id, filteredDestinationNode, person_id_ref, 1);
+      await result?.(writeUnit);
       const nodes = pathElement.queryAllOptional("node");
       nodes.filter(nodeElement => nodeElement.attributeMap.node_id_ref === originNode.attributeMap.id)
         .forEach(nodeElement => nodeElement.removeFromParent())
