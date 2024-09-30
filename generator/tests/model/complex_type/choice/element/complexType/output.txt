@@ -2,15 +2,18 @@
   {
     "name": "by",
     "type": "element",
+    "isSingle": false,
     "value": {
       "metaType": "union",
       "value": [
         {
           "metaType": "object",
+          "isSingle": true,
           "value": {
             "do": {
               "metaType": "object",
               "value": {},
+              "isSingle": true,
               "attributes": {
                 "metaType": "object",
                 "value": {
@@ -30,10 +33,12 @@
         },
         {
           "metaType": "object",
+          "isSingle": true,
           "value": {
             "move_towards": {
               "metaType": "object",
               "value": {},
+              "isSingle": true,
               "attributes": {
                 "metaType": "object",
                 "value": {
@@ -55,6 +60,7 @@
           }
         }
       ],
+      "isSingle": false,
       "attributes": {
         "metaType": "object",
         "value": {

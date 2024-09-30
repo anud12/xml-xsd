@@ -1,60 +1,57 @@
 import {mergeError} from "./mergeError";
 
-export type Type = (TypeObject | TypePrimitive | TypeComposition | TypeUnion | TypeAny | TypeUnknown | TypeReference) & TypeAttribute;
+export type Type = (TypeObject | TypePrimitive | TypeComposition | TypeUnion | TypeAny | TypeUnknown | TypeReference);
 
-export type TypeAttribute = {
-  attributes?: Type
+export type BaseType = {
+  attributes?: Type,
+  isSingle?: boolean,
+  isNullable?: boolean,
 }
 
-
-export type TypeObject = {
+export type TypeObject = BaseType & {
   metaType: "object",
-  attributes?: Type,
   value: {
     [P: string]: Type
   }
 }
-export type TypeAny = {
-  metaType: "any"
+export type TypeAny = BaseType & {
+  metaType: "any",
 }
 
-export type TypeUnknown = {
-  metaType: "unknown"
+export type TypeUnknown = BaseType & {
+  metaType: "unknown",
 }
 
-export type TypeReference = {
+export type TypeReference = BaseType & {
   metaType: "reference"
-  attributes?: Type,
   value: string,
 }
 
-export type TypePrimitive = {
+export type TypePrimitive = BaseType & {
   metaType: "primitive"
-  attributes?: Type,
   value: string,
 }
-export type TypeComposition = {
+export type TypeComposition = BaseType & {
   metaType: "composition"
-  attributes?: Type,
   value: Type[],
 }
-export type TypeUnion = {
+export type TypeUnion = BaseType & {
   metaType: "union"
-  attributes?: Type,
   value: Type[],
 }
-export type TypeDeclaration = {
+export type TypeDeclaration = BaseType & {
   name: string,
-  type: "simple" | "complex" | "group" | "attribute" |"attributeGroup" | "element",
+  type: "simple" | "complex" | "group" | "attribute" | "attributeGroup" | "element",
   value: Type
 }
 
-export function createPrimitive(value:string): TypePrimitive {
+export function createPrimitive(value: string): TypePrimitive {
   return {
-    metaType:"primitive",
+    metaType: "primitive",
     value: value,
   }
 }
+
 export function typeUnionCreate(...second: Array<Type>): Type {
   return {
     metaType: "union",
@@ -69,11 +66,16 @@ export function typeRecursiveMerge(first: TypeObject, ...second: Array<TypeObjec
       ...value.value
     }
   }, {});
+
+  const isSingle = second.reduce((acc, value) => {
+    return value.isSingle && acc;
+  }, first.isSingle)
   const attributes = typeMerge(first.attributes, ...second.map(value => value.attributes));
 
   return {
     metaType: "object",
     attributes: attributes,
+    isSingle: isSingle,
     value: {
       ...first.value,
       ...secondValues
@@ -85,6 +87,7 @@ export function typeMergeAsUnion(...second: Array<Type>): Type {
   return typeUnionCreate(...second);
 }
 
+
 export function typeMerge(first: Type, ...second: Array<Type>): Type | undefined {
   try {
     //filter undefined values
@@ -95,17 +98,17 @@ export function typeMerge(first: Type, ...second: Array<Type>): Type | undefined
     }
     // if first is undefined ignore
     if (first === undefined) {
-      if(second === undefined || second.length === 0) {
+      if (second === undefined || second.length === 0) {
         return undefined
       }
-      if(second.length === 1) {
+      if (second.length === 1) {
         return second[0];
       }
 
       return typeMerge(second[0], ...second.slice(1));
     }
     //if second is either undefined or empty, return first;
-    if(second === undefined || second.length === 0) {
+    if (second === undefined || second.length === 0) {
       return first;
     }
 
@@ -179,8 +182,16 @@ export function typeDeclarationsToRecursive(...declarations: Array<TypeDeclarati
       [value.name]: value.value
     }
   }, {});
+  let isSingle = declarations[0]?.isSingle ?? false;
+  if (declarations.length > 1) {
+    isSingle = declarations.reduce((acc, value) => {
+      return acc && value.isSingle
+    }, isSingle)
+  }
+
   return {
     metaType: "object",
+    isSingle: isSingle,
     value: declarationsValue
   }
 }

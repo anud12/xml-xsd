@@ -17,10 +17,12 @@
     "type": "complex",
     "value": {
       "metaType": "object",
+      "isSingle": false,
       "value": {
         "property": {
           "metaType": "object",
           "value": {},
+          "isSingle": false,
           "attributes": {
             "metaType": "reference",
             "value": "property_rule_ref"

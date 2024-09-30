@@ -2,15 +2,18 @@
   {
     "name": "element",
     "type": "element",
+    "isSingle": true,
     "value": {
       "metaType": "union",
       "value": [
         {
           "metaType": "object",
+          "isSingle": true,
           "value": {
             "first_choice_element": {
               "metaType": "object",
               "value": {},
+              "isSingle": true,
               "attributes": {
                 "metaType": "object",
                 "value": {
@@ -28,6 +31,7 @@
           }
         }
       ],
+      "isSingle": true,
       "attributes": {
         "metaType": "object",
         "value": {

@@ -2,8 +2,10 @@
   {
     "name": "root",
     "type": "element",
+    "isSingle": true,
     "value": {
-      "metaType": "any"
+      "metaType": "any",
+      "isSingle": true
     }
   }
 ]

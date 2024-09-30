@@ -5,6 +5,7 @@
     "value": {
       "metaType": "object",
       "value": {},
+      "isSingle": true,
       "attributes": {
         "metaType": "object",
         "value": {
@@ -25,6 +26,7 @@
         {
           "metaType": "object",
           "value": {},
+          "isSingle": true,
           "attributes": {
             "metaType": "object",
             "value": {
@@ -45,9 +47,11 @@
   {
     "name": "root",
     "type": "element",
+    "isSingle": true,
     "value": {
-      "metaType": "primitive",
-      "value": "complexType"
+      "metaType": "reference",
+      "value": "complexType",
+      "isSingle": true
     }
   }
 ]

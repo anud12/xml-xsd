@@ -21,6 +21,7 @@ export function processSequenceType(element: XsdElement | XsdElement[]): Type[] 
     }
     if (element["xs:element"] !== undefined) {
       const type = typeDeclarationsToRecursive(...processElementTypeToDeclaration(element["xs:element"]));
+
       types.push(type);
     }
     if (element["xs:group"] !== undefined) {

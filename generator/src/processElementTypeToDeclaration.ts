@@ -21,6 +21,7 @@ export function processElementTypeToDeclaration(element: XsdElement | XsdElement
       return {
         name: element.name,
         type: "element",
+        isSingle: type.isSingle,
         value: type
       } as TypeDeclaration;
     });

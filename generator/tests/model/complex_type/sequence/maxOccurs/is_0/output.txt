@@ -8,9 +8,9 @@
       "isSingle": true,
       "value": {
         "child": {
-          "metaType": "reference",
-          "value": "xs:int",
-          "isSingle": true
+          "metaType": "primitive",
+          "value": "unknown",
+          "isSingle": false
         }
       }
     }

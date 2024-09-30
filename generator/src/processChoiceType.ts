@@ -13,10 +13,14 @@ export function processChoice(element: XsdElement | XsdElement[]): Type[] {
       return result;
     }
 
+    const maxOccurs = element.maxOccurs ?? "1";
+    const isSingle = maxOccurs === "1";
+
     if (element.type) {
       return [{
         metaType: "primitive",
-        value: element.type
+        value: element.type,
+        isSingle
       }]
     }
     let type: Type = {
@@ -29,14 +33,16 @@ export function processChoice(element: XsdElement | XsdElement[]): Type[] {
         const xsElement = element["xs:element"][key] ?? element["xs:element"];
         return {
           metaType: "object",
+          isSingle: type.isSingle,
           value: {
             [xsElement.name]: type
           },
-        }satisfies TypeObject
+        } satisfies TypeObject
       })
       type = typeMergeAsUnion(...objectType);
     }
 
+    type.isSingle = isSingle;
     return [type];
   } catch (e) {
     throw mergeError(e, new Error(`processChoice failed for ${JSON.stringify(element, null, 2)}`))

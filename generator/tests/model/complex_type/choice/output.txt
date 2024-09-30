@@ -2,28 +2,34 @@
   {
     "name": "root",
     "type": "element",
+    "isSingle": true,
     "value": {
       "metaType": "union",
       "value": [
         {
           "metaType": "object",
+          "isSingle": true,
           "value": {
             "firstChoice": {
-              "metaType": "primitive",
-              "value": "xs:string"
+              "metaType": "reference",
+              "value": "xs:string",
+              "isSingle": true
             }
           }
         },
         {
           "metaType": "object",
+          "isSingle": true,
           "value": {
             "secondChoice": {
-              "metaType": "primitive",
-              "value": "xs:int"
+              "metaType": "reference",
+              "value": "xs:int",
+              "isSingle": true
             }
           }
         }
-      ]
+      ],
+      "isSingle": true
     }
   }
 ]

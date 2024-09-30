@@ -2,9 +2,11 @@
   {
     "name": "root",
     "type": "element",
+    "isSingle": true,
     "value": {
       "metaType": "primitive",
-      "value": "unknown"
+      "value": "unknown",
+      "isSingle": true
     }
   }
 ]

@@ -13,10 +13,12 @@
           }
         }
       },
+      "isSingle": true,
       "value": {
         "complex_type": {
-          "metaType": "primitive",
-          "value": "xs:int"
+          "metaType": "reference",
+          "value": "xs:int",
+          "isSingle": true
         }
       }
     }
@@ -24,12 +26,14 @@
   {
     "name": "root",
     "type": "element",
+    "isSingle": true,
     "value": {
       "metaType": "composition",
       "value": [
         {
           "metaType": "object",
           "value": {},
+          "isSingle": true,
           "attributes": {
             "metaType": "object",
             "value": {
@@ -44,7 +48,8 @@
           "metaType": "primitive",
           "value": "complex_type"
         }
-      ]
+      ],
+      "isSingle": true
     }
   }
 ]

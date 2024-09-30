@@ -19,9 +19,11 @@
   {
     "name": "root",
     "type": "element",
+    "isSingle": true,
     "value": {
-      "metaType": "primitive",
-      "value": "simple_type"
+      "metaType": "reference",
+      "value": "simple_type",
+      "isSingle": true
     }
   }
 ]

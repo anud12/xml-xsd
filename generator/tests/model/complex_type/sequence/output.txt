@@ -2,12 +2,15 @@
   {
     "name": "root",
     "type": "element",
+    "isSingle": true,
     "value": {
       "metaType": "object",
+      "isSingle": true,
       "value": {
         "child": {
-          "metaType": "primitive",
-          "value": "xs:int"
+          "metaType": "reference",
+          "value": "xs:int",
+          "isSingle": true
         }
       }
     }

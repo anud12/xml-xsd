@@ -4,10 +4,12 @@
     "type": "group",
     "value": {
       "metaType": "object",
+      "isSingle": false,
       "value": {
         "firstElement": {
           "metaType": "object",
           "value": {},
+          "isSingle": true,
           "attributes": {
             "metaType": "object",
             "value": {
@@ -21,6 +23,7 @@
         "secondElement": {
           "metaType": "reference",
           "value": "group",
+          "isSingle": false,
           "attributes": {
             "metaType": "object",
             "value": {
@@ -41,9 +44,11 @@
   {
     "name": "root",
     "type": "element",
+    "isSingle": true,
     "value": {
       "metaType": "reference",
-      "value": "group"
+      "value": "group",
+      "isSingle": true
     }
   }
 ]

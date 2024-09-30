@@ -5,6 +5,7 @@
     "value": {
       "metaType": "object",
       "value": {},
+      "isSingle": true,
       "attributes": {
         "metaType": "object",
         "value": {
@@ -19,9 +20,11 @@
   {
     "name": "root",
     "type": "element",
+    "isSingle": true,
     "value": {
       "metaType": "object",
       "value": {},
+      "isSingle": true,
       "attributes": {
         "metaType": "reference",
         "value": "attributeGroup"

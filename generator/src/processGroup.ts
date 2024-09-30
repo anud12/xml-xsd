@@ -13,9 +13,11 @@ export function processGroup(element: XsdElement | XsdElement[]): Type[] {
       return result;
     }
     if (element.ref) {
+      const maxOccurs = element.maxOccurs ?? "1";
       return [{
         metaType: "reference",
-        value: element.ref
+        value: element.ref,
+        isSingle: maxOccurs === "1"
       }]
     }
     return processComplexType(element)
