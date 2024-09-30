@@ -7,9 +7,11 @@
       "value": {
         "property_rule_ref": {
           "metaType": "primitive",
-          "value": "xs:string"
+          "value": "xs:string",
+          "isNullable": true
         }
-      }
+      },
+      "isNullable": true
     }
   },
   {
@@ -25,7 +27,8 @@
           "isSingle": false,
           "attributes": {
             "metaType": "reference",
-            "value": "property_rule_ref"
+            "value": "property_rule_ref",
+            "isNullable": true
           }
         }
       }

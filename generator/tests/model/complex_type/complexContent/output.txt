@@ -11,9 +11,11 @@
         "value": {
           "extensionAttribute": {
             "metaType": "primitive",
-            "value": "xs:string"
+            "value": "xs:string",
+            "isNullable": true
           }
-        }
+        },
+        "isNullable": true
       }
     }
   },
@@ -32,9 +34,11 @@
             "value": {
               "attribute": {
                 "metaType": "primitive",
-                "value": "xs:string"
+                "value": "xs:string",
+                "isNullable": false
               }
-            }
+            },
+            "isNullable": false
           }
         },
         {

@@ -15,9 +15,11 @@
             "value": {
               "attribute": {
                 "metaType": "primitive",
-                "value": "xs:string"
+                "value": "xs:string",
+                "isNullable": false
               }
-            }
+            },
+            "isNullable": false
           }
         },
         "secondElement": {
@@ -29,11 +31,13 @@
             "value": {
               "attribute": {
                 "metaType": "primitive",
-                "value": "xs:int"
+                "value": "xs:int",
+                "isNullable": false
               },
               "secondAttribute": {
                 "metaType": "primitive",
-                "value": "xs:int"
+                "value": "xs:int",
+                "isNullable": false
               }
             }
           }

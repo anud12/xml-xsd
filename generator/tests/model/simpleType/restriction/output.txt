@@ -5,7 +5,8 @@
     "value": {
       "metaType": "primitive",
       "value": "xs:string"
-    }
+    },
+    "isNullable": true
   },
   {
     "name": "root",

@@ -9,9 +9,11 @@
         "value": {
           "complex_attribute": {
             "metaType": "primitive",
-            "value": "xs:int"
+            "value": "xs:int",
+            "isNullable": true
           }
-        }
+        },
+        "isNullable": true
       },
       "isSingle": true,
       "value": {
@@ -39,9 +41,11 @@
             "value": {
               "attribute": {
                 "metaType": "primitive",
-                "value": "xs:int"
+                "value": "xs:int",
+                "isNullable": false
               }
-            }
+            },
+            "isNullable": false
           }
         },
         {

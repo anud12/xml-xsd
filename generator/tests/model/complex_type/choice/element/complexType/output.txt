@@ -18,13 +18,16 @@
                 "metaType": "object",
                 "value": {
                   "action_rule_ref": {
-                    "metaType": "unknown"
+                    "metaType": "unknown",
+                    "isNullable": true
                   },
                   "action_ref": {
-                    "metaType": "unknown"
+                    "metaType": "unknown",
+                    "isNullable": true
                   },
                   "person_ref": {
-                    "metaType": "unknown"
+                    "metaType": "unknown",
+                    "isNullable": false
                   }
                 }
               }
@@ -44,15 +47,18 @@
                 "value": {
                   "layer": {
                     "metaType": "primitive",
-                    "value": "xs:string"
+                    "value": "xs:string",
+                    "isNullable": true
                   },
                   "x": {
                     "metaType": "primitive",
-                    "value": "xs:int"
+                    "value": "xs:int",
+                    "isNullable": false
                   },
                   "y": {
                     "metaType": "primitive",
-                    "value": "xs:int"
+                    "value": "xs:int",
+                    "isNullable": false
                   }
                 }
               }
@@ -65,9 +71,11 @@
         "metaType": "object",
         "value": {
           "person_ref": {
-            "metaType": "unknown"
+            "metaType": "unknown",
+            "isNullable": false
           }
-        }
+        },
+        "isNullable": false
       }
     }
   }

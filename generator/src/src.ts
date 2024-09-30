@@ -19,6 +19,7 @@ export type XsdElement = {
   ref?: string;
   minOccurs?:string,
   maxOccurs?:string,
+  use?: string
   attributes?: { [key: string]: string };
 } & {
   [P in string]: XsdElement | XsdElement[]

@@ -13,14 +13,10 @@
           "attributeName": {
             "metaType": "primitive",
             "value": "xs:int",
-            "isNullable": true
-          },
-          "secondAttributeName": {
-            "metaType": "primitive",
-            "value": "xs:int",
-            "isNullable": true
+            "isNullable": false
           }
-        }
+        },
+        "isNullable": false
       }
     }
   }

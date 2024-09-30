@@ -11,9 +11,11 @@
         "value": {
           "value": {
             "metaType": "primitive",
-            "value": "xs:integer"
+            "value": "xs:integer",
+            "isNullable": false
           }
-        }
+        },
+        "isNullable": false
       }
     }
   },

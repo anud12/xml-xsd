@@ -4,8 +4,10 @@
     "type": "simple",
     "value": {
       "metaType": "primitive",
-      "value": "unknown"
-    }
+      "value": "unknown",
+      "isNullable": true
+    },
+    "isNullable": true
   },
   {
     "name": "root",

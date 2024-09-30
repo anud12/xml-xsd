@@ -27,9 +27,11 @@
         "value": {
           "value": {
             "metaType": "primitive",
-            "value": "xs:int"
+            "value": "xs:int",
+            "isNullable": true
           }
-        }
+        },
+        "isNullable": true
       }
     }
   }

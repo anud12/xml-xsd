@@ -19,11 +19,13 @@
                 "value": {
                   "first_attribute": {
                     "metaType": "primitive",
-                    "value": "xs:string"
+                    "value": "xs:string",
+                    "isNullable": false
                   },
                   "second_attribute": {
                     "metaType": "primitive",
-                    "value": "xs:string"
+                    "value": "xs:string",
+                    "isNullable": false
                   }
                 }
               }
@@ -37,9 +39,11 @@
         "value": {
           "attribute": {
             "metaType": "primitive",
-            "value": "xs:string"
+            "value": "xs:string",
+            "isNullable": false
           }
-        }
+        },
+        "isNullable": false
       }
     }
   }
