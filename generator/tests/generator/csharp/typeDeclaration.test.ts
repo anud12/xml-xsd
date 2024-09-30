@@ -1,277 +1,440 @@
-import {Type, TypeComposition, TypeDeclaration, TypeObject, TypePrimitive, TypeUnion} from "../../../src/type";
 import {typeDeclarationToString} from "../../../src/generator/csharp/typeToString";
+import {typeDeclarationDataSets} from "../typeDeclaration";
+import {template} from "../../../src/template/template";
 
-it('should correctly handle primitive types', async () => {
-  const typeDeclaration: TypeDeclaration = {
-    name: 'test',
-    type: "element",
-    value: {
-      metaType: 'primitive',
-      value: 'string'
-    } as TypePrimitive
-  };
+it("should correctly handle primitive types" satisfies keyof typeof typeDeclarationDataSets, () => {
+  const result = typeDeclarationToString(typeDeclarationDataSets[expect.getState().currentTestName]);
+  expect(result).toEqual(template()`
+/*typeDeclarationElementToInterfaceString= element*/
+public interface Itest {
+  public void Deserialize (RawNode rawNode);
 
-  const result = typeDeclarationToString(typeDeclaration);
-  expect(result).toEqual(`public class test {
-  public WorldStepSerializer serializer = new WorldStepSerializer();
+  public RawNode SerializeIntoRawNode();
 
-  string
-
-  public test (XmlNode xmlElement) {
-    serializer.Deserialize(xmlElement, this);
-  }
+  public void Serialize(XmlElement element);
 }
 
+/*typeDeclarationElementToString= element*/
+public class test: Itest {
+  public RawNode rawNode = new RawNode();
+
+  public test()
+  {
+  }
+
+  public test(RawNode rawNode)
+  {
+    Deserialize(rawNode);
+  }
+
+  public test(XmlElement xmlElement)
+  {
+    this.rawNode.Deserialize(xmlElement);
+    Deserialize(rawNode);
+  }
+
+  public void Deserialize (RawNode rawNode)
+  {
+    this.rawNode = rawNode;
+    Godot.GD.Print("Deserializing test");
+  }
+
+  public RawNode SerializeIntoRawNode()
+  {
+    return rawNode;
+  }
+
+  public void Serialize(XmlElement element)
+  {
+      Godot.GD.Print("Serializing test");
+      var updatedRawNode = SerializeIntoRawNode();
+      updatedRawNode.Serialize(element);
+  }
+}
 `);
-});
+})
 
-it('should correctly handle recursive types', async () => {
-  const typeDeclaration: TypeDeclaration = {
-    name: 'test',
-    type: "element",
-    value: {
-      metaType: 'object',
-      value: {
-        prop: {
-          metaType: 'primitive',
-          value: 'number'
-        }
-      }
-    } as TypeObject
-  };
+it("should correctly handle recursive types" satisfies keyof typeof typeDeclarationDataSets, () => {
+  const result = typeDeclarationToString(typeDeclarationDataSets[expect.getState().currentTestName]);
+  expect(result).toEqual(template()`
+/*typeDeclarationElementToInterfaceString= element*/
+public interface Itest {
 
-  const result = typeDeclarationToString(typeDeclaration);
-  expect(result).toEqual(`public class test {
-  public WorldStepSerializer serializer = new WorldStepSerializer();
+  //Children elements
+  /* ignored children key:prop of type:number*/
+  public void Deserialize (RawNode rawNode);
 
-  [Element]
-  public number prop;
+  public RawNode SerializeIntoRawNode();
 
-  public test (XmlNode xmlElement) {
-    serializer.Deserialize(xmlElement, this);
-  }
+  public void Serialize(XmlElement element);
 }
 
+/*typeDeclarationElementToString= element*/
+public class test: Itest {
+  public RawNode rawNode = new RawNode();
+
+  //Children elements
+  /* ignored children key:prop of type:number*/
+
+  public test()
+  {
+  }
+
+  public test(RawNode rawNode)
+  {
+    Deserialize(rawNode);
+  }
+
+  public test(XmlElement xmlElement)
+  {
+    this.rawNode.Deserialize(xmlElement);
+    Deserialize(rawNode);
+  }
+
+  public void Deserialize (RawNode rawNode)
+  {
+    this.rawNode = rawNode;
+    Godot.GD.Print("Deserializing test");
+    //Deserialize elements
+
+  }
+
+  public RawNode SerializeIntoRawNode()
+  {
+    //Serialize elements
+
+    return rawNode;
+  }
+
+  public void Serialize(XmlElement element)
+  {
+      Godot.GD.Print("Serializing test");
+      var updatedRawNode = SerializeIntoRawNode();
+      updatedRawNode.Serialize(element);
+  }
+}
 `);
-});
+})
 
-it('should correctly handle recursive types with mixed levels of depth', async () => {
-  const typeDeclaration: TypeDeclaration = {
-    name: 'test',
-    type: "element",
-    value: {
-      metaType: 'object',
-      value: {
-        level1: {
-          metaType: 'object',
-          value: {
-            level2: {
-              metaType: 'object',
-              value: {},
-            },
-            anotherLevel2: {
-              metaType: 'primitive',
-              value: 'string'
-            }
-          }
-        },
-        anotherLevel1: {
-          metaType: 'primitive',
-          value: 'number'
-        }
-      }
-    } as TypeObject
-  };
+it("should correctly handle recursive types with mixed levels of depth" satisfies keyof typeof typeDeclarationDataSets, () => {
+  const result = typeDeclarationToString(typeDeclarationDataSets[expect.getState().currentTestName]);
+  expect(result).toEqual(template()`
+/*typeDeclarationElementToInterfaceString= element*/
+public interface Itest {
 
-  const result = typeDeclarationToString(typeDeclaration);
-  expect(result).toEqual(`public class test {
-  public WorldStepSerializer serializer = new WorldStepSerializer();
+  //Children elements
+  public List<test__level1> Get_level1();
+  public void Set_level1(List<test__level1> value);
+  /* ignored children key:anotherLevel1 of type:number*/
+  public void Deserialize (RawNode rawNode);
 
-  [Element]
-  public test__level1 level1;
-  [Element]
-  public number anotherLevel1;
+  public RawNode SerializeIntoRawNode();
 
-  public test (XmlNode xmlElement) {
-    serializer.Deserialize(xmlElement, this);
-  }
+  public void Serialize(XmlElement element);
 }
 
-public class test__level1 {
-  public WorldStepSerializer serializer = new WorldStepSerializer();
+/*typeDeclarationElementToString= element*/
+public class test: Itest {
+  public RawNode rawNode = new RawNode();
 
-  [Element]
-  public test__level1__level2 level2;
-  [Element]
-  public string anotherLevel2;
+  //Children elements
+  public List<test__level1> level1 = new List<test__level1>();
+  public List<test__level1> Get_level1()
+  {
+    return this.level1;
+  }
+  public void Set_level1(List<test__level1> value)
+  {
+    this.level1 = value;
+  }
+  /* ignored children key:anotherLevel1 of type:number*/
 
-  public test__level1 (XmlNode xmlElement) {
-    serializer.Deserialize(xmlElement, this);
+  public test()
+  {
+  }
+
+  public test(RawNode rawNode)
+  {
+    Deserialize(rawNode);
+  }
+
+  public test(XmlElement xmlElement)
+  {
+    this.rawNode.Deserialize(xmlElement);
+    Deserialize(rawNode);
+  }
+
+  public void Deserialize (RawNode rawNode)
+  {
+    this.rawNode = rawNode;
+    Godot.GD.Print("Deserializing test");
+    //Deserialize elements
+    this.level1 = rawNode.InitializeWithRawNode("level1", this.level1);
+  }
+
+  public RawNode SerializeIntoRawNode()
+  {
+    //Serialize elements
+    rawNode.children["level1"] = level1.Select(x => x.SerializeIntoRawNode()).ToList();
+    return rawNode;
+  }
+
+  public void Serialize(XmlElement element)
+  {
+      Godot.GD.Print("Serializing test");
+      var updatedRawNode = SerializeIntoRawNode();
+      updatedRawNode.Serialize(element);
   }
 }
+/*typeDeclarationElementToInterfaceString= element*/
+public interface Itest__level1 {
 
-public class test__level1__level2 {
-  public WorldStepSerializer serializer = new WorldStepSerializer();
+  //Children elements
+  /* ignored children key:level2 of type:boolean*/
+  /* ignored children key:anotherLevel2 of type:string*/
+  public void Deserialize (RawNode rawNode);
 
+  public RawNode SerializeIntoRawNode();
 
-  public test__level1__level2 (XmlNode xmlElement) {
-    serializer.Deserialize(xmlElement, this);
-  }
-}`);
-});
-
-it('should correctly handle composition types', async () => {
-  const typeDeclaration: TypeDeclaration = {
-    name: 'test',
-    type: "element",
-    value: {
-      metaType: 'composition',
-      value: [
-        {
-          metaType: 'primitive',
-          value: 'string'
-        },
-        {
-          metaType: 'primitive',
-          value: 'number'
-        }
-      ]
-    } as TypeComposition
-  };
-
-  const result = typeDeclarationToString(typeDeclaration);
-  expect(result).toEqual(`public class test {
-  public WorldStepSerializer serializer = new WorldStepSerializer();
-
-  string
-  number
-
-  public test (XmlNode xmlElement) {
-    serializer.Deserialize(xmlElement, this);
-  }
+  public void Serialize(XmlElement element);
 }
 
+/*typeDeclarationElementToString= element*/
+public class test__level1: Itest__level1 {
+  public RawNode rawNode = new RawNode();
+
+  //Children elements
+  /* ignored children key:level2 of type:boolean*/
+  /* ignored children key:anotherLevel2 of type:string*/
+
+  public test__level1()
+  {
+  }
+
+  public test__level1(RawNode rawNode)
+  {
+    Deserialize(rawNode);
+  }
+
+  public test__level1(XmlElement xmlElement)
+  {
+    this.rawNode.Deserialize(xmlElement);
+    Deserialize(rawNode);
+  }
+
+  public void Deserialize (RawNode rawNode)
+  {
+    this.rawNode = rawNode;
+    Godot.GD.Print("Deserializing test__level1");
+    //Deserialize elements
+
+  }
+
+  public RawNode SerializeIntoRawNode()
+  {
+    //Serialize elements
+
+    return rawNode;
+  }
+
+  public void Serialize(XmlElement element)
+  {
+      Godot.GD.Print("Serializing test__level1");
+      var updatedRawNode = SerializeIntoRawNode();
+      updatedRawNode.Serialize(element);
+  }
+}
 `);
-});
+})
 
-it('should correctly handle composition types with recursive types', async () => {
-  const typeDeclaration: TypeDeclaration = {
-    name: 'test',
-    type: "element",
-    value: {
-      metaType: 'composition',
-      value: [
-        {
-          metaType: 'object',
-          value: {
-            prop1: {
-              metaType: 'primitive',
-              value: 'string'
-            }
-          }
-        },
-        {
-          metaType: 'object',
-          value: {
-            prop2: {
-              metaType: 'primitive',
-              value: 'number'
-            }
-          }
-        }
-      ]
-    } as TypeComposition
-  };
 
-  const result = typeDeclarationToString(typeDeclaration);
-  expect(result).toEqual(`public class test {
-  public WorldStepSerializer serializer = new WorldStepSerializer();
+it("should correctly handle composition types" satisfies keyof typeof typeDeclarationDataSets, () => {
+  const result = typeDeclarationToString(typeDeclarationDataSets[expect.getState().currentTestName]);
+  expect(result).toEqual(template()`
+/*typeDeclarationElementToInterfaceString= element*/
+public interface Itest {
+  public void Deserialize (RawNode rawNode);
 
-  [Element]
-  public string prop1;
+  public RawNode SerializeIntoRawNode();
 
-  [Element]
-  public number prop2;
-
-  public test (XmlNode xmlElement) {
-    serializer.Deserialize(xmlElement, this);
-  }
+  public void Serialize(XmlElement element);
 }
 
-`);
-});
+/*typeDeclarationElementToString= element*/
+public class test: Itest {
+  public RawNode rawNode = new RawNode();
 
-it('should correctly handle union types', async () => {
-  const typeDeclaration: TypeDeclaration = {
-    name: 'test',
-    type: "element",
-    value: {
-      metaType: 'union',
-      value: [
-        {
-          metaType: 'primitive',
-          value: 'string'
-        },
-        {
-          metaType: 'primitive',
-          value: 'number'
-        }
-      ]
-    } as TypeUnion
-  };
+  public test()
+  {
+  }
 
-  const result = typeDeclarationToString(typeDeclaration);
-  expect(result).toEqual(`public class test {
-  public WorldStepSerializer serializer = new WorldStepSerializer();
+  public test(RawNode rawNode)
+  {
+    Deserialize(rawNode);
+  }
 
-  string
-  number
+  public test(XmlElement xmlElement)
+  {
+    this.rawNode.Deserialize(xmlElement);
+    Deserialize(rawNode);
+  }
 
-  public test (XmlNode xmlElement) {
-    serializer.Deserialize(xmlElement, this);
+  public void Deserialize (RawNode rawNode)
+  {
+    this.rawNode = rawNode;
+    Godot.GD.Print("Deserializing test");
+  }
+
+  public RawNode SerializeIntoRawNode()
+  {
+    return rawNode;
+  }
+
+  public void Serialize(XmlElement element)
+  {
+      Godot.GD.Print("Serializing test");
+      var updatedRawNode = SerializeIntoRawNode();
+      updatedRawNode.Serialize(element);
   }
 }
-
 `);
-});
+})
 
-it('should correctly handle object type with attributes', async () => {
-  const typeDeclaration: TypeDeclaration = {
-    name: 'test',
-    type: "element",
-    value: {
-      metaType: 'object',
-      value: {
-        prop: {
-          metaType: 'primitive',
-          value: 'string'
-        }
-      },
-      attributes: {
-        metaType: "object",
-        value: {
-          attr: {
-            metaType: 'primitive',
-            value: 'number'
-          }
-        }
-      }
-    } as Type
-  };
 
-  const result = typeDeclarationToString(typeDeclaration);
-  expect(result).toEqual(`public class test {
-  public WorldStepSerializer serializer = new WorldStepSerializer();
+it("should correctly handle composition types with recursive types" satisfies keyof typeof typeDeclarationDataSets, () => {
+  const result = typeDeclarationToString(typeDeclarationDataSets[expect.getState().currentTestName]);
+  expect(result).toEqual(template()`
+/*typeDeclarationElementToInterfaceString= element*/
+public interface Itest {
+  public void Deserialize (RawNode rawNode);
 
-  [Attribute]
-  public number attr;
-  [Element]
-  public string prop;
+  public RawNode SerializeIntoRawNode();
 
-  public test (XmlNode xmlElement) {
-    serializer.Deserialize(xmlElement, this);
-  }
+  public void Serialize(XmlElement element);
 }
 
+/*typeDeclarationElementToString= element*/
+public class test: Itest {
+  public RawNode rawNode = new RawNode();
+
+  public test()
+  {
+  }
+
+  public test(RawNode rawNode)
+  {
+    Deserialize(rawNode);
+  }
+
+  public test(XmlElement xmlElement)
+  {
+    this.rawNode.Deserialize(xmlElement);
+    Deserialize(rawNode);
+  }
+
+  public void Deserialize (RawNode rawNode)
+  {
+    this.rawNode = rawNode;
+    Godot.GD.Print("Deserializing test");
+  }
+
+  public RawNode SerializeIntoRawNode()
+  {
+    return rawNode;
+  }
+
+  public void Serialize(XmlElement element)
+  {
+      Godot.GD.Print("Serializing test");
+      var updatedRawNode = SerializeIntoRawNode();
+      updatedRawNode.Serialize(element);
+  }
+}
 `);
-});
+})
+
+it("should correctly handle object type with attributes" satisfies keyof typeof typeDeclarationDataSets, () => {
+  const result = typeDeclarationToString(typeDeclarationDataSets[expect.getState().currentTestName]);
+  expect(result).toEqual(template()`
+/*typeDeclarationElementToInterfaceString= element*/
+public interface Itest {
+  //Attributes
+  public System.String Get_attr();
+  public void Set_attr(System.String value);
+
+  //Children elements
+  /* ignored children key:prop of type:string*/
+  public void Deserialize (RawNode rawNode);
+
+  public RawNode SerializeIntoRawNode();
+
+  public void Serialize(XmlElement element);
+}
+
+/*typeDeclarationElementToString= element*/
+public class test: Itest {
+  public RawNode rawNode = new RawNode();
+  //Attributes
+  public System.String attr;
+  public System.String Get_attr()
+  {
+    return this.attr;
+  }
+  public void Set_attr(System.String value)
+  {
+    this.attr = value;
+  }
+
+  //Children elements
+  /* ignored children key:prop of type:string*/
+
+  public test()
+  {
+  }
+
+  public test(RawNode rawNode)
+  {
+    Deserialize(rawNode);
+  }
+
+  public test(XmlElement xmlElement)
+  {
+    this.rawNode.Deserialize(xmlElement);
+    Deserialize(rawNode);
+  }
+
+  public void Deserialize (RawNode rawNode)
+  {
+    this.rawNode = rawNode;
+    Godot.GD.Print("Deserializing test");
+    //Deserialize arguments
+    if(rawNode.attributes.ContainsKey("attr"))
+    {
+      var attribute_attr = rawNode.attributes["attr"];
+      this.attr = rawNode.attributes["attr"];
+    }
+    //Deserialize elements
+
+  }
+
+  public RawNode SerializeIntoRawNode()
+  {
+    //Serialize arguments
+    if(this.attr != null)
+    {
+      rawNode.attributes["attr"] = this.attr.ToString();
+    }
+    //Serialize elements
+
+    return rawNode;
+  }
+
+  public void Serialize(XmlElement element)
+  {
+      Godot.GD.Print("Serializing test");
+      var updatedRawNode = SerializeIntoRawNode();
+      updatedRawNode.Serialize(element);
+  }
+}
+`);
+})
