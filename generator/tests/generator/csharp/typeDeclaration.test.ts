@@ -1,5 +1,5 @@
 import {typeDeclarationToString} from "../../../src/generator/csharp/typeToString";
-import {typeDeclarationDataSets} from "../typeDeclaration";
+import {typeDeclarationDataSets} from "../typeDeclarationDataSets";
 import {template} from "../../../src/template/template";
 
 it("should correctly handle primitive types" satisfies keyof typeof typeDeclarationDataSets, () => {

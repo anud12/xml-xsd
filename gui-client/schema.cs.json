@@ -7,9 +7,11 @@
       "value": {
         "property_rule_ref": {
           "metaType": "primitive",
-          "value": "xs:string"
+          "value": "xs:string",
+          "isNullable": true
         }
-      }
+      },
+      "isNullable": true
     }
   },
   {
@@ -18,20 +20,24 @@
     "value": {
       "metaType": "object",
       "value": {},
+      "isSingle": true,
       "attributes": {
         "metaType": "object",
         "value": {
           "value": {
             "metaType": "primitive",
-            "value": "xs:int"
+            "value": "xs:int",
+            "isNullable": false
           },
           "max_value": {
             "metaType": "primitive",
-            "value": "xs:int"
+            "value": "xs:int",
+            "isNullable": true
           },
           "inclusive": {
             "metaType": "primitive",
-            "value": "xs:boolean"
+            "value": "xs:boolean",
+            "isNullable": false
           }
         }
       }
@@ -42,14 +48,17 @@
     "type": "complex",
     "value": {
       "metaType": "object",
+      "isSingle": true,
       "value": {
         "classifications": {
           "metaType": "reference",
-          "value": "type__classification_list"
+          "value": "type__classification_list",
+          "isSingle": true
         },
         "properties": {
           "metaType": "reference",
-          "value": "type__property_list"
+          "value": "type__property_list",
+          "isSingle": true
         }
       }
     }
@@ -59,33 +68,40 @@
     "type": "complex",
     "value": {
       "metaType": "object",
+      "isSingle": false,
       "value": {
         "add_property": {
           "metaType": "object",
           "value": {},
+          "isSingle": true,
           "attributes": {
             "metaType": "object",
             "value": {
               "property_rule_ref": {
                 "metaType": "primitive",
-                "value": "xs:string"
+                "value": "xs:string",
+                "isNullable": false
               }
-            }
+            },
+            "isNullable": false
           }
         },
         "and": {
           "metaType": "reference",
           "value": "group__operation__and",
+          "isSingle": false,
           "attributes": {
             "metaType": "object",
             "value": {
               "do": {
                 "metaType": "primitive",
-                "value": "type__group__operation__and"
+                "value": "type__group__operation__and",
+                "isNullable": false
               },
               "value": {
                 "metaType": "primitive",
-                "value": "xs:int"
+                "value": "xs:int",
+                "isNullable": false
               }
             }
           }
@@ -98,18 +114,22 @@
     "type": "complex",
     "value": {
       "metaType": "object",
+      "isSingle": true,
       "value": {
         "operation": {
           "metaType": "reference",
           "value": "group__operation__and",
+          "isSingle": true,
           "attributes": {
             "metaType": "object",
             "value": {
               "initial": {
                 "metaType": "primitive",
-                "value": "xs:int"
+                "value": "xs:int",
+                "isNullable": false
               }
-            }
+            },
+            "isNullable": false
           }
         }
       }
@@ -120,46 +140,56 @@
     "type": "complex",
     "value": {
       "metaType": "object",
+      "isSingle": false,
       "value": {
         "name_token": {
           "metaType": "union",
           "value": [
             {
               "metaType": "object",
+              "isSingle": true,
               "value": {
                 "ref": {
                   "metaType": "object",
                   "value": {},
+                  "isSingle": true,
                   "attributes": {
                     "metaType": "object",
                     "value": {
                       "name_rule_ref": {
                         "metaType": "primitive",
-                        "value": "xs:string"
+                        "value": "xs:string",
+                        "isNullable": false
                       }
-                    }
+                    },
+                    "isNullable": false
                   }
                 }
               }
             },
             {
               "metaType": "object",
+              "isSingle": true,
               "value": {
                 "one_of": {
                   "metaType": "reference",
-                  "value": "group__name_token"
+                  "value": "group__name_token",
+                  "isSingle": true
                 }
               }
             }
           ],
+          "isSingle": false,
           "attributes": {
             "metaType": "object",
             "value": {
               "prefix": {
                 "metaType": "primitive",
-                "value": "xs:string"
+                "value": "xs:string",
+                "isNullable": false
               }
-            }
+            },
+            "isNullable": false
           }
         }
       }
@@ -184,7 +214,8 @@
           "value": "\"legs\""
         }
       ]
-    }
+    },
+    "isNullable": true
   },
   {
     "name": "type_direction",
@@ -209,7 +240,8 @@
           "value": "\"west\""
         }
       ]
-    }
+    },
+    "isNullable": true
   },
   {
     "name": "type_person_select",
@@ -226,7 +258,8 @@
           "value": "\"target\""
         }
       ]
-    }
+    },
+    "isNullable": true
   },
   {
     "name": "type__group__operation__and",
@@ -267,7 +300,8 @@
           "value": "\"modulo_dice\""
         }
       ]
-    }
+    },
+    "isNullable": true
   },
   {
     "name": "type_range",
@@ -275,6 +309,7 @@
     "value": {
       "metaType": "object",
       "value": {},
+      "isSingle": true,
       "attributes": {
         "metaType": "reference",
         "value": "attributeGroup_range"
@@ -290,14 +325,17 @@
         {
           "metaType": "object",
           "value": {},
+          "isSingle": true,
           "attributes": {
             "metaType": "object",
             "value": {
               "on": {
                 "metaType": "primitive",
-                "value": "type_person_select"
+                "value": "type_person_select",
+                "isNullable": false
               }
-            }
+            },
+            "isNullable": false
           }
         },
         {
@@ -317,22 +355,28 @@
         "value": {
           "property_rule_ref": {
             "metaType": "primitive",
-            "value": "xs:string"
+            "value": "xs:string",
+            "isNullable": false
           }
-        }
+        },
+        "isNullable": false
       },
+      "isSingle": false,
       "value": {
         "from": {
           "metaType": "reference",
           "value": "group__math_operations",
+          "isSingle": false,
           "attributes": {
             "metaType": "object",
             "value": {
               "participant": {
                 "metaType": "primitive",
-                "value": "type_person_select"
+                "value": "type_person_select",
+                "isNullable": false
               }
-            }
+            },
+            "isNullable": false
           }
         }
       }
@@ -350,20 +394,24 @@
     "type": "complex",
     "value": {
       "metaType": "object",
+      "isSingle": false,
       "value": {
         "property": {
           "metaType": "object",
           "value": {},
+          "isSingle": false,
           "attributes": {
             "metaType": "object",
             "value": {
               "property_rule_ref": {
                 "metaType": "primitive",
-                "value": "xs:string"
+                "value": "xs:string",
+                "isNullable": false
               },
               "value": {
                 "metaType": "primitive",
-                "value": "xs:int"
+                "value": "xs:int",
+                "isNullable": false
               }
             }
           }
@@ -376,18 +424,22 @@
     "type": "complex",
     "value": {
       "metaType": "object",
+      "isSingle": false,
       "value": {
         "classification": {
           "metaType": "object",
           "value": {},
+          "isSingle": false,
           "attributes": {
             "metaType": "object",
             "value": {
               "classification_rule_ref": {
                 "metaType": "primitive",
-                "value": "xs:string"
+                "value": "xs:string",
+                "isNullable": false
               }
-            }
+            },
+            "isNullable": false
           }
         }
       }
@@ -399,14 +451,17 @@
     "value": {
       "metaType": "reference",
       "value": "group__item_data",
+      "isSingle": true,
       "attributes": {
         "metaType": "object",
         "value": {
           "id": {
-            "metaType": "unknown"
+            "metaType": "unknown",
+            "isNullable": false
           },
           "name": {
-            "metaType": "unknown"
+            "metaType": "unknown",
+            "isNullable": true
           }
         }
       }
@@ -420,20 +475,24 @@
       "value": [
         {
           "metaType": "object",
+          "isSingle": true,
           "value": {
             "min": {
               "metaType": "reference",
-              "value": "type__math_operations"
+              "value": "type__math_operations",
+              "isSingle": true
             },
             "max": {
               "metaType": "reference",
-              "value": "type__math_operations"
+              "value": "type__math_operations",
+              "isSingle": true
             }
           }
         },
         {
           "metaType": "reference",
-          "value": "group__item_data"
+          "value": "group__item_data",
+          "isSingle": true
         }
       ]
     }
@@ -444,19 +503,23 @@
     "value": {
       "metaType": "object",
       "value": {},
+      "isSingle": true,
       "attributes": {
         "metaType": "object",
         "value": {
           "layer": {
-            "metaType": "unknown"
+            "metaType": "unknown",
+            "isNullable": true
           },
           "x": {
             "metaType": "primitive",
-            "value": "xs:int"
+            "value": "xs:int",
+            "isNullable": false
           },
           "y": {
             "metaType": "primitive",
-            "value": "xs:int"
+            "value": "xs:int",
+            "isNullable": false
           }
         }
       }
@@ -467,18 +530,22 @@
     "type": "complex",
     "value": {
       "metaType": "object",
+      "isSingle": false,
       "value": {
         "radius": {
           "metaType": "reference",
-          "value": "type__math_operations"
+          "value": "type__math_operations",
+          "isSingle": true
         },
         "min": {
           "metaType": "reference",
-          "value": "type__math_operations"
+          "value": "type__math_operations",
+          "isSingle": true
         },
         "max": {
           "metaType": "reference",
-          "value": "type__math_operations"
+          "value": "type__math_operations",
+          "isSingle": true
         },
         "property": {
           "metaType": "object",
@@ -487,52 +554,65 @@
             "value": {
               "property_rule_ref": {
                 "metaType": "primitive",
-                "value": "xs:string"
+                "value": "xs:string",
+                "isNullable": true
               }
-            }
+            },
+            "isNullable": true
           },
+          "isSingle": false,
           "value": {
             "min": {
               "metaType": "reference",
-              "value": "type__math_operations"
+              "value": "type__math_operations",
+              "isSingle": true
             },
             "max": {
               "metaType": "reference",
-              "value": "type__math_operations"
+              "value": "type__math_operations",
+              "isSingle": true
             }
           }
         },
         "classification": {
           "metaType": "object",
           "value": {},
+          "isSingle": false,
           "attributes": {
             "metaType": "object",
             "value": {
               "classification_rule_ref": {
                 "metaType": "primitive",
-                "value": "xs:string"
+                "value": "xs:string",
+                "isNullable": false
               }
-            }
+            },
+            "isNullable": false
           }
         },
         "race": {
           "metaType": "object",
           "value": {},
+          "isSingle": true,
           "attributes": {
             "metaType": "object",
             "value": {
               "race_rule_ref": {
-                "metaType": "unknown"
+                "metaType": "unknown",
+                "isNullable": false
               }
-            }
+            },
+            "isNullable": false
           }
         },
         "inventory": {
           "metaType": "object",
+          "isSingle": true,
           "value": {
             "item": {
               "metaType": "reference",
-              "value": "type__item_selection"
+              "value": "type__item_selection",
+              "isSingle": false
             }
           }
         }
@@ -544,17 +624,21 @@
     "type": "complex",
     "value": {
       "metaType": "object",
+      "isSingle": true,
       "value": {
         "person_action_used": {
           "metaType": "object",
           "value": {},
+          "isSingle": true,
           "attributes": {
             "metaType": "object",
             "value": {
               "action_rule_ref": {
-                "metaType": "unknown"
+                "metaType": "unknown",
+                "isNullable": false
               }
-            }
+            },
+            "isNullable": false
           }
         }
       }
@@ -566,14 +650,17 @@
     "value": {
       "metaType": "reference",
       "value": "group__operation__and",
+      "isSingle": true,
       "attributes": {
         "metaType": "object",
         "value": {
           "initial": {
             "metaType": "primitive",
-            "value": "xs:int"
+            "value": "xs:int",
+            "isNullable": false
           }
-        }
+        },
+        "isNullable": false
       }
     }
   },
@@ -582,20 +669,25 @@
     "type": "complex",
     "value": {
       "metaType": "object",
+      "isSingle": true,
       "value": {
         "from": {
           "metaType": "object",
+          "isSingle": true,
           "value": {
             "person": {
               "metaType": "object",
+              "isSingle": true,
               "value": {
                 "select": {
                   "metaType": "reference",
-                  "value": "type__person_selection"
+                  "value": "type__person_selection",
+                  "isSingle": true
                 },
                 "property_mutation": {
                   "metaType": "reference",
-                  "value": "type__property_mutation"
+                  "value": "type__property_mutation",
+                  "isSingle": true
                 }
               }
             }
@@ -603,17 +695,21 @@
         },
         "on": {
           "metaType": "object",
+          "isSingle": true,
           "value": {
             "person": {
               "metaType": "object",
+              "isSingle": true,
               "value": {
                 "select": {
                   "metaType": "reference",
-                  "value": "type__person_selection"
+                  "value": "type__person_selection",
+                  "isSingle": true
                 },
                 "property_mutation": {
                   "metaType": "reference",
-                  "value": "type__property_mutation"
+                  "value": "type__property_mutation",
+                  "isSingle": true
                 }
               }
             }
@@ -627,9 +723,11 @@
     "type": "complex",
     "value": {
       "metaType": "object",
+      "isSingle": true,
       "value": {
         "in__location_graph": {
           "metaType": "object",
+          "isSingle": true,
           "value": {
             "has__location_graph_id": {
               "metaType": "object",
@@ -638,22 +736,28 @@
                 "value": {
                   "location_graph_id_ref": {
                     "metaType": "primitive",
-                    "value": "xs:string"
+                    "value": "xs:string",
+                    "isNullable": false
                   }
-                }
+                },
+                "isNullable": false
               },
+              "isSingle": true,
               "value": {
                 "or": {
                   "metaType": "object",
                   "value": {},
+                  "isSingle": false,
                   "attributes": {
                     "metaType": "object",
                     "value": {
                       "location_graph_id_ref": {
                         "metaType": "primitive",
-                        "value": "xs:string"
+                        "value": "xs:string",
+                        "isNullable": true
                       }
-                    }
+                    },
+                    "isNullable": true
                   }
                 }
               }
@@ -667,22 +771,28 @@
             "value": {
               "node_graph_id_ref": {
                 "metaType": "primitive",
-                "value": "xs:string"
+                "value": "xs:string",
+                "isNullable": false
               }
-            }
+            },
+            "isNullable": false
           },
+          "isSingle": true,
           "value": {
             "or": {
               "metaType": "object",
               "value": {},
+              "isSingle": false,
               "attributes": {
                 "metaType": "object",
                 "value": {
                   "node_graph_id_ref": {
                     "metaType": "primitive",
-                    "value": "xs:string"
+                    "value": "xs:string",
+                    "isNullable": true
                   }
-                }
+                },
+                "isNullable": true
               }
             }
           }
@@ -695,14 +805,17 @@
     "type": "complex",
     "value": {
       "metaType": "object",
+      "isSingle": true,
       "value": {
         "origin__node_graph__selection": {
           "metaType": "reference",
-          "value": "type__node_graph__selection"
+          "value": "type__node_graph__selection",
+          "isSingle": true
         },
         "destination__node_graph__selection": {
           "metaType": "reference",
-          "value": "type__node_graph__selection"
+          "value": "type__node_graph__selection",
+          "isSingle": true
         }
       }
     }
@@ -710,91 +823,113 @@
   {
     "name": "world_step",
     "type": "element",
+    "isSingle": true,
     "value": {
       "metaType": "object",
+      "isSingle": true,
       "value": {
         "world_metadata": {
           "metaType": "object",
+          "isSingle": true,
           "value": {
             "previous_world_step": {
               "metaType": "object",
               "value": {},
+              "isSingle": true,
               "attributes": {
                 "metaType": "object",
                 "value": {
                   "value": {
                     "metaType": "primitive",
-                    "value": "xs:string"
+                    "value": "xs:string",
+                    "isNullable": true
                   }
-                }
+                },
+                "isNullable": true
               }
             },
             "next_world_step": {
               "metaType": "object",
               "value": {},
+              "isSingle": true,
               "attributes": {
                 "metaType": "object",
                 "value": {
                   "value": {
                     "metaType": "primitive",
-                    "value": "xs:string"
+                    "value": "xs:string",
+                    "isNullable": true
                   }
-                }
+                },
+                "isNullable": true
               }
             },
             "elapsed_time": {
               "metaType": "object",
               "value": {},
+              "isSingle": true,
               "attributes": {
                 "metaType": "object",
                 "value": {
                   "value": {
                     "metaType": "primitive",
-                    "value": "xs:int"
+                    "value": "xs:int",
+                    "isNullable": false
                   }
-                }
+                },
+                "isNullable": false
               }
             },
             "stepDuration": {
               "metaType": "object",
               "value": {},
+              "isSingle": true,
               "attributes": {
                 "metaType": "object",
                 "value": {
                   "value": {
                     "metaType": "primitive",
-                    "value": "xs:int"
+                    "value": "xs:int",
+                    "isNullable": false
                   }
-                }
+                },
+                "isNullable": false
               }
             },
             "counter": {
               "metaType": "object",
               "value": {},
+              "isSingle": true,
               "attributes": {
                 "metaType": "object",
                 "value": {
                   "value": {
                     "metaType": "primitive",
-                    "value": "xs:int"
+                    "value": "xs:int",
+                    "isNullable": false
                   }
-                }
+                },
+                "isNullable": false
               }
             },
             "randomization_table": {
               "metaType": "object",
+              "isSingle": true,
               "value": {
                 "entry": {
                   "metaType": "object",
                   "value": {},
+                  "isSingle": false,
                   "attributes": {
                     "metaType": "object",
                     "value": {
                       "value": {
                         "metaType": "primitive",
-                        "value": "xs:int"
+                        "value": "xs:int",
+                        "isNullable": true
                       }
-                    }
+                    },
+                    "isNullable": true
                   }
                 }
               }
@@ -807,13 +942,17 @@
             "metaType": "object",
             "value": {
               "id": {
-                "metaType": "unknown"
+                "metaType": "unknown",
+                "isNullable": false
               }
-            }
+            },
+            "isNullable": false
           },
+          "isSingle": false,
           "value": {
             "property_rule": {
               "metaType": "object",
+              "isSingle": true,
               "value": {
                 "entry": {
                   "metaType": "object",
@@ -821,57 +960,68 @@
                     "metaType": "object",
                     "value": {
                       "id": {
-                        "metaType": "unknown"
+                        "metaType": "unknown",
+                        "isNullable": false
                       },
                       "units": {
-                        "metaType": "unknown"
+                        "metaType": "unknown",
+                        "isNullable": false
                       }
                     }
                   },
+                  "isSingle": false,
                   "value": {
                     "person_default": {
                       "metaType": "composition",
                       "value": [
                         {
                           "metaType": "object",
-                          "value": {}
+                          "value": {},
+                          "isSingle": true
                         },
                         {
                           "metaType": "primitive",
                           "value": "type__math_operations"
                         }
-                      ]
+                      ],
+                      "isSingle": true
                     },
                     "item_default": {
                       "metaType": "composition",
                       "value": [
                         {
                           "metaType": "object",
-                          "value": {}
+                          "value": {},
+                          "isSingle": true
                         },
                         {
                           "metaType": "primitive",
                           "value": "type__math_operations"
                         }
-                      ]
+                      ],
+                      "isSingle": true
                     },
                     "property-threshold": {
                       "metaType": "object",
                       "value": {},
+                      "isSingle": false,
                       "attributes": {
                         "metaType": "object",
                         "value": {
                           "name": {
                             "metaType": "primitive",
-                            "value": "xs:string"
+                            "value": "xs:string",
+                            "isNullable": false
                           },
                           "min-value-inclusive": {
                             "metaType": "primitive",
-                            "value": "xs:int"
+                            "value": "xs:int",
+                            "isNullable": true
                           },
                           "max-value-inclusive": {
                             "metaType": "primitive",
-                            "value": "xs:int"
+                            "value": "xs:int",
+                            "isNullable": true
                           }
                         }
                       }
@@ -882,6 +1032,7 @@
             },
             "classification_rule": {
               "metaType": "object",
+              "isSingle": true,
               "value": {
                 "entry": {
                   "metaType": "object",
@@ -889,20 +1040,25 @@
                     "metaType": "object",
                     "value": {
                       "id": {
-                        "metaType": "unknown"
+                        "metaType": "unknown",
+                        "isNullable": false
                       }
-                    }
+                    },
+                    "isNullable": false
                   },
+                  "isSingle": false,
                   "value": {
                     "property": {
                       "metaType": "reference",
                       "value": "group__math_operations",
+                      "isSingle": false,
                       "attributes": {
                         "metaType": "object",
                         "value": {
                           "property_rule_ref": {
                             "metaType": "primitive",
-                            "value": "xs:string"
+                            "value": "xs:string",
+                            "isNullable": false
                           },
                           "is": {
                             "metaType": "union",
@@ -938,23 +1094,28 @@
             },
             "name_rule": {
               "metaType": "object",
+              "isSingle": true,
               "value": {
                 "entry": {
                   "metaType": "reference",
                   "value": "group__name_token",
+                  "isSingle": false,
                   "attributes": {
                     "metaType": "object",
                     "value": {
                       "id": {
-                        "metaType": "unknown"
+                        "metaType": "unknown",
+                        "isNullable": false
                       }
-                    }
+                    },
+                    "isNullable": false
                   }
                 }
               }
             },
             "race_rule": {
               "metaType": "object",
+              "isSingle": true,
               "value": {
                 "entry": {
                   "metaType": "object",
@@ -963,48 +1124,60 @@
                     "value": {
                       "id": {
                         "metaType": "primitive",
-                        "value": "xs:string"
+                        "value": "xs:string",
+                        "isNullable": false
                       }
-                    }
+                    },
+                    "isNullable": false
                   },
+                  "isSingle": false,
                   "value": {
                     "vision": {
                       "metaType": "reference",
-                      "value": "type_range"
+                      "value": "type_range",
+                      "isSingle": true
                     },
                     "movement": {
                       "metaType": "reference",
-                      "value": "type_range"
+                      "value": "type_range",
+                      "isSingle": true
                     },
                     "name": {
                       "metaType": "object",
                       "value": {},
+                      "isSingle": true,
                       "attributes": {
                         "metaType": "object",
                         "value": {
                           "name_rule_ref": {
                             "metaType": "primitive",
-                            "value": "xs:string"
+                            "value": "xs:string",
+                            "isNullable": false
                           }
-                        }
+                        },
+                        "isNullable": false
                       }
                     },
                     "property_bonus": {
                       "metaType": "reference",
                       "value": "group__math_operations",
+                      "isSingle": false,
                       "attributes": {
                         "metaType": "object",
                         "value": {
                           "property_rule_ref": {
                             "metaType": "primitive",
-                            "value": "xs:string"
+                            "value": "xs:string",
+                            "isNullable": true
                           }
-                        }
+                        },
+                        "isNullable": true
                       }
                     },
                     "icon": {
                       "metaType": "reference",
-                      "value": "type_icon"
+                      "value": "type_icon",
+                      "isSingle": true
                     }
                   }
                 }
@@ -1012,9 +1185,11 @@
             },
             "action_rule": {
               "metaType": "object",
+              "isSingle": true,
               "value": {
                 "global": {
                   "metaType": "object",
+                  "isSingle": true,
                   "value": {
                     "entry": {
                       "metaType": "composition",
@@ -1022,21 +1197,25 @@
                         {
                           "metaType": "object",
                           "value": {},
+                          "isSingle": true,
                           "attributes": {
                             "metaType": "object",
                             "value": {
                               "id": {
                                 "metaType": "primitive",
-                                "value": "xs:string"
+                                "value": "xs:string",
+                                "isNullable": false
                               }
-                            }
+                            },
+                            "isNullable": false
                           }
                         },
                         {
                           "metaType": "primitive",
                           "value": "type__action"
                         }
-                      ]
+                      ],
+                      "isSingle": false
                     }
                   }
                 },
@@ -1047,45 +1226,56 @@
                     "value": {
                       "id": {
                         "metaType": "primitive",
-                        "value": "xs:string"
+                        "value": "xs:string",
+                        "isNullable": false
                       }
-                    }
+                    },
+                    "isNullable": false
                   },
+                  "isSingle": false,
                   "value": {
                     "test": {
                       "metaType": "object",
+                      "isSingle": true,
                       "value": {
                         "value": {
                           "metaType": "reference",
                           "value": "group__math_operations",
+                          "isSingle": true,
                           "attributes": {
                             "metaType": "object",
                             "value": {
                               "target": {
                                 "metaType": "primitive",
-                                "value": "type_person_select"
+                                "value": "type_person_select",
+                                "isNullable": false
                               }
-                            }
+                            },
+                            "isNullable": false
                           }
                         },
                         "expected": {
                           "metaType": "reference",
                           "value": "group__math_operations",
+                          "isSingle": true,
                           "attributes": {
                             "metaType": "object",
                             "value": {
                               "target": {
                                 "metaType": "primitive",
-                                "value": "type_person_select"
+                                "value": "type_person_select",
+                                "isNullable": false
                               }
-                            }
+                            },
+                            "isNullable": false
                           }
                         }
                       }
                     },
                     "property_mutation": {
                       "metaType": "reference",
-                      "value": "type__property_mutation_on"
+                      "value": "type__property_mutation_on",
+                      "isSingle": true
                     },
                     "location_mutation": {
                       "metaType": "object",
@@ -1093,26 +1283,32 @@
                         "metaType": "object",
                         "value": {
                           "name": {
-                            "metaType": "unknown"
+                            "metaType": "unknown",
+                            "isNullable": true
                           },
                           "on": {
                             "metaType": "primitive",
-                            "value": "type_person_select"
+                            "value": "type_person_select",
+                            "isNullable": false
                           }
                         }
                       },
+                      "isSingle": true,
                       "value": {
                         "from": {
                           "metaType": "reference",
                           "value": "group__math_operations",
+                          "isSingle": false,
                           "attributes": {
                             "metaType": "object",
                             "value": {
                               "participant": {
                                 "metaType": "primitive",
-                                "value": "type_person_select"
+                                "value": "type_person_select",
+                                "isNullable": false
                               }
-                            }
+                            },
+                            "isNullable": false
                           }
                         }
                       }
@@ -1123,6 +1319,7 @@
             },
             "item_rule": {
               "metaType": "object",
+              "isSingle": true,
               "value": {
                 "entry": {
                   "metaType": "object",
@@ -1130,38 +1327,48 @@
                     "metaType": "object",
                     "value": {
                       "id": {
-                        "metaType": "unknown"
+                        "metaType": "unknown",
+                        "isNullable": false
                       }
-                    }
+                    },
+                    "isNullable": false
                   },
+                  "isSingle": false,
                   "value": {
                     "name": {
                       "metaType": "reference",
-                      "value": "group__name_token"
+                      "value": "group__name_token",
+                      "isSingle": true
                     },
                     "weight-kg": {
                       "metaType": "object",
                       "value": {},
+                      "isSingle": true,
                       "attributes": {
                         "metaType": "object",
                         "value": {
                           "value": {
-                            "metaType": "unknown"
+                            "metaType": "unknown",
+                            "isNullable": true
                           }
-                        }
+                        },
+                        "isNullable": true
                       }
                     },
                     "wearable": {
                       "metaType": "object",
                       "value": {},
+                      "isSingle": false,
                       "attributes": {
                         "metaType": "object",
                         "value": {
                           "slot": {
                             "metaType": "primitive",
-                            "value": "item_slot"
+                            "value": "item_slot",
+                            "isNullable": true
                           }
-                        }
+                        },
+                        "isNullable": true
                       }
                     }
                   }
@@ -1170,6 +1377,7 @@
             },
             "events_rule": {
               "metaType": "object",
+              "isSingle": true,
               "value": {
                 "entry": {
                   "metaType": "object",
@@ -1178,17 +1386,22 @@
                     "value": {
                       "id": {
                         "metaType": "primitive",
-                        "value": "xs:string"
+                        "value": "xs:string",
+                        "isNullable": false
                       }
-                    }
+                    },
+                    "isNullable": false
                   },
+                  "isSingle": false,
                   "value": {
                     "when": {
                       "metaType": "reference",
-                      "value": "type__trigger"
+                      "value": "type__trigger",
+                      "isSingle": false
                     },
                     "then": {
                       "metaType": "object",
+                      "isSingle": false,
                       "value": {
                         "select_person": {
                           "metaType": "composition",
@@ -1196,6 +1409,7 @@
                             {
                               "metaType": "object",
                               "value": {},
+                              "isSingle": true,
                               "attributes": {
                                 "metaType": "object",
                                 "value": {
@@ -1219,7 +1433,8 @@
                               "metaType": "primitive",
                               "value": "type__person_selection"
                             }
-                          ]
+                          ],
+                          "isSingle": false
                         },
                         "select_item": {
                           "metaType": "composition",
@@ -1227,6 +1442,7 @@
                             {
                               "metaType": "object",
                               "value": {},
+                              "isSingle": true,
                               "attributes": {
                                 "metaType": "object",
                                 "value": {
@@ -1250,7 +1466,8 @@
                               "metaType": "primitive",
                               "value": "type__item_selection"
                             }
-                          ]
+                          ],
+                          "isSingle": false
                         },
                         "property_mutation": {
                           "metaType": "composition",
@@ -1258,21 +1475,25 @@
                             {
                               "metaType": "object",
                               "value": {},
+                              "isSingle": true,
                               "attributes": {
                                 "metaType": "object",
                                 "value": {
                                   "property_rule_ref": {
                                     "metaType": "primitive",
-                                    "value": "xs:string"
+                                    "value": "xs:string",
+                                    "isNullable": false
                                   }
-                                }
+                                },
+                                "isNullable": false
                               }
                             },
                             {
                               "metaType": "primitive",
                               "value": "type__math_operations"
                             }
-                          ]
+                          ],
+                          "isSingle": true
                         }
                       }
                     }
@@ -1282,6 +1503,7 @@
             },
             "locations_markov_chain": {
               "metaType": "object",
+              "isSingle": true,
               "value": {
                 "location_markov_link": {
                   "metaType": "object",
@@ -1289,35 +1511,44 @@
                     "metaType": "object",
                     "value": {
                       "type": {
-                        "metaType": "unknown"
+                        "metaType": "unknown",
+                        "isNullable": false
                       }
-                    }
+                    },
+                    "isNullable": false
                   },
+                  "isSingle": false,
                   "value": {
                     "tag": {
                       "metaType": "object",
                       "value": {},
+                      "isSingle": false,
                       "attributes": {
                         "metaType": "object",
                         "value": {
                           "name": {
-                            "metaType": "unknown"
+                            "metaType": "unknown",
+                            "isNullable": false
                           }
-                        }
+                        },
+                        "isNullable": false
                       }
                     },
                     "sibling": {
                       "metaType": "object",
                       "value": {},
+                      "isSingle": false,
                       "attributes": {
                         "metaType": "object",
                         "value": {
                           "location_rule_ref": {
-                            "metaType": "unknown"
+                            "metaType": "unknown",
+                            "isNullable": false
                           },
                           "quantity": {
                             "metaType": "primitive",
-                            "value": "xs:int"
+                            "value": "xs:int",
+                            "isNullable": true
                           },
                           "position": {
                             "metaType": "union",
@@ -1353,7 +1584,8 @@
                     },
                     "icon": {
                       "metaType": "reference",
-                      "value": "type_icon"
+                      "value": "type_icon",
+                      "isSingle": true
                     }
                   }
                 }
@@ -1366,25 +1598,32 @@
                 "value": {
                   "id": {
                     "metaType": "primitive",
-                    "value": "xs:string"
+                    "value": "xs:string",
+                    "isNullable": false
                   }
-                }
+                },
+                "isNullable": false
               },
+              "isSingle": true,
               "value": {
                 "setup": {
                   "metaType": "object",
+                  "isSingle": true,
                   "value": {
                     "starting_node": {
                       "metaType": "object",
                       "value": {},
+                      "isSingle": true,
                       "attributes": {
                         "metaType": "object",
                         "value": {
                           "node_rule_ref": {
                             "metaType": "primitive",
-                            "value": "xs:string"
+                            "value": "xs:string",
+                            "isNullable": false
                           }
-                        }
+                        },
+                        "isNullable": false
                       }
                     },
                     "necessary_node": {
@@ -1394,30 +1633,37 @@
                         "value": {
                           "node_rule_ref": {
                             "metaType": "primitive",
-                            "value": "xs:string"
+                            "value": "xs:string",
+                            "isNullable": false
                           },
                           "min": {
                             "metaType": "primitive",
-                            "value": "xs:int"
+                            "value": "xs:int",
+                            "isNullable": false
                           },
                           "max": {
                             "metaType": "primitive",
-                            "value": "xs:int"
+                            "value": "xs:int",
+                            "isNullable": true
                           }
                         }
                       },
+                      "isSingle": false,
                       "value": {
                         "or": {
                           "metaType": "object",
                           "value": {},
+                          "isSingle": false,
                           "attributes": {
                             "metaType": "object",
                             "value": {
                               "node_rule_ref": {
                                 "metaType": "primitive",
-                                "value": "xs:string"
+                                "value": "xs:string",
+                                "isNullable": false
                               }
-                            }
+                            },
+                            "isNullable": false
                           }
                         }
                       }
@@ -1431,25 +1677,32 @@
                     "value": {
                       "id": {
                         "metaType": "primitive",
-                        "value": "xs:string"
+                        "value": "xs:string",
+                        "isNullable": false
                       }
-                    }
+                    },
+                    "isNullable": false
                   },
+                  "isSingle": false,
                   "value": {
                     "classifications": {
                       "metaType": "object",
+                      "isSingle": true,
                       "value": {
                         "classification": {
                           "metaType": "object",
                           "value": {},
+                          "isSingle": false,
                           "attributes": {
                             "metaType": "object",
                             "value": {
                               "location_classification_rule_ref": {
                                 "metaType": "primitive",
-                                "value": "xs:string"
+                                "value": "xs:string",
+                                "isNullable": false
                               }
-                            }
+                            },
+                            "isNullable": false
                           }
                         }
                       }
@@ -1461,22 +1714,27 @@
                         "value": {
                           "id": {
                             "metaType": "primitive",
-                            "value": "xs:string"
+                            "value": "xs:string",
+                            "isNullable": false
                           },
                           "angle": {
                             "metaType": "primitive",
-                            "value": "xs:int"
+                            "value": "xs:int",
+                            "isNullable": false
                           },
                           "angleMax": {
                             "metaType": "primitive",
-                            "value": "xs:int"
+                            "value": "xs:int",
+                            "isNullable": true
                           },
                           "limit": {
                             "metaType": "primitive",
-                            "value": "xs:int"
+                            "value": "xs:int",
+                            "isNullable": true
                           }
                         }
                       },
+                      "isSingle": false,
                       "value": {
                         "to_option": {
                           "metaType": "object",
@@ -1485,30 +1743,37 @@
                             "value": {
                               "node_rule_ref": {
                                 "metaType": "primitive",
-                                "value": "xs:string"
+                                "value": "xs:string",
+                                "isNullable": false
                               },
                               "distance": {
                                 "metaType": "primitive",
-                                "value": "xs:int"
+                                "value": "xs:int",
+                                "isNullable": false
                               },
                               "maxDistance": {
                                 "metaType": "primitive",
-                                "value": "xs:int"
+                                "value": "xs:int",
+                                "isNullable": true
                               },
                               "adjacent_depth_limit": {
                                 "metaType": "primitive",
-                                "value": "xs:int"
+                                "value": "xs:int",
+                                "isNullable": false
                               }
                             }
                           },
+                          "isSingle": false,
                           "value": {
                             "distance_to_progress_multiplier": {
                               "metaType": "reference",
-                              "value": "type__math_operations"
+                              "value": "type__math_operations",
+                              "isSingle": true
                             },
                             "person_progress_property": {
                               "metaType": "reference",
-                              "value": "type__math_operations"
+                              "value": "type__math_operations",
+                              "isSingle": true
                             }
                           }
                         }
@@ -1521,18 +1786,22 @@
                         "value": {
                           "min": {
                             "metaType": "primitive",
-                            "value": "xs:int"
+                            "value": "xs:int",
+                            "isNullable": false
                           },
                           "max": {
                             "metaType": "primitive",
-                            "value": "xs:int"
+                            "value": "xs:int",
+                            "isNullable": true
                           }
                         }
                       },
+                      "isSingle": true,
                       "value": {
                         "person_selection": {
                           "metaType": "reference",
-                          "value": "type__person_selection"
+                          "value": "type__person_selection",
+                          "isSingle": true
                         }
                       }
                     }
@@ -1542,18 +1811,22 @@
             },
             "location_classification_rule": {
               "metaType": "object",
+              "isSingle": true,
               "value": {
                 "entry": {
                   "metaType": "object",
                   "value": {},
+                  "isSingle": false,
                   "attributes": {
                     "metaType": "object",
                     "value": {
                       "id": {
                         "metaType": "primitive",
-                        "value": "xs:string"
+                        "value": "xs:string",
+                        "isNullable": false
                       }
-                    }
+                    },
+                    "isNullable": false
                   }
                 }
               }
@@ -1562,15 +1835,18 @@
         },
         "items": {
           "metaType": "object",
+          "isSingle": false,
           "value": {
             "item": {
               "metaType": "reference",
-              "value": "type__item"
+              "value": "type__item",
+              "isSingle": false
             }
           }
         },
         "people": {
           "metaType": "object",
+          "isSingle": false,
           "value": {
             "person": {
               "metaType": "object",
@@ -1579,46 +1855,57 @@
                 "value": {
                   "id": {
                     "metaType": "primitive",
-                    "value": "xs:string"
+                    "value": "xs:string",
+                    "isNullable": false
                   },
                   "name": {
                     "metaType": "primitive",
-                    "value": "xs:string"
+                    "value": "xs:string",
+                    "isNullable": true
                   }
                 }
               },
+              "isSingle": false,
               "value": {
                 "race": {
                   "metaType": "object",
                   "value": {},
+                  "isSingle": true,
                   "attributes": {
                     "metaType": "object",
                     "value": {
                       "race_rule_ref": {
-                        "metaType": "unknown"
+                        "metaType": "unknown",
+                        "isNullable": false
                       }
-                    }
+                    },
+                    "isNullable": false
                   }
                 },
                 "location": {
                   "metaType": "reference",
-                  "value": "type_cell_ref"
+                  "value": "type_cell_ref",
+                  "isSingle": true
                 },
                 "properties": {
                   "metaType": "object",
+                  "isSingle": true,
                   "value": {
                     "property": {
                       "metaType": "object",
                       "value": {},
+                      "isSingle": false,
                       "attributes": {
                         "metaType": "object",
                         "value": {
                           "property_rule_ref": {
                             "metaType": "primitive",
-                            "value": "xs:string"
+                            "value": "xs:string",
+                            "isNullable": false
                           },
                           "value": {
-                            "metaType": "unknown"
+                            "metaType": "unknown",
+                            "isNullable": false
                           }
                         }
                       }
@@ -1628,45 +1915,55 @@
                 "relations": {
                   "metaType": "object",
                   "value": {},
+                  "isSingle": false,
                   "attributes": {
                     "metaType": "object",
                     "value": {
                       "with": {
-                        "metaType": "unknown"
+                        "metaType": "unknown",
+                        "isNullable": false
                       }
-                    }
+                    },
+                    "isNullable": false
                   }
                 },
                 "inventory": {
                   "metaType": "object",
+                  "isSingle": true,
                   "value": {
                     "item": {
                       "metaType": "reference",
-                      "value": "type__item"
+                      "value": "type__item",
+                      "isSingle": false
                     }
                   }
                 },
                 "classifications": {
                   "metaType": "object",
+                  "isSingle": true,
                   "value": {
                     "classification": {
                       "metaType": "object",
                       "value": {},
+                      "isSingle": false,
                       "attributes": {
                         "metaType": "object",
                         "value": {
                           "classification_rule_ref": {
                             "metaType": "primitive",
-                            "value": "xs:string"
+                            "value": "xs:string",
+                            "isNullable": false
                           }
-                        }
+                        },
+                        "isNullable": false
                       }
                     }
                   }
                 },
                 "icon": {
                   "metaType": "reference",
-                  "value": "type_icon"
+                  "value": "type_icon",
+                  "isSingle": true
                 }
               }
             }
@@ -1678,25 +1975,32 @@
             "metaType": "object",
             "value": {
               "name": {
-                "metaType": "unknown"
+                "metaType": "unknown",
+                "isNullable": true
               }
-            }
+            },
+            "isNullable": true
           },
+          "isSingle": false,
           "value": {
             "cell": {
               "metaType": "object",
               "value": {},
+              "isSingle": false,
               "attributes": {
                 "metaType": "object",
                 "value": {
                   "location_rule_ref": {
-                    "metaType": "unknown"
+                    "metaType": "unknown",
+                    "isNullable": false
                   },
                   "x": {
-                    "metaType": "unknown"
+                    "metaType": "unknown",
+                    "isNullable": false
                   },
                   "y": {
-                    "metaType": "unknown"
+                    "metaType": "unknown",
+                    "isNullable": false
                   }
                 }
               }
@@ -1710,22 +2014,28 @@
             "value": {
               "id": {
                 "metaType": "primitive",
-                "value": "xs:string"
+                "value": "xs:string",
+                "isNullable": true
               }
-            }
+            },
+            "isNullable": true
           },
+          "isSingle": false,
           "value": {
             "rule": {
               "metaType": "object",
               "value": {},
+              "isSingle": true,
               "attributes": {
                 "metaType": "object",
                 "value": {
                   "location_graph_rule_ref": {
                     "metaType": "primitive",
-                    "value": "xs:string"
+                    "value": "xs:string",
+                    "isNullable": false
                   }
-                }
+                },
+                "isNullable": false
               }
             },
             "node": {
@@ -1735,46 +2045,56 @@
                 "value": {
                   "node_rule_ref": {
                     "metaType": "primitive",
-                    "value": "xs:string"
+                    "value": "xs:string",
+                    "isNullable": false
                   },
                   "id": {
                     "metaType": "primitive",
-                    "value": "xs:string"
+                    "value": "xs:string",
+                    "isNullable": false
                   }
                 }
               },
+              "isSingle": false,
               "value": {
                 "position": {
                   "metaType": "object",
                   "value": {},
+                  "isSingle": true,
                   "attributes": {
                     "metaType": "object",
                     "value": {
                       "x": {
                         "metaType": "primitive",
-                        "value": "xs:int"
+                        "value": "xs:int",
+                        "isNullable": false
                       },
                       "y": {
                         "metaType": "primitive",
-                        "value": "xs:int"
+                        "value": "xs:int",
+                        "isNullable": false
                       }
                     }
                   }
                 },
                 "classifications": {
                   "metaType": "object",
+                  "isSingle": true,
                   "value": {
                     "classification": {
                       "metaType": "object",
                       "value": {},
+                      "isSingle": false,
                       "attributes": {
                         "metaType": "object",
                         "value": {
                           "location_classification_rule_ref": {
                             "metaType": "primitive",
-                            "value": "xs:string"
+                            "value": "xs:string",
+                            "isNullable": false
                           }
-                        }
+                        },
+                        "isNullable": false
                       }
                     }
                   }
@@ -1786,30 +2106,37 @@
                     "value": {
                       "node_id_ref": {
                         "metaType": "primitive",
-                        "value": "xs:string"
+                        "value": "xs:string",
+                        "isNullable": false
                       },
                       "total_progress": {
                         "metaType": "primitive",
-                        "value": "xs:int"
+                        "value": "xs:int",
+                        "isNullable": false
                       }
                     }
                   },
+                  "isSingle": false,
                   "value": {
                     "people": {
                       "metaType": "object",
+                      "isSingle": true,
                       "value": {
                         "person": {
                           "metaType": "object",
                           "value": {},
+                          "isSingle": false,
                           "attributes": {
                             "metaType": "object",
                             "value": {
                               "person_id_ref": {
                                 "metaType": "primitive",
-                                "value": "xs:string"
+                                "value": "xs:string",
+                                "isNullable": false
                               },
                               "accumulated_progress": {
-                                "metaType": "unknown"
+                                "metaType": "unknown",
+                                "isNullable": true
                               }
                             }
                           }
@@ -1818,24 +2145,29 @@
                     },
                     "person_progress_property": {
                       "metaType": "reference",
-                      "value": "type__math_operations"
+                      "value": "type__math_operations",
+                      "isSingle": true
                     }
                   }
                 },
                 "people": {
                   "metaType": "object",
+                  "isSingle": true,
                   "value": {
                     "person": {
                       "metaType": "object",
                       "value": {},
+                      "isSingle": false,
                       "attributes": {
                         "metaType": "object",
                         "value": {
                           "person_id_ref": {
                             "metaType": "primitive",
-                            "value": "xs:string"
+                            "value": "xs:string",
+                            "isNullable": false
                           }
-                        }
+                        },
+                        "isNullable": false
                       }
                     }
                   }
@@ -1846,27 +2178,33 @@
         },
         "actions": {
           "metaType": "object",
+          "isSingle": true,
           "value": {
             "by": {
               "metaType": "union",
               "value": [
                 {
                   "metaType": "object",
+                  "isSingle": true,
                   "value": {
                     "do": {
                       "metaType": "object",
                       "value": {},
+                      "isSingle": true,
                       "attributes": {
                         "metaType": "object",
                         "value": {
                           "action_rule_ref": {
-                            "metaType": "unknown"
+                            "metaType": "unknown",
+                            "isNullable": true
                           },
                           "action_ref": {
-                            "metaType": "unknown"
+                            "metaType": "unknown",
+                            "isNullable": true
                           },
                           "person_ref": {
-                            "metaType": "unknown"
+                            "metaType": "unknown",
+                            "isNullable": false
                           }
                         }
                       }
@@ -1875,24 +2213,29 @@
                 },
                 {
                   "metaType": "object",
+                  "isSingle": true,
                   "value": {
                     "move_towards": {
                       "metaType": "object",
                       "value": {},
+                      "isSingle": true,
                       "attributes": {
                         "metaType": "object",
                         "value": {
                           "layer": {
                             "metaType": "primitive",
-                            "value": "xs:string"
+                            "value": "xs:string",
+                            "isNullable": true
                           },
                           "x": {
                             "metaType": "primitive",
-                            "value": "xs:int"
+                            "value": "xs:int",
+                            "isNullable": false
                           },
                           "y": {
                             "metaType": "primitive",
-                            "value": "xs:int"
+                            "value": "xs:int",
+                            "isNullable": false
                           }
                         }
                       }
@@ -1900,51 +2243,62 @@
                   }
                 }
               ],
+              "isSingle": false,
               "attributes": {
                 "metaType": "object",
                 "value": {
                   "person_ref": {
-                    "metaType": "unknown"
+                    "metaType": "unknown",
+                    "isNullable": false
                   }
-                }
+                },
+                "isNullable": false
               }
             },
             "location_graph.create": {
               "metaType": "object",
               "value": {},
+              "isSingle": false,
               "attributes": {
                 "metaType": "object",
                 "value": {
                   "location_graph_rule_ref": {
                     "metaType": "primitive",
-                    "value": "xs:string"
+                    "value": "xs:string",
+                    "isNullable": false
                   }
-                }
+                },
+                "isNullable": false
               }
             },
             "location_graph.node.create_adjacent": {
               "metaType": "object",
               "value": {},
+              "isSingle": false,
               "attributes": {
                 "metaType": "object",
                 "value": {
                   "location_graph_id_ref": {
                     "metaType": "primitive",
-                    "value": "xs:string"
+                    "value": "xs:string",
+                    "isNullable": false
                   },
                   "node_id_ref": {
                     "metaType": "primitive",
-                    "value": "xs:string"
+                    "value": "xs:string",
+                    "isNullable": false
                   }
                 }
               }
             },
             "location_graph.node.add_classification": {
               "metaType": "object",
+              "isSingle": false,
               "value": {
                 "node_graph_selection": {
                   "metaType": "reference",
-                  "value": "type__node_graph__selection"
+                  "value": "type__node_graph__selection",
+                  "isSingle": true
                 },
                 "to_be_added__classification": {
                   "metaType": "object",
@@ -1953,22 +2307,28 @@
                     "value": {
                       "location_classification_rule_ref": {
                         "metaType": "primitive",
-                        "value": "xs:string"
+                        "value": "xs:string",
+                        "isNullable": false
                       }
-                    }
+                    },
+                    "isNullable": false
                   },
+                  "isSingle": true,
                   "value": {
                     "and": {
                       "metaType": "object",
                       "value": {},
+                      "isSingle": true,
                       "attributes": {
                         "metaType": "object",
                         "value": {
                           "location_classification_rule_ref": {
                             "metaType": "primitive",
-                            "value": "xs:string"
+                            "value": "xs:string",
+                            "isNullable": false
                           }
-                        }
+                        },
+                        "isNullable": false
                       }
                     }
                   }
@@ -1980,20 +2340,24 @@
               "value": [
                 {
                   "metaType": "object",
+                  "isSingle": true,
                   "value": {
                     "location_graph": {
                       "metaType": "object",
                       "value": {},
+                      "isSingle": true,
                       "attributes": {
                         "metaType": "object",
                         "value": {
                           "location_graph_id_ref": {
                             "metaType": "primitive",
-                            "value": "xs:string"
+                            "value": "xs:string",
+                            "isNullable": false
                           },
                           "node_id_ref": {
                             "metaType": "primitive",
-                            "value": "xs:string"
+                            "value": "xs:string",
+                            "isNullable": false
                           }
                         }
                       }
@@ -2002,6 +2366,7 @@
                 },
                 {
                   "metaType": "object",
+                  "isSingle": true,
                   "value": {
                     "link_to": {
                       "metaType": "object",
@@ -2010,61 +2375,75 @@
                         "value": {
                           "accumulated_progress": {
                             "metaType": "primitive",
-                            "value": "xs:int"
+                            "value": "xs:int",
+                            "isNullable": false
                           }
-                        }
+                        },
+                        "isNullable": false
                       },
+                      "isSingle": true,
                       "value": {
                         "selection": {
                           "metaType": "reference",
-                          "value": "type__link_to__selection"
+                          "value": "type__link_to__selection",
+                          "isSingle": true
                         }
                       }
                     }
                   }
                 }
               ],
+              "isSingle": true,
               "attributes": {
                 "metaType": "object",
                 "value": {
                   "person_id_ref": {
                     "metaType": "primitive",
-                    "value": "xs:string"
+                    "value": "xs:string",
+                    "isNullable": false
                   }
-                }
+                },
+                "isNullable": false
               }
             },
             "person.on_person.property_mutation": {
               "metaType": "object",
               "value": {},
+              "isSingle": false,
               "attributes": {
                 "metaType": "object",
                 "value": {
                   "person_id_ref": {
                     "metaType": "primitive",
-                    "value": "xs:string"
+                    "value": "xs:string",
+                    "isNullable": false
                   },
                   "target_person_id_ref": {
                     "metaType": "primitive",
-                    "value": "xs:string"
+                    "value": "xs:string",
+                    "isNullable": false
                   },
                   "action_property_mutation_rule_ref": {
                     "metaType": "primitive",
-                    "value": "xs:string"
+                    "value": "xs:string",
+                    "isNullable": false
                   }
                 }
               }
             },
             "person.create": {
               "metaType": "object",
+              "isSingle": false,
               "value": {
                 "node_graph__selection": {
                   "metaType": "reference",
-                  "value": "type__node_graph__selection"
+                  "value": "type__node_graph__selection",
+                  "isSingle": true
                 },
                 "person__selection": {
                   "metaType": "reference",
-                  "value": "type__person_selection"
+                  "value": "type__person_selection",
+                  "isSingle": true
                 }
               }
             },
@@ -2075,29 +2454,37 @@
                 "value": {
                   "person_id_ref": {
                     "metaType": "primitive",
-                    "value": "xs:string"
+                    "value": "xs:string",
+                    "isNullable": false
                   }
-                }
+                },
+                "isNullable": false
               },
+              "isSingle": false,
               "value": {
                 "find_path_towards": {
                   "metaType": "reference",
-                  "value": "type__node_graph__selection"
+                  "value": "type__node_graph__selection",
+                  "isSingle": true
                 },
                 "path": {
                   "metaType": "object",
+                  "isSingle": true,
                   "value": {
                     "node": {
                       "metaType": "object",
                       "value": {},
+                      "isSingle": false,
                       "attributes": {
                         "metaType": "object",
                         "value": {
                           "node_id_ref": {
                             "metaType": "primitive",
-                            "value": "xs:string"
+                            "value": "xs:string",
+                            "isNullable": false
                           }
-                        }
+                        },
+                        "isNullable": false
                       }
                     }
                   }

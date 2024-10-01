@@ -26,7 +26,31 @@ namespace XSD {
 			}).ToList();
 
 		}
-		public Dictionary<string, string> attributes = new Dictionary<string, string>();
+
+		public T InitializeWithRawNode<T>(string key, T obj)
+		{
+			//get type of elements in the list
+			GD.Print("InitializeWithRawNode");
+
+			var type = obj.GetType();
+
+			var childRawNodeList = this.children.ContainsKey(key) ? this.children[key] : null;
+			if (childRawNodeList == null || childRawNodeList.Count == 0)
+			{
+				var instance = (T?)Activator.CreateInstance(type);
+				if(instance is null) {
+					throw new Exception("Could not create instance of type " + type);
+				}
+				return instance;
+			}
+
+			var childRawNode = childRawNodeList.FirstOrDefault();
+
+			var newInstance = (T)Activator.CreateInstance(type, new object[] { childRawNode })!;
+			return newInstance;
+
+		}
+		public Dictionary<string, string?> attributes = new Dictionary<string, string?>();
 		public Dictionary<string, List<RawNode>> children = new Dictionary<string, List<RawNode>>();
 
 		public XmlNode Deserialize(XmlNode xmlElement) {

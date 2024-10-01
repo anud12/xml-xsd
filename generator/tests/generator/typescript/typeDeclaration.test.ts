@@ -1,5 +1,5 @@
 import {typeDeclarationToString} from "../../../src/generator/typescript/typeToString";
-import {typeDeclarationDataSets} from "../typeDeclaration";
+import {typeDeclarationDataSets} from "../typeDeclarationDataSets";
 import {template} from "../../../src/template/template";
 
 

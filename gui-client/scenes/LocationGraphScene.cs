@@ -11,7 +11,7 @@ public partial class LocationGraphScene : Control
 
 	public static PackedScene PackedScene = GD.Load<PackedScene>("res://scenes/LocationGraphScene.tscn");
 
-	public static int SCALE = LocationGraphNodeComponent.SIZE;
+	public static float SCALE = LocationGraphNodeComponent.SIZE;
 
 
 	private String locationGraphId;
@@ -70,7 +70,10 @@ public partial class LocationGraphScene : Control
 		{
 			return location_graph.node.SelectMany(node =>
 					{
-						var position = node.position.First();
+						var position = node.position;
+
+
+
 						var packedScene = LocationGraphNodeComponent.PackedScene.Instantiate();
 						var locationGraphNodeComponent = packedScene.GetNode<LocationGraphNodeComponent>("./");
 						//set position of the node based on the offest returned by getOffset
@@ -79,7 +82,7 @@ public partial class LocationGraphScene : Control
 						locationGraphNodeComponent.setOnTeleportToButtonPressed(node => TeleportTo(location_graph, node, worldStep));
 						locationGraphNodeComponent.setOnPathToButtonPressed(node => PathTo(location_graph, node, worldStep));
 
-						var newPosition = new Vector2(position.x * SCALE, position.y * SCALE);
+						var newPosition = new Vector2((float)position.x * SCALE, (float)position.y * SCALE);
 						newPosition += locationGraphNodeComponent.getOffset();
 						if (node2DVector2D.ContainsKey(newPosition))
 						{
@@ -126,11 +129,7 @@ public partial class LocationGraphScene : Control
 			location_graph_id_ref = locationGraph.id,
 			node_id_ref = node.id,
 		};
-		if (worldStep.actions.Count == 0)
-		{
-			worldStep.actions.Add(new world_step__actions());
-		}
-		worldStep.actions.First().location_graph__node__create_adjacent.Add(createAdjacent);
+		worldStep.actions.location_graph__node__create_adjacent.Add(createAdjacent);
 		LoadWorldStep.executeNextStep();
 	}
 
@@ -141,20 +140,14 @@ public partial class LocationGraphScene : Control
 		var teleport = new world_step__actions__person__teleport
 		{
 			person_id_ref = StoreSession.mainPersonId.data,
-		};
-		teleport.location_graph = new List<world_step__actions__person__teleport__location_graph> {
-			new world_step__actions__person__teleport__location_graph
+			location_graph = new world_step__actions__person__teleport__location_graph
 			{
 				location_graph_id_ref = locationGraph.id,
 				node_id_ref = node.id,
 			}
-		 };
+		};
 
-		if (worldStep.actions.Count == 0)
-		{
-			worldStep.actions.Add(new world_step__actions());
-		}
-		worldStep.actions.First().person__teleport.Add(teleport);
+		worldStep.actions.person__teleport = teleport;
 		LoadWorldStep.executeNextStep();
 	}
 	private void PathTo(world_step__location_graph locationGraph, world_step__location_graph__node node, world_step worldStep)
@@ -166,21 +159,15 @@ public partial class LocationGraphScene : Control
 			person_id_ref = StoreSession.mainPersonId.data,
 		};
 
-		action.find_path_towards.Add(new type__node_graph__selection
+		action.find_path_towards = new type__node_graph__selection
 		{
-			has__node_graph_id = new List<type__node_graph__selection__has__node_graph_id>{
-				new type__node_graph__selection__has__node_graph_id
-				{
-					node_graph_id_ref = node.id,
-				}
+			has__node_graph_id = new type__node_graph__selection__has__node_graph_id
+			{
+				node_graph_id_ref = node.id
 			}
-		});
+		};
 
-		if (worldStep.actions.Count == 0)
-		{
-			worldStep.actions.Add(new world_step__actions());
-		}
-		worldStep.actions.First().person__move_to.Add(action);
+		worldStep.actions.person__move_to.Add(action);
 		LoadWorldStep.executeNextStep();
 	}
 	private System.Collections.Generic.IEnumerable<Node> loadLinks(world_step worldStep)
@@ -198,8 +185,8 @@ public partial class LocationGraphScene : Control
 					var startNode = node;
 					GD.Print("linkTo.node_id_ref: " + linkTo.node_id_ref);
 					var endNode = nodeById[linkTo.node_id_ref];
-					var start = new Vector2(startNode.position.First().x * SCALE, startNode.position.First().y * SCALE);
-					var end = new Vector2(endNode.position.First().x * SCALE, endNode.position.First().y * SCALE);
+					var start = new Vector2((float)startNode.position.x * SCALE, (float)startNode.position.y * SCALE);
+					var end = new Vector2((float)endNode.position.x * SCALE, (float)endNode.position.y * SCALE);
 					var line2D = new Line2D
 					{
 						DefaultColor = new Color(0, 0, 0, 1),
@@ -223,7 +210,7 @@ public partial class LocationGraphScene : Control
 		var end = line2D.Points[1];
 
 		float totalLength = (start - end).Length();
-		float interval = totalLength / totalProgress;
+		float interval = totalLength / (float)totalProgress;
 		Vector2 direction = (end - start).Normalized();
 
 		for (int i = 0; i < (totalProgress); i++)
@@ -250,7 +237,7 @@ public partial class LocationGraphScene : Control
 		var end = line2D.Points[1];
 
 		float totalLength = (start - end).Length();
-		float interval = totalLength / totalProgress;
+		float interval = totalLength / (float)totalProgress;
 		Vector2 direction = (end - start).Normalized();
 
 		for (int i = 0; i < (totalProgress); i++)
@@ -266,14 +253,14 @@ public partial class LocationGraphScene : Control
 				Size = new Vector2(SCALE, SCALE),
 			};
 			line2D.AddChild(label);
-			linkTo.people?.SelectMany(people => people.person).ToList().ForEach(person =>
+			linkTo.people.person.ForEach(person =>
 			{
 				string personId = person.person_id_ref;
 				int progress = int.Parse(person.rawNode.attributes["accumulated_progress"]);
-				var relativeProgress = (i +2 ) / 2;
-				GD.Print("progress: " + progress + " Iteration: " + i + " Relative Progress: "+ relativeProgress +" Total Progress: " + totalProgress);
+				var relativeProgress = (i + 2) / 2;
+				GD.Print("progress: " + progress + " Iteration: " + i + " Relative Progress: " + relativeProgress + " Total Progress: " + totalProgress);
 
-				if(progress != relativeProgress)
+				if (progress != relativeProgress)
 				{
 					return;
 				}

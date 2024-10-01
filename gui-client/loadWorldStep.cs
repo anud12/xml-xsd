@@ -20,7 +20,7 @@ public class LoadWorldStep
 	}
 
 	public world_step worldStep;
-	public static int SCALE = LocationGraphNodeComponent.SIZE;
+	public static float SCALE = LocationGraphNodeComponent.SIZE;
 	public void loadFromPath(string path)
 	{
 
@@ -84,13 +84,13 @@ public class LoadWorldStep
 
 		return worldStep.location_graph.SelectMany(locationGraph => locationGraph.node.SelectMany(node =>
 		{
-			var position = node.position.First();
+			var position = node.position;
 			var packedScene = LocationGraphNodeComponent.PackedScene.Instantiate();
 			var locationGraphNodeComponent = packedScene.GetNode<LocationGraphNodeComponent>("./");
 
 
 
-			var newPosition = new Vector2(position.x * SCALE, position.y * SCALE);
+			var newPosition = new Vector2((float)(position.x * SCALE), (float)(position.y * SCALE));
 			//set position of the node based on the offest returned by getOffset
 			newPosition += locationGraphNodeComponent.getOffset();
 			locationGraphNodeComponent.SetPosition(newPosition);
@@ -112,11 +112,8 @@ public class LoadWorldStep
 			location_graph_id_ref = locationGraph.id,
 			node_id_ref = node.id,
 		};
-		if (worldStep.actions.Count == 0)
-		{
-			worldStep.actions.Add(new world_step__actions());
-		}
-		worldStep.actions.First().location_graph__node__create_adjacent.Add(createAdjacent);
+
+		worldStep.actions.location_graph__node__create_adjacent.Add(createAdjacent);
 		executeNextStep();
 	}
 	private System.Collections.Generic.IEnumerable<Node> loadLinks(world_step worldStep)
@@ -130,8 +127,8 @@ public class LoadWorldStep
 					var startNode = node;
 					GD.Print("linkTo.node_id_ref: " + linkTo.node_id_ref);
 					var endNode = nodeById[linkTo.node_id_ref];
-					var start = new Vector2(startNode.position.First().x * SCALE, startNode.position.First().y * SCALE);
-					var end = new Vector2(endNode.position.First().x * SCALE, endNode.position.First().y * SCALE);
+					var start = new Vector2((float)startNode.position.x * SCALE, (float)startNode.position.y * SCALE);
+					var end = new Vector2((float)endNode.position.x * SCALE, (float)endNode.position.y * SCALE);
 					var line2D = new Line2D
 					{
 						DefaultColor = new Color(0, 0, 0, 1),
