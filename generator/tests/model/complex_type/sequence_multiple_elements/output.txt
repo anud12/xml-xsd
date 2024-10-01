@@ -2,18 +2,26 @@
   {
     "name": "root",
     "type": "element",
+    "isSingle": true,
+    "isNullable": false,
     "value": {
       "metaType": "object",
+      "isSingle": true,
       "value": {
         "child": {
-          "metaType": "primitive",
-          "value": "xs:int"
+          "metaType": "reference",
+          "value": "xs:int",
+          "isSingle": true,
+          "isNullable": false
         },
         "secondChild": {
-          "metaType": "primitive",
-          "value": "xs:int"
+          "metaType": "reference",
+          "value": "xs:int",
+          "isSingle": true,
+          "isNullable": false
         }
-      }
+      },
+      "isNullable": false
     }
   }
 ]

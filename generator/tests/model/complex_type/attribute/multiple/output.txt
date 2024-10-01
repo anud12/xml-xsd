@@ -2,19 +2,25 @@
   {
     "name": "root",
     "type": "element",
+    "isSingle": true,
+    "isNullable": false,
     "value": {
       "metaType": "object",
       "value": {},
+      "isSingle": true,
+      "isNullable": false,
       "attributes": {
         "metaType": "object",
         "value": {
           "attributeName": {
             "metaType": "primitive",
-            "value": "xs:int"
+            "value": "xs:int",
+            "isNullable": true
           },
           "secondAttributeName": {
             "metaType": "primitive",
-            "value": "xs:int"
+            "value": "xs:int",
+            "isNullable": true
           }
         }
       }

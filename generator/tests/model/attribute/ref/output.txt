@@ -7,23 +7,30 @@
       "value": {
         "property_rule_ref": {
           "metaType": "primitive",
-          "value": "xs:string"
+          "value": "xs:string",
+          "isNullable": true
         }
-      }
+      },
+      "isNullable": true
     }
   },
   {
     "name": "type__person_selection",
     "type": "complex",
+    "isSingle": false,
     "value": {
       "metaType": "object",
+      "isSingle": false,
       "value": {
         "property": {
           "metaType": "object",
           "value": {},
+          "isSingle": false,
+          "isNullable": true,
           "attributes": {
             "metaType": "reference",
-            "value": "property_rule_ref"
+            "value": "property_rule_ref",
+            "isNullable": true
           }
         }
       }

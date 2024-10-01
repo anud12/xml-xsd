@@ -2,6 +2,7 @@
   {
     "name": "complex_type",
     "type": "complex",
+    "isSingle": true,
     "value": {
       "metaType": "object",
       "attributes": {
@@ -9,14 +10,19 @@
         "value": {
           "complex_attribute": {
             "metaType": "primitive",
-            "value": "xs:int"
+            "value": "xs:int",
+            "isNullable": true
           }
-        }
+        },
+        "isNullable": true
       },
+      "isSingle": true,
       "value": {
         "complex_type": {
-          "metaType": "primitive",
-          "value": "xs:int"
+          "metaType": "reference",
+          "value": "xs:int",
+          "isSingle": true,
+          "isNullable": false
         }
       }
     }
@@ -24,27 +30,35 @@
   {
     "name": "root",
     "type": "element",
+    "isSingle": true,
+    "isNullable": false,
     "value": {
       "metaType": "composition",
       "value": [
         {
           "metaType": "object",
           "value": {},
+          "isSingle": true,
+          "isNullable": false,
           "attributes": {
             "metaType": "object",
             "value": {
               "attribute": {
                 "metaType": "primitive",
-                "value": "xs:int"
+                "value": "xs:int",
+                "isNullable": false
               }
-            }
+            },
+            "isNullable": false
           }
         },
         {
           "metaType": "primitive",
           "value": "complex_type"
         }
-      ]
+      ],
+      "isSingle": true,
+      "isNullable": false
     }
   }
 ]

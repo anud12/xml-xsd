@@ -11,13 +11,13 @@ namespace XSD {
 
 	public class RawNode {
 
-		public List<T> InitializeWithRawNode<T>(string key, List<T> obj) {
+		public List<T> InitializeWithRawNode<T>(string key, List<T> defaultValue) {
 			//get type of elements in the list
-			var type = obj.GetType().GetGenericArguments()[0];
-			
+			var type = typeof(T);
+
 			var childRawNode = this.children.ContainsKey(key) ? this.children[key] : null;
 			if(childRawNode == null) {
-				return new List<T>();
+				return defaultValue;
 			}
 			return childRawNode.Select(o => {
 				//create new instante calling the contructor with the rawNode as first argument
@@ -26,7 +26,28 @@ namespace XSD {
 			}).ToList();
 
 		}
-		public Dictionary<string, string> attributes = new Dictionary<string, string>();
+
+		public T InitializeWithRawNode<T>(string key, T defaultValue)
+		{
+			//get type of elements in the list
+			GD.Print("InitializeWithRawNode");
+
+			var type = typeof(T);
+
+			var childRawNodeList = this.children.ContainsKey(key) ? this.children[key] : null;
+			if (childRawNodeList == null || childRawNodeList.Count == 0)
+			{
+				return defaultValue;
+			}
+
+			var childRawNode = childRawNodeList.FirstOrDefault();
+
+			var newInstance = (T)Activator.CreateInstance(type, new object[] { childRawNode })!;
+			return newInstance;
+
+		}
+
+		public Dictionary<string, string?> attributes = new Dictionary<string, string?>();
 		public Dictionary<string, List<RawNode>> children = new Dictionary<string, List<RawNode>>();
 
 		public XmlNode Deserialize(XmlNode xmlElement) {

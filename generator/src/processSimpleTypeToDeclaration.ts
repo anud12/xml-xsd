@@ -12,17 +12,24 @@ export function processSimpleTypeToDeclaration(element: XsdElement | XsdElement[
       })
       return result;
     }
-    if(!element) {
+    if (!element) {
       return []
     }
+
+
+    const use = element.use ?? "optional";
+    const isNullable = use === "optional";
+
     let type: Type = {
       metaType: "primitive",
-      value: "unknown"
+      value: "unknown",
+      isNullable: isNullable,
     };
     if (element.type) {
       type = {
-        metaType:"primitive",
-        value:element.type
+        metaType: "primitive",
+        value: element.type,
+        isNullable: isNullable,
       };
     }
     if (element["xs:restriction"] !== undefined) {
@@ -31,7 +38,8 @@ export function processSimpleTypeToDeclaration(element: XsdElement | XsdElement[
     return [{
       name: element.name,
       type: "simple",
-      value: type
+      value: type,
+      isNullable: isNullable,
     }];
   } catch (e) {
     throw mergeError(e, new Error(`processSimpleTypeToDeclaration failed for ${JSON.stringify(element, null, 2)}`));

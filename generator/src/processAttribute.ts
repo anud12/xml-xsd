@@ -12,10 +12,15 @@ export function processAttribute(element: XsdElement[] | XsdElement): (TypeObjec
       }
       return result;
     }
+
+    const use = element.use ?? "optional";
+    const isNullable = use === "optional";
+
     if(element.ref) {
       return [{
         metaType: "reference",
         value: element.ref,
+        isNullable: isNullable,
       }];
     }
     if (!element.name) {
@@ -34,18 +39,22 @@ export function processAttribute(element: XsdElement[] | XsdElement): (TypeObjec
 
     let type: Type = {
       metaType: "unknown",
+      isNullable: isNullable,
     } satisfies Type;
+
     if (element.type) {
       type = {
         metaType:"primitive",
-        value: element.type
+        value: element.type,
+        isNullable: isNullable,
       }
     }
     return [{
       metaType: "object",
       value: {
         [element.name]: type,
-      }
+      },
+      isNullable: isNullable,
     }];
   } catch (e) {
     throw mergeError(e, new Error(`processTypeAttribute failed for ${JSON.stringify(element, null, 2)}`));

@@ -19,17 +19,27 @@ export function processComplexType(element: XsdElement | XsdElement[]): Type[] {
       return result;
     }
 
+    const maxOccurs = element.maxOccurs ?? "1";
+    const isSingle = maxOccurs === "1";
+
+    const minOccurs = element.minOccurs ?? "1";
+    const isNullable = minOccurs === "0";
+
     if (element.type) {
       return [
         {
           metaType: 'primitive',
-          value: element.type
+          value: element.type,
+          isSingle: isSingle,
+          "isNullable": false,
         } as TypePrimitive
       ]
     }
     let type: Type = {
       metaType: "object",
       value: {},
+      isSingle: isSingle,
+      "isNullable": false,
     } as TypeObject;
 
     if (element["xs:complexContent"] !== undefined) {

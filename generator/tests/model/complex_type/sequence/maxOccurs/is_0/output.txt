@@ -1,0 +1,21 @@
+[
+  {
+    "name": "root",
+    "type": "element",
+    "isSingle": true,
+    "isNullable": false,
+    "value": {
+      "metaType": "object",
+      "isSingle": true,
+      "value": {
+        "child": {
+          "metaType": "primitive",
+          "value": "unknown",
+          "isSingle": false,
+          "isNullable": false
+        }
+      },
+      "isNullable": false
+    }
+  }
+]

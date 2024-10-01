@@ -2,17 +2,23 @@
   {
     "name": "extension",
     "type": "complex",
+    "isSingle": true,
+    "isNullable": false,
     "value": {
       "metaType": "object",
       "value": {},
+      "isSingle": true,
+      "isNullable": false,
       "attributes": {
         "metaType": "object",
         "value": {
           "extensionAttribute": {
             "metaType": "primitive",
-            "value": "xs:string"
+            "value": "xs:string",
+            "isNullable": true
           }
-        }
+        },
+        "isNullable": true
       }
     }
   },
@@ -25,14 +31,18 @@
         {
           "metaType": "object",
           "value": {},
+          "isSingle": true,
+          "isNullable": false,
           "attributes": {
             "metaType": "object",
             "value": {
               "attribute": {
                 "metaType": "primitive",
-                "value": "xs:string"
+                "value": "xs:string",
+                "isNullable": false
               }
-            }
+            },
+            "isNullable": false
           }
         },
         {
@@ -45,9 +55,13 @@
   {
     "name": "root",
     "type": "element",
+    "isSingle": true,
+    "isNullable": false,
     "value": {
-      "metaType": "primitive",
-      "value": "complexType"
+      "metaType": "reference",
+      "value": "complexType",
+      "isSingle": true,
+      "isNullable": false
     }
   }
 ]

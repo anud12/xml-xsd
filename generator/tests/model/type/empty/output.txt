@@ -2,9 +2,13 @@
   {
     "name": "root",
     "type": "element",
+    "isSingle": true,
+    "isNullable": false,
     "value": {
       "metaType": "primitive",
-      "value": "unknown"
+      "value": "unknown",
+      "isSingle": true,
+      "isNullable": false
     }
   }
 ]

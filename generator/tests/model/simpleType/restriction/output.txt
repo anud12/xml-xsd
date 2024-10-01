@@ -5,14 +5,19 @@
     "value": {
       "metaType": "primitive",
       "value": "xs:string"
-    }
+    },
+    "isNullable": true
   },
   {
     "name": "root",
     "type": "element",
+    "isSingle": true,
+    "isNullable": false,
     "value": {
-      "metaType": "primitive",
-      "value": "simple_type"
+      "metaType": "reference",
+      "value": "simple_type",
+      "isSingle": true,
+      "isNullable": false
     }
   }
 ]

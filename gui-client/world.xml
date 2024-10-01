@@ -153,7 +153,7 @@
     <location_graph_rule id="location_graph_rule_id">
       <setup>
         <starting_node node_rule_ref="farm" />
-        <necessary_node node_rule_ref="city" min="8" max="0" />
+        <necessary_node node_rule_ref="city" min="8"/>
       </setup>
       <node_rule id="city">
         <link_group id="all" angle="0" angleMax="360" limit="100">

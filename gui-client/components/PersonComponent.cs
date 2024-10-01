@@ -102,7 +102,7 @@ public partial class PersonComponent : Control
 				}
 
 				//if there are actions add them into container
-				worldStep.rule_group.SelectMany(ruleGroup => ruleGroup.action_rule.SelectMany(actionRule => actionRule.person_to_person)).ToList().ForEach(entry =>
+				worldStep.rule_group.ForEach(ruleGroup => ruleGroup.action_rule.person_to_person.ForEach(entry =>
 				{
 
 					//add buttons per entry
@@ -114,7 +114,7 @@ public partial class PersonComponent : Control
 					ProcessPersonToPersonAction(person.data.id, entry.id);
 				};
 					actionsContainer.AddChild(button);
-				});
+				}));
 			});
 		});
 
@@ -128,12 +128,8 @@ public partial class PersonComponent : Control
 		{
 			return;
 		}
-		if (worldStep.actions.Count == 0)
-		{
-			worldStep.actions.Add(new world_step__actions());
-		}
 
-		worldStep.actions.First().person__on_person__property_mutation.Add(new world_step__actions__person__on_person__property_mutation
+		worldStep.actions.person__on_person__property_mutation.Add(new world_step__actions__person__on_person__property_mutation
 		{
 			action_property_mutation_rule_ref = actionId,
 			person_id_ref = mainPersonId,
@@ -158,14 +154,10 @@ public partial class PersonComponent : Control
 			//Clear classificationContainer
 			var classificationContainer = GetNode<Control>("%ClassificationContainer");
 			classificationContainer.GetChildren().ToList().ForEach(child => classificationContainer.RemoveChild(child));
-			//if there are classifications add them into container
-			if (person.classifications.Count != 0)
+			person.classifications.classification.ForEach(classification =>
 			{
-				person.classifications.SelectMany(classification => classification.classification).ToList().ForEach(classification =>
-				{
-					classificationContainer.AddChild(new Label() { Text = classification.classification_rule_ref });
-				});
-			}
+				classificationContainer.AddChild(new Label() { Text = classification.classification_rule_ref });
+			});
 		});
 	}
 
@@ -186,10 +178,7 @@ public partial class PersonComponent : Control
 			var propertiesContainer = GetNode<Control>("%PropertiesContainer");
 			propertiesContainer.GetChildren().ToList().ForEach(child => propertiesContainer.RemoveChild(child));
 			//if there are properties add them into container
-			if (person.properties.Count != 0)
-			{
-				//Add properties into container
-				person.properties.SelectMany(properties => properties.property).ToList().ForEach(property =>
+			person.properties.property.ForEach(property =>
 				{
 					//create hbox container
 					var hboxContainer = new HBoxContainer();
@@ -199,7 +188,6 @@ public partial class PersonComponent : Control
 					//value
 					hboxContainer.AddChild(new Label() { Text = (string)property.rawNode.attributes["value"] });
 				});
-			}
 		});
 		unsubscribeList.Add(unsubscribe);
 

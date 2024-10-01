@@ -17,6 +17,9 @@ export type XsdElement = {
   type?: string;
   base?: string;
   ref?: string;
+  minOccurs?:string,
+  maxOccurs?:string,
+  use?: string
   attributes?: { [key: string]: string };
 } & {
   [P in string]: XsdElement | XsdElement[]

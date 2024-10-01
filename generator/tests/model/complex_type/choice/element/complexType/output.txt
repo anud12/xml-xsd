@@ -2,26 +2,35 @@
   {
     "name": "by",
     "type": "element",
+    "isSingle": false,
+    "isNullable": true,
     "value": {
       "metaType": "union",
       "value": [
         {
           "metaType": "object",
+          "isSingle": true,
+          "isNullable": false,
           "value": {
             "do": {
               "metaType": "object",
               "value": {},
+              "isSingle": true,
+              "isNullable": false,
               "attributes": {
                 "metaType": "object",
                 "value": {
                   "action_rule_ref": {
-                    "metaType": "unknown"
+                    "metaType": "unknown",
+                    "isNullable": true
                   },
                   "action_ref": {
-                    "metaType": "unknown"
+                    "metaType": "unknown",
+                    "isNullable": true
                   },
                   "person_ref": {
-                    "metaType": "unknown"
+                    "metaType": "unknown",
+                    "isNullable": false
                   }
                 }
               }
@@ -30,24 +39,31 @@
         },
         {
           "metaType": "object",
+          "isSingle": true,
+          "isNullable": false,
           "value": {
             "move_towards": {
               "metaType": "object",
               "value": {},
+              "isSingle": true,
+              "isNullable": false,
               "attributes": {
                 "metaType": "object",
                 "value": {
                   "layer": {
                     "metaType": "primitive",
-                    "value": "xs:string"
+                    "value": "xs:string",
+                    "isNullable": true
                   },
                   "x": {
                     "metaType": "primitive",
-                    "value": "xs:int"
+                    "value": "xs:int",
+                    "isNullable": false
                   },
                   "y": {
                     "metaType": "primitive",
-                    "value": "xs:int"
+                    "value": "xs:int",
+                    "isNullable": false
                   }
                 }
               }
@@ -55,14 +71,18 @@
           }
         }
       ],
+      "isSingle": false,
       "attributes": {
         "metaType": "object",
         "value": {
           "person_ref": {
-            "metaType": "unknown"
+            "metaType": "unknown",
+            "isNullable": false
           }
-        }
-      }
+        },
+        "isNullable": false
+      },
+      "isNullable": true
     }
   }
 ]

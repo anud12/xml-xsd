@@ -5,23 +5,31 @@
     "value": {
       "metaType": "object",
       "value": {},
+      "isSingle": true,
+      "isNullable": false,
       "attributes": {
         "metaType": "object",
         "value": {
           "value": {
             "metaType": "primitive",
-            "value": "xs:integer"
+            "value": "xs:integer",
+            "isNullable": false
           }
-        }
+        },
+        "isNullable": false
       }
     }
   },
   {
     "name": "root",
     "type": "element",
+    "isSingle": true,
+    "isNullable": false,
     "value": {
       "metaType": "object",
       "value": {},
+      "isSingle": true,
+      "isNullable": false,
       "attributes": {
         "metaType": "reference",
         "value": "attributeGroup"

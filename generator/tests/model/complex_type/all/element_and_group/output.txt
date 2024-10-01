@@ -4,14 +4,19 @@
     "type": "group",
     "value": {
       "metaType": "object",
+      "isSingle": true,
       "value": {
         "classifications": {
-          "metaType": "primitive",
-          "value": "xs:integer"
+          "metaType": "reference",
+          "value": "xs:integer",
+          "isSingle": true,
+          "isNullable": true
         },
         "properties": {
-          "metaType": "primitive",
-          "value": "xs:integer"
+          "metaType": "reference",
+          "value": "xs:integer",
+          "isSingle": true,
+          "isNullable": true
         }
       }
     }
@@ -24,20 +29,26 @@
       "value": [
         {
           "metaType": "object",
+          "isSingle": true,
           "value": {
             "min": {
-              "metaType": "primitive",
-              "value": "xs:integer"
+              "metaType": "reference",
+              "value": "xs:integer",
+              "isSingle": true,
+              "isNullable": true
             },
             "max": {
-              "metaType": "primitive",
-              "value": "xs:integer"
+              "metaType": "reference",
+              "value": "xs:integer",
+              "isSingle": true,
+              "isNullable": true
             }
           }
         },
         {
           "metaType": "reference",
-          "value": "group__item_data"
+          "value": "group__item_data",
+          "isSingle": true
         }
       ]
     }

@@ -8,7 +8,7 @@ public partial class LocationGraphNodeComponent : BoxContainer
 {
 
 	public static PackedScene PackedScene = GD.Load<PackedScene>("res://components/LocationGraphNodeComponent.tscn");
-	public static int SIZE = 350;
+	public static float SIZE = 350;
 	private world_step__location_graph__node node;
 	private world_step worldStep;
 	//populate the node with the data from the graph node
@@ -17,7 +17,8 @@ public partial class LocationGraphNodeComponent : BoxContainer
 		this.node = node;
 		this.worldStep = worldStep;
 		var personContainer = GetNode<Control>("%PersonContainer");
-		node.people.SelectMany(person => person.person).ToList().ForEach(person =>
+
+		node.people?.person.ForEach(person =>
 		{
 			var packedScene = PersonComponent.PackedScene.Instantiate();
 			var personComponent = packedScene.GetNode<PersonComponent>("./");

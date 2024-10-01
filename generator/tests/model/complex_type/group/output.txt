@@ -4,10 +4,13 @@
     "type": "group",
     "value": {
       "metaType": "object",
+      "isSingle": true,
       "value": {
         "operation": {
-          "metaType": "primitive",
-          "value": "xs:int"
+          "metaType": "reference",
+          "value": "xs:int",
+          "isSingle": true,
+          "isNullable": false
         }
       }
     }
@@ -15,9 +18,13 @@
   {
     "name": "root",
     "type": "element",
+    "isSingle": true,
+    "isNullable": false,
     "value": {
       "metaType": "reference",
-      "value": "group"
+      "value": "group",
+      "isSingle": true,
+      "isNullable": false
     }
   }
 ]

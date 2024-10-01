@@ -4,36 +4,45 @@
     "type": "group",
     "value": {
       "metaType": "object",
+      "isSingle": false,
       "value": {
         "firstElement": {
           "metaType": "object",
           "value": {},
+          "isSingle": true,
+          "isNullable": true,
           "attributes": {
             "metaType": "object",
             "value": {
               "attribute": {
                 "metaType": "primitive",
-                "value": "xs:string"
+                "value": "xs:string",
+                "isNullable": false
               }
-            }
+            },
+            "isNullable": false
           }
         },
         "secondElement": {
           "metaType": "reference",
           "value": "group",
+          "isSingle": false,
           "attributes": {
             "metaType": "object",
             "value": {
               "attribute": {
                 "metaType": "primitive",
-                "value": "xs:int"
+                "value": "xs:int",
+                "isNullable": false
               },
               "secondAttribute": {
                 "metaType": "primitive",
-                "value": "xs:int"
+                "value": "xs:int",
+                "isNullable": false
               }
             }
-          }
+          },
+          "isNullable": true
         }
       }
     }
@@ -41,9 +50,13 @@
   {
     "name": "root",
     "type": "element",
+    "isSingle": true,
+    "isNullable": false,
     "value": {
       "metaType": "reference",
-      "value": "group"
+      "value": "group",
+      "isSingle": true,
+      "isNullable": false
     }
   }
 ]
