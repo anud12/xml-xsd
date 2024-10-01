@@ -2,10 +2,13 @@
   {
     "name": "complexType",
     "type": "complex",
+    "isSingle": true,
+    "isNullable": false,
     "value": {
       "metaType": "object",
       "value": {},
       "isSingle": true,
+      "isNullable": false,
       "attributes": {
         "metaType": "object",
         "value": {
@@ -22,10 +25,13 @@
   {
     "name": "secondComplexType",
     "type": "complex",
+    "isSingle": true,
+    "isNullable": false,
     "value": {
       "metaType": "object",
       "value": {},
       "isSingle": true,
+      "isNullable": false,
       "attributes": {
         "metaType": "object",
         "value": {
@@ -43,10 +49,12 @@
     "name": "root",
     "type": "element",
     "isSingle": true,
+    "isNullable": false,
     "value": {
       "metaType": "reference",
       "value": "complexType",
-      "isSingle": true
+      "isSingle": true,
+      "isNullable": false
     }
   }
 ]

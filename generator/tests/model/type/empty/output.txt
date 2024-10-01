@@ -3,10 +3,12 @@
     "name": "root",
     "type": "element",
     "isSingle": true,
+    "isNullable": false,
     "value": {
       "metaType": "primitive",
       "value": "unknown",
-      "isSingle": true
+      "isSingle": true,
+      "isNullable": false
     }
   }
 ]

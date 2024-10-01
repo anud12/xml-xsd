@@ -21,6 +21,7 @@
       "metaType": "object",
       "value": {},
       "isSingle": true,
+      "isNullable": false,
       "attributes": {
         "metaType": "object",
         "value": {
@@ -46,6 +47,7 @@
   {
     "name": "group__item_data",
     "type": "complex",
+    "isSingle": true,
     "value": {
       "metaType": "object",
       "isSingle": true,
@@ -53,12 +55,14 @@
         "classifications": {
           "metaType": "reference",
           "value": "type__classification_list",
-          "isSingle": true
+          "isSingle": true,
+          "isNullable": true
         },
         "properties": {
           "metaType": "reference",
           "value": "type__property_list",
-          "isSingle": true
+          "isSingle": true,
+          "isNullable": true
         }
       }
     }
@@ -66,6 +70,7 @@
   {
     "name": "group__operation__and",
     "type": "complex",
+    "isSingle": false,
     "value": {
       "metaType": "object",
       "isSingle": false,
@@ -74,6 +79,7 @@
           "metaType": "object",
           "value": {},
           "isSingle": true,
+          "isNullable": true,
           "attributes": {
             "metaType": "object",
             "value": {
@@ -104,7 +110,8 @@
                 "isNullable": false
               }
             }
-          }
+          },
+          "isNullable": true
         }
       }
     }
@@ -112,6 +119,7 @@
   {
     "name": "group__math_operations",
     "type": "complex",
+    "isSingle": true,
     "value": {
       "metaType": "object",
       "isSingle": true,
@@ -130,7 +138,8 @@
               }
             },
             "isNullable": false
-          }
+          },
+          "isNullable": false
         }
       }
     }
@@ -138,6 +147,7 @@
   {
     "name": "group__name_token",
     "type": "complex",
+    "isSingle": false,
     "value": {
       "metaType": "object",
       "isSingle": false,
@@ -148,11 +158,13 @@
             {
               "metaType": "object",
               "isSingle": true,
+              "isNullable": true,
               "value": {
                 "ref": {
                   "metaType": "object",
                   "value": {},
                   "isSingle": true,
+                  "isNullable": true,
                   "attributes": {
                     "metaType": "object",
                     "value": {
@@ -170,11 +182,13 @@
             {
               "metaType": "object",
               "isSingle": true,
+              "isNullable": false,
               "value": {
                 "one_of": {
                   "metaType": "reference",
                   "value": "group__name_token",
-                  "isSingle": true
+                  "isSingle": true,
+                  "isNullable": false
                 }
               }
             }
@@ -190,7 +204,8 @@
               }
             },
             "isNullable": false
-          }
+          },
+          "isNullable": false
         }
       }
     }
@@ -306,10 +321,13 @@
   {
     "name": "type_range",
     "type": "complex",
+    "isSingle": true,
+    "isNullable": false,
     "value": {
       "metaType": "object",
       "value": {},
       "isSingle": true,
+      "isNullable": false,
       "attributes": {
         "metaType": "reference",
         "value": "attributeGroup_range"
@@ -326,6 +344,7 @@
           "metaType": "object",
           "value": {},
           "isSingle": true,
+          "isNullable": false,
           "attributes": {
             "metaType": "object",
             "value": {
@@ -348,6 +367,7 @@
   {
     "name": "type__property_mutation",
     "type": "complex",
+    "isSingle": false,
     "value": {
       "metaType": "object",
       "attributes": {
@@ -377,7 +397,8 @@
               }
             },
             "isNullable": false
-          }
+          },
+          "isNullable": false
         }
       }
     }
@@ -392,6 +413,7 @@
   {
     "name": "type__property_list",
     "type": "complex",
+    "isSingle": false,
     "value": {
       "metaType": "object",
       "isSingle": false,
@@ -400,6 +422,7 @@
           "metaType": "object",
           "value": {},
           "isSingle": false,
+          "isNullable": true,
           "attributes": {
             "metaType": "object",
             "value": {
@@ -422,6 +445,7 @@
   {
     "name": "type__classification_list",
     "type": "complex",
+    "isSingle": false,
     "value": {
       "metaType": "object",
       "isSingle": false,
@@ -430,6 +454,7 @@
           "metaType": "object",
           "value": {},
           "isSingle": false,
+          "isNullable": true,
           "attributes": {
             "metaType": "object",
             "value": {
@@ -448,6 +473,7 @@
   {
     "name": "type__item",
     "type": "complex",
+    "isSingle": true,
     "value": {
       "metaType": "reference",
       "value": "group__item_data",
@@ -480,12 +506,14 @@
             "min": {
               "metaType": "reference",
               "value": "type__math_operations",
-              "isSingle": true
+              "isSingle": true,
+              "isNullable": true
             },
             "max": {
               "metaType": "reference",
               "value": "type__math_operations",
-              "isSingle": true
+              "isSingle": true,
+              "isNullable": true
             }
           }
         },
@@ -500,10 +528,13 @@
   {
     "name": "type_cell_ref",
     "type": "complex",
+    "isSingle": true,
+    "isNullable": false,
     "value": {
       "metaType": "object",
       "value": {},
       "isSingle": true,
+      "isNullable": false,
       "attributes": {
         "metaType": "object",
         "value": {
@@ -528,6 +559,7 @@
   {
     "name": "type__person_selection",
     "type": "complex",
+    "isSingle": false,
     "value": {
       "metaType": "object",
       "isSingle": false,
@@ -535,17 +567,20 @@
         "radius": {
           "metaType": "reference",
           "value": "type__math_operations",
-          "isSingle": true
+          "isSingle": true,
+          "isNullable": true
         },
         "min": {
           "metaType": "reference",
           "value": "type__math_operations",
-          "isSingle": true
+          "isSingle": true,
+          "isNullable": true
         },
         "max": {
           "metaType": "reference",
           "value": "type__math_operations",
-          "isSingle": true
+          "isSingle": true,
+          "isNullable": true
         },
         "property": {
           "metaType": "object",
@@ -565,19 +600,23 @@
             "min": {
               "metaType": "reference",
               "value": "type__math_operations",
-              "isSingle": true
+              "isSingle": true,
+              "isNullable": true
             },
             "max": {
               "metaType": "reference",
               "value": "type__math_operations",
-              "isSingle": true
+              "isSingle": true,
+              "isNullable": true
             }
-          }
+          },
+          "isNullable": true
         },
         "classification": {
           "metaType": "object",
           "value": {},
           "isSingle": false,
+          "isNullable": true,
           "attributes": {
             "metaType": "object",
             "value": {
@@ -594,6 +633,7 @@
           "metaType": "object",
           "value": {},
           "isSingle": true,
+          "isNullable": true,
           "attributes": {
             "metaType": "object",
             "value": {
@@ -612,9 +652,11 @@
             "item": {
               "metaType": "reference",
               "value": "type__item_selection",
-              "isSingle": false
+              "isSingle": false,
+              "isNullable": true
             }
-          }
+          },
+          "isNullable": true
         }
       }
     }
@@ -622,6 +664,7 @@
   {
     "name": "type__trigger",
     "type": "complex",
+    "isSingle": true,
     "value": {
       "metaType": "object",
       "isSingle": true,
@@ -630,6 +673,7 @@
           "metaType": "object",
           "value": {},
           "isSingle": true,
+          "isNullable": false,
           "attributes": {
             "metaType": "object",
             "value": {
@@ -647,6 +691,7 @@
   {
     "name": "type__math_operations",
     "type": "complex",
+    "isSingle": true,
     "value": {
       "metaType": "reference",
       "value": "group__operation__and",
@@ -667,6 +712,7 @@
   {
     "name": "type__action",
     "type": "complex",
+    "isSingle": true,
     "value": {
       "metaType": "object",
       "isSingle": true,
@@ -682,16 +728,20 @@
                 "select": {
                   "metaType": "reference",
                   "value": "type__person_selection",
-                  "isSingle": true
+                  "isSingle": true,
+                  "isNullable": true
                 },
                 "property_mutation": {
                   "metaType": "reference",
                   "value": "type__property_mutation",
-                  "isSingle": true
+                  "isSingle": true,
+                  "isNullable": true
                 }
-              }
+              },
+              "isNullable": true
             }
-          }
+          },
+          "isNullable": false
         },
         "on": {
           "metaType": "object",
@@ -704,16 +754,20 @@
                 "select": {
                   "metaType": "reference",
                   "value": "type__person_selection",
-                  "isSingle": true
+                  "isSingle": true,
+                  "isNullable": true
                 },
                 "property_mutation": {
                   "metaType": "reference",
                   "value": "type__property_mutation",
-                  "isSingle": true
+                  "isSingle": true,
+                  "isNullable": true
                 }
-              }
+              },
+              "isNullable": true
             }
-          }
+          },
+          "isNullable": false
         }
       }
     }
@@ -721,6 +775,7 @@
   {
     "name": "type__node_graph__selection",
     "type": "complex",
+    "isSingle": true,
     "value": {
       "metaType": "object",
       "isSingle": true,
@@ -748,6 +803,7 @@
                   "metaType": "object",
                   "value": {},
                   "isSingle": false,
+                  "isNullable": true,
                   "attributes": {
                     "metaType": "object",
                     "value": {
@@ -760,9 +816,11 @@
                     "isNullable": true
                   }
                 }
-              }
+              },
+              "isNullable": true
             }
-          }
+          },
+          "isNullable": true
         },
         "has__node_graph_id": {
           "metaType": "object",
@@ -783,6 +841,7 @@
               "metaType": "object",
               "value": {},
               "isSingle": false,
+              "isNullable": true,
               "attributes": {
                 "metaType": "object",
                 "value": {
@@ -795,7 +854,8 @@
                 "isNullable": true
               }
             }
-          }
+          },
+          "isNullable": true
         }
       }
     }
@@ -803,6 +863,7 @@
   {
     "name": "type__link_to__selection",
     "type": "complex",
+    "isSingle": true,
     "value": {
       "metaType": "object",
       "isSingle": true,
@@ -810,12 +871,14 @@
         "origin__node_graph__selection": {
           "metaType": "reference",
           "value": "type__node_graph__selection",
-          "isSingle": true
+          "isSingle": true,
+          "isNullable": true
         },
         "destination__node_graph__selection": {
           "metaType": "reference",
           "value": "type__node_graph__selection",
-          "isSingle": true
+          "isSingle": true,
+          "isNullable": true
         }
       }
     }
@@ -824,6 +887,7 @@
     "name": "world_step",
     "type": "element",
     "isSingle": true,
+    "isNullable": false,
     "value": {
       "metaType": "object",
       "isSingle": true,
@@ -836,6 +900,7 @@
               "metaType": "object",
               "value": {},
               "isSingle": true,
+              "isNullable": true,
               "attributes": {
                 "metaType": "object",
                 "value": {
@@ -852,6 +917,7 @@
               "metaType": "object",
               "value": {},
               "isSingle": true,
+              "isNullable": true,
               "attributes": {
                 "metaType": "object",
                 "value": {
@@ -868,6 +934,7 @@
               "metaType": "object",
               "value": {},
               "isSingle": true,
+              "isNullable": false,
               "attributes": {
                 "metaType": "object",
                 "value": {
@@ -884,6 +951,7 @@
               "metaType": "object",
               "value": {},
               "isSingle": true,
+              "isNullable": false,
               "attributes": {
                 "metaType": "object",
                 "value": {
@@ -900,6 +968,7 @@
               "metaType": "object",
               "value": {},
               "isSingle": true,
+              "isNullable": false,
               "attributes": {
                 "metaType": "object",
                 "value": {
@@ -920,6 +989,7 @@
                   "metaType": "object",
                   "value": {},
                   "isSingle": false,
+                  "isNullable": false,
                   "attributes": {
                     "metaType": "object",
                     "value": {
@@ -932,9 +1002,11 @@
                     "isNullable": true
                   }
                 }
-              }
+              },
+              "isNullable": false
             }
-          }
+          },
+          "isNullable": false
         },
         "rule_group": {
           "metaType": "object",
@@ -977,14 +1049,16 @@
                         {
                           "metaType": "object",
                           "value": {},
-                          "isSingle": true
+                          "isSingle": true,
+                          "isNullable": false
                         },
                         {
                           "metaType": "primitive",
                           "value": "type__math_operations"
                         }
                       ],
-                      "isSingle": true
+                      "isSingle": true,
+                      "isNullable": true
                     },
                     "item_default": {
                       "metaType": "composition",
@@ -992,19 +1066,22 @@
                         {
                           "metaType": "object",
                           "value": {},
-                          "isSingle": true
+                          "isSingle": true,
+                          "isNullable": false
                         },
                         {
                           "metaType": "primitive",
                           "value": "type__math_operations"
                         }
                       ],
-                      "isSingle": true
+                      "isSingle": true,
+                      "isNullable": true
                     },
                     "property-threshold": {
                       "metaType": "object",
                       "value": {},
                       "isSingle": false,
+                      "isNullable": true,
                       "attributes": {
                         "metaType": "object",
                         "value": {
@@ -1026,9 +1103,11 @@
                         }
                       }
                     }
-                  }
+                  },
+                  "isNullable": true
                 }
-              }
+              },
+              "isNullable": true
             },
             "classification_rule": {
               "metaType": "object",
@@ -1086,11 +1165,14 @@
                             ]
                           }
                         }
-                      }
+                      },
+                      "isNullable": true
                     }
-                  }
+                  },
+                  "isNullable": true
                 }
-              }
+              },
+              "isNullable": true
             },
             "name_rule": {
               "metaType": "object",
@@ -1109,9 +1191,11 @@
                       }
                     },
                     "isNullable": false
-                  }
+                  },
+                  "isNullable": true
                 }
-              }
+              },
+              "isNullable": true
             },
             "race_rule": {
               "metaType": "object",
@@ -1135,17 +1219,20 @@
                     "vision": {
                       "metaType": "reference",
                       "value": "type_range",
-                      "isSingle": true
+                      "isSingle": true,
+                      "isNullable": true
                     },
                     "movement": {
                       "metaType": "reference",
                       "value": "type_range",
-                      "isSingle": true
+                      "isSingle": true,
+                      "isNullable": true
                     },
                     "name": {
                       "metaType": "object",
                       "value": {},
                       "isSingle": true,
+                      "isNullable": true,
                       "attributes": {
                         "metaType": "object",
                         "value": {
@@ -1172,16 +1259,20 @@
                           }
                         },
                         "isNullable": true
-                      }
+                      },
+                      "isNullable": true
                     },
                     "icon": {
                       "metaType": "reference",
                       "value": "type_icon",
-                      "isSingle": true
+                      "isSingle": true,
+                      "isNullable": true
                     }
-                  }
+                  },
+                  "isNullable": true
                 }
-              }
+              },
+              "isNullable": true
             },
             "action_rule": {
               "metaType": "object",
@@ -1198,6 +1289,7 @@
                           "metaType": "object",
                           "value": {},
                           "isSingle": true,
+                          "isNullable": false,
                           "attributes": {
                             "metaType": "object",
                             "value": {
@@ -1215,9 +1307,11 @@
                           "value": "type__action"
                         }
                       ],
-                      "isSingle": false
+                      "isSingle": false,
+                      "isNullable": true
                     }
-                  }
+                  },
+                  "isNullable": true
                 },
                 "person_to_person": {
                   "metaType": "object",
@@ -1252,7 +1346,8 @@
                               }
                             },
                             "isNullable": false
-                          }
+                          },
+                          "isNullable": false
                         },
                         "expected": {
                           "metaType": "reference",
@@ -1268,14 +1363,17 @@
                               }
                             },
                             "isNullable": false
-                          }
+                          },
+                          "isNullable": false
                         }
-                      }
+                      },
+                      "isNullable": false
                     },
                     "property_mutation": {
                       "metaType": "reference",
                       "value": "type__property_mutation_on",
-                      "isSingle": true
+                      "isSingle": true,
+                      "isNullable": true
                     },
                     "location_mutation": {
                       "metaType": "object",
@@ -1309,13 +1407,17 @@
                               }
                             },
                             "isNullable": false
-                          }
+                          },
+                          "isNullable": false
                         }
-                      }
+                      },
+                      "isNullable": true
                     }
-                  }
+                  },
+                  "isNullable": true
                 }
-              }
+              },
+              "isNullable": true
             },
             "item_rule": {
               "metaType": "object",
@@ -1338,12 +1440,14 @@
                     "name": {
                       "metaType": "reference",
                       "value": "group__name_token",
-                      "isSingle": true
+                      "isSingle": true,
+                      "isNullable": false
                     },
                     "weight-kg": {
                       "metaType": "object",
                       "value": {},
                       "isSingle": true,
+                      "isNullable": true,
                       "attributes": {
                         "metaType": "object",
                         "value": {
@@ -1359,6 +1463,7 @@
                       "metaType": "object",
                       "value": {},
                       "isSingle": false,
+                      "isNullable": true,
                       "attributes": {
                         "metaType": "object",
                         "value": {
@@ -1371,9 +1476,11 @@
                         "isNullable": true
                       }
                     }
-                  }
+                  },
+                  "isNullable": true
                 }
-              }
+              },
+              "isNullable": true
             },
             "events_rule": {
               "metaType": "object",
@@ -1397,7 +1504,8 @@
                     "when": {
                       "metaType": "reference",
                       "value": "type__trigger",
-                      "isSingle": false
+                      "isSingle": false,
+                      "isNullable": false
                     },
                     "then": {
                       "metaType": "object",
@@ -1410,6 +1518,7 @@
                               "metaType": "object",
                               "value": {},
                               "isSingle": true,
+                              "isNullable": false,
                               "attributes": {
                                 "metaType": "object",
                                 "value": {
@@ -1434,7 +1543,8 @@
                               "value": "type__person_selection"
                             }
                           ],
-                          "isSingle": false
+                          "isSingle": false,
+                          "isNullable": true
                         },
                         "select_item": {
                           "metaType": "composition",
@@ -1443,6 +1553,7 @@
                               "metaType": "object",
                               "value": {},
                               "isSingle": true,
+                              "isNullable": false,
                               "attributes": {
                                 "metaType": "object",
                                 "value": {
@@ -1467,7 +1578,8 @@
                               "value": "type__item_selection"
                             }
                           ],
-                          "isSingle": false
+                          "isSingle": false,
+                          "isNullable": true
                         },
                         "property_mutation": {
                           "metaType": "composition",
@@ -1476,6 +1588,7 @@
                               "metaType": "object",
                               "value": {},
                               "isSingle": true,
+                              "isNullable": false,
                               "attributes": {
                                 "metaType": "object",
                                 "value": {
@@ -1493,13 +1606,17 @@
                               "value": "type__math_operations"
                             }
                           ],
-                          "isSingle": true
+                          "isSingle": true,
+                          "isNullable": true
                         }
-                      }
+                      },
+                      "isNullable": false
                     }
-                  }
+                  },
+                  "isNullable": true
                 }
-              }
+              },
+              "isNullable": true
             },
             "locations_markov_chain": {
               "metaType": "object",
@@ -1523,6 +1640,7 @@
                       "metaType": "object",
                       "value": {},
                       "isSingle": false,
+                      "isNullable": true,
                       "attributes": {
                         "metaType": "object",
                         "value": {
@@ -1538,6 +1656,7 @@
                       "metaType": "object",
                       "value": {},
                       "isSingle": false,
+                      "isNullable": true,
                       "attributes": {
                         "metaType": "object",
                         "value": {
@@ -1585,11 +1704,14 @@
                     "icon": {
                       "metaType": "reference",
                       "value": "type_icon",
-                      "isSingle": true
+                      "isSingle": true,
+                      "isNullable": false
                     }
-                  }
+                  },
+                  "isNullable": true
                 }
-              }
+              },
+              "isNullable": true
             },
             "location_graph_rule": {
               "metaType": "object",
@@ -1614,6 +1736,7 @@
                       "metaType": "object",
                       "value": {},
                       "isSingle": true,
+                      "isNullable": false,
                       "attributes": {
                         "metaType": "object",
                         "value": {
@@ -1654,6 +1777,7 @@
                           "metaType": "object",
                           "value": {},
                           "isSingle": false,
+                          "isNullable": true,
                           "attributes": {
                             "metaType": "object",
                             "value": {
@@ -1666,9 +1790,11 @@
                             "isNullable": false
                           }
                         }
-                      }
+                      },
+                      "isNullable": true
                     }
-                  }
+                  },
+                  "isNullable": false
                 },
                 "node_rule": {
                   "metaType": "object",
@@ -1693,6 +1819,7 @@
                           "metaType": "object",
                           "value": {},
                           "isSingle": false,
+                          "isNullable": true,
                           "attributes": {
                             "metaType": "object",
                             "value": {
@@ -1705,7 +1832,8 @@
                             "isNullable": false
                           }
                         }
-                      }
+                      },
+                      "isNullable": true
                     },
                     "link_group": {
                       "metaType": "object",
@@ -1768,16 +1896,20 @@
                             "distance_to_progress_multiplier": {
                               "metaType": "reference",
                               "value": "type__math_operations",
-                              "isSingle": true
+                              "isSingle": true,
+                              "isNullable": true
                             },
                             "person_progress_property": {
                               "metaType": "reference",
                               "value": "type__math_operations",
-                              "isSingle": true
+                              "isSingle": true,
+                              "isNullable": true
                             }
-                          }
+                          },
+                          "isNullable": true
                         }
-                      }
+                      },
+                      "isNullable": true
                     },
                     "existing_person": {
                       "metaType": "object",
@@ -1801,13 +1933,17 @@
                         "person_selection": {
                           "metaType": "reference",
                           "value": "type__person_selection",
-                          "isSingle": true
+                          "isSingle": true,
+                          "isNullable": false
                         }
-                      }
+                      },
+                      "isNullable": true
                     }
-                  }
+                  },
+                  "isNullable": true
                 }
-              }
+              },
+              "isNullable": true
             },
             "location_classification_rule": {
               "metaType": "object",
@@ -1817,6 +1953,7 @@
                   "metaType": "object",
                   "value": {},
                   "isSingle": false,
+                  "isNullable": false,
                   "attributes": {
                     "metaType": "object",
                     "value": {
@@ -1829,9 +1966,11 @@
                     "isNullable": false
                   }
                 }
-              }
+              },
+              "isNullable": true
             }
-          }
+          },
+          "isNullable": false
         },
         "items": {
           "metaType": "object",
@@ -1840,9 +1979,11 @@
             "item": {
               "metaType": "reference",
               "value": "type__item",
-              "isSingle": false
+              "isSingle": false,
+              "isNullable": true
             }
-          }
+          },
+          "isNullable": true
         },
         "people": {
           "metaType": "object",
@@ -1871,6 +2012,7 @@
                   "metaType": "object",
                   "value": {},
                   "isSingle": true,
+                  "isNullable": true,
                   "attributes": {
                     "metaType": "object",
                     "value": {
@@ -1885,7 +2027,8 @@
                 "location": {
                   "metaType": "reference",
                   "value": "type_cell_ref",
-                  "isSingle": true
+                  "isSingle": true,
+                  "isNullable": true
                 },
                 "properties": {
                   "metaType": "object",
@@ -1895,6 +2038,7 @@
                       "metaType": "object",
                       "value": {},
                       "isSingle": false,
+                      "isNullable": true,
                       "attributes": {
                         "metaType": "object",
                         "value": {
@@ -1910,12 +2054,14 @@
                         }
                       }
                     }
-                  }
+                  },
+                  "isNullable": true
                 },
                 "relations": {
                   "metaType": "object",
                   "value": {},
                   "isSingle": false,
+                  "isNullable": true,
                   "attributes": {
                     "metaType": "object",
                     "value": {
@@ -1934,9 +2080,11 @@
                     "item": {
                       "metaType": "reference",
                       "value": "type__item",
-                      "isSingle": false
+                      "isSingle": false,
+                      "isNullable": true
                     }
-                  }
+                  },
+                  "isNullable": true
                 },
                 "classifications": {
                   "metaType": "object",
@@ -1946,6 +2094,7 @@
                       "metaType": "object",
                       "value": {},
                       "isSingle": false,
+                      "isNullable": true,
                       "attributes": {
                         "metaType": "object",
                         "value": {
@@ -1958,16 +2107,20 @@
                         "isNullable": false
                       }
                     }
-                  }
+                  },
+                  "isNullable": true
                 },
                 "icon": {
                   "metaType": "reference",
                   "value": "type_icon",
-                  "isSingle": true
+                  "isSingle": true,
+                  "isNullable": true
                 }
-              }
+              },
+              "isNullable": true
             }
-          }
+          },
+          "isNullable": true
         },
         "location_layer": {
           "metaType": "object",
@@ -1987,6 +2140,7 @@
               "metaType": "object",
               "value": {},
               "isSingle": false,
+              "isNullable": false,
               "attributes": {
                 "metaType": "object",
                 "value": {
@@ -2005,7 +2159,8 @@
                 }
               }
             }
-          }
+          },
+          "isNullable": true
         },
         "location_graph": {
           "metaType": "object",
@@ -2026,6 +2181,7 @@
               "metaType": "object",
               "value": {},
               "isSingle": true,
+              "isNullable": false,
               "attributes": {
                 "metaType": "object",
                 "value": {
@@ -2061,6 +2217,7 @@
                   "metaType": "object",
                   "value": {},
                   "isSingle": true,
+                  "isNullable": true,
                   "attributes": {
                     "metaType": "object",
                     "value": {
@@ -2085,6 +2242,7 @@
                       "metaType": "object",
                       "value": {},
                       "isSingle": false,
+                      "isNullable": true,
                       "attributes": {
                         "metaType": "object",
                         "value": {
@@ -2097,7 +2255,8 @@
                         "isNullable": false
                       }
                     }
-                  }
+                  },
+                  "isNullable": true
                 },
                 "link_to": {
                   "metaType": "object",
@@ -2126,6 +2285,7 @@
                           "metaType": "object",
                           "value": {},
                           "isSingle": false,
+                          "isNullable": true,
                           "attributes": {
                             "metaType": "object",
                             "value": {
@@ -2141,14 +2301,17 @@
                             }
                           }
                         }
-                      }
+                      },
+                      "isNullable": true
                     },
                     "person_progress_property": {
                       "metaType": "reference",
                       "value": "type__math_operations",
-                      "isSingle": true
+                      "isSingle": true,
+                      "isNullable": true
                     }
-                  }
+                  },
+                  "isNullable": true
                 },
                 "people": {
                   "metaType": "object",
@@ -2158,6 +2321,7 @@
                       "metaType": "object",
                       "value": {},
                       "isSingle": false,
+                      "isNullable": true,
                       "attributes": {
                         "metaType": "object",
                         "value": {
@@ -2170,11 +2334,14 @@
                         "isNullable": false
                       }
                     }
-                  }
+                  },
+                  "isNullable": true
                 }
-              }
+              },
+              "isNullable": false
             }
-          }
+          },
+          "isNullable": true
         },
         "actions": {
           "metaType": "object",
@@ -2186,11 +2353,13 @@
                 {
                   "metaType": "object",
                   "isSingle": true,
+                  "isNullable": false,
                   "value": {
                     "do": {
                       "metaType": "object",
                       "value": {},
                       "isSingle": true,
+                      "isNullable": false,
                       "attributes": {
                         "metaType": "object",
                         "value": {
@@ -2214,11 +2383,13 @@
                 {
                   "metaType": "object",
                   "isSingle": true,
+                  "isNullable": false,
                   "value": {
                     "move_towards": {
                       "metaType": "object",
                       "value": {},
                       "isSingle": true,
+                      "isNullable": false,
                       "attributes": {
                         "metaType": "object",
                         "value": {
@@ -2253,12 +2424,14 @@
                   }
                 },
                 "isNullable": false
-              }
+              },
+              "isNullable": true
             },
             "location_graph.create": {
               "metaType": "object",
               "value": {},
               "isSingle": false,
+              "isNullable": true,
               "attributes": {
                 "metaType": "object",
                 "value": {
@@ -2275,6 +2448,7 @@
               "metaType": "object",
               "value": {},
               "isSingle": false,
+              "isNullable": true,
               "attributes": {
                 "metaType": "object",
                 "value": {
@@ -2298,7 +2472,8 @@
                 "node_graph_selection": {
                   "metaType": "reference",
                   "value": "type__node_graph__selection",
-                  "isSingle": true
+                  "isSingle": true,
+                  "isNullable": false
                 },
                 "to_be_added__classification": {
                   "metaType": "object",
@@ -2319,6 +2494,7 @@
                       "metaType": "object",
                       "value": {},
                       "isSingle": true,
+                      "isNullable": true,
                       "attributes": {
                         "metaType": "object",
                         "value": {
@@ -2331,9 +2507,11 @@
                         "isNullable": false
                       }
                     }
-                  }
+                  },
+                  "isNullable": false
                 }
-              }
+              },
+              "isNullable": true
             },
             "person.teleport": {
               "metaType": "union",
@@ -2341,11 +2519,13 @@
                 {
                   "metaType": "object",
                   "isSingle": true,
+                  "isNullable": true,
                   "value": {
                     "location_graph": {
                       "metaType": "object",
                       "value": {},
                       "isSingle": true,
+                      "isNullable": true,
                       "attributes": {
                         "metaType": "object",
                         "value": {
@@ -2367,6 +2547,7 @@
                 {
                   "metaType": "object",
                   "isSingle": true,
+                  "isNullable": false,
                   "value": {
                     "link_to": {
                       "metaType": "object",
@@ -2386,9 +2567,11 @@
                         "selection": {
                           "metaType": "reference",
                           "value": "type__link_to__selection",
-                          "isSingle": true
+                          "isSingle": true,
+                          "isNullable": false
                         }
-                      }
+                      },
+                      "isNullable": false
                     }
                   }
                 }
@@ -2404,12 +2587,14 @@
                   }
                 },
                 "isNullable": false
-              }
+              },
+              "isNullable": true
             },
             "person.on_person.property_mutation": {
               "metaType": "object",
               "value": {},
               "isSingle": false,
+              "isNullable": true,
               "attributes": {
                 "metaType": "object",
                 "value": {
@@ -2438,14 +2623,17 @@
                 "node_graph__selection": {
                   "metaType": "reference",
                   "value": "type__node_graph__selection",
-                  "isSingle": true
+                  "isSingle": true,
+                  "isNullable": false
                 },
                 "person__selection": {
                   "metaType": "reference",
                   "value": "type__person_selection",
-                  "isSingle": true
+                  "isSingle": true,
+                  "isNullable": false
                 }
-              }
+              },
+              "isNullable": true
             },
             "person.move_to": {
               "metaType": "object",
@@ -2465,7 +2653,8 @@
                 "find_path_towards": {
                   "metaType": "reference",
                   "value": "type__node_graph__selection",
-                  "isSingle": true
+                  "isSingle": true,
+                  "isNullable": true
                 },
                 "path": {
                   "metaType": "object",
@@ -2475,6 +2664,7 @@
                       "metaType": "object",
                       "value": {},
                       "isSingle": false,
+                      "isNullable": true,
                       "attributes": {
                         "metaType": "object",
                         "value": {
@@ -2487,13 +2677,17 @@
                         "isNullable": false
                       }
                     }
-                  }
+                  },
+                  "isNullable": true
                 }
-              }
+              },
+              "isNullable": true
             }
-          }
+          },
+          "isNullable": true
         }
-      }
+      },
+      "isNullable": false
     }
   }
 ]

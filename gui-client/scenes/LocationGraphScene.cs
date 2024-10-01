@@ -129,7 +129,7 @@ public partial class LocationGraphScene : Control
 			location_graph_id_ref = locationGraph.id,
 			node_id_ref = node.id,
 		};
-		worldStep.actions.location_graph__node__create_adjacent.Add(createAdjacent);
+		worldStep.GetOrInsertDefault_actions().GetOrInsertDefault_location_graph__node__create_adjacent().Add(createAdjacent);
 		LoadWorldStep.executeNextStep();
 	}
 
@@ -253,7 +253,7 @@ public partial class LocationGraphScene : Control
 				Size = new Vector2(SCALE, SCALE),
 			};
 			line2D.AddChild(label);
-			linkTo.people.person.ForEach(person =>
+			linkTo.people?.person?.ForEach(person =>
 			{
 				string personId = person.person_id_ref;
 				int progress = int.Parse(person.rawNode.attributes["accumulated_progress"]);

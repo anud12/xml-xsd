@@ -3,17 +3,20 @@
     "name": "element",
     "type": "element",
     "isSingle": true,
+    "isNullable": true,
     "value": {
       "metaType": "union",
       "value": [
         {
           "metaType": "object",
           "isSingle": true,
+          "isNullable": true,
           "value": {
             "first_choice_element": {
               "metaType": "object",
               "value": {},
               "isSingle": true,
+              "isNullable": true,
               "attributes": {
                 "metaType": "object",
                 "value": {
@@ -44,7 +47,8 @@
           }
         },
         "isNullable": false
-      }
+      },
+      "isNullable": true
     }
   }
 ]

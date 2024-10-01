@@ -10,6 +10,7 @@
           "metaType": "object",
           "value": {},
           "isSingle": true,
+          "isNullable": true,
           "attributes": {
             "metaType": "object",
             "value": {
@@ -40,7 +41,8 @@
                 "isNullable": false
               }
             }
-          }
+          },
+          "isNullable": true
         }
       }
     }
@@ -49,10 +51,12 @@
     "name": "root",
     "type": "element",
     "isSingle": true,
+    "isNullable": false,
     "value": {
       "metaType": "reference",
       "value": "group",
-      "isSingle": true
+      "isSingle": true,
+      "isNullable": false
     }
   }
 ]

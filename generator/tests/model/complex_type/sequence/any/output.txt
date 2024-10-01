@@ -3,9 +3,11 @@
     "name": "root",
     "type": "element",
     "isSingle": true,
+    "isNullable": false,
     "value": {
       "metaType": "any",
-      "isSingle": true
+      "isSingle": true,
+      "isNullable": false
     }
   }
 ]

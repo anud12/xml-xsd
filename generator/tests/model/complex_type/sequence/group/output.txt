@@ -9,7 +9,8 @@
         "operation": {
           "metaType": "reference",
           "value": "xs:int",
-          "isSingle": true
+          "isSingle": true,
+          "isNullable": false
         }
       }
     }
@@ -18,10 +19,12 @@
     "name": "root",
     "type": "element",
     "isSingle": true,
+    "isNullable": false,
     "value": {
       "metaType": "reference",
       "value": "group",
-      "isSingle": true
+      "isSingle": true,
+      "isNullable": false
     }
   }
 ]

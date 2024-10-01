@@ -3,10 +3,12 @@
     "name": "root",
     "type": "element",
     "isSingle": true,
+    "isNullable": false,
     "value": {
       "metaType": "object",
       "value": {},
       "isSingle": true,
+      "isNullable": false,
       "attributes": {
         "metaType": "object",
         "value": {

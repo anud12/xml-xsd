@@ -9,12 +9,14 @@
         "classifications": {
           "metaType": "reference",
           "value": "xs:integer",
-          "isSingle": true
+          "isSingle": true,
+          "isNullable": true
         },
         "properties": {
           "metaType": "reference",
           "value": "xs:integer",
-          "isSingle": true
+          "isSingle": true,
+          "isNullable": true
         }
       }
     }
@@ -32,12 +34,14 @@
             "min": {
               "metaType": "reference",
               "value": "xs:integer",
-              "isSingle": true
+              "isSingle": true,
+              "isNullable": true
             },
             "max": {
               "metaType": "reference",
               "value": "xs:integer",
-              "isSingle": true
+              "isSingle": true,
+              "isNullable": true
             }
           }
         },

@@ -13,10 +13,12 @@
     "name": "root",
     "type": "element",
     "isSingle": true,
+    "isNullable": false,
     "value": {
       "metaType": "reference",
       "value": "simple_type",
-      "isSingle": true
+      "isSingle": true,
+      "isNullable": false
     }
   }
 ]

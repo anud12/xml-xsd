@@ -3,6 +3,7 @@
     "name": "root",
     "type": "element",
     "isSingle": true,
+    "isNullable": false,
     "value": {
       "metaType": "object",
       "isSingle": true,
@@ -14,11 +15,14 @@
             "grandChild": {
               "metaType": "reference",
               "value": "xs:int",
-              "isSingle": true
+              "isSingle": true,
+              "isNullable": false
             }
-          }
+          },
+          "isNullable": false
         }
-      }
+      },
+      "isNullable": false
     }
   }
 ]

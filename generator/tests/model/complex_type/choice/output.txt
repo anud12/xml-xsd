@@ -3,33 +3,39 @@
     "name": "root",
     "type": "element",
     "isSingle": true,
+    "isNullable": false,
     "value": {
       "metaType": "union",
       "value": [
         {
           "metaType": "object",
           "isSingle": true,
+          "isNullable": false,
           "value": {
             "firstChoice": {
               "metaType": "reference",
               "value": "xs:string",
-              "isSingle": true
+              "isSingle": true,
+              "isNullable": false
             }
           }
         },
         {
           "metaType": "object",
           "isSingle": true,
+          "isNullable": false,
           "value": {
             "secondChoice": {
               "metaType": "reference",
               "value": "xs:int",
-              "isSingle": true
+              "isSingle": true,
+              "isNullable": false
             }
           }
         }
       ],
-      "isSingle": true
+      "isSingle": true,
+      "isNullable": false
     }
   }
 ]

@@ -16,11 +16,15 @@ export function processChoice(element: XsdElement | XsdElement[]): Type[] {
     const maxOccurs = element.maxOccurs ?? "1";
     const isSingle = maxOccurs === "1";
 
+    const minOccurs = element.minOccurs ?? "1";
+    const isNullable = minOccurs === "0";
+
     if (element.type) {
       return [{
         metaType: "primitive",
         value: element.type,
-        isSingle
+        isSingle,
+        isNullable,
       }]
     }
     let type: Type = {
@@ -34,6 +38,7 @@ export function processChoice(element: XsdElement | XsdElement[]): Type[] {
         return {
           metaType: "object",
           isSingle: type.isSingle,
+          isNullable: type.isNullable,
           value: {
             [xsElement.name]: type
           },

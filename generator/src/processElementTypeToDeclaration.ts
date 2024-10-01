@@ -22,6 +22,7 @@ export function processElementTypeToDeclaration(element: XsdElement | XsdElement
         name: element.name,
         type: "element",
         isSingle: type.isSingle,
+        isNullable: type.isNullable,
         value: type
       } as TypeDeclaration;
     });

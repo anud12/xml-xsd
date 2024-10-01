@@ -3,17 +3,20 @@
     "name": "by",
     "type": "element",
     "isSingle": false,
+    "isNullable": true,
     "value": {
       "metaType": "union",
       "value": [
         {
           "metaType": "object",
           "isSingle": true,
+          "isNullable": false,
           "value": {
             "do": {
               "metaType": "object",
               "value": {},
               "isSingle": true,
+              "isNullable": false,
               "attributes": {
                 "metaType": "object",
                 "value": {
@@ -37,11 +40,13 @@
         {
           "metaType": "object",
           "isSingle": true,
+          "isNullable": false,
           "value": {
             "move_towards": {
               "metaType": "object",
               "value": {},
               "isSingle": true,
+              "isNullable": false,
               "attributes": {
                 "metaType": "object",
                 "value": {
@@ -76,7 +81,8 @@
           }
         },
         "isNullable": false
-      }
+      },
+      "isNullable": true
     }
   }
 ]

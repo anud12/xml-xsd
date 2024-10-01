@@ -15,27 +15,37 @@ function typeDeclarationElementToClassString(dependantType: DependantType, exten
       ${dependantType.value.attributes?.metaType === "object" && template()`
         //Attributes
         ${Object.entries(dependantType.value.attributes.value ?? {}).map(([key, value]) => {
-    const type = getTypeName(value, key, dependantType.name);
+    let type = getTypeName(value, key, dependantType.name);
+
     if (value.metaType === "primitive") {
       if (type !== primitives.int) {
+        const typeString = value.isNullable
+          ? `${primitives.string}?`
+          : primitives.string;
+
         return template()`
-                public ${primitives.string}? ${normalizeName(key)};
-                public ${primitives.string}? Get_${normalizeName(key)}()
+                public ${typeString} ${normalizeName(key)};
+                public ${typeString} Get_${normalizeName(key)}()
                 {
                   return this.${normalizeName(key)};
                 }
-                public void Set_${normalizeName(key)}(${primitives.string}? value)
+                public void Set_${normalizeName(key)}(${typeString} value)
                 {
                   this.${normalizeName(key)} = value;
                 }`
       }
+
+      const typeString = value.isNullable
+        ? `${type}?`
+        : type;
+
       return template()`
-              public ${type}? ${normalizeName(key)};
-              public ${type}? Get_${normalizeName(key)}()
+              public ${typeString} ${normalizeName(key)};
+              public ${typeString} Get_${normalizeName(key)}()
               {
                 return this.${normalizeName(key)};
               }
-              public void Set_${normalizeName(key)}(${type}? value)
+              public void Set_${normalizeName(key)}(${typeString} value)
               {
                 this.${normalizeName(key)} = value;
               }`
@@ -56,10 +66,15 @@ function typeDeclarationElementToClassString(dependantType: DependantType, exten
 
       const typeString = value.isSingle
         ? `${type}`
-        : `List<${type}>`
+        : `List<${type}>`;
+      const nullableTypeString = value.isNullable
+        ? `${typeString}?`
+        : typeString;
 
       const typeInitialization = value.isSingle
-        ? `new ${type}()`
+        ? value.isNullable
+          ? `null`
+          : `new ${type}()`
         : `new List<${type}>()`;
 
       if (value.metaType === "object") {
@@ -69,12 +84,19 @@ function typeDeclarationElementToClassString(dependantType: DependantType, exten
           name: type,
         })
         return template()`
-              public ${typeString} ${normalizeName(key)} = ${typeInitialization};
-              public ${typeString} Get_${normalizeName(key)}()
+              public ${nullableTypeString} ${normalizeName(key)} = ${typeInitialization};
+              public ${nullableTypeString} Get_${normalizeName(key)}()
               {
                 return this.${normalizeName(key)};
               }
-              public void Set_${normalizeName(key)}(${typeString} value)
+              public ${typeString} GetOrInsertDefault_${normalizeName(key)}()
+              {
+                if(this.${normalizeName(key)} == null) {
+                  this.${normalizeName(key)} = new ${typeString}();
+                }
+                return this.${normalizeName(key)};
+              }
+              public void Set_${normalizeName(key)}(${nullableTypeString} value)
               {
                 this.${normalizeName(key)} = value;
               }
@@ -87,12 +109,12 @@ function typeDeclarationElementToClassString(dependantType: DependantType, exten
           name: type,
         })
         return template()`
-              public ${typeString} ${normalizeName(key)} = ${typeInitialization};
-              public ${typeString} Get_${normalizeName(key)}()
+              public ${nullableTypeString} ${normalizeName(key)} = ${typeInitialization};
+              public ${nullableTypeString} Get_${normalizeName(key)}()
               {
                 return this.${normalizeName(key)};
               }
-              public void Set_${normalizeName(key)}(${typeString} value)
+              public void Set_${normalizeName(key)}(${nullableTypeString} value)
               {
                 this.${normalizeName(key)} = value;
               }
@@ -105,12 +127,12 @@ function typeDeclarationElementToClassString(dependantType: DependantType, exten
           name: type,
         })
         return template()`
-              public ${typeString} ${normalizeName(key)} = ${typeInitialization};
-              public ${typeString} Get_${normalizeName(key)}()
+              public ${nullableTypeString} ${normalizeName(key)} = ${typeInitialization};
+              public ${nullableTypeString} Get_${normalizeName(key)}()
               {
                 return this.${normalizeName(key)};
               }
-              public void Set_${normalizeName(key)}(${typeString} value)
+              public void Set_${normalizeName(key)}(${nullableTypeString} value)
               {
                 this.${normalizeName(key)} = value;
               }
@@ -148,7 +170,7 @@ function typeDeclarationElementToClassString(dependantType: DependantType, exten
                   if(rawNode.attributes.ContainsKey("${key}"))
                   {
                     var attribute_${normalizeName(key)} = rawNode.attributes["${key}"];
-                    this.${normalizeName(key)} = attribute_${normalizeName(key)}?.ToInt();
+                    this.${normalizeName(key)} = attribute_${normalizeName(key)}${value.isNullable && "?"}.ToInt();
                   }
                   `;
       }
@@ -181,7 +203,7 @@ function typeDeclarationElementToClassString(dependantType: DependantType, exten
       return template()`
                 if(this.${normalizeName(key)} != null) 
                 {
-                  rawNode.attributes["${key}"] = this.${normalizeName(key)}?.ToString();
+                  rawNode.attributes["${key}"] = this.${normalizeName(key)}${value.isNullable && "?"}.ToString();
                 }
                 `;
     }
@@ -193,7 +215,11 @@ function typeDeclarationElementToClassString(dependantType: DependantType, exten
     if (value.metaType === "object" || value.metaType === "union" || value.metaType === "composition" || value.metaType === "reference") {
 
       if (value.isSingle) {
-        return template()`rawNode.children["${key}"] = new List<RawNode> { ${normalizeName(key)}.SerializeIntoRawNode() };`;
+        return template()`
+          if(${normalizeName(key)} != null) {
+            rawNode.children["${key}"] = new List<RawNode> { ${normalizeName(key)}.SerializeIntoRawNode() };
+          }
+        `;
 
       }
       return template()`rawNode.children["${key}"] = ${normalizeName(key)}.Select(x => x.SerializeIntoRawNode()).ToList();`;
@@ -232,13 +258,21 @@ function typeDeclarationElementToInterfaceString(dependantType: DependantType, e
     const type = getTypeName(value, key, dependantType.name);
     if (value.metaType === "primitive") {
       if (type !== primitives.int) {
+
+        const typeString = value.isNullable
+          ? `${primitives.string}?`
+          : primitives.string;
         return template()`
-                    public ${primitives.string}? Get_${normalizeName(key)}();
-                    public void Set_${normalizeName(key)}(${primitives.string}? value);`
+                    public ${typeString} Get_${normalizeName(key)}();
+                    public void Set_${normalizeName(key)}(${typeString} value);`
       }
+
+      const typeString = value.isNullable
+        ? `${type}?`
+        : type;
       return template()`
-                  public ${type}? Get_${normalizeName(key)}();
-                  public void Set_${normalizeName(key)}(${type}? value);`
+                  public ${typeString} Get_${normalizeName(key)}();
+                  public void Set_${normalizeName(key)}(${typeString} value);`
     }
 
     return template()`/* ignored attribute key={key} of type=${type}*/`
@@ -254,10 +288,13 @@ function typeDeclarationElementToInterfaceString(dependantType: DependantType, e
       let type = getTypeName(value, key, dependantType.name);
       type = normalizeName(type);
 
-      const typeString = value.isSingle
+      let typeString = value.isSingle
         ? `${type}`
         : `List<${type}>`
-      
+      typeString = value.isNullable
+        ? `${typeString}?`
+        : typeString
+
       if (value.metaType === "object") {
         dependantTypeList.push({
           type: "element",

@@ -11,8 +11,8 @@
         "child": {
           "metaType": "primitive",
           "value": "unknown",
-          "isSingle": false,
-          "isNullable": false
+          "isSingle": true,
+          "isNullable": true
         }
       },
       "isNullable": false

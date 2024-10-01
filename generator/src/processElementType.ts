@@ -18,18 +18,22 @@ export function processElementType(element: XsdElement | XsdElement[]): Type[] {
     const maxOccurs = element.maxOccurs ?? "1";
     const isSingle = maxOccurs === "1";
 
+    const minOccurs = element.minOccurs ?? "1";
+    const isNullable = minOccurs === "0";
     if (element.type) {
       return [{
         metaType: "reference",
         value: element.type,
-        isSingle: isSingle
+        isSingle: isSingle,
+        isNullable: isNullable,
       }];
     }
     if (element["xs:complexContent"] !== undefined) {
       return processComplexType(element["xs:complexContent"]).map(type => {
         return {
           ...type,
-          isSingle: isSingle
+          isSingle: isSingle,
+          isNullable: isNullable,
         }
       });
     }
@@ -38,7 +42,8 @@ export function processElementType(element: XsdElement | XsdElement[]): Type[] {
       return processComplexType(element["xs:complexType"]).map(type => {
         return {
           ...type,
-          isSingle: isSingle
+          isSingle: isSingle,
+          isNullable: isNullable,
         }
       });
     }
@@ -47,6 +52,7 @@ export function processElementType(element: XsdElement | XsdElement[]): Type[] {
       metaType: "primitive",
       value: "unknown",
       isSingle: isSingle,
+      isNullable: isNullable,
     }];
   } catch (e) {
     throw mergeError(e, new Error(`processElementType failed for ${JSON.stringify(element, null, 2)}`))

@@ -143,6 +143,13 @@ public class test: Itest {
   {
     return this.level1;
   }
+  public List<test__level1> GetOrInsertDefault_level1()
+  {
+    if(this.level1 == null) {
+      this.level1 = new List<test__level1>();
+    }
+    return this.level1;
+  }
   public void Set_level1(List<test__level1> value)
   {
     this.level1 = value;

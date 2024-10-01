@@ -21,6 +21,8 @@ export function processComplexTypeToDeclaration(element: XsdElement | XsdElement
       return {
         name: element?.name,
         type: "complex",
+        isSingle: type.isSingle,
+        isNullable: type.isNullable,
         value: type
       } as TypeDeclaration;
     });
