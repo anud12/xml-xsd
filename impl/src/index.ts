@@ -19,10 +19,10 @@ const launchWebsocket = (onMessage: (string: string) => Promise<string>) => {
     console.log('Client connected');
 
     ws.on('message', async (message) => {
-      console.log(`Received message: ${message}`);
+      // console.log(`Received message: ${message}`);
       onMessage(message.toString())
         .then(response => {
-          console.log(`Sending response: ${response}`)
+          // console.log(`Sending response: ${response}`)
           ws.send(response)
           ws.close();
         });

@@ -2295,8 +2295,9 @@
                                 "isNullable": false
                               },
                               "accumulated_progress": {
-                                "metaType": "unknown",
-                                "isNullable": true
+                                "metaType": "primitive",
+                                "value": "xs:int",
+                                "isNullable": false
                               }
                             }
                           }

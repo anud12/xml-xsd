@@ -30,8 +30,6 @@ namespace XSD {
 		public T InitializeWithRawNode<T>(string key, T defaultValue)
 		{
 			//get type of elements in the list
-			GD.Print("InitializeWithRawNode");
-
 			var type = typeof(T);
 
 			var childRawNodeList = this.children.ContainsKey(key) ? this.children[key] : null;

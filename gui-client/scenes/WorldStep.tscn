@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://cfcl0ch64pt2k"]
+[gd_scene load_steps=8 format=3 uid="uid://cfcl0ch64pt2k"]
 
 [ext_resource type="Script" path="res://scenes/WorldStep.cs" id="1_nceax"]
 [ext_resource type="Theme" uid="uid://dskjtmlounwht" path="res://mainTheme.tres" id="1_thifx"]
 [ext_resource type="Script" path="res://components/nodes/MainPersonSelect.cs" id="3_7q138"]
 [ext_resource type="Script" path="res://components/nodes/ServerToggle.cs" id="3_djd6i"]
+[ext_resource type="Script" path="res://components/nodes/DataStoreDispatcher.cs" id="3_e37i8"]
 [ext_resource type="Script" path="res://components/nodes/NextStep.cs" id="4_6rmou"]
 [ext_resource type="Script" path="res://components/nodes/ButtonWithDropdownNode.cs" id="4_703po"]
 
@@ -16,6 +17,9 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_thifx")
 script = ExtResource("1_nceax")
+
+[node name="DataStoreDispatcher" type="Node" parent="."]
+script = ExtResource("3_e37i8")
 
 [node name="BoxContainer2" type="BoxContainer" parent="."]
 layout_mode = 1

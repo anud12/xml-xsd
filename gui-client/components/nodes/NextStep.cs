@@ -39,7 +39,7 @@ public partial class NextStep : Button
         base._Process(delta);
         if (isLooping.data) {
             lastTimeSeconds += delta;
-            if (lastTimeSeconds > 0.5)
+            if (lastTimeSeconds > 1)
             {
                 lastTimeSeconds = 0;
                     LoadWorldStep.executeNextStep();

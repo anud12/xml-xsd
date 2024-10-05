@@ -1490,7 +1490,7 @@
                                         </xs:documentation>
                                       </xs:annotation>
                                     </xs:attribute>
-                                    <xs:attribute name="accumulated_progress">
+                                    <xs:attribute name="accumulated_progress" type="xs:int" use="required">
                                       <xs:annotation>
                                         <xs:documentation>
                                           Represents the accumulated progress of the person in the link.

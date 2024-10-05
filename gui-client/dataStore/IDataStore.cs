@@ -9,6 +9,7 @@ namespace dataStore
     public class DataStore<T>
     {
         private T? _data;
+        public bool isSend { get; set; } = false;
 
         /// <summary>
         /// The data stored in the data store, setting the data will execute all the callbacks if the data is not equal to the previous data
@@ -59,6 +60,27 @@ namespace dataStore
             this._data = data;
             this.ExecuteCallbacks();
         }
+
+        public void QueueSet(T? data)
+        {
+            if(data != null && data.Equals(_data))
+            {
+                return;
+            }
+            this._data = data;
+            isSend = false;
+        }
+
+        public void Dispatch()
+        {
+            if(isSend)
+            {
+                return;
+            }
+            isSend = true;
+            this.ExecuteCallbacks();
+        }
+
         public Action OnSet(Action<T?, Action> callback)
         {
             var context = ExecutionContext.Capture();

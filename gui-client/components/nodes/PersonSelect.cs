@@ -4,6 +4,7 @@ using dataStore;
 using Godot;
 using XSD;
 
+[Tool]
 [GlobalClass]
 public partial class PersonSelect : OptionButton
 {

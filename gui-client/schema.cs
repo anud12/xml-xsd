@@ -164,7 +164,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step");
+      // Godot.GD.Print("Deserializing world_step");
       //Deserialize elements
       this.world_metadata = rawNode.InitializeWithRawNode("world_metadata", this.world_metadata);
       this.rule_group = rawNode.InitializeWithRawNode("rule_group", this.rule_group);
@@ -194,7 +194,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step");
+        // Godot.GD.Print("Serializing world_step");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -342,7 +342,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__world_metadata");
+      // Godot.GD.Print("Deserializing world_step__world_metadata");
       //Deserialize elements
       this.previous_world_step = rawNode.InitializeWithRawNode("previous_world_step", this.previous_world_step);
       this.next_world_step = rawNode.InitializeWithRawNode("next_world_step", this.next_world_step);
@@ -378,7 +378,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__world_metadata");
+        // Godot.GD.Print("Serializing world_step__world_metadata");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -602,7 +602,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group");
+      // Godot.GD.Print("Deserializing world_step__rule_group");
       //Deserialize arguments
 
       //Deserialize elements
@@ -658,7 +658,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group");
+        // Godot.GD.Print("Serializing world_step__rule_group");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -709,7 +709,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__items");
+      // Godot.GD.Print("Deserializing world_step__items");
       //Deserialize elements
       this.item = rawNode.InitializeWithRawNode("item", this.item);
     }
@@ -723,7 +723,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__items");
+        // Godot.GD.Print("Serializing world_step__items");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -781,7 +781,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__people");
+      // Godot.GD.Print("Deserializing world_step__people");
       //Deserialize elements
       this.person = rawNode.InitializeWithRawNode("person", this.person);
     }
@@ -795,7 +795,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__people");
+        // Godot.GD.Print("Serializing world_step__people");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -857,7 +857,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__location_layer");
+      // Godot.GD.Print("Deserializing world_step__location_layer");
       //Deserialize arguments
 
       //Deserialize elements
@@ -875,7 +875,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__location_layer");
+        // Godot.GD.Print("Serializing world_step__location_layer");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -964,7 +964,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__location_graph");
+      // Godot.GD.Print("Deserializing world_step__location_graph");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("id"))
       {
@@ -993,7 +993,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__location_graph");
+        // Godot.GD.Print("Serializing world_step__location_graph");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -1163,7 +1163,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__actions");
+      // Godot.GD.Print("Deserializing world_step__actions");
       //Deserialize elements
       this.by = rawNode.InitializeWithRawNode("by", this.by);
       this.location_graph__create = rawNode.InitializeWithRawNode("location_graph.create", this.location_graph__create);
@@ -1193,7 +1193,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__actions");
+        // Godot.GD.Print("Serializing world_step__actions");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -1247,7 +1247,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__world_metadata__previous_world_step");
+      // Godot.GD.Print("Deserializing world_step__world_metadata__previous_world_step");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("value"))
       {
@@ -1272,7 +1272,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__world_metadata__previous_world_step");
+        // Godot.GD.Print("Serializing world_step__world_metadata__previous_world_step");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -1326,7 +1326,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__world_metadata__next_world_step");
+      // Godot.GD.Print("Deserializing world_step__world_metadata__next_world_step");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("value"))
       {
@@ -1351,7 +1351,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__world_metadata__next_world_step");
+        // Godot.GD.Print("Serializing world_step__world_metadata__next_world_step");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -1405,7 +1405,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__world_metadata__elapsed_time");
+      // Godot.GD.Print("Deserializing world_step__world_metadata__elapsed_time");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("value"))
       {
@@ -1430,7 +1430,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__world_metadata__elapsed_time");
+        // Godot.GD.Print("Serializing world_step__world_metadata__elapsed_time");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -1484,7 +1484,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__world_metadata__stepDuration");
+      // Godot.GD.Print("Deserializing world_step__world_metadata__stepDuration");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("value"))
       {
@@ -1509,7 +1509,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__world_metadata__stepDuration");
+        // Godot.GD.Print("Serializing world_step__world_metadata__stepDuration");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -1563,7 +1563,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__world_metadata__counter");
+      // Godot.GD.Print("Deserializing world_step__world_metadata__counter");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("value"))
       {
@@ -1588,7 +1588,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__world_metadata__counter");
+        // Godot.GD.Print("Serializing world_step__world_metadata__counter");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -1646,7 +1646,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__world_metadata__randomization_table");
+      // Godot.GD.Print("Deserializing world_step__world_metadata__randomization_table");
       //Deserialize elements
       this.entry = rawNode.InitializeWithRawNode("entry", this.entry);
     }
@@ -1660,7 +1660,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__world_metadata__randomization_table");
+        // Godot.GD.Print("Serializing world_step__world_metadata__randomization_table");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -1718,7 +1718,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__property_rule");
+      // Godot.GD.Print("Deserializing world_step__rule_group__property_rule");
       //Deserialize elements
       this.entry = rawNode.InitializeWithRawNode("entry", this.entry);
     }
@@ -1732,7 +1732,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__property_rule");
+        // Godot.GD.Print("Serializing world_step__rule_group__property_rule");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -1790,7 +1790,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__classification_rule");
+      // Godot.GD.Print("Deserializing world_step__rule_group__classification_rule");
       //Deserialize elements
       this.entry = rawNode.InitializeWithRawNode("entry", this.entry);
     }
@@ -1804,7 +1804,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__classification_rule");
+        // Godot.GD.Print("Serializing world_step__rule_group__classification_rule");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -1855,7 +1855,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__name_rule");
+      // Godot.GD.Print("Deserializing world_step__rule_group__name_rule");
       //Deserialize elements
       this.entry = rawNode.InitializeWithRawNode("entry", this.entry);
     }
@@ -1869,7 +1869,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__name_rule");
+        // Godot.GD.Print("Serializing world_step__rule_group__name_rule");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -1927,7 +1927,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__race_rule");
+      // Godot.GD.Print("Deserializing world_step__rule_group__race_rule");
       //Deserialize elements
       this.entry = rawNode.InitializeWithRawNode("entry", this.entry);
     }
@@ -1941,7 +1941,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__race_rule");
+        // Godot.GD.Print("Serializing world_step__rule_group__race_rule");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -2017,7 +2017,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__action_rule");
+      // Godot.GD.Print("Deserializing world_step__rule_group__action_rule");
       //Deserialize elements
       this.global = rawNode.InitializeWithRawNode("global", this.global);
       this.person_to_person = rawNode.InitializeWithRawNode("person_to_person", this.person_to_person);
@@ -2035,7 +2035,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__action_rule");
+        // Godot.GD.Print("Serializing world_step__rule_group__action_rule");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -2093,7 +2093,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__item_rule");
+      // Godot.GD.Print("Deserializing world_step__rule_group__item_rule");
       //Deserialize elements
       this.entry = rawNode.InitializeWithRawNode("entry", this.entry);
     }
@@ -2107,7 +2107,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__item_rule");
+        // Godot.GD.Print("Serializing world_step__rule_group__item_rule");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -2165,7 +2165,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__events_rule");
+      // Godot.GD.Print("Deserializing world_step__rule_group__events_rule");
       //Deserialize elements
       this.entry = rawNode.InitializeWithRawNode("entry", this.entry);
     }
@@ -2179,7 +2179,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__events_rule");
+        // Godot.GD.Print("Serializing world_step__rule_group__events_rule");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -2237,7 +2237,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__locations_markov_chain");
+      // Godot.GD.Print("Deserializing world_step__rule_group__locations_markov_chain");
       //Deserialize elements
       this.location_markov_link = rawNode.InitializeWithRawNode("location_markov_link", this.location_markov_link);
     }
@@ -2251,7 +2251,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__locations_markov_chain");
+        // Godot.GD.Print("Serializing world_step__rule_group__locations_markov_chain");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -2340,7 +2340,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule");
+      // Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("id"))
       {
@@ -2369,7 +2369,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule");
+        // Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -2427,7 +2427,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__location_classification_rule");
+      // Godot.GD.Print("Deserializing world_step__rule_group__location_classification_rule");
       //Deserialize elements
       this.entry = rawNode.InitializeWithRawNode("entry", this.entry);
     }
@@ -2441,7 +2441,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__location_classification_rule");
+        // Godot.GD.Print("Serializing world_step__rule_group__location_classification_rule");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -2483,7 +2483,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__item");
+      // Godot.GD.Print("Deserializing type__item");
       //Deserialize arguments
     }
 
@@ -2495,7 +2495,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing type__item");
+        // Godot.GD.Print("Serializing type__item");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -2671,7 +2671,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__people__person");
+      // Godot.GD.Print("Deserializing world_step__people__person");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("id"))
       {
@@ -2729,7 +2729,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__people__person");
+        // Godot.GD.Print("Serializing world_step__people__person");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -2778,7 +2778,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__location_layer__cell");
+      // Godot.GD.Print("Deserializing world_step__location_layer__cell");
       //Deserialize arguments
 
       //Deserialize elements
@@ -2796,7 +2796,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__location_layer__cell");
+        // Godot.GD.Print("Serializing world_step__location_layer__cell");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -2850,7 +2850,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__location_graph__rule");
+      // Godot.GD.Print("Deserializing world_step__location_graph__rule");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("location_graph_rule_ref"))
       {
@@ -2875,7 +2875,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__location_graph__rule");
+        // Godot.GD.Print("Serializing world_step__location_graph__rule");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -3011,7 +3011,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__location_graph__node");
+      // Godot.GD.Print("Deserializing world_step__location_graph__node");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("node_rule_ref"))
       {
@@ -3057,7 +3057,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__location_graph__node");
+        // Godot.GD.Print("Serializing world_step__location_graph__node");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -3137,7 +3137,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__actions__by");
+      // Godot.GD.Print("Deserializing world_step__actions__by");
       //Deserialize arguments
 
       //Deserialize elements
@@ -3161,7 +3161,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__actions__by");
+        // Godot.GD.Print("Serializing world_step__actions__by");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -3215,7 +3215,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__actions__location_graph__create");
+      // Godot.GD.Print("Deserializing world_step__actions__location_graph__create");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("location_graph_rule_ref"))
       {
@@ -3240,7 +3240,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__actions__location_graph__create");
+        // Godot.GD.Print("Serializing world_step__actions__location_graph__create");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -3305,7 +3305,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__actions__location_graph__node__create_adjacent");
+      // Godot.GD.Print("Deserializing world_step__actions__location_graph__node__create_adjacent");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("location_graph_id_ref"))
       {
@@ -3339,7 +3339,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__actions__location_graph__node__create_adjacent");
+        // Godot.GD.Print("Serializing world_step__actions__location_graph__node__create_adjacent");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -3408,7 +3408,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__actions__location_graph__node__add_classification");
+      // Godot.GD.Print("Deserializing world_step__actions__location_graph__node__add_classification");
       //Deserialize elements
       this.node_graph_selection = rawNode.InitializeWithRawNode("node_graph_selection", this.node_graph_selection);
       this.to_be_added__classification = rawNode.InitializeWithRawNode("to_be_added__classification", this.to_be_added__classification);
@@ -3428,7 +3428,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__actions__location_graph__node__add_classification");
+        // Godot.GD.Print("Serializing world_step__actions__location_graph__node__add_classification");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -3517,7 +3517,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__actions__person__teleport");
+      // Godot.GD.Print("Deserializing world_step__actions__person__teleport");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("person_id_ref"))
       {
@@ -3548,7 +3548,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__actions__person__teleport");
+        // Godot.GD.Print("Serializing world_step__actions__person__teleport");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -3624,7 +3624,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__actions__person__on_person__property_mutation");
+      // Godot.GD.Print("Deserializing world_step__actions__person__on_person__property_mutation");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("person_id_ref"))
       {
@@ -3667,7 +3667,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__actions__person__on_person__property_mutation");
+        // Godot.GD.Print("Serializing world_step__actions__person__on_person__property_mutation");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -3729,7 +3729,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__actions__person__create");
+      // Godot.GD.Print("Deserializing world_step__actions__person__create");
       //Deserialize elements
       this.node_graph__selection = rawNode.InitializeWithRawNode("node_graph__selection", this.node_graph__selection);
       this.person__selection = rawNode.InitializeWithRawNode("person__selection", this.person__selection);
@@ -3749,7 +3749,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__actions__person__create");
+        // Godot.GD.Print("Serializing world_step__actions__person__create");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -3831,7 +3831,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__actions__person__move_to");
+      // Godot.GD.Print("Deserializing world_step__actions__person__move_to");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("person_id_ref"))
       {
@@ -3862,7 +3862,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__actions__person__move_to");
+        // Godot.GD.Print("Serializing world_step__actions__person__move_to");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -3916,7 +3916,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__world_metadata__randomization_table__entry");
+      // Godot.GD.Print("Deserializing world_step__world_metadata__randomization_table__entry");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("value"))
       {
@@ -3941,7 +3941,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__world_metadata__randomization_table__entry");
+        // Godot.GD.Print("Serializing world_step__world_metadata__randomization_table__entry");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -4027,7 +4027,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__property_rule__entry");
+      // Godot.GD.Print("Deserializing world_step__rule_group__property_rule__entry");
       //Deserialize arguments
 
       //Deserialize elements
@@ -4053,7 +4053,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__property_rule__entry");
+        // Godot.GD.Print("Serializing world_step__rule_group__property_rule__entry");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -4108,7 +4108,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__classification_rule__entry");
+      // Godot.GD.Print("Deserializing world_step__rule_group__classification_rule__entry");
       //Deserialize arguments
 
       //Deserialize elements
@@ -4126,7 +4126,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__classification_rule__entry");
+        // Godot.GD.Print("Serializing world_step__rule_group__classification_rule__entry");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -4177,7 +4177,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing group__name_token");
+      // Godot.GD.Print("Deserializing group__name_token");
       //Deserialize elements
       this.name_token = rawNode.InitializeWithRawNode("name_token", this.name_token);
     }
@@ -4191,7 +4191,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing group__name_token");
+        // Godot.GD.Print("Serializing group__name_token");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -4306,7 +4306,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__race_rule__entry");
+      // Godot.GD.Print("Deserializing world_step__rule_group__race_rule__entry");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("id"))
       {
@@ -4347,7 +4347,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__race_rule__entry");
+        // Godot.GD.Print("Serializing world_step__rule_group__race_rule__entry");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -4398,7 +4398,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__action_rule__global");
+      // Godot.GD.Print("Deserializing world_step__rule_group__action_rule__global");
       //Deserialize elements
       this.entry = rawNode.InitializeWithRawNode("entry", this.entry);
     }
@@ -4412,7 +4412,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__action_rule__global");
+        // Godot.GD.Print("Serializing world_step__rule_group__action_rule__global");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -4512,7 +4512,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__action_rule__person_to_person");
+      // Godot.GD.Print("Deserializing world_step__rule_group__action_rule__person_to_person");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("id"))
       {
@@ -4547,7 +4547,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__action_rule__person_to_person");
+        // Godot.GD.Print("Serializing world_step__rule_group__action_rule__person_to_person");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -4638,7 +4638,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__item_rule__entry");
+      // Godot.GD.Print("Deserializing world_step__rule_group__item_rule__entry");
       //Deserialize arguments
 
       //Deserialize elements
@@ -4664,7 +4664,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__item_rule__entry");
+        // Godot.GD.Print("Serializing world_step__rule_group__item_rule__entry");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -4746,7 +4746,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__events_rule__entry");
+      // Godot.GD.Print("Deserializing world_step__rule_group__events_rule__entry");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("id"))
       {
@@ -4773,7 +4773,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__events_rule__entry");
+        // Godot.GD.Print("Serializing world_step__rule_group__events_rule__entry");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -4864,7 +4864,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__locations_markov_chain__location_markov_link");
+      // Godot.GD.Print("Deserializing world_step__rule_group__locations_markov_chain__location_markov_link");
       //Deserialize arguments
 
       //Deserialize elements
@@ -4888,7 +4888,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__locations_markov_chain__location_markov_link");
+        // Godot.GD.Print("Serializing world_step__rule_group__locations_markov_chain__location_markov_link");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -4964,7 +4964,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__setup");
+      // Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__setup");
       //Deserialize elements
       this.starting_node = rawNode.InitializeWithRawNode("starting_node", this.starting_node);
       this.necessary_node = rawNode.InitializeWithRawNode("necessary_node", this.necessary_node);
@@ -4982,7 +4982,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__setup");
+        // Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__setup");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -5089,7 +5089,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__node_rule");
+      // Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__node_rule");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("id"))
       {
@@ -5122,7 +5122,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__node_rule");
+        // Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__node_rule");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -5176,7 +5176,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__location_classification_rule__entry");
+      // Godot.GD.Print("Deserializing world_step__rule_group__location_classification_rule__entry");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("id"))
       {
@@ -5201,7 +5201,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__location_classification_rule__entry");
+        // Godot.GD.Print("Serializing world_step__rule_group__location_classification_rule__entry");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -5246,7 +5246,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__people__person__race");
+      // Godot.GD.Print("Deserializing world_step__people__person__race");
       //Deserialize arguments
 
       //Deserialize elements
@@ -5264,7 +5264,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__people__person__race");
+        // Godot.GD.Print("Serializing world_step__people__person__race");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -5331,7 +5331,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type_cell_ref");
+      // Godot.GD.Print("Deserializing type_cell_ref");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("x"))
       {
@@ -5365,7 +5365,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing type_cell_ref");
+        // Godot.GD.Print("Serializing type_cell_ref");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -5423,7 +5423,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__people__person__properties");
+      // Godot.GD.Print("Deserializing world_step__people__person__properties");
       //Deserialize elements
       this.property = rawNode.InitializeWithRawNode("property", this.property);
     }
@@ -5437,7 +5437,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__people__person__properties");
+        // Godot.GD.Print("Serializing world_step__people__person__properties");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -5482,7 +5482,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__people__person__relations");
+      // Godot.GD.Print("Deserializing world_step__people__person__relations");
       //Deserialize arguments
 
       //Deserialize elements
@@ -5500,7 +5500,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__people__person__relations");
+        // Godot.GD.Print("Serializing world_step__people__person__relations");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -5551,7 +5551,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__people__person__inventory");
+      // Godot.GD.Print("Deserializing world_step__people__person__inventory");
       //Deserialize elements
       this.item = rawNode.InitializeWithRawNode("item", this.item);
     }
@@ -5565,7 +5565,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__people__person__inventory");
+        // Godot.GD.Print("Serializing world_step__people__person__inventory");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -5623,7 +5623,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__people__person__classifications");
+      // Godot.GD.Print("Deserializing world_step__people__person__classifications");
       //Deserialize elements
       this.classification = rawNode.InitializeWithRawNode("classification", this.classification);
     }
@@ -5637,7 +5637,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__people__person__classifications");
+        // Godot.GD.Print("Serializing world_step__people__person__classifications");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -5673,7 +5673,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type_icon");
+      // Godot.GD.Print("Deserializing type_icon");
     }
 
     public RawNode SerializeIntoRawNode()
@@ -5683,7 +5683,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing type_icon");
+        // Godot.GD.Print("Serializing type_icon");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -5748,7 +5748,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__location_graph__node__position");
+      // Godot.GD.Print("Deserializing world_step__location_graph__node__position");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("x"))
       {
@@ -5782,7 +5782,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__location_graph__node__position");
+        // Godot.GD.Print("Serializing world_step__location_graph__node__position");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -5840,7 +5840,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__location_graph__node__classifications");
+      // Godot.GD.Print("Deserializing world_step__location_graph__node__classifications");
       //Deserialize elements
       this.classification = rawNode.InitializeWithRawNode("classification", this.classification);
     }
@@ -5854,7 +5854,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__location_graph__node__classifications");
+        // Godot.GD.Print("Serializing world_step__location_graph__node__classifications");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -5947,7 +5947,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__location_graph__node__link_to");
+      // Godot.GD.Print("Deserializing world_step__location_graph__node__link_to");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("node_id_ref"))
       {
@@ -5987,7 +5987,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__location_graph__node__link_to");
+        // Godot.GD.Print("Serializing world_step__location_graph__node__link_to");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -6045,7 +6045,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__location_graph__node__people");
+      // Godot.GD.Print("Deserializing world_step__location_graph__node__people");
       //Deserialize elements
       this.person = rawNode.InitializeWithRawNode("person", this.person);
     }
@@ -6059,7 +6059,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__location_graph__node__people");
+        // Godot.GD.Print("Serializing world_step__location_graph__node__people");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -6108,7 +6108,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__actions__by__do");
+      // Godot.GD.Print("Deserializing world_step__actions__by__do");
       //Deserialize arguments
 
       //Deserialize elements
@@ -6126,7 +6126,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__actions__by__do");
+        // Godot.GD.Print("Serializing world_step__actions__by__do");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -6202,7 +6202,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__actions__by__move_towards");
+      // Godot.GD.Print("Deserializing world_step__actions__by__move_towards");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("layer"))
       {
@@ -6245,7 +6245,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__actions__by__move_towards");
+        // Godot.GD.Print("Serializing world_step__actions__by__move_towards");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -6321,7 +6321,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__node_graph__selection");
+      // Godot.GD.Print("Deserializing type__node_graph__selection");
       //Deserialize elements
       this.in__location_graph = rawNode.InitializeWithRawNode("in__location_graph", this.in__location_graph);
       this.has__node_graph_id = rawNode.InitializeWithRawNode("has__node_graph_id", this.has__node_graph_id);
@@ -6341,7 +6341,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing type__node_graph__selection");
+        // Godot.GD.Print("Serializing type__node_graph__selection");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -6412,7 +6412,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__actions__location_graph__node__add_classification__to_be_added__classification");
+      // Godot.GD.Print("Deserializing world_step__actions__location_graph__node__add_classification__to_be_added__classification");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("location_classification_rule_ref"))
       {
@@ -6439,7 +6439,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__actions__location_graph__node__add_classification__to_be_added__classification");
+        // Godot.GD.Print("Serializing world_step__actions__location_graph__node__add_classification__to_be_added__classification");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -6504,7 +6504,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__actions__person__teleport__location_graph");
+      // Godot.GD.Print("Deserializing world_step__actions__person__teleport__location_graph");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("location_graph_id_ref"))
       {
@@ -6538,7 +6538,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__actions__person__teleport__location_graph");
+        // Godot.GD.Print("Serializing world_step__actions__person__teleport__location_graph");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -6602,7 +6602,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__actions__person__teleport__link_to");
+      // Godot.GD.Print("Deserializing world_step__actions__person__teleport__link_to");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("accumulated_progress"))
       {
@@ -6629,7 +6629,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__actions__person__teleport__link_to");
+        // Godot.GD.Print("Serializing world_step__actions__person__teleport__link_to");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -6774,7 +6774,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__person_selection");
+      // Godot.GD.Print("Deserializing type__person_selection");
       //Deserialize elements
       this.radius = rawNode.InitializeWithRawNode("radius", this.radius);
       this.min = rawNode.InitializeWithRawNode("min", this.min);
@@ -6810,7 +6810,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing type__person_selection");
+        // Godot.GD.Print("Serializing type__person_selection");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -6868,7 +6868,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__actions__person__move_to__path");
+      // Godot.GD.Print("Deserializing world_step__actions__person__move_to__path");
       //Deserialize elements
       this.node = rawNode.InitializeWithRawNode("node", this.node);
     }
@@ -6882,7 +6882,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__actions__person__move_to__path");
+        // Godot.GD.Print("Serializing world_step__actions__person__move_to__path");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -6923,7 +6923,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__property_rule__entry__person_default");
+      // Godot.GD.Print("Deserializing world_step__rule_group__property_rule__entry__person_default");
       //Deserialize elements
 
     }
@@ -6937,7 +6937,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__property_rule__entry__person_default");
+        // Godot.GD.Print("Serializing world_step__rule_group__property_rule__entry__person_default");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -6978,7 +6978,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__property_rule__entry__item_default");
+      // Godot.GD.Print("Deserializing world_step__rule_group__property_rule__entry__item_default");
       //Deserialize elements
 
     }
@@ -6992,7 +6992,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__property_rule__entry__item_default");
+        // Godot.GD.Print("Serializing world_step__rule_group__property_rule__entry__item_default");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -7068,7 +7068,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__property_rule__entry__property_threshold");
+      // Godot.GD.Print("Deserializing world_step__rule_group__property_rule__entry__property_threshold");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("name"))
       {
@@ -7111,7 +7111,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__property_rule__entry__property_threshold");
+        // Godot.GD.Print("Serializing world_step__rule_group__property_rule__entry__property_threshold");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -7162,7 +7162,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing group__math_operations");
+      // Godot.GD.Print("Deserializing group__math_operations");
       //Deserialize elements
       this.operation = rawNode.InitializeWithRawNode("operation", this.operation);
     }
@@ -7178,7 +7178,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing group__math_operations");
+        // Godot.GD.Print("Serializing group__math_operations");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -7260,7 +7260,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing group__name_token__name_token");
+      // Godot.GD.Print("Deserializing group__name_token__name_token");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("prefix"))
       {
@@ -7291,7 +7291,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing group__name_token__name_token");
+        // Godot.GD.Print("Serializing group__name_token__name_token");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -7332,7 +7332,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type_range");
+      // Godot.GD.Print("Deserializing type_range");
       //Deserialize elements
 
     }
@@ -7346,7 +7346,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing type_range");
+        // Godot.GD.Print("Serializing type_range");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -7400,7 +7400,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__race_rule__entry__name");
+      // Godot.GD.Print("Deserializing world_step__rule_group__race_rule__entry__name");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("name_rule_ref"))
       {
@@ -7425,7 +7425,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__race_rule__entry__name");
+        // Godot.GD.Print("Serializing world_step__rule_group__race_rule__entry__name");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -7466,7 +7466,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__action_rule__global__entry");
+      // Godot.GD.Print("Deserializing world_step__rule_group__action_rule__global__entry");
       //Deserialize elements
 
     }
@@ -7480,7 +7480,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__action_rule__global__entry");
+        // Godot.GD.Print("Serializing world_step__rule_group__action_rule__global__entry");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -7542,7 +7542,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__action_rule__person_to_person__test");
+      // Godot.GD.Print("Deserializing world_step__rule_group__action_rule__person_to_person__test");
       //Deserialize elements
       this.value = rawNode.InitializeWithRawNode("value", this.value);
       this.expected = rawNode.InitializeWithRawNode("expected", this.expected);
@@ -7562,7 +7562,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__action_rule__person_to_person__test");
+        // Godot.GD.Print("Serializing world_step__rule_group__action_rule__person_to_person__test");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -7598,7 +7598,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__property_mutation_on");
+      // Godot.GD.Print("Deserializing type__property_mutation_on");
     }
 
     public RawNode SerializeIntoRawNode()
@@ -7608,7 +7608,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing type__property_mutation_on");
+        // Godot.GD.Print("Serializing type__property_mutation_on");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -7674,7 +7674,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__action_rule__person_to_person__location_mutation");
+      // Godot.GD.Print("Deserializing world_step__rule_group__action_rule__person_to_person__location_mutation");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("on"))
       {
@@ -7699,7 +7699,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__action_rule__person_to_person__location_mutation");
+        // Godot.GD.Print("Serializing world_step__rule_group__action_rule__person_to_person__location_mutation");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -7744,7 +7744,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__item_rule__entry__weight_kg");
+      // Godot.GD.Print("Deserializing world_step__rule_group__item_rule__entry__weight_kg");
       //Deserialize arguments
 
       //Deserialize elements
@@ -7762,7 +7762,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__item_rule__entry__weight_kg");
+        // Godot.GD.Print("Serializing world_step__rule_group__item_rule__entry__weight_kg");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -7816,7 +7816,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__item_rule__entry__wearable");
+      // Godot.GD.Print("Deserializing world_step__rule_group__item_rule__entry__wearable");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("slot"))
       {
@@ -7841,7 +7841,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__item_rule__entry__wearable");
+        // Godot.GD.Print("Serializing world_step__rule_group__item_rule__entry__wearable");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -7899,7 +7899,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__trigger");
+      // Godot.GD.Print("Deserializing type__trigger");
       //Deserialize elements
       this.person_action_used = rawNode.InitializeWithRawNode("person_action_used", this.person_action_used);
     }
@@ -7915,7 +7915,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing type__trigger");
+        // Godot.GD.Print("Serializing type__trigger");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -7988,7 +7988,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__events_rule__entry__then");
+      // Godot.GD.Print("Deserializing world_step__rule_group__events_rule__entry__then");
       //Deserialize elements
       this.select_person = rawNode.InitializeWithRawNode("select_person", this.select_person);
       this.select_item = rawNode.InitializeWithRawNode("select_item", this.select_item);
@@ -8008,7 +8008,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__events_rule__entry__then");
+        // Godot.GD.Print("Serializing world_step__rule_group__events_rule__entry__then");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -8053,7 +8053,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__locations_markov_chain__location_markov_link__tag");
+      // Godot.GD.Print("Deserializing world_step__rule_group__locations_markov_chain__location_markov_link__tag");
       //Deserialize arguments
 
       //Deserialize elements
@@ -8071,7 +8071,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__locations_markov_chain__location_markov_link__tag");
+        // Godot.GD.Print("Serializing world_step__rule_group__locations_markov_chain__location_markov_link__tag");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -8129,7 +8129,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__locations_markov_chain__location_markov_link__sibling");
+      // Godot.GD.Print("Deserializing world_step__rule_group__locations_markov_chain__location_markov_link__sibling");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("quantity"))
       {
@@ -8154,7 +8154,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__locations_markov_chain__location_markov_link__sibling");
+        // Godot.GD.Print("Serializing world_step__rule_group__locations_markov_chain__location_markov_link__sibling");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -8208,7 +8208,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__setup__starting_node");
+      // Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__setup__starting_node");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("node_rule_ref"))
       {
@@ -8233,7 +8233,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__setup__starting_node");
+        // Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__setup__starting_node");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -8326,7 +8326,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__setup__necessary_node");
+      // Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__setup__necessary_node");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("node_rule_ref"))
       {
@@ -8369,7 +8369,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__setup__necessary_node");
+        // Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__setup__necessary_node");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -8427,7 +8427,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__node_rule__classifications");
+      // Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__node_rule__classifications");
       //Deserialize elements
       this.classification = rawNode.InitializeWithRawNode("classification", this.classification);
     }
@@ -8441,7 +8441,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__node_rule__classifications");
+        // Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__node_rule__classifications");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -8545,7 +8545,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__node_rule__link_group");
+      // Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__node_rule__link_group");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("id"))
       {
@@ -8597,7 +8597,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__node_rule__link_group");
+        // Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__node_rule__link_group");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -8672,7 +8672,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__node_rule__existing_person");
+      // Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__node_rule__existing_person");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("min"))
       {
@@ -8708,7 +8708,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__node_rule__existing_person");
+        // Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__node_rule__existing_person");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -8764,7 +8764,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__people__person__properties__property");
+      // Godot.GD.Print("Deserializing world_step__people__person__properties__property");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("property_rule_ref"))
       {
@@ -8789,7 +8789,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__people__person__properties__property");
+        // Godot.GD.Print("Serializing world_step__people__person__properties__property");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -8843,7 +8843,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__people__person__classifications__classification");
+      // Godot.GD.Print("Deserializing world_step__people__person__classifications__classification");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("classification_rule_ref"))
       {
@@ -8868,7 +8868,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__people__person__classifications__classification");
+        // Godot.GD.Print("Serializing world_step__people__person__classifications__classification");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -8922,7 +8922,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__location_graph__node__classifications__classification");
+      // Godot.GD.Print("Deserializing world_step__location_graph__node__classifications__classification");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("location_classification_rule_ref"))
       {
@@ -8947,7 +8947,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__location_graph__node__classifications__classification");
+        // Godot.GD.Print("Serializing world_step__location_graph__node__classifications__classification");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -9005,7 +9005,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__location_graph__node__link_to__people");
+      // Godot.GD.Print("Deserializing world_step__location_graph__node__link_to__people");
       //Deserialize elements
       this.person = rawNode.InitializeWithRawNode("person", this.person);
     }
@@ -9019,7 +9019,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__location_graph__node__link_to__people");
+        // Godot.GD.Print("Serializing world_step__location_graph__node__link_to__people");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -9068,7 +9068,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__math_operations");
+      // Godot.GD.Print("Deserializing type__math_operations");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("initial"))
       {
@@ -9089,7 +9089,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing type__math_operations");
+        // Godot.GD.Print("Serializing type__math_operations");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -9143,7 +9143,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__location_graph__node__people__person");
+      // Godot.GD.Print("Deserializing world_step__location_graph__node__people__person");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("person_id_ref"))
       {
@@ -9168,7 +9168,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__location_graph__node__people__person");
+        // Godot.GD.Print("Serializing world_step__location_graph__node__people__person");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -9226,7 +9226,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__node_graph__selection__in__location_graph");
+      // Godot.GD.Print("Deserializing type__node_graph__selection__in__location_graph");
       //Deserialize elements
       this.has__location_graph_id = rawNode.InitializeWithRawNode("has__location_graph_id", this.has__location_graph_id);
     }
@@ -9242,7 +9242,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing type__node_graph__selection__in__location_graph");
+        // Godot.GD.Print("Serializing type__node_graph__selection__in__location_graph");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -9313,7 +9313,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__node_graph__selection__has__node_graph_id");
+      // Godot.GD.Print("Deserializing type__node_graph__selection__has__node_graph_id");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("node_graph_id_ref"))
       {
@@ -9338,7 +9338,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing type__node_graph__selection__has__node_graph_id");
+        // Godot.GD.Print("Serializing type__node_graph__selection__has__node_graph_id");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -9392,7 +9392,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__actions__location_graph__node__add_classification__to_be_added__classification__and");
+      // Godot.GD.Print("Deserializing world_step__actions__location_graph__node__add_classification__to_be_added__classification__and");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("location_classification_rule_ref"))
       {
@@ -9417,7 +9417,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__actions__location_graph__node__add_classification__to_be_added__classification__and");
+        // Godot.GD.Print("Serializing world_step__actions__location_graph__node__add_classification__to_be_added__classification__and");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -9479,7 +9479,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__link_to__selection");
+      // Godot.GD.Print("Deserializing type__link_to__selection");
       //Deserialize elements
       this.origin__node_graph__selection = rawNode.InitializeWithRawNode("origin__node_graph__selection", this.origin__node_graph__selection);
       this.destination__node_graph__selection = rawNode.InitializeWithRawNode("destination__node_graph__selection", this.destination__node_graph__selection);
@@ -9499,7 +9499,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing type__link_to__selection");
+        // Godot.GD.Print("Serializing type__link_to__selection");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -9574,7 +9574,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__person_selection__property");
+      // Godot.GD.Print("Deserializing type__person_selection__property");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("property_rule_ref"))
       {
@@ -9605,7 +9605,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing type__person_selection__property");
+        // Godot.GD.Print("Serializing type__person_selection__property");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -9659,7 +9659,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__person_selection__classification");
+      // Godot.GD.Print("Deserializing type__person_selection__classification");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("classification_rule_ref"))
       {
@@ -9684,7 +9684,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing type__person_selection__classification");
+        // Godot.GD.Print("Serializing type__person_selection__classification");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -9729,7 +9729,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__person_selection__race");
+      // Godot.GD.Print("Deserializing type__person_selection__race");
       //Deserialize arguments
 
       //Deserialize elements
@@ -9747,7 +9747,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing type__person_selection__race");
+        // Godot.GD.Print("Serializing type__person_selection__race");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -9798,7 +9798,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__person_selection__inventory");
+      // Godot.GD.Print("Deserializing type__person_selection__inventory");
       //Deserialize elements
       this.item = rawNode.InitializeWithRawNode("item", this.item);
     }
@@ -9812,7 +9812,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing type__person_selection__inventory");
+        // Godot.GD.Print("Serializing type__person_selection__inventory");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -9866,7 +9866,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__actions__person__move_to__path__node");
+      // Godot.GD.Print("Deserializing world_step__actions__person__move_to__path__node");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("node_id_ref"))
       {
@@ -9891,7 +9891,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__actions__person__move_to__path__node");
+        // Godot.GD.Print("Serializing world_step__actions__person__move_to__path__node");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -9960,7 +9960,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing group__operation__and");
+      // Godot.GD.Print("Deserializing group__operation__and");
       //Deserialize elements
       this.add_property = rawNode.InitializeWithRawNode("add_property", this.add_property);
       this.and = rawNode.InitializeWithRawNode("and", this.and);
@@ -9978,7 +9978,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing group__operation__and");
+        // Godot.GD.Print("Serializing group__operation__and");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -10032,7 +10032,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing group__name_token__name_token__ref");
+      // Godot.GD.Print("Deserializing group__name_token__name_token__ref");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("name_rule_ref"))
       {
@@ -10057,7 +10057,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing group__name_token__name_token__ref");
+        // Godot.GD.Print("Serializing group__name_token__name_token__ref");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -10102,7 +10102,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__trigger__person_action_used");
+      // Godot.GD.Print("Deserializing type__trigger__person_action_used");
       //Deserialize arguments
 
       //Deserialize elements
@@ -10120,7 +10120,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing type__trigger__person_action_used");
+        // Godot.GD.Print("Serializing type__trigger__person_action_used");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -10161,7 +10161,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__events_rule__entry__then__select_person");
+      // Godot.GD.Print("Deserializing world_step__rule_group__events_rule__entry__then__select_person");
       //Deserialize elements
 
     }
@@ -10175,7 +10175,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__events_rule__entry__then__select_person");
+        // Godot.GD.Print("Serializing world_step__rule_group__events_rule__entry__then__select_person");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -10216,7 +10216,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__events_rule__entry__then__select_item");
+      // Godot.GD.Print("Deserializing world_step__rule_group__events_rule__entry__then__select_item");
       //Deserialize elements
 
     }
@@ -10230,7 +10230,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__events_rule__entry__then__select_item");
+        // Godot.GD.Print("Serializing world_step__rule_group__events_rule__entry__then__select_item");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -10271,7 +10271,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__events_rule__entry__then__property_mutation");
+      // Godot.GD.Print("Deserializing world_step__rule_group__events_rule__entry__then__property_mutation");
       //Deserialize elements
 
     }
@@ -10285,7 +10285,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__events_rule__entry__then__property_mutation");
+        // Godot.GD.Print("Serializing world_step__rule_group__events_rule__entry__then__property_mutation");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -10339,7 +10339,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__setup__necessary_node__or");
+      // Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__setup__necessary_node__or");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("node_rule_ref"))
       {
@@ -10364,7 +10364,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__setup__necessary_node__or");
+        // Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__setup__necessary_node__or");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -10418,7 +10418,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__node_rule__classifications__classification");
+      // Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__node_rule__classifications__classification");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("location_classification_rule_ref"))
       {
@@ -10443,7 +10443,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__node_rule__classifications__classification");
+        // Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__node_rule__classifications__classification");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -10551,7 +10551,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__node_rule__link_group__to_option");
+      // Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__node_rule__link_group__to_option");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("node_rule_ref"))
       {
@@ -10609,7 +10609,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__node_rule__link_group__to_option");
+        // Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__node_rule__link_group__to_option");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -10619,7 +10619,8 @@ namespace XSD {
     //Attributes
     public System.String Get_person_id_ref();
     public void Set_person_id_ref(System.String value);
-    /* ignored attribute key={key} of type=System.Object*/
+    public System.Int32 Get_accumulated_progress();
+    public void Set_accumulated_progress(System.Int32 value);
 
     //Children elements
 
@@ -10643,7 +10644,15 @@ namespace XSD {
     {
       this.person_id_ref = value;
     }
-    /* ignored attribute key={key} of type=System.Object*/
+    public System.Int32 accumulated_progress;
+    public System.Int32 Get_accumulated_progress()
+    {
+      return this.accumulated_progress;
+    }
+    public void Set_accumulated_progress(System.Int32 value)
+    {
+      this.accumulated_progress = value;
+    }
 
     //Children elements
 
@@ -10665,12 +10674,17 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing world_step__location_graph__node__link_to__people__person");
+      // Godot.GD.Print("Deserializing world_step__location_graph__node__link_to__people__person");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("person_id_ref"))
       {
         var attribute_person_id_ref = rawNode.attributes["person_id_ref"];
         this.person_id_ref = rawNode.attributes["person_id_ref"];
+      }
+      if(rawNode.attributes.ContainsKey("accumulated_progress"))
+      {
+        var attribute_accumulated_progress = rawNode.attributes["accumulated_progress"];
+        this.accumulated_progress = attribute_accumulated_progress.ToInt();
       }
       //Deserialize elements
 
@@ -10683,6 +10697,10 @@ namespace XSD {
       {
         rawNode.attributes["person_id_ref"] = this.person_id_ref.ToString();
       }
+      if(this.accumulated_progress != null)
+      {
+        rawNode.attributes["accumulated_progress"] = this.accumulated_progress.ToString();
+      }
       //Serialize elements
 
       return rawNode;
@@ -10690,7 +10708,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing world_step__location_graph__node__link_to__people__person");
+        // Godot.GD.Print("Serializing world_step__location_graph__node__link_to__people__person");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -10761,7 +10779,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__node_graph__selection__in__location_graph__has__location_graph_id");
+      // Godot.GD.Print("Deserializing type__node_graph__selection__in__location_graph__has__location_graph_id");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("location_graph_id_ref"))
       {
@@ -10786,7 +10804,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing type__node_graph__selection__in__location_graph__has__location_graph_id");
+        // Godot.GD.Print("Serializing type__node_graph__selection__in__location_graph__has__location_graph_id");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -10840,7 +10858,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__node_graph__selection__has__node_graph_id__or");
+      // Godot.GD.Print("Deserializing type__node_graph__selection__has__node_graph_id__or");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("node_graph_id_ref"))
       {
@@ -10865,7 +10883,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing type__node_graph__selection__has__node_graph_id__or");
+        // Godot.GD.Print("Serializing type__node_graph__selection__has__node_graph_id__or");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -10901,7 +10919,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__item_selection");
+      // Godot.GD.Print("Deserializing type__item_selection");
     }
 
     public RawNode SerializeIntoRawNode()
@@ -10911,7 +10929,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing type__item_selection");
+        // Godot.GD.Print("Serializing type__item_selection");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -10965,7 +10983,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing group__operation__and__add_property");
+      // Godot.GD.Print("Deserializing group__operation__and__add_property");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("property_rule_ref"))
       {
@@ -10990,7 +11008,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing group__operation__and__add_property");
+        // Godot.GD.Print("Serializing group__operation__and__add_property");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -11044,7 +11062,7 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      Godot.GD.Print("Deserializing type__node_graph__selection__in__location_graph__has__location_graph_id__or");
+      // Godot.GD.Print("Deserializing type__node_graph__selection__in__location_graph__has__location_graph_id__or");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("location_graph_id_ref"))
       {
@@ -11069,7 +11087,7 @@ namespace XSD {
 
     public void Serialize(XmlElement element)
     {
-        Godot.GD.Print("Serializing type__node_graph__selection__in__location_graph__has__location_graph_id__or");
+        // Godot.GD.Print("Serializing type__node_graph__selection__in__location_graph__has__location_graph_id__or");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }

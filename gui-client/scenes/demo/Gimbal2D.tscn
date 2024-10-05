@@ -1,0 +1,84 @@
+[gd_scene load_steps=3 format=3 uid="uid://djs1u2pe5hws5"]
+
+[ext_resource type="Script" path="res://components/nodes/Gimbal2D.cs" id="1_7va22"]
+[ext_resource type="Script" path="res://components/nodes/LinkNode.cs" id="1_oihbb"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_right = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LinkNode" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 229.486
+offset_top = 381.933
+offset_right = 229.486
+offset_bottom = 383.933
+rotation = -0.33223
+script = ExtResource("1_oihbb")
+ChildrenByNodePath = {}
+
+[node name="PanelContainer2" type="PanelContainer" parent="."]
+layout_mode = 2
+offset_left = 790.0
+offset_top = 217.0
+offset_right = 830.0
+offset_bottom = 257.0
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 208.0
+offset_top = 404.0
+offset_right = 248.0
+offset_bottom = 444.0
+
+[node name="Gimbal2D" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_left = 414.153
+offset_top = 319.6
+offset_right = 528.153
+offset_bottom = 419.6
+rotation = -0.33223
+scale = Vector2(0.780701, 0.780701)
+script = ExtResource("1_7va22")
+
+[node name="PanelContainer" type="PanelContainer" parent="Gimbal2D"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Gimbal2D/PanelContainer"]
+layout_mode = 2
+text = "Test
+with alot of txt
+"
+
+[node name="Gimbal2D2" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 67.0
+offset_right = 292.0
+offset_bottom = 160.0
+rotation = 4.27606
+script = ExtResource("1_7va22")
+
+[node name="PanelContainer" type="PanelContainer" parent="Gimbal2D2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Gimbal2D2/PanelContainer"]
+layout_mode = 2
+text = "Test
+with alot of txt
+"
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+layout_mode = 0
+offset_left = 220.515
+offset_top = 306.952
+offset_right = 260.515
+offset_bottom = 346.952
+border_width = 5.0
+editor_only = false
