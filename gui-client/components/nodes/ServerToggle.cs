@@ -2,6 +2,7 @@ using System;
 using Dependencies;
 using Godot;
 
+[Tool]
 [GlobalClass]
 public partial class ServerToggle: Button {
 

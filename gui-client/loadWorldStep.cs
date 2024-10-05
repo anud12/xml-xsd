@@ -70,13 +70,15 @@ public class LoadWorldStep
 	{
 		GD.Print("Executing next step");
 		var worldStep = StoreWorld_Step.instance.data;
-		Task<String> result = ImplProgram.Send(worldStep);
-		result.Wait();
-		XmlDocument xmlDocument = new XmlDocument();
-		xmlDocument.LoadXml(result.Result);
-		GD.Print("Starting deserialization");
-		worldStep = new world_step(xmlDocument.DocumentElement);
-		StoreWorld_Step.instance.data = worldStep;
+		ImplProgram.Send(worldStep)
+			.ContinueWith(async result =>
+			{
+				XmlDocument xmlDocument = new XmlDocument();
+				xmlDocument.LoadXml(await result);
+				GD.Print("Starting deserialization");
+				worldStep = new world_step(xmlDocument.DocumentElement);
+				StoreWorld_Step.instance.QueueSet(worldStep);
+			});
 	}
 
 	private System.Collections.Generic.IEnumerable<Node> loadNodes(world_step worldStep)

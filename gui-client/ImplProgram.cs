@@ -14,11 +14,11 @@ public class ImplProgram
 
     static public Task<String> Send(world_step worldStep)
     {
-        return Task.Run(async () =>
-        {
+        return Task.Run(() => {
             var document = new XmlDocument();
             XmlElement worldStepElement = document.CreateElement("world_step");
             document.AppendChild(worldStepElement);
+            GD.Print("Serializing world step");
             worldStep.Serialize(worldStepElement);
 
             // Deserialize document to string
@@ -36,19 +36,20 @@ public class ImplProgram
             using (ClientWebSocket ws = new ClientWebSocket())
             {
                 Uri serverUri = new Uri("ws://localhost:8080");
-                await ws.ConnectAsync(serverUri, CancellationToken.None);
+                ws.ConnectAsync(serverUri, CancellationToken.None).Wait();
                 GD.Print("Connected to the server");
 
 
 
                 // Send the document string to the server
                 var bytesToSend = Encoding.UTF8.GetBytes(documentString);
-                ws.SendAsync(new ArraySegment<byte>(bytesToSend), WebSocketMessageType.Text, true, CancellationToken.None);
+                GD.Print($"Sending");
+                ws.SendAsync(new ArraySegment<byte>(bytesToSend), WebSocketMessageType.Text, true, CancellationToken.None).Wait();
 
                 // Read all contents from the WebSocket
                 string receivedMessageTask = ReceiveMessagesAsync(ws, bytesToSend.Length);
                 string receivedMessage = receivedMessageTask;
-                GD.Print($"Received: {receivedMessage}");
+                GD.Print($"Received");
 
                 //write the received message to a file
                 using (StreamWriter sw = new StreamWriter("response.xml"))
@@ -56,7 +57,7 @@ public class ImplProgram
                     sw.Write(receivedMessage);
                 }
 
-                ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", CancellationToken.None);
+                ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", CancellationToken.None).Wait();
                 GD.Print("Connection closed");
                 return receivedMessage;
             }
@@ -79,9 +80,6 @@ public class ImplProgram
 
             if (result.EndOfMessage)
             {
-                Console.WriteLine($"Received complete message: {completeMessage}");
-
-                // completeMessage.Clear(); // Clear the StringBuilder for the next message
             }
         } while (!result.EndOfMessage);
         return completeMessage.ToString();

@@ -160,7 +160,7 @@ function typeDeclarationElementToClassString(dependantType: DependantType, exten
       public void Deserialize (RawNode rawNode) 
       {
         this.rawNode = rawNode;
-        Godot.GD.Print("Deserializing ${dependantType.name}");
+        // Godot.GD.Print("Deserializing ${dependantType.name}");
         ${dependantType.value.attributes?.metaType === "object" && template()`
           //Deserialize arguments
           ${Object.entries(dependantType.value.attributes.value ?? []).map(([key, value]) => {
@@ -231,7 +231,7 @@ function typeDeclarationElementToClassString(dependantType: DependantType, exten
       
       public void Serialize(XmlElement element)
       {
-          Godot.GD.Print("Serializing ${dependantType.name}");
+          // Godot.GD.Print("Serializing ${dependantType.name}");
           var updatedRawNode = SerializeIntoRawNode();
           updatedRawNode.Serialize(element);
       }

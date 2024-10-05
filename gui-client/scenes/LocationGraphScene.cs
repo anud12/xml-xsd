@@ -45,8 +45,9 @@ public partial class LocationGraphScene : Control
 			{
 				return;
 			}
-			loadLinks(data).ToList().ForEach(node => viewportContainer.AddChild(node));
-			loadNodes(data).ToList().ForEach(node => viewportContainer.AddChild(node));
+			var nodesById = loadNodes(data);
+			nodesById.Item2.ToList().ForEach(node => viewportContainer.AddChild(node));
+			loadLinks(data, nodesById.Item1).ToList().ForEach(link => viewportContainer.AddChild(link));
 
 		});
 	}
@@ -62,20 +63,18 @@ public partial class LocationGraphScene : Control
 		unsubscribeList.Clear();
 	}
 
-	private System.Collections.Generic.IEnumerable<Node> loadNodes(world_step worldStep)
+	private (Dictionary<string, Control>, IEnumerable<Node>) loadNodes(world_step worldStep)
 	{
-
+		Dictionary<string, Control> nodeById = new Dictionary<string, Control>();
 		Dictionary<Vector2, Control> node2DVector2D = new Dictionary<Vector2, Control>();
-		return worldStep.location_graph.Where(location_graph => location_graph.id == this.locationGraphId).SelectMany(location_graph =>
+		var nodeList = worldStep.location_graph.Where(location_graph => location_graph.id == this.locationGraphId).SelectMany(location_graph =>
 		{
 			return location_graph.node.SelectMany(node =>
 					{
 						var position = node.position;
-
-
-
 						var packedScene = LocationGraphNodeComponent.PackedScene.Instantiate();
 						var locationGraphNodeComponent = packedScene.GetNode<LocationGraphNodeComponent>("./");
+						nodeById[node.id] = locationGraphNodeComponent;
 						//set position of the node based on the offest returned by getOffset
 						locationGraphNodeComponent.initialize(node, worldStep);
 						locationGraphNodeComponent.setOnCreateAdjacentButtonPressed(node => addAdjacent(location_graph, node, worldStep));
@@ -109,7 +108,7 @@ public partial class LocationGraphScene : Control
 						}
 						else
 						{
-							var node2D = new Panel();
+							var node2D = new Container();
 							node2D.Size = new Vector2(SCALE, SCALE);
 							node2D.Position = newPosition;
 							node2D.AddChild(locationGraphNodeComponent);
@@ -118,6 +117,7 @@ public partial class LocationGraphScene : Control
 						}
 					});
 		});
+		return (nodeById, nodeList);
 	}
 
 	private void addAdjacent(world_step__location_graph locationGraph, world_step__location_graph__node node, world_step worldStep)
@@ -147,7 +147,7 @@ public partial class LocationGraphScene : Control
 			}
 		};
 
-		worldStep.actions.person__teleport = teleport;
+		worldStep.GetOrInsertDefault_actions().person__teleport = teleport;
 		LoadWorldStep.executeNextStep();
 	}
 	private void PathTo(world_step__location_graph locationGraph, world_step__location_graph__node node, world_step worldStep)
@@ -167,39 +167,54 @@ public partial class LocationGraphScene : Control
 			}
 		};
 
-		worldStep.actions.person__move_to.Add(action);
+		worldStep.GetOrInsertDefault_actions().GetOrInsertDefault_person__move_to().Add(action);
 		LoadWorldStep.executeNextStep();
 	}
-	private System.Collections.Generic.IEnumerable<Node> loadLinks(world_step worldStep)
+	private IEnumerable<Node> loadLinks(world_step worldStep, Dictionary<string, Control> nodesById)
 	{
-
-
-		return worldStep.location_graph.Where(location_graph => location_graph.id == this.locationGraphId).SelectMany(location_graph =>
-		{
-			var nodeById = location_graph.node.ToDictionary(node => node.id);
-			return location_graph.node.SelectMany(node =>
+		IEnumerable<Node> nodeList = (worldStep.location_graph ?? new List<world_step__location_graph>())
+		.Where(location_graph => location_graph.id == this.locationGraphId)
+		.SelectMany(location_graph => location_graph.node)
+		.SelectMany(startNodeElement => startNodeElement.link_to.SelectMany(linkTo =>
 			{
-				GD.Print("node.link_to: " + node.link_to.Count);
-				return node.link_to.Select(linkTo =>
-				{
-					var startNode = node;
-					GD.Print("linkTo.node_id_ref: " + linkTo.node_id_ref);
-					var endNode = nodeById[linkTo.node_id_ref];
-					var start = new Vector2((float)startNode.position.x * SCALE, (float)startNode.position.y * SCALE);
-					var end = new Vector2((float)endNode.position.x * SCALE, (float)endNode.position.y * SCALE);
-					var line2D = new Line2D
-					{
-						DefaultColor = new Color(0, 0, 0, 1),
-						Points = new Vector2[] { start, end },
-					};
+				var endNode = nodesById[linkTo.node_id_ref];
+				var startNode = nodesById[startNodeElement.id];
+				var linkNode = new LinkNode();
 
-					addSteps(line2D, linkTo);
-					addPersons(line2D, linkTo, worldStep);
-					line2D.Width = SCALE / 6;
-					return line2D;
-				});
-			});
-		});
+				linkNode.StartNode = startNode;
+				linkNode.EndNode = endNode;
+				linkNode.Width = SCALE / 2.5F;
+				linkNode.MaxSteps = linkTo.total_progress - 1;
+
+				IEnumerable<Node>? personNodeList = linkTo.people?.person?.Select(person =>
+					{
+						var personId = person.person_id_ref;
+						var personData = worldStep.people.SelectMany(people => people.person).Where(person => person.id == personId).First();
+						var personScene = PersonComponent.PackedScene.Instantiate();
+						var personComponent = personScene.GetNode<PersonComponent>("./");
+						personComponent.initializeFromId(personId);
+
+						var personContainer = new Gimbal2D();
+						personContainer.Rotation = 0;
+						personContainer.Size = new Vector2(SCALE, SCALE);
+						personContainer.AddChild(personComponent);
+
+						linkNode.ChildrenByNode.Add(personContainer, person.accumulated_progress - 1);
+
+						return personContainer as Node;
+
+					}
+				);
+
+				List<Node> returnList = new List<Node>
+				{
+					linkNode
+				};
+				returnList.AddRange(personNodeList ?? new List<Node>());
+				return returnList;
+			})
+		);
+		return nodeList;
 	}
 
 	private void addSteps(Line2D line2D, world_step__location_graph__node__link_to linkTo)
