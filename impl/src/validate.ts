@@ -5,10 +5,8 @@ import {JsonSchema} from "./utils/JsonSchema";
 import {ValidationError} from "./validators/_type";
 import {actionRuleRefValidator} from "./validators/actionRuleRef.validator";
 import {personRefValidator} from "./validators/personRefValidator";
-import {itemRuleRefValidator} from "./validators/itemRuleRef.validator";
 import {JsonUtil} from "./utils/util";
 import {nameRuleRefValidator} from "./validators/nameRuleRef.validator";
-import {actionRefValidator} from "./validators/actionRef.validator";
 import {nodeRuleRefValidator} from "./validators/nodeRuleRef.validator";
 import {nodeIdRefValidator} from "./validators/nodeIdRef.validator";
 import {locationGraphIdRefValidator} from "./validators/locationGraphIdRef.validator";
@@ -30,7 +28,6 @@ export const validate = async (jsonUtils: JsonUtil, log: (...string: any[]) => v
   result.push(...await classificationRuleRefValidator(jsonUtils));
   result.push(...await locationClassificationRuleRefValidator(jsonUtils));
   result.push(...await personRefValidator(jsonUtils));
-  result.push(...await itemRuleRefValidator(jsonUtils));
   result.push(...await nameRuleRefValidator(jsonUtils));
   result.push(...await nodeRuleRefValidator(jsonUtils));
   result.push(...await nodeIdRefValidator(jsonUtils));
