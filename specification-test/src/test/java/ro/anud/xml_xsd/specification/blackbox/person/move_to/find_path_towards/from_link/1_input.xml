@@ -34,7 +34,7 @@
       <position x="0" y="0"/>
       <link_to node_id_ref="node_id_2" total_progress="1">
         <people>
-          <person person_id_ref="person_id"/>
+          <person person_id_ref="person_id" accumulated_progress="0"/>
         </people>
       </link_to>
     </node>

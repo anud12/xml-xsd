@@ -1,5 +1,5 @@
 import {EventMiddleware} from "./_type";
-import {ItemQueryType, JsonSchema} from "../utils/JsonSchema";
+import {JsonSchema} from "../utils/JsonSchema";
 import {Dispatcher} from "../utils/triggerDispatcher/dispatcher";
 import {PersonQueryType} from "../utils/person/setProperty";
 import {JsonUtil} from "../utils/util";
@@ -10,32 +10,6 @@ type EventQueryType = RuleGroupQueryType["children"]["events_rule"]["children"][
 
 
 const applyPropertyMutationToPerson = (readJson:JsonUtil, event: EventQueryType, target: PersonQueryType) => {
-  const propertyMutationList = event.queryAllOptional("then").flatMap(thenElement => thenElement.queryAllOptional("property_mutation"))
-  if(propertyMutationList.length === 0) {
-    return
-  }
-  let propertiesElement = target.queryOptional("properties")
-  if(!propertiesElement) {
-    propertiesElement = target.appendChild("properties");
-  }
-  const propertiesList = propertiesElement.queryAllOptional("property");
-  propertyMutationList.forEach(propertyMutation => {
-    const addedValue = readJson.computeOperationFromParent(propertyMutation);
-    const targetProperty = propertiesList.find(propertyElement => {
-      return propertyMutation.attributeMap.property_rule_ref === propertyElement.attributeMap.property_rule_ref
-    });
-    if(targetProperty) {
-      targetProperty.attributeMap.value = String(Number(addedValue) + Number(targetProperty.attributeMap.value))
-      return;
-    }
-    propertiesElement.appendChild("property", undefined, {
-      property_rule_ref: propertyMutation.attributeMap.property_rule_ref,
-      value: String(addedValue)
-    })
-  })
-}
-
-const applyPropertyMutationToItem = (readJson:JsonUtil, event: EventQueryType, target: ItemQueryType) => {
   const propertyMutationList = event.queryAllOptional("then").flatMap(thenElement => thenElement.queryAllOptional("property_mutation"))
   if(propertyMutationList.length === 0) {
     return
@@ -88,12 +62,6 @@ const applyFromPersonActionUsed = (readJson:JsonUtil , event: EventQueryType): (
             targetElement.forEach(element => applyPropertyMutationToPerson(readJson, event, element))
           }))
 
-        thenElement.flatMap(thenElement => thenElement
-          .queryAllOptional("select_item")
-          .forEach(selectItemElement => {
-            const targetElement = writeJson.item.selectItem(selectItemElement);
-            targetElement.forEach(element => applyPropertyMutationToItem(readJson,event, element))
-          }))
       })
     }
   })

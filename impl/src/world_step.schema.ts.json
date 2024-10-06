@@ -45,29 +45,6 @@
     }
   },
   {
-    "name": "group__item_data",
-    "type": "complex",
-    "isSingle": true,
-    "value": {
-      "metaType": "object",
-      "isSingle": true,
-      "value": {
-        "classifications": {
-          "metaType": "reference",
-          "value": "type__classification_list",
-          "isSingle": true,
-          "isNullable": true
-        },
-        "properties": {
-          "metaType": "reference",
-          "value": "type__property_list",
-          "isSingle": true,
-          "isNullable": true
-        }
-      }
-    }
-  },
-  {
     "name": "group__operation__and",
     "type": "complex",
     "isSingle": false,
@@ -471,61 +448,6 @@
     }
   },
   {
-    "name": "type__item",
-    "type": "complex",
-    "isSingle": true,
-    "value": {
-      "metaType": "reference",
-      "value": "group__item_data",
-      "isSingle": true,
-      "attributes": {
-        "metaType": "object",
-        "value": {
-          "id": {
-            "metaType": "unknown",
-            "isNullable": false
-          },
-          "name": {
-            "metaType": "unknown",
-            "isNullable": true
-          }
-        }
-      }
-    }
-  },
-  {
-    "name": "type__item_selection",
-    "type": "complex",
-    "value": {
-      "metaType": "composition",
-      "value": [
-        {
-          "metaType": "object",
-          "isSingle": true,
-          "value": {
-            "min": {
-              "metaType": "reference",
-              "value": "type__math_operations",
-              "isSingle": true,
-              "isNullable": true
-            },
-            "max": {
-              "metaType": "reference",
-              "value": "type__math_operations",
-              "isSingle": true,
-              "isNullable": true
-            }
-          }
-        },
-        {
-          "metaType": "reference",
-          "value": "group__item_data",
-          "isSingle": true
-        }
-      ]
-    }
-  },
-  {
     "name": "type_cell_ref",
     "type": "complex",
     "isSingle": true,
@@ -644,19 +566,6 @@
             },
             "isNullable": false
           }
-        },
-        "inventory": {
-          "metaType": "object",
-          "isSingle": true,
-          "value": {
-            "item": {
-              "metaType": "reference",
-              "value": "type__item_selection",
-              "isSingle": false,
-              "isNullable": true
-            }
-          },
-          "isNullable": true
         }
       }
     }
@@ -1546,41 +1455,6 @@
                           "isSingle": false,
                           "isNullable": true
                         },
-                        "select_item": {
-                          "metaType": "composition",
-                          "value": [
-                            {
-                              "metaType": "object",
-                              "value": {},
-                              "isSingle": true,
-                              "isNullable": false,
-                              "attributes": {
-                                "metaType": "object",
-                                "value": {
-                                  "origin": {
-                                    "metaType": "union",
-                                    "value": [
-                                      {
-                                        "metaType": "primitive",
-                                        "value": "\"target\""
-                                      },
-                                      {
-                                        "metaType": "primitive",
-                                        "value": "\"self\""
-                                      }
-                                    ]
-                                  }
-                                }
-                              }
-                            },
-                            {
-                              "metaType": "primitive",
-                              "value": "type__item_selection"
-                            }
-                          ],
-                          "isSingle": false,
-                          "isNullable": true
-                        },
                         "property_mutation": {
                           "metaType": "composition",
                           "value": [
@@ -1972,19 +1846,6 @@
           },
           "isNullable": false
         },
-        "items": {
-          "metaType": "object",
-          "isSingle": false,
-          "value": {
-            "item": {
-              "metaType": "reference",
-              "value": "type__item",
-              "isSingle": false,
-              "isNullable": true
-            }
-          },
-          "isNullable": true
-        },
         "people": {
           "metaType": "object",
           "isSingle": false,
@@ -2072,19 +1933,6 @@
                     },
                     "isNullable": false
                   }
-                },
-                "inventory": {
-                  "metaType": "object",
-                  "isSingle": true,
-                  "value": {
-                    "item": {
-                      "metaType": "reference",
-                      "value": "type__item",
-                      "isSingle": false,
-                      "isNullable": true
-                    }
-                  },
-                  "isNullable": true
                 },
                 "classifications": {
                   "metaType": "object",
