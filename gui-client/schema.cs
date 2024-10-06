@@ -359,8 +359,6 @@ namespace XSD {
     public void Set_race_rule(world_step__rule_group__race_rule? value);
     public world_step__rule_group__action_rule? Get_action_rule();
     public void Set_action_rule(world_step__rule_group__action_rule? value);
-    public world_step__rule_group__item_rule? Get_item_rule();
-    public void Set_item_rule(world_step__rule_group__item_rule? value);
     public world_step__rule_group__events_rule? Get_events_rule();
     public void Set_events_rule(world_step__rule_group__events_rule? value);
     public world_step__rule_group__location_graph_rule? Get_location_graph_rule();
@@ -461,22 +459,6 @@ namespace XSD {
     {
       this.action_rule = value;
     }
-    public world_step__rule_group__item_rule? item_rule = null;
-    public world_step__rule_group__item_rule? Get_item_rule()
-    {
-      return this.item_rule;
-    }
-    public world_step__rule_group__item_rule GetOrInsertDefault_item_rule()
-    {
-      if(this.item_rule == null) {
-        this.item_rule = new world_step__rule_group__item_rule();
-      }
-      return this.item_rule;
-    }
-    public void Set_item_rule(world_step__rule_group__item_rule? value)
-    {
-      this.item_rule = value;
-    }
     public world_step__rule_group__events_rule? events_rule = null;
     public world_step__rule_group__events_rule? Get_events_rule()
     {
@@ -553,7 +535,6 @@ namespace XSD {
       this.name_rule = rawNode.InitializeWithRawNode("name_rule", this.name_rule);
       this.race_rule = rawNode.InitializeWithRawNode("race_rule", this.race_rule);
       this.action_rule = rawNode.InitializeWithRawNode("action_rule", this.action_rule);
-      this.item_rule = rawNode.InitializeWithRawNode("item_rule", this.item_rule);
       this.events_rule = rawNode.InitializeWithRawNode("events_rule", this.events_rule);
       this.location_graph_rule = rawNode.InitializeWithRawNode("location_graph_rule", this.location_graph_rule);
       this.location_classification_rule = rawNode.InitializeWithRawNode("location_classification_rule", this.location_classification_rule);
@@ -578,9 +559,6 @@ namespace XSD {
       }
       if(action_rule != null) {
         rawNode.children["action_rule"] = new List<RawNode> { action_rule.SerializeIntoRawNode() };
-      }
-      if(item_rule != null) {
-        rawNode.children["item_rule"] = new List<RawNode> { item_rule.SerializeIntoRawNode() };
       }
       if(events_rule != null) {
         rawNode.children["events_rule"] = new List<RawNode> { events_rule.SerializeIntoRawNode() };
@@ -1829,78 +1807,6 @@ namespace XSD {
     public void Serialize(XmlElement element)
     {
         // Godot.GD.Print("Serializing world_step__rule_group__action_rule");
-        var updatedRawNode = SerializeIntoRawNode();
-        updatedRawNode.Serialize(element);
-    }
-  }
-  /*typeDeclarationElementToInterfaceString= element*/
-  public interface Iworld_step__rule_group__item_rule {
-
-    //Children elements
-    public List<world_step__rule_group__item_rule__entry>? Get_entry();
-    public void Set_entry(List<world_step__rule_group__item_rule__entry>? value);
-    public void Deserialize (RawNode rawNode);
-
-    public RawNode SerializeIntoRawNode();
-
-    public void Serialize(XmlElement element);
-  }
-
-  /*typeDeclarationElementToString= element*/
-  public class world_step__rule_group__item_rule: Iworld_step__rule_group__item_rule {
-    public RawNode rawNode = new RawNode();
-
-    //Children elements
-    public List<world_step__rule_group__item_rule__entry>? entry = new List<world_step__rule_group__item_rule__entry>();
-    public List<world_step__rule_group__item_rule__entry>? Get_entry()
-    {
-      return this.entry;
-    }
-    public List<world_step__rule_group__item_rule__entry> GetOrInsertDefault_entry()
-    {
-      if(this.entry == null) {
-        this.entry = new List<world_step__rule_group__item_rule__entry>();
-      }
-      return this.entry;
-    }
-    public void Set_entry(List<world_step__rule_group__item_rule__entry>? value)
-    {
-      this.entry = value;
-    }
-
-    public world_step__rule_group__item_rule()
-    {
-    }
-
-    public world_step__rule_group__item_rule(RawNode rawNode)
-    {
-      Deserialize(rawNode);
-    }
-
-    public world_step__rule_group__item_rule(XmlElement xmlElement)
-    {
-      this.rawNode.Deserialize(xmlElement);
-      Deserialize(rawNode);
-    }
-
-    public void Deserialize (RawNode rawNode)
-    {
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing world_step__rule_group__item_rule");
-      //Deserialize elements
-      this.entry = rawNode.InitializeWithRawNode("entry", this.entry);
-    }
-
-    public RawNode SerializeIntoRawNode()
-    {
-      //Serialize elements
-      rawNode.children["entry"] = entry.Select(x => x.SerializeIntoRawNode()).ToList();
-      return rawNode;
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        // Godot.GD.Print("Serializing world_step__rule_group__item_rule");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -4111,123 +4017,6 @@ namespace XSD {
     public void Serialize(XmlElement element)
     {
         // Godot.GD.Print("Serializing world_step__rule_group__action_rule__person_to_person");
-        var updatedRawNode = SerializeIntoRawNode();
-        updatedRawNode.Serialize(element);
-    }
-  }
-  /*typeDeclarationElementToInterfaceString= element*/
-  public interface Iworld_step__rule_group__item_rule__entry {
-    //Attributes
-    /* ignored attribute key={key} of type=System.Object*/
-
-    //Children elements
-    public group__name_token Get_name();
-    public void Set_name(group__name_token value);
-    public world_step__rule_group__item_rule__entry__weight_kg? Get_weight_kg();
-    public void Set_weight_kg(world_step__rule_group__item_rule__entry__weight_kg? value);
-    public List<world_step__rule_group__item_rule__entry__wearable>? Get_wearable();
-    public void Set_wearable(List<world_step__rule_group__item_rule__entry__wearable>? value);
-    public void Deserialize (RawNode rawNode);
-
-    public RawNode SerializeIntoRawNode();
-
-    public void Serialize(XmlElement element);
-  }
-
-  /*typeDeclarationElementToString= element*/
-  public class world_step__rule_group__item_rule__entry: Iworld_step__rule_group__item_rule__entry {
-    public RawNode rawNode = new RawNode();
-    //Attributes
-    /* ignored attribute key={key} of type=System.Object*/
-
-    //Children elements
-    public group__name_token name = new group__name_token();
-    public group__name_token Get_name()
-    {
-      return this.name;
-    }
-    public void Set_name(group__name_token value)
-    {
-      this.name = value;
-    }
-    public world_step__rule_group__item_rule__entry__weight_kg? weight_kg = null;
-    public world_step__rule_group__item_rule__entry__weight_kg? Get_weight_kg()
-    {
-      return this.weight_kg;
-    }
-    public world_step__rule_group__item_rule__entry__weight_kg GetOrInsertDefault_weight_kg()
-    {
-      if(this.weight_kg == null) {
-        this.weight_kg = new world_step__rule_group__item_rule__entry__weight_kg();
-      }
-      return this.weight_kg;
-    }
-    public void Set_weight_kg(world_step__rule_group__item_rule__entry__weight_kg? value)
-    {
-      this.weight_kg = value;
-    }
-    public List<world_step__rule_group__item_rule__entry__wearable>? wearable = new List<world_step__rule_group__item_rule__entry__wearable>();
-    public List<world_step__rule_group__item_rule__entry__wearable>? Get_wearable()
-    {
-      return this.wearable;
-    }
-    public List<world_step__rule_group__item_rule__entry__wearable> GetOrInsertDefault_wearable()
-    {
-      if(this.wearable == null) {
-        this.wearable = new List<world_step__rule_group__item_rule__entry__wearable>();
-      }
-      return this.wearable;
-    }
-    public void Set_wearable(List<world_step__rule_group__item_rule__entry__wearable>? value)
-    {
-      this.wearable = value;
-    }
-
-    public world_step__rule_group__item_rule__entry()
-    {
-    }
-
-    public world_step__rule_group__item_rule__entry(RawNode rawNode)
-    {
-      Deserialize(rawNode);
-    }
-
-    public world_step__rule_group__item_rule__entry(XmlElement xmlElement)
-    {
-      this.rawNode.Deserialize(xmlElement);
-      Deserialize(rawNode);
-    }
-
-    public void Deserialize (RawNode rawNode)
-    {
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing world_step__rule_group__item_rule__entry");
-      //Deserialize arguments
-
-      //Deserialize elements
-      this.name = rawNode.InitializeWithRawNode("name", this.name);
-      this.weight_kg = rawNode.InitializeWithRawNode("weight-kg", this.weight_kg);
-      this.wearable = rawNode.InitializeWithRawNode("wearable", this.wearable);
-    }
-
-    public RawNode SerializeIntoRawNode()
-    {
-      //Serialize arguments
-
-      //Serialize elements
-      if(name != null) {
-        rawNode.children["name"] = new List<RawNode> { name.SerializeIntoRawNode() };
-      }
-      if(weight_kg != null) {
-        rawNode.children["weight-kg"] = new List<RawNode> { weight_kg.SerializeIntoRawNode() };
-      }
-      rawNode.children["wearable"] = wearable.Select(x => x.SerializeIntoRawNode()).ToList();
-      return rawNode;
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        // Godot.GD.Print("Serializing world_step__rule_group__item_rule__entry");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -6960,148 +6749,6 @@ namespace XSD {
     public void Serialize(XmlElement element)
     {
         // Godot.GD.Print("Serializing world_step__rule_group__action_rule__person_to_person__location_mutation");
-        var updatedRawNode = SerializeIntoRawNode();
-        updatedRawNode.Serialize(element);
-    }
-  }
-  /*typeDeclarationElementToInterfaceString= element*/
-  public interface Iworld_step__rule_group__item_rule__entry__weight_kg {
-    //Attributes
-    /* ignored attribute key={key} of type=System.Object*/
-
-    //Children elements
-
-    public void Deserialize (RawNode rawNode);
-
-    public RawNode SerializeIntoRawNode();
-
-    public void Serialize(XmlElement element);
-  }
-
-  /*typeDeclarationElementToString= element*/
-  public class world_step__rule_group__item_rule__entry__weight_kg: Iworld_step__rule_group__item_rule__entry__weight_kg {
-    public RawNode rawNode = new RawNode();
-    //Attributes
-    /* ignored attribute key={key} of type=System.Object*/
-
-    //Children elements
-
-    public world_step__rule_group__item_rule__entry__weight_kg()
-    {
-    }
-
-    public world_step__rule_group__item_rule__entry__weight_kg(RawNode rawNode)
-    {
-      Deserialize(rawNode);
-    }
-
-    public world_step__rule_group__item_rule__entry__weight_kg(XmlElement xmlElement)
-    {
-      this.rawNode.Deserialize(xmlElement);
-      Deserialize(rawNode);
-    }
-
-    public void Deserialize (RawNode rawNode)
-    {
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing world_step__rule_group__item_rule__entry__weight_kg");
-      //Deserialize arguments
-
-      //Deserialize elements
-
-    }
-
-    public RawNode SerializeIntoRawNode()
-    {
-      //Serialize arguments
-
-      //Serialize elements
-
-      return rawNode;
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        // Godot.GD.Print("Serializing world_step__rule_group__item_rule__entry__weight_kg");
-        var updatedRawNode = SerializeIntoRawNode();
-        updatedRawNode.Serialize(element);
-    }
-  }
-  /*typeDeclarationElementToInterfaceString= element*/
-  public interface Iworld_step__rule_group__item_rule__entry__wearable {
-    //Attributes
-    public System.String? Get_slot();
-    public void Set_slot(System.String? value);
-
-    //Children elements
-
-    public void Deserialize (RawNode rawNode);
-
-    public RawNode SerializeIntoRawNode();
-
-    public void Serialize(XmlElement element);
-  }
-
-  /*typeDeclarationElementToString= element*/
-  public class world_step__rule_group__item_rule__entry__wearable: Iworld_step__rule_group__item_rule__entry__wearable {
-    public RawNode rawNode = new RawNode();
-    //Attributes
-    public System.String? slot;
-    public System.String? Get_slot()
-    {
-      return this.slot;
-    }
-    public void Set_slot(System.String? value)
-    {
-      this.slot = value;
-    }
-
-    //Children elements
-
-    public world_step__rule_group__item_rule__entry__wearable()
-    {
-    }
-
-    public world_step__rule_group__item_rule__entry__wearable(RawNode rawNode)
-    {
-      Deserialize(rawNode);
-    }
-
-    public world_step__rule_group__item_rule__entry__wearable(XmlElement xmlElement)
-    {
-      this.rawNode.Deserialize(xmlElement);
-      Deserialize(rawNode);
-    }
-
-    public void Deserialize (RawNode rawNode)
-    {
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing world_step__rule_group__item_rule__entry__wearable");
-      //Deserialize arguments
-      if(rawNode.attributes.ContainsKey("slot"))
-      {
-        var attribute_slot = rawNode.attributes["slot"];
-        this.slot = rawNode.attributes["slot"];
-      }
-      //Deserialize elements
-
-    }
-
-    public RawNode SerializeIntoRawNode()
-    {
-      //Serialize arguments
-      if(this.slot != null)
-      {
-        rawNode.attributes["slot"] = this.slot?.ToString();
-      }
-      //Serialize elements
-
-      return rawNode;
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        // Godot.GD.Print("Serializing world_step__rule_group__item_rule__entry__wearable");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }

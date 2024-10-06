@@ -188,28 +188,6 @@
     }
   },
   {
-    "name": "item_slot",
-    "type": "simple",
-    "value": {
-      "metaType": "union",
-      "value": [
-        {
-          "metaType": "primitive",
-          "value": "\"hand\""
-        },
-        {
-          "metaType": "primitive",
-          "value": "\"chest\""
-        },
-        {
-          "metaType": "primitive",
-          "value": "\"legs\""
-        }
-      ]
-    },
-    "isNullable": true
-  },
-  {
     "name": "type_person_select",
     "type": "simple",
     "value": {
@@ -1204,69 +1182,6 @@
                         }
                       },
                       "isNullable": true
-                    }
-                  },
-                  "isNullable": true
-                }
-              },
-              "isNullable": true
-            },
-            "item_rule": {
-              "metaType": "object",
-              "isSingle": true,
-              "value": {
-                "entry": {
-                  "metaType": "object",
-                  "attributes": {
-                    "metaType": "object",
-                    "value": {
-                      "id": {
-                        "metaType": "unknown",
-                        "isNullable": false
-                      }
-                    },
-                    "isNullable": false
-                  },
-                  "isSingle": false,
-                  "value": {
-                    "name": {
-                      "metaType": "reference",
-                      "value": "group__name_token",
-                      "isSingle": true,
-                      "isNullable": false
-                    },
-                    "weight-kg": {
-                      "metaType": "object",
-                      "value": {},
-                      "isSingle": true,
-                      "isNullable": true,
-                      "attributes": {
-                        "metaType": "object",
-                        "value": {
-                          "value": {
-                            "metaType": "unknown",
-                            "isNullable": true
-                          }
-                        },
-                        "isNullable": true
-                      }
-                    },
-                    "wearable": {
-                      "metaType": "object",
-                      "value": {},
-                      "isSingle": false,
-                      "isNullable": true,
-                      "attributes": {
-                        "metaType": "object",
-                        "value": {
-                          "slot": {
-                            "metaType": "primitive",
-                            "value": "item_slot",
-                            "isNullable": true
-                          }
-                        },
-                        "isNullable": true
-                      }
                     }
                   },
                   "isNullable": true

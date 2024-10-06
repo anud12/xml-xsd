@@ -81,18 +81,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:simpleType name="item_slot">
-    <xs:annotation>
-      <xs:documentation>
-        Represents the slots where an item can be equipped.
-      </xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="hand"/>
-      <xs:enumeration value="chest"/>
-      <xs:enumeration value="legs"/>
-    </xs:restriction>
-  </xs:simpleType>
 
 
   <xs:simpleType name="type_person_select">
@@ -823,37 +811,6 @@
                       </xs:complexType>
                     </xs:element>
 
-                  </xs:sequence>
-                </xs:complexType>
-              </xs:element>
-
-
-              <xs:element name="item_rule" minOccurs="0">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element name="name">
-                            <xs:complexType>
-                              <xs:group ref="group__name_token"/>
-                            </xs:complexType>
-                          </xs:element>
-                          <xs:element name="weight-kg" minOccurs="0">
-                            <xs:complexType>
-                              <xs:attribute name="value"/>
-                            </xs:complexType>
-                          </xs:element>
-                          <xs:element name="wearable" minOccurs="0"
-                                      maxOccurs="unbounded">
-                            <xs:complexType>
-                              <xs:attribute name="slot" type="item_slot"/>
-                            </xs:complexType>
-                          </xs:element>
-                        </xs:sequence>
-                        <xs:attribute name="id" use="required"/>
-                      </xs:complexType>
-                    </xs:element>
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
