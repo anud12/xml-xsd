@@ -4541,13 +4541,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -4611,4705 +4604,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -9521,13 +4815,510 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
       </entry>
-    </item_rule>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -9739,13 +5530,888 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
       </entry>
-    </item_rule>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -9957,13 +6623,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -10031,13 +6690,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -10105,13 +6757,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -10179,13 +6824,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -10206,6 +6844,69 @@ undefined
         <property property_rule_ref="property" value="1"/>
       </properties>
     </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
   </people>
   <actions>
     <by person_ref="1">
@@ -10253,13 +6954,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -10289,81 +6983,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
-
-#### Tags:
-- person_select
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="points"/>
-    </property_rule>
-    <action_rule>
-      <person_to_person id="action_rule">
-        <test>
-          <value target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </value>
-          <expected target="target">
-            <operation initial="0">
-              <and do="add" value="0"/>
-            </operation>
-          </expected>
-        </test>
-      </person_to_person>
-    </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
-    <events_rule>
-      <entry id="item_select">
-        <when>
-          <person_action_used action_rule_ref="action_rule"/>
-        </when>
-        <then>
-          <select_person origin="target">
-            <min initial="1"/>
-          </select_person>
-          <property_mutation property_rule_ref="property" initial="1"/>
-        </then>
-      </entry>
-    </events_rule>
-  </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
-  <actions>
-    <by person_ref="1">
-      <do action_rule_ref="action_rule" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
 
 #### Tags:
 - person_select
@@ -10475,13 +7095,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -10549,13 +7162,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -10623,13 +7229,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -10697,13 +7296,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -10771,13 +7363,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -10845,13 +7430,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -10919,13 +7497,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -10993,13 +7564,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -11067,13 +7631,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -11141,13 +7698,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -11215,13 +7765,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -11289,13 +7832,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -11363,13 +7899,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -11437,13 +7966,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -11511,13 +8033,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -11585,13 +8100,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -11659,13 +8167,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -11733,13 +8234,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -11807,13 +8301,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -11881,13 +8368,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -11955,13 +8435,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -12029,13 +8502,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -12103,13 +8569,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -12177,13 +8636,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -12204,6 +8656,69 @@ undefined
         <property property_rule_ref="property" value="1"/>
       </properties>
     </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
   </people>
   <actions>
     <by person_ref="1">
@@ -12251,13 +8766,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -12287,7 +8795,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
 
 #### Tags:
 - person_select
@@ -12399,6 +8907,538 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
     <item_rule>
       <entry id="item_rule">
         <name>
@@ -12473,13 +9513,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -12547,13 +9580,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -12621,13 +9647,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -12695,13 +9714,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -12769,13 +9781,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -12843,13 +9848,2548 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
       </entry>
-    </item_rule>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -12991,13 +12531,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -13065,13 +12598,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -13139,13 +12665,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -13213,13 +12732,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -13287,13 +12799,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -13361,13 +12866,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -13435,13 +12933,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -13509,13 +13000,136 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
       </entry>
-    </item_rule>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -13583,13 +13197,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -13657,13 +13264,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -13731,13 +13331,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -13805,13 +13398,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -13879,13 +13465,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -13953,13 +13532,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -14027,13 +13599,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -14101,13 +13666,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -14175,13 +13733,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -14249,13 +13800,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -14323,13 +13867,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -14397,13 +13934,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -14471,13 +14001,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -14545,13 +14068,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -14619,13 +14135,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -14693,13 +14202,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -14767,13 +14269,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -14841,13 +14336,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -14915,13 +14403,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -14989,13 +14470,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -15063,13 +14537,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -15137,13 +14604,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -15211,13 +14671,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -15285,13 +14738,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -15359,13 +14805,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -15433,13 +14872,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -15507,13 +14939,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -15581,13 +15006,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -15655,13 +15073,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -15729,13 +15140,6 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
-      </entry>
-    </item_rule>
     <events_rule>
       <entry id="item_select">
         <when>
@@ -15803,13 +15207,6493 @@ undefined
         </test>
       </person_to_person>
     </action_rule>
-    <item_rule>
-      <entry id="item_rule">
-        <name>
-          <name_token prefix="item_name"/>
-        </name>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
       </entry>
-    </item_rule>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1"/>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+  </rule_group>
+  <people>
+    <person id="1">
+      <properties>
+        <property property_rule_ref="property" value="1"/>
+      </properties>
+    </person>
+  </people>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+
+#### Tags:
+- person_select
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+      <person_to_person id="action_rule">
+        <test>
+          <value target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </value>
+          <expected target="target">
+            <operation initial="0">
+              <and do="add" value="0"/>
+            </operation>
+          </expected>
+        </test>
+      </person_to_person>
+    </action_rule>
     <events_rule>
       <entry id="item_select">
         <when>

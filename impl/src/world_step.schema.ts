@@ -18,9 +18,6 @@ export type group__name_token = JsonQueryType<{}, {
       "one_of": group__name_token | any & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
 }>
-export type item_slot = "hand"
-  | "chest"
-  | "legs"
 export type type_person_select = "self"
   | "target"
 export type type__group__operation__and = "add"
@@ -133,13 +130,6 @@ export type world_step = JsonQueryType<{}, {
         "location_mutation": JsonQueryType<{"name": any;  "on": type_person_select;}, {
           "from": JsonQueryType<{"participant": type_person_select;}, {}> & group__math_operations & JsonQueryType<{}, {}>;
         }> & JsonQueryType<{}, {}>;
-      }> & JsonQueryType<{}, {}>;
-    }> & JsonQueryType<{}, {}>;
-    "item_rule": JsonQueryType<{}, {
-      "entry": JsonQueryType<{"id": any;}, {
-        "name": group__name_token & JsonQueryType<{}, {}>;
-        "weight-kg": JsonQueryType<{"value": any;}> & JsonQueryType<{}, {}>;
-        "wearable": JsonQueryType<{"slot": item_slot;}> & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
     "events_rule": JsonQueryType<{}, {
