@@ -51,9 +51,7 @@
     </events_rule>
   </rule_group>
   <people>
-    <person id="1">
-      <location x="0" y="0"/>
-    </person>
+    <person id="1"/>
   </people>
   <actions>
     <by person_ref="1">

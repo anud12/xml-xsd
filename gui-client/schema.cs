@@ -13,8 +13,6 @@ namespace XSD {
     public void Set_rule_group(List<world_step__rule_group> value);
     public List<world_step__people>? Get_people();
     public void Set_people(List<world_step__people>? value);
-    public List<world_step__location_layer>? Get_location_layer();
-    public void Set_location_layer(List<world_step__location_layer>? value);
     public List<world_step__location_graph>? Get_location_graph();
     public void Set_location_graph(List<world_step__location_graph>? value);
     public world_step__actions? Get_actions();
@@ -79,22 +77,6 @@ namespace XSD {
     {
       this.people = value;
     }
-    public List<world_step__location_layer>? location_layer = new List<world_step__location_layer>();
-    public List<world_step__location_layer>? Get_location_layer()
-    {
-      return this.location_layer;
-    }
-    public List<world_step__location_layer> GetOrInsertDefault_location_layer()
-    {
-      if(this.location_layer == null) {
-        this.location_layer = new List<world_step__location_layer>();
-      }
-      return this.location_layer;
-    }
-    public void Set_location_layer(List<world_step__location_layer>? value)
-    {
-      this.location_layer = value;
-    }
     public List<world_step__location_graph>? location_graph = new List<world_step__location_graph>();
     public List<world_step__location_graph>? Get_location_graph()
     {
@@ -151,7 +133,6 @@ namespace XSD {
       this.world_metadata = rawNode.InitializeWithRawNode("world_metadata", this.world_metadata);
       this.rule_group = rawNode.InitializeWithRawNode("rule_group", this.rule_group);
       this.people = rawNode.InitializeWithRawNode("people", this.people);
-      this.location_layer = rawNode.InitializeWithRawNode("location_layer", this.location_layer);
       this.location_graph = rawNode.InitializeWithRawNode("location_graph", this.location_graph);
       this.actions = rawNode.InitializeWithRawNode("actions", this.actions);
     }
@@ -164,7 +145,6 @@ namespace XSD {
       }
       rawNode.children["rule_group"] = rule_group.Select(x => x.SerializeIntoRawNode()).ToList();
       rawNode.children["people"] = people.Select(x => x.SerializeIntoRawNode()).ToList();
-      rawNode.children["location_layer"] = location_layer.Select(x => x.SerializeIntoRawNode()).ToList();
       rawNode.children["location_graph"] = location_graph.Select(x => x.SerializeIntoRawNode()).ToList();
       if(actions != null) {
         rawNode.children["actions"] = new List<RawNode> { actions.SerializeIntoRawNode() };
@@ -383,8 +363,6 @@ namespace XSD {
     public void Set_item_rule(world_step__rule_group__item_rule? value);
     public world_step__rule_group__events_rule? Get_events_rule();
     public void Set_events_rule(world_step__rule_group__events_rule? value);
-    public world_step__rule_group__locations_markov_chain? Get_locations_markov_chain();
-    public void Set_locations_markov_chain(world_step__rule_group__locations_markov_chain? value);
     public world_step__rule_group__location_graph_rule? Get_location_graph_rule();
     public void Set_location_graph_rule(world_step__rule_group__location_graph_rule? value);
     public world_step__rule_group__location_classification_rule? Get_location_classification_rule();
@@ -515,22 +493,6 @@ namespace XSD {
     {
       this.events_rule = value;
     }
-    public world_step__rule_group__locations_markov_chain? locations_markov_chain = null;
-    public world_step__rule_group__locations_markov_chain? Get_locations_markov_chain()
-    {
-      return this.locations_markov_chain;
-    }
-    public world_step__rule_group__locations_markov_chain GetOrInsertDefault_locations_markov_chain()
-    {
-      if(this.locations_markov_chain == null) {
-        this.locations_markov_chain = new world_step__rule_group__locations_markov_chain();
-      }
-      return this.locations_markov_chain;
-    }
-    public void Set_locations_markov_chain(world_step__rule_group__locations_markov_chain? value)
-    {
-      this.locations_markov_chain = value;
-    }
     public world_step__rule_group__location_graph_rule? location_graph_rule = null;
     public world_step__rule_group__location_graph_rule? Get_location_graph_rule()
     {
@@ -593,7 +555,6 @@ namespace XSD {
       this.action_rule = rawNode.InitializeWithRawNode("action_rule", this.action_rule);
       this.item_rule = rawNode.InitializeWithRawNode("item_rule", this.item_rule);
       this.events_rule = rawNode.InitializeWithRawNode("events_rule", this.events_rule);
-      this.locations_markov_chain = rawNode.InitializeWithRawNode("locations_markov_chain", this.locations_markov_chain);
       this.location_graph_rule = rawNode.InitializeWithRawNode("location_graph_rule", this.location_graph_rule);
       this.location_classification_rule = rawNode.InitializeWithRawNode("location_classification_rule", this.location_classification_rule);
     }
@@ -623,9 +584,6 @@ namespace XSD {
       }
       if(events_rule != null) {
         rawNode.children["events_rule"] = new List<RawNode> { events_rule.SerializeIntoRawNode() };
-      }
-      if(locations_markov_chain != null) {
-        rawNode.children["locations_markov_chain"] = new List<RawNode> { locations_markov_chain.SerializeIntoRawNode() };
       }
       if(location_graph_rule != null) {
         rawNode.children["location_graph_rule"] = new List<RawNode> { location_graph_rule.SerializeIntoRawNode() };
@@ -711,86 +669,6 @@ namespace XSD {
     public void Serialize(XmlElement element)
     {
         // Godot.GD.Print("Serializing world_step__people");
-        var updatedRawNode = SerializeIntoRawNode();
-        updatedRawNode.Serialize(element);
-    }
-  }
-  /*typeDeclarationElementToInterfaceString= element*/
-  public interface Iworld_step__location_layer {
-    //Attributes
-    /* ignored attribute key={key} of type=System.Object*/
-
-    //Children elements
-    public List<world_step__location_layer__cell> Get_cell();
-    public void Set_cell(List<world_step__location_layer__cell> value);
-    public void Deserialize (RawNode rawNode);
-
-    public RawNode SerializeIntoRawNode();
-
-    public void Serialize(XmlElement element);
-  }
-
-  /*typeDeclarationElementToString= element*/
-  public class world_step__location_layer: Iworld_step__location_layer {
-    public RawNode rawNode = new RawNode();
-    //Attributes
-    /* ignored attribute key={key} of type=System.Object*/
-
-    //Children elements
-    public List<world_step__location_layer__cell> cell = new List<world_step__location_layer__cell>();
-    public List<world_step__location_layer__cell> Get_cell()
-    {
-      return this.cell;
-    }
-    public List<world_step__location_layer__cell> GetOrInsertDefault_cell()
-    {
-      if(this.cell == null) {
-        this.cell = new List<world_step__location_layer__cell>();
-      }
-      return this.cell;
-    }
-    public void Set_cell(List<world_step__location_layer__cell> value)
-    {
-      this.cell = value;
-    }
-
-    public world_step__location_layer()
-    {
-    }
-
-    public world_step__location_layer(RawNode rawNode)
-    {
-      Deserialize(rawNode);
-    }
-
-    public world_step__location_layer(XmlElement xmlElement)
-    {
-      this.rawNode.Deserialize(xmlElement);
-      Deserialize(rawNode);
-    }
-
-    public void Deserialize (RawNode rawNode)
-    {
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing world_step__location_layer");
-      //Deserialize arguments
-
-      //Deserialize elements
-      this.cell = rawNode.InitializeWithRawNode("cell", this.cell);
-    }
-
-    public RawNode SerializeIntoRawNode()
-    {
-      //Serialize arguments
-
-      //Serialize elements
-      rawNode.children["cell"] = cell.Select(x => x.SerializeIntoRawNode()).ToList();
-      return rawNode;
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        // Godot.GD.Print("Serializing world_step__location_layer");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -2100,78 +1978,6 @@ namespace XSD {
     }
   }
   /*typeDeclarationElementToInterfaceString= element*/
-  public interface Iworld_step__rule_group__locations_markov_chain {
-
-    //Children elements
-    public List<world_step__rule_group__locations_markov_chain__location_markov_link>? Get_location_markov_link();
-    public void Set_location_markov_link(List<world_step__rule_group__locations_markov_chain__location_markov_link>? value);
-    public void Deserialize (RawNode rawNode);
-
-    public RawNode SerializeIntoRawNode();
-
-    public void Serialize(XmlElement element);
-  }
-
-  /*typeDeclarationElementToString= element*/
-  public class world_step__rule_group__locations_markov_chain: Iworld_step__rule_group__locations_markov_chain {
-    public RawNode rawNode = new RawNode();
-
-    //Children elements
-    public List<world_step__rule_group__locations_markov_chain__location_markov_link>? location_markov_link = new List<world_step__rule_group__locations_markov_chain__location_markov_link>();
-    public List<world_step__rule_group__locations_markov_chain__location_markov_link>? Get_location_markov_link()
-    {
-      return this.location_markov_link;
-    }
-    public List<world_step__rule_group__locations_markov_chain__location_markov_link> GetOrInsertDefault_location_markov_link()
-    {
-      if(this.location_markov_link == null) {
-        this.location_markov_link = new List<world_step__rule_group__locations_markov_chain__location_markov_link>();
-      }
-      return this.location_markov_link;
-    }
-    public void Set_location_markov_link(List<world_step__rule_group__locations_markov_chain__location_markov_link>? value)
-    {
-      this.location_markov_link = value;
-    }
-
-    public world_step__rule_group__locations_markov_chain()
-    {
-    }
-
-    public world_step__rule_group__locations_markov_chain(RawNode rawNode)
-    {
-      Deserialize(rawNode);
-    }
-
-    public world_step__rule_group__locations_markov_chain(XmlElement xmlElement)
-    {
-      this.rawNode.Deserialize(xmlElement);
-      Deserialize(rawNode);
-    }
-
-    public void Deserialize (RawNode rawNode)
-    {
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing world_step__rule_group__locations_markov_chain");
-      //Deserialize elements
-      this.location_markov_link = rawNode.InitializeWithRawNode("location_markov_link", this.location_markov_link);
-    }
-
-    public RawNode SerializeIntoRawNode()
-    {
-      //Serialize elements
-      rawNode.children["location_markov_link"] = location_markov_link.Select(x => x.SerializeIntoRawNode()).ToList();
-      return rawNode;
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        // Godot.GD.Print("Serializing world_step__rule_group__locations_markov_chain");
-        var updatedRawNode = SerializeIntoRawNode();
-        updatedRawNode.Serialize(element);
-    }
-  }
-  /*typeDeclarationElementToInterfaceString= element*/
   public interface Iworld_step__rule_group__location_graph_rule {
     //Attributes
     public System.String Get_id();
@@ -2372,8 +2178,6 @@ namespace XSD {
     //Children elements
     public world_step__people__person__race? Get_race();
     public void Set_race(world_step__people__person__race? value);
-    public type_cell_ref? Get_location();
-    public void Set_location(type_cell_ref? value);
     public world_step__people__person__properties? Get_properties();
     public void Set_properties(world_step__people__person__properties? value);
     public List<world_step__people__person__relations>? Get_relations();
@@ -2428,15 +2232,6 @@ namespace XSD {
     public void Set_race(world_step__people__person__race? value)
     {
       this.race = value;
-    }
-    public type_cell_ref? location = null;
-    public type_cell_ref? Get_location()
-    {
-      return this.location;
-    }
-    public void Set_location(type_cell_ref? value)
-    {
-      this.location = value;
     }
     public world_step__people__person__properties? properties = null;
     public world_step__people__person__properties? Get_properties()
@@ -2528,7 +2323,6 @@ namespace XSD {
       }
       //Deserialize elements
       this.race = rawNode.InitializeWithRawNode("race", this.race);
-      this.location = rawNode.InitializeWithRawNode("location", this.location);
       this.properties = rawNode.InitializeWithRawNode("properties", this.properties);
       this.relations = rawNode.InitializeWithRawNode("relations", this.relations);
       this.classifications = rawNode.InitializeWithRawNode("classifications", this.classifications);
@@ -2550,9 +2344,6 @@ namespace XSD {
       if(race != null) {
         rawNode.children["race"] = new List<RawNode> { race.SerializeIntoRawNode() };
       }
-      if(location != null) {
-        rawNode.children["location"] = new List<RawNode> { location.SerializeIntoRawNode() };
-      }
       if(properties != null) {
         rawNode.children["properties"] = new List<RawNode> { properties.SerializeIntoRawNode() };
       }
@@ -2569,73 +2360,6 @@ namespace XSD {
     public void Serialize(XmlElement element)
     {
         // Godot.GD.Print("Serializing world_step__people__person");
-        var updatedRawNode = SerializeIntoRawNode();
-        updatedRawNode.Serialize(element);
-    }
-  }
-  /*typeDeclarationElementToInterfaceString= element*/
-  public interface Iworld_step__location_layer__cell {
-    //Attributes
-    /* ignored attribute key={key} of type=System.Object*/
-    /* ignored attribute key={key} of type=System.Object*/
-    /* ignored attribute key={key} of type=System.Object*/
-
-    //Children elements
-
-    public void Deserialize (RawNode rawNode);
-
-    public RawNode SerializeIntoRawNode();
-
-    public void Serialize(XmlElement element);
-  }
-
-  /*typeDeclarationElementToString= element*/
-  public class world_step__location_layer__cell: Iworld_step__location_layer__cell {
-    public RawNode rawNode = new RawNode();
-    //Attributes
-    /* ignored attribute key={key} of type=System.Object*/
-    /* ignored attribute key={key} of type=System.Object*/
-    /* ignored attribute key={key} of type=System.Object*/
-
-    //Children elements
-
-    public world_step__location_layer__cell()
-    {
-    }
-
-    public world_step__location_layer__cell(RawNode rawNode)
-    {
-      Deserialize(rawNode);
-    }
-
-    public world_step__location_layer__cell(XmlElement xmlElement)
-    {
-      this.rawNode.Deserialize(xmlElement);
-      Deserialize(rawNode);
-    }
-
-    public void Deserialize (RawNode rawNode)
-    {
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing world_step__location_layer__cell");
-      //Deserialize arguments
-
-      //Deserialize elements
-
-    }
-
-    public RawNode SerializeIntoRawNode()
-    {
-      //Serialize arguments
-
-      //Serialize elements
-
-      return rawNode;
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        // Godot.GD.Print("Serializing world_step__location_layer__cell");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -4618,121 +4342,6 @@ namespace XSD {
     }
   }
   /*typeDeclarationElementToInterfaceString= element*/
-  public interface Iworld_step__rule_group__locations_markov_chain__location_markov_link {
-    //Attributes
-    /* ignored attribute key={key} of type=System.Object*/
-
-    //Children elements
-    public List<world_step__rule_group__locations_markov_chain__location_markov_link__tag>? Get_tag();
-    public void Set_tag(List<world_step__rule_group__locations_markov_chain__location_markov_link__tag>? value);
-    public List<world_step__rule_group__locations_markov_chain__location_markov_link__sibling>? Get_sibling();
-    public void Set_sibling(List<world_step__rule_group__locations_markov_chain__location_markov_link__sibling>? value);
-    public type_icon Get_icon();
-    public void Set_icon(type_icon value);
-    public void Deserialize (RawNode rawNode);
-
-    public RawNode SerializeIntoRawNode();
-
-    public void Serialize(XmlElement element);
-  }
-
-  /*typeDeclarationElementToString= element*/
-  public class world_step__rule_group__locations_markov_chain__location_markov_link: Iworld_step__rule_group__locations_markov_chain__location_markov_link {
-    public RawNode rawNode = new RawNode();
-    //Attributes
-    /* ignored attribute key={key} of type=System.Object*/
-
-    //Children elements
-    public List<world_step__rule_group__locations_markov_chain__location_markov_link__tag>? tag = new List<world_step__rule_group__locations_markov_chain__location_markov_link__tag>();
-    public List<world_step__rule_group__locations_markov_chain__location_markov_link__tag>? Get_tag()
-    {
-      return this.tag;
-    }
-    public List<world_step__rule_group__locations_markov_chain__location_markov_link__tag> GetOrInsertDefault_tag()
-    {
-      if(this.tag == null) {
-        this.tag = new List<world_step__rule_group__locations_markov_chain__location_markov_link__tag>();
-      }
-      return this.tag;
-    }
-    public void Set_tag(List<world_step__rule_group__locations_markov_chain__location_markov_link__tag>? value)
-    {
-      this.tag = value;
-    }
-    public List<world_step__rule_group__locations_markov_chain__location_markov_link__sibling>? sibling = new List<world_step__rule_group__locations_markov_chain__location_markov_link__sibling>();
-    public List<world_step__rule_group__locations_markov_chain__location_markov_link__sibling>? Get_sibling()
-    {
-      return this.sibling;
-    }
-    public List<world_step__rule_group__locations_markov_chain__location_markov_link__sibling> GetOrInsertDefault_sibling()
-    {
-      if(this.sibling == null) {
-        this.sibling = new List<world_step__rule_group__locations_markov_chain__location_markov_link__sibling>();
-      }
-      return this.sibling;
-    }
-    public void Set_sibling(List<world_step__rule_group__locations_markov_chain__location_markov_link__sibling>? value)
-    {
-      this.sibling = value;
-    }
-    public type_icon icon = new type_icon();
-    public type_icon Get_icon()
-    {
-      return this.icon;
-    }
-    public void Set_icon(type_icon value)
-    {
-      this.icon = value;
-    }
-
-    public world_step__rule_group__locations_markov_chain__location_markov_link()
-    {
-    }
-
-    public world_step__rule_group__locations_markov_chain__location_markov_link(RawNode rawNode)
-    {
-      Deserialize(rawNode);
-    }
-
-    public world_step__rule_group__locations_markov_chain__location_markov_link(XmlElement xmlElement)
-    {
-      this.rawNode.Deserialize(xmlElement);
-      Deserialize(rawNode);
-    }
-
-    public void Deserialize (RawNode rawNode)
-    {
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing world_step__rule_group__locations_markov_chain__location_markov_link");
-      //Deserialize arguments
-
-      //Deserialize elements
-      this.tag = rawNode.InitializeWithRawNode("tag", this.tag);
-      this.sibling = rawNode.InitializeWithRawNode("sibling", this.sibling);
-      this.icon = rawNode.InitializeWithRawNode("icon", this.icon);
-    }
-
-    public RawNode SerializeIntoRawNode()
-    {
-      //Serialize arguments
-
-      //Serialize elements
-      rawNode.children["tag"] = tag.Select(x => x.SerializeIntoRawNode()).ToList();
-      rawNode.children["sibling"] = sibling.Select(x => x.SerializeIntoRawNode()).ToList();
-      if(icon != null) {
-        rawNode.children["icon"] = new List<RawNode> { icon.SerializeIntoRawNode() };
-      }
-      return rawNode;
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        // Godot.GD.Print("Serializing world_step__rule_group__locations_markov_chain__location_markov_link");
-        var updatedRawNode = SerializeIntoRawNode();
-        updatedRawNode.Serialize(element);
-    }
-  }
-  /*typeDeclarationElementToInterfaceString= element*/
   public interface Iworld_step__rule_group__location_graph_rule__setup {
 
     //Children elements
@@ -5104,107 +4713,6 @@ namespace XSD {
     public void Serialize(XmlElement element)
     {
         // Godot.GD.Print("Serializing world_step__people__person__race");
-        var updatedRawNode = SerializeIntoRawNode();
-        updatedRawNode.Serialize(element);
-    }
-  }
-  /*typeDeclarationElementToInterfaceString= element*/
-  public interface Itype_cell_ref {
-    //Attributes
-    /* ignored attribute key={key} of type=System.Object*/
-    public System.Int32 Get_x();
-    public void Set_x(System.Int32 value);
-    public System.Int32 Get_y();
-    public void Set_y(System.Int32 value);
-
-    //Children elements
-
-    public void Deserialize (RawNode rawNode);
-
-    public RawNode SerializeIntoRawNode();
-
-    public void Serialize(XmlElement element);
-  }
-
-  /*typeDeclarationElementToString= element*/
-  public class type_cell_ref: Itype_cell_ref {
-    public RawNode rawNode = new RawNode();
-    //Attributes
-    /* ignored attribute key={key} of type=System.Object*/
-    public System.Int32 x;
-    public System.Int32 Get_x()
-    {
-      return this.x;
-    }
-    public void Set_x(System.Int32 value)
-    {
-      this.x = value;
-    }
-    public System.Int32 y;
-    public System.Int32 Get_y()
-    {
-      return this.y;
-    }
-    public void Set_y(System.Int32 value)
-    {
-      this.y = value;
-    }
-
-    //Children elements
-
-    public type_cell_ref()
-    {
-    }
-
-    public type_cell_ref(RawNode rawNode)
-    {
-      Deserialize(rawNode);
-    }
-
-    public type_cell_ref(XmlElement xmlElement)
-    {
-      this.rawNode.Deserialize(xmlElement);
-      Deserialize(rawNode);
-    }
-
-    public void Deserialize (RawNode rawNode)
-    {
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing type_cell_ref");
-      //Deserialize arguments
-      if(rawNode.attributes.ContainsKey("x"))
-      {
-        var attribute_x = rawNode.attributes["x"];
-        this.x = attribute_x.ToInt();
-      }
-      if(rawNode.attributes.ContainsKey("y"))
-      {
-        var attribute_y = rawNode.attributes["y"];
-        this.y = attribute_y.ToInt();
-      }
-      //Deserialize elements
-
-    }
-
-    public RawNode SerializeIntoRawNode()
-    {
-      //Serialize arguments
-      if(this.x != null)
-      {
-        rawNode.attributes["x"] = this.x.ToString();
-      }
-      if(this.y != null)
-      {
-        rawNode.attributes["y"] = this.y.ToString();
-      }
-      //Serialize elements
-
-      return rawNode;
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        // Godot.GD.Print("Serializing type_cell_ref");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -7748,152 +7256,6 @@ namespace XSD {
     public void Serialize(XmlElement element)
     {
         // Godot.GD.Print("Serializing world_step__rule_group__events_rule__entry__then");
-        var updatedRawNode = SerializeIntoRawNode();
-        updatedRawNode.Serialize(element);
-    }
-  }
-  /*typeDeclarationElementToInterfaceString= element*/
-  public interface Iworld_step__rule_group__locations_markov_chain__location_markov_link__tag {
-    //Attributes
-    /* ignored attribute key={key} of type=System.Object*/
-
-    //Children elements
-
-    public void Deserialize (RawNode rawNode);
-
-    public RawNode SerializeIntoRawNode();
-
-    public void Serialize(XmlElement element);
-  }
-
-  /*typeDeclarationElementToString= element*/
-  public class world_step__rule_group__locations_markov_chain__location_markov_link__tag: Iworld_step__rule_group__locations_markov_chain__location_markov_link__tag {
-    public RawNode rawNode = new RawNode();
-    //Attributes
-    /* ignored attribute key={key} of type=System.Object*/
-
-    //Children elements
-
-    public world_step__rule_group__locations_markov_chain__location_markov_link__tag()
-    {
-    }
-
-    public world_step__rule_group__locations_markov_chain__location_markov_link__tag(RawNode rawNode)
-    {
-      Deserialize(rawNode);
-    }
-
-    public world_step__rule_group__locations_markov_chain__location_markov_link__tag(XmlElement xmlElement)
-    {
-      this.rawNode.Deserialize(xmlElement);
-      Deserialize(rawNode);
-    }
-
-    public void Deserialize (RawNode rawNode)
-    {
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing world_step__rule_group__locations_markov_chain__location_markov_link__tag");
-      //Deserialize arguments
-
-      //Deserialize elements
-
-    }
-
-    public RawNode SerializeIntoRawNode()
-    {
-      //Serialize arguments
-
-      //Serialize elements
-
-      return rawNode;
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        // Godot.GD.Print("Serializing world_step__rule_group__locations_markov_chain__location_markov_link__tag");
-        var updatedRawNode = SerializeIntoRawNode();
-        updatedRawNode.Serialize(element);
-    }
-  }
-  /*typeDeclarationElementToInterfaceString= element*/
-  public interface Iworld_step__rule_group__locations_markov_chain__location_markov_link__sibling {
-    //Attributes
-    /* ignored attribute key={key} of type=System.Object*/
-    public System.Int32? Get_quantity();
-    public void Set_quantity(System.Int32? value);
-    /* ignored attribute key={key} of type=world_step__rule_group__locations_markov_chain__location_markov_link__sibling__position*/
-
-    //Children elements
-
-    public void Deserialize (RawNode rawNode);
-
-    public RawNode SerializeIntoRawNode();
-
-    public void Serialize(XmlElement element);
-  }
-
-  /*typeDeclarationElementToString= element*/
-  public class world_step__rule_group__locations_markov_chain__location_markov_link__sibling: Iworld_step__rule_group__locations_markov_chain__location_markov_link__sibling {
-    public RawNode rawNode = new RawNode();
-    //Attributes
-    /* ignored attribute key={key} of type=System.Object*/
-    public System.Int32? quantity;
-    public System.Int32? Get_quantity()
-    {
-      return this.quantity;
-    }
-    public void Set_quantity(System.Int32? value)
-    {
-      this.quantity = value;
-    }
-    /* ignored attribute key={key} of type=world_step__rule_group__locations_markov_chain__location_markov_link__sibling__position*/
-
-    //Children elements
-
-    public world_step__rule_group__locations_markov_chain__location_markov_link__sibling()
-    {
-    }
-
-    public world_step__rule_group__locations_markov_chain__location_markov_link__sibling(RawNode rawNode)
-    {
-      Deserialize(rawNode);
-    }
-
-    public world_step__rule_group__locations_markov_chain__location_markov_link__sibling(XmlElement xmlElement)
-    {
-      this.rawNode.Deserialize(xmlElement);
-      Deserialize(rawNode);
-    }
-
-    public void Deserialize (RawNode rawNode)
-    {
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing world_step__rule_group__locations_markov_chain__location_markov_link__sibling");
-      //Deserialize arguments
-      if(rawNode.attributes.ContainsKey("quantity"))
-      {
-        var attribute_quantity = rawNode.attributes["quantity"];
-        this.quantity = attribute_quantity?.ToInt();
-      }
-      //Deserialize elements
-
-    }
-
-    public RawNode SerializeIntoRawNode()
-    {
-      //Serialize arguments
-      if(this.quantity != null)
-      {
-        rawNode.attributes["quantity"] = this.quantity?.ToString();
-      }
-      //Serialize elements
-
-      return rawNode;
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        // Godot.GD.Print("Serializing world_step__rule_group__locations_markov_chain__location_markov_link__sibling");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }

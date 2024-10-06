@@ -1,7 +1,6 @@
 import {JsonQuery} from "./JSONQuery";
 import {JsonSchema} from "./utils/JsonSchema";
 import {JsonUtil} from "./utils/util";
-import {personVision} from "./middleware/personVision";
 import {personMoveTowards} from "./middleware/personMoveTowards";
 import {personAssignClassification} from "./middleware/personAssignClassification";
 import {eventsMetadata} from "./middleware/eventsMetadata";
@@ -120,7 +119,6 @@ export const execute = async (readJson: JsonSchema, log: (...string: any[]) => v
   await locationGraphCreateResult(readJsonUtil);
   await locationGraphCreateAdjacentResult(readJsonUtil);
   await personTeleportResult(readJsonUtil);
-  await personVision(readJsonUtil)(readJsonUtil);
   await personAssignClassification(readJsonUtil)(readJsonUtil);
   await offsetRandomisationTable(readJsonUtil)(readJsonUtil);
 

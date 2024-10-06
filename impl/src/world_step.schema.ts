@@ -21,10 +21,6 @@ export type group__name_token = JsonQueryType<{}, {
 export type item_slot = "hand"
   | "chest"
   | "legs"
-export type type_direction = "north"
-  | "east"
-  | "south"
-  | "west"
 export type type_person_select = "self"
   | "target"
 export type type__group__operation__and = "add"
@@ -42,13 +38,6 @@ export type type__property_mutation = JsonQueryType<{"property_rule_ref": string
   "from": JsonQueryType<{"participant": type_person_select;}, {}> & group__math_operations & JsonQueryType<{}, {}>;
 }>
 export type type_icon = any
-export type type__property_list = JsonQueryType<{}, {
-  "property": JsonQueryType<{"property_rule_ref": string;  "value": string;}> & JsonQueryType<{}, {}>;
-}>
-export type type__classification_list = JsonQueryType<{}, {
-  "classification": JsonQueryType<{"classification_rule_ref": string;}> & JsonQueryType<{}, {}>;
-}>
-export type type_cell_ref = JsonQueryType<{"layer": any;  "x": string;  "y": string;}>
 export type type__person_selection = JsonQueryType<{}, {
   "radius": type__math_operations & JsonQueryType<{}, {}>;
   "min": type__math_operations & JsonQueryType<{}, {}>;
@@ -164,13 +153,6 @@ export type world_step = JsonQueryType<{}, {
         }> & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
-    "locations_markov_chain": JsonQueryType<{}, {
-      "location_markov_link": JsonQueryType<{"type": any;}, {
-        "tag": JsonQueryType<{"name": any;}> & JsonQueryType<{}, {}>;
-        "sibling": JsonQueryType<{"location_rule_ref": any;  "quantity": string;  "position": "all" | "fill" | "top" | "right" | "bottom" | "left";}> & JsonQueryType<{}, {}>;
-        "icon": type_icon & JsonQueryType<{}, {}>;
-      }> & JsonQueryType<{}, {}>;
-    }> & JsonQueryType<{}, {}>;
     "location_graph_rule": JsonQueryType<{"id": string;}, {
       "setup": JsonQueryType<{}, {
         "starting_node": JsonQueryType<{"node_rule_ref": string;}> & JsonQueryType<{}, {}>;
@@ -200,7 +182,6 @@ export type world_step = JsonQueryType<{}, {
   "people": JsonQueryType<{}, {
     "person": JsonQueryType<{"id": string;  "name": string;}, {
       "race": JsonQueryType<{"race_rule_ref": any;}> & JsonQueryType<{}, {}>;
-      "location": type_cell_ref & JsonQueryType<{}, {}>;
       "properties": JsonQueryType<{}, {
         "property": JsonQueryType<{"property_rule_ref": string;  "value": any;}> & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
@@ -210,9 +191,6 @@ export type world_step = JsonQueryType<{}, {
       }> & JsonQueryType<{}, {}>;
       "icon": type_icon & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
-  }> & JsonQueryType<{}, {}>;
-  "location_layer": JsonQueryType<{"name": any;}, {
-    "cell": JsonQueryType<{"location_rule_ref": any;  "x": any;  "y": any;}> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
   "location_graph": JsonQueryType<{"id": string;}, {
     "rule": JsonQueryType<{"location_graph_rule_ref": string;}> & JsonQueryType<{}, {}>;

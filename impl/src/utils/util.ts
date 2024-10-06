@@ -1,7 +1,4 @@
-import {LocationGrid, locationGrid} from "./location/locationGrid";
-import {locationMarkovChainMatrix, LocationMatrix} from "./location/locationMarkovChainMatrix";
 import {markovNext} from "./markovNext";
-import {create} from "./location/create";
 import {
   JsonSchema,
   NodeGraphQueryType,
@@ -42,10 +39,7 @@ export const memoizeFunction = <T>(func: T): T => {
 }
 
 export const utils = {
-  locationGrid: locationGrid,
-  locationMarkovChainMatrix: locationMarkovChainMatrix,
   markov: markovNext,
-  newLocation: create,
 }
 
 export class JsonUtil {
@@ -62,11 +56,6 @@ export class JsonUtil {
   }
   randomBetweenInt = (min: number, max: number) => {
     return Math.floor(this.randomBetween(min, max));
-  }
-  location: {
-    grid: () => LocationGrid,
-    markovChainMatrix: (direction: string) => LocationMatrix,
-    create: (x: number, y: number) => void,
   }
 
   randomListFromArray = <T>(originalArray: T[], numberOfElements: number = 1): T[] => {
@@ -112,19 +101,6 @@ export class JsonUtil {
   }
   invalidate = () => {
     this.random = newRandom(this);
-    this.location = {
-      grid: memoizeFunction(() => {
-        return locationGrid(this)
-      }),
-
-      markovChainMatrix: memoizeFunction((direction: string) => {
-        return locationMarkovChainMatrix(this, direction)
-      }),
-
-      create: memoizeFunction((x: number, y: number) => {
-        return create(this, x, y)
-      })
-    }
   }
 
   name = {
@@ -168,11 +144,11 @@ export class JsonUtil {
   }
 
   person = {
-    selectPerson: (selectPersonQueryType: SelectPersonQueryType, position?: Position) => {
-      return selectPerson(this, selectPersonQueryType, position);
+    selectPerson: (selectPersonQueryType: SelectPersonQueryType) => {
+      return selectPerson(this, selectPersonQueryType);
     },
-    createPerson: (selectPersonQueryType: SelectPersonQueryType, position?: Position) => {
-      return createPerson(this, selectPersonQueryType, position);
+    createPerson: (selectPersonQueryType: SelectPersonQueryType) => {
+      return createPerson(this, selectPersonQueryType);
     },
     applyPropertyMutation: (personQueryType: PersonQueryType, propertyMutation: PropertyMutationQueryType, getPropertyTarget?: (key: string) => string) => {
       return applyPropertyMutation(this, personQueryType, propertyMutation, getPropertyTarget)
@@ -185,17 +161,6 @@ export class JsonUtil {
     classifyPerson: (personQueryType: PersonQueryType) => {
       return classifyPerson(this, personQueryType);
     },
-    getDistance: memoizeFunction((personQueryType: PersonQueryType, secondPersonQueryType: PersonQueryType) => {
-      const x = Number(personQueryType.queryOptional("location")?.attributeMap.x);
-      const y = Number(personQueryType.queryOptional("location")?.attributeMap.y);
-      const x2 = Number(secondPersonQueryType.queryOptional("location")?.attributeMap.x);
-      const y2 = Number(secondPersonQueryType.queryOptional("location")?.attributeMap.y);
-      const distance = Math.sqrt(Math.pow(x - x2, 2) + Math.pow(y - y2, 2))
-      if (isNaN(distance)) {
-        return;
-      }
-      return distance;
-    }),
   }
 
   markov = markovNext;

@@ -5,41 +5,6 @@ import {Position} from "./selectPerson";
 type PeopleQueryType = JsonSchema['children']["people"]["children"]["person"];
 
 
-const filterPersonListBasedOnPosition = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, position: Position | undefined, person: PeopleQueryType): boolean => {
-  try {
-    const radiusQueryElement = selectPerson.queryOptional("radius");
-    if (!radiusQueryElement) {
-      return true;
-    }
-    if (!position) {
-      throw new Error("position is undefined when radius exists")
-    }
-
-    const location = person.query("location");
-    const x = Number(location.attributeMap.x);
-    const y = Number(location.attributeMap.y);
-
-    const radius = Number(jsonUtil.computeOperationFromParent(radiusQueryElement));
-    const maxX = Number(position.x) + radius;
-    const minX = Number(position.x) - radius;
-
-    const maxY = Number(position.y) + radius;
-    const minY = Number(position.y) - radius;
-
-    const xUnderMax = maxX >= x;
-    const xOverMin = x >= minX;
-    const yUnderMax = maxY >= y;
-    const yOverMin = y >= minY;
-
-    return xUnderMax && xOverMin && yUnderMax && yOverMin;
-
-  } catch (e) {
-    const newError = new Error(`filterPersonListBasedOnPosition failed for ${selectPerson.getPath()}`);
-    newError.stack += '\nCaused by: ' + e.stack;
-    throw newError;
-  }
-}
-
 const filterPersonListBasedOnProperties = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, person: PeopleQueryType): boolean => {
   const ruleElements = selectPerson.queryAllOptional("property");
   if (ruleElements.length === 0) {
@@ -101,8 +66,7 @@ export const filterPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQuery
     if(!selectPerson) {
       return true;
     }
-    return filterPersonListBasedOnPosition(jsonUtil, selectPerson, position, person)
-      && filterPersonListBasedOnProperties(jsonUtil, selectPerson, person)
+    return filterPersonListBasedOnProperties(jsonUtil, selectPerson, person)
       && filterPersonListBasedOnClassification(jsonUtil, selectPerson, person)
       && filterPersonListBasedOnRace(jsonUtil, selectPerson, person);
 

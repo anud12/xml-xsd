@@ -51,7 +51,6 @@
 </rule_group>
   <people>
     <person id="1">
-      <location x="0" y="0"/>
       <properties>
         <property property_rule_ref="property" value="2"/>
       </properties>

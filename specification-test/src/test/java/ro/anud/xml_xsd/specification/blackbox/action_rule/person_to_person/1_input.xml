@@ -60,12 +60,10 @@
   <people>
     <person id="Billy">
       <race race_rule_ref="human"/>
-      <location x="10" y="10"/>
       <properties/>
     </person>
     <person id="Bob">
       <race race_rule_ref="human"/>
-      <location x="10" y="10"/>
       <properties/>
     </person>
   </people>
