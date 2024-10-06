@@ -3,10 +3,10 @@ import {locationMarkovChainMatrix, LocationMatrix} from "./location/locationMark
 import {markovNext} from "./markovNext";
 import {create} from "./location/create";
 import {
-  ItemQueryType,
-  JsonSchema, NodeGraphQueryType,
+  JsonSchema,
+  NodeGraphQueryType,
   PropertyMutationQueryType,
-  SelectItemQueryType, SelectNodeGraphQueryType,
+  SelectNodeGraphQueryType,
   SelectPersonQueryType,
 } from "./JsonSchema";
 import {newRandom} from "./newRandom";
@@ -15,15 +15,9 @@ import {getPersonProperty, PersonQueryType} from "./person/getPersonProperty";
 import {getById} from "./person/getById";
 import {createOperationFromParent} from "./operation/createOperationFromParent";
 import {calculateNameFromChildren, calculateNameFromRefString} from "./calculateName";
-import {CreateItemArgs, createItemAt} from "./item/createItemAt";
 import {classifyPerson} from "./person/classifyPerson";
 import {setProperty} from "./person/setProperty";
 import {Position, selectPerson} from "./person/selectPerson";
-import {selectItem} from "./item/selectItem";
-import {queryItem} from "./item/queryItem";
-import {classifyItem} from "./item/classifyItem";
-import {getItemProperty} from "./item/getItemProperty";
-import {filterItem} from "./item/filterItem";
 import {applyPropertyMutation} from "./person/applyPropertyMutation";
 import {group__name_token, group__operation__and, type__math_operations} from "../world_step.schema";
 import {createLocationGraph} from "./locationGraph/createLocationGraph";
@@ -145,26 +139,6 @@ export class JsonUtil {
 
   classification: {}
 
-  item = {
-    classifyItem: (args: ItemQueryType) => {
-      return classifyItem(this, args)
-    },
-    createItemAt: (args: CreateItemArgs) => {
-      return createItemAt(this, args);
-    },
-    selectItem: (args: SelectItemQueryType,) => {
-      return selectItem(this, args)
-    },
-    queryItem: () => {
-      return queryItem(this)
-    },
-    getProperty: (args: ItemQueryType, key: string) => {
-      return getItemProperty(this, args, key)
-    },
-    filterItem(selectItemQueryType: SelectItemQueryType, itemQueryElement: ItemQueryType) {
-      return filterItem(this, selectItemQueryType, itemQueryElement);
-    }
-  }
 
   locationGraph = {
     createLocationGraph: (ref: string) => {

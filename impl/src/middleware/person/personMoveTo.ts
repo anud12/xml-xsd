@@ -133,7 +133,7 @@ const applyPathRecursiveFromLink = (readJson: JsonUtil, pathElement: PathQueryEl
     const peopleElement = linkElement.queryOrAppend("people");
     peopleElement.appendChild("person", null, {
       person_id_ref: person_id_ref,
-      accumulated_progress: Math.trunc(progressValue)
+      accumulated_progress: Math.trunc(progressValue).toString()
     })
   };
 
@@ -253,7 +253,7 @@ const applyPathRecursive = (readJson: JsonUtil, pathElement: PathQueryElement, c
       console.log(preLog, `on link ${linkElement.attributeMap.node_id_ref} with accumulated_progress ${accumulated_progress} truncated from ${progressValue}`);
       peopleElement.appendChild("person", null, {
         person_id_ref: person_id_ref,
-        accumulated_progress: accumulated_progress
+        accumulated_progress: accumulated_progress.toString()
       })
     }
 

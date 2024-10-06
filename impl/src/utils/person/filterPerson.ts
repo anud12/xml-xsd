@@ -94,39 +94,6 @@ const filterPersonListBasedOnRace = (jsonUtil: JsonUtil, selectPerson: SelectPer
 }
 
 
-const filterPersonBasedOnInventory = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, person: PeopleQueryType): boolean => {
-  const ruleElements = selectPerson.queryAllOptional("inventory");
-  if (ruleElements.length === 0) {
-    return true;
-  }
-  const inventory = person.queryOptional("inventory");
-  if (!inventory) {
-    return false;
-  }
-  return ruleElements.flatMap(ruleElement => ruleElement.queryAllOptional("item"))
-    .reduce((result, inventoryRule) => {
-      const itemList = inventory.queryAllOptional("item")
-      .filter(itemQueryElement => jsonUtil.item.filterItem(inventoryRule, itemQueryElement));
-
-      const min = inventoryRule.queryOptional("min");
-      if (min) {
-        const minValue = Number(jsonUtil.computeOperationFromParent(min));
-        if (minValue > itemList.length) {
-          return false;
-        }
-      }
-
-      const max = inventoryRule.queryOptional("max");
-      if (max) {
-        const maxValue = Number(jsonUtil.computeOperationFromParent(max));
-        if (maxValue < itemList.length) {
-          return false;
-        }
-      }
-
-      return result;
-    }, true)
-}
 
 
 export const filterPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType | undefined, person: PeopleQueryType, position?: Position): boolean => {
@@ -137,8 +104,7 @@ export const filterPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQuery
     return filterPersonListBasedOnPosition(jsonUtil, selectPerson, position, person)
       && filterPersonListBasedOnProperties(jsonUtil, selectPerson, person)
       && filterPersonListBasedOnClassification(jsonUtil, selectPerson, person)
-      && filterPersonListBasedOnRace(jsonUtil, selectPerson, person)
-      && filterPersonBasedOnInventory(jsonUtil, selectPerson, person);
+      && filterPersonListBasedOnRace(jsonUtil, selectPerson, person);
 
   } catch (e) {
     const newError = new Error(`filterPersonList failed for ${selectPerson.getPath()} in for person ${person.getPath()}`);

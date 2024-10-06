@@ -11,8 +11,6 @@ namespace XSD {
     public void Set_world_metadata(world_step__world_metadata value);
     public List<world_step__rule_group> Get_rule_group();
     public void Set_rule_group(List<world_step__rule_group> value);
-    public List<world_step__items>? Get_items();
-    public void Set_items(List<world_step__items>? value);
     public List<world_step__people>? Get_people();
     public void Set_people(List<world_step__people>? value);
     public List<world_step__location_layer>? Get_location_layer();
@@ -64,22 +62,6 @@ namespace XSD {
     public void Set_rule_group(List<world_step__rule_group> value)
     {
       this.rule_group = value;
-    }
-    public List<world_step__items>? items = new List<world_step__items>();
-    public List<world_step__items>? Get_items()
-    {
-      return this.items;
-    }
-    public List<world_step__items> GetOrInsertDefault_items()
-    {
-      if(this.items == null) {
-        this.items = new List<world_step__items>();
-      }
-      return this.items;
-    }
-    public void Set_items(List<world_step__items>? value)
-    {
-      this.items = value;
     }
     public List<world_step__people>? people = new List<world_step__people>();
     public List<world_step__people>? Get_people()
@@ -168,7 +150,6 @@ namespace XSD {
       //Deserialize elements
       this.world_metadata = rawNode.InitializeWithRawNode("world_metadata", this.world_metadata);
       this.rule_group = rawNode.InitializeWithRawNode("rule_group", this.rule_group);
-      this.items = rawNode.InitializeWithRawNode("items", this.items);
       this.people = rawNode.InitializeWithRawNode("people", this.people);
       this.location_layer = rawNode.InitializeWithRawNode("location_layer", this.location_layer);
       this.location_graph = rawNode.InitializeWithRawNode("location_graph", this.location_graph);
@@ -182,7 +163,6 @@ namespace XSD {
         rawNode.children["world_metadata"] = new List<RawNode> { world_metadata.SerializeIntoRawNode() };
       }
       rawNode.children["rule_group"] = rule_group.Select(x => x.SerializeIntoRawNode()).ToList();
-      rawNode.children["items"] = items.Select(x => x.SerializeIntoRawNode()).ToList();
       rawNode.children["people"] = people.Select(x => x.SerializeIntoRawNode()).ToList();
       rawNode.children["location_layer"] = location_layer.Select(x => x.SerializeIntoRawNode()).ToList();
       rawNode.children["location_graph"] = location_graph.Select(x => x.SerializeIntoRawNode()).ToList();
@@ -659,71 +639,6 @@ namespace XSD {
     public void Serialize(XmlElement element)
     {
         // Godot.GD.Print("Serializing world_step__rule_group");
-        var updatedRawNode = SerializeIntoRawNode();
-        updatedRawNode.Serialize(element);
-    }
-  }
-  /*typeDeclarationElementToInterfaceString= element*/
-  public interface Iworld_step__items {
-
-    //Children elements
-    public List<type__item>? Get_item();
-    public void Set_item(List<type__item>? value);
-    public void Deserialize (RawNode rawNode);
-
-    public RawNode SerializeIntoRawNode();
-
-    public void Serialize(XmlElement element);
-  }
-
-  /*typeDeclarationElementToString= element*/
-  public class world_step__items: Iworld_step__items {
-    public RawNode rawNode = new RawNode();
-
-    //Children elements
-    public List<type__item>? item = new List<type__item>();
-    public List<type__item>? Get_item()
-    {
-      return this.item;
-    }
-    public void Set_item(List<type__item>? value)
-    {
-      this.item = value;
-    }
-
-    public world_step__items()
-    {
-    }
-
-    public world_step__items(RawNode rawNode)
-    {
-      Deserialize(rawNode);
-    }
-
-    public world_step__items(XmlElement xmlElement)
-    {
-      this.rawNode.Deserialize(xmlElement);
-      Deserialize(rawNode);
-    }
-
-    public void Deserialize (RawNode rawNode)
-    {
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing world_step__items");
-      //Deserialize elements
-      this.item = rawNode.InitializeWithRawNode("item", this.item);
-    }
-
-    public RawNode SerializeIntoRawNode()
-    {
-      //Serialize elements
-      rawNode.children["item"] = item.Select(x => x.SerializeIntoRawNode()).ToList();
-      return rawNode;
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        // Godot.GD.Print("Serializing world_step__items");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -2447,60 +2362,6 @@ namespace XSD {
     }
   }
   /*typeDeclarationElementToInterfaceString= element*/
-  public interface Itype__item {
-    //Attributes
-    /* ignored attribute key={key} of type=System.Object*/
-    /* ignored attribute key={key} of type=System.Object*/
-    public void Deserialize (RawNode rawNode);
-
-    public RawNode SerializeIntoRawNode();
-
-    public void Serialize(XmlElement element);
-  }
-
-  /*typeDeclarationElementToString= element*/
-  public class type__item: Itype__item {
-    public RawNode rawNode = new RawNode();
-    //Attributes
-    /* ignored attribute key={key} of type=System.Object*/
-    /* ignored attribute key={key} of type=System.Object*/
-
-    public type__item()
-    {
-    }
-
-    public type__item(RawNode rawNode)
-    {
-      Deserialize(rawNode);
-    }
-
-    public type__item(XmlElement xmlElement)
-    {
-      this.rawNode.Deserialize(xmlElement);
-      Deserialize(rawNode);
-    }
-
-    public void Deserialize (RawNode rawNode)
-    {
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing type__item");
-      //Deserialize arguments
-    }
-
-    public RawNode SerializeIntoRawNode()
-    {
-      //Serialize arguments
-      return rawNode;
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        // Godot.GD.Print("Serializing type__item");
-        var updatedRawNode = SerializeIntoRawNode();
-        updatedRawNode.Serialize(element);
-    }
-  }
-  /*typeDeclarationElementToInterfaceString= element*/
   public interface Iworld_step__people__person {
     //Attributes
     public System.String Get_id();
@@ -2517,8 +2378,6 @@ namespace XSD {
     public void Set_properties(world_step__people__person__properties? value);
     public List<world_step__people__person__relations>? Get_relations();
     public void Set_relations(List<world_step__people__person__relations>? value);
-    public world_step__people__person__inventory? Get_inventory();
-    public void Set_inventory(world_step__people__person__inventory? value);
     public world_step__people__person__classifications? Get_classifications();
     public void Set_classifications(world_step__people__person__classifications? value);
     public type_icon? Get_icon();
@@ -2611,22 +2470,6 @@ namespace XSD {
     {
       this.relations = value;
     }
-    public world_step__people__person__inventory? inventory = null;
-    public world_step__people__person__inventory? Get_inventory()
-    {
-      return this.inventory;
-    }
-    public world_step__people__person__inventory GetOrInsertDefault_inventory()
-    {
-      if(this.inventory == null) {
-        this.inventory = new world_step__people__person__inventory();
-      }
-      return this.inventory;
-    }
-    public void Set_inventory(world_step__people__person__inventory? value)
-    {
-      this.inventory = value;
-    }
     public world_step__people__person__classifications? classifications = null;
     public world_step__people__person__classifications? Get_classifications()
     {
@@ -2688,7 +2531,6 @@ namespace XSD {
       this.location = rawNode.InitializeWithRawNode("location", this.location);
       this.properties = rawNode.InitializeWithRawNode("properties", this.properties);
       this.relations = rawNode.InitializeWithRawNode("relations", this.relations);
-      this.inventory = rawNode.InitializeWithRawNode("inventory", this.inventory);
       this.classifications = rawNode.InitializeWithRawNode("classifications", this.classifications);
       this.icon = rawNode.InitializeWithRawNode("icon", this.icon);
     }
@@ -2715,9 +2557,6 @@ namespace XSD {
         rawNode.children["properties"] = new List<RawNode> { properties.SerializeIntoRawNode() };
       }
       rawNode.children["relations"] = relations.Select(x => x.SerializeIntoRawNode()).ToList();
-      if(inventory != null) {
-        rawNode.children["inventory"] = new List<RawNode> { inventory.SerializeIntoRawNode() };
-      }
       if(classifications != null) {
         rawNode.children["classifications"] = new List<RawNode> { classifications.SerializeIntoRawNode() };
       }
@@ -5506,71 +5345,6 @@ namespace XSD {
     }
   }
   /*typeDeclarationElementToInterfaceString= element*/
-  public interface Iworld_step__people__person__inventory {
-
-    //Children elements
-    public List<type__item>? Get_item();
-    public void Set_item(List<type__item>? value);
-    public void Deserialize (RawNode rawNode);
-
-    public RawNode SerializeIntoRawNode();
-
-    public void Serialize(XmlElement element);
-  }
-
-  /*typeDeclarationElementToString= element*/
-  public class world_step__people__person__inventory: Iworld_step__people__person__inventory {
-    public RawNode rawNode = new RawNode();
-
-    //Children elements
-    public List<type__item>? item = new List<type__item>();
-    public List<type__item>? Get_item()
-    {
-      return this.item;
-    }
-    public void Set_item(List<type__item>? value)
-    {
-      this.item = value;
-    }
-
-    public world_step__people__person__inventory()
-    {
-    }
-
-    public world_step__people__person__inventory(RawNode rawNode)
-    {
-      Deserialize(rawNode);
-    }
-
-    public world_step__people__person__inventory(XmlElement xmlElement)
-    {
-      this.rawNode.Deserialize(xmlElement);
-      Deserialize(rawNode);
-    }
-
-    public void Deserialize (RawNode rawNode)
-    {
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing world_step__people__person__inventory");
-      //Deserialize elements
-      this.item = rawNode.InitializeWithRawNode("item", this.item);
-    }
-
-    public RawNode SerializeIntoRawNode()
-    {
-      //Serialize elements
-      rawNode.children["item"] = item.Select(x => x.SerializeIntoRawNode()).ToList();
-      return rawNode;
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        // Godot.GD.Print("Serializing world_step__people__person__inventory");
-        var updatedRawNode = SerializeIntoRawNode();
-        updatedRawNode.Serialize(element);
-    }
-  }
-  /*typeDeclarationElementToInterfaceString= element*/
   public interface Iworld_step__people__person__classifications {
 
     //Children elements
@@ -6650,8 +6424,6 @@ namespace XSD {
     public void Set_classification(List<type__person_selection__classification>? value);
     public type__person_selection__race? Get_race();
     public void Set_race(type__person_selection__race? value);
-    public type__person_selection__inventory? Get_inventory();
-    public void Set_inventory(type__person_selection__inventory? value);
     public void Deserialize (RawNode rawNode);
 
     public RawNode SerializeIntoRawNode();
@@ -6739,22 +6511,6 @@ namespace XSD {
     {
       this.race = value;
     }
-    public type__person_selection__inventory? inventory = null;
-    public type__person_selection__inventory? Get_inventory()
-    {
-      return this.inventory;
-    }
-    public type__person_selection__inventory GetOrInsertDefault_inventory()
-    {
-      if(this.inventory == null) {
-        this.inventory = new type__person_selection__inventory();
-      }
-      return this.inventory;
-    }
-    public void Set_inventory(type__person_selection__inventory? value)
-    {
-      this.inventory = value;
-    }
 
     public type__person_selection()
     {
@@ -6782,7 +6538,6 @@ namespace XSD {
       this.property = rawNode.InitializeWithRawNode("property", this.property);
       this.classification = rawNode.InitializeWithRawNode("classification", this.classification);
       this.race = rawNode.InitializeWithRawNode("race", this.race);
-      this.inventory = rawNode.InitializeWithRawNode("inventory", this.inventory);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -6801,9 +6556,6 @@ namespace XSD {
       rawNode.children["classification"] = classification.Select(x => x.SerializeIntoRawNode()).ToList();
       if(race != null) {
         rawNode.children["race"] = new List<RawNode> { race.SerializeIntoRawNode() };
-      }
-      if(inventory != null) {
-        rawNode.children["inventory"] = new List<RawNode> { inventory.SerializeIntoRawNode() };
       }
       return rawNode;
     }
@@ -7926,8 +7678,6 @@ namespace XSD {
     //Children elements
     public List<world_step__rule_group__events_rule__entry__then__select_person>? Get_select_person();
     public void Set_select_person(List<world_step__rule_group__events_rule__entry__then__select_person>? value);
-    public List<world_step__rule_group__events_rule__entry__then__select_item>? Get_select_item();
-    public void Set_select_item(List<world_step__rule_group__events_rule__entry__then__select_item>? value);
     public world_step__rule_group__events_rule__entry__then__property_mutation? Get_property_mutation();
     public void Set_property_mutation(world_step__rule_group__events_rule__entry__then__property_mutation? value);
     public void Deserialize (RawNode rawNode);
@@ -7950,15 +7700,6 @@ namespace XSD {
     public void Set_select_person(List<world_step__rule_group__events_rule__entry__then__select_person>? value)
     {
       this.select_person = value;
-    }
-    public List<world_step__rule_group__events_rule__entry__then__select_item>? select_item = new List<world_step__rule_group__events_rule__entry__then__select_item>();
-    public List<world_step__rule_group__events_rule__entry__then__select_item>? Get_select_item()
-    {
-      return this.select_item;
-    }
-    public void Set_select_item(List<world_step__rule_group__events_rule__entry__then__select_item>? value)
-    {
-      this.select_item = value;
     }
     public world_step__rule_group__events_rule__entry__then__property_mutation? property_mutation = null;
     public world_step__rule_group__events_rule__entry__then__property_mutation? Get_property_mutation()
@@ -7991,7 +7732,6 @@ namespace XSD {
       // Godot.GD.Print("Deserializing world_step__rule_group__events_rule__entry__then");
       //Deserialize elements
       this.select_person = rawNode.InitializeWithRawNode("select_person", this.select_person);
-      this.select_item = rawNode.InitializeWithRawNode("select_item", this.select_item);
       this.property_mutation = rawNode.InitializeWithRawNode("property_mutation", this.property_mutation);
     }
 
@@ -7999,7 +7739,6 @@ namespace XSD {
     {
       //Serialize elements
       rawNode.children["select_person"] = select_person.Select(x => x.SerializeIntoRawNode()).ToList();
-      rawNode.children["select_item"] = select_item.Select(x => x.SerializeIntoRawNode()).ToList();
       if(property_mutation != null) {
         rawNode.children["property_mutation"] = new List<RawNode> { property_mutation.SerializeIntoRawNode() };
       }
@@ -9753,71 +9492,6 @@ namespace XSD {
     }
   }
   /*typeDeclarationElementToInterfaceString= element*/
-  public interface Itype__person_selection__inventory {
-
-    //Children elements
-    public List<type__item_selection>? Get_item();
-    public void Set_item(List<type__item_selection>? value);
-    public void Deserialize (RawNode rawNode);
-
-    public RawNode SerializeIntoRawNode();
-
-    public void Serialize(XmlElement element);
-  }
-
-  /*typeDeclarationElementToString= element*/
-  public class type__person_selection__inventory: Itype__person_selection__inventory {
-    public RawNode rawNode = new RawNode();
-
-    //Children elements
-    public List<type__item_selection>? item = new List<type__item_selection>();
-    public List<type__item_selection>? Get_item()
-    {
-      return this.item;
-    }
-    public void Set_item(List<type__item_selection>? value)
-    {
-      this.item = value;
-    }
-
-    public type__person_selection__inventory()
-    {
-    }
-
-    public type__person_selection__inventory(RawNode rawNode)
-    {
-      Deserialize(rawNode);
-    }
-
-    public type__person_selection__inventory(XmlElement xmlElement)
-    {
-      this.rawNode.Deserialize(xmlElement);
-      Deserialize(rawNode);
-    }
-
-    public void Deserialize (RawNode rawNode)
-    {
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing type__person_selection__inventory");
-      //Deserialize elements
-      this.item = rawNode.InitializeWithRawNode("item", this.item);
-    }
-
-    public RawNode SerializeIntoRawNode()
-    {
-      //Serialize elements
-      rawNode.children["item"] = item.Select(x => x.SerializeIntoRawNode()).ToList();
-      return rawNode;
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        // Godot.GD.Print("Serializing type__person_selection__inventory");
-        var updatedRawNode = SerializeIntoRawNode();
-        updatedRawNode.Serialize(element);
-    }
-  }
-  /*typeDeclarationElementToInterfaceString= element*/
   public interface Iworld_step__actions__person__move_to__path__node {
     //Attributes
     public System.String Get_node_id_ref();
@@ -10176,61 +9850,6 @@ namespace XSD {
     public void Serialize(XmlElement element)
     {
         // Godot.GD.Print("Serializing world_step__rule_group__events_rule__entry__then__select_person");
-        var updatedRawNode = SerializeIntoRawNode();
-        updatedRawNode.Serialize(element);
-    }
-  }
-  /*typeDeclarationElementToInterfaceString= element*/
-  public interface Iworld_step__rule_group__events_rule__entry__then__select_item {
-
-    //Children elements
-
-    public void Deserialize (RawNode rawNode);
-
-    public RawNode SerializeIntoRawNode();
-
-    public void Serialize(XmlElement element);
-  }
-
-  /*typeDeclarationElementToString= element*/
-  public class world_step__rule_group__events_rule__entry__then__select_item: Iworld_step__rule_group__events_rule__entry__then__select_item {
-    public RawNode rawNode = new RawNode();
-
-    //Children elements
-
-    public world_step__rule_group__events_rule__entry__then__select_item()
-    {
-    }
-
-    public world_step__rule_group__events_rule__entry__then__select_item(RawNode rawNode)
-    {
-      Deserialize(rawNode);
-    }
-
-    public world_step__rule_group__events_rule__entry__then__select_item(XmlElement xmlElement)
-    {
-      this.rawNode.Deserialize(xmlElement);
-      Deserialize(rawNode);
-    }
-
-    public void Deserialize (RawNode rawNode)
-    {
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing world_step__rule_group__events_rule__entry__then__select_item");
-      //Deserialize elements
-
-    }
-
-    public RawNode SerializeIntoRawNode()
-    {
-      //Serialize elements
-
-      return rawNode;
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        // Godot.GD.Print("Serializing world_step__rule_group__events_rule__entry__then__select_item");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -10884,52 +10503,6 @@ namespace XSD {
     public void Serialize(XmlElement element)
     {
         // Godot.GD.Print("Serializing type__node_graph__selection__has__node_graph_id__or");
-        var updatedRawNode = SerializeIntoRawNode();
-        updatedRawNode.Serialize(element);
-    }
-  }
-  /*typeDeclarationElementToInterfaceString= element*/
-  public interface Itype__item_selection {
-    public void Deserialize (RawNode rawNode);
-
-    public RawNode SerializeIntoRawNode();
-
-    public void Serialize(XmlElement element);
-  }
-
-  /*typeDeclarationElementToString= element*/
-  public class type__item_selection: Itype__item_selection {
-    public RawNode rawNode = new RawNode();
-
-    public type__item_selection()
-    {
-    }
-
-    public type__item_selection(RawNode rawNode)
-    {
-      Deserialize(rawNode);
-    }
-
-    public type__item_selection(XmlElement xmlElement)
-    {
-      this.rawNode.Deserialize(xmlElement);
-      Deserialize(rawNode);
-    }
-
-    public void Deserialize (RawNode rawNode)
-    {
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing type__item_selection");
-    }
-
-    public RawNode SerializeIntoRawNode()
-    {
-      return rawNode;
-    }
-
-    public void Serialize(XmlElement element)
-    {
-        // Godot.GD.Print("Serializing type__item_selection");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }

@@ -3,7 +3,6 @@ import {JsonSchema, SelectPersonQueryType} from "../JsonSchema";
 import {PersonQueryType} from "./getPersonProperty";
 import {JsonQueryType} from "../../JsonQueryType";
 import {Position} from "./selectPerson";
-import {createItemsFromSelection} from "../item/createItem";
 
 export type PersonQueryElement = JsonSchema["children"]["people"]["children"]["person"];
 
@@ -42,7 +41,6 @@ const createNewPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType
     y: "0"
   });
   person.appendChild("properties", undefined, {});
-  person.appendChild("inventory", undefined, {});
   person.appendChild("classifications", undefined, {});
 
   return person;
@@ -150,22 +148,6 @@ const applyLocation = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, 
 }
 
 
-const applyInventory = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, person: PersonQueryType): void => {
-  const inventoryRule = selectPerson.queryOptional("inventory");
-
-  if (!inventoryRule) {
-    return;
-  }
-
-  let inventory = person.queryOptional("inventory");
-  if (!inventory) {
-    inventory = person.appendChild("inventory");
-  }
-  inventoryRule.queryAllOptional("item")
-    .map(itemElement => createItemsFromSelection(jsonUtil, itemElement, inventory))
-
-};
-
 export const createPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, position?: Position): PersonQueryElement => {
   try {
     let person = createNewPerson(jsonUtil, selectPerson);
@@ -173,7 +155,6 @@ export const createPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQuery
       person = applyClassification(jsonUtil, value.attributeMap.classification_rule_ref, person)
     })
     applyProperty(jsonUtil, selectPerson, person);
-    applyInventory(jsonUtil, selectPerson, person);
     applyLocation(jsonUtil, selectPerson, position, person);
     return person;
   } catch (e) {
