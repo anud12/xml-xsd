@@ -94,103 +94,6 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:complexType name="type__property_list">
-    <xs:sequence>
-      <xs:element name="property" minOccurs="0"
-                  maxOccurs="unbounded">
-        <xs:annotation>
-          <xs:documentation>
-            Represents a property.
-          </xs:documentation>
-        </xs:annotation>
-        <xs:complexType>
-          <xs:attribute name="property_rule_ref" type="xs:string" use="required">
-            <xs:annotation>
-              <xs:documentation>
-                Represents the reference to a property rule.
-              </xs:documentation>
-            </xs:annotation>
-          </xs:attribute>
-          <xs:attribute name="value"
-                        type="xs:int"
-                        use="required">
-            <xs:annotation>
-              <xs:documentation>
-                Represents the value of the property.
-              </xs:documentation>
-            </xs:annotation>
-          </xs:attribute>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-
-
-  <xs:complexType name="type__classification_list">
-    <xs:annotation>
-      <xs:documentation>
-        Represents a list of classifications.
-      </xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="classification" minOccurs="0"
-                  maxOccurs="unbounded">
-        <xs:annotation>
-          <xs:documentation>
-            Represents a classification.
-          </xs:documentation>
-        </xs:annotation>
-        <xs:complexType>
-          <xs:attribute name="classification_rule_ref" type="xs:string" use="required"/>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-
-
-  <xs:simpleType name="type_direction">
-    <xs:annotation>
-      <xs:documentation>
-        Represents the possible directions.
-      </xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="north"/>
-      <xs:enumeration value="east"/>
-      <xs:enumeration value="south"/>
-      <xs:enumeration value="west"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:complexType name="type_cell_ref">
-    <xs:annotation>
-      <xs:documentation>
-        Represents a cell reference in a location layer.
-      </xs:documentation>
-    </xs:annotation>
-    <xs:attribute name="layer">
-      <xs:annotation>
-        <xs:documentation>
-          Represents the layer of the cell in the location layer.
-        </xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="x" use="required" type="xs:int">
-      <xs:annotation>
-        <xs:documentation>
-          Represents the x-coordinate of the cell in the location layer.
-        </xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="y" use="required" type="xs:int">
-      <xs:annotation>
-        <xs:documentation>
-          Represents the y-coordinate of the cell in the location layer.
-        </xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-  </xs:complexType>
-
 
   <xs:simpleType name="type_person_select">
     <xs:annotation>
@@ -1014,48 +917,6 @@
               </xs:element>
 
 
-              <xs:element name="locations_markov_chain" minOccurs="0">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="location_markov_link" minOccurs="0"
-                                maxOccurs="unbounded">
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element name="tag" minOccurs="0" maxOccurs="unbounded">
-                            <xs:complexType>
-                              <xs:attribute name="name" use="required"/>
-                            </xs:complexType>
-                          </xs:element>
-                          <xs:element name="sibling" minOccurs="0"
-                                      maxOccurs="unbounded">
-                            <xs:complexType>
-                              <xs:attribute name="location_rule_ref" use="required"/>
-                              <xs:attribute name="quantity" type="xs:int"
-                                            default="1"/>
-                              <xs:attribute name="position" use="required">
-                                <xs:simpleType>
-                                  <xs:restriction base="xs:string">
-                                    <xs:enumeration value="all"/>
-                                    <xs:enumeration value="fill"/>
-                                    <xs:enumeration value="top"/>
-                                    <xs:enumeration value="right"/>
-                                    <xs:enumeration value="bottom"/>
-                                    <xs:enumeration value="left"/>
-                                  </xs:restriction>
-                                </xs:simpleType>
-                              </xs:attribute>
-                            </xs:complexType>
-                          </xs:element>
-                          <xs:element name="icon" type="type_icon"/>
-                        </xs:sequence>
-                        <xs:attribute name="type" use="required"/>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:sequence>
-                </xs:complexType>
-              </xs:element>
-
-
               <xs:element name="location_graph_rule" minOccurs="0">
                 <xs:complexType>
                   <xs:sequence>
@@ -1276,7 +1137,6 @@
                         <xs:attribute name="race_rule_ref" use="required"/>
                       </xs:complexType>
                     </xs:element>
-                    <xs:element name="location" minOccurs="0" type="type_cell_ref"/>
                     <xs:element name="properties" minOccurs="0">
                       <xs:complexType>
                         <xs:sequence>
@@ -1319,20 +1179,6 @@
           </xs:complexType>
         </xs:element>
 
-        <xs:element name="location_layer" minOccurs="0" maxOccurs="unbounded">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="cell" maxOccurs="unbounded">
-                <xs:complexType>
-                  <xs:attribute name="location_rule_ref" use="required"/>
-                  <xs:attribute name="x" use="required"/>
-                  <xs:attribute name="y" use="required"/>
-                </xs:complexType>
-              </xs:element>
-            </xs:sequence>
-            <xs:attribute name="name" default="default"/>
-          </xs:complexType>
-        </xs:element>
 
         <xs:element name="location_graph" minOccurs="0" maxOccurs="unbounded">
           <xs:annotation>

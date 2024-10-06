@@ -25,7 +25,7 @@ export const filterPersonMaxQuantity = (jsonUtil: JsonUtil, selectPerson: Select
   return jsonUtil.randomListFromArray(list, Number(maxQuantityValue));
 }
 
-export const filterPersonMinQuantity = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType | undefined, position: Position | undefined, list: Array<PeopleQueryType>): Array<PeopleQueryType> => {
+export const filterPersonMinQuantity = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType | undefined, list: Array<PeopleQueryType>): Array<PeopleQueryType> => {
   if(!selectPerson) {
     return list;
   }
@@ -36,7 +36,7 @@ export const filterPersonMinQuantity = (jsonUtil: JsonUtil, selectPerson: Select
   }
   new Array(Math.abs(difference)).fill("")
     .map(() => {
-      const person = createPerson(jsonUtil, selectPerson, position);
+      const person = createPerson(jsonUtil, selectPerson);
       list.push(person);
     })
   return list;
@@ -49,7 +49,7 @@ export const selectPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQuery
     .filter(person => filterPerson(jsonUtil, selectPerson, person, position));
 
    people = filterPersonMaxQuantity(jsonUtil, selectPerson, people);
-   people = filterPersonMinQuantity(jsonUtil, selectPerson, position, people);
+   people = filterPersonMinQuantity(jsonUtil, selectPerson, people);
 
     return people;
   } catch (e: any) {

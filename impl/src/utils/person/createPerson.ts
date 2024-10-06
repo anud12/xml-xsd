@@ -36,10 +36,6 @@ const createNewPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType
       race_rule_ref: race.attributeMap.id
     });
   }
-  person.appendChild("location", undefined, {
-    x: "0",
-    y: "0"
-  });
   person.appendChild("properties", undefined, {});
   person.appendChild("classifications", undefined, {});
 
@@ -114,48 +110,14 @@ const applyProperty = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, 
   })
 }
 
-const applyLocation = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, position: Position | undefined, person: PersonQueryType): void => {
-  try {
-    const location = person.queryOptional("location")
-    if (!location) {
-      return;
-    }
-    const radius = selectPerson.queryOptional("radius");
-    if (!radius) {
-      return;
-    }
-    if (!position) {
-      throw new Error("position is undefined when radius exists")
-    }
 
-    const radiusX = Number(jsonUtil.computeOperationFromParent(radius));
-    const randomX = jsonUtil.random() - 0.5;
-    const absoluteX = Math.trunc(randomX * radiusX);
-
-    location.attributeMap.x = String(Number(position.x) + absoluteX);
-
-
-    const radiusY = Number(jsonUtil.computeOperationFromParent(radius));
-    const randomY = jsonUtil.random() - 0.5;
-    const absoluteY = Math.trunc(randomY * radiusY);
-    location.attributeMap.y = String(Number(position.y) + absoluteY);
-  } catch (e) {
-    const newError = new Error(`applyLocation failed for ${selectPerson.getPath()}`);
-    newError.stack += '\nCaused by: ' + e.stack;
-    throw newError;
-  }
-
-}
-
-
-export const createPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, position?: Position): PersonQueryElement => {
+export const createPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType): PersonQueryElement => {
   try {
     let person = createNewPerson(jsonUtil, selectPerson);
     selectPerson.queryAllOptional("classification").forEach(value => {
       person = applyClassification(jsonUtil, value.attributeMap.classification_rule_ref, person)
     })
     applyProperty(jsonUtil, selectPerson, person);
-    applyLocation(jsonUtil, selectPerson, position, person);
     return person;
   } catch (e) {
     const newError = new Error(`createPerson failed for ${selectPerson.getPath()}`);

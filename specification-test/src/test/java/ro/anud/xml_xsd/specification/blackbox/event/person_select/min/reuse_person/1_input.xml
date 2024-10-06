@@ -40,12 +40,9 @@
         </then>
       </entry>
     </events_rule>
-    <locations_markov_chain/>
   </rule_group>
   <people>
-    <person id="0">
-      <location x="1" y="0"/>
-    </person>
+    <person id="0"/>
   </people>
   <actions>
     <by person_ref="0">

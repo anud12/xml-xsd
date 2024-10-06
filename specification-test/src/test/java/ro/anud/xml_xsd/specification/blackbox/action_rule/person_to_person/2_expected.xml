@@ -56,7 +56,6 @@
   <people>
     <person id="Billy">
       <race race_rule_ref="human"/>
-      <location x="10" y="10"/>
       <properties>
         <property property_rule_ref="strength" value="10"/>
       </properties>
@@ -64,7 +63,6 @@
     </person>
     <person id="Bob">
       <race race_rule_ref="human"/>
-      <location x="10" y="10"/>
       <properties>
         <property property_rule_ref="health" value="15"/>
       </properties>

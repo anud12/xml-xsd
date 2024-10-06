@@ -210,32 +210,6 @@
     "isNullable": true
   },
   {
-    "name": "type_direction",
-    "type": "simple",
-    "value": {
-      "metaType": "union",
-      "value": [
-        {
-          "metaType": "primitive",
-          "value": "\"north\""
-        },
-        {
-          "metaType": "primitive",
-          "value": "\"east\""
-        },
-        {
-          "metaType": "primitive",
-          "value": "\"south\""
-        },
-        {
-          "metaType": "primitive",
-          "value": "\"west\""
-        }
-      ]
-    },
-    "isNullable": true
-  },
-  {
     "name": "type_person_select",
     "type": "simple",
     "value": {
@@ -385,97 +359,6 @@
     "type": "complex",
     "value": {
       "metaType": "any"
-    }
-  },
-  {
-    "name": "type__property_list",
-    "type": "complex",
-    "isSingle": false,
-    "value": {
-      "metaType": "object",
-      "isSingle": false,
-      "value": {
-        "property": {
-          "metaType": "object",
-          "value": {},
-          "isSingle": false,
-          "isNullable": true,
-          "attributes": {
-            "metaType": "object",
-            "value": {
-              "property_rule_ref": {
-                "metaType": "primitive",
-                "value": "xs:string",
-                "isNullable": false
-              },
-              "value": {
-                "metaType": "primitive",
-                "value": "xs:int",
-                "isNullable": false
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  {
-    "name": "type__classification_list",
-    "type": "complex",
-    "isSingle": false,
-    "value": {
-      "metaType": "object",
-      "isSingle": false,
-      "value": {
-        "classification": {
-          "metaType": "object",
-          "value": {},
-          "isSingle": false,
-          "isNullable": true,
-          "attributes": {
-            "metaType": "object",
-            "value": {
-              "classification_rule_ref": {
-                "metaType": "primitive",
-                "value": "xs:string",
-                "isNullable": false
-              }
-            },
-            "isNullable": false
-          }
-        }
-      }
-    }
-  },
-  {
-    "name": "type_cell_ref",
-    "type": "complex",
-    "isSingle": true,
-    "isNullable": false,
-    "value": {
-      "metaType": "object",
-      "value": {},
-      "isSingle": true,
-      "isNullable": false,
-      "attributes": {
-        "metaType": "object",
-        "value": {
-          "layer": {
-            "metaType": "unknown",
-            "isNullable": true
-          },
-          "x": {
-            "metaType": "primitive",
-            "value": "xs:int",
-            "isNullable": false
-          },
-          "y": {
-            "metaType": "primitive",
-            "value": "xs:int",
-            "isNullable": false
-          }
-        }
-      }
     }
   },
   {
@@ -1492,101 +1375,6 @@
               },
               "isNullable": true
             },
-            "locations_markov_chain": {
-              "metaType": "object",
-              "isSingle": true,
-              "value": {
-                "location_markov_link": {
-                  "metaType": "object",
-                  "attributes": {
-                    "metaType": "object",
-                    "value": {
-                      "type": {
-                        "metaType": "unknown",
-                        "isNullable": false
-                      }
-                    },
-                    "isNullable": false
-                  },
-                  "isSingle": false,
-                  "value": {
-                    "tag": {
-                      "metaType": "object",
-                      "value": {},
-                      "isSingle": false,
-                      "isNullable": true,
-                      "attributes": {
-                        "metaType": "object",
-                        "value": {
-                          "name": {
-                            "metaType": "unknown",
-                            "isNullable": false
-                          }
-                        },
-                        "isNullable": false
-                      }
-                    },
-                    "sibling": {
-                      "metaType": "object",
-                      "value": {},
-                      "isSingle": false,
-                      "isNullable": true,
-                      "attributes": {
-                        "metaType": "object",
-                        "value": {
-                          "location_rule_ref": {
-                            "metaType": "unknown",
-                            "isNullable": false
-                          },
-                          "quantity": {
-                            "metaType": "primitive",
-                            "value": "xs:int",
-                            "isNullable": true
-                          },
-                          "position": {
-                            "metaType": "union",
-                            "value": [
-                              {
-                                "metaType": "primitive",
-                                "value": "\"all\""
-                              },
-                              {
-                                "metaType": "primitive",
-                                "value": "\"fill\""
-                              },
-                              {
-                                "metaType": "primitive",
-                                "value": "\"top\""
-                              },
-                              {
-                                "metaType": "primitive",
-                                "value": "\"right\""
-                              },
-                              {
-                                "metaType": "primitive",
-                                "value": "\"bottom\""
-                              },
-                              {
-                                "metaType": "primitive",
-                                "value": "\"left\""
-                              }
-                            ]
-                          }
-                        }
-                      }
-                    },
-                    "icon": {
-                      "metaType": "reference",
-                      "value": "type_icon",
-                      "isSingle": true,
-                      "isNullable": false
-                    }
-                  },
-                  "isNullable": true
-                }
-              },
-              "isNullable": true
-            },
             "location_graph_rule": {
               "metaType": "object",
               "attributes": {
@@ -1885,12 +1673,6 @@
                     "isNullable": false
                   }
                 },
-                "location": {
-                  "metaType": "reference",
-                  "value": "type_cell_ref",
-                  "isSingle": true,
-                  "isNullable": true
-                },
                 "properties": {
                   "metaType": "object",
                   "isSingle": true,
@@ -1966,46 +1748,6 @@
                 }
               },
               "isNullable": true
-            }
-          },
-          "isNullable": true
-        },
-        "location_layer": {
-          "metaType": "object",
-          "attributes": {
-            "metaType": "object",
-            "value": {
-              "name": {
-                "metaType": "unknown",
-                "isNullable": true
-              }
-            },
-            "isNullable": true
-          },
-          "isSingle": false,
-          "value": {
-            "cell": {
-              "metaType": "object",
-              "value": {},
-              "isSingle": false,
-              "isNullable": false,
-              "attributes": {
-                "metaType": "object",
-                "value": {
-                  "location_rule_ref": {
-                    "metaType": "unknown",
-                    "isNullable": false
-                  },
-                  "x": {
-                    "metaType": "unknown",
-                    "isNullable": false
-                  },
-                  "y": {
-                    "metaType": "unknown",
-                    "isNullable": false
-                  }
-                }
-              }
             }
           },
           "isNullable": true

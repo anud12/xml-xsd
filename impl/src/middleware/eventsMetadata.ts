@@ -55,10 +55,7 @@ const applyFromPersonActionUsed = (readJson:JsonUtil , event: EventQueryType): (
             const originElement = selectPersonElement.attributeMap.origin === "self"
               ? writeJson.person.getById(byElement.attributeMap.person_ref)
               : writeJson.person.getById(doElement.attributeMap.person_ref)
-            const targetElement = writeJson.person.selectPerson(selectPersonElement, {
-              x: originElement.query("location").attributeMap.x,
-              y: originElement.query("location").attributeMap.y
-            });
+            const targetElement = writeJson.person.selectPerson(selectPersonElement);
             targetElement.forEach(element => applyPropertyMutationToPerson(readJson, event, element))
           }))
 
