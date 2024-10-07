@@ -27,7 +27,9 @@
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <people/>
+  <data>
+    <people/>
+  </data>
   <location_graph id="location_graph_id">
     <rule location_graph_rule_ref="location_graph_rule_id"/>
     <node node_rule_ref="node" id="node_id">

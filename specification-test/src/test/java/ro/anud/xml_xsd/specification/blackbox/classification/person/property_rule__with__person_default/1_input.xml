@@ -30,18 +30,20 @@
     </classification_rule>
   </rule_group>
 
-  <people>
-    <person id="0">
-      <properties/>
-      <classifications/>
-    </person>
-    <person id="1">
-      <properties/>
-      <classifications/>
-    </person>
-    <person id="2">
-      <properties/>
-      <classifications/>
-    </person>
-  </people>
+  <data>
+    <people>
+      <person id="0">
+        <properties/>
+        <classifications/>
+      </person>
+      <person id="1">
+        <properties/>
+        <classifications/>
+      </person>
+      <person id="2">
+        <properties/>
+        <classifications/>
+      </person>
+    </people>
+  </data>
 </world_step>

@@ -44,20 +44,22 @@
       </entry>
     </events_rule>
   </rule_group>
-  <people>
-    <person id="0">
-      <classifications/>
-    </person>
-    <person id="0.0">
-      <race race_rule_ref="race"/>
-      <properties/>
-      <classifications/>
-    </person>
-    <person id="0.1">
-      <race race_rule_ref="race"/>
-      <properties/>
-      <classifications/>
-    </person>
-  </people>
+  <data>
+    <people>
+      <person id="0">
+        <classifications/>
+      </person>
+      <person id="0.0">
+        <race race_rule_ref="race"/>
+        <properties/>
+        <classifications/>
+      </person>
+      <person id="0.1">
+        <race race_rule_ref="race"/>
+        <properties/>
+        <classifications/>
+      </person>
+    </people>
+  </data>
   <actions/>
 </world_step>

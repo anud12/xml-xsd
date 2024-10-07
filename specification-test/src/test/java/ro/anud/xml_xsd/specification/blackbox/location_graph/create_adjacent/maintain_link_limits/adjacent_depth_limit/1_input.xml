@@ -127,6 +127,7 @@
       </node_rule>
     </location_graph_rule>
   </rule_group>
+  <data/>
   <location_graph id="first world">
     <rule location_graph_rule_ref="location_graph_rule_id"/>
     <node node_rule_ref="city" id="Capital">
