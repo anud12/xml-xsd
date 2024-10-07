@@ -189,7 +189,7 @@ public partial class LocationGraphScene : Control
 				IEnumerable<Node>? personNodeList = linkTo.people?.person?.Select(person =>
 					{
 						var personId = person.person_id_ref;
-						var personData = worldStep.people.SelectMany(people => people.person).Where(person => person.id == personId).First();
+						var personData = worldStep.data.people?.person?.Where(person => person.id == personId).First();
 						var personScene = PersonComponent.PackedScene.Instantiate();
 						var personComponent = personScene.GetNode<PersonComponent>("./");
 						personComponent.initializeFromId(personId);
@@ -280,10 +280,10 @@ public partial class LocationGraphScene : Control
 					return;
 				}
 
-				var personData = world_Step.people.SelectMany(people => people.person).Where(person => person.id == personId).First();
+				var personData = world_Step.data.people?.person?.Where(person => person.id == personId).First();
 				if (personData != null)
 				{
-					string personName = personData.name.ToString() + "(" + progress + ")" + "(" + relativeProgress + ")";
+					string personName = personData.name?.ToString() + "(" + progress + ")" + "(" + relativeProgress + ")";
 					label.Text = personName.ToString();
 				}
 			});

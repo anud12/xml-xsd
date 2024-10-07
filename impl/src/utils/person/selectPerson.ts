@@ -10,7 +10,7 @@ export type Position = {
   y: string,
 }
 
-type PeopleQueryType = JsonSchema['children']["people"]["children"]["person"];
+type PeopleQueryType = JsonSchema['children']["data"]["children"]["people"]["children"]["person"];
 
 export const filterPersonMaxQuantity = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType | undefined, list: Array<PeopleQueryType>): Array<PeopleQueryType> => {
   if(!selectPerson) {

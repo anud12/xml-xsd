@@ -169,17 +169,19 @@ export type world_step = JsonQueryType<{}, {
       "entry": JsonQueryType<{"id": string;}> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
-  "people": JsonQueryType<{}, {
-    "person": JsonQueryType<{"id": string;  "name": string;}, {
-      "race": JsonQueryType<{"race_rule_ref": any;}> & JsonQueryType<{}, {}>;
-      "properties": JsonQueryType<{}, {
-        "property": JsonQueryType<{"property_rule_ref": string;  "value": any;}> & JsonQueryType<{}, {}>;
+  "data": JsonQueryType<{}, {
+    "people": JsonQueryType<{}, {
+      "person": JsonQueryType<{"id": string;  "name": string;}, {
+        "race": JsonQueryType<{"race_rule_ref": any;}> & JsonQueryType<{}, {}>;
+        "properties": JsonQueryType<{}, {
+          "property": JsonQueryType<{"property_rule_ref": string;  "value": any;}> & JsonQueryType<{}, {}>;
+        }> & JsonQueryType<{}, {}>;
+        "relations": JsonQueryType<{"with": any;}> & JsonQueryType<{}, {}>;
+        "classifications": JsonQueryType<{}, {
+          "classification": JsonQueryType<{"classification_rule_ref": string;}> & JsonQueryType<{}, {}>;
+        }> & JsonQueryType<{}, {}>;
+        "icon": type_icon & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
-      "relations": JsonQueryType<{"with": any;}> & JsonQueryType<{}, {}>;
-      "classifications": JsonQueryType<{}, {
-        "classification": JsonQueryType<{"classification_rule_ref": string;}> & JsonQueryType<{}, {}>;
-      }> & JsonQueryType<{}, {}>;
-      "icon": type_icon & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
   "location_graph": JsonQueryType<{"id": string;}, {

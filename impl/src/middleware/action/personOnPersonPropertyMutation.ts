@@ -4,7 +4,7 @@ import {JsonUtil} from "../../utils/util";
 import {JsonSchema} from "../../utils/JsonSchema";
 
 type RuleGroupQueryType = JsonSchema["children"]["rule_group"];
-type PersonQueryType = JsonSchema["children"]["people"]["children"]["person"];
+type PersonQueryType = JsonSchema["children"]["data"]["children"]["people"]["children"]["person"];
 type PersonActionMetadataQueryType = RuleGroupQueryType["children"]["action_rule"]["children"]["person_to_person"];
 
 type MutationQueryType = RuleGroupQueryType["children"]["action_rule"]["children"]["person_to_person"]["children"]["property_mutation"];
@@ -29,23 +29,6 @@ const mutationToValue = (readJson: JsonUtil, mutation: MutationQueryType, person
   return operations.reduce((e, op) => String(Number(e) + Number(op)), "0");
 }
 
-// const isOutOfRange = (readJson: JsonUtil, personAction: PersonActionMetadataQueryType, person: PersonQueryType, targetPerson: PersonQueryType,) => {
-//   const maxRange = personAction.query("max_range");
-//   if (!maxRange) {
-//     return true;
-//   }
-//   const maxRangeValue = readJson.computeOperationFromParent(maxRange.query("operation"), string => readJson.person.getProperty(person, string));
-//   const distance = readJson.person.getDistance(person, targetPerson);
-//   if ((distance + 1) > (Number(maxRangeValue))) {
-//     return true;
-//   }
-//   const minRange = personAction.queryOptional("min_range");
-//   if (!minRange) {
-//     return false;
-//   }
-//   const minRangeValue = readJson.computeOperationFromParent(maxRange.query("operation"), string => readJson.person.getProperty(person, string));
-//   return (Number(minRangeValue) + 1) > distance;
-// }
 
 export const personOnPersonPropertyMutation: MutationMiddleware =readJson => {
 
@@ -54,7 +37,7 @@ export const personOnPersonPropertyMutation: MutationMiddleware =readJson => {
     .flatMap(e => e.queryAllOptional("person_to_person"));
 
 
-  const personList = readJson.json.queryAllOptional("people").flatMap(e => e.queryAllOptional("person"));
+  const personList = readJson.json.queryOptional("data").queryAllOptional("people").flatMap(e => e.queryAllOptional("person"));
 
   const actions = readJson.json.queryAllOptional("actions")
     .flatMap(e => e.queryAllOptional("person.on_person.property_mutation"))
@@ -93,7 +76,7 @@ export const personOnPersonPropertyMutation: MutationMiddleware =readJson => {
         element.removeFromParent();
       });
     actions.filter(e => e).forEach(({personIdRef, targetPersonIdRef, property_mutation_list}) => {
-      const personList = writeJson.json.queryAll("people").flatMap(e => e.queryAll("person"));
+      const personList = writeJson.json.queryOptional("data").queryAll("people").flatMap(e => e.queryAll("person"));
       const person = personList.find(e => e.attributeMap.id === personIdRef);
       const targetPerson = personList.find(e => e.attributeMap.id === targetPersonIdRef);
 

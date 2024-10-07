@@ -1,7 +1,7 @@
 import {AttributeNotInValidationError, Validator} from "./_type";
 import {JsonSchema} from "../utils/JsonSchema";
 
-type QueryType = JsonSchema["children"]["people"]["children"]["person"]["children"]["properties"]["children"]["property"]
+type QueryType = JsonSchema["children"]["data"]["children"]["people"]["children"]["person"]["children"]["properties"]["children"]["property"]
 
 export const propertyRefValidator: Validator<AttributeNotInValidationError<QueryType>> = async (jsonSchema) => {
   const ruleGroups = jsonSchema.getRuleGroups();

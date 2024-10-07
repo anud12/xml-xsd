@@ -4,7 +4,7 @@ import {JsonSchema} from "../utils/JsonSchema";
 type QueryType = JsonSchema["children"]["actions"]["children"]["by"]
 
 export const personRefValidator: Validator<AttributeNotInValidationError<QueryType>> = async (jsonSchema) => {
-  const raceMetadataNames = jsonSchema.json.queryAllOptional("people").flatMap(e => e.queryAllOptional("person").map(e => e.attributeMap.id));
+  const raceMetadataNames = jsonSchema.json.queryOptional("data").queryAllOptional("people").flatMap(e => e.queryAllOptional("person").map(e => e.attributeMap.id));
 
 
   return jsonSchema.json.queryAllRecursiveWithAttributeFrom<QueryType>("person_ref")

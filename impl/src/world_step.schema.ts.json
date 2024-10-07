@@ -1549,123 +1549,130 @@
           },
           "isNullable": false
         },
-        "people": {
+        "data": {
           "metaType": "object",
-          "isSingle": false,
+          "isSingle": true,
           "value": {
-            "person": {
+            "people": {
               "metaType": "object",
-              "attributes": {
-                "metaType": "object",
-                "value": {
-                  "id": {
-                    "metaType": "primitive",
-                    "value": "xs:string",
-                    "isNullable": false
-                  },
-                  "name": {
-                    "metaType": "primitive",
-                    "value": "xs:string",
-                    "isNullable": true
-                  }
-                }
-              },
-              "isSingle": false,
+              "isSingle": true,
               "value": {
-                "race": {
+                "person": {
                   "metaType": "object",
-                  "value": {},
-                  "isSingle": true,
-                  "isNullable": true,
                   "attributes": {
                     "metaType": "object",
                     "value": {
-                      "race_rule_ref": {
-                        "metaType": "unknown",
+                      "id": {
+                        "metaType": "primitive",
+                        "value": "xs:string",
                         "isNullable": false
-                      }
-                    },
-                    "isNullable": false
-                  }
-                },
-                "properties": {
-                  "metaType": "object",
-                  "isSingle": true,
-                  "value": {
-                    "property": {
-                      "metaType": "object",
-                      "value": {},
-                      "isSingle": false,
-                      "isNullable": true,
-                      "attributes": {
-                        "metaType": "object",
-                        "value": {
-                          "property_rule_ref": {
-                            "metaType": "primitive",
-                            "value": "xs:string",
-                            "isNullable": false
-                          },
-                          "value": {
-                            "metaType": "unknown",
-                            "isNullable": false
-                          }
-                        }
+                      },
+                      "name": {
+                        "metaType": "primitive",
+                        "value": "xs:string",
+                        "isNullable": true
                       }
                     }
                   },
-                  "isNullable": true
-                },
-                "relations": {
-                  "metaType": "object",
-                  "value": {},
                   "isSingle": false,
-                  "isNullable": true,
-                  "attributes": {
-                    "metaType": "object",
-                    "value": {
-                      "with": {
-                        "metaType": "unknown",
-                        "isNullable": false
-                      }
-                    },
-                    "isNullable": false
-                  }
-                },
-                "classifications": {
-                  "metaType": "object",
-                  "isSingle": true,
                   "value": {
-                    "classification": {
+                    "race": {
                       "metaType": "object",
                       "value": {},
-                      "isSingle": false,
+                      "isSingle": true,
                       "isNullable": true,
                       "attributes": {
                         "metaType": "object",
                         "value": {
-                          "classification_rule_ref": {
-                            "metaType": "primitive",
-                            "value": "xs:string",
+                          "race_rule_ref": {
+                            "metaType": "unknown",
                             "isNullable": false
                           }
                         },
                         "isNullable": false
                       }
+                    },
+                    "properties": {
+                      "metaType": "object",
+                      "isSingle": true,
+                      "value": {
+                        "property": {
+                          "metaType": "object",
+                          "value": {},
+                          "isSingle": false,
+                          "isNullable": true,
+                          "attributes": {
+                            "metaType": "object",
+                            "value": {
+                              "property_rule_ref": {
+                                "metaType": "primitive",
+                                "value": "xs:string",
+                                "isNullable": false
+                              },
+                              "value": {
+                                "metaType": "unknown",
+                                "isNullable": false
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "isNullable": true
+                    },
+                    "relations": {
+                      "metaType": "object",
+                      "value": {},
+                      "isSingle": false,
+                      "isNullable": true,
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "with": {
+                            "metaType": "unknown",
+                            "isNullable": false
+                          }
+                        },
+                        "isNullable": false
+                      }
+                    },
+                    "classifications": {
+                      "metaType": "object",
+                      "isSingle": true,
+                      "value": {
+                        "classification": {
+                          "metaType": "object",
+                          "value": {},
+                          "isSingle": false,
+                          "isNullable": true,
+                          "attributes": {
+                            "metaType": "object",
+                            "value": {
+                              "classification_rule_ref": {
+                                "metaType": "primitive",
+                                "value": "xs:string",
+                                "isNullable": false
+                              }
+                            },
+                            "isNullable": false
+                          }
+                        }
+                      },
+                      "isNullable": true
+                    },
+                    "icon": {
+                      "metaType": "reference",
+                      "value": "type_icon",
+                      "isSingle": true,
+                      "isNullable": true
                     }
                   },
-                  "isNullable": true
-                },
-                "icon": {
-                  "metaType": "reference",
-                  "value": "type_icon",
-                  "isSingle": true,
                   "isNullable": true
                 }
               },
               "isNullable": true
             }
           },
-          "isNullable": true
+          "isNullable": false
         },
         "location_graph": {
           "metaType": "object",

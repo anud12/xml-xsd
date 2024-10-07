@@ -4,7 +4,7 @@ import {JsonUtil} from "../utils/util";
 import {mergeError} from "../mergeError";
 
 type RuleGroupQueryType = JsonSchema["children"]["rule_group"]
-type PersonQueryType = JsonSchema["children"]["people"]["children"]["person"]
+type PersonQueryType = JsonSchema["children"]["data"]["children"]["people"]["children"]["person"]
 type PersonActionMetadataQueryType = RuleGroupQueryType["children"]["action_rule"]["children"]["person_to_person"];
 
 type MutationQueryType = RuleGroupQueryType["children"]["action_rule"]["children"]["person_to_person"]["children"]["property_mutation"]
@@ -54,7 +54,7 @@ export const personAction: MutationMiddleware = readJson => {
     .flatMap(e => e.queryAllOptional("person_to_person"));
 
 
-  const personList = readJson.json.queryAllOptional("people").flatMap(e => e.queryAllOptional("person"));
+  const personList = readJson.json.queryOptional("data").queryAllOptional("people").flatMap(e => e.queryAllOptional("person"));
 
   const actions = readJson.json.queryAllOptional("actions")
     .flatMap(e => e.queryAllOptional("by"))
@@ -96,7 +96,7 @@ export const personAction: MutationMiddleware = readJson => {
 
   return async writeJson => {
     actions.filter(e => e).forEach(({by: by, personAction, property_mutation_list}) => {
-      const personList = writeJson.json.queryAll("people").flatMap(e => e.queryAll("person"));
+      const personList = writeJson.json.queryOptional("data").queryAll("people").flatMap(e => e.queryAll("person"));
       const person = personList.find(e => e.attributeMap.id === by.attributeMap.person_ref);
       const targetPerson = personList.find(e => e.attributeMap.id === personAction.attributeMap.person_ref);
 

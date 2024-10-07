@@ -8,7 +8,7 @@ public partial class SelectMainPerson : Control
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		
+
 		//get personContainer
 		var personContainer = GetNode<Control>("%PersonContainer");
 
@@ -16,19 +16,16 @@ public partial class SelectMainPerson : Control
 		var worldStep = StoreWorld_Step.instance.data;
 
 		//iterate through worldStep and create a button for each person
-		worldStep?.people?.ForEach(personList =>
+		worldStep?.data?.people?.person?.ForEach(person =>
 		{
-			personList?.person.ForEach(person =>
+			var button = new Button();
+			button.Text = $"{person.name}({person.id})";
+			button.Pressed += () =>
 			{
-				var button = new Button();
-				button.Text = $"{person.name}({person.id})";
-				button.Pressed += () =>
-				{
-					StoreSession.mainPersonId.data = person.id;
-					GetTree().ChangeSceneToPacked(WorldStep.PackedScene);
-				};
-				personContainer.AddChild(button);
-			});
+				StoreSession.mainPersonId.data = person.id;
+				GetTree().ChangeSceneToPacked(WorldStep.PackedScene);
+			};
+			personContainer.AddChild(button);
 		});
 	}
 

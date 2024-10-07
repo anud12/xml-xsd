@@ -1083,56 +1083,62 @@
           </xs:complexType>
         </xs:element>
 
-        <xs:element name="people" minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="data">
           <xs:complexType>
-            <xs:sequence>
-              <xs:element name="person" minOccurs="0" maxOccurs="unbounded">
+            <xs:all>
+              <xs:element name="people" minOccurs="0">
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element name="race" minOccurs="0">
-                      <xs:complexType>
-                        <xs:attribute name="race_rule_ref" use="required"/>
-                      </xs:complexType>
-                    </xs:element>
-                    <xs:element name="properties" minOccurs="0">
+                    <xs:element name="person" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="property" minOccurs="0"
-                                      maxOccurs="unbounded">
+                          <xs:element name="race" minOccurs="0">
                             <xs:complexType>
-                              <xs:attribute name="property_rule_ref" type="xs:string" use="required"/>
-                              <xs:attribute name="value"
-                                            use="required"/>
+                              <xs:attribute name="race_rule_ref" use="required"/>
                             </xs:complexType>
                           </xs:element>
-                        </xs:sequence>
-                      </xs:complexType>
-                    </xs:element>
-                    <xs:element name="relations" minOccurs="0"
-                                maxOccurs="unbounded">
-                      <xs:complexType>
-                        <xs:attribute name="with" use="required"/>
-                      </xs:complexType>
-                    </xs:element>
-                    <xs:element name="classifications" minOccurs="0">
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element name="classification" minOccurs="0"
-                                      maxOccurs="unbounded">
+                          <xs:element name="properties" minOccurs="0">
                             <xs:complexType>
-                              <xs:attribute name="classification_rule_ref" type="xs:string" use="required"/>
+                              <xs:sequence>
+                                <xs:element name="property" minOccurs="0"
+                                            maxOccurs="unbounded">
+                                  <xs:complexType>
+                                    <xs:attribute name="property_rule_ref" type="xs:string" use="required"/>
+                                    <xs:attribute name="value"
+                                                  use="required"/>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
                             </xs:complexType>
                           </xs:element>
+                          <xs:element name="relations" minOccurs="0"
+                                      maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:attribute name="with" use="required"/>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="classifications" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="classification" minOccurs="0"
+                                            maxOccurs="unbounded">
+                                  <xs:complexType>
+                                    <xs:attribute name="classification_rule_ref" type="xs:string" use="required"/>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="icon" type="type_icon" minOccurs="0"/>
                         </xs:sequence>
+                        <xs:attribute name="id" use="required" type="xs:string"/>
+                        <xs:attribute name="name" type="xs:string"/>
                       </xs:complexType>
                     </xs:element>
-                    <xs:element name="icon" type="type_icon" minOccurs="0"/>
                   </xs:sequence>
-                  <xs:attribute name="id" use="required" type="xs:string"/>
-                  <xs:attribute name="name" type="xs:string"/>
                 </xs:complexType>
               </xs:element>
-            </xs:sequence>
+            </xs:all>
           </xs:complexType>
         </xs:element>
 

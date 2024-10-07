@@ -54,7 +54,7 @@ export const getRaceProperty = (readJson: JsonUtil, personQueryType: PersonQuery
 
 }
 
-export type PersonQueryType = JsonSchema["children"]["people"]["children"]["person"]
+export type PersonQueryType = JsonSchema["children"]["data"]["children"]["people"]["children"]["person"]
 
 export const getPersonProperty = (readJson: JsonUtil, personQueryType: PersonQueryType, key: string): string | undefined => {
   try {

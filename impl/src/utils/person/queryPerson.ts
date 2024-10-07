@@ -2,11 +2,11 @@ import {JsonSchema} from "../JsonSchema";
 import {JsonUtil} from "../util";
 import {mergeError} from "../../mergeError";
 
-type PeopleQueryType = JsonSchema['children']["people"]["children"]["person"];
+type PeopleQueryType = JsonSchema['children']["data"]["children"]["people"]["children"]["person"];
 
 export const queryPerson = (jsonUtil: JsonUtil): Array<PeopleQueryType> => {
   try {
-    return jsonUtil.json.queryAll("people")
+    return jsonUtil.json.queryOptional("data").queryAll("people")
       .flatMap(people => people.queryAllOptional("person"));
 
   } catch (e: any) {
