@@ -2,7 +2,7 @@ import {JsonUtil} from "../util";
 import {JsonSchema} from "../JsonSchema";
 import {mergeError} from "../../mergeError";
 
-export type LocationGraphQueryType = JsonSchema["children"]["location_graph"]
+export type LocationGraphQueryType = JsonSchema["children"]["data"]["children"]["location"]["children"]["location_graph"]
 export type LocationGraphNodeQueryType = LocationGraphQueryType["children"]["node"];
 export type PositionQueryType = LocationGraphNodeQueryType["children"]["position"];
 

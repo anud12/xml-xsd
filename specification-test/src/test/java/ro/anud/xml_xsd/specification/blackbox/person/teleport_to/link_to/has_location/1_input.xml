@@ -29,22 +29,24 @@
       <person id="person_id">
       </person>
     </people>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="second_node_id" total_progress="0"/>
+        </node>
+        <node node_rule_ref="node" id="second_node_id">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="node_id" total_progress="0">
+            <people>
+              <person person_id_ref="person_id" accumulated_progress="0"/>
+            </people>
+          </link_to>
+        </node>
+      </location_graph>
+    </location>
   </data>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-      <link_to node_id_ref="second_node_id" total_progress="0"/>
-    </node>
-    <node node_rule_ref="node" id="second_node_id">
-      <position x="0" y="0"/>
-      <link_to node_id_ref="node_id" total_progress="0">
-        <people>
-          <person person_id_ref="person_id" accumulated_progress="0"/>
-        </people>
-      </link_to>
-    </node>
-  </location_graph>
   <actions>
     <person.teleport person_id_ref="person_id">
       <link_to accumulated_progress="1">

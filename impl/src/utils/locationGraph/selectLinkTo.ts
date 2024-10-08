@@ -2,7 +2,7 @@ import {JsonUtil} from "../util";
 import {JsonSchema, NodeGraphQueryType, SelectNodeGraphQueryType} from "../JsonSchema";
 import {mergeError} from "../../mergeError";
 
-export type LinkToQueryType = JsonSchema["children"]["location_graph"]["children"]["node"]["children"]["link_to"];
+export type LinkToQueryType = JsonSchema["children"]["data"]["children"]["location"]["children"]["location_graph"]["children"]["node"]["children"]["link_to"];
 export type SelectLinkToQueryType = JsonSchema["children"]["actions"]["children"]["person.teleport"]["children"]["link_to"]["children"]["selection"];
 
 export const selectLinkTo = (jsonUtil: JsonUtil, selectLinkToQueryType?: SelectLinkToQueryType): Array<LinkToQueryType> => {

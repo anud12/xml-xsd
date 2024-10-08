@@ -26,25 +26,28 @@
       <entry id="location_classification_rule_id"/>
     </location_classification_rule>
   </rule_group>
-  <data/>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-    </node>
-    <node node_rule_ref="node" id="node_id_1">
-      <position x="0" y="0"/>
-    </node>
-  </location_graph>
-  <location_graph id="location_graph_id_2">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-    </node>
-    <node node_rule_ref="node" id="node_id_1">
-      <position x="0" y="0"/>
-    </node>
-  </location_graph>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+        </node>
+        <node node_rule_ref="node" id="node_id_1">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+      <location_graph id="location_graph_id_2">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+        </node>
+        <node node_rule_ref="node" id="node_id_1">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <location_graph.node.add_classification>
       <node_graph_selection>

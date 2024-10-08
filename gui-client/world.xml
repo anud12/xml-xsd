@@ -316,16 +316,19 @@
         </classifications>
       </person>
     </people>
+    <location>
+      <location_graph id="first world">
+        <rule location_graph_rule_ref="location_graph_rule_id" />
+        <node node_rule_ref="city" id="Capital">
+          <position x="0" y="0" />
+          <people>
+            <person person_id_ref="0" />
+            <person person_id_ref="1" />
+          </people>
+        </node>
+      </location_graph>
+    </location>
   </data>
   
-  <location_graph id="first world">
-    <rule location_graph_rule_ref="location_graph_rule_id" />
-    <node node_rule_ref="city" id="Capital">
-      <position x="0" y="0" />
-      <people>
-        <person person_id_ref="0" />
-        <person person_id_ref="1" />
-      </people>
-    </node>
-  </location_graph>
+  
 </world_step>

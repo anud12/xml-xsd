@@ -21,7 +21,7 @@ if (fs.existsSync(outputPath)) {
 //create documentation folder
 fs.mkdirSync(outputPath);
 
-writeFileSync(indexFile, `# Index\n\n`, {flag: "w"});
+writeFileSync(indexFile, `# Index\n\n`, {flag: "w+"});
 
 
 const inputRelativePath = `1_input.xml`

@@ -1138,166 +1138,171 @@
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
-            </xs:all>
-          </xs:complexType>
-        </xs:element>
-
-
-        <xs:element name="location_graph" minOccurs="0" maxOccurs="unbounded">
-          <xs:annotation>
-            <xs:documentation>
-              Represents a location graph.
-            </xs:documentation>
-          </xs:annotation>
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="rule">
-                <xs:annotation>
-                  <xs:documentation>
-                    Represents the rule that will be used when creating or extending the graph.
-                  </xs:documentation>
-                </xs:annotation>
-                <xs:complexType>
-                  <xs:attribute name="location_graph_rule_ref" type="xs:string" use="required">
-                    <xs:annotation>
-                      <xs:documentation>
-                        Represents the reference to the location graph rule that will be used to create or extend the
-                        graph.
-                      </xs:documentation>
-                    </xs:annotation>
-                  </xs:attribute>
-                </xs:complexType>
-              </xs:element>
-              <xs:element name="node" maxOccurs="unbounded">
-                <xs:annotation>
-                  <xs:documentation>
-                    Represents a node in the location graph.
-                  </xs:documentation>
-                </xs:annotation>
+              <xs:element name="location" minOccurs="0">
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element name="position" minOccurs="0">
+                    <xs:element name="location_graph" minOccurs="0" maxOccurs="unbounded">
                       <xs:annotation>
                         <xs:documentation>
-                          Represents the position of the node in the graph.
+                          Represents a location graph.
                         </xs:documentation>
                       </xs:annotation>
-                      <xs:complexType>
-                        <xs:attribute name="x" type="xs:int" use="required"/>
-                        <xs:attribute name="y" type="xs:int" use="required"/>
-                      </xs:complexType>
-                    </xs:element>
-                    <xs:element name="classifications" minOccurs="0">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="classification" minOccurs="0" maxOccurs="unbounded">
+                          <xs:element name="rule">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Represents the rule that will be used when creating or extending the graph.
+                              </xs:documentation>
+                            </xs:annotation>
                             <xs:complexType>
-                              <xs:attribute name="location_classification_rule_ref" type="xs:string" use="required"/>
+                              <xs:attribute name="location_graph_rule_ref" type="xs:string" use="required">
+                                <xs:annotation>
+                                  <xs:documentation>
+                                    Represents the reference to the location graph rule that will be used to create or extend the
+                                    graph.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
                             </xs:complexType>
                           </xs:element>
-                        </xs:sequence>
-                      </xs:complexType>
-                    </xs:element>
-                    <xs:element name="link_to" minOccurs="0" maxOccurs="unbounded">
-                      <xs:annotation>
-                        <xs:documentation>
-                          Represents the links to other nodes in the graph.
-                        </xs:documentation>
-                      </xs:annotation>
-                      <xs:complexType>
-                        <xs:all>
-                          <xs:element name="people" minOccurs="0">
+                          <xs:element name="node" maxOccurs="unbounded">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Represents a node in the location graph.
+                              </xs:documentation>
+                            </xs:annotation>
                             <xs:complexType>
                               <xs:sequence>
-                                <xs:element name="person" minOccurs="0" maxOccurs="unbounded">
+                                <xs:element name="position" minOccurs="0">
+                                  <xs:annotation>
+                                    <xs:documentation>
+                                      Represents the position of the node in the graph.
+                                    </xs:documentation>
+                                  </xs:annotation>
                                   <xs:complexType>
-                                    <xs:attribute name="person_id_ref" type="xs:string" use="required">
+                                    <xs:attribute name="x" type="xs:int" use="required"/>
+                                    <xs:attribute name="y" type="xs:int" use="required"/>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="classifications" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="classification" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                          <xs:attribute name="location_classification_rule_ref" type="xs:string" use="required"/>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="link_to" minOccurs="0" maxOccurs="unbounded">
+                                  <xs:annotation>
+                                    <xs:documentation>
+                                      Represents the links to other nodes in the graph.
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                  <xs:complexType>
+                                    <xs:all>
+                                      <xs:element name="people" minOccurs="0">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="person" minOccurs="0" maxOccurs="unbounded">
+                                              <xs:complexType>
+                                                <xs:attribute name="person_id_ref" type="xs:string" use="required">
+                                                  <xs:annotation>
+                                                    <xs:documentation>
+                                                      Represents the reference to the person that will be linked to.
+                                                    </xs:documentation>
+                                                  </xs:annotation>
+                                                </xs:attribute>
+                                                <xs:attribute name="accumulated_progress" type="xs:int" use="required">
+                                                  <xs:annotation>
+                                                    <xs:documentation>
+                                                      Represents the accumulated progress of the person in the link.
+                                                    </xs:documentation>
+                                                  </xs:annotation>
+                                                </xs:attribute>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="person_progress_property" minOccurs="0"
+                                                  type="type__math_operations"/>
+                                    </xs:all>
+                                    <xs:attribute name="node_id_ref" use="required" type="xs:string">
                                       <xs:annotation>
                                         <xs:documentation>
-                                          Represents the reference to the person that will be linked to.
+                                          Represents the reference to the node that will be linked to.
                                         </xs:documentation>
                                       </xs:annotation>
                                     </xs:attribute>
-                                    <xs:attribute name="accumulated_progress" type="xs:int" use="required">
+                                    <xs:attribute name="total_progress" type="xs:int" use="required">
                                       <xs:annotation>
                                         <xs:documentation>
-                                          Represents the accumulated progress of the person in the link.
+                                          Represents the invested time to reach the node.
                                         </xs:documentation>
                                       </xs:annotation>
                                     </xs:attribute>
                                   </xs:complexType>
                                 </xs:element>
+                                <xs:element name="people" minOccurs="0">
+                                  <xs:annotation>
+                                    <xs:documentation>
+                                      Represents the people in the node.
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="person" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                          <xs:attribute name="person_id_ref" type="xs:string" use="required">
+                                            <xs:annotation>
+                                              <xs:documentation>
+                                                Represents the reference to the person that will be in the node.
+                                              </xs:documentation>
+                                            </xs:annotation>
+                                          </xs:attribute>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
                               </xs:sequence>
-                            </xs:complexType>
-                          </xs:element>
-                          <xs:element name="person_progress_property" minOccurs="0"
-                                      type="type__math_operations"/>
-                        </xs:all>
-                        <xs:attribute name="node_id_ref" use="required" type="xs:string">
-                          <xs:annotation>
-                            <xs:documentation>
-                              Represents the reference to the node that will be linked to.
-                            </xs:documentation>
-                          </xs:annotation>
-                        </xs:attribute>
-                        <xs:attribute name="total_progress" type="xs:int" use="required">
-                          <xs:annotation>
-                            <xs:documentation>
-                              Represents the invested time to reach the node.
-                            </xs:documentation>
-                          </xs:annotation>
-                        </xs:attribute>
-                      </xs:complexType>
-                    </xs:element>
-                    <xs:element name="people" minOccurs="0">
-                      <xs:annotation>
-                        <xs:documentation>
-                          Represents the people in the node.
-                        </xs:documentation>
-                      </xs:annotation>
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element name="person" minOccurs="0" maxOccurs="unbounded">
-                            <xs:complexType>
-                              <xs:attribute name="person_id_ref" type="xs:string" use="required">
+                              <xs:attribute name="node_rule_ref" type="xs:string" use="required">
                                 <xs:annotation>
                                   <xs:documentation>
-                                    Represents the reference to the person that will be in the node.
+                                    Represents the reference to the node rule was used to create the node.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="id" type="xs:string" use="required">
+                                <xs:annotation>
+                                  <xs:documentation>
+                                    Represents the unique identifier of the node.
                                   </xs:documentation>
                                 </xs:annotation>
                               </xs:attribute>
                             </xs:complexType>
                           </xs:element>
                         </xs:sequence>
+                        <xs:attribute name="id" type="xs:string">
+                          <xs:annotation>
+                            <xs:documentation>
+                              Represents the unique identifier of the location graph.
+                            </xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>
-                  <xs:attribute name="node_rule_ref" type="xs:string" use="required">
-                    <xs:annotation>
-                      <xs:documentation>
-                        Represents the reference to the node rule was used to create the node.
-                      </xs:documentation>
-                    </xs:annotation>
-                  </xs:attribute>
-                  <xs:attribute name="id" type="xs:string" use="required">
-                    <xs:annotation>
-                      <xs:documentation>
-                        Represents the unique identifier of the node.
-                      </xs:documentation>
-                    </xs:annotation>
-                  </xs:attribute>
                 </xs:complexType>
               </xs:element>
-            </xs:sequence>
-            <xs:attribute name="id" type="xs:string">
-              <xs:annotation>
-                <xs:documentation>
-                  Represents the unique identifier of the location graph.
-                </xs:documentation>
-              </xs:annotation>
-            </xs:attribute>
+            </xs:all>
           </xs:complexType>
         </xs:element>
+
         <xs:element name="actions" minOccurs="0">
           <xs:complexType>
             <xs:sequence>

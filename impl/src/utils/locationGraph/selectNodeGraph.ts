@@ -63,8 +63,11 @@ export const selectNodeGraph = (jsonUtil: JsonUtil, selectNodeGraphQueryType?: S
     if (!selectNodeGraphQueryType) {
       return [];
     }
-    const locationGraphList = jsonUtil.json.queryAllOptional("location_graph")
-      .filter(locationGraph => filterLocationGraph(selectNodeGraphQueryType, locationGraph));
+    const locationGraphList = jsonUtil.json
+      .queryOptional("data")
+      ?.queryOptional("location")
+      ?.queryAllOptional("location_graph")
+      .filter(locationGraph => filterLocationGraph(selectNodeGraphQueryType, locationGraph)) ?? [];
 
 
     return locationGraphList.flatMap(locationGraph => {

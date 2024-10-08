@@ -18,7 +18,10 @@ const applyFindPath = (readJson: JsonUtil, personMoveToElement: PersonMoveToQuer
 
   const person_id_ref = personMoveToElement.attributeMap.person_id_ref;
 
-  let originNodeList = readJson.json.queryAllOptional("location_graph")
+  let originNodeList = readJson.json
+    .queryOptional("data")
+    .queryOptional("location")
+    .queryAllOptional("location_graph")
     .flatMap(locationGraphElement => {
       return locationGraphElement.queryAllOptional("node").find(nodeElement => {
         return nodeElement.queryAllOptional("people").find(peopleElement => {
@@ -30,7 +33,10 @@ const applyFindPath = (readJson: JsonUtil, personMoveToElement: PersonMoveToQuer
   let originNode = originNodeList[0];
   if (!originNode) {
 
-    originNode = readJson.json.queryAllOptional("location_graph")
+    originNode = readJson.json
+      .queryOptional("data")
+      .queryOptional("location")
+      .queryAllOptional("location_graph")
       .flatMap(locationGraphElement =>
         locationGraphElement.queryAllOptional("node")
       )
@@ -45,7 +51,10 @@ const applyFindPath = (readJson: JsonUtil, personMoveToElement: PersonMoveToQuer
     }
 
   }
-  const locationGraph = readJson.json.queryAllOptional("location_graph").find(locationGraphElement => {
+  const locationGraph = readJson.json
+    .queryOptional("data")
+    .queryOptional("location")
+    .queryAllOptional("location_graph").find(locationGraphElement => {
     return locationGraphElement.queryAllOptional("node")
       .find(nodeElement => nodeElement.attributeMap.id === originNode.attributeMap.id)
   })
@@ -85,7 +94,10 @@ const applyPathRecursiveFromLink = (readJson: JsonUtil, pathElement: PathQueryEl
 
   console.log("applyPathRecursiveFromLink path:", destinationNodeList.map(e => e.attributeMap.node_id_ref), "person_id_ref:", person_id_ref);
   let personLinkElement: LinkToPersonQueryElement;
-  let personNodeElement = readJson.json.queryAllOptional("location_graph").flatMap(locationGraphElement => locationGraphElement.queryAllOptional("node"))
+  let personNodeElement = readJson.json
+    .queryOptional("data")
+    .queryOptional("location")
+    .queryAllOptional("location_graph").flatMap(locationGraphElement => locationGraphElement.queryAllOptional("node"))
     .find(nodeElement => nodeElement.queryAllOptional("link_to")
       .find(linkToElement => {
           const person = linkToElement.queryAllOptional("people")
@@ -171,7 +183,10 @@ const applyPathRecursive = (readJson: JsonUtil, pathElement: PathQueryElement, c
       return;
     }
 
-    const originNode = readJson.json.queryAllOptional("location_graph").flatMap(locationGraphElement => locationGraphElement.queryAllOptional("node"))
+    const originNode = readJson.json
+      .queryOptional("data")
+      .queryOptional("location")
+      .queryAllOptional("location_graph").flatMap(locationGraphElement => locationGraphElement.queryAllOptional("node"))
       .find(nodeElement => nodeElement.attributeMap.id === currentNodeId);
 
     const linkElement = originNode.queryAllOptional("link_to").find(linkToElement => {
@@ -199,7 +214,10 @@ const applyPathRecursive = (readJson: JsonUtil, pathElement: PathQueryElement, c
     if (progressValue === 0) {
       console.log(preLog, "reached destination");
       readJson.locationGraph.removePerson(person_id_ref);
-      const endNode = readJson.json.queryAllOptional("location_graph")
+      const endNode = readJson.json
+        .queryOptional("data")
+        .queryOptional("location")
+        .queryAllOptional("location_graph")
         .flatMap(locationGraphElement => locationGraphElement.queryAllOptional("node"))
         .find(e => {
           const keep = e.attributeMap.id === destinationNode.attributeMap.node_id_ref;
@@ -233,7 +251,10 @@ const applyPathRecursive = (readJson: JsonUtil, pathElement: PathQueryElement, c
         return async writeUnit => {
           console.log(preLog, `dd test`);
           writeUnit.locationGraph.removePerson(person_id_ref);
-          const endNode = writeUnit.json.queryAllOptional("location_graph")
+          const endNode = writeUnit.json
+            .queryOptional("data")
+            .queryOptional("location")
+            .queryAllOptional("location_graph")
             .flatMap(locationGraphElement => locationGraphElement.queryAllOptional("node"))
             .find(e => e.attributeMap.id === destinationNode.attributeMap.node_id_ref);
           endNode.queryOrAppend("people").appendChild("person", null, {
@@ -291,7 +312,10 @@ const applyPath = (readJson: JsonUtil, personMoveToElement: PersonMoveToQueryEle
       return hasExecuted
     }
 
-    const originNodeList = readJson.json.queryAllOptional("location_graph")
+    const originNodeList = readJson.json
+      .queryOptional("data")
+      .queryOptional("location")
+      .queryAllOptional("location_graph")
       .flatMap(locationGraphElement => {
         return locationGraphElement.queryAllOptional("node").find(nodeElement => {
           return nodeElement.queryAllOptional("people").find(peopleElement => {

@@ -34,25 +34,29 @@
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <data/>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id" />
-    <node node_rule_ref="city" id="Capital">
-      <position x="0" y="0"/>
-      <link_to node_id_ref="1.0" total_progress="0"/>
-      <link_to node_id_ref="1.1" total_progress="0"/>
-      <link_to node_id_ref="1.2" total_progress="0"/>
-    </node>
-    <node node_rule_ref="plains" id="1.0">
-      <position x="0" y="-1"/>
-    </node>
-    <node node_rule_ref="plains" id="1.1">
-      <position x="0" y="1"/>
-    </node>
-    <node node_rule_ref="plains" id="1.2">
-      <position x="1" y="0"/>
-    </node>
-  </location_graph>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id" />
+        <node node_rule_ref="city" id="Capital">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="1.0" total_progress="0"/>
+          <link_to node_id_ref="1.1" total_progress="0"/>
+          <link_to node_id_ref="1.2" total_progress="0"/>
+        </node>
+        <node node_rule_ref="plains" id="1.0">
+          <position x="0" y="-1"/>
+        </node>
+        <node node_rule_ref="plains" id="1.1">
+          <position x="0" y="1"/>
+        </node>
+        <node node_rule_ref="plains" id="1.2">
+          <position x="1" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
+
   <actions>
     <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="Capital"/>
   </actions>

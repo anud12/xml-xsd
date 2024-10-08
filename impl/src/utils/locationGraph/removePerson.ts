@@ -1,7 +1,10 @@
 import {JsonUtil} from "../util";
 
 export const removePerson = (readJson: JsonUtil, personIdRef: string) => {
-  readJson.json.queryAllOptional("location_graph")
+  readJson.json
+    .queryOptional("data")
+    ?.queryOptional("location")
+    ?.queryAllOptional("location_graph")
     .find(locationGraphElement => locationGraphElement.queryAllOptional("node")
       .find(nodeElement => {
         nodeElement.queryAllOptional("people").find(peopleElement => {

@@ -183,22 +183,24 @@ export type world_step = JsonQueryType<{}, {
         "icon": type_icon & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
-  }> & JsonQueryType<{}, {}>;
-  "location_graph": JsonQueryType<{"id": string;}, {
-    "rule": JsonQueryType<{"location_graph_rule_ref": string;}> & JsonQueryType<{}, {}>;
-    "node": JsonQueryType<{"node_rule_ref": string;  "id": string;}, {
-      "position": JsonQueryType<{"x": string;  "y": string;}> & JsonQueryType<{}, {}>;
-      "classifications": JsonQueryType<{}, {
-        "classification": JsonQueryType<{"location_classification_rule_ref": string;}> & JsonQueryType<{}, {}>;
-      }> & JsonQueryType<{}, {}>;
-      "link_to": JsonQueryType<{"node_id_ref": string;  "total_progress": string;}, {
-        "people": JsonQueryType<{}, {
-          "person": JsonQueryType<{"person_id_ref": string;  "accumulated_progress": string;}> & JsonQueryType<{}, {}>;
+    "location": JsonQueryType<{}, {
+      "location_graph": JsonQueryType<{"id": string;}, {
+        "rule": JsonQueryType<{"location_graph_rule_ref": string;}> & JsonQueryType<{}, {}>;
+        "node": JsonQueryType<{"node_rule_ref": string;  "id": string;}, {
+          "position": JsonQueryType<{"x": string;  "y": string;}> & JsonQueryType<{}, {}>;
+          "classifications": JsonQueryType<{}, {
+            "classification": JsonQueryType<{"location_classification_rule_ref": string;}> & JsonQueryType<{}, {}>;
+          }> & JsonQueryType<{}, {}>;
+          "link_to": JsonQueryType<{"node_id_ref": string;  "total_progress": string;}, {
+            "people": JsonQueryType<{}, {
+              "person": JsonQueryType<{"person_id_ref": string;  "accumulated_progress": string;}> & JsonQueryType<{}, {}>;
+            }> & JsonQueryType<{}, {}>;
+            "person_progress_property": type__math_operations & JsonQueryType<{}, {}>;
+          }> & JsonQueryType<{}, {}>;
+          "people": JsonQueryType<{}, {
+            "person": JsonQueryType<{"person_id_ref": string;}> & JsonQueryType<{}, {}>;
+          }> & JsonQueryType<{}, {}>;
         }> & JsonQueryType<{}, {}>;
-        "person_progress_property": type__math_operations & JsonQueryType<{}, {}>;
-      }> & JsonQueryType<{}, {}>;
-      "people": JsonQueryType<{}, {
-        "person": JsonQueryType<{"person_id_ref": string;}> & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;

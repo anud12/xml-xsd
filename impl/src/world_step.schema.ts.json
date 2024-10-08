@@ -1670,95 +1670,35 @@
                 }
               },
               "isNullable": true
-            }
-          },
-          "isNullable": false
-        },
-        "location_graph": {
-          "metaType": "object",
-          "attributes": {
-            "metaType": "object",
-            "value": {
-              "id": {
-                "metaType": "primitive",
-                "value": "xs:string",
-                "isNullable": true
-              }
             },
-            "isNullable": true
-          },
-          "isSingle": false,
-          "value": {
-            "rule": {
+            "location": {
               "metaType": "object",
-              "value": {},
               "isSingle": true,
-              "isNullable": false,
-              "attributes": {
-                "metaType": "object",
-                "value": {
-                  "location_graph_rule_ref": {
-                    "metaType": "primitive",
-                    "value": "xs:string",
-                    "isNullable": false
-                  }
-                },
-                "isNullable": false
-              }
-            },
-            "node": {
-              "metaType": "object",
-              "attributes": {
-                "metaType": "object",
-                "value": {
-                  "node_rule_ref": {
-                    "metaType": "primitive",
-                    "value": "xs:string",
-                    "isNullable": false
-                  },
-                  "id": {
-                    "metaType": "primitive",
-                    "value": "xs:string",
-                    "isNullable": false
-                  }
-                }
-              },
-              "isSingle": false,
               "value": {
-                "position": {
+                "location_graph": {
                   "metaType": "object",
-                  "value": {},
-                  "isSingle": true,
-                  "isNullable": true,
                   "attributes": {
                     "metaType": "object",
                     "value": {
-                      "x": {
+                      "id": {
                         "metaType": "primitive",
-                        "value": "xs:int",
-                        "isNullable": false
-                      },
-                      "y": {
-                        "metaType": "primitive",
-                        "value": "xs:int",
-                        "isNullable": false
+                        "value": "xs:string",
+                        "isNullable": true
                       }
-                    }
-                  }
-                },
-                "classifications": {
-                  "metaType": "object",
-                  "isSingle": true,
+                    },
+                    "isNullable": true
+                  },
+                  "isSingle": false,
                   "value": {
-                    "classification": {
+                    "rule": {
                       "metaType": "object",
                       "value": {},
-                      "isSingle": false,
-                      "isNullable": true,
+                      "isSingle": true,
+                      "isNullable": false,
                       "attributes": {
                         "metaType": "object",
                         "value": {
-                          "location_classification_rule_ref": {
+                          "location_graph_rule_ref": {
                             "metaType": "primitive",
                             "value": "xs:string",
                             "isNullable": false
@@ -1766,95 +1706,162 @@
                         },
                         "isNullable": false
                       }
-                    }
-                  },
-                  "isNullable": true
-                },
-                "link_to": {
-                  "metaType": "object",
-                  "attributes": {
-                    "metaType": "object",
-                    "value": {
-                      "node_id_ref": {
-                        "metaType": "primitive",
-                        "value": "xs:string",
-                        "isNullable": false
-                      },
-                      "total_progress": {
-                        "metaType": "primitive",
-                        "value": "xs:int",
-                        "isNullable": false
-                      }
-                    }
-                  },
-                  "isSingle": false,
-                  "value": {
-                    "people": {
+                    },
+                    "node": {
                       "metaType": "object",
-                      "isSingle": true,
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "node_rule_ref": {
+                            "metaType": "primitive",
+                            "value": "xs:string",
+                            "isNullable": false
+                          },
+                          "id": {
+                            "metaType": "primitive",
+                            "value": "xs:string",
+                            "isNullable": false
+                          }
+                        }
+                      },
+                      "isSingle": false,
                       "value": {
-                        "person": {
+                        "position": {
                           "metaType": "object",
                           "value": {},
-                          "isSingle": false,
+                          "isSingle": true,
                           "isNullable": true,
                           "attributes": {
                             "metaType": "object",
                             "value": {
-                              "person_id_ref": {
+                              "x": {
                                 "metaType": "primitive",
-                                "value": "xs:string",
+                                "value": "xs:int",
                                 "isNullable": false
                               },
-                              "accumulated_progress": {
+                              "y": {
                                 "metaType": "primitive",
                                 "value": "xs:int",
                                 "isNullable": false
                               }
                             }
                           }
+                        },
+                        "classifications": {
+                          "metaType": "object",
+                          "isSingle": true,
+                          "value": {
+                            "classification": {
+                              "metaType": "object",
+                              "value": {},
+                              "isSingle": false,
+                              "isNullable": true,
+                              "attributes": {
+                                "metaType": "object",
+                                "value": {
+                                  "location_classification_rule_ref": {
+                                    "metaType": "primitive",
+                                    "value": "xs:string",
+                                    "isNullable": false
+                                  }
+                                },
+                                "isNullable": false
+                              }
+                            }
+                          },
+                          "isNullable": true
+                        },
+                        "link_to": {
+                          "metaType": "object",
+                          "attributes": {
+                            "metaType": "object",
+                            "value": {
+                              "node_id_ref": {
+                                "metaType": "primitive",
+                                "value": "xs:string",
+                                "isNullable": false
+                              },
+                              "total_progress": {
+                                "metaType": "primitive",
+                                "value": "xs:int",
+                                "isNullable": false
+                              }
+                            }
+                          },
+                          "isSingle": false,
+                          "value": {
+                            "people": {
+                              "metaType": "object",
+                              "isSingle": true,
+                              "value": {
+                                "person": {
+                                  "metaType": "object",
+                                  "value": {},
+                                  "isSingle": false,
+                                  "isNullable": true,
+                                  "attributes": {
+                                    "metaType": "object",
+                                    "value": {
+                                      "person_id_ref": {
+                                        "metaType": "primitive",
+                                        "value": "xs:string",
+                                        "isNullable": false
+                                      },
+                                      "accumulated_progress": {
+                                        "metaType": "primitive",
+                                        "value": "xs:int",
+                                        "isNullable": false
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "isNullable": true
+                            },
+                            "person_progress_property": {
+                              "metaType": "reference",
+                              "value": "type__math_operations",
+                              "isSingle": true,
+                              "isNullable": true
+                            }
+                          },
+                          "isNullable": true
+                        },
+                        "people": {
+                          "metaType": "object",
+                          "isSingle": true,
+                          "value": {
+                            "person": {
+                              "metaType": "object",
+                              "value": {},
+                              "isSingle": false,
+                              "isNullable": true,
+                              "attributes": {
+                                "metaType": "object",
+                                "value": {
+                                  "person_id_ref": {
+                                    "metaType": "primitive",
+                                    "value": "xs:string",
+                                    "isNullable": false
+                                  }
+                                },
+                                "isNullable": false
+                              }
+                            }
+                          },
+                          "isNullable": true
                         }
                       },
-                      "isNullable": true
-                    },
-                    "person_progress_property": {
-                      "metaType": "reference",
-                      "value": "type__math_operations",
-                      "isSingle": true,
-                      "isNullable": true
-                    }
-                  },
-                  "isNullable": true
-                },
-                "people": {
-                  "metaType": "object",
-                  "isSingle": true,
-                  "value": {
-                    "person": {
-                      "metaType": "object",
-                      "value": {},
-                      "isSingle": false,
-                      "isNullable": true,
-                      "attributes": {
-                        "metaType": "object",
-                        "value": {
-                          "person_id_ref": {
-                            "metaType": "primitive",
-                            "value": "xs:string",
-                            "isNullable": false
-                          }
-                        },
-                        "isNullable": false
-                      }
+                      "isNullable": false
                     }
                   },
                   "isNullable": true
                 }
               },
-              "isNullable": false
+              "isNullable": true
             }
           },
-          "isNullable": true
+          "isNullable": false
         },
         "actions": {
           "metaType": "object",
