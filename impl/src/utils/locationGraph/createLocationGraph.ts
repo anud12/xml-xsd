@@ -8,9 +8,12 @@ type LocationGraphRuleQueryType = JsonSchema["children"]["rule_group"]["children
 
 const initializeLocationGraph = (writeJson: JsonUtil, ref: string) => {
   try {
-    let locationGraphElement = writeJson.json.appendChild("location_graph", "", {
-      id: writeJson.getNextId()
-    });
+
+    let locationGraphElement = writeJson.json.queryOptional("data")
+      .queryOrAppend("location")
+      .appendChild("location_graph", "", {
+        id: writeJson.getNextId()
+      });
     locationGraphElement.appendChild("rule", undefined, {
       location_graph_rule_ref: ref
     })
@@ -72,12 +75,12 @@ export const createLocationGraph = (readJson: JsonUtil, ref: string): (writeUnit
 
       let createdNodes: Array<LocationGraphNodeQueryType> = [startNode];
 
-      if(createdNodes.length === 0) {
+      if (createdNodes.length === 0) {
         return;
       }
 
       while (!isNecessaryNodeSatisfied(rule, createdNodes)) {
-        if(createdNodes.length === 0) {
+        if (createdNodes.length === 0) {
           break;
         }
         const node = await writeJson.locationGraph.createAdjacent(locationGraphElement.attributeMap.id, createdNodes[0].attributeMap.id)(writeJson);

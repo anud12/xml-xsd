@@ -20,7 +20,9 @@ action,person,person.create,
   </world_metadata>
   <rule_group id="rule_group_id">
   </rule_group>
-  <people/>
+  <data>
+    <people/>
+  </data>
   <actions>
     <person.create>
       <node_graph__selection/>
@@ -64,12 +66,16 @@ action,person,person.create,
       <node_rule id="node_rule_ref"/>
     </location_graph_rule>
   </rule_group>
-  <people/>
-  <location_graph>
-    <rule location_graph_rule_ref=""/>
-    <node node_rule_ref="node_rule_ref" id="">
-    </node>
-  </location_graph>
+  <data>
+    <people/>
+    <location>
+      <location_graph>
+        <rule location_graph_rule_ref=""/>
+        <node node_rule_ref="node_rule_ref" id="">
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <person.create>
       <node_graph__selection/>
@@ -113,9 +119,11 @@ action,person,person.create,
       </global>
     </action_rule>
   </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
+  <data>
+    <people>
+      <person id="1"/>
+    </people>
+  </data>
   <actions>
     <by person_ref="1">
       <do action_ref="global_action" person_ref="1" />
@@ -168,14 +176,16 @@ action,person,person.create,
       </global>
     </action_rule>
   </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-    <person id="2"/>
-  </people>
+  <data>
+    <people>
+      <person id="1">
+        <properties>
+          <property property_rule_ref="property" value="1"/>
+        </properties>
+      </person>
+      <person id="2"/>
+    </people>
+  </data>
   <actions>
     <by person_ref="1">
       <do action_ref="global_action" person_ref="2" />
@@ -226,14 +236,16 @@ action,person,person.create,
       </global>
     </action_rule>
   </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-    <person id="2"/>
-  </people>
+  <data>
+    <people>
+      <person id="1">
+        <properties>
+          <property property_rule_ref="property" value="1"/>
+        </properties>
+      </person>
+      <person id="2"/>
+    </people>
+  </data>
   <actions>
     <by person_ref="1">
       <do action_ref="global_action" person_ref="2"/>
@@ -284,10 +296,12 @@ action,person,person.create,
       </global>
     </action_rule>
   </rule_group>
-  <people>
-    <person id="1"/>
-    <person id="2"/>
-  </people>
+  <data>
+    <people>
+      <person id="1"/>
+      <person id="2"/>
+    </people>
+  </data>
   <actions>
     <by person_ref="1">
       <do action_ref="global_action" person_ref="2" />
@@ -345,17 +359,19 @@ action,person,person.create,
       </global>
     </action_rule>
   </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-      <classifications>
-        <classification classification_rule_ref="classification"/>
-      </classifications>
-    </person>
-    <person id="2"/>
-  </people>
+  <data>
+    <people>
+      <person id="1">
+        <properties>
+          <property property_rule_ref="property" value="1"/>
+        </properties>
+        <classifications>
+          <classification classification_rule_ref="classification"/>
+        </classifications>
+      </person>
+      <person id="2"/>
+    </people>
+  </data>
   <actions>
     <by person_ref="1">
       <do action_ref="global_action" person_ref="2" />
@@ -413,14 +429,16 @@ action,person,person.create,
       </global>
     </action_rule>
   </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-    <person id="2"/>
-  </people>
+  <data>
+    <people>
+      <person id="1">
+        <properties>
+          <property property_rule_ref="property" value="1"/>
+        </properties>
+      </person>
+      <person id="2"/>
+    </people>
+  </data>
   <actions>
     <by person_ref="1">
       <do action_ref="global_action" person_ref="2" />
@@ -481,14 +499,16 @@ action,person,person.create,
       </global>
     </action_rule>
   </rule_group>
-  <people>
-    <person id="1"/>
-    <person id="2">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
+  <data>
+    <people>
+      <person id="1"/>
+      <person id="2">
+        <properties>
+          <property property_rule_ref="property" value="1"/>
+        </properties>
+      </person>
+    </people>
+  </data>
   <actions>
     <by person_ref="1">
       <do action_ref="global_action" person_ref="2" />
@@ -542,14 +562,16 @@ action,person,person.create,
       </global>
     </action_rule>
   </rule_group>
-  <people>
-    <person id="1"/>
-    <person id="2">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
+  <data>
+    <people>
+      <person id="1"/>
+      <person id="2">
+        <properties>
+          <property property_rule_ref="property" value="1"/>
+        </properties>
+      </person>
+    </people>
+  </data>
   <actions>
     <by person_ref="1">
       <do action_ref="global_action" person_ref="2" />
@@ -601,14 +623,16 @@ action,person,person.create,
       </global>
     </action_rule>
   </rule_group>
-  <people>
-    <person id="1"/>
-    <person id="2">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
+  <data>
+    <people>
+      <person id="1"/>
+      <person id="2">
+        <properties>
+          <property property_rule_ref="property" value="1"/>
+        </properties>
+      </person>
+    </people>
+  </data>
   <actions>
     <by person_ref="1">
       <do action_ref="global_action" person_ref="2" />
@@ -660,10 +684,12 @@ action,person,person.create,
       </global>
     </action_rule>
   </rule_group>
-  <people>
-    <person id="1"/>
-    <person id="2"/>
-  </people>
+  <data>
+    <people>
+      <person id="1"/>
+      <person id="2"/>
+    </people>
+  </data>
   <actions>
     <by person_ref="1">
       <do action_ref="global_action" person_ref="2" />
@@ -721,17 +747,19 @@ action,person,person.create,
       </global>
     </action_rule>
   </rule_group>
-  <people>
-    <person id="1"/>
-    <person id="2">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-      <classifications>
-        <classification classification_rule_ref="classification"/>
-      </classifications>
-    </person>
-  </people>
+  <data>
+    <people>
+      <person id="1"/>
+      <person id="2">
+        <properties>
+          <property property_rule_ref="property" value="1"/>
+        </properties>
+        <classifications>
+          <classification classification_rule_ref="classification"/>
+        </classifications>
+      </person>
+    </people>
+  </data>
   <actions>
     <by person_ref="1">
       <do action_ref="global_action" person_ref="2" />
@@ -789,14 +817,16 @@ action,person,person.create,
       </global>
     </action_rule>
   </rule_group>
-  <people>
-    <person id="1"/>
-    <person id="2">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
+  <data>
+    <people>
+      <person id="1"/>
+      <person id="2">
+        <properties>
+          <property property_rule_ref="property" value="1"/>
+        </properties>
+      </person>
+    </people>
+  </data>
   <actions>
     <by person_ref="1">
       <do action_ref="global_action" person_ref="2" />
@@ -871,16 +901,18 @@ action,person,person.create,
     </action_rule>
   </rule_group>
 
-  <people>
-    <person id="Billy">
-      <race race_rule_ref="human"/>
-      <properties/>
-    </person>
-    <person id="Bob">
-      <race race_rule_ref="human"/>
-      <properties/>
-    </person>
-  </people>
+  <data>
+    <people>
+      <person id="Billy">
+        <race race_rule_ref="human"/>
+        <properties/>
+      </person>
+      <person id="Bob">
+        <race race_rule_ref="human"/>
+        <properties/>
+      </person>
+    </people>
+  </data>
   <actions>
     <person.on_person.property_mutation person_id_ref="Billy" target_person_id_ref="Bob" action_property_mutation_rule_ref="meleeAttack"/>
   </actions>
@@ -921,12 +953,14 @@ action,person,person.create,
     </classification_rule>
   </rule_group>
 
-  <people>
-    <person id="0">
-      <properties/>
-      <classifications/>
-    </person>
-  </people>
+  <data>
+    <people>
+      <person id="0">
+        <properties/>
+        <classifications/>
+      </person>
+    </people>
+  </data>
 </world_step>
 ```
 
@@ -971,20 +1005,22 @@ action,person,person.create,
     </classification_rule>
   </rule_group>
 
-  <people>
-    <person id="0">
-      <properties/>
-      <classifications/>
-    </person>
-    <person id="1">
-      <properties/>
-      <classifications/>
-    </person>
-    <person id="2">
-      <properties/>
-      <classifications/>
-    </person>
-  </people>
+  <data>
+    <people>
+      <person id="0">
+        <properties/>
+        <classifications/>
+      </person>
+      <person id="1">
+        <properties/>
+        <classifications/>
+      </person>
+      <person id="2">
+        <properties/>
+        <classifications/>
+      </person>
+    </people>
+  </data>
 </world_step>
 ```
 
@@ -1007,6 +1043,7 @@ undefined
     </randomization_table>
   </world_metadata>
   <rule_group id="rule_group_id"/>
+  <data/>
 </world_step>
 ```
 
@@ -1076,9 +1113,11 @@ undefined
       </entry>
     </events_rule>
   </rule_group>
-  <people>
-    <person id="0"/>
-  </people>
+  <data>
+    <people>
+      <person id="0"/>
+    </people>
+  </data>
   <actions>
     <by person_ref="0">
       <do action_rule_ref="action_rule" person_ref="0"/>
@@ -1145,10 +1184,12 @@ undefined
       </entry>
     </events_rule>
   </rule_group>
-  <people>
-    <person id="0">
-    </person>
-  </people>
+  <data>
+    <people>
+      <person id="0">
+      </person>
+    </people>
+  </data>
   <actions>
     <by person_ref="0">
       <do action_rule_ref="action_rule" person_ref="0"/>
@@ -1220,9 +1261,11 @@ undefined
       </entry>
     </events_rule>
   </rule_group>
-  <people>
-    <person id="0"/>
-  </people>
+  <data>
+    <people>
+      <person id="0"/>
+    </people>
+  </data>
   <actions>
     <by person_ref="0">
       <do action_rule_ref="action_rule" person_ref="0"/>
@@ -1294,10 +1337,12 @@ undefined
       </entry>
     </events_rule>
   </rule_group>
-  <people>
-    <person id="0">
-    </person>
-  </people>
+  <data>
+    <people>
+      <person id="0">
+      </person>
+    </people>
+  </data>
   <actions>
     <by person_ref="0">
       <do action_rule_ref="action_rule" person_ref="0"/>
@@ -1359,9 +1404,11 @@ undefined
       </entry>
     </events_rule>
   </rule_group>
-  <people>
-    <person id="0"/>
-  </people>
+  <data>
+    <people>
+      <person id="0"/>
+    </people>
+  </data>
   <actions>
     <by person_ref="0">
       <do action_rule_ref="action_rule" person_ref="0"/>
@@ -1424,9 +1471,11 @@ undefined
       </entry>
     </events_rule>
   </rule_group>
-  <people>
-    <person id="0"/>
-  </people>
+  <data>
+    <people>
+      <person id="0"/>
+    </people>
+  </data>
   <actions>
     <by person_ref="0">
       <do action_rule_ref="action_rule" person_ref="0"/>
@@ -1485,9 +1534,11 @@ undefined
       </entry>
     </events_rule>
   </rule_group>
-  <people>
-    <person id="0"/>
-  </people>
+  <data>
+    <people>
+      <person id="0"/>
+    </people>
+  </data>
   <actions>
     <by person_ref="0">
       <do action_rule_ref="action_rule" person_ref="0"/>
@@ -1548,9 +1599,11 @@ undefined
       </entry>
     </events_rule>
   </rule_group>
-  <people>
-    <person id="1"/>
-  </people>
+  <data>
+    <people>
+      <person id="1"/>
+    </people>
+  </data>
   <actions>
     <by person_ref="1">
       <do action_rule_ref="action_rule" person_ref="1" />
@@ -1611,13 +1664,15 @@ undefined
       </entry>
     </events_rule>
   </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
+  <data>
+    <people>
+      <person id="1">
+        <properties>
+          <property property_rule_ref="property" value="1"/>
+        </properties>
+      </person>
+    </people>
+  </data>
   <actions>
     <by person_ref="1">
       <do action_rule_ref="action_rule" person_ref="1" />
@@ -1678,13 +1733,15 @@ undefined
       </entry>
     </events_rule>
   </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-  </people>
+  <data>
+    <people>
+      <person id="1">
+        <properties>
+          <property property_rule_ref="property" value="1"/>
+        </properties>
+      </person>
+    </people>
+  </data>
   <actions>
     <by person_ref="1">
       <do action_rule_ref="action_rule" person_ref="1" />
@@ -1731,18 +1788,22 @@ undefined
       <entry id="my_classification"/>
     </location_classification_rule>
   </rule_group>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-      <classifications>
-        <classification location_classification_rule_ref="my_classification"/>
-      </classifications>
-    </node>
-    <node node_rule_ref="node" id="node_id_1">
-      <position x="0" y="0"/>
-    </node>
-  </location_graph>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+          <classifications>
+            <classification location_classification_rule_ref="my_classification"/>
+          </classifications>
+        </node>
+        <node node_rule_ref="node" id="node_id_1">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <location_graph.node.add_classification>
       <node_graph_selection>
@@ -1791,12 +1852,16 @@ undefined
       <entry id="location_classification_rule_id"/>
     </location_classification_rule>
   </rule_group>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-    </node>
-  </location_graph>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <location_graph.node.add_classification>
       <node_graph_selection/>
@@ -1843,24 +1908,28 @@ undefined
       <entry id="location_classification_rule_id"/>
     </location_classification_rule>
   </rule_group>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-    </node>
-    <node node_rule_ref="node" id="node_id_1">
-      <position x="0" y="0"/>
-    </node>
-  </location_graph>
-  <location_graph id="location_graph_id_2">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-    </node>
-    <node node_rule_ref="node" id="node_id_1">
-      <position x="0" y="0"/>
-    </node>
-  </location_graph>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+        </node>
+        <node node_rule_ref="node" id="node_id_1">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+      <location_graph id="location_graph_id_2">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+        </node>
+        <node node_rule_ref="node" id="node_id_1">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <location_graph.node.add_classification>
       <node_graph_selection>
@@ -1912,24 +1981,28 @@ undefined
       <entry id="location_classification_rule_id"/>
     </location_classification_rule>
   </rule_group>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-    </node>
-    <node node_rule_ref="node" id="node_id_1">
-      <position x="0" y="0"/>
-    </node>
-  </location_graph>
-  <location_graph id="location_graph_id_2">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-    </node>
-    <node node_rule_ref="node" id="node_id_1">
-      <position x="0" y="0"/>
-    </node>
-  </location_graph>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+        </node>
+        <node node_rule_ref="node" id="node_id_1">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+      <location_graph id="location_graph_id_2">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+        </node>
+        <node node_rule_ref="node" id="node_id_1">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <location_graph.node.add_classification>
       <node_graph_selection>
@@ -1972,25 +2045,29 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="A">
-      <position x="0" y="0"/>
-      <link_to node_id_ref="B" total_progress="0"/>
-    </node>
-    <node node_rule_ref="node" id="B">
-      <position x="100" y="0"/>
-      <link_to node_id_ref="C" total_progress="0"/>
-      <link_to node_id_ref="A" total_progress="0"/>
-    </node>
-    <node node_rule_ref="node" id="C">
-      <position x="100" y="100"/>
-      <link_to node_id_ref="D" total_progress="0"/>
-    </node>
-    <node node_rule_ref="node" id="D">
-      <position x="0" y="100"/>
-    </node>
-  </location_graph>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="A">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="B" total_progress="0"/>
+        </node>
+        <node node_rule_ref="node" id="B">
+          <position x="100" y="0"/>
+          <link_to node_id_ref="C" total_progress="0"/>
+          <link_to node_id_ref="A" total_progress="0"/>
+        </node>
+        <node node_rule_ref="node" id="C">
+          <position x="100" y="100"/>
+          <link_to node_id_ref="D" total_progress="0"/>
+        </node>
+        <node node_rule_ref="node" id="D">
+          <position x="0" y="100"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="A"/>
   </actions>
@@ -2037,12 +2114,17 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-    </node>
-  </location_graph>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
+
   <actions>
     <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
   </actions>
@@ -2085,12 +2167,16 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-    </node>
-  </location_graph>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
     <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
@@ -2135,13 +2221,17 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <people/>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-    </node>
-  </location_graph>
+  <data>
+    <people/>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
   </actions>
@@ -2182,12 +2272,16 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-    </node>
-  </location_graph>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
     <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
@@ -2230,12 +2324,16 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-    </node>
-  </location_graph>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
     <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
@@ -2277,16 +2375,20 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-      <link_to node_id_ref="second_node" total_progress="0"/>
-    </node>
-    <node node_rule_ref="node" id="second_node">
-      <position x="100" y="0"/>
-    </node>
-  </location_graph>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="second_node" total_progress="0"/>
+        </node>
+        <node node_rule_ref="node" id="second_node">
+          <position x="100" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
   </actions>
@@ -2330,16 +2432,20 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-      <link_to node_id_ref="second_node" total_progress="0"/>
-    </node>
-    <node node_rule_ref="node" id="second_node">
-      <position x="100" y="0"/>
-    </node>
-  </location_graph>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="second_node" total_progress="0"/>
+        </node>
+        <node node_rule_ref="node" id="second_node">
+          <position x="100" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
   </actions>
@@ -2483,38 +2589,42 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <location_graph id="first world">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="city" id="Capital">
-      <position x="0" y="0"/>
-      <link_to node_id_ref="0.0" total_progress="0"/>
-      <link_to node_id_ref="0.1" total_progress="0"/>
-      <link_to node_id_ref="0.2" total_progress="0"/>
-      <link_to node_id_ref="0.3" total_progress="0"/>
-    </node>
-    <node node_rule_ref="city" id="0.0">
-      <position x="1" y="0"/>
-      <link_to node_id_ref="Capital" total_progress="0"/>
-      <link_to node_id_ref="0.1" total_progress="0"/>
-      <link_to node_id_ref="0.2" total_progress="0"/>
-      <link_to node_id_ref="0.3" total_progress="0"/>
-    </node>
-    <node node_rule_ref="city" id="0.1">
-      <position x="2" y="0"/>
-      <link_to node_id_ref="0.0" total_progress="0"/>
-      <link_to node_id_ref="0.2" total_progress="0"/>
-      <link_to node_id_ref="0.3" total_progress="0"/>
-    </node>
-    <node node_rule_ref="city" id="0.2">
-      <position x="3" y="0"/>
-      <link_to node_id_ref="0.1" total_progress="0"/>
-      <link_to node_id_ref="0.3" total_progress="0"/>
-    </node>
-    <node node_rule_ref="city" id="0.3">
-      <position x="4" y="0"/>
-      <link_to node_id_ref="0.2" total_progress="0"/>
-    </node>
-  </location_graph>
+  <data>
+    <location>
+      <location_graph id="first world">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="city" id="Capital">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="0.0" total_progress="0"/>
+          <link_to node_id_ref="0.1" total_progress="0"/>
+          <link_to node_id_ref="0.2" total_progress="0"/>
+          <link_to node_id_ref="0.3" total_progress="0"/>
+        </node>
+        <node node_rule_ref="city" id="0.0">
+          <position x="1" y="0"/>
+          <link_to node_id_ref="Capital" total_progress="0"/>
+          <link_to node_id_ref="0.1" total_progress="0"/>
+          <link_to node_id_ref="0.2" total_progress="0"/>
+          <link_to node_id_ref="0.3" total_progress="0"/>
+        </node>
+        <node node_rule_ref="city" id="0.1">
+          <position x="2" y="0"/>
+          <link_to node_id_ref="0.0" total_progress="0"/>
+          <link_to node_id_ref="0.2" total_progress="0"/>
+          <link_to node_id_ref="0.3" total_progress="0"/>
+        </node>
+        <node node_rule_ref="city" id="0.2">
+          <position x="3" y="0"/>
+          <link_to node_id_ref="0.1" total_progress="0"/>
+          <link_to node_id_ref="0.3" total_progress="0"/>
+        </node>
+        <node node_rule_ref="city" id="0.3">
+          <position x="4" y="0"/>
+          <link_to node_id_ref="0.2" total_progress="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <location_graph.node.create_adjacent location_graph_id_ref="first world" node_id_ref="0.3"/>
   </actions>
@@ -2565,24 +2675,29 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id" />
-    <node node_rule_ref="city" id="Capital">
-      <position x="0" y="0"/>
-      <link_to node_id_ref="1.0" total_progress="0"/>
-      <link_to node_id_ref="1.1" total_progress="0"/>
-      <link_to node_id_ref="1.2" total_progress="0"/>
-    </node>
-    <node node_rule_ref="plains" id="1.0">
-      <position x="0" y="-1"/>
-    </node>
-    <node node_rule_ref="plains" id="1.1">
-      <position x="0" y="1"/>
-    </node>
-    <node node_rule_ref="plains" id="1.2">
-      <position x="1" y="0"/>
-    </node>
-  </location_graph>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id" />
+        <node node_rule_ref="city" id="Capital">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="1.0" total_progress="0"/>
+          <link_to node_id_ref="1.1" total_progress="0"/>
+          <link_to node_id_ref="1.2" total_progress="0"/>
+        </node>
+        <node node_rule_ref="plains" id="1.0">
+          <position x="0" y="-1"/>
+        </node>
+        <node node_rule_ref="plains" id="1.1">
+          <position x="0" y="1"/>
+        </node>
+        <node node_rule_ref="plains" id="1.2">
+          <position x="1" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
+
   <actions>
     <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="Capital"/>
   </actions>
@@ -2725,20 +2840,24 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <location_graph id="first world">
-    <rule location_graph_rule_ref="location_graph_rule_id" />
-    <node node_rule_ref="city" id="Capital">
-      <position x="0" y="0" />
-      <link_to node_id_ref="1.0" total_progress="0" />
-      <link_to node_id_ref="1.1" total_progress="0" />
-    </node>
-    <node node_rule_ref="plains" id="1.0">
-      <position x="1" y="0" />
-    </node>
-    <node node_rule_ref="plains" id="1.1">
-      <position x="0" y="1" />
-    </node>
-  </location_graph>
+  <data>
+    <location>
+      <location_graph id="first world">
+        <rule location_graph_rule_ref="location_graph_rule_id" />
+        <node node_rule_ref="city" id="Capital">
+          <position x="0" y="0" />
+          <link_to node_id_ref="1.0" total_progress="0" />
+          <link_to node_id_ref="1.1" total_progress="0" />
+        </node>
+        <node node_rule_ref="plains" id="1.0">
+          <position x="1" y="0" />
+        </node>
+        <node node_rule_ref="plains" id="1.1">
+          <position x="0" y="1" />
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <location_graph.node.create_adjacent location_graph_id_ref="first world" node_id_ref="Capital" />
   </actions>
@@ -2779,12 +2898,16 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-    </node>
-  </location_graph>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
     <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
@@ -2827,12 +2950,16 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-    </node>
-  </location_graph>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
     <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
@@ -2881,12 +3008,16 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-    </node>
-  </location_graph>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
   </actions>
@@ -2925,7 +3056,7 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-
+  <data/>
   <actions>
     <location_graph.create location_graph_rule_ref="location_graph_rule_id"/>
   </actions>
@@ -2966,7 +3097,7 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-
+  <data/>
   <actions>
     <location_graph.create location_graph_rule_ref="location_graph_rule_id"/>
   </actions>
@@ -3005,10 +3136,14 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id"/>
-  </location_graph>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id"/>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <location_graph.node.create_adjacent location_graph_id_ref="invalid_location_graph_id" node_id_ref="node_id"/>
   </actions>
@@ -3047,10 +3182,14 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id"/>
-  </location_graph>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id"/>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="invalid_node_id"/>
   </actions>
@@ -3088,6 +3227,7 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
+  <data/>
 </world_step>
 ```
 
@@ -3120,6 +3260,7 @@ undefined
       </entry>
     </name_rule>
   </rule_group>
+  <data/>
 </world_step>
 ```
 
@@ -3148,6 +3289,7 @@ undefined
       </entry>
     </name_rule>
   </rule_group>
+  <data/>
 </world_step>
 ```
 
@@ -3189,6 +3331,7 @@ undefined
       </entry>
     </name_rule>
   </rule_group>
+  <data/>
 </world_step>
 ```
 
@@ -3222,6 +3365,7 @@ undefined
       </entry>
     </name_rule>
   </rule_group>
+  <data/>
 </world_step>
 ```
 
@@ -3260,36 +3404,40 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <people>
-    <person id="person_id">
-    </person>
-  </people>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-      <link_to node_id_ref="node_id_2" total_progress="1">
-        <people>
-          <person person_id_ref="person_id" accumulated_progress="0"/>
-        </people>
-      </link_to>
-    </node>
-    <node node_rule_ref="node" id="node_id_destination">
-      <position x="0" y="1"/>
-    </node>
-    <node node_rule_ref="node" id="node_id_2">
-      <position x="0" y="4"/>
-      <link_to node_id_ref="node_id_3" total_progress="1"/>
-    </node>
-    <node node_rule_ref="node" id="node_id_3">
-      <position x="0" y="3"/>
-      <link_to node_id_ref="node_id_4" total_progress="1"/>
-    </node>
-    <node node_rule_ref="node" id="node_id_4">
-      <position x="0" y="2"/>
-      <link_to node_id_ref="node_id_destination" total_progress="1"/>
-    </node>
-  </location_graph>
+  <data>
+    <people>
+      <person id="person_id">
+      </person>
+    </people>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="node_id_2" total_progress="1">
+            <people>
+              <person person_id_ref="person_id" accumulated_progress="0"/>
+            </people>
+          </link_to>
+        </node>
+        <node node_rule_ref="node" id="node_id_destination">
+          <position x="0" y="1"/>
+        </node>
+        <node node_rule_ref="node" id="node_id_2">
+          <position x="0" y="4"/>
+          <link_to node_id_ref="node_id_3" total_progress="1"/>
+        </node>
+        <node node_rule_ref="node" id="node_id_3">
+          <position x="0" y="3"/>
+          <link_to node_id_ref="node_id_4" total_progress="1"/>
+        </node>
+        <node node_rule_ref="node" id="node_id_4">
+          <position x="0" y="2"/>
+          <link_to node_id_ref="node_id_destination" total_progress="1"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <person.move_to person_id_ref="person_id">
       <find_path_towards>
@@ -3335,35 +3483,39 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <people>
-    <person id="person_id">
-    </person>
-  </people>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-      <link_to node_id_ref="node_id_2" total_progress="1"/>
-      <people>
-        <person person_id_ref="person_id"/>
-      </people>
-    </node>
-    <node node_rule_ref="node" id="node_id_destination">
-      <position x="0" y="1"/>
-    </node>
-    <node node_rule_ref="node" id="node_id_2">
-      <position x="0" y="4"/>
-      <link_to node_id_ref="node_id_3" total_progress="1"/>
-    </node>
-    <node node_rule_ref="node" id="node_id_3">
-      <position x="0" y="3"/>
-      <link_to node_id_ref="node_id_4" total_progress="1"/>
-    </node>
-    <node node_rule_ref="node" id="node_id_4">
-      <position x="0" y="2"/>
-      <link_to node_id_ref="node_id_destination" total_progress="1"/>
-    </node>
-  </location_graph>
+  <data>
+    <people>
+      <person id="person_id">
+      </person>
+    </people>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="node_id_2" total_progress="1"/>
+          <people>
+            <person person_id_ref="person_id"/>
+          </people>
+        </node>
+        <node node_rule_ref="node" id="node_id_destination">
+          <position x="0" y="1"/>
+        </node>
+        <node node_rule_ref="node" id="node_id_2">
+          <position x="0" y="4"/>
+          <link_to node_id_ref="node_id_3" total_progress="1"/>
+        </node>
+        <node node_rule_ref="node" id="node_id_3">
+          <position x="0" y="3"/>
+          <link_to node_id_ref="node_id_4" total_progress="1"/>
+        </node>
+        <node node_rule_ref="node" id="node_id_4">
+          <position x="0" y="2"/>
+          <link_to node_id_ref="node_id_destination" total_progress="1"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <person.move_to person_id_ref="person_id">
       <find_path_towards>
@@ -3409,36 +3561,41 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <people>
-    <person id="person_id">
-    </person>
-  </people>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-      <link_to node_id_ref="node_id_2" total_progress="1"/>
-      <link_to node_id_ref="node_id_4" total_progress="1"/>
-      <people>
-        <person person_id_ref="person_id"/>
-      </people>
-    </node>
-    <node node_rule_ref="node" id="node_id_destination">
-      <position x="0" y="1"/>
-    </node>
-    <node node_rule_ref="node" id="node_id_2">
-      <position x="0" y="4"/>
-      <link_to node_id_ref="node_id_3" total_progress="1"/>
-    </node>
-    <node node_rule_ref="node" id="node_id_3">
-      <position x="0" y="3"/>
-      <link_to node_id_ref="node_id_4" total_progress="1"/>
-    </node>
-    <node node_rule_ref="node" id="node_id_4">
-      <position x="0" y="2"/>
-      <link_to node_id_ref="node_id_destination" total_progress="1"/>
-    </node>
-  </location_graph>
+  <data>
+    <people>
+      <person id="person_id">
+      </person>
+    </people>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="node_id_2" total_progress="1"/>
+          <link_to node_id_ref="node_id_4" total_progress="1"/>
+          <people>
+            <person person_id_ref="person_id"/>
+          </people>
+        </node>
+        <node node_rule_ref="node" id="node_id_destination">
+          <position x="0" y="1"/>
+        </node>
+        <node node_rule_ref="node" id="node_id_2">
+          <position x="0" y="4"/>
+          <link_to node_id_ref="node_id_3" total_progress="1"/>
+        </node>
+        <node node_rule_ref="node" id="node_id_3">
+          <position x="0" y="3"/>
+          <link_to node_id_ref="node_id_4" total_progress="1"/>
+        </node>
+        <node node_rule_ref="node" id="node_id_4">
+          <position x="0" y="2"/>
+          <link_to node_id_ref="node_id_destination" total_progress="1"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
+
   <actions>
     <person.move_to person_id_ref="person_id">
       <find_path_towards>
@@ -3484,36 +3641,40 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <people>
-    <person id="person_id">
-    </person>
-  </people>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-      <link_to node_id_ref="node_id_2" total_progress="1"/>
-      <link_to node_id_ref="node_id_4" total_progress="1000"/>
-      <people>
-        <person person_id_ref="person_id"/>
-      </people>
-    </node>
-    <node node_rule_ref="node" id="node_id_destination">
-      <position x="0" y="1"/>
-    </node>
-    <node node_rule_ref="node" id="node_id_2">
-      <position x="0" y="4"/>
-      <link_to node_id_ref="node_id_3" total_progress="1"/>
-    </node>
-    <node node_rule_ref="node" id="node_id_3">
-      <position x="0" y="3"/>
-      <link_to node_id_ref="node_id_4" total_progress="1"/>
-    </node>
-    <node node_rule_ref="node" id="node_id_4">
-      <position x="0" y="2"/>
-      <link_to node_id_ref="node_id_destination" total_progress="1"/>
-    </node>
-  </location_graph>
+  <data>
+    <people>
+      <person id="person_id">
+      </person>
+    </people>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="node_id_2" total_progress="1"/>
+          <link_to node_id_ref="node_id_4" total_progress="1000"/>
+          <people>
+            <person person_id_ref="person_id"/>
+          </people>
+        </node>
+        <node node_rule_ref="node" id="node_id_destination">
+          <position x="0" y="1"/>
+        </node>
+        <node node_rule_ref="node" id="node_id_2">
+          <position x="0" y="4"/>
+          <link_to node_id_ref="node_id_3" total_progress="1"/>
+        </node>
+        <node node_rule_ref="node" id="node_id_3">
+          <position x="0" y="3"/>
+          <link_to node_id_ref="node_id_4" total_progress="1"/>
+        </node>
+        <node node_rule_ref="node" id="node_id_4">
+          <position x="0" y="2"/>
+          <link_to node_id_ref="node_id_destination" total_progress="1"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <person.move_to person_id_ref="person_id">
       <find_path_towards>
@@ -3561,28 +3722,32 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <people>
-    <person id="person_id">
-    </person>
-  </people>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-      <link_to node_id_ref="node_id_2" total_progress="1">
-        <person_progress_property initial="3"/>
-      </link_to>
-      <people>
-        <person person_id_ref="person_id"/>
-      </people>
-    </node>
-    <node node_rule_ref="node" id="node_id_2">
-      <position x="0" y="1"/>
-    </node>
-    <node node_rule_ref="node" id="node_id_destination">
-      <position x="0" y="1"/>
-    </node>
-  </location_graph>
+  <data>
+    <people>
+      <person id="person_id">
+      </person>
+    </people>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="node_id_2" total_progress="1">
+            <person_progress_property initial="3"/>
+          </link_to>
+          <people>
+            <person person_id_ref="person_id"/>
+          </people>
+        </node>
+        <node node_rule_ref="node" id="node_id_2">
+          <position x="0" y="1"/>
+        </node>
+        <node node_rule_ref="node" id="node_id_destination">
+          <position x="0" y="1"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <person.move_to person_id_ref="person_id">
       <path>
@@ -3630,31 +3795,35 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <people>
-    <person id="person_id">
-    </person>
-  </people>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-      <link_to node_id_ref="node_id_2" total_progress="1">
-        <person_progress_property initial="4"/>
-        <people>
-          <person person_id_ref="person_id" accumulated_progress="1"/>
-        </people>
-      </link_to>
-    </node>
-    <node node_rule_ref="node" id="node_id_2">
-      <position x="0" y="1"/>
-      <link_to node_id_ref="node_id_destination" total_progress="9">
-        <person_progress_property initial="10"/>
-      </link_to>
-    </node>
-    <node node_rule_ref="node" id="node_id_destination">
-      <position x="0" y="1"/>
-    </node>
-  </location_graph>
+  <data>
+    <people>
+      <person id="person_id">
+      </person>
+    </people>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="node_id_2" total_progress="1">
+            <person_progress_property initial="4"/>
+            <people>
+              <person person_id_ref="person_id" accumulated_progress="1"/>
+            </people>
+          </link_to>
+        </node>
+        <node node_rule_ref="node" id="node_id_2">
+          <position x="0" y="1"/>
+          <link_to node_id_ref="node_id_destination" total_progress="9">
+            <person_progress_property initial="10"/>
+          </link_to>
+        </node>
+        <node node_rule_ref="node" id="node_id_destination">
+          <position x="0" y="1"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <person.move_to person_id_ref="person_id">
       <path>
@@ -3703,31 +3872,35 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <people>
-    <person id="person_id">
-    </person>
-  </people>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-      <link_to node_id_ref="node_id_2" total_progress="1">
-        <person_progress_property initial="4"/>
-        <people>
-          <person person_id_ref="person_id" accumulated_progress="1"/>
-        </people>
-      </link_to>
-    </node>
-    <node node_rule_ref="node" id="node_id_2">
-      <position x="0" y="1"/>
-      <link_to node_id_ref="node_id_destination" total_progress="9">
-        <person_progress_property initial="10"/>
-      </link_to>
-    </node>
-    <node node_rule_ref="node" id="node_id_destination">
-      <position x="0" y="1"/>
-    </node>
-  </location_graph>
+  <data>
+    <people>
+      <person id="person_id">
+      </person>
+    </people>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="node_id_2" total_progress="1">
+            <person_progress_property initial="4"/>
+            <people>
+              <person person_id_ref="person_id" accumulated_progress="1"/>
+            </people>
+          </link_to>
+        </node>
+        <node node_rule_ref="node" id="node_id_2">
+          <position x="0" y="1"/>
+          <link_to node_id_ref="node_id_destination" total_progress="9">
+            <person_progress_property initial="10"/>
+          </link_to>
+        </node>
+        <node node_rule_ref="node" id="node_id_destination">
+          <position x="0" y="1"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <person.move_to person_id_ref="person_id">
       <path>
@@ -3777,41 +3950,45 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <people>
-    <person id="person_id">
-    </person>
-  </people>
-  <location_graph id="first world">
-    <rule location_graph_rule_ref="location_graph_rule_id" />
-    <node node_rule_ref="node" id="origin">
-      <position x="0" y="0" />
-      <link_to node_id_ref="0.0" total_progress="5">
-        <person_progress_property initial="1" />
-        <people />
-      </link_to>
-      <people>
-        <person person_id_ref="1" />
-      </people>
-    </node>
-    <node node_rule_ref="node" id="0.0">
-      <position x="8" y="0" />
-      <link_to node_id_ref="0.1" total_progress="5">
-        <person_progress_property initial="1" />
-        <people />
-      </link_to>
-      <people />
-    </node>
-    <node node_rule_ref="node" id="0.1">
-      <position x="4" y="3" />
-      <link_to node_id_ref="origin" total_progress="5">
-        <person_progress_property initial="1" />
-        <people />
-      </link_to>
-      <people>
-        <person person_id_ref="0" />
-      </people>
-    </node>
-  </location_graph>
+  <data>
+    <people>
+      <person id="person_id">
+      </person>
+    </people>
+    <location>
+      <location_graph id="first world">
+        <rule location_graph_rule_ref="location_graph_rule_id" />
+        <node node_rule_ref="node" id="origin">
+          <position x="0" y="0" />
+          <link_to node_id_ref="0.0" total_progress="5">
+            <person_progress_property initial="1" />
+            <people />
+          </link_to>
+          <people>
+            <person person_id_ref="1" />
+          </people>
+        </node>
+        <node node_rule_ref="node" id="0.0">
+          <position x="8" y="0" />
+          <link_to node_id_ref="0.1" total_progress="5">
+            <person_progress_property initial="1" />
+            <people />
+          </link_to>
+          <people />
+        </node>
+        <node node_rule_ref="node" id="0.1">
+          <position x="4" y="3" />
+          <link_to node_id_ref="origin" total_progress="5">
+            <person_progress_property initial="1" />
+            <people />
+          </link_to>
+          <people>
+            <person person_id_ref="0" />
+          </people>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <person.move_to person_id_ref="0">
       <path>
@@ -3860,31 +4037,35 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <people>
-    <person id="person_id">
-    </person>
-  </people>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-      <link_to node_id_ref="node_id_2" total_progress="1">
-        <person_progress_property initial="4"/>
-      </link_to>
-      <people>
-        <person person_id_ref="person_id"/>
-      </people>
-    </node>
-    <node node_rule_ref="node" id="node_id_2">
-      <position x="0" y="1"/>
-      <link_to node_id_ref="node_id_destination" total_progress="1">
-        <person_progress_property initial="4"/>
-      </link_to>
-    </node>
-    <node node_rule_ref="node" id="node_id_destination">
-      <position x="0" y="1"/>
-    </node>
-  </location_graph>
+  <data>
+    <people>
+      <person id="person_id">
+      </person>
+    </people>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="node_id_2" total_progress="1">
+            <person_progress_property initial="4"/>
+          </link_to>
+          <people>
+            <person person_id_ref="person_id"/>
+          </people>
+        </node>
+        <node node_rule_ref="node" id="node_id_2">
+          <position x="0" y="1"/>
+          <link_to node_id_ref="node_id_destination" total_progress="1">
+            <person_progress_property initial="4"/>
+          </link_to>
+        </node>
+        <node node_rule_ref="node" id="node_id_destination">
+          <position x="0" y="1"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <person.move_to person_id_ref="person_id">
       <path>
@@ -3934,31 +4115,35 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <people>
-    <person id="person_id">
-    </person>
-  </people>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-      <link_to node_id_ref="node_id_2" total_progress="1">
-        <person_progress_property initial="4"/>
-      </link_to>
-    </node>
-    <node node_rule_ref="node" id="node_id_2">
-      <position x="0" y="1"/>
-      <link_to node_id_ref="node_id_destination" total_progress="9">
-        <person_progress_property initial="1"/>
-      </link_to>
-      <people>
-        <person person_id_ref="person_id"/>
-      </people>
-    </node>
-    <node node_rule_ref="node" id="node_id_destination">
-      <position x="0" y="1"/>
-    </node>
-  </location_graph>
+  <data>
+    <people>
+      <person id="person_id">
+      </person>
+    </people>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="node_id_2" total_progress="1">
+            <person_progress_property initial="4"/>
+          </link_to>
+        </node>
+        <node node_rule_ref="node" id="node_id_2">
+          <position x="0" y="1"/>
+          <link_to node_id_ref="node_id_destination" total_progress="9">
+            <person_progress_property initial="1"/>
+          </link_to>
+          <people>
+            <person person_id_ref="person_id"/>
+          </people>
+        </node>
+        <node node_rule_ref="node" id="node_id_destination">
+          <position x="0" y="1"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <person.move_to person_id_ref="person_id">
       <path>
@@ -4008,28 +4193,32 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <people>
-    <person id="person_id">
-    </person>
-  </people>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-      <link_to node_id_ref="node_id_2" total_progress="1">
-        <person_progress_property initial="3"/>
-      </link_to>
-      <people>
-        <person person_id_ref="person_id"/>
-      </people>
-    </node>
-    <node node_rule_ref="node" id="node_id_2">
-      <position x="0" y="1"/>
-    </node>
-    <node node_rule_ref="node" id="node_id_destination">
-      <position x="0" y="1"/>
-    </node>
-  </location_graph>
+  <data>
+    <people>
+      <person id="person_id">
+      </person>
+    </people>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="node_id_2" total_progress="1">
+            <person_progress_property initial="3"/>
+          </link_to>
+          <people>
+            <person person_id_ref="person_id"/>
+          </people>
+        </node>
+        <node node_rule_ref="node" id="node_id_2">
+          <position x="0" y="1"/>
+        </node>
+        <node node_rule_ref="node" id="node_id_destination">
+          <position x="0" y="1"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <person.move_to person_id_ref="person_id">
       <path>
@@ -4079,31 +4268,35 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <people>
-    <person id="person_id">
-    </person>
-  </people>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-      <link_to node_id_ref="node_id_2" total_progress="1">
-        <person_progress_property initial="4"/>
-      </link_to>
-      <people>
-        <person person_id_ref="person_id"/>
-      </people>
-    </node>
-    <node node_rule_ref="node" id="node_id_2">
-      <position x="0" y="1"/>
-      <link_to node_id_ref="node_id_destination" total_progress="10">
-        <person_progress_property initial="9"/>
-      </link_to>
-    </node>
-    <node node_rule_ref="node" id="node_id_destination">
-      <position x="0" y="1"/>
-    </node>
-  </location_graph>
+  <data>
+    <people>
+      <person id="person_id">
+      </person>
+    </people>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="node_id_2" total_progress="1">
+            <person_progress_property initial="4"/>
+          </link_to>
+          <people>
+            <person person_id_ref="person_id"/>
+          </people>
+        </node>
+        <node node_rule_ref="node" id="node_id_2">
+          <position x="0" y="1"/>
+          <link_to node_id_ref="node_id_destination" total_progress="10">
+            <person_progress_property initial="9"/>
+          </link_to>
+        </node>
+        <node node_rule_ref="node" id="node_id_destination">
+          <position x="0" y="1"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <person.move_to person_id_ref="person_id">
       <path>
@@ -4153,25 +4346,29 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <people>
-    <person id="person_id">
-    </person>
-  </people>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-      <link_to node_id_ref="node_id_destination" total_progress="10">
-        <person_progress_property initial="1"/>
-      </link_to>
-      <people>
-        <person person_id_ref="person_id"/>
-      </people>
-    </node>
-    <node node_rule_ref="node" id="node_id_destination">
-      <position x="0" y="1"/>
-    </node>
-  </location_graph>
+  <data>
+    <people>
+      <person id="person_id">
+      </person>
+    </people>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="node_id_destination" total_progress="10">
+            <person_progress_property initial="1"/>
+          </link_to>
+          <people>
+            <person person_id_ref="person_id"/>
+          </people>
+        </node>
+        <node node_rule_ref="node" id="node_id_destination">
+          <position x="0" y="1"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <person.move_to person_id_ref="person_id">
       <path>
@@ -4218,23 +4415,29 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <people>
-    <person id="person_id">
-    </person>
-  </people>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-      <link_to node_id_ref="node_id_destination" total_progress="1"/>
-      <people>
-        <person person_id_ref="person_id"/>
-      </people>
-    </node>
-    <node node_rule_ref="node" id="node_id_destination">
-      <position x="0" y="1"/>
-    </node>
-  </location_graph><actions>
+  <data>
+    <people>
+      <person id="person_id">
+      </person>
+    </people>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="node_id_destination" total_progress="1"/>
+          <people>
+            <person person_id_ref="person_id"/>
+          </people>
+        </node>
+        <node node_rule_ref="node" id="node_id_destination">
+          <position x="0" y="1"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
+
+  <actions>
   <person.move_to person_id_ref="person_id">
     <path>
       <node node_id_ref="node_id_destination"/>
@@ -4278,22 +4481,26 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <people>
-    <person id="person_id">
-    </person>
-  </people>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-      <people>
-        <person person_id_ref="person_id"/>
-      </people>
-    </node>
-    <node node_rule_ref="node" id="second_node_id">
-      <position x="0" y="0"/>
-    </node>
-  </location_graph>
+  <data>
+    <people>
+      <person id="person_id">
+      </person>
+    </people>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+          <people>
+            <person person_id_ref="person_id"/>
+          </people>
+        </node>
+        <node node_rule_ref="node" id="second_node_id">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <person.teleport person_id_ref="person_id">
       <location_graph location_graph_id_ref="location_graph_id" node_id_ref="second_node_id"/>
@@ -4336,16 +4543,21 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <people>
-    <person id="person_id">
-    </person>
-  </people>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-    </node>
-  </location_graph>
+  <data>
+    <people>
+      <person id="person_id">
+      </person>
+    </people>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
+
   <actions>
     <person.teleport person_id_ref="person_id">
       <location_graph location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
@@ -4387,25 +4599,29 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <people>
-    <person id="person_id">
-    </person>
-  </people>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-      <link_to node_id_ref="second_node_id" total_progress="0"/>
-    </node>
-    <node node_rule_ref="node" id="second_node_id">
-      <position x="0" y="0"/>
-      <link_to node_id_ref="node_id" total_progress="0">
-        <people>
-          <person person_id_ref="person_id" accumulated_progress="0"/>
-        </people>
-      </link_to>
-    </node>
-  </location_graph>
+  <data>
+    <people>
+      <person id="person_id">
+      </person>
+    </people>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="second_node_id" total_progress="0"/>
+        </node>
+        <node node_rule_ref="node" id="second_node_id">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="node_id" total_progress="0">
+            <people>
+              <person person_id_ref="person_id" accumulated_progress="0"/>
+            </people>
+          </link_to>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <person.teleport person_id_ref="person_id">
       <link_to accumulated_progress="1">
@@ -4454,20 +4670,24 @@ undefined
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <people>
-    <person id="person_id">
-    </person>
-  </people>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-      <link_to node_id_ref="second_node_id" total_progress="0"/>
-    </node>
-    <node node_rule_ref="node" id="second_node_id">
-      <position x="0" y="0"/>
-    </node>
-  </location_graph>
+  <data>
+    <people>
+      <person id="person_id">
+      </person>
+    </people>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="second_node_id" total_progress="0"/>
+        </node>
+        <node node_rule_ref="node" id="second_node_id">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <person.teleport person_id_ref="person_id">
       <link_to accumulated_progress="1">

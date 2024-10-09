@@ -4,7 +4,7 @@ import {PersonQueryType} from "./getPersonProperty";
 import {JsonQueryType} from "../../JsonQueryType";
 import {Position} from "./selectPerson";
 
-export type PersonQueryElement = JsonSchema["children"]["people"]["children"]["person"];
+export type PersonQueryElement = JsonSchema["children"]["data"]["children"]["people"]["children"]["person"];
 
 const createNewPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType) => {
   const ruleGroup = jsonUtil.getRuleGroups();
@@ -20,10 +20,10 @@ const createNewPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType
 
   const name = jsonUtil.name.calculateNameFromRefString(race?.queryOptional("name")?.attributeMap?.name_rule_ref);
 
-  let people = jsonUtil.json.queryOptional("people");
+  let people = jsonUtil.json.queryOptional("data").queryOptional("people");
   if(!people) {
-    jsonUtil.json.appendChild("people", undefined, {});
-    people = jsonUtil.json.queryOptional("people");
+    jsonUtil.json.queryOptional("data").appendChild("people", undefined, {});
+    people = jsonUtil.json.queryOptional("data").queryOptional("people");
   }
   const person = people.appendChild("person", undefined, {
     id: jsonUtil.getNextId()

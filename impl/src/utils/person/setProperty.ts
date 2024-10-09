@@ -2,7 +2,7 @@ import {JsonSchema} from "../JsonSchema";
 import {JsonUtil} from "../util";
 import {mergeError} from "../../mergeError";
 
-export type PersonQueryType = JsonSchema["children"]["people"]["children"]["person"]
+export type PersonQueryType = JsonSchema["children"]["data"]["children"]["people"]["children"]["person"]
 
 export const setProperty = (readJson: JsonUtil, personQueryType: PersonQueryType, key: string, value:string) => {
   try {

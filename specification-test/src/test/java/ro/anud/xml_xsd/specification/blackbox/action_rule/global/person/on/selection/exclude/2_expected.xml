@@ -38,16 +38,18 @@
       </global>
     </action_rule>
   </rule_group>
-  <people>
-    <person id="1">
-      <classifications/>
-    </person>
-    <person id="2">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-      <classifications/>
-    </person>
-  </people>
+  <data>
+    <people>
+      <person id="1">
+        <classifications/>
+      </person>
+      <person id="2">
+        <properties>
+          <property property_rule_ref="property" value="1"/>
+        </properties>
+        <classifications/>
+      </person>
+    </people>
+  </data>
   <actions/>
 </world_step>

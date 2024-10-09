@@ -12,8 +12,8 @@ public partial class PersonSelect : OptionButton
 
     private DataStore<world_step> _worldStepDataStore = StoreWorld_Step.instance;
 
-    private world_step__people__person? _person;
-    public DataStore<world_step__people__person> value = new DataStore<world_step__people__person>();
+    private world_step__data__people__person? _person;
+    public DataStore<world_step__data__people__person> value = new DataStore<world_step__data__people__person>();
 
     public PersonSelect()
     {
@@ -39,7 +39,7 @@ public partial class PersonSelect : OptionButton
             Clear();
             //Add placeholder
             AddItem("Select Person");
-            foreach (var person in worldStep.people.SelectMany(people => people.person))
+            foreach (var person in worldStep.data.people?.person)
             {
                 AddItem(person.name);
             }
@@ -50,7 +50,7 @@ public partial class PersonSelect : OptionButton
             }
         });
     }
-    private world_step__people__person? SelectById(string? id) {
+    private world_step__data__people__person? SelectById(string? id) {
         if (id == null)
         {
             value.data = null;
@@ -62,8 +62,8 @@ public partial class PersonSelect : OptionButton
         {
             return null;
         }
-        var personList = worldStep.people.SelectMany(people => people.person).ToList();
-        var person = personList.First(person => person.id == id);
+        var personList = worldStep.data.people?.person;
+        var person = personList?.First(person => person.id == id);
         
         Select(personList.IndexOf(person) + 1);
         return person;
@@ -86,7 +86,7 @@ public partial class PersonSelect : OptionButton
         {
             return;
         }
-        var person = worldStep.people.SelectMany(people => people.person).ElementAt(index - 1);
+        var person = worldStep.data.people?.person?.ElementAt(index - 1);
         _person = person;
         value.data = person;
     }

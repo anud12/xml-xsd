@@ -100,7 +100,7 @@ public partial class WorldStep : Control
 					//add LocationGraphScene to LocationGraphSceneContainer
 					GetNode<Control>("%LocationGraphSceneContainer").AddChild(locationGraphScene);
 			});
-			worldStep?.location_graph?.ForEach(locationGraph =>
+			worldStep?.data?.location?.location_graph?.ForEach(locationGraph =>
 			{
 				rootLocationGraphNode.options.Add(locationGraph.id);
 				rootLocationGraphNode.options = rootLocationGraphNode.options;

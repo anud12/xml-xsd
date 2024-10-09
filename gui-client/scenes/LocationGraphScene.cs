@@ -67,7 +67,7 @@ public partial class LocationGraphScene : Control
 	{
 		Dictionary<string, Control> nodeById = new Dictionary<string, Control>();
 		Dictionary<Vector2, Control> node2DVector2D = new Dictionary<Vector2, Control>();
-		var nodeList = worldStep.location_graph.Where(location_graph => location_graph.id == this.locationGraphId).SelectMany(location_graph =>
+		var nodeList = worldStep.data.location?.location_graph.Where(location_graph => location_graph.id == this.locationGraphId).SelectMany(location_graph =>
 		{
 			return location_graph.node.SelectMany(node =>
 					{
@@ -120,7 +120,7 @@ public partial class LocationGraphScene : Control
 		return (nodeById, nodeList);
 	}
 
-	private void addAdjacent(world_step__location_graph locationGraph, world_step__location_graph__node node, world_step worldStep)
+	private void addAdjacent(world_step__data__location__location_graph locationGraph, world_step__data__location__location_graph__node node, world_step worldStep)
 	{
 		GD.Print("Adding adjacent to " + node.id);
 
@@ -133,7 +133,7 @@ public partial class LocationGraphScene : Control
 		LoadWorldStep.executeNextStep();
 	}
 
-	private void TeleportTo(world_step__location_graph locationGraph, world_step__location_graph__node node, world_step worldStep)
+	private void TeleportTo(world_step__data__location__location_graph locationGraph, world_step__data__location__location_graph__node node, world_step worldStep)
 	{
 		GD.Print("Teleporting to " + node.id);
 
@@ -150,7 +150,7 @@ public partial class LocationGraphScene : Control
 		worldStep.GetOrInsertDefault_actions().person__teleport = teleport;
 		LoadWorldStep.executeNextStep();
 	}
-	private void PathTo(world_step__location_graph locationGraph, world_step__location_graph__node node, world_step worldStep)
+	private void PathTo(world_step__data__location__location_graph locationGraph, world_step__data__location__location_graph__node node, world_step worldStep)
 	{
 		GD.Print("Teleporting to " + node.id);
 
@@ -172,7 +172,7 @@ public partial class LocationGraphScene : Control
 	}
 	private IEnumerable<Node> loadLinks(world_step worldStep, Dictionary<string, Control> nodesById)
 	{
-		IEnumerable<Node> nodeList = (worldStep.location_graph ?? new List<world_step__location_graph>())
+		IEnumerable<Node> nodeList = (worldStep.data.location?.location_graph ?? new List<world_step__data__location__location_graph>())
 		.Where(location_graph => location_graph.id == this.locationGraphId)
 		.SelectMany(location_graph => location_graph.node)
 		.SelectMany(startNodeElement => startNodeElement.link_to.SelectMany(linkTo =>
@@ -189,7 +189,7 @@ public partial class LocationGraphScene : Control
 				IEnumerable<Node>? personNodeList = linkTo.people?.person?.Select(person =>
 					{
 						var personId = person.person_id_ref;
-						var personData = worldStep.people.SelectMany(people => people.person).Where(person => person.id == personId).First();
+						var personData = worldStep.data.people?.person?.Where(person => person.id == personId).First();
 						var personScene = PersonComponent.PackedScene.Instantiate();
 						var personComponent = personScene.GetNode<PersonComponent>("./");
 						personComponent.initializeFromId(personId);
@@ -217,7 +217,7 @@ public partial class LocationGraphScene : Control
 		return nodeList;
 	}
 
-	private void addSteps(Line2D line2D, world_step__location_graph__node__link_to linkTo)
+	private void addSteps(Line2D line2D, world_step__data__location__location_graph__node__link_to linkTo)
 	{
 		var totalProgress = linkTo.total_progress - 1;
 
@@ -244,7 +244,7 @@ public partial class LocationGraphScene : Control
 		}
 	}
 
-	private void addPersons(Line2D line2D, world_step__location_graph__node__link_to linkTo, world_step world_Step)
+	private void addPersons(Line2D line2D, world_step__data__location__location_graph__node__link_to linkTo, world_step world_Step)
 	{
 		var totalProgress = (linkTo.total_progress - 1) * 2;
 
@@ -280,10 +280,10 @@ public partial class LocationGraphScene : Control
 					return;
 				}
 
-				var personData = world_Step.people.SelectMany(people => people.person).Where(person => person.id == personId).First();
+				var personData = world_Step.data.people?.person?.Where(person => person.id == personId).First();
 				if (personData != null)
 				{
-					string personName = personData.name.ToString() + "(" + progress + ")" + "(" + relativeProgress + ")";
+					string personName = personData.name?.ToString() + "(" + progress + ")" + "(" + relativeProgress + ")";
 					label.Text = personName.ToString();
 				}
 			});

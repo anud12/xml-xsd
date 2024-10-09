@@ -84,7 +84,7 @@ public class LoadWorldStep
 	private System.Collections.Generic.IEnumerable<Node> loadNodes(world_step worldStep)
 	{
 
-		return worldStep.location_graph.SelectMany(locationGraph => locationGraph.node.SelectMany(node =>
+		return worldStep.data.location?.location_graph.SelectMany(locationGraph => locationGraph.node.SelectMany(node =>
 		{
 			var position = node.position;
 			var packedScene = LocationGraphNodeComponent.PackedScene.Instantiate();
@@ -100,10 +100,10 @@ public class LoadWorldStep
 			locationGraphNodeComponent.initialize(node, worldStep);
 			locationGraphNodeComponent.setOnCreateAdjacentButtonPressed(node => addAdjacent(locationGraph, node));
 			return new Node[] { locationGraphNodeComponent };
-		}));
+		})) ?? Array.Empty<Node>().AsEnumerable();
 	}
 
-	private void addAdjacent(world_step__location_graph locationGraph, world_step__location_graph__node node)
+	private void addAdjacent(world_step__data__location__location_graph locationGraph, world_step__data__location__location_graph__node node)
 	{
 
 
@@ -120,8 +120,8 @@ public class LoadWorldStep
 	}
 	private System.Collections.Generic.IEnumerable<Node> loadLinks(world_step worldStep)
 	{
-		var nodeById = worldStep.location_graph.SelectMany(locationGraph => locationGraph.node).ToDictionary(node => node.id);
-		return worldStep.location_graph.SelectMany(locationGraph => locationGraph.node.SelectMany(node =>
+		var nodeById = worldStep.data.location?.location_graph?.SelectMany(locationGraph => locationGraph.node).ToDictionary(node => node.id);
+		return worldStep.data.location?.location_graph?.SelectMany(locationGraph => locationGraph.node.SelectMany(node =>
 			{
 				GD.Print("node.link_to: " + node.link_to.Count);
 				return node.link_to.Select(linkTo =>
@@ -139,6 +139,6 @@ public class LoadWorldStep
 					line2D.Width = SCALE / 10;
 					return line2D;
 				});
-			}));
+			})) ?? Array.Empty<Node>().AsEnumerable();
 	}
 }

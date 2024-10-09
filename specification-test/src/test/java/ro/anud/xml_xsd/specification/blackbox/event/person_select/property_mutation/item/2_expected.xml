@@ -42,13 +42,15 @@
     </entry>
   </events_rule>
 </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="2"/>
-      </properties>
-      <classifications/>
-    </person>
-  </people>
+  <data>
+    <people>
+      <person id="1">
+        <properties>
+          <property property_rule_ref="property" value="2"/>
+        </properties>
+        <classifications/>
+      </person>
+    </people>
+  </data>
   <actions/>
 </world_step>

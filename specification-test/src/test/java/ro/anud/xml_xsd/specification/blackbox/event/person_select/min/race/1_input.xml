@@ -44,9 +44,11 @@
       </entry>
     </events_rule>
   </rule_group>
-  <people>
-    <person id="0"/>
-  </people>
+  <data>
+    <people>
+      <person id="0"/>
+    </people>
+  </data>
   <actions>
     <by person_ref="0">
       <do action_rule_ref="action_rule" person_ref="0"/>

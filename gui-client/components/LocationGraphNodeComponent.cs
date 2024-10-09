@@ -9,10 +9,10 @@ public partial class LocationGraphNodeComponent : BoxContainer
 
 	public static PackedScene PackedScene = GD.Load<PackedScene>("res://components/LocationGraphNodeComponent.tscn");
 	public static float SIZE = 350;
-	private world_step__location_graph__node node;
+	private world_step__data__location__location_graph__node node;
 	private world_step worldStep;
 	//populate the node with the data from the graph node
-	public void initialize(world_step__location_graph__node node, world_step worldStep)
+	public void initialize(world_step__data__location__location_graph__node node, world_step worldStep)
 	{
 		this.node = node;
 		this.worldStep = worldStep;
@@ -34,19 +34,19 @@ public partial class LocationGraphNodeComponent : BoxContainer
 	}
 
 	//setter that takes a callback and it calls it when action button is pressed
-	public void setOnCreateAdjacentButtonPressed(Action<world_step__location_graph__node> callback)
+	public void setOnCreateAdjacentButtonPressed(Action<world_step__data__location__location_graph__node> callback)
 	{
 		var actionButton = GetNode<Button>("%CreateAdjacentButton");
 		actionButton.Pressed += () => callback(node);
 	}
-	public void setOnTeleportToButtonPressed(Action<world_step__location_graph__node> callback)
+	public void setOnTeleportToButtonPressed(Action<world_step__data__location__location_graph__node> callback)
 	{
 		var actionButton = GetNode<Button>("%TeleportToButton");
 		actionButton.Pressed += () => callback(node);
 	}
 
 
-	public void setOnPathToButtonPressed(Action<world_step__location_graph__node> callback)
+	public void setOnPathToButtonPressed(Action<world_step__data__location__location_graph__node> callback)
 	{
 		var actionButton = GetNode<Button>("%PathToButton");
 		actionButton.Pressed += () => callback(node);

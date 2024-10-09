@@ -30,30 +30,32 @@
     </classification_rule>
   </rule_group>
 
-  <people>
-    <person id="0">
-      <properties>
-        <property property_rule_ref="attribute" value="35"/>
-      </properties>
-      <classifications>
-        <classification classification_rule_ref="classification"/>
-      </classifications>
-    </person>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="attribute" value="60"/>
-      </properties>
-      <classifications>
-        <classification classification_rule_ref="classification"/>
-      </classifications>
-    </person>
-    <person id="2">
-      <properties>
-        <property property_rule_ref="attribute" value="85"/>
-      </properties>
-      <classifications>
-        <classification classification_rule_ref="classification"/>
-      </classifications>
-    </person>
-  </people>
+  <data>
+    <people>
+      <person id="0">
+        <properties>
+          <property property_rule_ref="attribute" value="35"/>
+        </properties>
+        <classifications>
+          <classification classification_rule_ref="classification"/>
+        </classifications>
+      </person>
+      <person id="1">
+        <properties>
+          <property property_rule_ref="attribute" value="60"/>
+        </properties>
+        <classifications>
+          <classification classification_rule_ref="classification"/>
+        </classifications>
+      </person>
+      <person id="2">
+        <properties>
+          <property property_rule_ref="attribute" value="85"/>
+        </properties>
+        <classifications>
+          <classification classification_rule_ref="classification"/>
+        </classifications>
+      </person>
+    </people>
+  </data>
 </world_step>

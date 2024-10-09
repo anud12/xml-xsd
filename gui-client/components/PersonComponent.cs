@@ -11,7 +11,7 @@ public partial class PersonComponent : Control
 	// Called when the node enters the scene tree for the first time.
 	public static PackedScene PackedScene = GD.Load<PackedScene>("res://components/PersonComponent.tscn");
 	private DataStore<world_step> worldStep = StoreWorld_Step.instance;
-	private DataStore<world_step__people__person> person = new DataStore<world_step__people__person>();
+	private DataStore<world_step__data__people__person> person = new DataStore<world_step__data__people__person>();
 
 	private List<Action> unsubscribeList = new List<Action>();
 	public void initializeFromId(string? personId)
@@ -22,7 +22,7 @@ public partial class PersonComponent : Control
 		{
 			return;
 		}
-		var person = worldStep.people.SelectMany(people => people.person).First(person => person.id == personId);
+		var person = worldStep.data.people?.person?.First(person => person.id == personId);
 		this.person.data = person;
 
 	}

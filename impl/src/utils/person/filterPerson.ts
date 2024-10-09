@@ -2,7 +2,7 @@ import {JsonSchema, SelectPersonQueryType} from "../JsonSchema";
 import {JsonUtil} from "../util";
 import {Position} from "./selectPerson";
 
-type PeopleQueryType = JsonSchema['children']["people"]["children"]["person"];
+type PeopleQueryType = JsonSchema['children']["data"]["children"]["people"]["children"]["person"];
 
 
 const filterPersonListBasedOnProperties = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, person: PeopleQueryType): boolean => {

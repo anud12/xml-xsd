@@ -20,10 +20,12 @@
       </global>
     </action_rule>
   </rule_group>
-  <people>
-    <person id="1">
-      <classifications/>
-    </person>
-  </people>
+  <data>
+    <people>
+      <person id="1">
+        <classifications/>
+      </person>
+    </people>
+  </data>
   <actions/>
 </world_step>

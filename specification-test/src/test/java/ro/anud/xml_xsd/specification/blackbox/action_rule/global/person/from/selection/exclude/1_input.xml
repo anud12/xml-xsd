@@ -38,14 +38,16 @@
       </global>
     </action_rule>
   </rule_group>
-  <people>
-    <person id="1">
-      <properties>
-        <property property_rule_ref="property" value="1"/>
-      </properties>
-    </person>
-    <person id="2"/>
-  </people>
+  <data>
+    <people>
+      <person id="1">
+        <properties>
+          <property property_rule_ref="property" value="1"/>
+        </properties>
+      </person>
+      <person id="2"/>
+    </people>
+  </data>
   <actions>
     <by person_ref="1">
       <do action_ref="global_action" person_ref="2" />

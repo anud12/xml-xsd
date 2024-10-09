@@ -24,36 +24,40 @@
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <people>
-    <person id="person_id">
-    </person>
-  </people>
-  <location_graph id="location_graph_id">
-    <rule location_graph_rule_ref="location_graph_rule_id"/>
-    <node node_rule_ref="node" id="node_id">
-      <position x="0" y="0"/>
-      <link_to node_id_ref="node_id_2" total_progress="1"/>
-      <link_to node_id_ref="node_id_4" total_progress="1000"/>
-      <people>
-        <person person_id_ref="person_id"/>
-      </people>
-    </node>
-    <node node_rule_ref="node" id="node_id_destination">
-      <position x="0" y="1"/>
-    </node>
-    <node node_rule_ref="node" id="node_id_2">
-      <position x="0" y="4"/>
-      <link_to node_id_ref="node_id_3" total_progress="1"/>
-    </node>
-    <node node_rule_ref="node" id="node_id_3">
-      <position x="0" y="3"/>
-      <link_to node_id_ref="node_id_4" total_progress="1"/>
-    </node>
-    <node node_rule_ref="node" id="node_id_4">
-      <position x="0" y="2"/>
-      <link_to node_id_ref="node_id_destination" total_progress="1"/>
-    </node>
-  </location_graph>
+  <data>
+    <people>
+      <person id="person_id">
+      </person>
+    </people>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="node_id_2" total_progress="1"/>
+          <link_to node_id_ref="node_id_4" total_progress="1000"/>
+          <people>
+            <person person_id_ref="person_id"/>
+          </people>
+        </node>
+        <node node_rule_ref="node" id="node_id_destination">
+          <position x="0" y="1"/>
+        </node>
+        <node node_rule_ref="node" id="node_id_2">
+          <position x="0" y="4"/>
+          <link_to node_id_ref="node_id_3" total_progress="1"/>
+        </node>
+        <node node_rule_ref="node" id="node_id_3">
+          <position x="0" y="3"/>
+          <link_to node_id_ref="node_id_4" total_progress="1"/>
+        </node>
+        <node node_rule_ref="node" id="node_id_4">
+          <position x="0" y="2"/>
+          <link_to node_id_ref="node_id_destination" total_progress="1"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
   <actions>
     <person.move_to person_id_ref="person_id">
       <find_path_towards>

@@ -110,7 +110,7 @@ const createLinkTo = (jsonUtil: JsonUtil, toOptionElement: ToOptionQueryType, no
   try {
     let ratio = "1";
     const multiplier = toOptionElement.queryOptional("distance_to_progress_multiplier")
-    if(multiplier) {
+    if (multiplier) {
       ratio = jsonUtil.computeOperationFromParent(multiplier);
     }
     return async () => {
@@ -121,7 +121,7 @@ const createLinkTo = (jsonUtil: JsonUtil, toOptionElement: ToOptionQueryType, no
 
       const personProgressProperty = toOptionElement.queryOptional("person_progress_property");
 
-      if(personProgressProperty) {
+      if (personProgressProperty) {
         linkToElement.appendChild("person_progress_property", personProgressProperty?.childrenList.map(e => (e as JsonQueryType).serializeRaw()).join(""), {
           ...personProgressProperty?.attributeMap || {}
         });
@@ -179,7 +179,11 @@ const positionBasedOnLink = (jsonUtil: JsonUtil, linkGroupElement: LinkGroupQuer
 
 export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nodeRef: string): (writeUnit: JsonUtil) => Promise<LocationGraphNodeQueryType | undefined> => {
   try {
-    const locationGraphElement = jsonUtil.json.queryAllOptional("location_graph").find(locationGraphElement => locationGraphElement.attributeMap.id === locationGraphRef);
+    const locationGraphElement = jsonUtil.json
+      .queryOptional("data")
+      ?.queryOptional("location")
+      ?.queryAllOptional("location_graph")
+      .find(locationGraphElement => locationGraphElement.attributeMap.id === locationGraphRef);
     const nodeGraphElement = locationGraphElement?.queryAllOptional("node").find(nodeElement => nodeElement.attributeMap.id === nodeRef);
     const nodeRuleElement = jsonUtil.getRuleGroups().flatMap(element => element.queryAllOptional("location_graph_rule"))
       .flatMap(element => element.queryAllOptional("node_rule"))

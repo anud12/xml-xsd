@@ -23,7 +23,7 @@
       </node_rule>
     </location_graph_rule>
   </rule_group>
-
+  <data/>
   <actions>
     <location_graph.create location_graph_rule_ref="location_graph_rule_id"/>
   </actions>

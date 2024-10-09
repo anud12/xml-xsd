@@ -297,32 +297,38 @@
       </node_rule>
     </location_graph_rule>
   </rule_group>
-  <people>
-    <person id="0" name="BillyWithVeryLongName">
-      <properties>
-        <property property_rule_ref="health" value="10" />
-      </properties>
-      <classifications>
-        <classification classification_rule_ref="alive" />
-      </classifications>
-    </person>
-    <person id="1" name="Bandit">
-      <properties>
-        <property property_rule_ref="health" value="10" />
-      </properties>
-      <classifications>
-        <classification classification_rule_ref="alive" />
-      </classifications>
-    </person>
-  </people>
-  <location_graph id="first world">
-    <rule location_graph_rule_ref="location_graph_rule_id" />
-    <node node_rule_ref="city" id="Capital">
-      <position x="0" y="0" />
-      <people>
-        <person person_id_ref="0" />
-        <person person_id_ref="1" />
-      </people>
-    </node>
-  </location_graph>
+  <data>
+    <people>
+      <person id="0" name="BillyWithVeryLongName">
+        <properties>
+          <property property_rule_ref="health" value="10" />
+        </properties>
+        <classifications>
+          <classification classification_rule_ref="alive" />
+        </classifications>
+      </person>
+      <person id="1" name="Bandit">
+        <properties>
+          <property property_rule_ref="health" value="10" />
+        </properties>
+        <classifications>
+          <classification classification_rule_ref="alive" />
+        </classifications>
+      </person>
+    </people>
+    <location>
+      <location_graph id="first world">
+        <rule location_graph_rule_ref="location_graph_rule_id" />
+        <node node_rule_ref="city" id="Capital">
+          <position x="0" y="0" />
+          <people>
+            <person person_id_ref="0" />
+            <person person_id_ref="1" />
+          </people>
+        </node>
+      </location_graph>
+    </location>
+  </data>
+  
+  
 </world_step>

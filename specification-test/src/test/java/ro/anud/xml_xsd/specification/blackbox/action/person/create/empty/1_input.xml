@@ -11,7 +11,9 @@
   </world_metadata>
   <rule_group id="rule_group_id">
   </rule_group>
-  <people/>
+  <data>
+    <people/>
+  </data>
   <actions>
     <person.create>
       <node_graph__selection/>

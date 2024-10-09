@@ -57,16 +57,18 @@
     </action_rule>
   </rule_group>
 
-  <people>
-    <person id="Billy">
-      <race race_rule_ref="human"/>
-      <properties/>
-    </person>
-    <person id="Bob">
-      <race race_rule_ref="human"/>
-      <properties/>
-    </person>
-  </people>
+  <data>
+    <people>
+      <person id="Billy">
+        <race race_rule_ref="human"/>
+        <properties/>
+      </person>
+      <person id="Bob">
+        <race race_rule_ref="human"/>
+        <properties/>
+      </person>
+    </people>
+  </data>
   <actions>
     <person.on_person.property_mutation person_id_ref="Billy" target_person_id_ref="Bob" action_property_mutation_rule_ref="meleeAttack"/>
   </actions>

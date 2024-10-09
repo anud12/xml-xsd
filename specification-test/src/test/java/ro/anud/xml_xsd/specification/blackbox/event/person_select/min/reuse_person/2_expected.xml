@@ -41,15 +41,17 @@
       </entry>
     </events_rule>
   </rule_group>
-  <people>
-    <person id="0">
-      <classifications/>
-    </person>
-    <person id="0.0">
-      <race race_rule_ref="second_race"/>
-      <properties/>
-      <classifications/>
-    </person>
-  </people>
+  <data>
+    <people>
+      <person id="0">
+        <classifications/>
+      </person>
+      <person id="0.0">
+        <race race_rule_ref="second_race"/>
+        <properties/>
+        <classifications/>
+      </person>
+    </people>
+  </data>
   <actions/>
 </world_step>

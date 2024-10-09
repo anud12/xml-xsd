@@ -20,7 +20,7 @@ export const applyPropertyMutation = (readJson: JsonUtil, personQueryType: Perso
       return
     }
 
-    writeJson.json.queryAllOptional("people").flatMap(peopleElement => peopleElement.queryAllOptional("person"))
+    writeJson.json.queryOptional("data").queryAllOptional("people").flatMap(peopleElement => peopleElement.queryAllOptional("person"))
       .flatMap(personElement => personElement.queryAllOptional("properties"))
       .flatMap(property => property.queryAllOptional("property"))
       .filter(element => element.attributeMap.property_rule_ref === propertyRuleRef)

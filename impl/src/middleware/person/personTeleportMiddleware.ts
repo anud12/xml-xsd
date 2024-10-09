@@ -14,7 +14,10 @@ const locationGraph = (readJson: JsonUtil, action: PersonTeleportQueryType) => {
     action.removeFromParent();
 
 
-    const locationGraphList = writeJson.json.queryAllOptional("location_graph");
+    const locationGraphList = writeJson.json
+      .queryOptional("data")
+      .queryOptional("location")
+      .queryAllOptional("location_graph");
     const locationGraph = locationGraphList
       .find(locationGraph => locationGraph.attributeMap.id === targetLocationGraphId)
 
