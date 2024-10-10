@@ -12,10 +12,25 @@ import {distanceBetweenNodes} from "./distanceBetweenNodes";
 import {JsonQueryType} from "../../JsonQueryType";
 
 export type NodeRuleQueryType = JsonSchema["children"]["rule_group"]["children"]["location_graph_rule"]["children"]["node_rule"];
-export type LinkGroupQueryType = JsonSchema["children"]["rule_group"]["children"]["location_graph_rule"]["children"]["node_rule"]["children"]["link_group"];
-export type ToOptionQueryType = JsonSchema["children"]["rule_group"]["children"]["location_graph_rule"]["children"]["node_rule"]["children"]["link_group"]["children"]["to_option"];
+export type LinkGroupRuleQueryType = JsonSchema["children"]["rule_group"]["children"]["link_group_rule_list"]["children"]["link_group_rule"];
+export type LinkGroupQueryType = JsonSchema["children"]["rule_group"]["children"]["location_graph_rule"]["children"]["node_rule"]["children"]["link_group_list"]["children"]["link_group"];
+export type ToOptionQueryType = JsonSchema["children"]["rule_group"]["children"]["location_graph_rule"]["children"]["node_rule"]["children"]["link_group_list"]["children"]["link_group"]["children"]["to_option"];
 export type NodeQueryType = LocationGraphQueryType["children"]["node"];
 type LinkQueryType = LocationGraphQueryType["children"]["node"]["children"]["link_to"];
+
+
+const getLinkRules = (readJson: JsonUtil, nodeRule: NodeRuleQueryType): LinkGroupRuleQueryType[] => {
+  const inlineLinkRules = nodeRule?.queryOptional("link_group_list")?.queryAllOptional("link_group") ?? [];
+  const linkRuleElementList = readJson.getRuleGroups()
+    .flatMap(ruleGroup => ruleGroup.queryAllOptional("link_group_rule_list"))
+    .flatMap(link_group_rule_list => link_group_rule_list.queryAllOptional("link_group_rule"));
+
+    const referencedLinkRuleList = nodeRule.queryOptional("link_group_list").queryAllOptional("reference").map(referenceElement => {
+      return linkRuleElementList.find(linkRule => referenceElement.attributeMap.link_group_rule_ref === linkRule.attributeMap.id)
+    })
+
+  return [...referencedLinkRuleList, ...inlineLinkRules];
+}
 
 const getAdjacentNodes = (jsonUtil: JsonUtil, locationGraph: LocationGraphQueryType, originNode: NodeQueryType, maxDepth: number, excludeNodes: Array<NodeQueryType> = []): Array<NodeQueryType> => {
   try {
@@ -69,7 +84,9 @@ const canCreateLinkBetween = (jsonUtil: JsonUtil, locationGraph: LocationGraphQu
     .flatMap(element => element.queryAllOptional("node_rule"))
     .find(element => element.attributeMap.id === nodeGraphElement?.attributeMap.node_rule_ref);
 
-  const notFullLinkGroupElementList = keepNotFullLinkGroupElements(locationGraph, nodeGraphElement, nodeRule?.queryAllOptional("link_group") || []);
+  const linkGroups = getLinkRules(jsonUtil, nodeRule);
+
+  const notFullLinkGroupElementList = keepNotFullLinkGroupElements(locationGraph, nodeGraphElement, linkGroups || []);
   if (notFullLinkGroupElementList.length === 0) {
     return undefined;
   }
@@ -87,7 +104,10 @@ const canCreateLinkBetween = (jsonUtil: JsonUtil, locationGraph: LocationGraphQu
   const targetNodeRule = jsonUtil.getRuleGroups().flatMap(element => element.queryAllOptional("location_graph_rule"))
     .flatMap(element => element.queryAllOptional("node_rule"))
     .find(element => element.attributeMap.id === nodeGraphElement?.attributeMap.node_rule_ref);
-  const targetNotFullLinkGroupElementList = keepNotFullLinkGroupElements(locationGraph, targetNodeGraphElement, targetNodeRule?.queryAllOptional("link_group") || []);
+
+  const linkGroupList = getLinkRules(jsonUtil, targetNodeRule);
+
+  const targetNotFullLinkGroupElementList = keepNotFullLinkGroupElements(locationGraph, targetNodeGraphElement, linkGroupList || []);
   if (targetNotFullLinkGroupElementList.length === 0) {
     return undefined;
   }
@@ -189,7 +209,7 @@ export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nod
       .flatMap(element => element.queryAllOptional("node_rule"))
       .find(element => element.attributeMap.id === nodeGraphElement?.attributeMap?.node_rule_ref)
 
-    const linkGroupElementList = nodeRuleElement?.queryAllOptional("link_group");
+    const linkGroupElementList = getLinkRules(jsonUtil, nodeRuleElement);
     const notFullLinkGroupElementList = keepNotFullLinkGroupElements(locationGraphElement, nodeGraphElement, linkGroupElementList);
     const linkGroupElement = jsonUtil.randomFromArray(notFullLinkGroupElementList);
 

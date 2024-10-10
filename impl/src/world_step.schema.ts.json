@@ -1290,6 +1290,89 @@
               },
               "isNullable": true
             },
+            "link_group_rule_list": {
+              "metaType": "object",
+              "isSingle": true,
+              "value": {
+                "link_group_rule": {
+                  "metaType": "object",
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "id": {
+                        "metaType": "primitive",
+                        "value": "xs:string",
+                        "isNullable": false
+                      },
+                      "angle": {
+                        "metaType": "primitive",
+                        "value": "xs:int",
+                        "isNullable": false
+                      },
+                      "angleMax": {
+                        "metaType": "primitive",
+                        "value": "xs:int",
+                        "isNullable": true
+                      },
+                      "limit": {
+                        "metaType": "primitive",
+                        "value": "xs:int",
+                        "isNullable": true
+                      }
+                    }
+                  },
+                  "isSingle": true,
+                  "value": {
+                    "to_option": {
+                      "metaType": "object",
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "node_rule_ref": {
+                            "metaType": "primitive",
+                            "value": "xs:string",
+                            "isNullable": false
+                          },
+                          "distance": {
+                            "metaType": "primitive",
+                            "value": "xs:int",
+                            "isNullable": false
+                          },
+                          "maxDistance": {
+                            "metaType": "primitive",
+                            "value": "xs:int",
+                            "isNullable": true
+                          },
+                          "adjacent_depth_limit": {
+                            "metaType": "primitive",
+                            "value": "xs:int",
+                            "isNullable": false
+                          }
+                        }
+                      },
+                      "isSingle": false,
+                      "value": {
+                        "distance_to_progress_multiplier": {
+                          "metaType": "reference",
+                          "value": "type__math_operations",
+                          "isSingle": true,
+                          "isNullable": true
+                        },
+                        "person_progress_property": {
+                          "metaType": "reference",
+                          "value": "type__math_operations",
+                          "isSingle": true,
+                          "isNullable": true
+                        }
+                      },
+                      "isNullable": true
+                    }
+                  },
+                  "isNullable": true
+                }
+              },
+              "isNullable": true
+            },
             "location_graph_rule": {
               "metaType": "object",
               "attributes": {
@@ -1412,74 +1495,98 @@
                       },
                       "isNullable": true
                     },
-                    "link_group": {
+                    "link_group_list": {
                       "metaType": "object",
-                      "attributes": {
-                        "metaType": "object",
-                        "value": {
-                          "id": {
-                            "metaType": "primitive",
-                            "value": "xs:string",
-                            "isNullable": false
-                          },
-                          "angle": {
-                            "metaType": "primitive",
-                            "value": "xs:int",
-                            "isNullable": false
-                          },
-                          "angleMax": {
-                            "metaType": "primitive",
-                            "value": "xs:int",
-                            "isNullable": true
-                          },
-                          "limit": {
-                            "metaType": "primitive",
-                            "value": "xs:int",
-                            "isNullable": true
-                          }
-                        }
-                      },
-                      "isSingle": false,
+                      "isSingle": true,
                       "value": {
-                        "to_option": {
+                        "reference": {
+                          "metaType": "object",
+                          "value": {},
+                          "isSingle": false,
+                          "isNullable": true,
+                          "attributes": {
+                            "metaType": "object",
+                            "value": {
+                              "link_group_rule_ref": {
+                                "metaType": "primitive",
+                                "value": "xs:string",
+                                "isNullable": false
+                              }
+                            },
+                            "isNullable": false
+                          }
+                        },
+                        "link_group": {
                           "metaType": "object",
                           "attributes": {
                             "metaType": "object",
                             "value": {
-                              "node_rule_ref": {
+                              "id": {
                                 "metaType": "primitive",
                                 "value": "xs:string",
                                 "isNullable": false
                               },
-                              "distance": {
+                              "angle": {
                                 "metaType": "primitive",
                                 "value": "xs:int",
                                 "isNullable": false
                               },
-                              "maxDistance": {
+                              "angleMax": {
                                 "metaType": "primitive",
                                 "value": "xs:int",
                                 "isNullable": true
                               },
-                              "adjacent_depth_limit": {
+                              "limit": {
                                 "metaType": "primitive",
                                 "value": "xs:int",
-                                "isNullable": false
+                                "isNullable": true
                               }
                             }
                           },
                           "isSingle": false,
                           "value": {
-                            "distance_to_progress_multiplier": {
-                              "metaType": "reference",
-                              "value": "type__math_operations",
-                              "isSingle": true,
-                              "isNullable": true
-                            },
-                            "person_progress_property": {
-                              "metaType": "reference",
-                              "value": "type__math_operations",
-                              "isSingle": true,
+                            "to_option": {
+                              "metaType": "object",
+                              "attributes": {
+                                "metaType": "object",
+                                "value": {
+                                  "node_rule_ref": {
+                                    "metaType": "primitive",
+                                    "value": "xs:string",
+                                    "isNullable": false
+                                  },
+                                  "distance": {
+                                    "metaType": "primitive",
+                                    "value": "xs:int",
+                                    "isNullable": false
+                                  },
+                                  "maxDistance": {
+                                    "metaType": "primitive",
+                                    "value": "xs:int",
+                                    "isNullable": true
+                                  },
+                                  "adjacent_depth_limit": {
+                                    "metaType": "primitive",
+                                    "value": "xs:int",
+                                    "isNullable": false
+                                  }
+                                }
+                              },
+                              "isSingle": false,
+                              "value": {
+                                "distance_to_progress_multiplier": {
+                                  "metaType": "reference",
+                                  "value": "type__math_operations",
+                                  "isSingle": true,
+                                  "isNullable": true
+                                },
+                                "person_progress_property": {
+                                  "metaType": "reference",
+                                  "value": "type__math_operations",
+                                  "isSingle": true,
+                                  "isNullable": true
+                                }
+                              },
                               "isNullable": true
                             }
                           },

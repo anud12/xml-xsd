@@ -1778,9 +1778,11 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
     <location_classification_rule>
@@ -1843,9 +1845,11 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
     <location_classification_rule>
@@ -1899,9 +1903,11 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
     <location_classification_rule>
@@ -1972,9 +1978,11 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
     <location_classification_rule>
@@ -2039,9 +2047,11 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="2" distance="100"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="2" distance="100"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -2108,9 +2118,11 @@ undefined
         <classifications>
           <classification location_classification_rule_ref="classification_location_rule_id"/>
         </classifications>
-        <link_group id="all" angle="0" angleMax="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="1"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0" angleMax="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="1"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -2159,11 +2171,13 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="2" maxDistance="4">
-            <distance_to_progress_multiplier initial="2"/>
-          </to_option>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="2" maxDistance="4">
+              <distance_to_progress_multiplier initial="2"/>
+            </to_option>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -2212,9 +2226,11 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0" angleMax="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="1"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0" angleMax="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="1"/>
+          </link_group>
+        </link_group_list>
         <existing_person min="3">
           <person_selection/>
         </existing_person>
@@ -2266,9 +2282,11 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -2318,9 +2336,11 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0" limit="1">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="100"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0" limit="1">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="100"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -2369,9 +2389,11 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0" limit="1">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="100"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0" limit="1">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="100"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -2423,12 +2445,14 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0" limit="1">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="100"/>
-        </link_group>
-        <link_group id="second_all" angle="0" limit="1">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="100"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0" limit="1">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="100"/>
+          </link_group>
+          <link_group id="second_all" angle="0" limit="1">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="100"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -2577,15 +2601,19 @@ undefined
         <starting_node node_rule_ref="city"/>
       </setup>
       <node_rule id="city">
-        <link_group id="0" angle="0" angleMax="0" limit="1">
-          <to_option node_rule_ref="city" adjacent_depth_limit="100" distance="1" maxDistance="1"/>
-        </link_group>
-        <link_group id="90" angle="90" angleMax="90" limit="1">
-          <to_option node_rule_ref="city" adjacent_depth_limit="100" distance="1" maxDistance="1"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="0" angle="0" angleMax="0" limit="1">
+            <to_option node_rule_ref="city" adjacent_depth_limit="100" distance="1" maxDistance="1"/>
+          </link_group>
+          <link_group id="90" angle="90" angleMax="90" limit="1">
+            <to_option node_rule_ref="city" adjacent_depth_limit="100" distance="1" maxDistance="1"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
       <node_rule id="plains">
-        <link_group id="all" angle="0" angleMax="0" limit="10"/>
+        <link_group_list>
+          <link_group id="all" angle="0" angleMax="0" limit="10"/>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -2659,19 +2687,23 @@ undefined
         <starting_node node_rule_ref="city"/>
       </setup>
       <node_rule id="city">
-        <link_group id="0" angle="0" limit="1">
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="3"/>
-        </link_group>
-        <link_group id="90" angle="90" limit="1">
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="3"/>
-        </link_group>
-        <link_group id="270" angle="270" limit="1">
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="3"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="0" angle="0" limit="1">
+            <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="3"/>
+          </link_group>
+          <link_group id="90" angle="90" limit="1">
+            <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="3"/>
+          </link_group>
+          <link_group id="270" angle="270" limit="1">
+            <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="3"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
       <node_rule id="plains">
-        <link_group id="all" angle="0" angleMax="360" limit="10">
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0" angleMax="360" limit="10">
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -2828,15 +2860,19 @@ undefined
         <starting_node node_rule_ref="city" />
       </setup>
       <node_rule id="city">
-        <link_group id="0" angle="0" limit="1">
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="1" />
-        </link_group>
-        <link_group id="90" angle="90" limit="1">
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="1" />
-        </link_group>
+        <link_group_list>
+          <link_group id="0" angle="0" limit="1">
+            <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="1" />
+          </link_group>
+          <link_group id="90" angle="90" limit="1">
+            <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="1" />
+          </link_group>
+        </link_group_list>
       </node_rule>
       <node_rule id="plains">
-        <link_group id="all" angle="0" angleMax="360" limit="10" />
+        <link_group_list>
+          <link_group id="all" angle="0" angleMax="360" limit="10" />
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -2892,9 +2928,11 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0" angleMax="360">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="100"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0" angleMax="360">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="100"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -2944,9 +2982,11 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0" maxDistance="10"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0" maxDistance="10"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -2996,15 +3036,17 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="2" maxDistance="4">
-            <person_progress_property initial="2">
-              <and do="add" value="1">
-                <and do="divide" value="1"/>
-              </and>
-            </person_progress_property>
-          </to_option>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="2" maxDistance="4">
+              <person_progress_property initial="2">
+                <and do="add" value="1">
+                  <and do="divide" value="1"/>
+                </and>
+              </person_progress_property>
+            </to_option>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -3050,9 +3092,11 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0" angleMax="360">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0" angleMax="360">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -3091,9 +3135,11 @@ undefined
         <necessary_node node_rule_ref="node" min="3"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0" angleMax="360">
-          <to_option node_rule_ref="node" adjacent_depth_limit="1" distance="0"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0" angleMax="360">
+            <to_option node_rule_ref="node" adjacent_depth_limit="1" distance="0"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -3130,9 +3176,11 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0" angleMax="360">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0" angleMax="360">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -3176,9 +3224,11 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0" angleMax="360">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0" angleMax="360">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -3221,9 +3271,11 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0" angleMax="360">
-          <to_option node_rule_ref="other" adjacent_depth_limit="0" distance="0"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0" angleMax="360">
+            <to_option node_rule_ref="other" adjacent_depth_limit="0" distance="0"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -3398,9 +3450,11 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -3477,9 +3531,11 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -3555,9 +3611,11 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -3635,9 +3693,11 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -3714,11 +3774,12 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0">
-
-          </to_option>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0">
+            </to_option>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -3787,11 +3848,12 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0">
-
-          </to_option>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0">
+            </to_option>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -3864,11 +3926,12 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0">
-
-          </to_option>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0">
+            </to_option>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -3942,11 +4005,12 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0">
-
-          </to_option>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0">
+            </to_option>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -4029,11 +4093,12 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0">
-
-          </to_option>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0">
+            </to_option>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -4107,11 +4172,12 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0">
-
-          </to_option>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0">
+            </to_option>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -4185,11 +4251,12 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0">
-
-          </to_option>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0">
+            </to_option>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -4260,11 +4327,12 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0">
-
-          </to_option>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0">
+            </to_option>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -4338,11 +4406,12 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0">
-
-          </to_option>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0">
+            </to_option>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -4409,9 +4478,11 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -4475,9 +4546,11 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -4537,9 +4610,11 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -4593,9 +4668,11 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -4663,10 +4740,12 @@ undefined
         <starting_node node_rule_ref="node"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0">
-          <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0">
-          </to_option>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0">
+            </to_option>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -4698,6 +4777,460 @@ undefined
         </selection>
       </link_to>
     </person.teleport>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/adjacentDepthLimit_2](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__adjacentDepthLimit_2.md)
+
+#### Tags:
+- location_graph
+- location_graph.node.create_adjacent
+
+#### Input XML
+```xml
+<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="1"/>
+      <entry value="2"/>
+      <entry value="3"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <location_graph_rule id="location_graph_rule_id">
+      <setup>
+        <starting_node node_rule_ref="node"/>
+      </setup>
+      <node_rule id="node">
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="2" distance="100"/>
+          </link_group>
+        </link_group_list>
+      </node_rule>
+    </location_graph_rule>
+  </rule_group>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="A">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="B" total_progress="0"/>
+        </node>
+        <node node_rule_ref="node" id="B">
+          <position x="100" y="0"/>
+          <link_to node_id_ref="C" total_progress="0"/>
+          <link_to node_id_ref="A" total_progress="0"/>
+        </node>
+        <node node_rule_ref="node" id="C">
+          <position x="100" y="100"/>
+          <link_to node_id_ref="D" total_progress="0"/>
+        </node>
+        <node node_rule_ref="node" id="D">
+          <position x="0" y="100"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
+  <actions>
+    <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="A"/>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/classification_location](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__classification_location.md)
+
+#### Tags:
+- location_graph
+- location_graph.node.create_adjacent
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="1"/>
+      <entry value="2"/>
+      <entry value="3"/>
+    </randomization_table>
+  </world_metadata>
+
+  <rule_group id="rule_group_id">
+    <location_classification_rule>
+      <entry id="classification_location_rule_id"/>
+    </location_classification_rule>
+    <location_graph_rule id="location_graph_rule_id">
+      <setup>
+        <starting_node node_rule_ref="node"/>
+      </setup>
+      <node_rule id="node">
+        <classifications>
+          <classification location_classification_rule_ref="classification_location_rule_id"/>
+        </classifications>
+        <link_group_list>
+          <link_group id="all" angle="0" angleMax="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="1"/>
+          </link_group>
+        </link_group_list>
+      </node_rule>
+    </location_graph_rule>
+  </rule_group>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
+
+  <actions>
+    <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/distance_to_progress_multiplier](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__distance_to_progress_multiplier.md)
+
+#### Tags:
+- location_graph
+- location_graph.node.create_adjacent
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="1"/>
+      <entry value="2"/>
+      <entry value="3"/>
+    </randomization_table>
+  </world_metadata>
+
+  <rule_group id="rule_group_id">
+    <location_graph_rule id="location_graph_rule_id">
+      <setup>
+        <starting_node node_rule_ref="node"/>
+      </setup>
+      <node_rule id="node">
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="2" maxDistance="4">
+              <distance_to_progress_multiplier initial="2"/>
+            </to_option>
+          </link_group>
+        </link_group_list>
+      </node_rule>
+    </location_graph_rule>
+  </rule_group>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
+  <actions>
+    <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
+    <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/existing_person](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__existing_person.md)
+
+#### Tags:
+- location_graph
+- location_graph.node.create_adjacent
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="1"/>
+      <entry value="2"/>
+      <entry value="3"/>
+    </randomization_table>
+  </world_metadata>
+
+  <rule_group id="rule_group_id">
+    <location_graph_rule id="location_graph_rule_id">
+      <setup>
+        <starting_node node_rule_ref="node"/>
+      </setup>
+      <node_rule id="node">
+        <link_group_list>
+          <link_group id="all" angle="0" angleMax="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="1"/>
+          </link_group>
+        </link_group_list>
+        <existing_person min="3">
+          <person_selection/>
+        </existing_person>
+      </node_rule>
+    </location_graph_rule>
+  </rule_group>
+  <data>
+    <people/>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
+  <actions>
+    <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent.md)
+
+#### Tags:
+- location_graph
+- location_graph.node.create_adjacent
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="1"/>
+      <entry value="2"/>
+      <entry value="3"/>
+    </randomization_table>
+  </world_metadata>
+
+  <rule_group id="rule_group_id">
+    <location_graph_rule id="location_graph_rule_id">
+      <setup>
+        <starting_node node_rule_ref="node"/>
+      </setup>
+      <node_rule id="node">
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
+          </link_group>
+        </link_group_list>
+      </node_rule>
+    </location_graph_rule>
+  </rule_group>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
+  <actions>
+    <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
+    <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
+    <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/limit/batch](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__limit__batch.md)
+
+#### Tags:
+- location_graph
+- location_graph.node.create_adjacent
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="1"/>
+      <entry value="2"/>
+      <entry value="3"/>
+    </randomization_table>
+  </world_metadata>
+
+  <rule_group id="rule_group_id">
+    <location_graph_rule id="location_graph_rule_id">
+      <setup>
+        <starting_node node_rule_ref="node"/>
+      </setup>
+      <node_rule id="node">
+        <link_group_list>
+          <link_group id="all" angle="0" limit="1">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="100"/>
+          </link_group>
+        </link_group_list>
+      </node_rule>
+    </location_graph_rule>
+  </rule_group>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
+  <actions>
+    <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
+    <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/limit](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__limit.md)
+
+#### Tags:
+- location_graph
+- location_graph.node.create_adjacent
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="1"/>
+      <entry value="2"/>
+      <entry value="3"/>
+    </randomization_table>
+  </world_metadata>
+
+  <rule_group id="rule_group_id">
+    <location_graph_rule id="location_graph_rule_id">
+      <setup>
+        <starting_node node_rule_ref="node"/>
+      </setup>
+      <node_rule id="node">
+        <link_group_list>
+          <link_group id="all" angle="0" limit="1">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="100"/>
+          </link_group>
+        </link_group_list>
+      </node_rule>
+    </location_graph_rule>
+  </rule_group>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="second_node" total_progress="0"/>
+        </node>
+        <node node_rule_ref="node" id="second_node">
+          <position x="100" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
+  <actions>
+    <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/limit/multipleLinkGroups](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__limit__multipleLinkGroups.md)
+
+#### Tags:
+- location_graph
+- location_graph.node.create_adjacent
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="1"/>
+      <entry value="2"/>
+      <entry value="3"/>
+    </randomization_table>
+  </world_metadata>
+
+  <rule_group id="rule_group_id">
+    <location_graph_rule id="location_graph_rule_id">
+      <setup>
+        <starting_node node_rule_ref="node"/>
+      </setup>
+      <node_rule id="node">
+        <link_group_list>
+          <link_group id="all" angle="0" limit="1">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="100"/>
+          </link_group>
+          <link_group id="second_all" angle="0" limit="1">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="100"/>
+          </link_group>
+        </link_group_list>
+      </node_rule>
+    </location_graph_rule>
+  </rule_group>
+  <data>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+          <link_to node_id_ref="second_node" total_progress="0"/>
+        </node>
+        <node node_rule_ref="node" id="second_node">
+          <position x="100" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
+  <actions>
+    <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
   </actions>
 </world_step>
 ```

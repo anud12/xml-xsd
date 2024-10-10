@@ -29,7 +29,7 @@
     "generate_documentation": "ts-node ./src/blackboxDocumentationGenerator.ts",
     "generate_documentation-watch": "ts-node ./src/blackboxDocumentationGenerator.ts -w",
     "start": "ts-node-dev --max_old_space_size=8192 src/index.ts",
-    "dev": "concurrently \"npm run build-watch\" \"npm run generate_documentation-watch\" "
+    "dev": "concurrently \"npm run build-watch\" \"npm run generate_documentation-watch\" \"npm run start\" "
   },
   "author": "",
   "license": "ISC",

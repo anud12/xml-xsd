@@ -343,6 +343,8 @@ namespace XSD {
     public void Set_action_rule(world_step__rule_group__action_rule? value);
     public world_step__rule_group__events_rule? Get_events_rule();
     public void Set_events_rule(world_step__rule_group__events_rule? value);
+    public world_step__rule_group__link_group_rule_list? Get_link_group_rule_list();
+    public void Set_link_group_rule_list(world_step__rule_group__link_group_rule_list? value);
     public world_step__rule_group__location_graph_rule? Get_location_graph_rule();
     public void Set_location_graph_rule(world_step__rule_group__location_graph_rule? value);
     public world_step__rule_group__location_classification_rule? Get_location_classification_rule();
@@ -457,6 +459,22 @@ namespace XSD {
     {
       this.events_rule = value;
     }
+    public world_step__rule_group__link_group_rule_list? link_group_rule_list = null;
+    public world_step__rule_group__link_group_rule_list? Get_link_group_rule_list()
+    {
+      return this.link_group_rule_list;
+    }
+    public world_step__rule_group__link_group_rule_list GetOrInsertDefault_link_group_rule_list()
+    {
+      if(this.link_group_rule_list == null) {
+        this.link_group_rule_list = new world_step__rule_group__link_group_rule_list();
+      }
+      return this.link_group_rule_list;
+    }
+    public void Set_link_group_rule_list(world_step__rule_group__link_group_rule_list? value)
+    {
+      this.link_group_rule_list = value;
+    }
     public world_step__rule_group__location_graph_rule? location_graph_rule = null;
     public world_step__rule_group__location_graph_rule? Get_location_graph_rule()
     {
@@ -518,6 +536,7 @@ namespace XSD {
       this.race_rule = rawNode.InitializeWithRawNode("race_rule", this.race_rule);
       this.action_rule = rawNode.InitializeWithRawNode("action_rule", this.action_rule);
       this.events_rule = rawNode.InitializeWithRawNode("events_rule", this.events_rule);
+      this.link_group_rule_list = rawNode.InitializeWithRawNode("link_group_rule_list", this.link_group_rule_list);
       this.location_graph_rule = rawNode.InitializeWithRawNode("location_graph_rule", this.location_graph_rule);
       this.location_classification_rule = rawNode.InitializeWithRawNode("location_classification_rule", this.location_classification_rule);
     }
@@ -544,6 +563,9 @@ namespace XSD {
       }
       if(events_rule != null) {
         rawNode.children["events_rule"] = new List<RawNode> { events_rule.SerializeIntoRawNode() };
+      }
+      if(link_group_rule_list != null) {
+        rawNode.children["link_group_rule_list"] = new List<RawNode> { link_group_rule_list.SerializeIntoRawNode() };
       }
       if(location_graph_rule != null) {
         rawNode.children["location_graph_rule"] = new List<RawNode> { location_graph_rule.SerializeIntoRawNode() };
@@ -1767,6 +1789,80 @@ namespace XSD {
     public void Serialize(XmlElement element)
     {
         // Godot.GD.Print("Serializing world_step__rule_group__events_rule");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
+  public interface Iworld_step__rule_group__link_group_rule_list {
+
+    //Children elements
+    public world_step__rule_group__link_group_rule_list__link_group_rule? Get_link_group_rule();
+    public void Set_link_group_rule(world_step__rule_group__link_group_rule_list__link_group_rule? value);
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class world_step__rule_group__link_group_rule_list: Iworld_step__rule_group__link_group_rule_list {
+    public RawNode rawNode = new RawNode();
+
+    //Children elements
+    public world_step__rule_group__link_group_rule_list__link_group_rule? link_group_rule = null;
+    public world_step__rule_group__link_group_rule_list__link_group_rule? Get_link_group_rule()
+    {
+      return this.link_group_rule;
+    }
+    public world_step__rule_group__link_group_rule_list__link_group_rule GetOrInsertDefault_link_group_rule()
+    {
+      if(this.link_group_rule == null) {
+        this.link_group_rule = new world_step__rule_group__link_group_rule_list__link_group_rule();
+      }
+      return this.link_group_rule;
+    }
+    public void Set_link_group_rule(world_step__rule_group__link_group_rule_list__link_group_rule? value)
+    {
+      this.link_group_rule = value;
+    }
+
+    public world_step__rule_group__link_group_rule_list()
+    {
+    }
+
+    public world_step__rule_group__link_group_rule_list(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public world_step__rule_group__link_group_rule_list(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      // Godot.GD.Print("Deserializing world_step__rule_group__link_group_rule_list");
+      //Deserialize elements
+      this.link_group_rule = rawNode.InitializeWithRawNode("link_group_rule", this.link_group_rule);
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize elements
+      if(link_group_rule != null) {
+        rawNode.children["link_group_rule"] = new List<RawNode> { link_group_rule.SerializeIntoRawNode() };
+      }
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        // Godot.GD.Print("Serializing world_step__rule_group__link_group_rule_list");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -3705,6 +3801,162 @@ namespace XSD {
     }
   }
   /*typeDeclarationElementToInterfaceString= element*/
+  public interface Iworld_step__rule_group__link_group_rule_list__link_group_rule {
+    //Attributes
+    public System.String Get_id();
+    public void Set_id(System.String value);
+    public System.Int32 Get_angle();
+    public void Set_angle(System.Int32 value);
+    public System.Int32? Get_angleMax();
+    public void Set_angleMax(System.Int32? value);
+    public System.Int32? Get_limit();
+    public void Set_limit(System.Int32? value);
+
+    //Children elements
+    public List<world_step__rule_group__link_group_rule_list__link_group_rule__to_option>? Get_to_option();
+    public void Set_to_option(List<world_step__rule_group__link_group_rule_list__link_group_rule__to_option>? value);
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class world_step__rule_group__link_group_rule_list__link_group_rule: Iworld_step__rule_group__link_group_rule_list__link_group_rule {
+    public RawNode rawNode = new RawNode();
+    //Attributes
+    public System.String id;
+    public System.String Get_id()
+    {
+      return this.id;
+    }
+    public void Set_id(System.String value)
+    {
+      this.id = value;
+    }
+    public System.Int32 angle;
+    public System.Int32 Get_angle()
+    {
+      return this.angle;
+    }
+    public void Set_angle(System.Int32 value)
+    {
+      this.angle = value;
+    }
+    public System.Int32? angleMax;
+    public System.Int32? Get_angleMax()
+    {
+      return this.angleMax;
+    }
+    public void Set_angleMax(System.Int32? value)
+    {
+      this.angleMax = value;
+    }
+    public System.Int32? limit;
+    public System.Int32? Get_limit()
+    {
+      return this.limit;
+    }
+    public void Set_limit(System.Int32? value)
+    {
+      this.limit = value;
+    }
+
+    //Children elements
+    public List<world_step__rule_group__link_group_rule_list__link_group_rule__to_option>? to_option = new List<world_step__rule_group__link_group_rule_list__link_group_rule__to_option>();
+    public List<world_step__rule_group__link_group_rule_list__link_group_rule__to_option>? Get_to_option()
+    {
+      return this.to_option;
+    }
+    public List<world_step__rule_group__link_group_rule_list__link_group_rule__to_option> GetOrInsertDefault_to_option()
+    {
+      if(this.to_option == null) {
+        this.to_option = new List<world_step__rule_group__link_group_rule_list__link_group_rule__to_option>();
+      }
+      return this.to_option;
+    }
+    public void Set_to_option(List<world_step__rule_group__link_group_rule_list__link_group_rule__to_option>? value)
+    {
+      this.to_option = value;
+    }
+
+    public world_step__rule_group__link_group_rule_list__link_group_rule()
+    {
+    }
+
+    public world_step__rule_group__link_group_rule_list__link_group_rule(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public world_step__rule_group__link_group_rule_list__link_group_rule(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      // Godot.GD.Print("Deserializing world_step__rule_group__link_group_rule_list__link_group_rule");
+      //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("id"))
+      {
+        var attribute_id = rawNode.attributes["id"];
+        this.id = rawNode.attributes["id"];
+      }
+      if(rawNode.attributes.ContainsKey("angle"))
+      {
+        var attribute_angle = rawNode.attributes["angle"];
+        this.angle = attribute_angle.ToInt();
+      }
+      if(rawNode.attributes.ContainsKey("angleMax"))
+      {
+        var attribute_angleMax = rawNode.attributes["angleMax"];
+        this.angleMax = attribute_angleMax?.ToInt();
+      }
+      if(rawNode.attributes.ContainsKey("limit"))
+      {
+        var attribute_limit = rawNode.attributes["limit"];
+        this.limit = attribute_limit?.ToInt();
+      }
+      //Deserialize elements
+      this.to_option = rawNode.InitializeWithRawNode("to_option", this.to_option);
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize arguments
+      if(this.id != null)
+      {
+        rawNode.attributes["id"] = this.id.ToString();
+      }
+      if(this.angle != null)
+      {
+        rawNode.attributes["angle"] = this.angle.ToString();
+      }
+      if(this.angleMax != null)
+      {
+        rawNode.attributes["angleMax"] = this.angleMax?.ToString();
+      }
+      if(this.limit != null)
+      {
+        rawNode.attributes["limit"] = this.limit?.ToString();
+      }
+      //Serialize elements
+      rawNode.children["to_option"] = to_option.Select(x => x.SerializeIntoRawNode()).ToList();
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        // Godot.GD.Print("Serializing world_step__rule_group__link_group_rule_list__link_group_rule");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
   public interface Iworld_step__rule_group__location_graph_rule__setup {
 
     //Children elements
@@ -3807,8 +4059,8 @@ namespace XSD {
     //Children elements
     public world_step__rule_group__location_graph_rule__node_rule__classifications? Get_classifications();
     public void Set_classifications(world_step__rule_group__location_graph_rule__node_rule__classifications? value);
-    public List<world_step__rule_group__location_graph_rule__node_rule__link_group>? Get_link_group();
-    public void Set_link_group(List<world_step__rule_group__location_graph_rule__node_rule__link_group>? value);
+    public world_step__rule_group__location_graph_rule__node_rule__link_group_list? Get_link_group_list();
+    public void Set_link_group_list(world_step__rule_group__location_graph_rule__node_rule__link_group_list? value);
     public world_step__rule_group__location_graph_rule__node_rule__existing_person? Get_existing_person();
     public void Set_existing_person(world_step__rule_group__location_graph_rule__node_rule__existing_person? value);
     public void Deserialize (RawNode rawNode);
@@ -3849,21 +4101,21 @@ namespace XSD {
     {
       this.classifications = value;
     }
-    public List<world_step__rule_group__location_graph_rule__node_rule__link_group>? link_group = new List<world_step__rule_group__location_graph_rule__node_rule__link_group>();
-    public List<world_step__rule_group__location_graph_rule__node_rule__link_group>? Get_link_group()
+    public world_step__rule_group__location_graph_rule__node_rule__link_group_list? link_group_list = null;
+    public world_step__rule_group__location_graph_rule__node_rule__link_group_list? Get_link_group_list()
     {
-      return this.link_group;
+      return this.link_group_list;
     }
-    public List<world_step__rule_group__location_graph_rule__node_rule__link_group> GetOrInsertDefault_link_group()
+    public world_step__rule_group__location_graph_rule__node_rule__link_group_list GetOrInsertDefault_link_group_list()
     {
-      if(this.link_group == null) {
-        this.link_group = new List<world_step__rule_group__location_graph_rule__node_rule__link_group>();
+      if(this.link_group_list == null) {
+        this.link_group_list = new world_step__rule_group__location_graph_rule__node_rule__link_group_list();
       }
-      return this.link_group;
+      return this.link_group_list;
     }
-    public void Set_link_group(List<world_step__rule_group__location_graph_rule__node_rule__link_group>? value)
+    public void Set_link_group_list(world_step__rule_group__location_graph_rule__node_rule__link_group_list? value)
     {
-      this.link_group = value;
+      this.link_group_list = value;
     }
     public world_step__rule_group__location_graph_rule__node_rule__existing_person? existing_person = null;
     public world_step__rule_group__location_graph_rule__node_rule__existing_person? Get_existing_person()
@@ -3909,7 +4161,7 @@ namespace XSD {
       }
       //Deserialize elements
       this.classifications = rawNode.InitializeWithRawNode("classifications", this.classifications);
-      this.link_group = rawNode.InitializeWithRawNode("link_group", this.link_group);
+      this.link_group_list = rawNode.InitializeWithRawNode("link_group_list", this.link_group_list);
       this.existing_person = rawNode.InitializeWithRawNode("existing_person", this.existing_person);
     }
 
@@ -3924,7 +4176,9 @@ namespace XSD {
       if(classifications != null) {
         rawNode.children["classifications"] = new List<RawNode> { classifications.SerializeIntoRawNode() };
       }
-      rawNode.children["link_group"] = link_group.Select(x => x.SerializeIntoRawNode()).ToList();
+      if(link_group_list != null) {
+        rawNode.children["link_group_list"] = new List<RawNode> { link_group_list.SerializeIntoRawNode() };
+      }
       if(existing_person != null) {
         rawNode.children["existing_person"] = new List<RawNode> { existing_person.SerializeIntoRawNode() };
       }
@@ -6151,6 +6405,172 @@ namespace XSD {
     }
   }
   /*typeDeclarationElementToInterfaceString= element*/
+  public interface Iworld_step__rule_group__link_group_rule_list__link_group_rule__to_option {
+    //Attributes
+    public System.String Get_node_rule_ref();
+    public void Set_node_rule_ref(System.String value);
+    public System.Int32 Get_distance();
+    public void Set_distance(System.Int32 value);
+    public System.Int32? Get_maxDistance();
+    public void Set_maxDistance(System.Int32? value);
+    public System.Int32 Get_adjacent_depth_limit();
+    public void Set_adjacent_depth_limit(System.Int32 value);
+
+    //Children elements
+    public type__math_operations? Get_distance_to_progress_multiplier();
+    public void Set_distance_to_progress_multiplier(type__math_operations? value);
+    public type__math_operations? Get_person_progress_property();
+    public void Set_person_progress_property(type__math_operations? value);
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class world_step__rule_group__link_group_rule_list__link_group_rule__to_option: Iworld_step__rule_group__link_group_rule_list__link_group_rule__to_option {
+    public RawNode rawNode = new RawNode();
+    //Attributes
+    public System.String node_rule_ref;
+    public System.String Get_node_rule_ref()
+    {
+      return this.node_rule_ref;
+    }
+    public void Set_node_rule_ref(System.String value)
+    {
+      this.node_rule_ref = value;
+    }
+    public System.Int32 distance;
+    public System.Int32 Get_distance()
+    {
+      return this.distance;
+    }
+    public void Set_distance(System.Int32 value)
+    {
+      this.distance = value;
+    }
+    public System.Int32? maxDistance;
+    public System.Int32? Get_maxDistance()
+    {
+      return this.maxDistance;
+    }
+    public void Set_maxDistance(System.Int32? value)
+    {
+      this.maxDistance = value;
+    }
+    public System.Int32 adjacent_depth_limit;
+    public System.Int32 Get_adjacent_depth_limit()
+    {
+      return this.adjacent_depth_limit;
+    }
+    public void Set_adjacent_depth_limit(System.Int32 value)
+    {
+      this.adjacent_depth_limit = value;
+    }
+
+    //Children elements
+    public type__math_operations? distance_to_progress_multiplier = null;
+    public type__math_operations? Get_distance_to_progress_multiplier()
+    {
+      return this.distance_to_progress_multiplier;
+    }
+    public void Set_distance_to_progress_multiplier(type__math_operations? value)
+    {
+      this.distance_to_progress_multiplier = value;
+    }
+    public type__math_operations? person_progress_property = null;
+    public type__math_operations? Get_person_progress_property()
+    {
+      return this.person_progress_property;
+    }
+    public void Set_person_progress_property(type__math_operations? value)
+    {
+      this.person_progress_property = value;
+    }
+
+    public world_step__rule_group__link_group_rule_list__link_group_rule__to_option()
+    {
+    }
+
+    public world_step__rule_group__link_group_rule_list__link_group_rule__to_option(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public world_step__rule_group__link_group_rule_list__link_group_rule__to_option(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      // Godot.GD.Print("Deserializing world_step__rule_group__link_group_rule_list__link_group_rule__to_option");
+      //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("node_rule_ref"))
+      {
+        var attribute_node_rule_ref = rawNode.attributes["node_rule_ref"];
+        this.node_rule_ref = rawNode.attributes["node_rule_ref"];
+      }
+      if(rawNode.attributes.ContainsKey("distance"))
+      {
+        var attribute_distance = rawNode.attributes["distance"];
+        this.distance = attribute_distance.ToInt();
+      }
+      if(rawNode.attributes.ContainsKey("maxDistance"))
+      {
+        var attribute_maxDistance = rawNode.attributes["maxDistance"];
+        this.maxDistance = attribute_maxDistance?.ToInt();
+      }
+      if(rawNode.attributes.ContainsKey("adjacent_depth_limit"))
+      {
+        var attribute_adjacent_depth_limit = rawNode.attributes["adjacent_depth_limit"];
+        this.adjacent_depth_limit = attribute_adjacent_depth_limit.ToInt();
+      }
+      //Deserialize elements
+      this.distance_to_progress_multiplier = rawNode.InitializeWithRawNode("distance_to_progress_multiplier", this.distance_to_progress_multiplier);
+      this.person_progress_property = rawNode.InitializeWithRawNode("person_progress_property", this.person_progress_property);
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize arguments
+      if(this.node_rule_ref != null)
+      {
+        rawNode.attributes["node_rule_ref"] = this.node_rule_ref.ToString();
+      }
+      if(this.distance != null)
+      {
+        rawNode.attributes["distance"] = this.distance.ToString();
+      }
+      if(this.maxDistance != null)
+      {
+        rawNode.attributes["maxDistance"] = this.maxDistance?.ToString();
+      }
+      if(this.adjacent_depth_limit != null)
+      {
+        rawNode.attributes["adjacent_depth_limit"] = this.adjacent_depth_limit.ToString();
+      }
+      //Serialize elements
+      if(distance_to_progress_multiplier != null) {
+        rawNode.children["distance_to_progress_multiplier"] = new List<RawNode> { distance_to_progress_multiplier.SerializeIntoRawNode() };
+      }
+      if(person_progress_property != null) {
+        rawNode.children["person_progress_property"] = new List<RawNode> { person_progress_property.SerializeIntoRawNode() };
+      }
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        // Godot.GD.Print("Serializing world_step__rule_group__link_group_rule_list__link_group_rule__to_option");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
   public interface Iworld_step__rule_group__location_graph_rule__setup__starting_node {
     //Attributes
     public System.String Get_node_rule_ref();
@@ -6438,20 +6858,13 @@ namespace XSD {
     }
   }
   /*typeDeclarationElementToInterfaceString= element*/
-  public interface Iworld_step__rule_group__location_graph_rule__node_rule__link_group {
-    //Attributes
-    public System.String Get_id();
-    public void Set_id(System.String value);
-    public System.Int32 Get_angle();
-    public void Set_angle(System.Int32 value);
-    public System.Int32? Get_angleMax();
-    public void Set_angleMax(System.Int32? value);
-    public System.Int32? Get_limit();
-    public void Set_limit(System.Int32? value);
+  public interface Iworld_step__rule_group__location_graph_rule__node_rule__link_group_list {
 
     //Children elements
-    public List<world_step__rule_group__location_graph_rule__node_rule__link_group__to_option>? Get_to_option();
-    public void Set_to_option(List<world_step__rule_group__location_graph_rule__node_rule__link_group__to_option>? value);
+    public List<world_step__rule_group__location_graph_rule__node_rule__link_group_list__reference>? Get_reference();
+    public void Set_reference(List<world_step__rule_group__location_graph_rule__node_rule__link_group_list__reference>? value);
+    public List<world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group>? Get_link_group();
+    public void Set_link_group(List<world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group>? value);
     public void Deserialize (RawNode rawNode);
 
     public RawNode SerializeIntoRawNode();
@@ -6460,74 +6873,53 @@ namespace XSD {
   }
 
   /*typeDeclarationElementToString= element*/
-  public class world_step__rule_group__location_graph_rule__node_rule__link_group: Iworld_step__rule_group__location_graph_rule__node_rule__link_group {
+  public class world_step__rule_group__location_graph_rule__node_rule__link_group_list: Iworld_step__rule_group__location_graph_rule__node_rule__link_group_list {
     public RawNode rawNode = new RawNode();
-    //Attributes
-    public System.String id;
-    public System.String Get_id()
-    {
-      return this.id;
-    }
-    public void Set_id(System.String value)
-    {
-      this.id = value;
-    }
-    public System.Int32 angle;
-    public System.Int32 Get_angle()
-    {
-      return this.angle;
-    }
-    public void Set_angle(System.Int32 value)
-    {
-      this.angle = value;
-    }
-    public System.Int32? angleMax;
-    public System.Int32? Get_angleMax()
-    {
-      return this.angleMax;
-    }
-    public void Set_angleMax(System.Int32? value)
-    {
-      this.angleMax = value;
-    }
-    public System.Int32? limit;
-    public System.Int32? Get_limit()
-    {
-      return this.limit;
-    }
-    public void Set_limit(System.Int32? value)
-    {
-      this.limit = value;
-    }
 
     //Children elements
-    public List<world_step__rule_group__location_graph_rule__node_rule__link_group__to_option>? to_option = new List<world_step__rule_group__location_graph_rule__node_rule__link_group__to_option>();
-    public List<world_step__rule_group__location_graph_rule__node_rule__link_group__to_option>? Get_to_option()
+    public List<world_step__rule_group__location_graph_rule__node_rule__link_group_list__reference>? reference = new List<world_step__rule_group__location_graph_rule__node_rule__link_group_list__reference>();
+    public List<world_step__rule_group__location_graph_rule__node_rule__link_group_list__reference>? Get_reference()
     {
-      return this.to_option;
+      return this.reference;
     }
-    public List<world_step__rule_group__location_graph_rule__node_rule__link_group__to_option> GetOrInsertDefault_to_option()
+    public List<world_step__rule_group__location_graph_rule__node_rule__link_group_list__reference> GetOrInsertDefault_reference()
     {
-      if(this.to_option == null) {
-        this.to_option = new List<world_step__rule_group__location_graph_rule__node_rule__link_group__to_option>();
+      if(this.reference == null) {
+        this.reference = new List<world_step__rule_group__location_graph_rule__node_rule__link_group_list__reference>();
       }
-      return this.to_option;
+      return this.reference;
     }
-    public void Set_to_option(List<world_step__rule_group__location_graph_rule__node_rule__link_group__to_option>? value)
+    public void Set_reference(List<world_step__rule_group__location_graph_rule__node_rule__link_group_list__reference>? value)
     {
-      this.to_option = value;
+      this.reference = value;
+    }
+    public List<world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group>? link_group = new List<world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group>();
+    public List<world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group>? Get_link_group()
+    {
+      return this.link_group;
+    }
+    public List<world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group> GetOrInsertDefault_link_group()
+    {
+      if(this.link_group == null) {
+        this.link_group = new List<world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group>();
+      }
+      return this.link_group;
+    }
+    public void Set_link_group(List<world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group>? value)
+    {
+      this.link_group = value;
     }
 
-    public world_step__rule_group__location_graph_rule__node_rule__link_group()
+    public world_step__rule_group__location_graph_rule__node_rule__link_group_list()
     {
     }
 
-    public world_step__rule_group__location_graph_rule__node_rule__link_group(RawNode rawNode)
+    public world_step__rule_group__location_graph_rule__node_rule__link_group_list(RawNode rawNode)
     {
       Deserialize(rawNode);
     }
 
-    public world_step__rule_group__location_graph_rule__node_rule__link_group(XmlElement xmlElement)
+    public world_step__rule_group__location_graph_rule__node_rule__link_group_list(XmlElement xmlElement)
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
@@ -6536,59 +6928,23 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__node_rule__link_group");
-      //Deserialize arguments
-      if(rawNode.attributes.ContainsKey("id"))
-      {
-        var attribute_id = rawNode.attributes["id"];
-        this.id = rawNode.attributes["id"];
-      }
-      if(rawNode.attributes.ContainsKey("angle"))
-      {
-        var attribute_angle = rawNode.attributes["angle"];
-        this.angle = attribute_angle.ToInt();
-      }
-      if(rawNode.attributes.ContainsKey("angleMax"))
-      {
-        var attribute_angleMax = rawNode.attributes["angleMax"];
-        this.angleMax = attribute_angleMax?.ToInt();
-      }
-      if(rawNode.attributes.ContainsKey("limit"))
-      {
-        var attribute_limit = rawNode.attributes["limit"];
-        this.limit = attribute_limit?.ToInt();
-      }
+      // Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__node_rule__link_group_list");
       //Deserialize elements
-      this.to_option = rawNode.InitializeWithRawNode("to_option", this.to_option);
+      this.reference = rawNode.InitializeWithRawNode("reference", this.reference);
+      this.link_group = rawNode.InitializeWithRawNode("link_group", this.link_group);
     }
 
     public RawNode SerializeIntoRawNode()
     {
-      //Serialize arguments
-      if(this.id != null)
-      {
-        rawNode.attributes["id"] = this.id.ToString();
-      }
-      if(this.angle != null)
-      {
-        rawNode.attributes["angle"] = this.angle.ToString();
-      }
-      if(this.angleMax != null)
-      {
-        rawNode.attributes["angleMax"] = this.angleMax?.ToString();
-      }
-      if(this.limit != null)
-      {
-        rawNode.attributes["limit"] = this.limit?.ToString();
-      }
       //Serialize elements
-      rawNode.children["to_option"] = to_option.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["reference"] = reference.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["link_group"] = link_group.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 
     public void Serialize(XmlElement element)
     {
-        // Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__node_rule__link_group");
+        // Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__node_rule__link_group_list");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -8461,22 +8817,13 @@ namespace XSD {
     }
   }
   /*typeDeclarationElementToInterfaceString= element*/
-  public interface Iworld_step__rule_group__location_graph_rule__node_rule__link_group__to_option {
+  public interface Iworld_step__rule_group__location_graph_rule__node_rule__link_group_list__reference {
     //Attributes
-    public System.String Get_node_rule_ref();
-    public void Set_node_rule_ref(System.String value);
-    public System.Int32 Get_distance();
-    public void Set_distance(System.Int32 value);
-    public System.Int32? Get_maxDistance();
-    public void Set_maxDistance(System.Int32? value);
-    public System.Int32 Get_adjacent_depth_limit();
-    public void Set_adjacent_depth_limit(System.Int32 value);
+    public System.String Get_link_group_rule_ref();
+    public void Set_link_group_rule_ref(System.String value);
 
     //Children elements
-    public type__math_operations? Get_distance_to_progress_multiplier();
-    public void Set_distance_to_progress_multiplier(type__math_operations? value);
-    public type__math_operations? Get_person_progress_property();
-    public void Set_person_progress_property(type__math_operations? value);
+
     public void Deserialize (RawNode rawNode);
 
     public RawNode SerializeIntoRawNode();
@@ -8485,76 +8832,31 @@ namespace XSD {
   }
 
   /*typeDeclarationElementToString= element*/
-  public class world_step__rule_group__location_graph_rule__node_rule__link_group__to_option: Iworld_step__rule_group__location_graph_rule__node_rule__link_group__to_option {
+  public class world_step__rule_group__location_graph_rule__node_rule__link_group_list__reference: Iworld_step__rule_group__location_graph_rule__node_rule__link_group_list__reference {
     public RawNode rawNode = new RawNode();
     //Attributes
-    public System.String node_rule_ref;
-    public System.String Get_node_rule_ref()
+    public System.String link_group_rule_ref;
+    public System.String Get_link_group_rule_ref()
     {
-      return this.node_rule_ref;
+      return this.link_group_rule_ref;
     }
-    public void Set_node_rule_ref(System.String value)
+    public void Set_link_group_rule_ref(System.String value)
     {
-      this.node_rule_ref = value;
-    }
-    public System.Int32 distance;
-    public System.Int32 Get_distance()
-    {
-      return this.distance;
-    }
-    public void Set_distance(System.Int32 value)
-    {
-      this.distance = value;
-    }
-    public System.Int32? maxDistance;
-    public System.Int32? Get_maxDistance()
-    {
-      return this.maxDistance;
-    }
-    public void Set_maxDistance(System.Int32? value)
-    {
-      this.maxDistance = value;
-    }
-    public System.Int32 adjacent_depth_limit;
-    public System.Int32 Get_adjacent_depth_limit()
-    {
-      return this.adjacent_depth_limit;
-    }
-    public void Set_adjacent_depth_limit(System.Int32 value)
-    {
-      this.adjacent_depth_limit = value;
+      this.link_group_rule_ref = value;
     }
 
     //Children elements
-    public type__math_operations? distance_to_progress_multiplier = null;
-    public type__math_operations? Get_distance_to_progress_multiplier()
-    {
-      return this.distance_to_progress_multiplier;
-    }
-    public void Set_distance_to_progress_multiplier(type__math_operations? value)
-    {
-      this.distance_to_progress_multiplier = value;
-    }
-    public type__math_operations? person_progress_property = null;
-    public type__math_operations? Get_person_progress_property()
-    {
-      return this.person_progress_property;
-    }
-    public void Set_person_progress_property(type__math_operations? value)
-    {
-      this.person_progress_property = value;
-    }
 
-    public world_step__rule_group__location_graph_rule__node_rule__link_group__to_option()
+    public world_step__rule_group__location_graph_rule__node_rule__link_group_list__reference()
     {
     }
 
-    public world_step__rule_group__location_graph_rule__node_rule__link_group__to_option(RawNode rawNode)
+    public world_step__rule_group__location_graph_rule__node_rule__link_group_list__reference(RawNode rawNode)
     {
       Deserialize(rawNode);
     }
 
-    public world_step__rule_group__location_graph_rule__node_rule__link_group__to_option(XmlElement xmlElement)
+    public world_step__rule_group__location_graph_rule__node_rule__link_group_list__reference(XmlElement xmlElement)
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
@@ -8563,65 +8865,188 @@ namespace XSD {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__node_rule__link_group__to_option");
+      // Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__node_rule__link_group_list__reference");
       //Deserialize arguments
-      if(rawNode.attributes.ContainsKey("node_rule_ref"))
+      if(rawNode.attributes.ContainsKey("link_group_rule_ref"))
       {
-        var attribute_node_rule_ref = rawNode.attributes["node_rule_ref"];
-        this.node_rule_ref = rawNode.attributes["node_rule_ref"];
-      }
-      if(rawNode.attributes.ContainsKey("distance"))
-      {
-        var attribute_distance = rawNode.attributes["distance"];
-        this.distance = attribute_distance.ToInt();
-      }
-      if(rawNode.attributes.ContainsKey("maxDistance"))
-      {
-        var attribute_maxDistance = rawNode.attributes["maxDistance"];
-        this.maxDistance = attribute_maxDistance?.ToInt();
-      }
-      if(rawNode.attributes.ContainsKey("adjacent_depth_limit"))
-      {
-        var attribute_adjacent_depth_limit = rawNode.attributes["adjacent_depth_limit"];
-        this.adjacent_depth_limit = attribute_adjacent_depth_limit.ToInt();
+        var attribute_link_group_rule_ref = rawNode.attributes["link_group_rule_ref"];
+        this.link_group_rule_ref = rawNode.attributes["link_group_rule_ref"];
       }
       //Deserialize elements
-      this.distance_to_progress_multiplier = rawNode.InitializeWithRawNode("distance_to_progress_multiplier", this.distance_to_progress_multiplier);
-      this.person_progress_property = rawNode.InitializeWithRawNode("person_progress_property", this.person_progress_property);
+
     }
 
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.node_rule_ref != null)
+      if(this.link_group_rule_ref != null)
       {
-        rawNode.attributes["node_rule_ref"] = this.node_rule_ref.ToString();
-      }
-      if(this.distance != null)
-      {
-        rawNode.attributes["distance"] = this.distance.ToString();
-      }
-      if(this.maxDistance != null)
-      {
-        rawNode.attributes["maxDistance"] = this.maxDistance?.ToString();
-      }
-      if(this.adjacent_depth_limit != null)
-      {
-        rawNode.attributes["adjacent_depth_limit"] = this.adjacent_depth_limit.ToString();
+        rawNode.attributes["link_group_rule_ref"] = this.link_group_rule_ref.ToString();
       }
       //Serialize elements
-      if(distance_to_progress_multiplier != null) {
-        rawNode.children["distance_to_progress_multiplier"] = new List<RawNode> { distance_to_progress_multiplier.SerializeIntoRawNode() };
-      }
-      if(person_progress_property != null) {
-        rawNode.children["person_progress_property"] = new List<RawNode> { person_progress_property.SerializeIntoRawNode() };
-      }
+
       return rawNode;
     }
 
     public void Serialize(XmlElement element)
     {
-        // Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__node_rule__link_group__to_option");
+        // Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__node_rule__link_group_list__reference");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
+  public interface Iworld_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group {
+    //Attributes
+    public System.String Get_id();
+    public void Set_id(System.String value);
+    public System.Int32 Get_angle();
+    public void Set_angle(System.Int32 value);
+    public System.Int32? Get_angleMax();
+    public void Set_angleMax(System.Int32? value);
+    public System.Int32? Get_limit();
+    public void Set_limit(System.Int32? value);
+
+    //Children elements
+    public List<world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group__to_option>? Get_to_option();
+    public void Set_to_option(List<world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group__to_option>? value);
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group: Iworld_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group {
+    public RawNode rawNode = new RawNode();
+    //Attributes
+    public System.String id;
+    public System.String Get_id()
+    {
+      return this.id;
+    }
+    public void Set_id(System.String value)
+    {
+      this.id = value;
+    }
+    public System.Int32 angle;
+    public System.Int32 Get_angle()
+    {
+      return this.angle;
+    }
+    public void Set_angle(System.Int32 value)
+    {
+      this.angle = value;
+    }
+    public System.Int32? angleMax;
+    public System.Int32? Get_angleMax()
+    {
+      return this.angleMax;
+    }
+    public void Set_angleMax(System.Int32? value)
+    {
+      this.angleMax = value;
+    }
+    public System.Int32? limit;
+    public System.Int32? Get_limit()
+    {
+      return this.limit;
+    }
+    public void Set_limit(System.Int32? value)
+    {
+      this.limit = value;
+    }
+
+    //Children elements
+    public List<world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group__to_option>? to_option = new List<world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group__to_option>();
+    public List<world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group__to_option>? Get_to_option()
+    {
+      return this.to_option;
+    }
+    public List<world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group__to_option> GetOrInsertDefault_to_option()
+    {
+      if(this.to_option == null) {
+        this.to_option = new List<world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group__to_option>();
+      }
+      return this.to_option;
+    }
+    public void Set_to_option(List<world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group__to_option>? value)
+    {
+      this.to_option = value;
+    }
+
+    public world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group()
+    {
+    }
+
+    public world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      // Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group");
+      //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("id"))
+      {
+        var attribute_id = rawNode.attributes["id"];
+        this.id = rawNode.attributes["id"];
+      }
+      if(rawNode.attributes.ContainsKey("angle"))
+      {
+        var attribute_angle = rawNode.attributes["angle"];
+        this.angle = attribute_angle.ToInt();
+      }
+      if(rawNode.attributes.ContainsKey("angleMax"))
+      {
+        var attribute_angleMax = rawNode.attributes["angleMax"];
+        this.angleMax = attribute_angleMax?.ToInt();
+      }
+      if(rawNode.attributes.ContainsKey("limit"))
+      {
+        var attribute_limit = rawNode.attributes["limit"];
+        this.limit = attribute_limit?.ToInt();
+      }
+      //Deserialize elements
+      this.to_option = rawNode.InitializeWithRawNode("to_option", this.to_option);
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize arguments
+      if(this.id != null)
+      {
+        rawNode.attributes["id"] = this.id.ToString();
+      }
+      if(this.angle != null)
+      {
+        rawNode.attributes["angle"] = this.angle.ToString();
+      }
+      if(this.angleMax != null)
+      {
+        rawNode.attributes["angleMax"] = this.angleMax?.ToString();
+      }
+      if(this.limit != null)
+      {
+        rawNode.attributes["limit"] = this.limit?.ToString();
+      }
+      //Serialize elements
+      rawNode.children["to_option"] = to_option.Select(x => x.SerializeIntoRawNode()).ToList();
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        // Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -9412,6 +9837,172 @@ namespace XSD {
     public void Serialize(XmlElement element)
     {
         // Godot.GD.Print("Serializing group__operation__and__add_property");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+  }
+  /*typeDeclarationElementToInterfaceString= element*/
+  public interface Iworld_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group__to_option {
+    //Attributes
+    public System.String Get_node_rule_ref();
+    public void Set_node_rule_ref(System.String value);
+    public System.Int32 Get_distance();
+    public void Set_distance(System.Int32 value);
+    public System.Int32? Get_maxDistance();
+    public void Set_maxDistance(System.Int32? value);
+    public System.Int32 Get_adjacent_depth_limit();
+    public void Set_adjacent_depth_limit(System.Int32 value);
+
+    //Children elements
+    public type__math_operations? Get_distance_to_progress_multiplier();
+    public void Set_distance_to_progress_multiplier(type__math_operations? value);
+    public type__math_operations? Get_person_progress_property();
+    public void Set_person_progress_property(type__math_operations? value);
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+  /*typeDeclarationElementToString= element*/
+  public class world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group__to_option: Iworld_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group__to_option {
+    public RawNode rawNode = new RawNode();
+    //Attributes
+    public System.String node_rule_ref;
+    public System.String Get_node_rule_ref()
+    {
+      return this.node_rule_ref;
+    }
+    public void Set_node_rule_ref(System.String value)
+    {
+      this.node_rule_ref = value;
+    }
+    public System.Int32 distance;
+    public System.Int32 Get_distance()
+    {
+      return this.distance;
+    }
+    public void Set_distance(System.Int32 value)
+    {
+      this.distance = value;
+    }
+    public System.Int32? maxDistance;
+    public System.Int32? Get_maxDistance()
+    {
+      return this.maxDistance;
+    }
+    public void Set_maxDistance(System.Int32? value)
+    {
+      this.maxDistance = value;
+    }
+    public System.Int32 adjacent_depth_limit;
+    public System.Int32 Get_adjacent_depth_limit()
+    {
+      return this.adjacent_depth_limit;
+    }
+    public void Set_adjacent_depth_limit(System.Int32 value)
+    {
+      this.adjacent_depth_limit = value;
+    }
+
+    //Children elements
+    public type__math_operations? distance_to_progress_multiplier = null;
+    public type__math_operations? Get_distance_to_progress_multiplier()
+    {
+      return this.distance_to_progress_multiplier;
+    }
+    public void Set_distance_to_progress_multiplier(type__math_operations? value)
+    {
+      this.distance_to_progress_multiplier = value;
+    }
+    public type__math_operations? person_progress_property = null;
+    public type__math_operations? Get_person_progress_property()
+    {
+      return this.person_progress_property;
+    }
+    public void Set_person_progress_property(type__math_operations? value)
+    {
+      this.person_progress_property = value;
+    }
+
+    public world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group__to_option()
+    {
+    }
+
+    public world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group__to_option(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group__to_option(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      // Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group__to_option");
+      //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("node_rule_ref"))
+      {
+        var attribute_node_rule_ref = rawNode.attributes["node_rule_ref"];
+        this.node_rule_ref = rawNode.attributes["node_rule_ref"];
+      }
+      if(rawNode.attributes.ContainsKey("distance"))
+      {
+        var attribute_distance = rawNode.attributes["distance"];
+        this.distance = attribute_distance.ToInt();
+      }
+      if(rawNode.attributes.ContainsKey("maxDistance"))
+      {
+        var attribute_maxDistance = rawNode.attributes["maxDistance"];
+        this.maxDistance = attribute_maxDistance?.ToInt();
+      }
+      if(rawNode.attributes.ContainsKey("adjacent_depth_limit"))
+      {
+        var attribute_adjacent_depth_limit = rawNode.attributes["adjacent_depth_limit"];
+        this.adjacent_depth_limit = attribute_adjacent_depth_limit.ToInt();
+      }
+      //Deserialize elements
+      this.distance_to_progress_multiplier = rawNode.InitializeWithRawNode("distance_to_progress_multiplier", this.distance_to_progress_multiplier);
+      this.person_progress_property = rawNode.InitializeWithRawNode("person_progress_property", this.person_progress_property);
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize arguments
+      if(this.node_rule_ref != null)
+      {
+        rawNode.attributes["node_rule_ref"] = this.node_rule_ref.ToString();
+      }
+      if(this.distance != null)
+      {
+        rawNode.attributes["distance"] = this.distance.ToString();
+      }
+      if(this.maxDistance != null)
+      {
+        rawNode.attributes["maxDistance"] = this.maxDistance?.ToString();
+      }
+      if(this.adjacent_depth_limit != null)
+      {
+        rawNode.attributes["adjacent_depth_limit"] = this.adjacent_depth_limit.ToString();
+      }
+      //Serialize elements
+      if(distance_to_progress_multiplier != null) {
+        rawNode.children["distance_to_progress_multiplier"] = new List<RawNode> { distance_to_progress_multiplier.SerializeIntoRawNode() };
+      }
+      if(person_progress_property != null) {
+        rawNode.children["person_progress_property"] = new List<RawNode> { person_progress_property.SerializeIntoRawNode() };
+      }
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        // Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__node_rule__link_group_list__link_group__to_option");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }

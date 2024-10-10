@@ -115,15 +115,19 @@
         <starting_node node_rule_ref="city" />
       </setup>
       <node_rule id="city">
-        <link_group id="0" angle="0" limit="1">
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="1" />
-        </link_group>
-        <link_group id="90" angle="90" limit="1">
-          <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="1" />
-        </link_group>
+        <link_group_list>
+          <link_group id="0" angle="0" limit="1">
+            <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="1" />
+          </link_group>
+          <link_group id="90" angle="90" limit="1">
+            <to_option node_rule_ref="plains" adjacent_depth_limit="100" distance="1" maxDistance="1" />
+          </link_group>
+        </link_group_list>
       </node_rule>
       <node_rule id="plains">
-        <link_group id="all" angle="0" angleMax="360" limit="10" />
+        <link_group_list>
+          <link_group id="all" angle="0" angleMax="360" limit="10" />
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
