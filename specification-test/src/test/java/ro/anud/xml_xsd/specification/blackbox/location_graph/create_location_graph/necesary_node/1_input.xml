@@ -17,9 +17,11 @@
         <necessary_node node_rule_ref="node" min="3"/>
       </setup>
       <node_rule id="node">
-        <link_group id="all" angle="0" angleMax="360">
-          <to_option node_rule_ref="node" adjacent_depth_limit="1" distance="0"/>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0" angleMax="360">
+            <to_option node_rule_ref="node" adjacent_depth_limit="1" distance="0"/>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>

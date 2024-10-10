@@ -527,6 +527,13 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
       <entry id="city"/>
     </location_classification_rule>
 
+
+    <link_group_rule_list>
+      <link_group_rule id="qwe" angle="23">
+
+      </link_group_rule>
+    </link_group_rule_list>
+
     <location_graph_rule id="dd">
       <setup>
         <starting_node node_rule_ref="city"/>
@@ -535,9 +542,13 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
         <classifications>
           <classification location_classification_rule_ref="city"/>
         </classifications>
-        <link_group id="all" angle="0" angleMax="360">
-          <to_option node_rule_ref="city" distance="20" maxDistance="50" adjacent_depth_limit="0"/>
-        </link_group>
+        <link_group_list>
+          <reference link_group_rule_ref=""/>
+          <link_group id="all" angle="0" angleMax="360">
+            <to_option node_rule_ref="city" distance="20" maxDistance="50" adjacent_depth_limit="0"/>
+          </link_group>
+        </link_group_list>
+
       </node_rule>
 
     </location_graph_rule>

@@ -12,6 +12,7 @@ import {nodeIdRefValidator} from "./validators/nodeIdRef.validator";
 import {locationGraphIdRefValidator} from "./validators/locationGraphIdRef.validator";
 import {locationClassificationRuleRefValidator} from "./validators/locationClassificationRuleRefValidator";
 import {classificationRuleRefValidator} from "./validators/classificationRuleRef.validator";
+import {linkGroupRuleRefValidator} from "./validators/linkGroupRuleRef.validator";
 
 export const validateString = async (xmlString: string, log: (...string: any[]) => void) => {
   const readJson = JsonQuery.fromText<JsonSchema>(xmlString.toString());
@@ -27,6 +28,7 @@ export const validate = async (jsonUtils: JsonUtil, log: (...string: any[]) => v
   result.push(...await actionRuleRefValidator(jsonUtils));
   result.push(...await classificationRuleRefValidator(jsonUtils));
   result.push(...await locationClassificationRuleRefValidator(jsonUtils));
+  result.push(...await linkGroupRuleRefValidator(jsonUtils))
   result.push(...await personRefValidator(jsonUtils));
   result.push(...await nameRuleRefValidator(jsonUtils));
   result.push(...await nodeRuleRefValidator(jsonUtils));
