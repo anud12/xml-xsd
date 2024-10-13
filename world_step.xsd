@@ -762,6 +762,67 @@
                         </xs:sequence>
                       </xs:complexType>
                     </xs:element>
+                    <xs:element name="from_person" minOccurs="0" maxOccurs="unbounded">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Represents an action rule that originates from a person.
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:all>
+                          <xs:element name="applicable_selection" minOccurs="0" type="type__person_selection">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Represents the selection criteria for the person from whom the action originates.
+                              </xs:documentation>
+                            </xs:annotation>
+                          </xs:element>
+                          <xs:element name="mutations" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Represents the mutations that can be applied to the properties of the person initiating the action.
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="property_mutation" minOccurs="0" type="type__property_mutation"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="on_person" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Represents the person on whom the action is applied.
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:all>
+                                <xs:element name="applicable_selection" minOccurs="0" type="type__person_selection">
+                                  <xs:annotation>
+                                    <xs:documentation>
+                                      Represents the selection criteria for the person on whom the action is applied.
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                </xs:element>
+                                <xs:element name="mutations" minOccurs="0">
+                                  <xs:annotation>
+                                    <xs:documentation>
+                                      Represents the mutations that can be applied to the properties of the person the action is applied to.
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="property_mutation" minOccurs="0" type="type__property_mutation"/>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:all>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:all>
+                        <xs:attribute name="id" type="xs:string" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
                     <xs:element name="person_to_person" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
@@ -1416,9 +1477,9 @@
                   <xs:choice>
                     <xs:element name="do">
                       <xs:complexType>
-                        <xs:attribute name="action_rule_ref"/>
-                        <xs:attribute name="action_ref"/>
-                        <xs:attribute name="person_ref" use="required"/>
+                        <xs:attribute name="action_rule_ref" type="xs:string"/>
+                        <xs:attribute name="action_ref" type="xs:string"/>
+                        <xs:attribute name="person_ref" type="xs:string" use="required"/>
                       </xs:complexType>
                     </xs:element>
                     <xs:element name="move_towards">
@@ -1429,7 +1490,7 @@
                       </xs:complexType>
                     </xs:element>
                   </xs:choice>
-                  <xs:attribute name="person_ref" use="required"/>
+                  <xs:attribute name="person_ref" type="xs:string" use="required"/>
                 </xs:complexType>
               </xs:element>
               <xs:element name="location_graph.create" minOccurs="0" maxOccurs="unbounded">
@@ -1577,6 +1638,19 @@
                     </xs:element>
                   </xs:all>
                   <xs:attribute name="person_id_ref" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="from_person" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:all>
+                    <xs:element name="on_person">
+                      <xs:complexType>
+                        <xs:attribute name="person_id_ref" use="required" type="xs:string"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:all>
+                  <xs:attribute name="person_id_ref" type="xs:string" use="required"/>
+                  <xs:attribute name="from_person_rule_ref" type="xs:string" use="required"/>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>

@@ -1,0 +1,46 @@
+/*typeDeclarationElementToInterfaceString= element*/
+public interface Iroot {
+  public void Deserialize (RawNode rawNode);
+
+  public RawNode SerializeIntoRawNode();
+
+  public void Serialize(XmlElement element);
+}
+
+/*typeDeclarationElementToString= element*/
+public class root: Iroot {
+  public RawNode rawNode = new RawNode();
+
+  public root()
+  {
+  }
+
+  public root(RawNode rawNode)
+  {
+    Deserialize(rawNode);
+  }
+
+  public root(XmlElement xmlElement)
+  {
+    this.rawNode.Deserialize(xmlElement);
+    Deserialize(rawNode);
+  }
+
+  public void Deserialize (RawNode rawNode)
+  {
+    this.rawNode = rawNode;
+    // Godot.GD.Print("Deserializing root");
+  }
+
+  public RawNode SerializeIntoRawNode()
+  {
+    return rawNode;
+  }
+
+  public void Serialize(XmlElement element)
+  {
+      // Godot.GD.Print("Serializing root");
+      var updatedRawNode = SerializeIntoRawNode();
+      updatedRawNode.Serialize(element);
+  }
+}

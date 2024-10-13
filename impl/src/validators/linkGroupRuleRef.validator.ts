@@ -8,7 +8,7 @@ export const linkGroupRuleRefValidator: Validator<AttributeNotInValidationError<
   const metadata = ruleGroups.flatMap(ruleGroup => ruleGroup.queryAllOptional("link_group_rule_list"));
   const raceMetadataNames = metadata.flatMap(e => e.queryAllOptional("link_group_rule").map(e => e.attributeMap.id));
 
-  return jsonSchema.json.queryAllRecursiveWithAttributeFrom<QueryType>("link_group_rule")
-    .filter((race) => !raceMetadataNames.includes(race.attributeMap.link_group_rule))
-    .map(race => new AttributeNotInValidationError(race, "link_group_rule", raceMetadataNames));
+  return jsonSchema.json.queryAllRecursiveWithAttributeFrom<QueryType>("link_group_rule_ref")
+    .filter((race) => !raceMetadataNames.includes(race.attributeMap.link_group_rule_ref))
+    .map(race => new AttributeNotInValidationError(race, "link_group_rule_ref", raceMetadataNames));
 }

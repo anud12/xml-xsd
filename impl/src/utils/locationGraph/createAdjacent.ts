@@ -25,11 +25,11 @@ const getLinkRules = (readJson: JsonUtil, nodeRule: NodeRuleQueryType): LinkGrou
     .flatMap(ruleGroup => ruleGroup.queryAllOptional("link_group_rule_list"))
     .flatMap(link_group_rule_list => link_group_rule_list.queryAllOptional("link_group_rule"));
 
-    const referencedLinkRuleList = nodeRule.queryOptional("link_group_list").queryAllOptional("reference").map(referenceElement => {
+    const referencedLinkRuleList = nodeRule.queryOptional("link_group_list")?.queryAllOptional("reference")?.map(referenceElement => {
       return linkRuleElementList.find(linkRule => referenceElement.attributeMap.link_group_rule_ref === linkRule.attributeMap.id)
     })
 
-  return [...referencedLinkRuleList, ...inlineLinkRules];
+  return [...(referencedLinkRuleList ?? []), ...(inlineLinkRules ?? [])];
 }
 
 const getAdjacentNodes = (jsonUtil: JsonUtil, locationGraph: LocationGraphQueryType, originNode: NodeQueryType, maxDepth: number, excludeNodes: Array<NodeQueryType> = []): Array<NodeQueryType> => {

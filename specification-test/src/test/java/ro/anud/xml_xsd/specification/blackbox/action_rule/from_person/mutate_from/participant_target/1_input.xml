@@ -1,0 +1,57 @@
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd"
+>
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points">
+      </entry>
+      <entry id="property_dependant" units="points">
+      </entry>
+    </property_rule>
+
+    <action_rule>
+      <from_person id="from_person_rule">
+        <mutations>
+          <property_mutation property_rule_ref="property">
+            <from participant="target">
+              <operation initial="1">
+                <add_property property_rule_ref="property_dependant"/>
+              </operation>
+            </from>
+          </property_mutation>
+        </mutations>
+        <on_person/>
+      </from_person>
+    </action_rule>
+  </rule_group>
+
+  <data>
+    <people>
+      <person id="1">
+        <properties>
+          <property property_rule_ref="property" value="1"/>
+          <property property_rule_ref="property_dependant" value="1"/>
+        </properties>
+      </person>
+      <person id="2">
+        <properties>
+          <property property_rule_ref="property_dependant" value="2"/>
+        </properties>
+      </person>
+    </people>
+  </data>
+  <actions>
+    <from_person person_id_ref="1" from_person_rule_ref="from_person_rule">
+      <on_person person_id_ref="2"/>
+    </from_person>
+  </actions>
+</world_step>

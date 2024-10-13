@@ -28,7 +28,8 @@
     "build-watch": "node esbuild_watch.config.js",
     "generate_documentation": "ts-node ./src/blackboxDocumentationGenerator.ts",
     "generate_documentation-watch": "ts-node ./src/blackboxDocumentationGenerator.ts -w",
-    "start": "ts-node-dev --max_old_space_size=8192 src/index.ts",
+    "start": "ts-node-dev src/index.ts",
+    "start-no-websocket": "ts-node-dev src/index.ts -- --no-websocket",
     "dev": "concurrently \"npm run build-watch\" \"npm run generate_documentation-watch\" \"npm run start\" "
   },
   "author": "",

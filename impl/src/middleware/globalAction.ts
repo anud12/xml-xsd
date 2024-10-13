@@ -32,7 +32,7 @@ const applyOn = (readJson: JsonUtil, globalRules: GlobalActionQueryType[], byEle
   return elementList.flatMap(onElement => onElement.queryOptional("person"))
     .flatMap(rule => {
       const personList = readJson.person.selectPerson(rule.queryOptional("select"))
-      const mutations = personList.map(personElement => readJson.person.applyPropertyMutation(personElement, rule.queryOptional("property_mutation")))
+      const mutations = personList.map(personElement => readJson.person.oldApplyPropertyMutation(personElement, rule.queryOptional("property_mutation")))
       return mutations;
     });
 }
@@ -46,7 +46,7 @@ const applyFrom = (readJson: JsonUtil, globalRules: GlobalActionQueryType[], byE
     .flatMap(rule => {
       const personList = readJson.person.selectPerson(rule.queryOptional("select"))
       .filter(person => person.attributeMap.id === byElement.attributeMap.person_ref)
-      const mutations = personList.map(personElement => readJson.person.applyPropertyMutation(personElement, rule.queryOptional("property_mutation")))
+      const mutations = personList.map(personElement => readJson.person.oldApplyPropertyMutation(personElement, rule.queryOptional("property_mutation")))
       return mutations;
     })
 }

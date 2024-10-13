@@ -1,25 +1,11 @@
-import {Type, TypeObject, TypeReference} from "../../../type";
+import {Type, TypeObject} from "../../../type";
 import {typeDeclarationElementToString} from "./typeDeclarationToString";
 import {DependantType, GetObjectBodyReturn} from "../typeToString";
 
-export function unionTypeDeclarationToString(dependantType:DependantType):GetObjectBodyReturn {
+export function unionTypeDeclarationToString(writtenClassesList: string[], dependantType:DependantType):GetObjectBodyReturn {
   if(dependantType.type === "union") {
-    if(dependantType.value.metaType === "union" || dependantType.value.metaType  === "composition") {
+    if(dependantType.value.metaType === "union" ) {
 
-      const extensionsDependantTypes:DependantType<TypeReference>[] = dependantType.value.value.flatMap(e => {
-        if(e.metaType === "reference") {
-          return [{
-            name: e.value,
-            value: e,
-            type: "reference"
-          }]
-        }
-        return [];
-      });
-
-      const extensions = extensionsDependantTypes.map(e => {
-        return e.value.value;
-      });
 
       const value = dependantType.value.value.flatMap(e => {
         if(e.metaType === "object") {
@@ -37,13 +23,14 @@ export function unionTypeDeclarationToString(dependantType:DependantType):GetObj
         attributes: dependantType.value.attributes,
         value: value
       }
-      const result = typeDeclarationElementToString({
+      const result = typeDeclarationElementToString(writtenClassesList, {
         type: "element",
         value: type,
         name: dependantType.name
-      }, extensions)
+      }, [])
       return {
-        dependantTypes: [...result.dependantTypes, ...extensionsDependantTypes],
+        writtenClass: result.writtenClass,
+        dependantTypes: [...result.dependantTypes],
         templateString: result.templateString
       }
     }
