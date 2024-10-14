@@ -21,6 +21,7 @@ import java.util.Collection;
 /*tags
   - from_person
   - participant `self`
+  - property_mutation
  */
 @Execution(ExecutionMode.CONCURRENT)
 public class IndexTest {

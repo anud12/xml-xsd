@@ -18,10 +18,13 @@ const indexFile = `${outputPath}/index.md`
 if (fs.existsSync(outputPath)) {
   fs.rmSync(outputPath, {recursive: true});
 }
+if(fs.existsSync(indexFile)) {
+  fs.rmSync(indexFile);
+}
 //create documentation folder
 fs.mkdirSync(outputPath);
 
-writeFileSync(indexFile, `# Index\n\n`, {flag: "w+"});
+writeFileSync(indexFile, `# Index\n\n`, {flag: "w"});
 
 
 const inputRelativePath = `1_input.xml`

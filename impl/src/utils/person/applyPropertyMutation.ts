@@ -54,29 +54,36 @@ export const applyPropertyMutation = (readJson: JsonUtil, outputPersonQueryType:
     }
   }
 
-  const value = readJson.computeOperationFromParent(fromElement?.queryOptional("operation"), getProperty)
+  const newValueString = readJson.computeOperationFromParent(fromElement?.queryOptional("operation"), getProperty)
 
   return async (writeJson: JsonUtil) => {
-    if (!value) {
+    if (!newValueString) {
       return
     }
 
     writeJson.json.queryOptional("data").queryAllOptional("people")
       .flatMap(peopleElement => peopleElement.queryAllOptional("person"))
       .filter(personElement => personElement.attributeMap.id === outputPersonQueryType.attributeMap.id)
-      .flatMap(personElement => personElement.queryAllOptional("properties"))
-      .flatMap(property => property.queryAllOptional("property"))
-      .filter(element => element.attributeMap.property_rule_ref === propertyRuleRef)
-      .forEach(fromElement => {
-        const currentValue = Number(fromElement.attributeMap.value)
-        if (isNaN(currentValue)) {
-          return
-        }
-        const newValue = Number(value);
-        if(isNaN(newValue)) {
+      .forEach(personElement => {
+        const oldValue = writeJson.person.getProperty(personElement, propertyRuleRef);
+        const newValueNumber = Number(newValueString) + Number(oldValue);
+        if (isNaN(Number(newValueString)) || isNaN(Number(oldValue))) {
           return;
         }
-        fromElement.attributeMap.value = currentValue + newValue;
+        const properties = personElement.queryOrAppend("properties")
+        if(!properties) {
+
+        }
+        const propertyElement = properties.queryAllOptional("property")
+          .find(element => element.attributeMap.property_rule_ref === propertyRuleRef);
+        if (!propertyElement) {
+          properties.appendChild("property", undefined, {
+            property_rule_ref: propertyRuleRef,
+            value: newValueNumber.toString()
+          })
+          return;
+        }
+        propertyElement.attributeMap.value = newValueNumber.toString()
       })
 
   }
