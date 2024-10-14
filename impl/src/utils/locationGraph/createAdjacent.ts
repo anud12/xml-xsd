@@ -25,9 +25,9 @@ const getLinkRules = (readJson: JsonUtil, nodeRule: NodeRuleQueryType): LinkGrou
     .flatMap(ruleGroup => ruleGroup.queryAllOptional("link_group_rule_list"))
     .flatMap(link_group_rule_list => link_group_rule_list.queryAllOptional("link_group_rule"));
 
-    const referencedLinkRuleList = nodeRule.queryOptional("link_group_list")?.queryAllOptional("reference")?.map(referenceElement => {
-      return linkRuleElementList.find(linkRule => referenceElement.attributeMap.link_group_rule_ref === linkRule.attributeMap.id)
-    })
+  const referencedLinkRuleList = nodeRule.queryOptional("link_group_list")?.queryAllOptional("reference")?.map(referenceElement => {
+    return linkRuleElementList.find(linkRule => referenceElement.attributeMap.link_group_rule_ref === linkRule.attributeMap.id)
+  })
 
   return [...(referencedLinkRuleList ?? []), ...(inlineLinkRules ?? [])];
 }
@@ -133,10 +133,15 @@ const createLinkTo = (jsonUtil: JsonUtil, toOptionElement: ToOptionQueryType, no
     if (multiplier) {
       ratio = jsonUtil.computeOperationFromParent(multiplier);
     }
+
+    const distance = distanceBetweenNodes(nodeGraphElement, targetNodeGraphElement);
+
+    console.log("", nodeGraphElement.attributeMap.id, "and", targetNodeGraphElement.attributeMap.id, "Distance", distance, "ratio", ratio)
+
     return async () => {
       const linkToElement = nodeGraphElement.appendChild("link_to", undefined, {
         node_id_ref: targetNodeGraphElement.attributeMap.id,
-        total_progress: String(Math.trunc(distanceBetweenNodes(nodeGraphElement, targetNodeGraphElement) * Number(ratio))),
+        total_progress: String(Math.trunc(distance * Number(ratio))),
       });
 
       const personProgressProperty = toOptionElement.queryOptional("person_progress_property");

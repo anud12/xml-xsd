@@ -132,6 +132,9 @@
     <action_rule>
       <from_person id="globalMeleeAttack">
         <on_person>
+          <selection>
+            <from_person_same_location_graph_node value="true" />
+          </selection>
           <mutations>
             <property_mutation property_rule_ref="health">
               <from participant="target">
@@ -218,7 +221,7 @@
               adjacent_depth_limit="5"
             >
               <distance_to_progress_multiplier initial="1">
-                <and do="multiply_dice" value="3" />
+                <and do="add_dice" value="3" />
               </distance_to_progress_multiplier>
               <person_progress_property initial="1" />
             </to_option>
@@ -229,7 +232,7 @@
               adjacent_depth_limit="5"
             >
               <distance_to_progress_multiplier initial="1">
-                <and do="multiply_dice" value="3" />
+                <and do="add_dice" value="3" />
               </distance_to_progress_multiplier>
               <person_progress_property initial="1" />
             </to_option>
@@ -240,7 +243,7 @@
               adjacent_depth_limit="5"
             >
               <distance_to_progress_multiplier initial="1">
-                <and do="multiply_dice" value="3" />
+                <and do="add_dice" value="3" />
               </distance_to_progress_multiplier>
               <person_progress_property initial="1" />
             </to_option>
@@ -251,7 +254,7 @@
               adjacent_depth_limit="5"
             >
               <distance_to_progress_multiplier initial="1">
-                <and do="multiply_dice" value="3" />
+                <and do="add_dice" value="3" />
               </distance_to_progress_multiplier>
               <person_progress_property initial="1" />
             </to_option>
@@ -262,7 +265,7 @@
               adjacent_depth_limit="5"
             >
               <distance_to_progress_multiplier initial="1">
-                <and do="multiply_dice" value="3" />
+                <and do="add_dice" value="3" />
               </distance_to_progress_multiplier>
               <person_progress_property initial="1" />
             </to_option>
@@ -287,7 +290,7 @@
               adjacent_depth_limit="5"
             >
               <distance_to_progress_multiplier initial="1">
-                <and do="multiply_dice" value="3" />
+                <and do="add_dice" value="3" />
               </distance_to_progress_multiplier>
               <person_progress_property initial="1" />
             </to_option>
@@ -298,7 +301,7 @@
               adjacent_depth_limit="5"
             >
               <distance_to_progress_multiplier initial="1">
-                <and do="multiply_dice" value="3" />
+                <and do="add_dice" value="3" />
               </distance_to_progress_multiplier>
               <person_progress_property initial="1" />
             </to_option>
@@ -309,7 +312,7 @@
               adjacent_depth_limit="5"
             >
               <distance_to_progress_multiplier initial="1">
-                <and do="multiply_dice" value="3" />
+                <and do="add_dice" value="3" />
               </distance_to_progress_multiplier>
               <person_progress_property initial="1" />
             </to_option>

@@ -29,8 +29,8 @@ const onPersonApplicable = (writeUnit: JsonUtil, originPerson: PersonQueryType, 
 
     const commonLocation = originLocation.find(originLocation => {
       return targetLocation.find(targetLocation => {
-        return originLocation?.locationGraph.attributeMap.id === targetLocation?.locationGraph.attributeMap.id
-          && originLocation?.node.attributeMap.id === targetLocation?.node.attributeMap.id
+        return originLocation?.locationGraph?.attributeMap?.id === targetLocation?.locationGraph?.attributeMap?.id
+          && originLocation?.node?.attributeMap?.id === targetLocation?.node?.attributeMap?.id
       })
     })
     return !!commonLocation;
