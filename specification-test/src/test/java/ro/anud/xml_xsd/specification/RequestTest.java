@@ -55,8 +55,8 @@ public class RequestTest {
     static private String getFreePort() {
         try (ServerSocket socket = new ServerSocket(0)) {
             socket.setReuseAddress(true);
-//            return String.valueOf(socket.getLocalPort());
-            return "8080";
+            return String.valueOf(socket.getLocalPort());
+//            return "8080";
         } catch (IOException e) {
             throw new RuntimeException("Failed to find a free port", e);
         }
@@ -163,7 +163,7 @@ public class RequestTest {
             Runnable process = () -> {};
             try {
                 var port = getFreePort();
-//                process = launchChildProcess(port);
+                process = launchChildProcess(port);
                 waitForHeartbeat("http://localhost:" + port + "/health");
                 String relativePath = Paths.get(runningTestClass.getResource("").toURI()).toString();
                 String input = new String(Files.readAllBytes(Path.of(relativePath, "/1_input.xml")));

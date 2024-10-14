@@ -127,7 +127,10 @@ export type world_step = JsonQueryType<{}, {
           "property_mutation": type__property_mutation & JsonQueryType<{}, {}>;
         }> & JsonQueryType<{}, {}>;
         "on_person": JsonQueryType<{}, {
-          "applicable_selection": type__person_selection & JsonQueryType<{}, {}>;
+          "selection": JsonQueryType<{}, {
+            "from_person_same_location_graph_node": JsonQueryType<{"value": string;}> & JsonQueryType<{}, {}>;
+          }>
+            & type__person_selection & JsonQueryType<{}, {}>;
           "mutations": JsonQueryType<{}, {
             "property_mutation": type__property_mutation & JsonQueryType<{}, {}>;
           }> & JsonQueryType<{}, {}>;

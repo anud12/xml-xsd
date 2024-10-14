@@ -663,6 +663,163 @@ action,person,person.create,
 </world_step>
 ```
 
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/from_person/on_person/selection/from_person_same_location_graph_node/no_location](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__from_person__on_person__selection__from_person_same_location_graph_node__no_location.md)
+
+#### Tags:
+- from_person
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../../../world_step.xsd"
+>
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points">
+      </entry>
+    </property_rule>
+
+    <action_rule>
+      <from_person id="from_person_rule">
+        <on_person>
+          <selection>
+            <from_person_same_location_graph_node value="true"/>
+          </selection>
+          <mutations>
+            <property_mutation property_rule_ref="property">
+              <from participant="self">
+                <operation initial="1"/>
+              </from>
+            </property_mutation>
+          </mutations>
+        </on_person>
+      </from_person>
+    </action_rule>
+    <location_graph_rule id="location_graph_id">
+      <setup>
+        <starting_node node_rule_ref="node_rule_id"/>
+      </setup>
+      <node_rule id="node_rule_id"/>
+    </location_graph_rule>
+  </rule_group>
+  <data>
+    <people>
+      <person id="1">
+        <properties>
+          <property property_rule_ref="property" value="1"/>
+        </properties>
+      </person>
+      <person id="2">
+        <properties>
+          <property property_rule_ref="property" value="1"/>
+        </properties>
+      </person>
+    </people>
+    <location>
+      <location_graph>
+        <rule location_graph_rule_ref="location_graph_id"/>
+        <node node_rule_ref="node_rule_id" id="node_0"/>
+      </location_graph>
+    </location>
+  </data>
+  <actions>
+    <from_person person_id_ref="1" from_person_rule_ref="from_person_rule">
+      <on_person person_id_ref="2"/>
+    </from_person>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/from_person/on_person/selection/from_person_same_location_graph_node/same_location](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__from_person__on_person__selection__from_person_same_location_graph_node__same_location.md)
+
+#### Tags:
+- from_person
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../../../world_step.xsd"
+>
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points">
+      </entry>
+    </property_rule>
+
+    <action_rule>
+      <from_person id="from_person_rule">
+        <on_person>
+          <selection>
+            <from_person_same_location_graph_node value="true"/>
+          </selection>
+          <mutations>
+            <property_mutation property_rule_ref="property">
+              <from participant="self">
+                <operation initial="1"/>
+              </from>
+            </property_mutation>
+          </mutations>
+        </on_person>
+      </from_person>
+    </action_rule>
+    <location_graph_rule id="location_graph_id">
+      <setup>
+        <starting_node node_rule_ref="node_rule_id"/>
+      </setup>
+      <node_rule id="node_rule_id"/>
+    </location_graph_rule>
+  </rule_group>
+  <data>
+    <people>
+      <person id="1">
+        <properties>
+          <property property_rule_ref="property" value="1"/>
+        </properties>
+      </person>
+      <person id="2">
+        <properties>
+          <property property_rule_ref="property" value="1"/>
+        </properties>
+      </person>
+    </people>
+    <location>
+      <location_graph>
+        <rule location_graph_rule_ref="location_graph_id"/>
+        <node node_rule_ref="node_rule_id" id="node_0">
+          <people>
+            <person person_id_ref="1"/>
+            <person person_id_ref="2"/>
+          </people>
+        </node>
+      </location_graph>
+    </location>
+  </data>
+  <actions>
+    <from_person person_id_ref="1" from_person_rule_ref="from_person_rule">
+      <on_person person_id_ref="2"/>
+    </from_person>
+  </actions>
+</world_step>
+```
+
 ## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/global/minimal](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__global__minimal.md)
 
 #### Tags:

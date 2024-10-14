@@ -1121,9 +1121,37 @@
                       "metaType": "object",
                       "isSingle": true,
                       "value": {
-                        "applicable_selection": {
-                          "metaType": "reference",
-                          "value": "type__person_selection",
+                        "selection": {
+                          "metaType": "composition",
+                          "value": [
+                            {
+                              "metaType": "object",
+                              "isSingle": true,
+                              "value": {
+                                "from_person_same_location_graph_node": {
+                                  "metaType": "object",
+                                  "value": {},
+                                  "isSingle": true,
+                                  "isNullable": true,
+                                  "attributes": {
+                                    "metaType": "object",
+                                    "value": {
+                                      "value": {
+                                        "metaType": "primitive",
+                                        "value": "xs:boolean",
+                                        "isNullable": false
+                                      }
+                                    },
+                                    "isNullable": false
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "metaType": "primitive",
+                              "value": "type__person_selection"
+                            }
+                          ],
                           "isSingle": true,
                           "isNullable": true
                         },

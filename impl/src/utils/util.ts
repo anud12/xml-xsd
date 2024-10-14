@@ -26,6 +26,7 @@ import {selectLinkTo, SelectLinkToQueryType} from "./locationGraph/selectLinkTo"
 import {shortestPathsInGraph, shortestPathsInGraphExcludeStart} from "./locationGraph/shortestPathsInGraph";
 import {removePerson} from "./locationGraph/removePerson";
 import {MutationResult} from "../middleware/_type";
+import {findPersonLocation, FindPersonResult} from "./locationGraph/findPerson";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -141,6 +142,9 @@ export class JsonUtil {
     },
     removePerson: (personIdRef: string) => {
       return removePerson(this, personIdRef)
+    },
+    findPersonLocation: (personIdRef: string): Array<FindPersonResult> => {
+      return findPersonLocation(this, personIdRef);
     }
   }
 

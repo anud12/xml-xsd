@@ -5809,7 +5809,7 @@ namespace XSD {
       //Attributes
 
       //Children elements
-      public type__person_selection? applicable_selection = null;
+      public world_step__rule_group__action_rule__from_person__on_person__selection? selection = null;
       public world_step__rule_group__action_rule__from_person__on_person__mutations? mutations = null;
       public world_step__rule_group__action_rule__from_person__on_person()
       {
@@ -5833,7 +5833,7 @@ namespace XSD {
         //Deserialize arguments
 
         //Deserialize children
-        this.applicable_selection = rawNode.InitializeWithRawNode("applicable_selection", this.applicable_selection);
+        this.selection = rawNode.InitializeWithRawNode("selection", this.selection);
         this.mutations = rawNode.InitializeWithRawNode("mutations", this.mutations);
       }
 
@@ -5842,8 +5842,8 @@ namespace XSD {
         //Serialize arguments
 
         //Serialize children
-        if(applicable_selection != null) {
-          rawNode.children["applicable_selection"] = new List<RawNode> { applicable_selection.SerializeIntoRawNode() };
+        if(selection != null) {
+          rawNode.children["selection"] = new List<RawNode> { selection.SerializeIntoRawNode() };
         }
         if(mutations != null) {
           rawNode.children["mutations"] = new List<RawNode> { mutations.SerializeIntoRawNode() };
@@ -5857,13 +5857,13 @@ namespace XSD {
           var updatedRawNode = SerializeIntoRawNode();
           updatedRawNode.Serialize(element);
       }
-    public type__person_selection? Get_applicable_selection()
+    public world_step__rule_group__action_rule__from_person__on_person__selection? Get_selection()
     {
-      return this.applicable_selection;
+      return this.selection;
     }
-    public void Set_applicable_selection(type__person_selection? value)
+    public void Set_selection(world_step__rule_group__action_rule__from_person__on_person__selection? value)
     {
-      this.applicable_selection = value;
+      this.selection = value;
     }
     public world_step__rule_group__action_rule__from_person__on_person__mutations? Get_mutations()
     {
@@ -8275,6 +8275,200 @@ namespace XSD {
       this.from = value;
     }
   }
+  public interface Itype__person_selection {
+
+    //Children elements
+    public type__math_operations? Get_radius();
+    public void Set_radius(type__math_operations? value);
+    public type__math_operations? Get_min();
+    public void Set_min(type__math_operations? value);
+    public type__math_operations? Get_max();
+    public void Set_max(type__math_operations? value);
+    public List<type__person_selection__property>? Get_property();
+    public void Set_property(List<type__person_selection__property>? value);
+    public List<type__person_selection__classification>? Get_classification();
+    public void Set_classification(List<type__person_selection__classification>? value);
+    public type__person_selection__race? Get_race();
+    public void Set_race(type__person_selection__race? value);
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+    public class world_step__rule_group__action_rule__from_person__on_person__selection : Itype__person_selection {
+      public RawNode rawNode = new RawNode();
+      //Attributes
+
+      //Attributes of type__person_selection
+
+      //Children elements
+      public world_step__rule_group__action_rule__from_person__on_person__selection__from_person_same_location_graph_node? from_person_same_location_graph_node = null;
+
+      //Children of type__person_selection
+      public type__math_operations? radius = null;
+      public type__math_operations? min = null;
+      public type__math_operations? max = null;
+      public List<type__person_selection__property>? property = new List<type__person_selection__property>();
+      public List<type__person_selection__classification>? classification = new List<type__person_selection__classification>();
+      public type__person_selection__race? race = null;
+      public world_step__rule_group__action_rule__from_person__on_person__selection()
+      {
+      }
+
+      public world_step__rule_group__action_rule__from_person__on_person__selection(RawNode rawNode)
+      {
+        Deserialize(rawNode);
+      }
+
+      public world_step__rule_group__action_rule__from_person__on_person__selection(XmlElement xmlElement)
+      {
+        this.rawNode.Deserialize(xmlElement);
+        Deserialize(rawNode);
+      }
+
+      public void Deserialize (RawNode rawNode)
+      {
+        this.rawNode = rawNode;
+        // Godot.GD.Print("Deserializing world_step__rule_group__action_rule__from_person__on_person__selection");
+        //Deserialize arguments
+
+        // Deserialize arguments of type__person_selection
+
+        //Deserialize children
+        this.from_person_same_location_graph_node = rawNode.InitializeWithRawNode("from_person_same_location_graph_node", this.from_person_same_location_graph_node);
+
+        // Deserialize children of type__person_selection
+  this.radius = rawNode.InitializeWithRawNode("radius", this.radius);
+  this.min = rawNode.InitializeWithRawNode("min", this.min);
+  this.max = rawNode.InitializeWithRawNode("max", this.max);
+  this.property = rawNode.InitializeWithRawNode("property", this.property);
+  this.classification = rawNode.InitializeWithRawNode("classification", this.classification);
+  this.race = rawNode.InitializeWithRawNode("race", this.race);
+      }
+
+      public RawNode SerializeIntoRawNode()
+      {
+        //Serialize arguments
+
+        // Serialize arguments of type__person_selection
+
+
+        //Serialize children
+        if(from_person_same_location_graph_node != null) {
+          rawNode.children["from_person_same_location_graph_node"] = new List<RawNode> { from_person_same_location_graph_node.SerializeIntoRawNode() };
+        }
+
+        // Serialize children of type__person_selection
+  if(radius != null) {
+    rawNode.children["radius"] = new List<RawNode> { radius.SerializeIntoRawNode() };
+  }
+  if(min != null) {
+    rawNode.children["min"] = new List<RawNode> { min.SerializeIntoRawNode() };
+  }
+  if(max != null) {
+    rawNode.children["max"] = new List<RawNode> { max.SerializeIntoRawNode() };
+  }
+  rawNode.children["property"] = property.Select(x => x.SerializeIntoRawNode()).ToList();
+  rawNode.children["classification"] = classification.Select(x => x.SerializeIntoRawNode()).ToList();
+  if(race != null) {
+    rawNode.children["race"] = new List<RawNode> { race.SerializeIntoRawNode() };
+  }
+        return rawNode;
+      }
+
+      public void Serialize(XmlElement element)
+      {
+          // Godot.GD.Print("Serializing world_step__rule_group__action_rule__from_person__on_person__selection");
+          var updatedRawNode = SerializeIntoRawNode();
+          updatedRawNode.Serialize(element);
+      }
+    public world_step__rule_group__action_rule__from_person__on_person__selection__from_person_same_location_graph_node? Get_from_person_same_location_graph_node()
+    {
+      return this.from_person_same_location_graph_node;
+    }
+    public world_step__rule_group__action_rule__from_person__on_person__selection__from_person_same_location_graph_node GetOrInsertDefault_from_person_same_location_graph_node()
+    {
+      if(this.from_person_same_location_graph_node == null) {
+        this.from_person_same_location_graph_node = new world_step__rule_group__action_rule__from_person__on_person__selection__from_person_same_location_graph_node();
+      }
+      return this.from_person_same_location_graph_node;
+    }
+    public void Set_from_person_same_location_graph_node(world_step__rule_group__action_rule__from_person__on_person__selection__from_person_same_location_graph_node? value)
+    {
+      this.from_person_same_location_graph_node = value;
+    }
+    public type__math_operations? Get_radius()
+    {
+      return this.radius;
+    }
+    public void Set_radius(type__math_operations? value)
+    {
+      this.radius = value;
+    }
+    public type__math_operations? Get_min()
+    {
+      return this.min;
+    }
+    public void Set_min(type__math_operations? value)
+    {
+      this.min = value;
+    }
+    public type__math_operations? Get_max()
+    {
+      return this.max;
+    }
+    public void Set_max(type__math_operations? value)
+    {
+      this.max = value;
+    }
+    public List<type__person_selection__property>? Get_property()
+    {
+      return this.property;
+    }
+    public List<type__person_selection__property> GetOrInsertDefault_property()
+    {
+      if(this.property == null) {
+        this.property = new List<type__person_selection__property>();
+      }
+      return this.property;
+    }
+    public void Set_property(List<type__person_selection__property>? value)
+    {
+      this.property = value;
+    }
+    public List<type__person_selection__classification>? Get_classification()
+    {
+      return this.classification;
+    }
+    public List<type__person_selection__classification> GetOrInsertDefault_classification()
+    {
+      if(this.classification == null) {
+        this.classification = new List<type__person_selection__classification>();
+      }
+      return this.classification;
+    }
+    public void Set_classification(List<type__person_selection__classification>? value)
+    {
+      this.classification = value;
+    }
+    public type__person_selection__race? Get_race()
+    {
+      return this.race;
+    }
+    public type__person_selection__race GetOrInsertDefault_race()
+    {
+      if(this.race == null) {
+        this.race = new type__person_selection__race();
+      }
+      return this.race;
+    }
+    public void Set_race(type__person_selection__race? value)
+    {
+      this.race = value;
+    }
+  }
 
 
     public class world_step__rule_group__action_rule__from_person__on_person__mutations  {
@@ -8382,27 +8576,7 @@ namespace XSD {
       }
     /* ignored attribute key={key} of type=System.Object*/
   }
-  public interface Itype__person_selection {
 
-    //Children elements
-    public type__math_operations? Get_radius();
-    public void Set_radius(type__math_operations? value);
-    public type__math_operations? Get_min();
-    public void Set_min(type__math_operations? value);
-    public type__math_operations? Get_max();
-    public void Set_max(type__math_operations? value);
-    public List<type__person_selection__property>? Get_property();
-    public void Set_property(List<type__person_selection__property>? value);
-    public List<type__person_selection__classification>? Get_classification();
-    public void Set_classification(List<type__person_selection__classification>? value);
-    public type__person_selection__race? Get_race();
-    public void Set_race(type__person_selection__race? value);
-    public void Deserialize (RawNode rawNode);
-
-    public RawNode SerializeIntoRawNode();
-
-    public void Serialize(XmlElement element);
-  }
 
     public class world_step__rule_group__events_rule__entry__then__select_person : Itype__person_selection {
       public RawNode rawNode = new RawNode();
@@ -9790,6 +9964,70 @@ namespace XSD {
     public void Set_property_mutation(type__property_mutation? value)
     {
       this.property_mutation = value;
+    }
+  }
+
+
+    public class world_step__rule_group__action_rule__from_person__on_person__selection__from_person_same_location_graph_node  {
+      public RawNode rawNode = new RawNode();
+      //Attributes
+      public System.String value;
+
+      //Children elements
+      public world_step__rule_group__action_rule__from_person__on_person__selection__from_person_same_location_graph_node()
+      {
+      }
+
+      public world_step__rule_group__action_rule__from_person__on_person__selection__from_person_same_location_graph_node(RawNode rawNode)
+      {
+        Deserialize(rawNode);
+      }
+
+      public world_step__rule_group__action_rule__from_person__on_person__selection__from_person_same_location_graph_node(XmlElement xmlElement)
+      {
+        this.rawNode.Deserialize(xmlElement);
+        Deserialize(rawNode);
+      }
+
+      public void Deserialize (RawNode rawNode)
+      {
+        this.rawNode = rawNode;
+        // Godot.GD.Print("Deserializing world_step__rule_group__action_rule__from_person__on_person__selection__from_person_same_location_graph_node");
+        //Deserialize arguments
+        if(rawNode.attributes.ContainsKey("value"))
+        {
+          var attribute_value = rawNode.attributes["value"];
+          this.value = rawNode.attributes["value"];
+        }
+
+        //Deserialize children
+      }
+
+      public RawNode SerializeIntoRawNode()
+      {
+        //Serialize arguments
+        if(this.value != null)
+        {
+          rawNode.attributes["value"] = this.value.ToString();
+        }
+
+        //Serialize children
+        return rawNode;
+      }
+
+      public void Serialize(XmlElement element)
+      {
+          // Godot.GD.Print("Serializing world_step__rule_group__action_rule__from_person__on_person__selection__from_person_same_location_graph_node");
+          var updatedRawNode = SerializeIntoRawNode();
+          updatedRawNode.Serialize(element);
+      }
+    public System.String Get_value()
+    {
+      return this.value;
+    }
+    public void Set_value(System.String value)
+    {
+      this.value = value;
     }
   }
 
