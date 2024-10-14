@@ -146,5 +146,61 @@ export const typeDeclarationDataSets = {
         }
       }
     } as Type
-  }
+  },
+  "should correctly handle element that extends a base complex type": [
+    {
+      "name": "type__action",
+      "type": "complex",
+      "isSingle": true,
+      "value": {
+        "metaType": "object",
+        "value": {},
+        "isSingle": true,
+        "isNullable": false,
+        "attributes": {
+          "metaType": "object",
+          "value": {
+            "attributeName": {
+              "metaType": "primitive",
+              "value": "xs:string",
+              "isNullable": false
+            }
+          },
+          "isNullable": false
+        }
+      }
+    },
+    {
+      "name": "root",
+      "type": "element",
+      "value": {
+        "metaType": "composition",
+        "value": [
+          {
+            "metaType": "object",
+            "value": {},
+            "isSingle": true,
+            "isNullable": false,
+            "attributes": {
+              "metaType": "object",
+              "value": {
+                "id": {
+                  "metaType": "primitive",
+                  "value": "xs:string",
+                  "isNullable": false
+                }
+              },
+              "isNullable": false
+            }
+          },
+          {
+            "metaType": "primitive",
+            "value": "type__action"
+          }
+        ],
+        "isSingle": false,
+        "isNullable": true
+      }
+    }
+  ]
 }

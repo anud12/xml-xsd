@@ -321,6 +321,27 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
     <!--Action_metadata-->
     <!--_-->
     <action_rule>
+      <from_person>
+        <applicable_selection>
+
+        </applicable_selection>
+        <mutations>
+          <property_mutation property_rule_ref="qwe">
+            <from participant="self">
+              <operation initial="1"/>
+            </from>
+          </property_mutation>
+        </mutations>
+        <on_person>
+          <mutations>
+            <property_mutation property_rule_ref="">
+              <from participant="target">
+                <operation initial="2"/>
+              </from>
+            </property_mutation>
+          </mutations>
+        </on_person>
+      </from_person>
       <person_to_person id="talk">
         <test>
           <value target="self">

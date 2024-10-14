@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using XSD;
 
 public partial class PersonComponent : Control
@@ -102,6 +103,46 @@ public partial class PersonComponent : Control
 				}
 
 				//if there are actions add them into container
+				worldStep.rule_group.ForEach(ruleGroup =>
+				{
+					ruleGroup?.action_rule?.from_person?.ForEach(fromPersonElement => {
+						if(fromPersonElement.on_person == null) {
+							return;
+						}
+
+						//add buttons per entry
+						var button = new Button();
+						button.Text = fromPersonElement.id;
+						button.Pressed += () =>
+					{
+						var mainPersonId = StoreSession.mainPersonId.data;
+						ProcessPersonToPersonAction(person.data.id, fromPersonElement.id);
+					};
+						actionsContainer.AddChild(button);
+					});
+					ruleGroup?.action_rule?.global?.entry?.ForEach(entry =>
+					{
+						if (entry.from.person == null)
+						{
+							return;
+						}
+						if (entry.on.person == null)
+						{
+							return;
+						}
+						//add buttons per entry
+						var button = new Button();
+						button.Text = entry.id;
+						button.Pressed += () =>
+					{
+						var mainPersonId = StoreSession.mainPersonId.data;
+						ProcessPersonToPersonAction(person.data.id, entry.id);
+					};
+						actionsContainer.AddChild(button);
+
+					});
+				});
+
 				worldStep.rule_group.ForEach(ruleGroup => ruleGroup.action_rule.person_to_person.ForEach(entry =>
 				{
 
@@ -129,12 +170,21 @@ public partial class PersonComponent : Control
 			return;
 		}
 
-		worldStep.actions.person__on_person__property_mutation.Add(new world_step__actions__person__on_person__property_mutation
+		worldStep.GetOrInsertDefault_actions().GetOrInsertDefault_from_person().Add(new world_step__actions__from_person
 		{
-			action_property_mutation_rule_ref = actionId,
 			person_id_ref = mainPersonId,
-			target_person_id_ref = targetPersonId,
+			from_person_rule_ref = actionId,
+			on_person = new world_step__actions__from_person__on_person
+			{
+				person_id_ref = targetPersonId,
+			}
 		});
+		// worldStep.GetOrInsertDefault_actions().person__on_person__property_mutation.Add(new world_step__actions__person__on_person__property_mutation
+		// {
+		// 	action_property_mutation_rule_ref = actionId,
+		// 	person_id_ref = mainPersonId,
+		// 	target_person_id_ref = targetPersonId,
+		// });
 		LoadWorldStep.executeNextStep();
 	}
 

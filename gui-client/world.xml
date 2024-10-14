@@ -130,6 +130,21 @@
       </entry>
     </classification_rule>
     <action_rule>
+      <from_person id="globalMeleeAttack">
+        <on_person>
+          <mutations>
+            <property_mutation property_rule_ref="health">
+              <from participant="target">
+                <operation initial="0">
+                  <add_property property_rule_ref="strength" />
+                  <and do="divide" value="2" />
+                  <and do="multiply" value="-1" />
+                </operation>
+              </from>
+            </property_mutation>
+          </mutations>
+        </on_person>
+      </from_person>
       <person_to_person id="meleeAttack">
         <test>
           <value target="self">
@@ -156,144 +171,150 @@
         <necessary_node node_rule_ref="city" min="8" />
       </setup>
       <node_rule id="city">
-        <link_group id="all" angle="0" angleMax="360" limit="100">
-          <to_option
-            node_rule_ref="farm"
-            distance="1"
-            maxDistance="2"
-            adjacent_depth_limit="5"
-          >
-            <person_progress_property initial="1" />
-          </to_option>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0" angleMax="360" limit="100">
+            <to_option
+              node_rule_ref="farm"
+              distance="1"
+              maxDistance="2"
+              adjacent_depth_limit="5"
+            >
+              <person_progress_property initial="1" />
+            </to_option>
+          </link_group>
+        </link_group_list>
       </node_rule>
       <node_rule id="farm">
-        <link_group id="all" angle="0" angleMax="360" limit="3">
-          <to_option
-            node_rule_ref="city"
-            distance="3"
-            maxDistance="5"
-            adjacent_depth_limit="5"
-          >
-            <person_progress_property initial="1" />
-          </to_option>
-          <to_option
-            node_rule_ref="farm"
-            distance="3"
-            maxDistance="5"
-            adjacent_depth_limit="5"
-          >
-            <person_progress_property initial="1" />
-          </to_option>
-          <to_option
-            node_rule_ref="farm"
-            distance="3"
-            maxDistance="5"
-            adjacent_depth_limit="5"
-          >
-            <person_progress_property initial="1" />
-          </to_option>
-          <to_option
-            node_rule_ref="forest"
-            distance="5"
-            maxDistance="6"
-            adjacent_depth_limit="5"
-          >
-            <distance_to_progress_multiplier initial="1">
-              <and do="multiply_dice" value="3" />
-            </distance_to_progress_multiplier>
-            <person_progress_property initial="1" />
-          </to_option>
-          <to_option
-            node_rule_ref="forest"
-            distance="5"
-            maxDistance="6"
-            adjacent_depth_limit="5"
-          >
-            <distance_to_progress_multiplier initial="1">
-              <and do="multiply_dice" value="3" />
-            </distance_to_progress_multiplier>
-            <person_progress_property initial="1" />
-          </to_option>
-          <to_option
-            node_rule_ref="forest"
-            distance="5"
-            maxDistance="6"
-            adjacent_depth_limit="5"
-          >
-            <distance_to_progress_multiplier initial="1">
-              <and do="multiply_dice" value="3" />
-            </distance_to_progress_multiplier>
-            <person_progress_property initial="1" />
-          </to_option>
-          <to_option
-            node_rule_ref="forest"
-            distance="5"
-            maxDistance="6"
-            adjacent_depth_limit="5"
-          >
-            <distance_to_progress_multiplier initial="1">
-              <and do="multiply_dice" value="3" />
-            </distance_to_progress_multiplier>
-            <person_progress_property initial="1" />
-          </to_option>
-          <to_option
-            node_rule_ref="forest"
-            distance="5"
-            maxDistance="6"
-            adjacent_depth_limit="5"
-          >
-            <distance_to_progress_multiplier initial="1">
-              <and do="multiply_dice" value="3" />
-            </distance_to_progress_multiplier>
-            <person_progress_property initial="1" />
-          </to_option>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0" angleMax="360" limit="3">
+            <to_option
+              node_rule_ref="city"
+              distance="3"
+              maxDistance="5"
+              adjacent_depth_limit="5"
+            >
+              <person_progress_property initial="1" />
+            </to_option>
+            <to_option
+              node_rule_ref="farm"
+              distance="3"
+              maxDistance="5"
+              adjacent_depth_limit="5"
+            >
+              <person_progress_property initial="1" />
+            </to_option>
+            <to_option
+              node_rule_ref="farm"
+              distance="3"
+              maxDistance="5"
+              adjacent_depth_limit="5"
+            >
+              <person_progress_property initial="1" />
+            </to_option>
+            <to_option
+              node_rule_ref="forest"
+              distance="5"
+              maxDistance="6"
+              adjacent_depth_limit="5"
+            >
+              <distance_to_progress_multiplier initial="1">
+                <and do="multiply_dice" value="3" />
+              </distance_to_progress_multiplier>
+              <person_progress_property initial="1" />
+            </to_option>
+            <to_option
+              node_rule_ref="forest"
+              distance="5"
+              maxDistance="6"
+              adjacent_depth_limit="5"
+            >
+              <distance_to_progress_multiplier initial="1">
+                <and do="multiply_dice" value="3" />
+              </distance_to_progress_multiplier>
+              <person_progress_property initial="1" />
+            </to_option>
+            <to_option
+              node_rule_ref="forest"
+              distance="5"
+              maxDistance="6"
+              adjacent_depth_limit="5"
+            >
+              <distance_to_progress_multiplier initial="1">
+                <and do="multiply_dice" value="3" />
+              </distance_to_progress_multiplier>
+              <person_progress_property initial="1" />
+            </to_option>
+            <to_option
+              node_rule_ref="forest"
+              distance="5"
+              maxDistance="6"
+              adjacent_depth_limit="5"
+            >
+              <distance_to_progress_multiplier initial="1">
+                <and do="multiply_dice" value="3" />
+              </distance_to_progress_multiplier>
+              <person_progress_property initial="1" />
+            </to_option>
+            <to_option
+              node_rule_ref="forest"
+              distance="5"
+              maxDistance="6"
+              adjacent_depth_limit="5"
+            >
+              <distance_to_progress_multiplier initial="1">
+                <and do="multiply_dice" value="3" />
+              </distance_to_progress_multiplier>
+              <person_progress_property initial="1" />
+            </to_option>
+          </link_group>
+        </link_group_list>
       </node_rule>
       <node_rule id="forest">
-        <link_group id="all" angle="0" angleMax="360" limit="3">
-          <to_option
-            node_rule_ref="farm"
-            distance="1"
-            maxDistance="20"
-            adjacent_depth_limit="5"
-          >
-            <person_progress_property initial="1" />
-          </to_option>
-          <to_option
-            node_rule_ref="forest"
-            distance="5"
-            maxDistance="6"
-            adjacent_depth_limit="5"
-          >
-            <distance_to_progress_multiplier initial="1">
-              <and do="multiply_dice" value="3" />
-            </distance_to_progress_multiplier>
-            <person_progress_property initial="1" />
-          </to_option>
-          <to_option
-            node_rule_ref="forest"
-            distance="5"
-            maxDistance="6"
-            adjacent_depth_limit="5"
-          >
-            <distance_to_progress_multiplier initial="1">
-              <and do="multiply_dice" value="3" />
-            </distance_to_progress_multiplier>
-            <person_progress_property initial="1" />
-          </to_option>
-          <to_option
-            node_rule_ref="forest"
-            distance="5"
-            maxDistance="6"
-            adjacent_depth_limit="5"
-          >
-            <distance_to_progress_multiplier initial="1">
-              <and do="multiply_dice" value="3" />
-            </distance_to_progress_multiplier>
-            <person_progress_property initial="1" />
-          </to_option>
-        </link_group>
+        <link_group_list>
+          <link_group id="all" angle="0" angleMax="360" limit="3">
+            <to_option
+              node_rule_ref="farm"
+              distance="1"
+              maxDistance="20"
+              adjacent_depth_limit="5"
+            >
+              <person_progress_property initial="1" />
+            </to_option>
+            <to_option
+              node_rule_ref="forest"
+              distance="5"
+              maxDistance="6"
+              adjacent_depth_limit="5"
+            >
+              <distance_to_progress_multiplier initial="1">
+                <and do="multiply_dice" value="3" />
+              </distance_to_progress_multiplier>
+              <person_progress_property initial="1" />
+            </to_option>
+            <to_option
+              node_rule_ref="forest"
+              distance="5"
+              maxDistance="6"
+              adjacent_depth_limit="5"
+            >
+              <distance_to_progress_multiplier initial="1">
+                <and do="multiply_dice" value="3" />
+              </distance_to_progress_multiplier>
+              <person_progress_property initial="1" />
+            </to_option>
+            <to_option
+              node_rule_ref="forest"
+              distance="5"
+              maxDistance="6"
+              adjacent_depth_limit="5"
+            >
+              <distance_to_progress_multiplier initial="1">
+                <and do="multiply_dice" value="3" />
+              </distance_to_progress_multiplier>
+              <person_progress_property initial="1" />
+            </to_option>
+          </link_group>
+        </link_group_list>
       </node_rule>
     </location_graph_rule>
   </rule_group>
@@ -329,6 +350,6 @@
       </location_graph>
     </location>
   </data>
-  
-  
+
+
 </world_step>

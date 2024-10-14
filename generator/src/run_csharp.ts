@@ -9,7 +9,7 @@ main("../world_step.xsd", "../gui-client/schema.cs");
 export function main(path: string, output: string = "./type.cs") {
   const schema = parseXsdSchema(path);
   const types = generateTypes(schema);
-  const typeString = typeDeclarationToString(...types);
+  const typeString = typeDeclarationToString(types);
 
   let result = template()`
   using System.Collections.Generic;

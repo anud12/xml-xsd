@@ -1,30 +1,26 @@
-package ro.anud.xml_xsd.specification.blackbox.action_rule.global.person.not_eligible;
+package ro.anud.xml_xsd.specification.blackbox.action_rule.from_person.on_person.selection.from_person_same_location_graph_node.same_location;
 
-import ro.anud.xml_xsd.specification.TestBase;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
+import ro.anud.xml_xsd.specification.TestBase;
 
 import java.util.Collection;
 
 /*description
-# Global Action
+# `from_person` action with on_person selection
 ## When
-A global action is defined with from person selector
+`from_person` action `action_id` is called
+- with `from_person_same_location_graph_node` element value set to `true`
+- both persons are not in a graph node
 
-Using global action on target
-
-Owner is not eligible to use the action
-
-## It should
-do nothing
+##It should
+- do nothing
  */
 
 /*tags
-- action_rule
-- global_action
-- type__person_selection
+  - from_person
  */
 
 @Execution(ExecutionMode.CONCURRENT)

@@ -14,14 +14,7 @@ import * as fs from "fs";
 const outputPath = "./documentation";
 const indexFile = `${outputPath}/index.md`
 
-//delete documentation folder
-if (fs.existsSync(outputPath)) {
-  fs.rmSync(outputPath, {recursive: true});
-}
-//create documentation folder
-fs.mkdirSync(outputPath);
 
-writeFileSync(indexFile, `# Index\n\n`, {flag: "w+"});
 
 
 const inputRelativePath = `1_input.xml`
@@ -74,6 +67,18 @@ const watchFolder = (folderPath: string, callback: () => void) => {
   }
 
 };
+
+//delete documentation folder
+if (fs.existsSync(outputPath)) {
+  fs.rmSync(outputPath, {recursive: true});
+}
+if(fs.existsSync(indexFile)) {
+  fs.rmSync(indexFile);
+}
+//create documentation folder
+fs.mkdirSync(outputPath);
+
+writeFileSync(indexFile, `# Index\n\n`, {flag: "w"});
 
 const readDirectory = (path: string, fileName:string) => {
   console.log("Reading directory:", path);

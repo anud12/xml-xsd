@@ -15,7 +15,7 @@ import {calculateNameFromChildren, calculateNameFromRefString} from "./calculate
 import {classifyPerson} from "./person/classifyPerson";
 import {setProperty} from "./person/setProperty";
 import {Position, selectPerson} from "./person/selectPerson";
-import {applyPropertyMutation} from "./person/applyPropertyMutation";
+import {oldApplyPropertyMutation, applyPropertyMutation} from "./person/applyPropertyMutation";
 import {group__name_token, group__operation__and, type__math_operations} from "../world_step.schema";
 import {createLocationGraph} from "./locationGraph/createLocationGraph";
 import {createGraphNode, LocationGraphQueryType} from "./locationGraph/createGraphNode";
@@ -25,6 +25,8 @@ import {selectNodeGraph} from "./locationGraph/selectNodeGraph";
 import {selectLinkTo, SelectLinkToQueryType} from "./locationGraph/selectLinkTo";
 import {shortestPathsInGraph, shortestPathsInGraphExcludeStart} from "./locationGraph/shortestPathsInGraph";
 import {removePerson} from "./locationGraph/removePerson";
+import {MutationResult} from "../middleware/_type";
+import {findPersonLocation, FindPersonResult} from "./locationGraph/findPerson";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -140,6 +142,9 @@ export class JsonUtil {
     },
     removePerson: (personIdRef: string) => {
       return removePerson(this, personIdRef)
+    },
+    findPersonLocation: (personIdRef: string): Array<FindPersonResult> => {
+      return findPersonLocation(this, personIdRef);
     }
   }
 
@@ -150,8 +155,11 @@ export class JsonUtil {
     createPerson: (selectPersonQueryType: SelectPersonQueryType) => {
       return createPerson(this, selectPersonQueryType);
     },
-    applyPropertyMutation: (personQueryType: PersonQueryType, propertyMutation: PropertyMutationQueryType, getPropertyTarget?: (key: string) => string) => {
-      return applyPropertyMutation(this, personQueryType, propertyMutation, getPropertyTarget)
+    oldApplyPropertyMutation: (personQueryType: PersonQueryType, propertyMutation: PropertyMutationQueryType, getPropertyTarget?: (key: string) => string) => {
+      return oldApplyPropertyMutation(this, personQueryType, propertyMutation, getPropertyTarget)
+    },
+    applyPropertyMutation: (outputPersonQueryType: PersonQueryType, propertyMutation: PropertyMutationQueryType | undefined, selfPersonQueryType: PersonQueryType, targetPersonQueryType: PersonQueryType): MutationResult => {
+      return applyPropertyMutation(this, outputPersonQueryType, propertyMutation, selfPersonQueryType, targetPersonQueryType)
     },
     getProperty: (personQueryType: PersonQueryType, key) => getPersonProperty(this, personQueryType, key),
     setProperty: (personQueryType: PersonQueryType, key, value: string) => setProperty(this, personQueryType, key, value),

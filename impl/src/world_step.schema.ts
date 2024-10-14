@@ -121,6 +121,21 @@ export type world_step = JsonQueryType<{}, {
         "entry": JsonQueryType<{"id": string;}>
           & type__action & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
+      "from_person": JsonQueryType<{"id": string;}, {
+        "applicable_selection": type__person_selection & JsonQueryType<{}, {}>;
+        "mutations": JsonQueryType<{}, {
+          "property_mutation": type__property_mutation & JsonQueryType<{}, {}>;
+        }> & JsonQueryType<{}, {}>;
+        "on_person": JsonQueryType<{}, {
+          "selection": JsonQueryType<{}, {
+            "from_person_same_location_graph_node": JsonQueryType<{"value": string;}> & JsonQueryType<{}, {}>;
+          }>
+            & type__person_selection & JsonQueryType<{}, {}>;
+          "mutations": JsonQueryType<{}, {
+            "property_mutation": type__property_mutation & JsonQueryType<{}, {}>;
+          }> & JsonQueryType<{}, {}>;
+        }> & JsonQueryType<{}, {}>;
+      }> & JsonQueryType<{}, {}>;
       "person_to_person": JsonQueryType<{"id": string;}, {
         "test": JsonQueryType<{}, {
           "value": JsonQueryType<{"target": type_person_select;}, {}> & group__math_operations & JsonQueryType<{}, {}>;
@@ -216,8 +231,8 @@ export type world_step = JsonQueryType<{}, {
     }> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
   "actions": JsonQueryType<{}, {
-    "by": JsonQueryType<{"person_ref": any;}, {}> & JsonQueryType<{}, {
-        "do": JsonQueryType<{"action_rule_ref": any;  "action_ref": any;  "person_ref": any;}> & JsonQueryType<{}, {}>;
+    "by": JsonQueryType<{"person_ref": string;}, {}> & JsonQueryType<{}, {
+        "do": JsonQueryType<{"action_rule_ref": string;  "action_ref": string;  "person_ref": string;}> & JsonQueryType<{}, {}>;
       }>
       & JsonQueryType<{}, {
         "move_towards": JsonQueryType<{"layer": string;  "x": string;  "y": string;}> & JsonQueryType<{}, {}>;
@@ -248,6 +263,9 @@ export type world_step = JsonQueryType<{}, {
       "path": JsonQueryType<{}, {
         "node": JsonQueryType<{"node_id_ref": string;}> & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
+    "from_person": JsonQueryType<{"person_id_ref": string;  "from_person_rule_ref": string;}, {
+      "on_person": JsonQueryType<{"person_id_ref": string;}> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
 }>

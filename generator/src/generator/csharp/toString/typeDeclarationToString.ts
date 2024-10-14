@@ -1,147 +1,60 @@
 import {template} from "../../../template/template";
-import {Type} from "../../../type";
+import {Type, TypeDeclaration} from "../../../type";
 import {DependantType, GetObjectBodyReturn} from "../typeToString";
 import {getTypeName, primitives} from "./geTypeName";
 import {normalizeName} from "./normalizeName";
+import {dependantTypeToAttributeDeclaration} from "./dependantTypeToAttributeDeclaration";
+import {dependantTypeToAttributeGetterSetter} from "./dependantTypeToAttributeGetterSetter";
+import {dependantTypeToChildrenDeclaration} from "./dependantTypeToChildrenDeclaration";
+import {dependantTypeToChildrenGetterSetter} from "./dependantTypeToChildrenGetterSetter";
+import {dependantTypeToAttributeSerializationBody} from "./dependantTypeToAttributeSerializationBody";
+import {dependantTypeToChildrenSerializationBody} from "./dependantTypeToChildrenSerializationBody";
+import {dependantTypeToAttributeDeserializationBody} from "./dependantTypeToAttributeDeserializationBody";
+import {dependantTypeToChildrenDeserializationBody} from "./dependantTypeToChildrenDeserializationBody";
 
 
-function typeDeclarationElementToClassString(dependantType: DependantType, extensions: string[] = []): GetObjectBodyReturn {
+type ClassTemplateParts = {
+  declaration: (body: string) => string,
+  attributeDeclaration: (dependantType: DependantType) => string,
+  attributeGetterSetter: (dependantType: DependantType) => string,
+  childrenDeclaration: (dependantType: DependantType) => { dependantTypes: DependantType[], templateString: string },
+  childrenGetterSetter: (dependantType: DependantType) => { dependantTypes: DependantType[], templateString: string },
+  fieldGetterSetter: () => string,
+  serializer: () => string,
+}
+
+
+function typeDeclarationElementToClassString(dependantType: DependantType, extensions: DependantType[] = []): GetObjectBodyReturn {
   const dependantTypeList: DependantType[] = [];
 
+
+  const childrenDeclaration = dependantTypeToChildrenDeclaration(dependantType);
+  dependantTypeList.push(...(childrenDeclaration?.dependantTypes ?? []))
+
+  const extensionNames = extensions.map(e => `I${e.name}`)
+
   const templateString = template()`
-    /*typeDeclarationElementToString= ${dependantType.type}*/
-    public class ${normalizeName(dependantType.name)}: I${normalizeName(dependantType.name)}${extensions?.length !== 0 && `, ${extensions.map(s => "I" + normalizeName(s)).join(",")}`} {
+    public class ${normalizeName(dependantType.name)} ${extensionNames.length > 0 && `: ${extensionNames.join(", ")}`} {
       public RawNode rawNode = new RawNode();
-      ${dependantType.value.attributes?.metaType === "object" && template()`
-        //Attributes
-        ${Object.entries(dependantType.value.attributes.value ?? {}).map(([key, value]) => {
-    let type = getTypeName(value, key, dependantType.name);
-
-    if (value.metaType === "primitive") {
-      if (type !== primitives.int) {
-        const typeString = value.isNullable
-          ? `${primitives.string}?`
-          : primitives.string;
-
-        return template()`
-                public ${typeString} ${normalizeName(key)};
-                public ${typeString} Get_${normalizeName(key)}()
-                {
-                  return this.${normalizeName(key)};
-                }
-                public void Set_${normalizeName(key)}(${typeString} value)
-                {
-                  this.${normalizeName(key)} = value;
-                }`
-      }
-
-      const typeString = value.isNullable
-        ? `${type}?`
-        : type;
-
-      return template()`
-              public ${typeString} ${normalizeName(key)};
-              public ${typeString} Get_${normalizeName(key)}()
-              {
-                return this.${normalizeName(key)};
-              }
-              public void Set_${normalizeName(key)}(${typeString} value)
-              {
-                this.${normalizeName(key)} = value;
-              }`
-    }
-
-    return template()`/* ignored attribute key={key} of type=${type}*/`
-  }).filter(e => e).join("\n")}
-      `}
+      //Attributes
+      ${dependantTypeToAttributeDeclaration(dependantType)}
       
-      ${dependantType.value.metaType === "object" && template()`
-        //Children elements
-        ${Object.entries(dependantType.value.value).flatMap(([key, value]) => {
-    return [[key, value] as [string, Type]]
-  })
-    .map(([key, value]) => {
-      let type = getTypeName(value, key, dependantType.name);
-      type = normalizeName(type);
-
-      const typeString = value.isSingle
-        ? `${type}`
-        : `List<${type}>`;
-      const nullableTypeString = value.isNullable
-        ? `${typeString}?`
-        : typeString;
-
-      const typeInitialization = value.isSingle
-        ? value.isNullable
-          ? `null`
-          : `new ${type}()`
-        : `new List<${type}>()`;
-
-      if (value.metaType === "object") {
-        dependantTypeList.push({
-          type: "element",
-          value: value,
-          name: type,
-        })
-        return template()`
-              public ${nullableTypeString} ${normalizeName(key)} = ${typeInitialization};
-              public ${nullableTypeString} Get_${normalizeName(key)}()
-              {
-                return this.${normalizeName(key)};
-              }
-              public ${typeString} GetOrInsertDefault_${normalizeName(key)}()
-              {
-                if(this.${normalizeName(key)} == null) {
-                  this.${normalizeName(key)} = new ${typeString}();
-                }
-                return this.${normalizeName(key)};
-              }
-              public void Set_${normalizeName(key)}(${nullableTypeString} value)
-              {
-                this.${normalizeName(key)} = value;
-              }
-              `
-      }
-      if (value.metaType === "union" || value.metaType === "composition") {
-        dependantTypeList.push({
-          type: "union",
-          value: value,
-          name: type,
-        })
-        return template()`
-              public ${nullableTypeString} ${normalizeName(key)} = ${typeInitialization};
-              public ${nullableTypeString} Get_${normalizeName(key)}()
-              {
-                return this.${normalizeName(key)};
-              }
-              public void Set_${normalizeName(key)}(${nullableTypeString} value)
-              {
-                this.${normalizeName(key)} = value;
-              }
-              `
-      }
-      if (value.metaType === "reference") {
-        dependantTypeList.push({
-          type: "reference",
-          value: value,
-          name: type,
-        })
-        return template()`
-              public ${nullableTypeString} ${normalizeName(key)} = ${typeInitialization};
-              public ${nullableTypeString} Get_${normalizeName(key)}()
-              {
-                return this.${normalizeName(key)};
-              }
-              public void Set_${normalizeName(key)}(${nullableTypeString} value)
-              {
-                this.${normalizeName(key)} = value;
-              }
-              `
-      }
-      return template()`/* ignored children key:${key} of type:${type}*/`
-    }).filter(e => e).join("\n")}
-      `}
+      ${extensions.map(extension => {
+    return template()`
+        //Attributes of ${extension.name}
+        ${dependantTypeToAttributeDeclaration(extension)}
+        `
+  }).join("\n")}
       
+      //Children elements
+      ${childrenDeclaration?.templateString}
+      
+      ${extensions.map(extension => {
+    return template()`
+        //Children of ${extension.name}
+        ${dependantTypeToChildrenDeclaration(extension)?.templateString}
+        `
+  }).join("\n")}
       public ${normalizeName(dependantType.name)}() 
       {
       }
@@ -161,71 +74,48 @@ function typeDeclarationElementToClassString(dependantType: DependantType, exten
       {
         this.rawNode = rawNode;
         // Godot.GD.Print("Deserializing ${dependantType.name}");
-        ${dependantType.value.attributes?.metaType === "object" && template()`
-          //Deserialize arguments
-          ${Object.entries(dependantType.value.attributes.value ?? []).map(([key, value]) => {
-    if (value.metaType === "primitive") {
-      if (value.value === "xs:int") {
-        return template()`
-                  if(rawNode.attributes.ContainsKey("${key}"))
-                  {
-                    var attribute_${normalizeName(key)} = rawNode.attributes["${key}"];
-                    this.${normalizeName(key)} = attribute_${normalizeName(key)}${value.isNullable && "?"}.ToInt();
-                  }
-                  `;
-      }
-      return template()`
-                if(rawNode.attributes.ContainsKey("${key}"))
-                {
-                  var attribute_${normalizeName(key)} = rawNode.attributes["${key}"];
-                  this.${normalizeName(key)} = rawNode.attributes["${key}"];
-                }
-                `;
-    }
-  }).filter(e => e).join("\n")}
-        `}
-        ${dependantType.value.metaType === "object" && dependantType.value.value && template()`
-          //Deserialize elements
-          ${Object.entries(dependantType.value.value).map(([key, value]) => {
-    if (value.metaType === "object" || value.metaType === "union" || value.metaType === "composition" || value.metaType === "reference") {
-      return template()`this.${normalizeName(key)} = rawNode.InitializeWithRawNode("${key}", this.${normalizeName(key)});`;
-    }
-  }).filter(e => e).join("\n")}
-        `}
+        //Deserialize arguments
+        ${dependantTypeToAttributeDeserializationBody(dependantType)}
+        
+        ${extensions.map(extension => {
+          return template()`
+             // Deserialize arguments of ${extension.name}
+             ${dependantTypeToAttributeDeserializationBody(extension)}
+            `
+        })}
+        
+        //Deserialize children
+        ${dependantTypeToChildrenDeserializationBody(dependantType)}
+        
+        ${extensions.map(extension => {
+            return template()`
+               // Deserialize children of ${extension.name}
+               ${dependantTypeToChildrenDeserializationBody(extension)}
+              `
+        })}
       }
       
       public RawNode SerializeIntoRawNode() 
       {
-        ${dependantType.value.attributes?.metaType === "object" && template()`
-          //Serialize arguments
-          ${Object.entries(dependantType.value.attributes.value ?? []).map(([key, value]) => {
-    if (value.metaType === "primitive") {
-      return template()`
-                if(this.${normalizeName(key)} != null) 
-                {
-                  rawNode.attributes["${key}"] = this.${normalizeName(key)}${value.isNullable && "?"}.ToString();
-                }
-                `;
-    }
-  }).filter(e => e).join("\n")}
-        `}
-        ${dependantType.value.metaType === "object" && dependantType.value.value && template()`
-          //Serialize elements
-          ${Object.entries(dependantType.value.value).map(([key, value]) => {
-    if (value.metaType === "object" || value.metaType === "union" || value.metaType === "composition" || value.metaType === "reference") {
-
-      if (value.isSingle) {
-        return template()`
-          if(${normalizeName(key)} != null) {
-            rawNode.children["${key}"] = new List<RawNode> { ${normalizeName(key)}.SerializeIntoRawNode() };
-          }
-        `;
-
-      }
-      return template()`rawNode.children["${key}"] = ${normalizeName(key)}.Select(x => x.SerializeIntoRawNode()).ToList();`;
-    }
-  }).filter(e => e).join("\n")}
-        `}
+        //Serialize arguments
+        ${dependantTypeToAttributeSerializationBody(dependantType)}
+        
+        ${extensions.map(extension => {
+          return template()`
+             // Serialize arguments of ${extension.name}
+             ${dependantTypeToAttributeSerializationBody(extension)}
+            `
+        })}
+        
+        //Serialize children
+        ${dependantTypeToChildrenSerializationBody(dependantType)}
+        
+        ${extensions.map(extension => {
+          return template()`
+           // Serialize children of ${extension.name}
+           ${dependantTypeToChildrenSerializationBody(extension)}
+          `
+        })}
         return rawNode;
       }
       
@@ -235,23 +125,36 @@ function typeDeclarationElementToClassString(dependantType: DependantType, exten
           var updatedRawNode = SerializeIntoRawNode();
           updatedRawNode.Serialize(element);
       }
-    }
+    ${dependantTypeToAttributeGetterSetter(dependantType)}
+    ${extensions.map(extension => dependantTypeToAttributeGetterSetter(extension)).join("\n")}
+    ${dependantTypeToChildrenGetterSetter(dependantType)?.templateString}
+    ${extensions.map(extension => dependantTypeToChildrenGetterSetter(extension)?.templateString).join("\n")}
+  }
   `
 
 
   return {
+    writtenClass: [dependantType.name],
     dependantTypes: dependantTypeList,
     templateString: templateString
   }
 }
 
 
-function typeDeclarationElementToInterfaceString(dependantType: DependantType, extensions: string[] = []): GetObjectBodyReturn {
+function typeDeclarationElementToInterfaceString(writtenClasses: string[], dependantType: DependantType): GetObjectBodyReturn {
   const dependantTypeList: DependantType[] = [];
+  const interfaceName = `I${normalizeName(dependantType.name)}`;
+
+  if (writtenClasses.includes(interfaceName)) {
+    return {
+      dependantTypes: [],
+      templateString: "",
+      writtenClass: []
+    }
+  }
 
   const templateString = template()`
-    /*typeDeclarationElementToInterfaceString= ${dependantType.type}*/
-    public interface I${normalizeName(dependantType.name)}${extensions?.length !== 0 && `: ${extensions.map(s => "I" + normalizeName(s)).join(",")}`} {
+    public interface ${interfaceName} {
       ${dependantType.value.attributes?.metaType === "object" && template()`
         //Attributes
         ${Object.entries(dependantType.value.attributes.value ?? {}).map(([key, value]) => {
@@ -278,7 +181,7 @@ function typeDeclarationElementToInterfaceString(dependantType: DependantType, e
     return template()`/* ignored attribute key={key} of type=${type}*/`
   }).filter(e => e).join("\n")}
       `}
-      
+
       ${dependantType.value.metaType === "object" && template()`
         //Children elements
         ${Object.entries(dependantType.value.value).flatMap(([key, value]) => {
@@ -332,32 +235,39 @@ function typeDeclarationElementToInterfaceString(dependantType: DependantType, e
     }).filter(e => e).join("\n")}
       `}
       public void Deserialize (RawNode rawNode);
-      
+
       public RawNode SerializeIntoRawNode();
-      
+
       public void Serialize(XmlElement element);
     }
   `
 
 
   return {
+    writtenClass: [interfaceName],
     dependantTypes: dependantTypeList,
     templateString: templateString
   }
 }
 
-export function typeDeclarationElementToString(dependantType: DependantType, extensions: string[] = []): GetObjectBodyReturn {
+export function typeDeclarationElementToString(writtenClassesList: string[], dependantType: DependantType, extensions: DependantType[] = []): GetObjectBodyReturn {
+
+  let localWrittenClassesList = [...writtenClassesList];
   const classResult = typeDeclarationElementToClassString(dependantType, extensions);
-  const interfaceResult = typeDeclarationElementToInterfaceString(dependantType, extensions);
+
+  const interfaceResult = extensions.map(extensinon => {
+    const result = typeDeclarationElementToInterfaceString(localWrittenClassesList, extensinon);
+    localWrittenClassesList = [...localWrittenClassesList, ...result.writtenClass]
+    return result;
+  })
   return {
-    dependantTypes: classResult.dependantTypes,
+    writtenClass: [...classResult.writtenClass, ...interfaceResult.flatMap(e => e?.writtenClass)],
+    dependantTypes: [...classResult.dependantTypes, ...interfaceResult.flatMap(e => e?.dependantTypes)],
     templateString: template()`
-      ${interfaceResult.templateString}
-      
-      
+      ${interfaceResult.map(e => e.templateString).filter(e => e).join("\n")}
+
       ${classResult.templateString}
-      
-      
+
       `,
   }
 }

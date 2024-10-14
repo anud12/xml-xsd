@@ -1,32 +1,26 @@
-package ro.anud.xml_xsd.specification.blackbox.action_rule.person_to_person;
+package ro.anud.xml_xsd.specification.blackbox.action_rule.from_person.mutate_from;
 
-import ro.anud.xml_xsd.specification.TestBase;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
+import ro.anud.xml_xsd.specification.TestBase;
 
 import java.util.Collection;
 
 /*description
-# Person to person action
+# `from_person` action with mutation set on `from_person`
 ## When
-A action is defined
-
-Using global action on from Billy to Bob
-Distance between them is 0
+`from_person` action `action_id` is called
 
 ##It should
-compute billy strength to 10
-compute bob health to 15
-  -base 10
-  -add billy's strength divided by 2 (5)
+- on person with id `1` it should add 2 to property setting to `2`
+- ignore person with id `3`
  */
 
 /*tags
-  - person_to_person
+  - from_person
  */
-
 @Execution(ExecutionMode.CONCURRENT)
 public class IndexTest {
 
