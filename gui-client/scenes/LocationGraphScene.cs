@@ -30,7 +30,9 @@ public partial class LocationGraphScene : Control
 		var title = GetNode<Label>("%Title");
 		title.Text = "Location Graph: " + locationGraphId;
 
-		var viewportContainer = GetNode<Node>("%GraphContainer");
+		var nodeContainer = GetNode<Node>("%NodeContainer");
+		var personContainer = GetNode<Node>("%PersonContainer");
+		var linkContainer = GetNode<Node>("%LinkContainer");
 		StoreWorld_Step.instance.OnSet((data, unsubscribe) =>
 		{
 			if (IsInstanceValid(this) == false)
@@ -40,14 +42,16 @@ public partial class LocationGraphScene : Control
 			}
 			//clear the viewport container
 
-			viewportContainer.GetChildren().ToList().ForEach(child => viewportContainer.RemoveChild(child));
+			nodeContainer.GetChildren().ToList().ForEach(child => nodeContainer.RemoveChild(child));
+			personContainer.GetChildren().ToList().ForEach(child => personContainer.RemoveChild(child));
+			linkContainer.GetChildren().ToList().ForEach(child => linkContainer.RemoveChild(child));
 			if (data == null)
 			{
 				return;
 			}
 			var nodesById = loadNodes(data);
-			nodesById.Item2.ToList().ForEach(node => viewportContainer.AddChild(node));
-			loadLinks(data, nodesById.Item1).ToList().ForEach(link => viewportContainer.AddChild(link));
+			nodesById.Item2.ToList().ForEach(node => nodeContainer.AddChild(node));
+			loadLinks(data, nodesById.Item1).ToList().ForEach(link => linkContainer.AddChild(link));
 
 		});
 	}
@@ -172,6 +176,7 @@ public partial class LocationGraphScene : Control
 	}
 	private IEnumerable<Node> loadLinks(world_step worldStep, Dictionary<string, Control> nodesById)
 	{
+		var personContainerNode = GetNode<Node>("%PersonContainer");
 		IEnumerable<Node> nodeList = (worldStep.data.location?.location_graph ?? new List<world_step__data__location__location_graph>())
 		.Where(location_graph => location_graph.id == this.locationGraphId)
 		.SelectMany(location_graph => location_graph.node)
@@ -186,7 +191,7 @@ public partial class LocationGraphScene : Control
 				linkNode.Width = SCALE / 2.5F;
 				linkNode.MaxSteps = linkTo.total_progress - 1;
 
-				IEnumerable<Node>? personNodeList = linkTo.people?.person?.Select(person =>
+				linkTo.people?.person?.ForEach(person =>
 					{
 						var personId = person.person_id_ref;
 						var personData = worldStep.data.people?.person?.Where(person => person.id == personId).First();
@@ -200,8 +205,8 @@ public partial class LocationGraphScene : Control
 						personContainer.AddChild(personComponent);
 
 						linkNode.ChildrenByNode.Add(personContainer, person.accumulated_progress - 1);
-
-						return personContainer as Node;
+						personContainerNode.AddChild(personContainer);
+						
 
 					}
 				);
@@ -210,7 +215,6 @@ public partial class LocationGraphScene : Control
 				{
 					linkNode
 				};
-				returnList.AddRange(personNodeList ?? new List<Node>());
 				return returnList;
 			})
 		);

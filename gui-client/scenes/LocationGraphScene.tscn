@@ -57,5 +57,11 @@ offset_bottom = 23.0
 text = "Viewport
 "
 
-[node name="GraphContainer" type="Node" parent="BoxContainer/SubViewportContainer/SubViewport"]
+[node name="LinkContainer" type="Node" parent="BoxContainer/SubViewportContainer/SubViewport"]
+unique_name_in_owner = true
+
+[node name="PersonContainer" type="Node" parent="BoxContainer/SubViewportContainer/SubViewport"]
+unique_name_in_owner = true
+
+[node name="NodeContainer" type="Node" parent="BoxContainer/SubViewportContainer/SubViewport"]
 unique_name_in_owner = true
