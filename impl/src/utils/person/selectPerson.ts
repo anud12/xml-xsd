@@ -2,7 +2,7 @@ import {JsonUtil} from "../util";
 import {JsonSchema, SelectPersonQueryType} from "../JsonSchema";
 import {queryPerson} from "./queryPerson";
 import {createPerson} from "./createPerson";
-import {filterPerson} from "./filterPerson";
+import {isSelectionApplicableTo} from "./isSelectionApplicableTo";
 import {mergeError} from "../../mergeError";
 
 export type Position = {
@@ -43,10 +43,10 @@ export const filterPersonMinQuantity = (jsonUtil: JsonUtil, selectPerson: Select
 }
 
 
-export const selectPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType | undefined, position?: Position):Array<PeopleQueryType> => {
+export const selectPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType | undefined):Array<PeopleQueryType> => {
   try {
     let people = queryPerson(jsonUtil)
-    .filter(person => filterPerson(jsonUtil, selectPerson, person, position));
+    .filter(person => isSelectionApplicableTo(jsonUtil, selectPerson, person));
 
    people = filterPersonMaxQuantity(jsonUtil, selectPerson, people);
    people = filterPersonMinQuantity(jsonUtil, selectPerson, people);

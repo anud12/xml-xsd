@@ -27,6 +27,7 @@ import {shortestPathsInGraph, shortestPathsInGraphExcludeStart} from "./location
 import {removePerson} from "./locationGraph/removePerson";
 import {MutationResult} from "../middleware/_type";
 import {findPersonLocation, FindPersonResult} from "./locationGraph/findPerson";
+import {isSelectionApplicableTo} from "./person/isSelectionApplicableTo";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -151,6 +152,9 @@ export class JsonUtil {
   person = {
     selectPerson: (selectPersonQueryType: SelectPersonQueryType) => {
       return selectPerson(this, selectPersonQueryType);
+    },
+    isSelectionApplicableTo: (selectPersonQueryType: SelectPersonQueryType, personQueryType:PersonQueryType) => {
+      return isSelectionApplicableTo(this, selectPersonQueryType, personQueryType);
     },
     createPerson: (selectPersonQueryType: SelectPersonQueryType) => {
       return createPerson(this, selectPersonQueryType);

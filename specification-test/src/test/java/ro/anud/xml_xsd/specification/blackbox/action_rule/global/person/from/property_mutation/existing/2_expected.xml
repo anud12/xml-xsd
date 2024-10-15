@@ -36,7 +36,7 @@
     <people>
       <person id="1">
         <properties>
-          <property property_rule_ref="property" value="10"/>
+          <property property_rule_ref="property" value="11"/>
         </properties>
         <classifications/>
       </person>
