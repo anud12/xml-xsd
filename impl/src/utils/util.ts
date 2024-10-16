@@ -28,6 +28,7 @@ import {removePerson} from "./locationGraph/removePerson";
 import {MutationResult} from "../middleware/_type";
 import {findPersonLocation, FindPersonResult} from "./locationGraph/findPerson";
 import {isSelectionApplicableTo} from "./person/isSelectionApplicableTo";
+import {validate} from "../validate";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -58,7 +59,9 @@ export class JsonUtil {
     return this.random() % (max + 1 - min) + min;
   }
   randomBetweenInt = (min: number, max: number) => {
-    return Math.floor(this.randomBetween(min, max));
+    const result = Math.floor(this.randomBetween(min, max));
+    console.log(`randomBetweenInt ${result}`)
+    return result
   }
 
   randomListFromArray = <T>(originalArray: T[], numberOfElements: number = 1): T[] => {
@@ -153,7 +156,7 @@ export class JsonUtil {
     selectPerson: (selectPersonQueryType: SelectPersonQueryType) => {
       return selectPerson(this, selectPersonQueryType);
     },
-    isSelectionApplicableTo: (selectPersonQueryType: SelectPersonQueryType, personQueryType:PersonQueryType) => {
+    isSelectionApplicableTo: (selectPersonQueryType: SelectPersonQueryType, personQueryType: PersonQueryType) => {
       return isSelectionApplicableTo(this, selectPersonQueryType, personQueryType);
     },
     createPerson: (selectPersonQueryType: SelectPersonQueryType) => {

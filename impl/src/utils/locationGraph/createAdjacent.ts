@@ -204,6 +204,7 @@ const positionBasedOnLink = (jsonUtil: JsonUtil, linkGroupElement: LinkGroupQuer
 
 export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nodeRef: string): (writeUnit: JsonUtil) => Promise<LocationGraphNodeQueryType | undefined> => {
   try {
+    console.log(`createAdjacent`)
     const locationGraphElement = jsonUtil.json
       .queryOptional("data")
       ?.queryOptional("location")
@@ -225,7 +226,9 @@ export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nod
     }
 
     const position = positionBasedOnLink(jsonUtil, linkGroupElement, nodeGraphElement);
-    const classificationLocationList = nodeRuleElement.queryAllOptional("classifications")?.flatMap(element => element.queryAllOptional("classification").map(e => e.attributeMap.location_classification_rule_ref));
+    const classificationLocationList = nodeRuleElement.queryAllOptional("classifications")
+      ?.flatMap(element => element.queryAllOptional("classification")
+        .map(e => e.attributeMap.location_classification_rule_ref));
 
     const toOptionElement = jsonUtil.randomFromArray(linkGroupElement.queryAllOptional("to_option"))
     const nodeRuleRef = toOptionElement.attributeMap.node_rule_ref;
@@ -238,8 +241,6 @@ export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nod
     }
     const adjacentNodes = getAdjacentNodes(jsonUtil, locationGraphElement, nodeGraphElement, Number(toOptionElement.attributeMap.adjacent_depth_limit) || 0);
 
-    const existingPersonRule = nodeRuleElement.queryOptional("existing_person");
-
     return async (writeUnit: JsonUtil) => {
       if (!locationGraphElement || !nodeGraphElement || !linkGroupElement) {
         return
@@ -251,21 +252,6 @@ export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nod
       await createLinkTo(writeUnit, toOptionElement, nodeGraphElement, newGraphNode)(writeUnit);
       await createLinkTo(writeUnit, toOptionElement, newGraphNode, nodeGraphElement)(writeUnit);
 
-
-      existingPersonRule?.queryAllOptional("person_selection").forEach(personElement => {
-        const min = existingPersonRule.attributeMap.min;
-        let max = existingPersonRule.attributeMap.max ?? min;
-        const iterations = writeUnit.randomBetweenInt(Number(min), Number(max));
-
-
-        let peopleElement = newGraphNode.appendChild("people");
-        for (let i = 0; i < iterations; i++) {
-          const person = writeUnit.person.createPerson(personElement);
-          peopleElement.appendChild("person", undefined, {
-            person_id_ref: person.attributeMap.id
-          });
-        }
-      })
 
       const validAdjacentNodeList = adjacentNodes
         .filter(node => {
@@ -283,6 +269,7 @@ export const createAdjacent = (jsonUtil: JsonUtil, locationGraphRef: string, nod
       await Promise.all(adjacentLinkList)
       return newGraphNode;
     }
+
   } catch (e) {
     throw mergeError(e, new Error(`Error in createAdjacent failed for locationGraphRef:${locationGraphRef} and nodeRef:${nodeRef}`));
   }

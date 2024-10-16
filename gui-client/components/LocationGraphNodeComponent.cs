@@ -8,7 +8,6 @@ public partial class LocationGraphNodeComponent : BoxContainer
 {
 
 	public static PackedScene PackedScene = GD.Load<PackedScene>("res://components/LocationGraphNodeComponent.tscn");
-	public static float SIZE = 350;
 	private world_step__data__location__location_graph__node node;
 	private world_step worldStep;
 	//populate the node with the data from the graph node
@@ -69,7 +68,7 @@ public partial class LocationGraphNodeComponent : BoxContainer
 	public Vector2 getOffset()
 	{
 
-		return new Vector2(-SIZE / 2, -SIZE / 2);
+		return new Vector2(-LocationGraphScene.NODE_SIZE / 2, -LocationGraphScene.NODE_SIZE / 2);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

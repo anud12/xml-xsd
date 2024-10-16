@@ -1439,8 +1439,8 @@ namespace XSD {
       //Attributes
 
       //Children elements
-      public world_step__rule_group__action_rule__global? global = null;
       public List<world_step__rule_group__action_rule__from_person>? from_person = new List<world_step__rule_group__action_rule__from_person>();
+      public world_step__rule_group__action_rule__global? global = null;
       public List<world_step__rule_group__action_rule__person_to_person>? person_to_person = new List<world_step__rule_group__action_rule__person_to_person>();
       public world_step__rule_group__action_rule()
       {
@@ -1464,8 +1464,8 @@ namespace XSD {
         //Deserialize arguments
 
         //Deserialize children
-        this.global = rawNode.InitializeWithRawNode("global", this.global);
         this.from_person = rawNode.InitializeWithRawNode("from_person", this.from_person);
+        this.global = rawNode.InitializeWithRawNode("global", this.global);
         this.person_to_person = rawNode.InitializeWithRawNode("person_to_person", this.person_to_person);
       }
 
@@ -1474,10 +1474,10 @@ namespace XSD {
         //Serialize arguments
 
         //Serialize children
+        rawNode.children["from_person"] = from_person.Select(x => x.SerializeIntoRawNode()).ToList();
         if(global != null) {
           rawNode.children["global"] = new List<RawNode> { global.SerializeIntoRawNode() };
         }
-        rawNode.children["from_person"] = from_person.Select(x => x.SerializeIntoRawNode()).ToList();
         rawNode.children["person_to_person"] = person_to_person.Select(x => x.SerializeIntoRawNode()).ToList();
         return rawNode;
       }
@@ -1488,21 +1488,6 @@ namespace XSD {
           var updatedRawNode = SerializeIntoRawNode();
           updatedRawNode.Serialize(element);
       }
-    public world_step__rule_group__action_rule__global? Get_global()
-    {
-      return this.global;
-    }
-    public world_step__rule_group__action_rule__global GetOrInsertDefault_global()
-    {
-      if(this.global == null) {
-        this.global = new world_step__rule_group__action_rule__global();
-      }
-      return this.global;
-    }
-    public void Set_global(world_step__rule_group__action_rule__global? value)
-    {
-      this.global = value;
-    }
     public List<world_step__rule_group__action_rule__from_person>? Get_from_person()
     {
       return this.from_person;
@@ -1517,6 +1502,21 @@ namespace XSD {
     public void Set_from_person(List<world_step__rule_group__action_rule__from_person>? value)
     {
       this.from_person = value;
+    }
+    public world_step__rule_group__action_rule__global? Get_global()
+    {
+      return this.global;
+    }
+    public world_step__rule_group__action_rule__global GetOrInsertDefault_global()
+    {
+      if(this.global == null) {
+        this.global = new world_step__rule_group__action_rule__global();
+      }
+      return this.global;
+    }
+    public void Set_global(world_step__rule_group__action_rule__global? value)
+    {
+      this.global = value;
     }
     public List<world_step__rule_group__action_rule__person_to_person>? Get_person_to_person()
     {
@@ -1605,7 +1605,7 @@ namespace XSD {
       //Attributes
 
       //Children elements
-      public world_step__rule_group__link_group_rule_list__link_group_rule? link_group_rule = null;
+      public List<world_step__rule_group__link_group_rule_list__link_group_rule>? link_group_rule = new List<world_step__rule_group__link_group_rule_list__link_group_rule>();
       public world_step__rule_group__link_group_rule_list()
       {
       }
@@ -1636,9 +1636,7 @@ namespace XSD {
         //Serialize arguments
 
         //Serialize children
-        if(link_group_rule != null) {
-          rawNode.children["link_group_rule"] = new List<RawNode> { link_group_rule.SerializeIntoRawNode() };
-        }
+        rawNode.children["link_group_rule"] = link_group_rule.Select(x => x.SerializeIntoRawNode()).ToList();
         return rawNode;
       }
 
@@ -1648,18 +1646,18 @@ namespace XSD {
           var updatedRawNode = SerializeIntoRawNode();
           updatedRawNode.Serialize(element);
       }
-    public world_step__rule_group__link_group_rule_list__link_group_rule? Get_link_group_rule()
+    public List<world_step__rule_group__link_group_rule_list__link_group_rule>? Get_link_group_rule()
     {
       return this.link_group_rule;
     }
-    public world_step__rule_group__link_group_rule_list__link_group_rule GetOrInsertDefault_link_group_rule()
+    public List<world_step__rule_group__link_group_rule_list__link_group_rule> GetOrInsertDefault_link_group_rule()
     {
       if(this.link_group_rule == null) {
-        this.link_group_rule = new world_step__rule_group__link_group_rule_list__link_group_rule();
+        this.link_group_rule = new List<world_step__rule_group__link_group_rule_list__link_group_rule>();
       }
       return this.link_group_rule;
     }
-    public void Set_link_group_rule(world_step__rule_group__link_group_rule_list__link_group_rule? value)
+    public void Set_link_group_rule(List<world_step__rule_group__link_group_rule_list__link_group_rule>? value)
     {
       this.link_group_rule = value;
     }
@@ -3172,6 +3170,110 @@ namespace XSD {
   }
 
 
+    public class world_step__rule_group__action_rule__from_person  {
+      public RawNode rawNode = new RawNode();
+      //Attributes
+      public System.String id;
+
+      //Children elements
+      public world_step__rule_group__action_rule__from_person__mutations? mutations = null;
+      public world_step__rule_group__action_rule__from_person__on_person? on_person = null;
+      public world_step__rule_group__action_rule__from_person()
+      {
+      }
+
+      public world_step__rule_group__action_rule__from_person(RawNode rawNode)
+      {
+        Deserialize(rawNode);
+      }
+
+      public world_step__rule_group__action_rule__from_person(XmlElement xmlElement)
+      {
+        this.rawNode.Deserialize(xmlElement);
+        Deserialize(rawNode);
+      }
+
+      public void Deserialize (RawNode rawNode)
+      {
+        this.rawNode = rawNode;
+        // Godot.GD.Print("Deserializing world_step__rule_group__action_rule__from_person");
+        //Deserialize arguments
+        if(rawNode.attributes.ContainsKey("id"))
+        {
+          var attribute_id = rawNode.attributes["id"];
+          this.id = rawNode.attributes["id"];
+        }
+
+        //Deserialize children
+        this.mutations = rawNode.InitializeWithRawNode("mutations", this.mutations);
+        this.on_person = rawNode.InitializeWithRawNode("on_person", this.on_person);
+      }
+
+      public RawNode SerializeIntoRawNode()
+      {
+        //Serialize arguments
+        if(this.id != null)
+        {
+          rawNode.attributes["id"] = this.id.ToString();
+        }
+
+        //Serialize children
+        if(mutations != null) {
+          rawNode.children["mutations"] = new List<RawNode> { mutations.SerializeIntoRawNode() };
+        }
+        if(on_person != null) {
+          rawNode.children["on_person"] = new List<RawNode> { on_person.SerializeIntoRawNode() };
+        }
+        return rawNode;
+      }
+
+      public void Serialize(XmlElement element)
+      {
+          // Godot.GD.Print("Serializing world_step__rule_group__action_rule__from_person");
+          var updatedRawNode = SerializeIntoRawNode();
+          updatedRawNode.Serialize(element);
+      }
+    public System.String Get_id()
+    {
+      return this.id;
+    }
+    public void Set_id(System.String value)
+    {
+      this.id = value;
+    }
+    public world_step__rule_group__action_rule__from_person__mutations? Get_mutations()
+    {
+      return this.mutations;
+    }
+    public world_step__rule_group__action_rule__from_person__mutations GetOrInsertDefault_mutations()
+    {
+      if(this.mutations == null) {
+        this.mutations = new world_step__rule_group__action_rule__from_person__mutations();
+      }
+      return this.mutations;
+    }
+    public void Set_mutations(world_step__rule_group__action_rule__from_person__mutations? value)
+    {
+      this.mutations = value;
+    }
+    public world_step__rule_group__action_rule__from_person__on_person? Get_on_person()
+    {
+      return this.on_person;
+    }
+    public world_step__rule_group__action_rule__from_person__on_person GetOrInsertDefault_on_person()
+    {
+      if(this.on_person == null) {
+        this.on_person = new world_step__rule_group__action_rule__from_person__on_person();
+      }
+      return this.on_person;
+    }
+    public void Set_on_person(world_step__rule_group__action_rule__from_person__on_person? value)
+    {
+      this.on_person = value;
+    }
+  }
+
+
     public class world_step__rule_group__action_rule__global  {
       public RawNode rawNode = new RawNode();
       //Attributes
@@ -3225,123 +3327,6 @@ namespace XSD {
     public void Set_entry(List<world_step__rule_group__action_rule__global__entry>? value)
     {
       this.entry = value;
-    }
-  }
-
-
-    public class world_step__rule_group__action_rule__from_person  {
-      public RawNode rawNode = new RawNode();
-      //Attributes
-      public System.String id;
-
-      //Children elements
-      public type__person_selection? applicable_selection = null;
-      public world_step__rule_group__action_rule__from_person__mutations? mutations = null;
-      public world_step__rule_group__action_rule__from_person__on_person? on_person = null;
-      public world_step__rule_group__action_rule__from_person()
-      {
-      }
-
-      public world_step__rule_group__action_rule__from_person(RawNode rawNode)
-      {
-        Deserialize(rawNode);
-      }
-
-      public world_step__rule_group__action_rule__from_person(XmlElement xmlElement)
-      {
-        this.rawNode.Deserialize(xmlElement);
-        Deserialize(rawNode);
-      }
-
-      public void Deserialize (RawNode rawNode)
-      {
-        this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing world_step__rule_group__action_rule__from_person");
-        //Deserialize arguments
-        if(rawNode.attributes.ContainsKey("id"))
-        {
-          var attribute_id = rawNode.attributes["id"];
-          this.id = rawNode.attributes["id"];
-        }
-
-        //Deserialize children
-        this.applicable_selection = rawNode.InitializeWithRawNode("applicable_selection", this.applicable_selection);
-        this.mutations = rawNode.InitializeWithRawNode("mutations", this.mutations);
-        this.on_person = rawNode.InitializeWithRawNode("on_person", this.on_person);
-      }
-
-      public RawNode SerializeIntoRawNode()
-      {
-        //Serialize arguments
-        if(this.id != null)
-        {
-          rawNode.attributes["id"] = this.id.ToString();
-        }
-
-        //Serialize children
-        if(applicable_selection != null) {
-          rawNode.children["applicable_selection"] = new List<RawNode> { applicable_selection.SerializeIntoRawNode() };
-        }
-        if(mutations != null) {
-          rawNode.children["mutations"] = new List<RawNode> { mutations.SerializeIntoRawNode() };
-        }
-        if(on_person != null) {
-          rawNode.children["on_person"] = new List<RawNode> { on_person.SerializeIntoRawNode() };
-        }
-        return rawNode;
-      }
-
-      public void Serialize(XmlElement element)
-      {
-          // Godot.GD.Print("Serializing world_step__rule_group__action_rule__from_person");
-          var updatedRawNode = SerializeIntoRawNode();
-          updatedRawNode.Serialize(element);
-      }
-    public System.String Get_id()
-    {
-      return this.id;
-    }
-    public void Set_id(System.String value)
-    {
-      this.id = value;
-    }
-    public type__person_selection? Get_applicable_selection()
-    {
-      return this.applicable_selection;
-    }
-    public void Set_applicable_selection(type__person_selection? value)
-    {
-      this.applicable_selection = value;
-    }
-    public world_step__rule_group__action_rule__from_person__mutations? Get_mutations()
-    {
-      return this.mutations;
-    }
-    public world_step__rule_group__action_rule__from_person__mutations GetOrInsertDefault_mutations()
-    {
-      if(this.mutations == null) {
-        this.mutations = new world_step__rule_group__action_rule__from_person__mutations();
-      }
-      return this.mutations;
-    }
-    public void Set_mutations(world_step__rule_group__action_rule__from_person__mutations? value)
-    {
-      this.mutations = value;
-    }
-    public world_step__rule_group__action_rule__from_person__on_person? Get_on_person()
-    {
-      return this.on_person;
-    }
-    public world_step__rule_group__action_rule__from_person__on_person GetOrInsertDefault_on_person()
-    {
-      if(this.on_person == null) {
-        this.on_person = new world_step__rule_group__action_rule__from_person__on_person();
-      }
-      return this.on_person;
-    }
-    public void Set_on_person(world_step__rule_group__action_rule__from_person__on_person? value)
-    {
-      this.on_person = value;
     }
   }
 
@@ -5614,135 +5599,6 @@ namespace XSD {
           updatedRawNode.Serialize(element);
       }
   }
-  public interface Itype__action {
-
-    //Children elements
-    public type__action__from Get_from();
-    public void Set_from(type__action__from value);
-    public type__action__on Get_on();
-    public void Set_on(type__action__on value);
-    public void Deserialize (RawNode rawNode);
-
-    public RawNode SerializeIntoRawNode();
-
-    public void Serialize(XmlElement element);
-  }
-
-    public class world_step__rule_group__action_rule__global__entry : Itype__action {
-      public RawNode rawNode = new RawNode();
-      //Attributes
-      public System.String id;
-
-      //Attributes of type__action
-
-      //Children elements
-
-      //Children of type__action
-      public type__action__from from = new type__action__from();
-      public type__action__on on = new type__action__on();
-      public world_step__rule_group__action_rule__global__entry()
-      {
-      }
-
-      public world_step__rule_group__action_rule__global__entry(RawNode rawNode)
-      {
-        Deserialize(rawNode);
-      }
-
-      public world_step__rule_group__action_rule__global__entry(XmlElement xmlElement)
-      {
-        this.rawNode.Deserialize(xmlElement);
-        Deserialize(rawNode);
-      }
-
-      public void Deserialize (RawNode rawNode)
-      {
-        this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing world_step__rule_group__action_rule__global__entry");
-        //Deserialize arguments
-        if(rawNode.attributes.ContainsKey("id"))
-        {
-          var attribute_id = rawNode.attributes["id"];
-          this.id = rawNode.attributes["id"];
-        }
-
-        // Deserialize arguments of type__action
-
-        //Deserialize children
-
-        // Deserialize children of type__action
-  this.from = rawNode.InitializeWithRawNode("from", this.from);
-  this.on = rawNode.InitializeWithRawNode("on", this.on);
-      }
-
-      public RawNode SerializeIntoRawNode()
-      {
-        //Serialize arguments
-        if(this.id != null)
-        {
-          rawNode.attributes["id"] = this.id.ToString();
-        }
-
-        // Serialize arguments of type__action
-
-
-        //Serialize children
-
-        // Serialize children of type__action
-  if(from != null) {
-    rawNode.children["from"] = new List<RawNode> { from.SerializeIntoRawNode() };
-  }
-  if(on != null) {
-    rawNode.children["on"] = new List<RawNode> { on.SerializeIntoRawNode() };
-  }
-        return rawNode;
-      }
-
-      public void Serialize(XmlElement element)
-      {
-          // Godot.GD.Print("Serializing world_step__rule_group__action_rule__global__entry");
-          var updatedRawNode = SerializeIntoRawNode();
-          updatedRawNode.Serialize(element);
-      }
-    public System.String Get_id()
-    {
-      return this.id;
-    }
-    public void Set_id(System.String value)
-    {
-      this.id = value;
-    }
-    public type__action__from Get_from()
-    {
-      return this.from;
-    }
-    public type__action__from GetOrInsertDefault_from()
-    {
-      if(this.from == null) {
-        this.from = new type__action__from();
-      }
-      return this.from;
-    }
-    public void Set_from(type__action__from value)
-    {
-      this.from = value;
-    }
-    public type__action__on Get_on()
-    {
-      return this.on;
-    }
-    public type__action__on GetOrInsertDefault_on()
-    {
-      if(this.on == null) {
-        this.on = new type__action__on();
-      }
-      return this.on;
-    }
-    public void Set_on(type__action__on value)
-    {
-      this.on = value;
-    }
-  }
 
 
     public class world_step__rule_group__action_rule__from_person__mutations  {
@@ -5879,6 +5735,135 @@ namespace XSD {
     public void Set_mutations(world_step__rule_group__action_rule__from_person__on_person__mutations? value)
     {
       this.mutations = value;
+    }
+  }
+  public interface Itype__action {
+
+    //Children elements
+    public type__action__from Get_from();
+    public void Set_from(type__action__from value);
+    public type__action__on Get_on();
+    public void Set_on(type__action__on value);
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+  }
+
+    public class world_step__rule_group__action_rule__global__entry : Itype__action {
+      public RawNode rawNode = new RawNode();
+      //Attributes
+      public System.String id;
+
+      //Attributes of type__action
+
+      //Children elements
+
+      //Children of type__action
+      public type__action__from from = new type__action__from();
+      public type__action__on on = new type__action__on();
+      public world_step__rule_group__action_rule__global__entry()
+      {
+      }
+
+      public world_step__rule_group__action_rule__global__entry(RawNode rawNode)
+      {
+        Deserialize(rawNode);
+      }
+
+      public world_step__rule_group__action_rule__global__entry(XmlElement xmlElement)
+      {
+        this.rawNode.Deserialize(xmlElement);
+        Deserialize(rawNode);
+      }
+
+      public void Deserialize (RawNode rawNode)
+      {
+        this.rawNode = rawNode;
+        // Godot.GD.Print("Deserializing world_step__rule_group__action_rule__global__entry");
+        //Deserialize arguments
+        if(rawNode.attributes.ContainsKey("id"))
+        {
+          var attribute_id = rawNode.attributes["id"];
+          this.id = rawNode.attributes["id"];
+        }
+
+        // Deserialize arguments of type__action
+
+        //Deserialize children
+
+        // Deserialize children of type__action
+  this.from = rawNode.InitializeWithRawNode("from", this.from);
+  this.on = rawNode.InitializeWithRawNode("on", this.on);
+      }
+
+      public RawNode SerializeIntoRawNode()
+      {
+        //Serialize arguments
+        if(this.id != null)
+        {
+          rawNode.attributes["id"] = this.id.ToString();
+        }
+
+        // Serialize arguments of type__action
+
+
+        //Serialize children
+
+        // Serialize children of type__action
+  if(from != null) {
+    rawNode.children["from"] = new List<RawNode> { from.SerializeIntoRawNode() };
+  }
+  if(on != null) {
+    rawNode.children["on"] = new List<RawNode> { on.SerializeIntoRawNode() };
+  }
+        return rawNode;
+      }
+
+      public void Serialize(XmlElement element)
+      {
+          // Godot.GD.Print("Serializing world_step__rule_group__action_rule__global__entry");
+          var updatedRawNode = SerializeIntoRawNode();
+          updatedRawNode.Serialize(element);
+      }
+    public System.String Get_id()
+    {
+      return this.id;
+    }
+    public void Set_id(System.String value)
+    {
+      this.id = value;
+    }
+    public type__action__from Get_from()
+    {
+      return this.from;
+    }
+    public type__action__from GetOrInsertDefault_from()
+    {
+      if(this.from == null) {
+        this.from = new type__action__from();
+      }
+      return this.from;
+    }
+    public void Set_from(type__action__from value)
+    {
+      this.from = value;
+    }
+    public type__action__on Get_on()
+    {
+      return this.on;
+    }
+    public type__action__on GetOrInsertDefault_on()
+    {
+      if(this.on == null) {
+        this.on = new type__action__on();
+      }
+      return this.on;
+    }
+    public void Set_on(type__action__on value)
+    {
+      this.on = value;
     }
   }
 
@@ -7984,224 +7969,6 @@ namespace XSD {
   }
 
 
-    public class type__action__from  {
-      public RawNode rawNode = new RawNode();
-      //Attributes
-
-      //Children elements
-      public type__action__from__person? person = null;
-      public type__action__from()
-      {
-      }
-
-      public type__action__from(RawNode rawNode)
-      {
-        Deserialize(rawNode);
-      }
-
-      public type__action__from(XmlElement xmlElement)
-      {
-        this.rawNode.Deserialize(xmlElement);
-        Deserialize(rawNode);
-      }
-
-      public void Deserialize (RawNode rawNode)
-      {
-        this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing type__action__from");
-        //Deserialize arguments
-
-        //Deserialize children
-        this.person = rawNode.InitializeWithRawNode("person", this.person);
-      }
-
-      public RawNode SerializeIntoRawNode()
-      {
-        //Serialize arguments
-
-        //Serialize children
-        if(person != null) {
-          rawNode.children["person"] = new List<RawNode> { person.SerializeIntoRawNode() };
-        }
-        return rawNode;
-      }
-
-      public void Serialize(XmlElement element)
-      {
-          // Godot.GD.Print("Serializing type__action__from");
-          var updatedRawNode = SerializeIntoRawNode();
-          updatedRawNode.Serialize(element);
-      }
-    public type__action__from__person? Get_person()
-    {
-      return this.person;
-    }
-    public type__action__from__person GetOrInsertDefault_person()
-    {
-      if(this.person == null) {
-        this.person = new type__action__from__person();
-      }
-      return this.person;
-    }
-    public void Set_person(type__action__from__person? value)
-    {
-      this.person = value;
-    }
-  }
-
-
-    public class type__action__on  {
-      public RawNode rawNode = new RawNode();
-      //Attributes
-
-      //Children elements
-      public type__action__on__person? person = null;
-      public type__action__on()
-      {
-      }
-
-      public type__action__on(RawNode rawNode)
-      {
-        Deserialize(rawNode);
-      }
-
-      public type__action__on(XmlElement xmlElement)
-      {
-        this.rawNode.Deserialize(xmlElement);
-        Deserialize(rawNode);
-      }
-
-      public void Deserialize (RawNode rawNode)
-      {
-        this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing type__action__on");
-        //Deserialize arguments
-
-        //Deserialize children
-        this.person = rawNode.InitializeWithRawNode("person", this.person);
-      }
-
-      public RawNode SerializeIntoRawNode()
-      {
-        //Serialize arguments
-
-        //Serialize children
-        if(person != null) {
-          rawNode.children["person"] = new List<RawNode> { person.SerializeIntoRawNode() };
-        }
-        return rawNode;
-      }
-
-      public void Serialize(XmlElement element)
-      {
-          // Godot.GD.Print("Serializing type__action__on");
-          var updatedRawNode = SerializeIntoRawNode();
-          updatedRawNode.Serialize(element);
-      }
-    public type__action__on__person? Get_person()
-    {
-      return this.person;
-    }
-    public type__action__on__person GetOrInsertDefault_person()
-    {
-      if(this.person == null) {
-        this.person = new type__action__on__person();
-      }
-      return this.person;
-    }
-    public void Set_person(type__action__on__person? value)
-    {
-      this.person = value;
-    }
-  }
-
-
-    public class type__action  {
-      public RawNode rawNode = new RawNode();
-      //Attributes
-
-      //Children elements
-      public type__action__from from = new type__action__from();
-      public type__action__on on = new type__action__on();
-      public type__action()
-      {
-      }
-
-      public type__action(RawNode rawNode)
-      {
-        Deserialize(rawNode);
-      }
-
-      public type__action(XmlElement xmlElement)
-      {
-        this.rawNode.Deserialize(xmlElement);
-        Deserialize(rawNode);
-      }
-
-      public void Deserialize (RawNode rawNode)
-      {
-        this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing type__action");
-        //Deserialize arguments
-
-        //Deserialize children
-        this.from = rawNode.InitializeWithRawNode("from", this.from);
-        this.on = rawNode.InitializeWithRawNode("on", this.on);
-      }
-
-      public RawNode SerializeIntoRawNode()
-      {
-        //Serialize arguments
-
-        //Serialize children
-        if(from != null) {
-          rawNode.children["from"] = new List<RawNode> { from.SerializeIntoRawNode() };
-        }
-        if(on != null) {
-          rawNode.children["on"] = new List<RawNode> { on.SerializeIntoRawNode() };
-        }
-        return rawNode;
-      }
-
-      public void Serialize(XmlElement element)
-      {
-          // Godot.GD.Print("Serializing type__action");
-          var updatedRawNode = SerializeIntoRawNode();
-          updatedRawNode.Serialize(element);
-      }
-    public type__action__from Get_from()
-    {
-      return this.from;
-    }
-    public type__action__from GetOrInsertDefault_from()
-    {
-      if(this.from == null) {
-        this.from = new type__action__from();
-      }
-      return this.from;
-    }
-    public void Set_from(type__action__from value)
-    {
-      this.from = value;
-    }
-    public type__action__on Get_on()
-    {
-      return this.on;
-    }
-    public type__action__on GetOrInsertDefault_on()
-    {
-      if(this.on == null) {
-        this.on = new type__action__on();
-      }
-      return this.on;
-    }
-    public void Set_on(type__action__on value)
-    {
-      this.on = value;
-    }
-  }
-
-
     public class type__property_mutation  {
       public RawNode rawNode = new RawNode();
       //Attributes
@@ -8526,6 +8293,224 @@ namespace XSD {
     public void Set_property_mutation(type__property_mutation? value)
     {
       this.property_mutation = value;
+    }
+  }
+
+
+    public class type__action__from  {
+      public RawNode rawNode = new RawNode();
+      //Attributes
+
+      //Children elements
+      public type__action__from__person? person = null;
+      public type__action__from()
+      {
+      }
+
+      public type__action__from(RawNode rawNode)
+      {
+        Deserialize(rawNode);
+      }
+
+      public type__action__from(XmlElement xmlElement)
+      {
+        this.rawNode.Deserialize(xmlElement);
+        Deserialize(rawNode);
+      }
+
+      public void Deserialize (RawNode rawNode)
+      {
+        this.rawNode = rawNode;
+        // Godot.GD.Print("Deserializing type__action__from");
+        //Deserialize arguments
+
+        //Deserialize children
+        this.person = rawNode.InitializeWithRawNode("person", this.person);
+      }
+
+      public RawNode SerializeIntoRawNode()
+      {
+        //Serialize arguments
+
+        //Serialize children
+        if(person != null) {
+          rawNode.children["person"] = new List<RawNode> { person.SerializeIntoRawNode() };
+        }
+        return rawNode;
+      }
+
+      public void Serialize(XmlElement element)
+      {
+          // Godot.GD.Print("Serializing type__action__from");
+          var updatedRawNode = SerializeIntoRawNode();
+          updatedRawNode.Serialize(element);
+      }
+    public type__action__from__person? Get_person()
+    {
+      return this.person;
+    }
+    public type__action__from__person GetOrInsertDefault_person()
+    {
+      if(this.person == null) {
+        this.person = new type__action__from__person();
+      }
+      return this.person;
+    }
+    public void Set_person(type__action__from__person? value)
+    {
+      this.person = value;
+    }
+  }
+
+
+    public class type__action__on  {
+      public RawNode rawNode = new RawNode();
+      //Attributes
+
+      //Children elements
+      public type__action__on__person? person = null;
+      public type__action__on()
+      {
+      }
+
+      public type__action__on(RawNode rawNode)
+      {
+        Deserialize(rawNode);
+      }
+
+      public type__action__on(XmlElement xmlElement)
+      {
+        this.rawNode.Deserialize(xmlElement);
+        Deserialize(rawNode);
+      }
+
+      public void Deserialize (RawNode rawNode)
+      {
+        this.rawNode = rawNode;
+        // Godot.GD.Print("Deserializing type__action__on");
+        //Deserialize arguments
+
+        //Deserialize children
+        this.person = rawNode.InitializeWithRawNode("person", this.person);
+      }
+
+      public RawNode SerializeIntoRawNode()
+      {
+        //Serialize arguments
+
+        //Serialize children
+        if(person != null) {
+          rawNode.children["person"] = new List<RawNode> { person.SerializeIntoRawNode() };
+        }
+        return rawNode;
+      }
+
+      public void Serialize(XmlElement element)
+      {
+          // Godot.GD.Print("Serializing type__action__on");
+          var updatedRawNode = SerializeIntoRawNode();
+          updatedRawNode.Serialize(element);
+      }
+    public type__action__on__person? Get_person()
+    {
+      return this.person;
+    }
+    public type__action__on__person GetOrInsertDefault_person()
+    {
+      if(this.person == null) {
+        this.person = new type__action__on__person();
+      }
+      return this.person;
+    }
+    public void Set_person(type__action__on__person? value)
+    {
+      this.person = value;
+    }
+  }
+
+
+    public class type__action  {
+      public RawNode rawNode = new RawNode();
+      //Attributes
+
+      //Children elements
+      public type__action__from from = new type__action__from();
+      public type__action__on on = new type__action__on();
+      public type__action()
+      {
+      }
+
+      public type__action(RawNode rawNode)
+      {
+        Deserialize(rawNode);
+      }
+
+      public type__action(XmlElement xmlElement)
+      {
+        this.rawNode.Deserialize(xmlElement);
+        Deserialize(rawNode);
+      }
+
+      public void Deserialize (RawNode rawNode)
+      {
+        this.rawNode = rawNode;
+        // Godot.GD.Print("Deserializing type__action");
+        //Deserialize arguments
+
+        //Deserialize children
+        this.from = rawNode.InitializeWithRawNode("from", this.from);
+        this.on = rawNode.InitializeWithRawNode("on", this.on);
+      }
+
+      public RawNode SerializeIntoRawNode()
+      {
+        //Serialize arguments
+
+        //Serialize children
+        if(from != null) {
+          rawNode.children["from"] = new List<RawNode> { from.SerializeIntoRawNode() };
+        }
+        if(on != null) {
+          rawNode.children["on"] = new List<RawNode> { on.SerializeIntoRawNode() };
+        }
+        return rawNode;
+      }
+
+      public void Serialize(XmlElement element)
+      {
+          // Godot.GD.Print("Serializing type__action");
+          var updatedRawNode = SerializeIntoRawNode();
+          updatedRawNode.Serialize(element);
+      }
+    public type__action__from Get_from()
+    {
+      return this.from;
+    }
+    public type__action__from GetOrInsertDefault_from()
+    {
+      if(this.from == null) {
+        this.from = new type__action__from();
+      }
+      return this.from;
+    }
+    public void Set_from(type__action__from value)
+    {
+      this.from = value;
+    }
+    public type__action__on Get_on()
+    {
+      return this.on;
+    }
+    public type__action__on GetOrInsertDefault_on()
+    {
+      if(this.on == null) {
+        this.on = new type__action__on();
+      }
+      return this.on;
+    }
+    public void Set_on(type__action__on value)
+    {
+      this.on = value;
     }
   }
 
@@ -9824,6 +9809,70 @@ namespace XSD {
   }
 
 
+    public class world_step__rule_group__action_rule__from_person__on_person__selection__from_person_same_location_graph_node  {
+      public RawNode rawNode = new RawNode();
+      //Attributes
+      public System.String value;
+
+      //Children elements
+      public world_step__rule_group__action_rule__from_person__on_person__selection__from_person_same_location_graph_node()
+      {
+      }
+
+      public world_step__rule_group__action_rule__from_person__on_person__selection__from_person_same_location_graph_node(RawNode rawNode)
+      {
+        Deserialize(rawNode);
+      }
+
+      public world_step__rule_group__action_rule__from_person__on_person__selection__from_person_same_location_graph_node(XmlElement xmlElement)
+      {
+        this.rawNode.Deserialize(xmlElement);
+        Deserialize(rawNode);
+      }
+
+      public void Deserialize (RawNode rawNode)
+      {
+        this.rawNode = rawNode;
+        // Godot.GD.Print("Deserializing world_step__rule_group__action_rule__from_person__on_person__selection__from_person_same_location_graph_node");
+        //Deserialize arguments
+        if(rawNode.attributes.ContainsKey("value"))
+        {
+          var attribute_value = rawNode.attributes["value"];
+          this.value = rawNode.attributes["value"];
+        }
+
+        //Deserialize children
+      }
+
+      public RawNode SerializeIntoRawNode()
+      {
+        //Serialize arguments
+        if(this.value != null)
+        {
+          rawNode.attributes["value"] = this.value.ToString();
+        }
+
+        //Serialize children
+        return rawNode;
+      }
+
+      public void Serialize(XmlElement element)
+      {
+          // Godot.GD.Print("Serializing world_step__rule_group__action_rule__from_person__on_person__selection__from_person_same_location_graph_node");
+          var updatedRawNode = SerializeIntoRawNode();
+          updatedRawNode.Serialize(element);
+      }
+    public System.String Get_value()
+    {
+      return this.value;
+    }
+    public void Set_value(System.String value)
+    {
+      this.value = value;
+    }
+  }
+
+
     public class type__action__from__person  {
       public RawNode rawNode = new RawNode();
       //Attributes
@@ -9964,70 +10013,6 @@ namespace XSD {
     public void Set_property_mutation(type__property_mutation? value)
     {
       this.property_mutation = value;
-    }
-  }
-
-
-    public class world_step__rule_group__action_rule__from_person__on_person__selection__from_person_same_location_graph_node  {
-      public RawNode rawNode = new RawNode();
-      //Attributes
-      public System.String value;
-
-      //Children elements
-      public world_step__rule_group__action_rule__from_person__on_person__selection__from_person_same_location_graph_node()
-      {
-      }
-
-      public world_step__rule_group__action_rule__from_person__on_person__selection__from_person_same_location_graph_node(RawNode rawNode)
-      {
-        Deserialize(rawNode);
-      }
-
-      public world_step__rule_group__action_rule__from_person__on_person__selection__from_person_same_location_graph_node(XmlElement xmlElement)
-      {
-        this.rawNode.Deserialize(xmlElement);
-        Deserialize(rawNode);
-      }
-
-      public void Deserialize (RawNode rawNode)
-      {
-        this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing world_step__rule_group__action_rule__from_person__on_person__selection__from_person_same_location_graph_node");
-        //Deserialize arguments
-        if(rawNode.attributes.ContainsKey("value"))
-        {
-          var attribute_value = rawNode.attributes["value"];
-          this.value = rawNode.attributes["value"];
-        }
-
-        //Deserialize children
-      }
-
-      public RawNode SerializeIntoRawNode()
-      {
-        //Serialize arguments
-        if(this.value != null)
-        {
-          rawNode.attributes["value"] = this.value.ToString();
-        }
-
-        //Serialize children
-        return rawNode;
-      }
-
-      public void Serialize(XmlElement element)
-      {
-          // Godot.GD.Print("Serializing world_step__rule_group__action_rule__from_person__on_person__selection__from_person_same_location_graph_node");
-          var updatedRawNode = SerializeIntoRawNode();
-          updatedRawNode.Serialize(element);
-      }
-    public System.String Get_value()
-    {
-      return this.value;
-    }
-    public void Set_value(System.String value)
-    {
-      this.value = value;
     }
   }
 

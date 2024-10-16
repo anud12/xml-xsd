@@ -9,7 +9,7 @@ public partial class NextStep : Button
 {
 
     [Export]
-    public new string Text = "Execute Step";
+    public new string Text = "Next Step";
 
     public DataStore<bool> isLooping = new DataStore<bool>(false);
 
@@ -24,7 +24,8 @@ public partial class NextStep : Button
         {
             Console.WriteLine("NextStep Pressed");
             isLooping.Set(!isLooping.data);
-            CallDeferred(Button.MethodName.SetText, isLooping.data ? "Stop" : Text);
+            // CallDeferred(Button.MethodName.SetText, isLooping.data ? "Stop" : Text);
+            LoadWorldStep.executeNextStep();
         };
     }
 
@@ -37,14 +38,14 @@ public partial class NextStep : Button
     {
         
         base._Process(delta);
-        if (isLooping.data) {
-            lastTimeSeconds += delta;
-            if (lastTimeSeconds > 1)
-            {
-                lastTimeSeconds = 0;
-                    LoadWorldStep.executeNextStep();
-            }
-        }
+        // if (isLooping.data) {
+        //     lastTimeSeconds += delta;
+        //     if (lastTimeSeconds > 1)
+        //     {
+        //         lastTimeSeconds = 0;
+        //             LoadWorldStep.executeNextStep();
+        //     }
+        // }
     }
 
 

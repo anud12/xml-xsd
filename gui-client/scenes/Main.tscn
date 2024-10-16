@@ -46,7 +46,7 @@ text = "File path: "
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 36)
 layout_mode = 2
-text = "./world.xml"
+text = "./request.xml"
 
 [node name="LoadFromDisk" type="Button" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true

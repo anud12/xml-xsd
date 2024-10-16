@@ -1048,41 +1048,6 @@
               "metaType": "object",
               "isSingle": true,
               "value": {
-                "global": {
-                  "metaType": "object",
-                  "isSingle": true,
-                  "value": {
-                    "entry": {
-                      "metaType": "composition",
-                      "value": [
-                        {
-                          "metaType": "object",
-                          "value": {},
-                          "isSingle": true,
-                          "isNullable": false,
-                          "attributes": {
-                            "metaType": "object",
-                            "value": {
-                              "id": {
-                                "metaType": "primitive",
-                                "value": "xs:string",
-                                "isNullable": false
-                              }
-                            },
-                            "isNullable": false
-                          }
-                        },
-                        {
-                          "metaType": "primitive",
-                          "value": "type__action"
-                        }
-                      ],
-                      "isSingle": false,
-                      "isNullable": true
-                    }
-                  },
-                  "isNullable": true
-                },
                 "from_person": {
                   "metaType": "object",
                   "attributes": {
@@ -1098,12 +1063,6 @@
                   },
                   "isSingle": false,
                   "value": {
-                    "applicable_selection": {
-                      "metaType": "reference",
-                      "value": "type__person_selection",
-                      "isSingle": true,
-                      "isNullable": true
-                    },
                     "mutations": {
                       "metaType": "object",
                       "isSingle": true,
@@ -1169,6 +1128,41 @@
                           "isNullable": true
                         }
                       },
+                      "isNullable": true
+                    }
+                  },
+                  "isNullable": true
+                },
+                "global": {
+                  "metaType": "object",
+                  "isSingle": true,
+                  "value": {
+                    "entry": {
+                      "metaType": "composition",
+                      "value": [
+                        {
+                          "metaType": "object",
+                          "value": {},
+                          "isSingle": true,
+                          "isNullable": false,
+                          "attributes": {
+                            "metaType": "object",
+                            "value": {
+                              "id": {
+                                "metaType": "primitive",
+                                "value": "xs:string",
+                                "isNullable": false
+                              }
+                            },
+                            "isNullable": false
+                          }
+                        },
+                        {
+                          "metaType": "primitive",
+                          "value": "type__action"
+                        }
+                      ],
+                      "isSingle": false,
                       "isNullable": true
                     }
                   },
@@ -1412,7 +1406,7 @@
                       }
                     }
                   },
-                  "isSingle": true,
+                  "isSingle": false,
                   "value": {
                     "to_option": {
                       "metaType": "object",
