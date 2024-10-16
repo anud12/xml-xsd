@@ -20,7 +20,7 @@ public class LoadWorldStep
 	}
 
 	public world_step worldStep;
-	public static float SCALE = LocationGraphNodeComponent.SIZE;
+	public static float SCALE = LocationGraphScene.NODE_SIZE;
 	public void loadFromPath(string path)
 	{
 
@@ -73,6 +73,10 @@ public class LoadWorldStep
 		ImplProgram.Send(worldStep)
 			.ContinueWith(async result =>
 			{
+				if (result == null)
+				{
+					return;
+				}
 				XmlDocument xmlDocument = new XmlDocument();
 				xmlDocument.LoadXml(await result);
 				GD.Print("Starting deserialization");

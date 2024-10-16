@@ -12,9 +12,10 @@ using XSD;
 public class ImplProgram
 {
 
-    static public Task<String> Send(world_step worldStep)
+    static public Task<String?> Send(world_step worldStep)
     {
-        return Task.Run(() => {
+        return Task.Run(() =>
+        {
             var document = new XmlDocument();
             XmlElement worldStepElement = document.CreateElement("world_step");
             document.AppendChild(worldStepElement);
@@ -36,7 +37,16 @@ public class ImplProgram
             using (ClientWebSocket ws = new ClientWebSocket())
             {
                 Uri serverUri = new Uri("ws://localhost:8080");
-                ws.ConnectAsync(serverUri, CancellationToken.None).Wait();
+                try
+                {
+                    ws.ConnectAsync(serverUri, CancellationToken.None).Wait();
+                }
+                catch (AggregateException e)
+                {
+                    e.InnerException.Equals(new WebSocketException("Unable to connect to the remote server"));
+                    GD.PrintErr("Unable to connect to the remote server");
+                    return null;
+                }
                 GD.Print("Connected to the server");
 
 

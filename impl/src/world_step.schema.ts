@@ -117,12 +117,7 @@ export type world_step = JsonQueryType<{}, {
       }> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
     "action_rule": JsonQueryType<{}, {
-      "global": JsonQueryType<{}, {
-        "entry": JsonQueryType<{"id": string;}>
-          & type__action & JsonQueryType<{}, {}>;
-      }> & JsonQueryType<{}, {}>;
       "from_person": JsonQueryType<{"id": string;}, {
-        "applicable_selection": type__person_selection & JsonQueryType<{}, {}>;
         "mutations": JsonQueryType<{}, {
           "property_mutation": type__property_mutation & JsonQueryType<{}, {}>;
         }> & JsonQueryType<{}, {}>;
@@ -135,6 +130,10 @@ export type world_step = JsonQueryType<{}, {
             "property_mutation": type__property_mutation & JsonQueryType<{}, {}>;
           }> & JsonQueryType<{}, {}>;
         }> & JsonQueryType<{}, {}>;
+      }> & JsonQueryType<{}, {}>;
+      "global": JsonQueryType<{}, {
+        "entry": JsonQueryType<{"id": string;}>
+          & type__action & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
       "person_to_person": JsonQueryType<{"id": string;}, {
         "test": JsonQueryType<{}, {

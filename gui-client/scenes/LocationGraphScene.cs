@@ -11,8 +11,8 @@ public partial class LocationGraphScene : Control
 
 	public static PackedScene PackedScene = GD.Load<PackedScene>("res://scenes/LocationGraphScene.tscn");
 
-	public static float SCALE = LocationGraphNodeComponent.SIZE;
-
+	public static float NODE_SIZE = 650;
+	public static float LINK_SIZE = 50;
 
 	private String locationGraphId;
 	private List<Action> unsubscribeList = new List<Action>();
@@ -85,7 +85,7 @@ public partial class LocationGraphScene : Control
 						locationGraphNodeComponent.setOnTeleportToButtonPressed(node => TeleportTo(location_graph, node, worldStep));
 						locationGraphNodeComponent.setOnPathToButtonPressed(node => PathTo(location_graph, node, worldStep));
 
-						var newPosition = new Vector2((float)position.x * SCALE, (float)position.y * SCALE);
+						var newPosition = new Vector2((float)position.x * NODE_SIZE, (float)position.y * NODE_SIZE);
 						newPosition += locationGraphNodeComponent.getOffset();
 						if (node2DVector2D.ContainsKey(newPosition))
 						{
@@ -104,7 +104,7 @@ public partial class LocationGraphScene : Control
 								{
 									var chilLocationGraphNodeComponent = (LocationGraphNodeComponent)child;
 									chilLocationGraphNodeComponent.Scale = new Vector2(1f / tableScale, 1f / tableScale);
-									chilLocationGraphNodeComponent.Position = new Vector2(SCALE / tableScale * (i % tableScale), SCALE / tableScale * (i / tableScale));
+									chilLocationGraphNodeComponent.Position = new Vector2(NODE_SIZE / tableScale * (i % tableScale), NODE_SIZE / tableScale * (i / tableScale));
 								}
 							}
 
@@ -113,7 +113,7 @@ public partial class LocationGraphScene : Control
 						else
 						{
 							var node2D = new Container();
-							node2D.Size = new Vector2(SCALE, SCALE);
+							node2D.Size = new Vector2(NODE_SIZE, NODE_SIZE);
 							node2D.Position = newPosition;
 							node2D.AddChild(locationGraphNodeComponent);
 							node2DVector2D[newPosition] = node2D;
@@ -188,7 +188,7 @@ public partial class LocationGraphScene : Control
 
 				linkNode.StartNode = startNode;
 				linkNode.EndNode = endNode;
-				linkNode.Width = SCALE / 2.5F;
+				linkNode.Width = LINK_SIZE;
 				linkNode.MaxSteps = linkTo.total_progress - 1;
 
 				linkTo.people?.person?.ForEach(person =>
@@ -201,7 +201,7 @@ public partial class LocationGraphScene : Control
 
 						var personContainer = new Gimbal2D();
 						personContainer.Rotation = 0;
-						personContainer.Size = new Vector2(SCALE, SCALE);
+						personContainer.Size = new Vector2(NODE_SIZE, NODE_SIZE);
 						personContainer.AddChild(personComponent);
 
 						linkNode.ChildrenByNode.Add(personContainer, person.accumulated_progress - 1);
@@ -239,12 +239,12 @@ public partial class LocationGraphScene : Control
 			{
 				Text = linkTo.total_progress.ToString() + "(" + i + ")",
 				// Text = "",
-				Size = new Vector2(SCALE, SCALE),
+				Size = new Vector2(NODE_SIZE, NODE_SIZE),
 			};
 			line2D.AddChild(label);
 			label.Position = position;
 			label.HorizontalAlignment = HorizontalAlignment.Center;
-			label.Set("theme_override_font_sizes/font_size", SCALE / 6);
+			label.Set("theme_override_font_sizes/font_size", NODE_SIZE / 6);
 		}
 	}
 
@@ -269,7 +269,7 @@ public partial class LocationGraphScene : Control
 			var label = new Label
 			{
 				Text = "",
-				Size = new Vector2(SCALE, SCALE),
+				Size = new Vector2(NODE_SIZE, NODE_SIZE),
 			};
 			line2D.AddChild(label);
 			linkTo.people?.person?.ForEach(person =>
@@ -296,7 +296,7 @@ public partial class LocationGraphScene : Control
 
 			label.Position = position;
 			label.HorizontalAlignment = HorizontalAlignment.Center;
-			label.Set("theme_override_font_sizes/font_size", SCALE / 6);
+			label.Set("theme_override_font_sizes/font_size", NODE_SIZE / 6);
 		}
 	}
 }
