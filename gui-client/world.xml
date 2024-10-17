@@ -274,6 +274,11 @@
       <entry id="strength" units="points">
         <person_default initial="10" />
       </entry>
+      <entry id="gold" units="coins">
+        <person_default initial="0">
+          <and do="add_dice" value="10" />
+        </person_default>
+      </entry>
     </property_rule>
     <classification_rule>
       <entry id="alive">
@@ -286,11 +291,61 @@
           <operation initial="0" />
         </property>
       </entry>
+      <entry id="bandit" />
+      <entry id="innkeeper"/>
     </classification_rule>
     <action_rule>
-      <from_person id="globalMeleeAttack">
+      <from_person id="lootGold">
+        <mutations>
+          <property_mutation property_rule_ref="gold">
+            <from participant="target">
+              <operation initial="0">
+                <add_property property_rule_ref="gold" />
+              </operation>
+            </from>
+          </property_mutation>
+        </mutations>
         <on_person>
           <selection>
+            <classification classification_rule_ref="dead" />
+          </selection>
+          <mutations>
+            <property_mutation property_rule_ref="gold">
+              <from participant="self">
+                <operation initial="0">
+                  <add_property property_rule_ref="gold" />
+                  <and do="multiply" value="-1" />
+                </operation>
+              </from>
+            </property_mutation>
+          </mutations>
+        </on_person>
+      </from_person>
+      <from_person id="restAtInn">
+        <mutations>
+          <property_mutation property_rule_ref="strength">
+            <from participant="self">
+              <operation initial="10"/>
+            </from>
+          </property_mutation>
+        </mutations>
+        <on_person>
+          <selection>
+            <classification classification_rule_ref="innkeeper" />
+          </selection>
+        </on_person>
+      </from_person>
+      <from_person id="globalMeleeAttack">
+        <mutations>
+          <property_mutation property_rule_ref="strength">
+            <from participant="self">
+              <operation initial="-1" />
+            </from>
+          </property_mutation>
+        </mutations>
+        <on_person>
+          <selection>
+            <classification classification_rule_ref="alive" />
             <from_person_same_location_graph_node value="true" />
           </selection>
           <mutations>
@@ -328,18 +383,18 @@
     </action_rule>
 
     <link_group_rule_list>
-      <link_group_rule id="to_farm" angle="-45" angleMax="45">
-        <to_option node_rule_ref="farm" distance="1" maxDistance="2" adjacent_depth_limit="1">
-          <person_progress_property initial="1" />
+      <link_group_rule id="to_farm" angle="-45" angleMax="45" limit="1">
+        <to_option node_rule_ref="farm" distance="2" maxDistance="4" adjacent_depth_limit="1">
+          <person_progress_property initial="2" />
         </to_option>
       </link_group_rule>
-      <link_group_rule id="to_city" angle="-45" angleMax="45">
-        <to_option node_rule_ref="city" distance="3" maxDistance="5" adjacent_depth_limit="1">
-          <person_progress_property initial="1" />
+      <link_group_rule id="to_city" angle="-45" angleMax="45" limit="1">
+        <to_option node_rule_ref="city" distance="5" maxDistance="7" adjacent_depth_limit="1">
+          <person_progress_property initial="2" />
         </to_option>
       </link_group_rule>
-      <link_group_rule id="to_wilderness" angle="-90" angleMax="90">
-        <to_option node_rule_ref="wilderness" distance="10" maxDistance="20" adjacent_depth_limit="1">
+      <link_group_rule id="to_wilderness" angle="-90" angleMax="90" limit="1">
+        <to_option node_rule_ref="wilderness" distance="2" maxDistance="4" adjacent_depth_limit="1">
           <distance_to_progress_multiplier initial="1">
             <and do="add" value="1" />
             <and do="add_dice" value="3" />
@@ -360,37 +415,24 @@
       </node_rule>
       <node_rule id="farm">
         <link_group_list>
-          <reference link_group_rule_ref="to_city" />
-          <reference link_group_rule_ref="to_farm" />
-          <reference link_group_rule_ref="to_wilderness" />
-          <reference link_group_rule_ref="to_wilderness" />
-          <reference link_group_rule_ref="to_wilderness" />
-          <reference link_group_rule_ref="to_wilderness" />
-          <reference link_group_rule_ref="to_wilderness" />
-          <reference link_group_rule_ref="to_wilderness" />
-          <reference link_group_rule_ref="to_wilderness" />
-          <reference link_group_rule_ref="to_wilderness" />
-          <reference link_group_rule_ref="to_wilderness" />
-          <reference link_group_rule_ref="to_wilderness" />
           <reference link_group_rule_ref="to_wilderness" />
           <reference link_group_rule_ref="to_wilderness" />
         </link_group_list>
+        <existing_person min="1" max="1">
+          <person_selection>
+            <classification classification_rule_ref="innkeeper" />
+          </person_selection>
+        </existing_person>
       </node_rule>
       <node_rule id="wilderness">
         <link_group_list>
-          <reference link_group_rule_ref="to_farm" />
-          <reference link_group_rule_ref="to_wilderness" />
-          <reference link_group_rule_ref="to_wilderness" />
-          <reference link_group_rule_ref="to_wilderness" />
-          <reference link_group_rule_ref="to_wilderness" />
-          <reference link_group_rule_ref="to_wilderness" />
-          <reference link_group_rule_ref="to_wilderness" />
-          <reference link_group_rule_ref="to_wilderness" />
-          <reference link_group_rule_ref="to_wilderness" />
-          <reference link_group_rule_ref="to_wilderness" />
         </link_group_list>
         <existing_person min="1" max="4">
           <person_selection>
+            <property property_rule_ref="gold">
+              <min initial="1" />
+              <max initial="10" />
+            </property>
             <classification classification_rule_ref="alive" />
           </person_selection>
         </existing_person>
@@ -429,8 +471,5 @@
       </location_graph>
     </location>
   </data>
-  <actions>
-    <location_graph.create location_graph_rule_ref="location_graph_rule_id" />
-  </actions>
 
 </world_step>

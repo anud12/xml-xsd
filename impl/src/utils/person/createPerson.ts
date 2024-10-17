@@ -53,6 +53,12 @@ const applyClassification = (jsonUtil: JsonUtil, classificationRef: string, pers
     return person;
   }
 
+  const classificationsElement = person.queryOrAppend("classifications");
+  classificationsElement.appendChild("classification", undefined, {
+    classification_rule_ref: classification.attributeMap.id,
+  })
+
+
   classification.queryAllOptional("property")
     .forEach(classification => {
       const propertyRef = classification.attributeMap.property_rule_ref;
