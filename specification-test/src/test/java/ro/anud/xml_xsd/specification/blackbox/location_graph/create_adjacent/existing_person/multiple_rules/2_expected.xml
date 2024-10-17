@@ -2,7 +2,7 @@
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
-    <counter value="1"/>
+    <counter value="4"/>
     <randomization_table>
       <entry value="2"/>
       <entry value="3"/>
@@ -34,7 +34,20 @@
     </location_graph_rule>
   </rule_group>
   <data>
-    <people/>
+    <people>
+      <person id="0.1">
+        <properties/>
+        <classifications/>
+      </person>
+      <person id="0.2">
+        <properties/>
+        <classifications/>
+      </person>
+      <person id="0.3">
+        <properties/>
+        <classifications/>
+      </person>
+    </people>
     <location>
       <location_graph id="location_graph_id">
         <rule location_graph_rule_ref="location_graph_rule_id"/>
@@ -43,6 +56,11 @@
           <link_to node_id_ref="0.0" total_progress="1"/>
         </node>
         <node node_rule_ref="node" id="0.0">
+          <people>
+            <person person_id_ref="0.1"/>
+            <person person_id_ref="0.2"/>
+            <person person_id_ref="0.3"/>
+          </people>
           <position x="1" y="0"/>
           <link_to node_id_ref="node_id" total_progress="1"/>
         </node>
