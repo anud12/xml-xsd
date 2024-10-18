@@ -55,6 +55,7 @@ const onPersonApplicable = (writeUnit: JsonUtil, originPerson: PersonQueryType, 
 
 }
 
+
 export const fromPersonActionMiddleware: MutationMiddleware = readJson => {
   const actionMetadataList = readJson.getRuleGroups()
     .flatMap(rule_group => rule_group.queryAllOptional("action_rule"))
@@ -73,6 +74,7 @@ export const fromPersonActionMiddleware: MutationMiddleware = readJson => {
       return
     }
 
+
     const result = actionElementList.flatMap(actionElement => {
       const actionRule = actionMetadataList.find(metadata => metadata.attributeMap.id === actionElement.attributeMap.from_person_rule_ref);
       if (!actionRule) {
@@ -81,6 +83,14 @@ export const fromPersonActionMiddleware: MutationMiddleware = readJson => {
       const action: Array<(writeUnit: JsonUtil) => Promise<void>> = [];
       const personList = people.queryAllOptional("person");
       const selfPerson = personList.find(person => person.attributeMap.id === actionElement.attributeMap.person_id_ref);
+
+      const selfSelection = actionRule.queryOptional("selection");
+      if (selfSelection) {
+        if (!writeUnit.person.isSelectionApplicableTo(selfSelection, selfPerson)) {
+          return
+        }
+      }
+
       const result = actionElement.queryAllOptional("on_person")
         .flatMap(on_person => {
           const onPersonRule = actionRule.queryOptional("on_person");

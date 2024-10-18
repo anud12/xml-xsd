@@ -3176,6 +3176,7 @@ namespace XSD {
       public System.String id;
 
       //Children elements
+      public type__person_selection? selection = null;
       public world_step__rule_group__action_rule__from_person__mutations? mutations = null;
       public world_step__rule_group__action_rule__from_person__on_person? on_person = null;
       public world_step__rule_group__action_rule__from_person()
@@ -3205,6 +3206,7 @@ namespace XSD {
         }
 
         //Deserialize children
+        this.selection = rawNode.InitializeWithRawNode("selection", this.selection);
         this.mutations = rawNode.InitializeWithRawNode("mutations", this.mutations);
         this.on_person = rawNode.InitializeWithRawNode("on_person", this.on_person);
       }
@@ -3218,6 +3220,9 @@ namespace XSD {
         }
 
         //Serialize children
+        if(selection != null) {
+          rawNode.children["selection"] = new List<RawNode> { selection.SerializeIntoRawNode() };
+        }
         if(mutations != null) {
           rawNode.children["mutations"] = new List<RawNode> { mutations.SerializeIntoRawNode() };
         }
@@ -3240,6 +3245,14 @@ namespace XSD {
     public void Set_id(System.String value)
     {
       this.id = value;
+    }
+    public type__person_selection? Get_selection()
+    {
+      return this.selection;
+    }
+    public void Set_selection(type__person_selection? value)
+    {
+      this.selection = value;
     }
     public world_step__rule_group__action_rule__from_person__mutations? Get_mutations()
     {

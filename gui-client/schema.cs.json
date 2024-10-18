@@ -1063,6 +1063,12 @@
                   },
                   "isSingle": false,
                   "value": {
+                    "selection": {
+                      "metaType": "reference",
+                      "value": "type__person_selection",
+                      "isSingle": true,
+                      "isNullable": true
+                    },
                     "mutations": {
                       "metaType": "object",
                       "isSingle": true,

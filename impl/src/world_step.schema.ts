@@ -118,6 +118,7 @@ export type world_step = JsonQueryType<{}, {
     }> & JsonQueryType<{}, {}>;
     "action_rule": JsonQueryType<{}, {
       "from_person": JsonQueryType<{"id": string;}, {
+        "selection": type__person_selection & JsonQueryType<{}, {}>;
         "mutations": JsonQueryType<{}, {
           "property_mutation": type__property_mutation & JsonQueryType<{}, {}>;
         }> & JsonQueryType<{}, {}>;
