@@ -57,8 +57,14 @@ public partial class LocationGraphNodeComponent : BoxContainer
 	{
 		//Set NameLabel node value to node id attribute value
 		var nameLabel = GetNode<Label>("%NameLabel");
-		nameLabel.Text = node.id;
 
+		if(node.name != null) {
+			nameLabel.Text = node.name.value;
+		} else {
+			nameLabel.Text = "";
+		}
+
+		nameLabel.Text += "(" + node.id + ")";
 		//Set RuleValue node value to value of node node_rule_ref attribute
 		var ruleValue = GetNode<Label>("%RuleValue");
 		ruleValue.Text = node.node_rule_ref;

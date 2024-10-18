@@ -560,6 +560,7 @@ l-27 73 -6 1855 c-3 1020 -7 1998 -8 2173 l-1 317 -277 -2 -278 -3 -5 -2120
         <starting_node node_rule_ref="city"/>
       </setup>
       <node_rule id="city">
+
         <classifications>
           <classification location_classification_rule_ref="city"/>
         </classifications>
