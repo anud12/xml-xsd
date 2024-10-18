@@ -764,7 +764,7 @@
                             </xs:annotation>
                             <xs:complexType>
                               <xs:sequence>
-                                <xs:element name="property_mutation" minOccurs="0" type="type__property_mutation"/>
+                                <xs:element name="property_mutation" minOccurs="0" maxOccurs="unbounded" type="type__property_mutation"/>
                               </xs:sequence>
                             </xs:complexType>
                           </xs:element>
