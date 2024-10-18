@@ -755,6 +755,7 @@
                       </xs:annotation>
                       <xs:complexType>
                         <xs:all>
+                          <xs:element name="selection" minOccurs="0" type="type__person_selection"/>
                           <xs:element name="mutations" minOccurs="0">
                             <xs:annotation>
                               <xs:documentation>
