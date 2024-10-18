@@ -5639,7 +5639,7 @@ namespace XSD {
       //Attributes
 
       //Children elements
-      public type__property_mutation? property_mutation = null;
+      public List<type__property_mutation>? property_mutation = new List<type__property_mutation>();
       public world_step__rule_group__action_rule__from_person__mutations()
       {
       }
@@ -5670,9 +5670,7 @@ namespace XSD {
         //Serialize arguments
 
         //Serialize children
-        if(property_mutation != null) {
-          rawNode.children["property_mutation"] = new List<RawNode> { property_mutation.SerializeIntoRawNode() };
-        }
+        rawNode.children["property_mutation"] = property_mutation.Select(x => x.SerializeIntoRawNode()).ToList();
         return rawNode;
       }
 
@@ -5682,11 +5680,11 @@ namespace XSD {
           var updatedRawNode = SerializeIntoRawNode();
           updatedRawNode.Serialize(element);
       }
-    public type__property_mutation? Get_property_mutation()
+    public List<type__property_mutation>? Get_property_mutation()
     {
       return this.property_mutation;
     }
-    public void Set_property_mutation(type__property_mutation? value)
+    public void Set_property_mutation(List<type__property_mutation>? value)
     {
       this.property_mutation = value;
     }

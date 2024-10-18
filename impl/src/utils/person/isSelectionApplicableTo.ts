@@ -12,18 +12,27 @@ const filterPersonListBasedOnProperties = (jsonUtil: JsonUtil, selectPerson: Sel
   }
 
   const filteredRules = ruleElements.filter(element => {
-    const propertyMin = Number(jsonUtil.computeOperationFromParent(element.queryOptional("min")));
-    const propertyMax = Number(jsonUtil.computeOperationFromParent(element.queryOptional("max")));
     const propertyRef = element.attributeMap.property_rule_ref;
-
     const propertyValue = Number(jsonUtil.person.getProperty(person, propertyRef))
 
-    if (propertyValue > propertyMax) {
-      return false;
+    const propertyMinElement = element.queryOptional("min");
+    if(propertyMinElement) {
+      const propertyMin = Number(jsonUtil.computeOperationFromParent(propertyMinElement));
+      if (propertyMin > propertyValue) {
+        return false
+      }
     }
-    if (propertyMin > propertyValue) {
-      return false
+
+    const propertyMaxElement = element.queryOptional("max");
+
+    if(propertyMaxElement) {
+      const propertyMax = Number(jsonUtil.computeOperationFromParent(element.queryOptional("max")));
+      if (propertyValue > propertyMax) {
+        return false;
+      }
     }
+
+
     return true;
   })
   return ruleElements.length === filteredRules.length;
