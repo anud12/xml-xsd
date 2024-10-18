@@ -1084,6 +1084,11 @@
                     <xs:element name="node_rule" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:all>
+                          <xs:element name="name" minOccurs="0">
+                            <xs:complexType>
+                              <xs:attribute name="name_rule_ref" type="xs:string" use="required"/>
+                            </xs:complexType>
+                          </xs:element>
                           <xs:element name="classifications" minOccurs="0">
                             <xs:complexType>
                               <xs:sequence>
@@ -1342,6 +1347,11 @@
                             </xs:annotation>
                             <xs:complexType>
                               <xs:sequence>
+                                <xs:element name="name" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:attribute name="value" type="xs:string" use="required"/>
+                                  </xs:complexType>
+                                </xs:element>
                                 <xs:element name="position" minOccurs="0">
                                   <xs:annotation>
                                     <xs:documentation>

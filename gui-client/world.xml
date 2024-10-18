@@ -276,7 +276,6 @@
       </entry>
       <entry id="gold" units="coins">
         <person_default initial="0">
-          <and do="add_dice" value="10" />
         </person_default>
       </entry>
     </property_rule>
@@ -403,6 +402,58 @@
         </to_option>
       </link_group_rule>
     </link_group_rule_list>
+    <name_rule>
+      <entry id="farmNodeName">
+        <name_token prefix="">
+          <one_of>
+            <name_token prefix="Silver"/>
+            <name_token prefix="Thorn"/>
+            <name_token prefix="Green"/>
+            <name_token prefix="Iron"/>
+            <name_token prefix="Amber"/>
+            <name_token prefix="Wild"/>
+            <name_token prefix="Frost"/>
+            <name_token prefix="Stone"/>
+            <name_token prefix="Golden"/>
+            <name_token prefix="Dark"/>
+            <name_token prefix="Ember"/>
+            <name_token prefix="Whisper"/>
+            <name_token prefix="Shadow"/>
+            <name_token prefix="Oak"/>
+            <name_token prefix="Briar"/>
+            <name_token prefix="Sun"/>
+            <name_token prefix="Wind"/>
+            <name_token prefix="Raven"/>
+            <name_token prefix="Crimson"/>
+            <name_token prefix="Misty"/>
+          </one_of>
+        </name_token>
+        <name_token prefix=" ">
+          <one_of>
+            <name_token prefix="Hollow" />
+            <name_token prefix="Fields" />
+            <name_token prefix="Grove" />
+            <name_token prefix="Acres" />
+            <name_token prefix="Pasture" />
+            <name_token prefix="Valley" />
+            <name_token prefix="Meadow" />
+            <name_token prefix="Ridge" />
+            <name_token prefix="Hearth" />
+            <name_token prefix="Orchard" />
+            <name_token prefix="Hold" />
+            <name_token prefix="Dale" />
+            <name_token prefix="Haven" />
+            <name_token prefix="Croft" />
+            <name_token prefix="Hollow" />
+            <name_token prefix="Hill" />
+            <name_token prefix="Barn" />
+            <name_token prefix="Root" />
+            <name_token prefix="Spring" />
+            <name_token prefix="Farmstead" />
+          </one_of>
+        </name_token>
+      </entry>
+    </name_rule>
     <location_graph_rule id="location_graph_rule_id">
       <setup>
         <starting_node node_rule_ref="farm" />
@@ -414,6 +465,7 @@
         </link_group_list>
       </node_rule>
       <node_rule id="farm">
+        <name name_rule_ref="farmNodeName" />
         <link_group_list>
           <reference link_group_rule_ref="to_wilderness" />
           <reference link_group_rule_ref="to_wilderness" />
@@ -433,6 +485,7 @@
               <min initial="1" />
               <max initial="10" />
             </property>
+            <classification classification_rule_ref="bandit" />
             <classification classification_rule_ref="alive" />
           </person_selection>
         </existing_person>

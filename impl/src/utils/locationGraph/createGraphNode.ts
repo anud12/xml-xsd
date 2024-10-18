@@ -27,6 +27,17 @@ export const createGraphNode = (readJson: JsonUtil, locationQueryGraph: Location
         id: writeUnit.getNextId(),
       })
 
+
+      const nameRuleRef = nodeRule.queryOptional("name");
+
+      if (nameRuleRef) {
+        const name = readJson.name.calculateNameFromRefString(nameRuleRef.attributeMap.name_rule_ref);
+        nodeElement.appendChild("name", null, {
+          value: name
+        })
+
+      }
+
       const existingPersonRule = nodeRule.queryOptional("existing_person");
 
       existingPersonRule?.queryAllOptional("person_selection").forEach(personElement => {

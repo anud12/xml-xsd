@@ -3767,6 +3767,7 @@ namespace XSD {
       public System.String id;
 
       //Children elements
+      public world_step__rule_group__location_graph_rule__node_rule__name? name = null;
       public world_step__rule_group__location_graph_rule__node_rule__classifications? classifications = null;
       public world_step__rule_group__location_graph_rule__node_rule__link_group_list? link_group_list = null;
       public world_step__rule_group__location_graph_rule__node_rule__existing_person? existing_person = null;
@@ -3797,6 +3798,7 @@ namespace XSD {
         }
 
         //Deserialize children
+        this.name = rawNode.InitializeWithRawNode("name", this.name);
         this.classifications = rawNode.InitializeWithRawNode("classifications", this.classifications);
         this.link_group_list = rawNode.InitializeWithRawNode("link_group_list", this.link_group_list);
         this.existing_person = rawNode.InitializeWithRawNode("existing_person", this.existing_person);
@@ -3811,6 +3813,9 @@ namespace XSD {
         }
 
         //Serialize children
+        if(name != null) {
+          rawNode.children["name"] = new List<RawNode> { name.SerializeIntoRawNode() };
+        }
         if(classifications != null) {
           rawNode.children["classifications"] = new List<RawNode> { classifications.SerializeIntoRawNode() };
         }
@@ -3836,6 +3841,21 @@ namespace XSD {
     public void Set_id(System.String value)
     {
       this.id = value;
+    }
+    public world_step__rule_group__location_graph_rule__node_rule__name? Get_name()
+    {
+      return this.name;
+    }
+    public world_step__rule_group__location_graph_rule__node_rule__name GetOrInsertDefault_name()
+    {
+      if(this.name == null) {
+        this.name = new world_step__rule_group__location_graph_rule__node_rule__name();
+      }
+      return this.name;
+    }
+    public void Set_name(world_step__rule_group__location_graph_rule__node_rule__name? value)
+    {
+      this.name = value;
     }
     public world_step__rule_group__location_graph_rule__node_rule__classifications? Get_classifications()
     {
@@ -6525,6 +6545,70 @@ namespace XSD {
   }
 
 
+    public class world_step__rule_group__location_graph_rule__node_rule__name  {
+      public RawNode rawNode = new RawNode();
+      //Attributes
+      public System.String name_rule_ref;
+
+      //Children elements
+      public world_step__rule_group__location_graph_rule__node_rule__name()
+      {
+      }
+
+      public world_step__rule_group__location_graph_rule__node_rule__name(RawNode rawNode)
+      {
+        Deserialize(rawNode);
+      }
+
+      public world_step__rule_group__location_graph_rule__node_rule__name(XmlElement xmlElement)
+      {
+        this.rawNode.Deserialize(xmlElement);
+        Deserialize(rawNode);
+      }
+
+      public void Deserialize (RawNode rawNode)
+      {
+        this.rawNode = rawNode;
+        // Godot.GD.Print("Deserializing world_step__rule_group__location_graph_rule__node_rule__name");
+        //Deserialize arguments
+        if(rawNode.attributes.ContainsKey("name_rule_ref"))
+        {
+          var attribute_name_rule_ref = rawNode.attributes["name_rule_ref"];
+          this.name_rule_ref = rawNode.attributes["name_rule_ref"];
+        }
+
+        //Deserialize children
+      }
+
+      public RawNode SerializeIntoRawNode()
+      {
+        //Serialize arguments
+        if(this.name_rule_ref != null)
+        {
+          rawNode.attributes["name_rule_ref"] = this.name_rule_ref.ToString();
+        }
+
+        //Serialize children
+        return rawNode;
+      }
+
+      public void Serialize(XmlElement element)
+      {
+          // Godot.GD.Print("Serializing world_step__rule_group__location_graph_rule__node_rule__name");
+          var updatedRawNode = SerializeIntoRawNode();
+          updatedRawNode.Serialize(element);
+      }
+    public System.String Get_name_rule_ref()
+    {
+      return this.name_rule_ref;
+    }
+    public void Set_name_rule_ref(System.String value)
+    {
+      this.name_rule_ref = value;
+    }
+  }
+
+
     public class world_step__rule_group__location_graph_rule__node_rule__classifications  {
       public RawNode rawNode = new RawNode();
       //Attributes
@@ -7061,6 +7145,7 @@ namespace XSD {
       public System.String id;
 
       //Children elements
+      public world_step__data__location__location_graph__node__name? name = null;
       public world_step__data__location__location_graph__node__position? position = null;
       public world_step__data__location__location_graph__node__classifications? classifications = null;
       public List<world_step__data__location__location_graph__node__link_to>? link_to = new List<world_step__data__location__location_graph__node__link_to>();
@@ -7097,6 +7182,7 @@ namespace XSD {
         }
 
         //Deserialize children
+        this.name = rawNode.InitializeWithRawNode("name", this.name);
         this.position = rawNode.InitializeWithRawNode("position", this.position);
         this.classifications = rawNode.InitializeWithRawNode("classifications", this.classifications);
         this.link_to = rawNode.InitializeWithRawNode("link_to", this.link_to);
@@ -7116,6 +7202,9 @@ namespace XSD {
         }
 
         //Serialize children
+        if(name != null) {
+          rawNode.children["name"] = new List<RawNode> { name.SerializeIntoRawNode() };
+        }
         if(position != null) {
           rawNode.children["position"] = new List<RawNode> { position.SerializeIntoRawNode() };
         }
@@ -7150,6 +7239,21 @@ namespace XSD {
     public void Set_id(System.String value)
     {
       this.id = value;
+    }
+    public world_step__data__location__location_graph__node__name? Get_name()
+    {
+      return this.name;
+    }
+    public world_step__data__location__location_graph__node__name GetOrInsertDefault_name()
+    {
+      if(this.name == null) {
+        this.name = new world_step__data__location__location_graph__node__name();
+      }
+      return this.name;
+    }
+    public void Set_name(world_step__data__location__location_graph__node__name? value)
+    {
+      this.name = value;
     }
     public world_step__data__location__location_graph__node__position? Get_position()
     {
@@ -9270,6 +9374,70 @@ namespace XSD {
     public void Set_classification_rule_ref(System.String value)
     {
       this.classification_rule_ref = value;
+    }
+  }
+
+
+    public class world_step__data__location__location_graph__node__name  {
+      public RawNode rawNode = new RawNode();
+      //Attributes
+      public System.String value;
+
+      //Children elements
+      public world_step__data__location__location_graph__node__name()
+      {
+      }
+
+      public world_step__data__location__location_graph__node__name(RawNode rawNode)
+      {
+        Deserialize(rawNode);
+      }
+
+      public world_step__data__location__location_graph__node__name(XmlElement xmlElement)
+      {
+        this.rawNode.Deserialize(xmlElement);
+        Deserialize(rawNode);
+      }
+
+      public void Deserialize (RawNode rawNode)
+      {
+        this.rawNode = rawNode;
+        // Godot.GD.Print("Deserializing world_step__data__location__location_graph__node__name");
+        //Deserialize arguments
+        if(rawNode.attributes.ContainsKey("value"))
+        {
+          var attribute_value = rawNode.attributes["value"];
+          this.value = rawNode.attributes["value"];
+        }
+
+        //Deserialize children
+      }
+
+      public RawNode SerializeIntoRawNode()
+      {
+        //Serialize arguments
+        if(this.value != null)
+        {
+          rawNode.attributes["value"] = this.value.ToString();
+        }
+
+        //Serialize children
+        return rawNode;
+      }
+
+      public void Serialize(XmlElement element)
+      {
+          // Godot.GD.Print("Serializing world_step__data__location__location_graph__node__name");
+          var updatedRawNode = SerializeIntoRawNode();
+          updatedRawNode.Serialize(element);
+      }
+    public System.String Get_value()
+    {
+      return this.value;
+    }
+    public void Set_value(System.String value)
+    {
+      this.value = value;
     }
   }
 

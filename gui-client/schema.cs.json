@@ -1556,6 +1556,23 @@
                   },
                   "isSingle": false,
                   "value": {
+                    "name": {
+                      "metaType": "object",
+                      "value": {},
+                      "isSingle": true,
+                      "isNullable": true,
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "name_rule_ref": {
+                            "metaType": "primitive",
+                            "value": "xs:string",
+                            "isNullable": false
+                          }
+                        },
+                        "isNullable": false
+                      }
+                    },
                     "classifications": {
                       "metaType": "object",
                       "isSingle": true,
@@ -1918,6 +1935,23 @@
                       },
                       "isSingle": false,
                       "value": {
+                        "name": {
+                          "metaType": "object",
+                          "value": {},
+                          "isSingle": true,
+                          "isNullable": true,
+                          "attributes": {
+                            "metaType": "object",
+                            "value": {
+                              "value": {
+                                "metaType": "primitive",
+                                "value": "xs:string",
+                                "isNullable": false
+                              }
+                            },
+                            "isNullable": false
+                          }
+                        },
                         "position": {
                           "metaType": "object",
                           "value": {},
