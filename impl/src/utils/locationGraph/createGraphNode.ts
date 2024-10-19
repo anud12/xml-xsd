@@ -12,6 +12,7 @@ export const createGraphNode = (readJson: JsonUtil, locationQueryGraph: Location
 }, classificationLocation: string[] = []): (writeUnit: JsonUtil) => Promise<LocationGraphNodeQueryType> => {
   try {
     return async (writeUnit) => {
+      console.log(`createGraphNode from locationQueryGraph ${locationQueryGraph.getPath()} and ref ${ref} at position ${position}`)
 
       const locationGraphRule = readJson.getRuleGroups().flatMap(ruleGroups => ruleGroups.queryAllOptional("location_graph_rule"))
         .find(locationQueryGraphRuleElement => locationQueryGraphRuleElement.attributeMap.id === locationQueryGraph.queryOptional("rule")?.attributeMap.location_graph_rule_ref)

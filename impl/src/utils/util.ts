@@ -14,8 +14,8 @@ import {createOperationFromParent} from "./operation/createOperationFromParent";
 import {calculateNameFromChildren, calculateNameFromRefString} from "./calculateName";
 import {classifyPerson} from "./person/classifyPerson";
 import {setProperty} from "./person/setProperty";
-import {Position, selectPerson} from "./person/selectPerson";
-import {oldApplyPropertyMutation, applyPropertyMutation} from "./person/applyPropertyMutation";
+import {selectPerson} from "./person/selectPerson";
+import {applyPropertyMutation, oldApplyPropertyMutation} from "./person/applyPropertyMutation";
 import {group__name_token, group__operation__and, type__math_operations} from "../world_step.schema";
 import {createLocationGraph} from "./locationGraph/createLocationGraph";
 import {createGraphNode, LocationGraphQueryType} from "./locationGraph/createGraphNode";
@@ -28,7 +28,6 @@ import {removePerson} from "./locationGraph/removePerson";
 import {MutationResult} from "../middleware/_type";
 import {findPersonLocation, FindPersonResult} from "./locationGraph/findPerson";
 import {isSelectionApplicableTo} from "./person/isSelectionApplicableTo";
-import {validate} from "../validate";
 
 export const memoizeFunction = <T>(func: T): T => {
   let value;
@@ -56,21 +55,27 @@ export class JsonUtil {
    */
   random: () => number;
   randomBetween = (min: number, max: number) => {
+    if(min > max) {
+      console.log(`randomBetween (${min}, ${max}) -> mix > max`)
+      return this.randomBetween(max, min);
+    }
+    const modOperation = (n, d) => ((n % d) + d) % d
     const randomValue = this.random()
 
     const maxRange = max + 1 - min;
-    console.log(`randomBetween maxRange: ${maxRange}`)
+    console.log(`randomBetween (${min}, ${max}) maxRange: ${maxRange}`)
     if (maxRange === 0) {
       const isGreaterThan = randomValue >= 0.5;
       const returnValue = isGreaterThan
         ? max
         : min;
-      console.log(`randomBetween, returning ${returnValue}, because randomValue ${randomValue} isGreaterThan test resulted ${isGreaterThan}`)
+      console.log(`randomBetween (${min}, ${max}) -> ${returnValue}, because randomValue ${randomValue} isGreaterThan test resulted ${isGreaterThan}`)
       return returnValue;
     }
 
-    const result = randomValue % (maxRange) + min;
-    console.log(`randomBetween (${min}, ${max}) -> ${randomValue} % ${maxRange} + ${min} -> ${result}`)
+    const delta = max - min;
+    const result = randomValue * delta + min;
+    console.log(`randomBetween (${min}, ${max}) -> ${randomValue} * ${delta} + ${min} -> ${result}`)
     return result;
   }
   randomBetweenInt = (min: number, max: number) => {

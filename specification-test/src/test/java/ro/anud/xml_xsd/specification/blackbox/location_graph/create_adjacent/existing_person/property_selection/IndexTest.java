@@ -16,9 +16,9 @@ import java.util.Collection;
 
 ## Then
 It should create persons with a random property value between `min` and `max`
-    - 0.1 has `1`
+    - 0.1 has `2`
     - 0.2 has `1`
-    - 0.3 has `2`
+    - 0.3 has `1`
  */
 
 /*tags

@@ -2149,6 +2149,7 @@ undefined
       <entry value="1"/>
       <entry value="3"/>
       <entry value="2"/>
+      <entry value="4"/>
     </randomization_table>
   </world_metadata>
   <rule_group id="rule_group_id">
@@ -2225,6 +2226,7 @@ undefined
       <entry value="1"/>
       <entry value="3"/>
       <entry value="2"/>
+      <entry value="4"/>
     </randomization_table>
   </world_metadata>
   <rule_group id="rule_group_id">

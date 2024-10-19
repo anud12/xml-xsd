@@ -524,8 +524,8 @@
         <existing_person min="1" max="4">
           <person_selection>
             <property property_rule_ref="gold">
-              <min initial="1" />
-              <max initial="10" />
+              <min initial="5" />
+              <max initial="15" />
             </property>
             <classification classification_rule_ref="bandit" />
             <classification classification_rule_ref="alive" />

@@ -7,6 +7,7 @@
     <randomization_table>
       <entry value="3"/>
       <entry value="2"/>
+      <entry value="4"/>
       <entry value="1"/>
     </randomization_table>
   </world_metadata>
@@ -17,10 +18,8 @@
       </entry>
     </property_rule>
     <race_rule>
-      <entry id="race">
-      </entry>
-      <entry id="second_race">
-      </entry>
+      <entry id="race"/>
+      <entry id="second_race"/>
     </race_rule>
     <action_rule>
       <person_to_person id="action_rule">
@@ -59,22 +58,23 @@
           <property property_rule_ref="property" value="10"/>
         </properties>
         <classifications/>
-      </person><person id="0.0">
-      <race race_rule_ref="second_race"/>
-      <properties>
-        <property property_rule_ref="property" value="3"/>
-      </properties>
-      <classifications/>
-    </person>
+      </person>
+      <person id="0.0">
+        <race race_rule_ref="race"/>
+        <properties>
+          <property property_rule_ref="property" value="2"/>
+        </properties>
+        <classifications/>
+      </person>
       <person id="0.1">
         <race race_rule_ref="race"/>
         <properties>
-          <property property_rule_ref="property" value="5"/>
+          <property property_rule_ref="property" value="3"/>
         </properties>
         <classifications/>
       </person>
       <person id="0.2">
-        <race race_rule_ref="race"/>
+        <race race_rule_ref="second_race"/>
         <properties>
           <property property_rule_ref="property" value="1"/>
         </properties>

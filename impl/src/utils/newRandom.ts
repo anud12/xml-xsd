@@ -17,7 +17,7 @@ export const newRandom = (worldSchema: JsonUtil) => {
         const index = counter % entries.length;
         counter += 1;
         const result = entries[index] / max;
-        console.log(`random: result=${result}, max=${max}, value=${entries[index]}`)
+        console.log(`random: value=${entries[index]} result=${result}, max=${max}, `)
         return result;
     }
 }

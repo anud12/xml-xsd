@@ -19,8 +19,8 @@ selecting persons with
 ## It should
 - compute `property` value for person `0` using default value 10
 - create 3 people (because person `0` value is greater than 5) with `property` value between 0 and 5
+  - 2
   - 3
-  - 5
   - 1
  */
 

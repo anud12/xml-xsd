@@ -99,6 +99,7 @@ const applyClassification = (jsonUtil: JsonUtil, classificationRef: string, pers
 const applyProperty = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, person: PersonQueryType): void => {
   selectPerson.queryAllOptional("property").map(property => {
     console.log(`applyProperty ${property.getPath()}`)
+    jsonUtil.person.getProperty(person, property.attributeMap.property_rule_ref);
 
     console.log("applyProperty has stringValue")
     let max = Number(jsonUtil.computeOperationFromParent(property.queryOptional("max")));
@@ -116,7 +117,7 @@ const applyProperty = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, 
       return;
     }
     console.log("applyProperty has any")
-    let value = jsonUtil.randomBetweenInt(max, min);
+    let value = jsonUtil.randomBetweenInt(min, max);
     jsonUtil.person.setProperty(person, property.attributeMap.property_rule_ref, String(value));
   })
 }
@@ -124,6 +125,7 @@ const applyProperty = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, 
 
 export const createPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType): PersonQueryElement => {
   try {
+    console.log(`createPerson from ${selectPerson.getPath()}`)
     let person = createNewPerson(jsonUtil, selectPerson);
     selectPerson.queryAllOptional("classification").forEach(value => {
       person = applyClassification(jsonUtil, value.attributeMap.classification_rule_ref, person)
