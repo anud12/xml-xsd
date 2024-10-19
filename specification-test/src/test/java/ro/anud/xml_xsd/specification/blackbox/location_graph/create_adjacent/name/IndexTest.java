@@ -20,6 +20,7 @@ It should create 3 new nodes and links them to the node references by `node_id_r
 /*tags
 - location_graph
 - location_graph.node.create_adjacent
+- name
  */
 
 @Execution(ExecutionMode.CONCURRENT)
