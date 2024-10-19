@@ -56,11 +56,26 @@ export class JsonUtil {
    */
   random: () => number;
   randomBetween = (min: number, max: number) => {
-    return this.random() % (max + 1 - min) + min;
+    const randomValue = this.random()
+
+    const maxRange = max + 1 - min;
+    console.log(`randomBetween maxRange: ${maxRange}`)
+    if (maxRange === 0) {
+      const isGreaterThan = randomValue >= 0.5;
+      const returnValue = isGreaterThan
+        ? max
+        : min;
+      console.log(`randomBetween, returning ${returnValue}, because randomValue ${randomValue} isGreaterThan test resulted ${isGreaterThan}`)
+      return returnValue;
+    }
+
+    const result = randomValue % (maxRange) + min;
+    console.log(`randomBetween (${min}, ${max}) -> ${randomValue} % ${maxRange} + ${min} -> ${result}`)
+    return result;
   }
   randomBetweenInt = (min: number, max: number) => {
     const result = Math.floor(this.randomBetween(min, max));
-    console.log(`randomBetweenInt ${result}`)
+    console.log(`randomBetweenInt: (${min}, ${max}) -> ${result}`)
     return result
   }
 
