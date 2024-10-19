@@ -58,6 +58,7 @@ export const calculateNameFromChildren = (readJson: JsonUtil, element: group__na
 }
 export const calculateNameFromRefString = (readJson: JsonUtil, ref: string): string | undefined => {
   try {
+    console.log(`calculateNameFromRefString ${ref}`)
     if (!ref) {
       return undefined;
     }
