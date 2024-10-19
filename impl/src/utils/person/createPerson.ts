@@ -21,7 +21,7 @@ const createNewPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType
   const name = jsonUtil.name.calculateNameFromRefString(race?.queryOptional("name")?.attributeMap?.name_rule_ref);
 
   let people = jsonUtil.json.queryOptional("data").queryOptional("people");
-  if(!people) {
+  if (!people) {
     jsonUtil.json.queryOptional("data").appendChild("people", undefined, {});
     people = jsonUtil.json.queryOptional("data").queryOptional("people");
   }
@@ -31,7 +31,7 @@ const createNewPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType
   if (name) {
     person.attributeMap.name = name;
   }
-  if(race) {
+  if (race) {
     person.appendChild("race", undefined, {
       race_rule_ref: race.attributeMap.id
     });
@@ -98,20 +98,25 @@ const applyClassification = (jsonUtil: JsonUtil, classificationRef: string, pers
 
 const applyProperty = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType, person: PersonQueryType): void => {
   selectPerson.queryAllOptional("property").map(property => {
-    const stringValue = jsonUtil.person.getProperty(person, property.attributeMap.property_rule_ref);
-    if (!stringValue) {
+    console.log(`applyProperty ${property.getPath()}`)
+
+    console.log("applyProperty has stringValue")
+    let max = Number(jsonUtil.computeOperationFromParent(property.queryOptional("max")));
+    let min = Number(jsonUtil.computeOperationFromParent(property.queryOptional("min")))
+
+    if (!max) {
+      max = min;
+    }
+    console.log(`applyProperty has max ${max}`)
+    if (!min) {
+      min = max;
+    }
+    console.log(`applyProperty has min ${min}`)
+    if (!min && !max) {
       return;
     }
-    let value = Number(stringValue)
-
-    const max = Number(jsonUtil.computeOperationFromParent(property.queryOptional("max")))
-    if (max) {
-      value = Math.min(value, max)
-    }
-    const min = Number(jsonUtil.computeOperationFromParent(property.queryOptional("min")))
-    if (min) {
-      value = Math.max(value, min)
-    }
+    console.log("applyProperty has any")
+    let value = jsonUtil.randomBetweenInt(max, min);
     jsonUtil.person.setProperty(person, property.attributeMap.property_rule_ref, String(value));
   })
 }
