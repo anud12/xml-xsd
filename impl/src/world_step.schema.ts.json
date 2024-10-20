@@ -2003,57 +2003,64 @@
                           },
                           "isNullable": true
                         },
-                        "link_to": {
+                        "links": {
                           "metaType": "object",
-                          "attributes": {
-                            "metaType": "object",
-                            "value": {
-                              "node_id_ref": {
-                                "metaType": "primitive",
-                                "value": "xs:string",
-                                "isNullable": false
-                              },
-                              "total_progress": {
-                                "metaType": "primitive",
-                                "value": "xs:int",
-                                "isNullable": false
-                              }
-                            }
-                          },
-                          "isSingle": false,
+                          "isSingle": true,
                           "value": {
-                            "people": {
+                            "link_to": {
                               "metaType": "object",
-                              "isSingle": true,
-                              "value": {
-                                "person": {
-                                  "metaType": "object",
-                                  "value": {},
-                                  "isSingle": false,
-                                  "isNullable": true,
-                                  "attributes": {
-                                    "metaType": "object",
-                                    "value": {
-                                      "person_id_ref": {
-                                        "metaType": "primitive",
-                                        "value": "xs:string",
-                                        "isNullable": false
-                                      },
-                                      "accumulated_progress": {
-                                        "metaType": "primitive",
-                                        "value": "xs:int",
-                                        "isNullable": false
-                                      }
-                                    }
+                              "attributes": {
+                                "metaType": "object",
+                                "value": {
+                                  "node_id_ref": {
+                                    "metaType": "primitive",
+                                    "value": "xs:string",
+                                    "isNullable": false
+                                  },
+                                  "total_progress": {
+                                    "metaType": "primitive",
+                                    "value": "xs:int",
+                                    "isNullable": false
                                   }
                                 }
                               },
-                              "isNullable": true
-                            },
-                            "person_progress_property": {
-                              "metaType": "reference",
-                              "value": "type__math_operations",
-                              "isSingle": true,
+                              "isSingle": false,
+                              "value": {
+                                "people": {
+                                  "metaType": "object",
+                                  "isSingle": true,
+                                  "value": {
+                                    "person": {
+                                      "metaType": "object",
+                                      "value": {},
+                                      "isSingle": false,
+                                      "isNullable": true,
+                                      "attributes": {
+                                        "metaType": "object",
+                                        "value": {
+                                          "person_id_ref": {
+                                            "metaType": "primitive",
+                                            "value": "xs:string",
+                                            "isNullable": false
+                                          },
+                                          "accumulated_progress": {
+                                            "metaType": "primitive",
+                                            "value": "xs:int",
+                                            "isNullable": false
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "isNullable": true
+                                },
+                                "person_progress_property": {
+                                  "metaType": "reference",
+                                  "value": "type__math_operations",
+                                  "isSingle": true,
+                                  "isNullable": true
+                                }
+                              },
                               "isNullable": true
                             }
                           },

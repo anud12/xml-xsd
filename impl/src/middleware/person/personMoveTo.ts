@@ -41,7 +41,7 @@ const applyFindPath = (readJson: JsonUtil, personMoveToElement: PersonMoveToQuer
         locationGraphElement.queryAllOptional("node")
       )
       .find(nodeElement => {
-        return nodeElement.queryAllOptional("link_to")
+        return nodeElement.queryAllOptional("links").flatMap(linksElement => linksElement.queryAllOptional("link_to"))
           .flatMap(linkToELement => linkToELement.queryAllOptional("people"))
           .flatMap(peopleElement => peopleElement.queryAllOptional("person"))
           .find(personElement => personElement.attributeMap.person_id_ref === person_id_ref)
@@ -98,7 +98,7 @@ const applyPathRecursiveFromLink = (readJson: JsonUtil, pathElement: PathQueryEl
     .queryOptional("data")
     .queryOptional("location")
     .queryAllOptional("location_graph").flatMap(locationGraphElement => locationGraphElement.queryAllOptional("node"))
-    .find(nodeElement => nodeElement.queryAllOptional("link_to")
+    .find(nodeElement => nodeElement.queryAllOptional("links").flatMap(linksElement => linksElement.queryAllOptional("link_to"))
       .find(linkToElement => {
           const person = linkToElement.queryAllOptional("people")
             .flatMap(peopleElement => peopleElement.queryAllOptional("person"))
@@ -113,7 +113,7 @@ const applyPathRecursiveFromLink = (readJson: JsonUtil, pathElement: PathQueryEl
     return;
   }
 
-  let linkElement = personNodeElement.queryAllOptional("link_to")
+  let linkElement = personNodeElement.queryAllOptional("links").flatMap(linksElement => linksElement.queryAllOptional("link_to"))
     .find(linkToElement => {
         const person = linkToElement.queryAllOptional("people")
           .flatMap(peopleElement => peopleElement.queryAllOptional("person"))
@@ -189,7 +189,7 @@ const applyPathRecursive = (readJson: JsonUtil, pathElement: PathQueryElement, c
       .queryAllOptional("location_graph").flatMap(locationGraphElement => locationGraphElement.queryAllOptional("node"))
       .find(nodeElement => nodeElement.attributeMap.id === currentNodeId);
 
-    const linkElement = originNode.queryAllOptional("link_to").find(linkToElement => {
+    const linkElement = originNode.queryAllOptional("links").flatMap(linksElement => linksElement.queryAllOptional("link_to")).find(linkToElement => {
       return linkToElement.attributeMap.node_id_ref === destinationNode.attributeMap.node_id_ref
     })
 

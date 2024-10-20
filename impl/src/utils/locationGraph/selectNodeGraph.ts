@@ -1,6 +1,6 @@
 import {JsonUtil} from "../util";
-import {NodeGraphQueryType, SelectNodeGraphQueryType} from "../JsonSchema";
-import {LocationGraphQueryType} from "./createGraphNode";
+import {SelectNodeGraphQueryType} from "../JsonSchema";
+import {LocationGraphNodeQueryType, LocationGraphQueryType} from "./createGraphNode";
 import {mergeError} from "../../mergeError";
 
 
@@ -33,7 +33,7 @@ const filterLocationGraph = (selectNodeGraphQueryType: SelectNodeGraphQueryType,
   }
 }
 
-const filterNodeGraph = (selectNodeGraphQueryType: SelectNodeGraphQueryType, nodeGraph: NodeGraphQueryType): boolean => {
+const filterNodeGraph = (selectNodeGraphQueryType: SelectNodeGraphQueryType, nodeGraph: LocationGraphNodeQueryType): boolean => {
   try {
 
     const hasNodeGraphIdList = selectNodeGraphQueryType.queryAllOptional("has__node_graph_id");
@@ -57,7 +57,7 @@ const filterNodeGraph = (selectNodeGraphQueryType: SelectNodeGraphQueryType, nod
 
 }
 
-export const selectNodeGraph = (jsonUtil: JsonUtil, selectNodeGraphQueryType?: SelectNodeGraphQueryType): Array<NodeGraphQueryType> => {
+export const selectNodeGraph = (jsonUtil: JsonUtil, selectNodeGraphQueryType?: SelectNodeGraphQueryType): Array<LocationGraphNodeQueryType> => {
 
   try {
     if (!selectNodeGraphQueryType) {

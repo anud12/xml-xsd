@@ -1347,7 +1347,7 @@
                               </xs:documentation>
                             </xs:annotation>
                             <xs:complexType>
-                              <xs:sequence>
+                              <xs:all>
                                 <xs:element name="name" minOccurs="0">
                                   <xs:complexType>
                                     <xs:attribute name="value" type="xs:string" use="required"/>
@@ -1376,55 +1376,61 @@
                                     </xs:sequence>
                                   </xs:complexType>
                                 </xs:element>
-                                <xs:element name="link_to" minOccurs="0" maxOccurs="unbounded">
-                                  <xs:annotation>
-                                    <xs:documentation>
-                                      Represents the links to other nodes in the graph.
-                                    </xs:documentation>
-                                  </xs:annotation>
+                                <xs:element name="links" minOccurs="0">
                                   <xs:complexType>
-                                    <xs:all>
-                                      <xs:element name="people" minOccurs="0">
+                                    <xs:sequence>
+                                      <xs:element name="link_to" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:annotation>
+                                          <xs:documentation>
+                                            Represents the links to other nodes in the graph.
+                                          </xs:documentation>
+                                        </xs:annotation>
                                         <xs:complexType>
-                                          <xs:sequence>
-                                            <xs:element name="person" minOccurs="0" maxOccurs="unbounded">
+                                          <xs:all>
+                                            <xs:element name="people" minOccurs="0">
                                               <xs:complexType>
-                                                <xs:attribute name="person_id_ref" type="xs:string" use="required">
-                                                  <xs:annotation>
-                                                    <xs:documentation>
-                                                      Represents the reference to the person that will be linked to.
-                                                    </xs:documentation>
-                                                  </xs:annotation>
-                                                </xs:attribute>
-                                                <xs:attribute name="accumulated_progress" type="xs:int" use="required">
-                                                  <xs:annotation>
-                                                    <xs:documentation>
-                                                      Represents the accumulated progress of the person in the link.
-                                                    </xs:documentation>
-                                                  </xs:annotation>
-                                                </xs:attribute>
+                                                <xs:sequence>
+                                                  <xs:element name="person" minOccurs="0" maxOccurs="unbounded">
+                                                    <xs:complexType>
+                                                      <xs:attribute name="person_id_ref" type="xs:string" use="required">
+                                                        <xs:annotation>
+                                                          <xs:documentation>
+                                                            Represents the reference to the person that will be linked to.
+                                                          </xs:documentation>
+                                                        </xs:annotation>
+                                                      </xs:attribute>
+                                                      <xs:attribute name="accumulated_progress" type="xs:int" use="required">
+                                                        <xs:annotation>
+                                                          <xs:documentation>
+                                                            Represents the accumulated progress of the person in the link.
+                                                          </xs:documentation>
+                                                        </xs:annotation>
+                                                      </xs:attribute>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
                                               </xs:complexType>
                                             </xs:element>
-                                          </xs:sequence>
+                                            <xs:element name="person_progress_property" minOccurs="0"
+                                                        type="type__math_operations"/>
+                                          </xs:all>
+                                          <xs:attribute name="node_id_ref" use="required" type="xs:string">
+                                            <xs:annotation>
+                                              <xs:documentation>
+                                                Represents the reference to the node that will be linked to.
+                                              </xs:documentation>
+                                            </xs:annotation>
+                                          </xs:attribute>
+                                          <xs:attribute name="total_progress" type="xs:int" use="required">
+                                            <xs:annotation>
+                                              <xs:documentation>
+                                                Represents the invested time to reach the node.
+                                              </xs:documentation>
+                                            </xs:annotation>
+                                          </xs:attribute>
                                         </xs:complexType>
                                       </xs:element>
-                                      <xs:element name="person_progress_property" minOccurs="0"
-                                                  type="type__math_operations"/>
-                                    </xs:all>
-                                    <xs:attribute name="node_id_ref" use="required" type="xs:string">
-                                      <xs:annotation>
-                                        <xs:documentation>
-                                          Represents the reference to the node that will be linked to.
-                                        </xs:documentation>
-                                      </xs:annotation>
-                                    </xs:attribute>
-                                    <xs:attribute name="total_progress" type="xs:int" use="required">
-                                      <xs:annotation>
-                                        <xs:documentation>
-                                          Represents the invested time to reach the node.
-                                        </xs:documentation>
-                                      </xs:annotation>
-                                    </xs:attribute>
+                                    </xs:sequence>
                                   </xs:complexType>
                                 </xs:element>
                                 <xs:element name="people" minOccurs="0">
@@ -1449,7 +1455,7 @@
                                     </xs:sequence>
                                   </xs:complexType>
                                 </xs:element>
-                              </xs:sequence>
+                              </xs:all>
                               <xs:attribute name="node_rule_ref" type="xs:string" use="required">
                                 <xs:annotation>
                                   <xs:documentation>

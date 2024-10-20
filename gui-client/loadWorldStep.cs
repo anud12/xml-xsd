@@ -127,8 +127,8 @@ public class LoadWorldStep
 		var nodeById = worldStep.data.location?.location_graph?.SelectMany(locationGraph => locationGraph.node).ToDictionary(node => node.id);
 		return worldStep.data.location?.location_graph?.SelectMany(locationGraph => locationGraph.node.SelectMany(node =>
 			{
-				GD.Print("node.link_to: " + node.link_to.Count);
-				return node.link_to.Select(linkTo =>
+				GD.Print("node.link_to: " + node.links?.link_to.Count);
+				return node.links?.link_to.Select(linkTo =>
 				{
 					var startNode = node;
 					GD.Print("linkTo.node_id_ref: " + linkTo.node_id_ref);

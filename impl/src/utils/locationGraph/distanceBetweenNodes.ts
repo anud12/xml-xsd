@@ -1,7 +1,7 @@
-import {NodeGraphQueryType} from "../JsonSchema";
+import {LocationGraphNodeQueryType} from "./createGraphNode";
 
 
-export const distanceBetweenNodes = (node1: NodeGraphQueryType, node2: NodeGraphQueryType) => {
+export const distanceBetweenNodes = (node1: LocationGraphNodeQueryType, node2: LocationGraphNodeQueryType) => {
   const node1Position = node1.query("position");
   const node2Position = node2.query("position");
 

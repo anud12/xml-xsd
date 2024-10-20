@@ -35,18 +35,22 @@
         <rule location_graph_rule_ref="location_graph_rule_id"/>
         <node node_rule_ref="node" id="node_id">
           <position x="0" y="0"/>
-          <link_to node_id_ref="node_id_2" total_progress="1">
-            <person_progress_property initial="4"/>
-          </link_to>
+          <links>
+            <link_to node_id_ref="node_id_2" total_progress="1">
+              <person_progress_property initial="4"/>
+            </link_to>
+          </links>
         </node>
         <node node_rule_ref="node" id="node_id_2">
           <position x="0" y="1"/>
-          <link_to node_id_ref="node_id_destination" total_progress="9">
-            <person_progress_property initial="1"/>
-            <people>
-              <person person_id_ref="person_id" accumulated_progress="1"/>
-            </people>
-          </link_to>
+          <links>
+            <link_to node_id_ref="node_id_destination" total_progress="9">
+              <person_progress_property initial="1"/>
+              <people>
+                <person person_id_ref="person_id" accumulated_progress="1"/>
+              </people>
+            </link_to>
+          </links>
           <people/>
         </node>
         <node node_rule_ref="node" id="node_id_destination">
