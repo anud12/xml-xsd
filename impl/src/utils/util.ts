@@ -129,9 +129,9 @@ export class JsonUtil {
   }
 
   name = {
-    calculateNameFromRefString: memoizeFunction((name: string) => {
+    calculateNameFromRefString: (name: string) => {
       return calculateNameFromRefString(this, name);
-    }),
+    },
 
     calculateNameFromChildren: (element: group__name_token) => {
       return calculateNameFromChildren(this, element);

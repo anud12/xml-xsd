@@ -28,6 +28,7 @@ const createNewPerson = (jsonUtil: JsonUtil, selectPerson: SelectPersonQueryType
   const person = people.appendChild("person", undefined, {
     id: jsonUtil.getNextId()
   });
+  console.log(`createNewPerson name ${name}`);
   if (name) {
     person.attributeMap.name = name;
   }
