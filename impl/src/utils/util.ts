@@ -28,17 +28,7 @@ import {MutationResult} from "../middleware/_type";
 import {findPersonLocation, FindPersonResult} from "./locationGraph/findPerson";
 import {isSelectionApplicableTo} from "./person/isSelectionApplicableTo";
 
-export const memoizeFunction = <T>(func: T): T => {
-  let value;
-  return new Proxy(func as any, {
-    apply(target: (func) => (func) => any, thisArg: any, argArray: any[]): any {
-      if (!value) {
-        value = target.apply(thisArg, argArray);
-      }
-      return value;
-    }
-  }) as any
-}
+
 
 export const utils = {
   markov: markovNext,
@@ -189,9 +179,9 @@ export class JsonUtil {
     },
     getProperty: (personQueryType: PersonQueryType, key) => getPersonProperty(this, personQueryType, key),
     setProperty: (personQueryType: PersonQueryType, key, value: string) => setProperty(this, personQueryType, key, value),
-    getById: memoizeFunction((id: string): PersonQueryType => {
+    getById:(id: string): PersonQueryType => {
       return getById(this.json, id)
-    }),
+    },
     classifyPerson: (personQueryType: PersonQueryType) => {
       return classifyPerson(this, personQueryType);
     },
