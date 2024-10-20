@@ -1,7 +1,6 @@
 import {markovNext} from "./markovNext";
 import {
   JsonSchema,
-  NodeGraphQueryType,
   PropertyMutationQueryType,
   SelectNodeGraphQueryType,
   SelectPersonQueryType,
@@ -18,7 +17,7 @@ import {selectPerson} from "./person/selectPerson";
 import {applyPropertyMutation, oldApplyPropertyMutation} from "./person/applyPropertyMutation";
 import {group__name_token, group__operation__and, type__math_operations} from "../world_step.schema";
 import {createLocationGraph} from "./locationGraph/createLocationGraph";
-import {createGraphNode, LocationGraphQueryType} from "./locationGraph/createGraphNode";
+import {createGraphNode, LocationGraphNodeQueryType, LocationGraphQueryType} from "./locationGraph/createGraphNode";
 import {createAdjacent} from "./locationGraph/createAdjacent";
 import {createPerson} from "./person/createPerson";
 import {selectNodeGraph} from "./locationGraph/selectNodeGraph";
@@ -158,10 +157,10 @@ export class JsonUtil {
     selectLinkTo: (selectLinkToQueryType: SelectLinkToQueryType) => {
       return selectLinkTo(this, selectLinkToQueryType)
     },
-    shortestPathsInGraph: (locationGraph: LocationGraphQueryType, startNode: NodeGraphQueryType, destinationNode: NodeGraphQueryType, numberOfPaths: number) => {
+    shortestPathsInGraph: (locationGraph: LocationGraphQueryType, startNode: LocationGraphNodeQueryType, destinationNode: LocationGraphNodeQueryType, numberOfPaths: number) => {
       return shortestPathsInGraph(this, locationGraph, startNode, destinationNode, numberOfPaths)
     },
-    shortestPathsInGraphExcludeStart: (locationGraph: LocationGraphQueryType, startNode: NodeGraphQueryType, destinationNode: NodeGraphQueryType, numberOfPaths: number) => {
+    shortestPathsInGraphExcludeStart: (locationGraph: LocationGraphQueryType, startNode: LocationGraphNodeQueryType, destinationNode: LocationGraphNodeQueryType, numberOfPaths: number) => {
       return shortestPathsInGraphExcludeStart(this, locationGraph, startNode, destinationNode, numberOfPaths)
     },
     removePerson: (personIdRef: string) => {

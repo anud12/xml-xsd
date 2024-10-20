@@ -60,7 +60,7 @@ const filterLinkGroupElementsAngle = (locationGraph: LocationGraphQueryType, ori
       }
       const allowedRuleList = linkGroupList.flatMap(element => element.queryAllOptional("to_option"))
         .flatMap(element => element.attributeMap.node_rule_ref);
-      const adjacentNodeList = originNode.queryAllOptional("link_to")
+      const adjacentNodeList = originNode.queryAllOptional("links").flatMap(linksElement => linksElement.queryAllOptional("link_to"))
         .map(linkToElement => nodeMap.get(linkToElement.attributeMap.node_id_ref))
         .filter(linkToElement => {
           return allowedRuleList?.includes(linkToElement?.attributeMap.node_rule_ref);
@@ -107,7 +107,7 @@ const filterLinkGroupElementsDistance = (locationGraph: LocationGraphQueryType, 
 
       const allowedRuleList = linkGroupList.flatMap(element => element.queryAllOptional("to_option"))
         .flatMap(element => element.attributeMap.node_rule_ref);
-      const adjacentNodeList = originNode.queryAllOptional("link_to")
+      const adjacentNodeList = originNode.queryAllOptional("links").flatMap(linksElement => linksElement.queryAllOptional("link_to"))
         .map(linkToElement => nodeMap.get(linkToElement.attributeMap.node_id_ref))
         .filter(linkToElement => {
           return allowedRuleList?.includes(linkToElement?.attributeMap.node_rule_ref);

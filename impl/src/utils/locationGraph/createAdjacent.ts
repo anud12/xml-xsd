@@ -16,7 +16,7 @@ export type LinkGroupRuleQueryType = JsonSchema["children"]["rule_group"]["child
 export type LinkGroupQueryType = JsonSchema["children"]["rule_group"]["children"]["location_graph_rule"]["children"]["node_rule"]["children"]["link_group_list"]["children"]["link_group"];
 export type ToOptionQueryType = JsonSchema["children"]["rule_group"]["children"]["location_graph_rule"]["children"]["node_rule"]["children"]["link_group_list"]["children"]["link_group"]["children"]["to_option"];
 export type NodeQueryType = LocationGraphQueryType["children"]["node"];
-type LinkQueryType = LocationGraphQueryType["children"]["node"]["children"]["link_to"];
+type LinkQueryType = LocationGraphQueryType["children"]["node"]["children"]["links"]["children"]["link_to"];
 
 
 const getLinkRules = (readJson: JsonUtil, nodeRule: NodeRuleQueryType): LinkGroupRuleQueryType[] => {
@@ -41,7 +41,7 @@ const getAdjacentNodes = (jsonUtil: JsonUtil, locationGraph: LocationGraphQueryT
     const allNodes = locationGraph.queryAllOptional("node")
       .filter(node => !excludeNodes.find(element => element.attributeMap.id === node.attributeMap.id));
 
-    const linkedNodes = originNode.queryAllOptional("link_to")
+    const linkedNodes = originNode.queryAllOptional("links").flatMap(linksElement => linksElement.queryAllOptional("link_to"))
       .map(linkElement => allNodes.find(value => value.attributeMap.id === linkElement.attributeMap.node_id_ref))
       .filter(e => e);
 
@@ -139,7 +139,7 @@ const createLinkTo = (jsonUtil: JsonUtil, toOptionElement: ToOptionQueryType, no
     console.log("", nodeGraphElement.attributeMap.id, "and", targetNodeGraphElement.attributeMap.id, "Distance", distance, "ratio", ratio)
 
     return async () => {
-      const linkToElement = nodeGraphElement.appendChild("link_to", undefined, {
+      const linkToElement = nodeGraphElement.queryOrAppend("links").appendChild("link_to", undefined, {
         node_id_ref: targetNodeGraphElement.attributeMap.id,
         total_progress: String(Math.trunc(distance * Number(ratio))),
       });

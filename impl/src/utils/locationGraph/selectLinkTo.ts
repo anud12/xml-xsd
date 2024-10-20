@@ -1,8 +1,8 @@
 import {JsonUtil} from "../util";
-import {JsonSchema, NodeGraphQueryType, SelectNodeGraphQueryType} from "../JsonSchema";
+import {JsonSchema} from "../JsonSchema";
 import {mergeError} from "../../mergeError";
 
-export type LinkToQueryType = JsonSchema["children"]["data"]["children"]["location"]["children"]["location_graph"]["children"]["node"]["children"]["link_to"];
+export type LinkToQueryType = JsonSchema["children"]["data"]["children"]["location"]["children"]["location_graph"]["children"]["node"]["children"]["links"]["children"]["link_to"];
 export type SelectLinkToQueryType = JsonSchema["children"]["actions"]["children"]["person.teleport"]["children"]["link_to"]["children"]["selection"];
 
 export const selectLinkTo = (jsonUtil: JsonUtil, selectLinkToQueryType?: SelectLinkToQueryType): Array<LinkToQueryType> => {
@@ -14,14 +14,14 @@ export const selectLinkTo = (jsonUtil: JsonUtil, selectLinkToQueryType?: SelectL
     const destinationNode = jsonUtil.locationGraph.selectNodeGraph(selectLinkToQueryType.queryOptional("destination__node_graph__selection"));
 
     if (originNode.length > 0 && destinationNode.length === 0) {
-      return originNode.flatMap(nodeGraph => nodeGraph.queryAllOptional("link_to"));
+      return originNode.flatMap(nodeGraph => nodeGraph.queryAllOptional("links").flatMap(linksElement => linksElement.queryAllOptional("link_to")));
     }
     if (destinationNode.length > 0 && originNode.length === 0) {
-      return destinationNode.flatMap(nodeGraph => nodeGraph.queryAllOptional("link_to"));
+      return destinationNode.flatMap(nodeGraph => nodeGraph.queryAllOptional("links").flatMap(linksElement => linksElement.queryAllOptional("link_to")));
     }
     const destinationNodeIds = destinationNode.map(e => e?.attributeMap.id);
 
-    const result = originNode.flatMap(nodeGraph => nodeGraph.queryAllOptional("link_to"))
+    const result = originNode.flatMap(nodeGraph => nodeGraph.queryAllOptional("links").flatMap(linksElement => linksElement.queryAllOptional("link_to")))
       .filter(linkTo => destinationNodeIds.includes(linkTo?.attributeMap.node_id_ref));
     return result;
   } catch (e) {

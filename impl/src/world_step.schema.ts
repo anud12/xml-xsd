@@ -219,11 +219,13 @@ export type world_step = JsonQueryType<{}, {
           "classifications": JsonQueryType<{}, {
             "classification": JsonQueryType<{"location_classification_rule_ref": string;}> & JsonQueryType<{}, {}>;
           }> & JsonQueryType<{}, {}>;
-          "link_to": JsonQueryType<{"node_id_ref": string;  "total_progress": string;}, {
-            "people": JsonQueryType<{}, {
-              "person": JsonQueryType<{"person_id_ref": string;  "accumulated_progress": string;}> & JsonQueryType<{}, {}>;
+          "links": JsonQueryType<{}, {
+            "link_to": JsonQueryType<{"node_id_ref": string;  "total_progress": string;}, {
+              "people": JsonQueryType<{}, {
+                "person": JsonQueryType<{"person_id_ref": string;  "accumulated_progress": string;}> & JsonQueryType<{}, {}>;
+              }> & JsonQueryType<{}, {}>;
+              "person_progress_property": type__math_operations & JsonQueryType<{}, {}>;
             }> & JsonQueryType<{}, {}>;
-            "person_progress_property": type__math_operations & JsonQueryType<{}, {}>;
           }> & JsonQueryType<{}, {}>;
           "people": JsonQueryType<{}, {
             "person": JsonQueryType<{"person_id_ref": string;}> & JsonQueryType<{}, {}>;

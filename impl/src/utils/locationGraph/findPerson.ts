@@ -27,7 +27,9 @@ export const findPersonLocation = (readJson: JsonUtil, personIdRef: string): Arr
                     linkTo: undefined,
                   } satisfies FindPersonResult];
         }
-        const linkToPerson = nodeElement.queryAllOptional("link_to").find(linkToElement => {
+        const linkToPerson = nodeElement.queryAllOptional("links")
+          .flatMap(linksElement => linksElement.queryAllOptional("link_to"))
+          .find(linkToElement => {
           return linkToElement.queryAllOptional("people")
             .flatMap(peopleElement => peopleElement.queryAllOptional("person"))
             .find(personElement => personElement.attributeMap.person_id_ref === personIdRef)

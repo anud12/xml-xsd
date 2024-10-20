@@ -1,6 +1,5 @@
 import {JsonUtil} from "../util";
-import {LocationGraphQueryType} from "./createGraphNode";
-import {NodeGraphQueryType} from "../JsonSchema";
+import {LocationGraphNodeQueryType, LocationGraphQueryType} from "./createGraphNode";
 import {LinkToQueryType} from "./selectLinkTo";
 
 
@@ -25,18 +24,18 @@ const insertValueInPlaceToSortedArray = <T>(array: T[], value: T, compare: (firs
 }
 
 
-const getPathsToDestinationOrdered = (nodeMapById: Map<string, NodeGraphQueryType>, startNode: NodeGraphQueryType, destinationNode: NodeGraphQueryType, numberOfPaths: number) => {
+const getPathsToDestinationOrdered = (nodeMapById: Map<string, LocationGraphNodeQueryType>, startNode: LocationGraphNodeQueryType, destinationNode: LocationGraphNodeQueryType, numberOfPaths: number) => {
 
   if (numberOfPaths <= 0) {
     return [];
   }
 
-  const queue: Array<{ path: Array<NodeGraphQueryType>, foundPaths: number, totalCost: number }> = [{
+  const queue: Array<{ path: Array<LocationGraphNodeQueryType>, foundPaths: number, totalCost: number }> = [{
     path: [startNode],
     foundPaths: 0,
     totalCost: 0
   }];
-  const resultList: Array<Array<NodeGraphQueryType>> = [];
+  const resultList: Array<Array<LocationGraphNodeQueryType>> = [];
 
   while (queue.length > 0 && resultList.length < numberOfPaths) {
     const {path, foundPaths, totalCost} = queue.shift();
@@ -51,9 +50,9 @@ const getPathsToDestinationOrdered = (nodeMapById: Map<string, NodeGraphQueryTyp
 
 
     const adjacentNodesAndLinks: Array<{
-      node: NodeGraphQueryType,
+      node: LocationGraphNodeQueryType,
       link: LinkToQueryType
-    }> = currentNode.queryAllOptional("link_to")
+    }> = currentNode.queryAllOptional("links").flatMap(linksElement => linksElement.queryAllOptional("link_to"))
       .reduce((acc, link) => {
         const entry = {
           node: nodeMapById.get(link.attributeMap.node_id_ref),
@@ -62,7 +61,7 @@ const getPathsToDestinationOrdered = (nodeMapById: Map<string, NodeGraphQueryTyp
         return insertValueToSortedArray(acc, entry, (first, second) => {
           return Number(first.link.attributeMap.total_progress) < Number(second.link.attributeMap.total_progress);
         });
-      }, [] as Array<{ node: NodeGraphQueryType, link: LinkToQueryType }>)
+      }, [] as Array<{ node: LocationGraphNodeQueryType, link: LinkToQueryType }>)
 
     adjacentNodesAndLinks.forEach(nodeAndLinks => {
       if (resultList.length < numberOfPaths) {
@@ -82,7 +81,7 @@ const getPathsToDestinationOrdered = (nodeMapById: Map<string, NodeGraphQueryTyp
 }
 
 
-export const shortestPathsInGraph = (readJson: JsonUtil, locationGraph: LocationGraphQueryType, startNode: NodeGraphQueryType, destinationNode: NodeGraphQueryType, numberOfPaths: number): Array<Array<NodeGraphQueryType>> => {
+export const shortestPathsInGraph = (readJson: JsonUtil, locationGraph: LocationGraphQueryType, startNode: LocationGraphNodeQueryType, destinationNode: LocationGraphNodeQueryType, numberOfPaths: number): Array<Array<LocationGraphNodeQueryType>> => {
   const nodes = locationGraph.queryAll("node");
 
   const startNodeExists = nodes.find(e => e.attributeMap.id === startNode.attributeMap.id);
@@ -101,7 +100,7 @@ export const shortestPathsInGraph = (readJson: JsonUtil, locationGraph: Location
   return paths.slice(0, numberOfPaths);
 }
 
-export const shortestPathsInGraphExcludeStart = (readJson: JsonUtil, locationGraph: LocationGraphQueryType, startNode: NodeGraphQueryType, destinationNode: NodeGraphQueryType, numberOfPaths: number): Array<Array<NodeGraphQueryType>> => {
+export const shortestPathsInGraphExcludeStart = (readJson: JsonUtil, locationGraph: LocationGraphQueryType, startNode: LocationGraphNodeQueryType, destinationNode: LocationGraphNodeQueryType, numberOfPaths: number): Array<Array<LocationGraphNodeQueryType>> => {
   return shortestPathsInGraph(readJson, locationGraph, startNode, destinationNode, numberOfPaths).map(list => {
     list.shift();
     return list;

@@ -35,43 +35,51 @@
         <rule location_graph_rule_ref="location_graph_rule_id"/>
         <node node_rule_ref="node" id="A">
           <position x="0" y="0"/>
-          <link_to node_id_ref="B" total_progress="0"/>
-          <link_to node_id_ref="0.0" total_progress="100">
-            <person_progress_property initial="2">
-              <and do="add" value="1">
-                <and do="divide" value="1"/>
-              </and>
-            </person_progress_property>
-          </link_to>
+          <links>
+            <link_to node_id_ref="B" total_progress="0"/>
+            <link_to node_id_ref="0.0" total_progress="100">
+              <person_progress_property initial="2">
+                <and do="add" value="1">
+                  <and do="divide" value="1"/>
+                </and>
+              </person_progress_property>
+            </link_to>
+          </links>
         </node>
         <node node_rule_ref="node" id="B">
           <position x="100" y="0"/>
-          <link_to node_id_ref="C" total_progress="0"/>
-          <link_to node_id_ref="A" total_progress="0"/>
+          <links>
+            <link_to node_id_ref="C" total_progress="0"/>
+            <link_to node_id_ref="A" total_progress="0"/>
+          </links>
         </node>
         <node node_rule_ref="node" id="C">
           <position x="100" y="100"/>
-          <link_to node_id_ref="D" total_progress="0"/>
-          <link_to node_id_ref="0.0" total_progress="100">
-            <person_progress_property initial="2">
-              <and do="add" value="1">
-                <and do="divide" value="1"/>
-              </and>
-            </person_progress_property>
-          </link_to>
+          <links>
+            <link_to node_id_ref="D" total_progress="0"/>
+            <link_to node_id_ref="0.0" total_progress="100">
+              <person_progress_property initial="2">
+                <and do="add" value="1">
+                  <and do="divide" value="1"/>
+                </and>
+              </person_progress_property>
+            </link_to>
+          </links>
         </node>
         <node node_rule_ref="node" id="D">
           <position x="0" y="100"/>
         </node>
         <node node_rule_ref="node" id="0.0">
           <position x="100" y="0"/>
-          <link_to node_id_ref="A" total_progress="100">
-            <person_progress_property initial="2">
-              <and do="add" value="1">
-                <and do="divide" value="1"/>
-              </and>
-            </person_progress_property>
-          </link_to>
+          <links>
+            <link_to node_id_ref="A" total_progress="100">
+              <person_progress_property initial="2">
+                <and do="add" value="1">
+                  <and do="divide" value="1"/>
+                </and>
+              </person_progress_property>
+            </link_to>
+          </links>
         </node>
       </location_graph>
     </location>

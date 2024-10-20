@@ -180,7 +180,7 @@ public partial class LocationGraphScene : Control
 		IEnumerable<Node> nodeList = (worldStep.data.location?.location_graph ?? new List<world_step__data__location__location_graph>())
 		.Where(location_graph => location_graph.id == this.locationGraphId)
 		.SelectMany(location_graph => location_graph.node)
-		.SelectMany(startNodeElement => startNodeElement.link_to.SelectMany(linkTo =>
+		.SelectMany(startNodeElement => startNodeElement.links.link_to.SelectMany(linkTo =>
 			{
 				var endNode = nodesById[linkTo.node_id_ref];
 				var startNode = nodesById[startNodeElement.id];
@@ -221,7 +221,7 @@ public partial class LocationGraphScene : Control
 		return nodeList;
 	}
 
-	private void addSteps(Line2D line2D, world_step__data__location__location_graph__node__link_to linkTo)
+	private void addSteps(Line2D line2D, world_step__data__location__location_graph__node__links__link_to linkTo)
 	{
 		var totalProgress = linkTo.total_progress - 1;
 
@@ -248,7 +248,7 @@ public partial class LocationGraphScene : Control
 		}
 	}
 
-	private void addPersons(Line2D line2D, world_step__data__location__location_graph__node__link_to linkTo, world_step world_Step)
+	private void addPersons(Line2D line2D, world_step__data__location__location_graph__node__links__link_to linkTo, world_step world_Step)
 	{
 		var totalProgress = (linkTo.total_progress - 1) * 2;
 
