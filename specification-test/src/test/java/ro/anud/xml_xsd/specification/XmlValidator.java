@@ -14,7 +14,10 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 import java.util.regex.Pattern;
+
+import static java.util.Optional.empty;
 
 public class XmlValidator {
     private static boolean validateXMLSchema(String xsdPath, String xmlString) throws SAXException, IOException {
@@ -26,8 +29,12 @@ public class XmlValidator {
         return true;
     }
 
-    public static DynamicTest validateXmlString(Class<?> runningTestClass, String displayName, String xmlFile) {
-        return DynamicTest.dynamicTest(displayName, () -> {
+    public static Optional<DynamicTest> validateXmlString(Class<?> runningTestClass, String displayName, Optional<String> xmlFileOptional) {
+        if(xmlFileOptional.isEmpty()) {
+            return empty();
+        }
+        var xmlFile = xmlFileOptional.get();
+        var test = DynamicTest.dynamicTest(displayName, () -> {
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             var document = documentBuilderFactory.newDocumentBuilder().parse(new ByteArrayInputStream(xmlFile.getBytes(StandardCharsets.UTF_8)));
             var schemaPathString = document.getDocumentElement().getAttribute("xsi:noNamespaceSchemaLocation");
@@ -37,5 +44,7 @@ public class XmlValidator {
             Assertions.assertThat(validateXMLSchema(rootRelativePathString, xmlFile))
                     .isEqualTo(true);
         });
+
+        return Optional.of(test);
     }
 }

@@ -12,10 +12,13 @@ import javax.xml.transform.stream.StreamSource;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Optional;
 
 public class TestBase {
 
@@ -54,21 +57,39 @@ public class TestBase {
             return lfInput;
         }
     }
-    static public String getInputXmlRelativeToClass(Class<?> clazz) {
+    static public Optional<String> getInputXmlRelativeToClass(Class<?> clazz) {
         try {
             String relativePath = Paths.get(clazz.getResource("").toURI()).toString();
-            return new String(Files.readAllBytes(Path.of(relativePath, "/1_input.xml")));
+            return Optional.of(new String(Files.readAllBytes(Path.of(relativePath, "/1_input.xml"))));
         } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    static public Optional<String> getOutputXmlRelativeToClass(Class<?> clazz) {
+        try {
+            String relativeDirectoryPathString = Paths.get(clazz.getResource("").toURI()).toString();
+            Path relativePath = Path.of(relativeDirectoryPathString, "/2_expected.xml");
+
+            return Optional.of(new String(Files.readAllBytes(relativePath)));
+        } catch (Exception e) {
+            if(e instanceof NoSuchFileException) {
+                return Optional.empty();
+            }
             throw new RuntimeException(e);
         }
     }
 
     static public Collection<DynamicTest> runTestRelativeToClass(Class<?> runningTestClass, RequestTest.Endpoints endpoints, int expectedCode) {
 
-        return Arrays.asList(
-                XmlValidator.validateXmlString(runningTestClass, "Validating input xml",getInputXmlRelativeToClass(runningTestClass)),
-                RequestTest.validateExecution(runningTestClass,endpoints,expectedCode)
-        );
+        var testList = new ArrayList<DynamicTest>();
+        XmlValidator.validateXmlString(runningTestClass, "Validating input xml",getInputXmlRelativeToClass(runningTestClass))
+                .ifPresent(testList::add);
+        testList.add(RequestTest.validateExecution(runningTestClass,endpoints,expectedCode));
+        XmlValidator.validateXmlString(runningTestClass, "Validating expected xml",getOutputXmlRelativeToClass(runningTestClass))
+                .ifPresent(testList::add);
+        return testList;
     }
 
     static public Collection<DynamicTest> runTestRelativeToClass(Class<?> clazz) {
