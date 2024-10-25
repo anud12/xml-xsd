@@ -1,8 +1,9 @@
 import {DependantType} from "../typeToString";
 import {template} from "../../../template/template";
 import {normalizeName} from "./normalizeName";
-import {getTypeName, primitives} from "./geTypeName";
+import {getTypeName} from "./geTypeName";
 import {Type} from "../../../type";
+import {getDependantTypeChildNamespace} from "./getDependantTypeChildNamespace";
 
 export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType): { dependantTypes:DependantType[], templateString: string } | undefined => {
 
@@ -17,8 +18,15 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
     return [[key, value] as [string, Type]]
   })
     .map(([key, value]) => {
-      let type = getTypeName(value, key, dependantType.name);
+      let type = getTypeName(value, key, dependantType);
       type = normalizeName(type);
+
+      const fullPathTypeString = value.isSingle
+        ? `${getDependantTypeChildNamespace(dependantType)}.${type}`
+        : `List<${getDependantTypeChildNamespace(dependantType)}.${type}>`;
+      const fullPathNullableTypeString = value.isNullable
+        ? `${fullPathTypeString}?`
+        : fullPathTypeString;
 
       const typeString = value.isSingle
         ? `${type}`
@@ -27,31 +35,26 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
         ? `${typeString}?`
         : typeString;
 
-      const typeInitialization = value.isSingle
-        ? value.isNullable
-          ? `null`
-          : `new ${type}()`
-        : `new List<${type}>()`;
-
       if (value.metaType === "object") {
         dependantTypeList.push({
           type: "element",
           value: value,
           name: type,
+          parentType: dependantType,
         })
         return template()`
-              public ${nullableTypeString} Get_${normalizeName(key)}()
+              public ${fullPathNullableTypeString} Get_${normalizeName(key)}()
               {
                 return this.${normalizeName(key)};
               }
-              public ${typeString} GetOrInsertDefault_${normalizeName(key)}()
+              public ${fullPathTypeString} GetOrInsertDefault_${normalizeName(key)}()
               {
                 if(this.${normalizeName(key)} == null) {
-                  this.${normalizeName(key)} = new ${typeString}();
+                  this.${normalizeName(key)} = new ${fullPathTypeString}();
                 }
                 return this.${normalizeName(key)};
               }
-              public void Set_${normalizeName(key)}(${nullableTypeString} value)
+              public void Set_${normalizeName(key)}(${fullPathNullableTypeString} value)
               {
                 this.${normalizeName(key)} = value;
               }
@@ -62,13 +65,14 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
           type: value.metaType,
           value: value,
           name: type,
+          parentType: dependantType,
         })
         return template()`
-              public ${nullableTypeString} Get_${normalizeName(key)}()
+              public ${fullPathNullableTypeString} Get_${normalizeName(key)}()
               {
                 return this.${normalizeName(key)};
               }
-              public void Set_${normalizeName(key)}(${nullableTypeString} value)
+              public void Set_${normalizeName(key)}(${fullPathNullableTypeString} value)
               {
                 this.${normalizeName(key)} = value;
               }

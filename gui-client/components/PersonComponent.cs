@@ -6,13 +6,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using XSD;
+using XSD.Nworld_step.Nactions;
+using XSD.Nworld_step.Nactions.Nfrom_person;
+using XSD.Nworld_step.Ndata.Npeople;
 
 public partial class PersonComponent : Control
 {
 	// Called when the node enters the scene tree for the first time.
 	public static PackedScene PackedScene = GD.Load<PackedScene>("res://components/PersonComponent.tscn");
-	private DataStore<world_step> worldStep = StoreWorld_Step.instance;
-	private DataStore<world_step__data__people__person> person = new DataStore<world_step__data__people__person>();
+	private DataStore<world_step> worldStep = StoreWorld_Step.instance;	private DataStore<person> person = new DataStore<person>();
 
 	private List<Action> unsubscribeList = new List<Action>();
 	public void initializeFromId(string? personId)
@@ -170,11 +172,11 @@ public partial class PersonComponent : Control
 			return;
 		}
 
-		worldStep.GetOrInsertDefault_actions().GetOrInsertDefault_from_person().Add(new world_step__actions__from_person
+		worldStep.GetOrInsertDefault_actions().GetOrInsertDefault_from_person().Add(new from_person
 		{
 			person_id_ref = mainPersonId,
 			from_person_rule_ref = actionId,
-			on_person = new world_step__actions__from_person__on_person
+			on_person = new on_person
 			{
 				person_id_ref = targetPersonId,
 			}

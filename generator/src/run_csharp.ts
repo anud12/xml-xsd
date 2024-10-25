@@ -1,31 +1,27 @@
-
 import {typeDeclarationToString} from "./generator/csharp/typeToString";
 import fs from "fs";
 import {generateTypes, parseXsdSchema} from "./src";
-import {template} from "./template/template";
 
-main("../world_step.xsd", "../gui-client/schema.cs");
+main("../world_step.xsd", "../gui-client/world_step/");
+
 // Main function to read XSD file and output TypeScript types
 export function main(path: string, output: string = "./type.cs") {
   const schema = parseXsdSchema(path);
   const types = generateTypes(schema);
-  const typeString = typeDeclarationToString(types);
+  const directoryMetadata = typeDeclarationToString(types);
 
-  let result = template()`
-  using System.Collections.Generic;
-  using System.Xml;
-  using System.Linq;
-  using Godot;
-  namespace XSD {
-    ${typeString}
-  }
-  `
 
-  console.log(typeString);
-  if (output) {
-    fs.writeFileSync(output, result);
-    fs.writeFileSync(`${output}.json`, JSON.stringify(types, null, 2));
-  }
+  directoryMetadata.getAllFilesRecursively().forEach(file => {
+
+    let path = directoryMetadata.getStringPathTo(file.parentDirectory) ?? file.name.split(".")[0];
+    console.log("writing file",file.name, "to", directoryMetadata.getStringPathTo(file.parentDirectory) ?? "");
+    fs.mkdirSync(`${output}/${path}`, {recursive:true})
+    if (output) {
+      fs.writeFileSync(`${output}/${path}/${file.name}`, file.data(), {});
+      fs.writeFileSync(`${output}/_types.json`, JSON.stringify(types, null, 2));
+    }
+
+  })
 
   return types;
 }

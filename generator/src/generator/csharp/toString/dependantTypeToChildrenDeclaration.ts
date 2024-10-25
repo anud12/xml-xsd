@@ -3,6 +3,7 @@ import {normalizeName} from "./normalizeName";
 import {getTypeName} from "./geTypeName";
 import {Type} from "../../../type";
 import {template} from "../../../template/template";
+import {getDependantTypeChildNamespace} from "./getDependantTypeChildNamespace";
 
 export const dependantTypeToChildrenDeclaration = (dependantType: DependantType): { dependantTypes:DependantType[], templateString: string } | undefined => {
 
@@ -17,8 +18,15 @@ export const dependantTypeToChildrenDeclaration = (dependantType: DependantType)
     return [[key, value] as [string, Type]]
   })
     .map(([key, value]) => {
-      let type = getTypeName(value, key, dependantType.name);
+      let type = getTypeName(value, key, dependantType);
       type = normalizeName(type);
+
+      const fullPathTypeString = value.isSingle
+        ? `${getDependantTypeChildNamespace(dependantType)}.${type}`
+        : `List<${getDependantTypeChildNamespace(dependantType)}.${type}>`;
+      const nullableFullPathString = value.isNullable
+        ? `${fullPathTypeString}?`
+        : fullPathTypeString;
 
       const typeString = value.isSingle
         ? `${type}`
@@ -26,6 +34,12 @@ export const dependantTypeToChildrenDeclaration = (dependantType: DependantType)
       const nullableTypeString = value.isNullable
         ? `${typeString}?`
         : typeString;
+
+      const fullPathTypeInitialization = value.isSingle
+        ? value.isNullable
+          ? `null`
+          : `new ${getDependantTypeChildNamespace(dependantType)}.${type}()`
+        : `new List<${getDependantTypeChildNamespace(dependantType)}.${type}>()`;
 
       const typeInitialization = value.isSingle
         ? value.isNullable
@@ -38,9 +52,10 @@ export const dependantTypeToChildrenDeclaration = (dependantType: DependantType)
           type: "element",
           value: value,
           name: type,
+          parentType: dependantType,
         })
         return template()`
-              public ${nullableTypeString} ${normalizeName(key)} = ${typeInitialization};
+              public ${nullableFullPathString} ${normalizeName(key)} = ${fullPathTypeInitialization};
               `
       }
       if (value.metaType === "union" || value.metaType === "composition") {
@@ -48,9 +63,10 @@ export const dependantTypeToChildrenDeclaration = (dependantType: DependantType)
           type: value.metaType,
           value: value,
           name: type,
+          parentType: dependantType,
         })
         return template()`
-              public ${nullableTypeString} ${normalizeName(key)} = ${typeInitialization};
+              public ${nullableFullPathString} ${normalizeName(key)} = ${fullPathTypeInitialization};
               `
       }
       if (value.metaType === "reference") {
@@ -58,6 +74,7 @@ export const dependantTypeToChildrenDeclaration = (dependantType: DependantType)
           type: "reference",
           value: value,
           name: type,
+          parentType: dependantType,
         })
         return template()`
               public ${nullableTypeString} ${normalizeName(key)} = ${typeInitialization};

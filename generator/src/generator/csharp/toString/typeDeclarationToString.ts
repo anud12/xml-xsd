@@ -1,5 +1,5 @@
 import {template} from "../../../template/template";
-import {Type, TypeDeclaration} from "../../../type";
+import {Type} from "../../../type";
 import {DependantType, GetObjectBodyReturn} from "../typeToString";
 import {getTypeName, primitives} from "./geTypeName";
 import {normalizeName} from "./normalizeName";
@@ -11,6 +11,10 @@ import {dependantTypeToAttributeSerializationBody} from "./dependantTypeToAttrib
 import {dependantTypeToChildrenSerializationBody} from "./dependantTypeToChildrenSerializationBody";
 import {dependantTypeToAttributeDeserializationBody} from "./dependantTypeToAttributeDeserializationBody";
 import {dependantTypeToChildrenDeserializationBody} from "./dependantTypeToChildrenDeserializationBody";
+import {DirectoryMetadata} from "../../../memory_fs/directoryMetadata";
+import {dependantTypeGetFullQualifiedName} from "./dependantTypeGetFullQualifiedName";
+import {getDependantTypeNamespace} from "./getDependantTypeNamespace";
+import {getDependantTypeChildNamespace} from "./getDependantTypeChildNamespace";
 
 
 type ClassTemplateParts = {
@@ -24,7 +28,7 @@ type ClassTemplateParts = {
 }
 
 
-function typeDeclarationElementToClassString(dependantType: DependantType, extensions: DependantType[] = []): GetObjectBodyReturn {
+function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadata, dependantType: DependantType, extensions: DependantType[] = []): GetObjectBodyReturn {
   const dependantTypeList: DependantType[] = [];
 
 
@@ -78,21 +82,21 @@ function typeDeclarationElementToClassString(dependantType: DependantType, exten
         ${dependantTypeToAttributeDeserializationBody(dependantType)}
         
         ${extensions.map(extension => {
-          return template()`
+    return template()`
              // Deserialize arguments of ${extension.name}
              ${dependantTypeToAttributeDeserializationBody(extension)}
             `
-        })}
+  })}
         
         //Deserialize children
         ${dependantTypeToChildrenDeserializationBody(dependantType)}
         
         ${extensions.map(extension => {
-            return template()`
+    return template()`
                // Deserialize children of ${extension.name}
                ${dependantTypeToChildrenDeserializationBody(extension)}
               `
-        })}
+  })}
       }
       
       public RawNode SerializeIntoRawNode() 
@@ -101,21 +105,21 @@ function typeDeclarationElementToClassString(dependantType: DependantType, exten
         ${dependantTypeToAttributeSerializationBody(dependantType)}
         
         ${extensions.map(extension => {
-          return template()`
+    return template()`
              // Serialize arguments of ${extension.name}
              ${dependantTypeToAttributeSerializationBody(extension)}
             `
-        })}
+  })}
         
         //Serialize children
         ${dependantTypeToChildrenSerializationBody(dependantType)}
         
         ${extensions.map(extension => {
-          return template()`
+    return template()`
            // Serialize children of ${extension.name}
            ${dependantTypeToChildrenSerializationBody(extension)}
           `
-        })}
+  })}
         return rawNode;
       }
       
@@ -125,23 +129,23 @@ function typeDeclarationElementToClassString(dependantType: DependantType, exten
           var updatedRawNode = SerializeIntoRawNode();
           updatedRawNode.Serialize(element);
       }
-    ${dependantTypeToAttributeGetterSetter(dependantType)}
-    ${extensions.map(extension => dependantTypeToAttributeGetterSetter(extension)).join("\n")}
-    ${dependantTypeToChildrenGetterSetter(dependantType)?.templateString}
-    ${extensions.map(extension => dependantTypeToChildrenGetterSetter(extension)?.templateString).join("\n")}
-  }
+      ${dependantTypeToAttributeGetterSetter(dependantType)}
+      ${extensions.map(extension => dependantTypeToAttributeGetterSetter(extension)).join("\n")}
+      ${dependantTypeToChildrenGetterSetter(dependantType)?.templateString}
+      ${extensions.map(extension => dependantTypeToChildrenGetterSetter(extension)?.templateString).join("\n")}
+    }
   `
 
 
   return {
-    writtenClass: [dependantType.name],
+    writtenClass: [dependantTypeGetFullQualifiedName(dependantType)],
     dependantTypes: dependantTypeList,
     templateString: templateString
   }
 }
 
 
-function typeDeclarationElementToInterfaceString(writtenClasses: string[], dependantType: DependantType): GetObjectBodyReturn {
+function typeDeclarationElementToInterfaceString(directoryMetadata: DirectoryMetadata, writtenClasses: string[], dependantType: DependantType): GetObjectBodyReturn {
   const dependantTypeList: DependantType[] = [];
   const interfaceName = `I${normalizeName(dependantType.name)}`;
 
@@ -158,7 +162,7 @@ function typeDeclarationElementToInterfaceString(writtenClasses: string[], depen
       ${dependantType.value.attributes?.metaType === "object" && template()`
         //Attributes
         ${Object.entries(dependantType.value.attributes.value ?? {}).map(([key, value]) => {
-    const type = getTypeName(value, key, dependantType.name);
+    const type = getTypeName(value, key, dependantType);
     if (value.metaType === "primitive") {
       if (type !== primitives.int) {
 
@@ -188,7 +192,7 @@ function typeDeclarationElementToInterfaceString(writtenClasses: string[], depen
     return [[key, value] as [string, Type]]
   })
     .map(([key, value]) => {
-      let type = getTypeName(value, key, dependantType.name);
+      let type = getTypeName(value, key, dependantType);
       type = normalizeName(type);
 
       let typeString = value.isSingle
@@ -198,6 +202,10 @@ function typeDeclarationElementToInterfaceString(writtenClasses: string[], depen
         ? `${typeString}?`
         : typeString
 
+      const fullPathTypeString = value.isSingle
+        ? `${getDependantTypeChildNamespace(dependantType)}.${type}`
+        : `List<${getDependantTypeChildNamespace(dependantType)}.${type}>`;
+      
       if (value.metaType === "object") {
         dependantTypeList.push({
           type: "element",
@@ -205,8 +213,8 @@ function typeDeclarationElementToInterfaceString(writtenClasses: string[], depen
           name: type,
         })
         return template()`
-          public ${typeString} Get_${normalizeName(key)}();
-          public void Set_${normalizeName(key)}(${typeString} value);
+          public ${fullPathTypeString} Get_${normalizeName(key)}();
+          public void Set_${normalizeName(key)}(${fullPathTypeString} value);
           `
       }
       if (value.metaType === "union" || value.metaType === "composition") {
@@ -216,8 +224,8 @@ function typeDeclarationElementToInterfaceString(writtenClasses: string[], depen
           name: type,
         })
         return template()`
-        public ${typeString} Get_${normalizeName(key)}();
-        public void Set_${normalizeName(key)}(${typeString} value);
+        public ${fullPathTypeString} Get_${normalizeName(key)}();
+        public void Set_${normalizeName(key)}(${fullPathTypeString} value);
         `
       }
       if (value.metaType === "reference") {
@@ -250,24 +258,58 @@ function typeDeclarationElementToInterfaceString(writtenClasses: string[], depen
   }
 }
 
-export function typeDeclarationElementToString(writtenClassesList: string[], dependantType: DependantType, extensions: DependantType[] = []): GetObjectBodyReturn {
+export function typeDeclarationElementToString(directoryMetadata: DirectoryMetadata, writtenClassesList: string[], dependantType: DependantType, extensions: DependantType[] = []): GetObjectBodyReturn {
+
+
+  let subNamespaces: string[] = [];
+  let parentType = dependantType.parentType;
+  while (parentType) {
+    subNamespaces.push(parentType.name)
+    parentType = parentType.parentType;
+  }
+  subNamespaces.reverse()
+
+  console.log("typeDeclarationElementToString", subNamespaces, dependantType.name)
 
   let localWrittenClassesList = [...writtenClassesList];
-  const classResult = typeDeclarationElementToClassString(dependantType, extensions);
+  const classResult = typeDeclarationElementToClassString(directoryMetadata, dependantType, extensions);
 
   const interfaceResult = extensions.map(extensinon => {
-    const result = typeDeclarationElementToInterfaceString(localWrittenClassesList, extensinon);
+    const result = typeDeclarationElementToInterfaceString(directoryMetadata, localWrittenClassesList, extensinon);
     localWrittenClassesList = [...localWrittenClassesList, ...result.writtenClass]
     return result;
   })
+
+  const templateString = template()`
+      using System.Collections.Generic;
+      using System.Xml;
+      using System.Linq;
+      using Godot;
+      using XSD;
+      
+      namespace ${getDependantTypeChildNamespace(dependantType)} {}
+      namespace XSD {
+        ${interfaceResult.map(e => e.templateString).filter(e => e).join("\n")}
+      }
+      namespace ${getDependantTypeNamespace(dependantType)} {
+        ${classResult.templateString}
+      }
+      `;
+
+  const directory = getDependantTypeChildNamespace(dependantType).split(".")
+    .filter(value => value !== "XSD")
+    .reduce((acc, value) => {
+      return acc.createOrGetDirectory(value.split("N")[1])
+    }, directoryMetadata);
+
+  directory.createFile(dependantType.name + ".cs", () => templateString)
+
   return {
-    writtenClass: [...classResult.writtenClass, ...interfaceResult.flatMap(e => e?.writtenClass)],
+    writtenClass: [
+      ...classResult.writtenClass,
+      ...interfaceResult.flatMap(e => e?.writtenClass)
+    ],
     dependantTypes: [...classResult.dependantTypes, ...interfaceResult.flatMap(e => e?.dependantTypes)],
-    templateString: template()`
-      ${interfaceResult.map(e => e.templateString).filter(e => e).join("\n")}
-
-      ${classResult.templateString}
-
-      `,
+    templateString: templateString
   }
 }

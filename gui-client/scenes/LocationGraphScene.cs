@@ -5,6 +5,13 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 using XSD;
+using XSD.Ntype__node_graph__selection;
+using XSD.Nworld_step.Nactions;
+using XSD.Nworld_step.Ndata.Nlocation;
+using XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph;
+using XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks;
+using link_to = XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.link_to;
+using location_graph = XSD.Nworld_step.Ndata.Nlocation.location_graph;
 
 public partial class LocationGraphScene : Control
 {
@@ -124,11 +131,11 @@ public partial class LocationGraphScene : Control
 		return (nodeById, nodeList);
 	}
 
-	private void addAdjacent(world_step__data__location__location_graph locationGraph, world_step__data__location__location_graph__node node, world_step worldStep)
+	private void addAdjacent(location_graph locationGraph, node node, world_step worldStep)
 	{
 		GD.Print("Adding adjacent to " + node.id);
 
-		var createAdjacent = new world_step__actions__location_graph__node__create_adjacent
+		var createAdjacent = new location_graph__node__create_adjacent
 		{
 			location_graph_id_ref = locationGraph.id,
 			node_id_ref = node.id,
@@ -137,14 +144,14 @@ public partial class LocationGraphScene : Control
 		LoadWorldStep.executeNextStep();
 	}
 
-	private void TeleportTo(world_step__data__location__location_graph locationGraph, world_step__data__location__location_graph__node node, world_step worldStep)
+	private void TeleportTo(location_graph locationGraph, node node, world_step worldStep)
 	{
 		GD.Print("Teleporting to " + node.id);
 
-		var teleport = new world_step__actions__person__teleport
+		var teleport = new person__teleport
 		{
 			person_id_ref = StoreSession.mainPersonId.data,
-			location_graph = new world_step__actions__person__teleport__location_graph
+			location_graph = new XSD.Nworld_step.Nactions.Nperson__teleport.location_graph
 			{
 				location_graph_id_ref = locationGraph.id,
 				node_id_ref = node.id,
@@ -154,18 +161,18 @@ public partial class LocationGraphScene : Control
 		worldStep.GetOrInsertDefault_actions().person__teleport = teleport;
 		LoadWorldStep.executeNextStep();
 	}
-	private void PathTo(world_step__data__location__location_graph locationGraph, world_step__data__location__location_graph__node node, world_step worldStep)
+	private void PathTo(location_graph locationGraph, node node, world_step worldStep)
 	{
 		GD.Print("Teleporting to " + node.id);
 
-		var action = new world_step__actions__person__move_to()
+		var action = new person__move_to()
 		{
 			person_id_ref = StoreSession.mainPersonId.data,
 		};
 
 		action.find_path_towards = new type__node_graph__selection
 		{
-			has__node_graph_id = new type__node_graph__selection__has__node_graph_id
+			has__node_graph_id = new has__node_graph_id
 			{
 				node_graph_id_ref = node.id
 			}
@@ -177,7 +184,7 @@ public partial class LocationGraphScene : Control
 	private IEnumerable<Node> loadLinks(world_step worldStep, Dictionary<string, Control> nodesById)
 	{
 		var personContainerNode = GetNode<Node>("%PersonContainer");
-		IEnumerable<Node> nodeList = (worldStep.data.location?.location_graph ?? new List<world_step__data__location__location_graph>())
+		IEnumerable<Node> nodeList = (worldStep.data.location?.location_graph ?? new List<location_graph>())
 		.Where(location_graph => location_graph.id == this.locationGraphId)
 		.SelectMany(location_graph => location_graph.node)
 		.SelectMany(startNodeElement => startNodeElement.links.link_to.SelectMany(linkTo =>
@@ -221,7 +228,7 @@ public partial class LocationGraphScene : Control
 		return nodeList;
 	}
 
-	private void addSteps(Line2D line2D, world_step__data__location__location_graph__node__links__link_to linkTo)
+	private void addSteps(Line2D line2D,  link_to linkTo)
 	{
 		var totalProgress = linkTo.total_progress - 1;
 
@@ -248,7 +255,7 @@ public partial class LocationGraphScene : Control
 		}
 	}
 
-	private void addPersons(Line2D line2D, world_step__data__location__location_graph__node__links__link_to linkTo, world_step world_Step)
+	private void addPersons(Line2D line2D, link_to linkTo, world_step world_Step)
 	{
 		var totalProgress = (linkTo.total_progress - 1) * 2;
 

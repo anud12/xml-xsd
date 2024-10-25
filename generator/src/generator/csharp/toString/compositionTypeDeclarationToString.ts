@@ -1,8 +1,9 @@
 import {Type, TypeDeclaration, TypeObject, TypeReference} from "../../../type";
 import {typeDeclarationElementToString} from "./typeDeclarationToString";
 import {DependantType, GetObjectBodyReturn} from "../typeToString";
+import {DirectoryMetadata} from "../../../memory_fs/directoryMetadata";
 
-export function compositionTypeDeclarationToString(typeDeclarationList:Array<TypeDeclaration>, writtenClassesList: string[], dependantType:DependantType):GetObjectBodyReturn {
+export function compositionTypeDeclarationToString(directoryMetadata: DirectoryMetadata, typeDeclarationList:Array<TypeDeclaration>, writtenClassesList: string[], dependantType:DependantType):GetObjectBodyReturn {
   if(dependantType.type === "composition") {
     if(dependantType.value.metaType  === "composition") {
 
@@ -59,15 +60,16 @@ export function compositionTypeDeclarationToString(typeDeclarationList:Array<Typ
         },
         value: value
       }
-      const result = typeDeclarationElementToString(writtenClassesList, {
+      const result = typeDeclarationElementToString(directoryMetadata, writtenClassesList, {
         type: "element",
         value: type,
-        name: dependantType.name
+        name: dependantType.name,
+        parentType: dependantType.parentType,
       }, extensions)
       return {
         writtenClass: result.writtenClass,
         dependantTypes: [...result.dependantTypes, ...extensions],
-        templateString: result.templateString
+        templateString: result.templateString,
       }
     }
 

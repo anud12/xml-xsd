@@ -1,0 +1,97 @@
+using System.Collections.Generic;
+using System.Xml;
+using System.Linq;
+using Godot;
+using XSD;
+
+namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nstarting_node {}
+namespace XSD {
+}
+namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup {
+  public class starting_node  {
+    public RawNode rawNode = new RawNode();
+    //Attributes
+    public System.String node_rule_ref;
+
+    //Children elements
+    public starting_node()
+    {
+    }
+
+    public starting_node(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public starting_node(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      // Godot.GD.Print("Deserializing starting_node");
+      //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("node_rule_ref"))
+      {
+        var attribute_node_rule_ref = rawNode.attributes["node_rule_ref"];
+        this.node_rule_ref = rawNode.attributes["node_rule_ref"];
+      }
+
+      //Deserialize children
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize arguments
+      if(this.node_rule_ref != null)
+      {
+        rawNode.attributes["node_rule_ref"] = this.node_rule_ref.ToString();
+      }
+
+      //Serialize children
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        // Godot.GD.Print("Serializing starting_node");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+    public System.String Get_node_rule_ref()
+    {
+      return this.node_rule_ref;
+    }
+    public void Set_node_rule_ref(System.String value)
+    {
+      this.node_rule_ref = value;
+    }
+  }
+}
+
+/*dependantType
+  {
+    "type": "element",
+    "value": {
+      "metaType": "object",
+      "value": {},
+      "isSingle": true,
+      "isNullable": false,
+      "attributes": {
+        "metaType": "object",
+        "value": {
+          "node_rule_ref": {
+            "metaType": "primitive",
+            "value": "xs:string",
+            "isNullable": false
+          }
+        },
+        "isNullable": false
+      }
+    },
+    "name": "starting_node"
+  }
+*/

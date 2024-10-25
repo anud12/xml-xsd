@@ -58,7 +58,7 @@ script = ExtResource("3_djd6i")
 
 [node name="Button" type="Button" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "Execute Step"
+text = "Next Step"
 script = ExtResource("4_6rmou")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer"]

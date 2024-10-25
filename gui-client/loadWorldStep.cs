@@ -8,6 +8,9 @@ using System.Xml.Serialization;
 using Godot;
 using GodotPlugins.Game;
 using XSD;
+using XSD.Nworld_step.Nactions;
+using XSD.Nworld_step.Ndata.Nlocation;
+using XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph;
 using Node = Godot.Node;
 
 public class LoadWorldStep
@@ -107,13 +110,11 @@ public class LoadWorldStep
 		})) ?? Array.Empty<Node>().AsEnumerable();
 	}
 
-	private void addAdjacent(world_step__data__location__location_graph locationGraph, world_step__data__location__location_graph__node node)
+	private void addAdjacent(location_graph locationGraph, node node)
 	{
-
-
 		GD.Print("Adding adjacent to " + node.id);
 
-		var createAdjacent = new world_step__actions__location_graph__node__create_adjacent
+		var createAdjacent = new location_graph__node__create_adjacent
 		{
 			location_graph_id_ref = locationGraph.id,
 			node_id_ref = node.id,

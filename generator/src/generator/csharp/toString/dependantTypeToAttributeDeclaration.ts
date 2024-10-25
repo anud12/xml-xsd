@@ -11,7 +11,7 @@ export const dependantTypeToAttributeDeclaration = (dependantType: DependantType
 
 
   return Object.entries(dependantType.value.attributes.value ?? {}).map(([key, value]) => {
-    let type = getTypeName(value, key, dependantType.name);
+    let type = getTypeName(value, key, dependantType);
 
     if (value.metaType === "primitive") {
       if (type !== primitives.int) {

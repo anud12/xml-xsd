@@ -9,5 +9,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="world_step\" />
   </ItemGroup>
 </Project>

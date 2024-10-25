@@ -8,7 +8,8 @@ export type DirectoryFileMetadata = {
   name: string,
   parentDirectory: DirectoryMetadata,
   data: () => string,
-  getStringPathToRoot: () => string
+  getStringPathToRoot: () => string,
+  getStringPathFromRoot: () => string,
 }
 
 export class DirectoryMetadata {
@@ -24,6 +25,14 @@ export class DirectoryMetadata {
 
   persistFile = (fileMetadata: FileMetadata): DirectoryFileMetadata => {
     return this.insertFileToDirectory(fileMetadata.childDirectoryNames, fileMetadata);
+  }
+
+  createOrGetDirectory = (name: string): DirectoryMetadata => {
+    const directory = [...this.nameByDirectory.entries()].find(([_, fileName]) => fileName === name);
+    if (directory) {
+      return directory[0];
+    }
+    return this.newChildDirectoryMetadata(name);
   }
 
   createOrGetFile = (name: string, data: () => string): DirectoryFileMetadata => {
@@ -60,6 +69,7 @@ export class DirectoryMetadata {
         name: fileMetadata.name,
         parentDirectory: this,
         data: fileMetadata.data,
+        getStringPathFromRoot: () => `${this.getStringPathFromRoot()}${fileMetadata.name}`,
         getStringPathToRoot: () => `${this.getStringPathToRoot()}${fileMetadata.name}`
       }
       this.nameByFile.set(file, fileMetadata.name);
@@ -105,6 +115,12 @@ export class DirectoryMetadata {
   }
   getStringPathToRoot = (): string | undefined => {
     return this.getStringPathTo(this.getRoot());
+  }
+  getStringPathFromRoot = ():string => {
+    if(this.parentDirectory === undefined) {
+      return "/"
+    }
+    return this.parentDirectory.getStringPathFromRoot() + this._name + "/";
   }
   getStringPathTo = (target: DirectoryMetadata, excludeDirectory?: DirectoryMetadata): string | undefined => {
     if (target === this) {

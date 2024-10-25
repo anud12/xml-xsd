@@ -1,4 +1,5 @@
 import {Type} from "../../../type";
+import {DependantType} from "../typeToString";
 
 export const primitives = {
   int: "System.Int32",
@@ -7,7 +8,7 @@ export const primitives = {
   object: "System.Object"
 }
 
-export function getTypeName(type: Type, parentKey?: string, parentName?: string) {
+export function getTypeName(type: Type, parentKey?: string, parent?: DependantType) {
   switch (type.metaType) {
     case "reference":
     case "primitive":
@@ -28,8 +29,10 @@ export function getTypeName(type: Type, parentKey?: string, parentName?: string)
       }
     case "union":
     case "object":
-    case "composition":
-      return `${parentName}__${parentKey}`;
+    case "composition":{
+      return `${parentKey}`;
+    }
+
     default:
       return primitives.object;
   }

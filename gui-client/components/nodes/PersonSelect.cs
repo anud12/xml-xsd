@@ -3,6 +3,7 @@ using System.Security.Cryptography.X509Certificates;
 using dataStore;
 using Godot;
 using XSD;
+using XSD.Nworld_step.Ndata.Npeople;
 
 [Tool]
 [GlobalClass]
@@ -12,8 +13,9 @@ public partial class PersonSelect : OptionButton
 
     private DataStore<world_step> _worldStepDataStore = StoreWorld_Step.instance;
 
-    private world_step__data__people__person? _person;
-    public DataStore<world_step__data__people__person> value = new DataStore<world_step__data__people__person>();
+    
+    private person? _person;
+    public DataStore<person> value = new DataStore<person>();
 
     public PersonSelect()
     {
@@ -50,7 +52,7 @@ public partial class PersonSelect : OptionButton
             }
         });
     }
-    private world_step__data__people__person? SelectById(string? id) {
+    private person? SelectById(string? id) {
         if (id == null)
         {
             value.data = null;
