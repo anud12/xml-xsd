@@ -53,13 +53,3 @@ namespace XSD {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "any"
-    },
-    "name": "type_icon"
-  }
-*/

@@ -71,27 +71,3 @@ namespace XSD.Nworld_step.Nactions.Nperson__move_to.Npath {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "value": {},
-      "isSingle": false,
-      "isNullable": true,
-      "attributes": {
-        "metaType": "object",
-        "value": {
-          "node_id_ref": {
-            "metaType": "primitive",
-            "value": "xs:string",
-            "isNullable": false
-          }
-        },
-        "isNullable": false
-      }
-    },
-    "name": "node"
-  }
-*/

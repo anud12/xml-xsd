@@ -53,36 +53,3 @@ namespace XSD {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "composition",
-      "value": [
-        {
-          "metaType": "object",
-          "value": {},
-          "isSingle": true,
-          "isNullable": false,
-          "attributes": {
-            "metaType": "object",
-            "value": {
-              "on": {
-                "metaType": "primitive",
-                "value": "type_person_select",
-                "isNullable": false
-              }
-            },
-            "isNullable": false
-          }
-        },
-        {
-          "metaType": "primitive",
-          "value": "type__property_mutation"
-        }
-      ]
-    },
-    "name": "type__property_mutation_on"
-  }
-*/

@@ -89,31 +89,3 @@ namespace XSD.Nworld_step.Nactions {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "value": {},
-      "isSingle": false,
-      "isNullable": true,
-      "attributes": {
-        "metaType": "object",
-        "value": {
-          "location_graph_id_ref": {
-            "metaType": "primitive",
-            "value": "xs:string",
-            "isNullable": false
-          },
-          "node_id_ref": {
-            "metaType": "primitive",
-            "value": "xs:string",
-            "isNullable": false
-          }
-        }
-      }
-    },
-    "name": "location_graph__node__create_adjacent"
-  }
-*/

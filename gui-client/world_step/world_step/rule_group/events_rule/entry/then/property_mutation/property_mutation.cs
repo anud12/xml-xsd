@@ -104,24 +104,3 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "attributes": {
-        "metaType": "object",
-        "value": {
-          "property_rule_ref": {
-            "metaType": "primitive",
-            "value": "xs:string",
-            "isNullable": false
-          }
-        }
-      },
-      "value": {}
-    },
-    "name": "property_mutation"
-  }
-*/

@@ -71,27 +71,3 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_classification_rule {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "value": {},
-      "isSingle": false,
-      "isNullable": false,
-      "attributes": {
-        "metaType": "object",
-        "value": {
-          "id": {
-            "metaType": "primitive",
-            "value": "xs:string",
-            "isNullable": false
-          }
-        },
-        "isNullable": false
-      }
-    },
-    "name": "entry"
-  }
-*/

@@ -107,36 +107,3 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "value": {},
-      "isSingle": false,
-      "isNullable": true,
-      "attributes": {
-        "metaType": "object",
-        "value": {
-          "name": {
-            "metaType": "primitive",
-            "value": "xs:string",
-            "isNullable": false
-          },
-          "min-value-inclusive": {
-            "metaType": "primitive",
-            "value": "xs:int",
-            "isNullable": true
-          },
-          "max-value-inclusive": {
-            "metaType": "primitive",
-            "value": "xs:int",
-            "isNullable": true
-          }
-        }
-      }
-    },
-    "name": "property_threshold"
-  }
-*/

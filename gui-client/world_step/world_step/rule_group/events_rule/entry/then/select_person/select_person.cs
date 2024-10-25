@@ -163,32 +163,3 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "attributes": {
-        "metaType": "object",
-        "value": {
-          "origin": {
-            "metaType": "union",
-            "value": [
-              {
-                "metaType": "primitive",
-                "value": "\"target\""
-              },
-              {
-                "metaType": "primitive",
-                "value": "\"self\""
-              }
-            ]
-          }
-        }
-      },
-      "value": {}
-    },
-    "name": "select_person"
-  }
-*/

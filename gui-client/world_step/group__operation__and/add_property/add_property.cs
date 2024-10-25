@@ -71,27 +71,3 @@ namespace XSD.Ngroup__operation__and {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "value": {},
-      "isSingle": true,
-      "isNullable": true,
-      "attributes": {
-        "metaType": "object",
-        "value": {
-          "property_rule_ref": {
-            "metaType": "primitive",
-            "value": "xs:string",
-            "isNullable": false
-          }
-        },
-        "isNullable": false
-      }
-    },
-    "name": "add_property"
-  }
-*/

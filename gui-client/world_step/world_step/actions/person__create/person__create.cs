@@ -79,29 +79,3 @@ namespace XSD.Nworld_step.Nactions {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "isSingle": false,
-      "value": {
-        "node_graph__selection": {
-          "metaType": "reference",
-          "value": "type__node_graph__selection",
-          "isSingle": true,
-          "isNullable": false
-        },
-        "person__selection": {
-          "metaType": "reference",
-          "value": "type__person_selection",
-          "isSingle": true,
-          "isNullable": false
-        }
-      },
-      "isNullable": true
-    },
-    "name": "person__create"
-  }
-*/

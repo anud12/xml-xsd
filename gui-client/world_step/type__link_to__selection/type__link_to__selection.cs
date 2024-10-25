@@ -79,28 +79,3 @@ namespace XSD {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "isSingle": true,
-      "value": {
-        "origin__node_graph__selection": {
-          "metaType": "reference",
-          "value": "type__node_graph__selection",
-          "isSingle": true,
-          "isNullable": true
-        },
-        "destination__node_graph__selection": {
-          "metaType": "reference",
-          "value": "type__node_graph__selection",
-          "isSingle": true,
-          "isNullable": true
-        }
-      }
-    },
-    "name": "type__link_to__selection"
-  }
-*/

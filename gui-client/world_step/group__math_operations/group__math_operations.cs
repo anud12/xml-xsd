@@ -66,33 +66,3 @@ namespace XSD {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "isSingle": true,
-      "value": {
-        "operation": {
-          "metaType": "reference",
-          "value": "group__operation__and",
-          "isSingle": true,
-          "attributes": {
-            "metaType": "object",
-            "value": {
-              "initial": {
-                "metaType": "primitive",
-                "value": "xs:int",
-                "isNullable": false
-              }
-            },
-            "isNullable": false
-          },
-          "isNullable": false
-        }
-      }
-    },
-    "name": "group__math_operations"
-  }
-*/

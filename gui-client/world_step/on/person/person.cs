@@ -79,29 +79,3 @@ namespace XSD.Non {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "isSingle": true,
-      "value": {
-        "select": {
-          "metaType": "reference",
-          "value": "type__person_selection",
-          "isSingle": true,
-          "isNullable": true
-        },
-        "property_mutation": {
-          "metaType": "reference",
-          "value": "type__property_mutation",
-          "isSingle": true,
-          "isNullable": true
-        }
-      },
-      "isNullable": true
-    },
-    "name": "person"
-  }
-*/

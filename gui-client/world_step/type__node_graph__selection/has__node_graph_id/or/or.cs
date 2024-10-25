@@ -71,27 +71,3 @@ namespace XSD.Ntype__node_graph__selection.Nhas__node_graph_id {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "value": {},
-      "isSingle": false,
-      "isNullable": true,
-      "attributes": {
-        "metaType": "object",
-        "value": {
-          "node_graph_id_ref": {
-            "metaType": "primitive",
-            "value": "xs:string",
-            "isNullable": true
-          }
-        },
-        "isNullable": true
-      }
-    },
-    "name": "or"
-  }
-*/

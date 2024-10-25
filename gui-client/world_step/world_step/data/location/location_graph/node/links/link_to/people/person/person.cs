@@ -89,31 +89,3 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "value": {},
-      "isSingle": false,
-      "isNullable": true,
-      "attributes": {
-        "metaType": "object",
-        "value": {
-          "person_id_ref": {
-            "metaType": "primitive",
-            "value": "xs:string",
-            "isNullable": false
-          },
-          "accumulated_progress": {
-            "metaType": "primitive",
-            "value": "xs:int",
-            "isNullable": false
-          }
-        }
-      }
-    },
-    "name": "person"
-  }
-*/

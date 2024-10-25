@@ -71,27 +71,3 @@ namespace XSD.Nworld_step.Nworld_metadata.Nrandomization_table {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "value": {},
-      "isSingle": false,
-      "isNullable": false,
-      "attributes": {
-        "metaType": "object",
-        "value": {
-          "value": {
-            "metaType": "primitive",
-            "value": "xs:int",
-            "isNullable": true
-          }
-        },
-        "isNullable": true
-      }
-    },
-    "name": "entry"
-  }
-*/

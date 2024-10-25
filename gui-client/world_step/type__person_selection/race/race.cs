@@ -55,26 +55,3 @@ namespace XSD.Ntype__person_selection {
     /* ignored attribute key={key} of type=System.Object*/
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "value": {},
-      "isSingle": true,
-      "isNullable": true,
-      "attributes": {
-        "metaType": "object",
-        "value": {
-          "race_rule_ref": {
-            "metaType": "unknown",
-            "isNullable": false
-          }
-        },
-        "isNullable": false
-      }
-    },
-    "name": "race"
-  }
-*/

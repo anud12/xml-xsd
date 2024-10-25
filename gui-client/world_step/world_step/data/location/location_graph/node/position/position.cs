@@ -89,31 +89,3 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "value": {},
-      "isSingle": true,
-      "isNullable": true,
-      "attributes": {
-        "metaType": "object",
-        "value": {
-          "x": {
-            "metaType": "primitive",
-            "value": "xs:int",
-            "isNullable": false
-          },
-          "y": {
-            "metaType": "primitive",
-            "value": "xs:int",
-            "isNullable": false
-          }
-        }
-      }
-    },
-    "name": "position"
-  }
-*/

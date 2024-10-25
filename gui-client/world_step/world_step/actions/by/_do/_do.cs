@@ -107,36 +107,3 @@ namespace XSD.Nworld_step.Nactions.Nby {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "value": {},
-      "isSingle": true,
-      "isNullable": false,
-      "attributes": {
-        "metaType": "object",
-        "value": {
-          "action_rule_ref": {
-            "metaType": "primitive",
-            "value": "xs:string",
-            "isNullable": true
-          },
-          "action_ref": {
-            "metaType": "primitive",
-            "value": "xs:string",
-            "isNullable": true
-          },
-          "person_ref": {
-            "metaType": "primitive",
-            "value": "xs:string",
-            "isNullable": false
-          }
-        }
-      }
-    },
-    "name": "_do"
-  }
-*/

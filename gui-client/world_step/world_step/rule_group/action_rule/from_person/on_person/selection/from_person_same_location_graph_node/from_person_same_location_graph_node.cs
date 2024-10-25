@@ -71,27 +71,3 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.Nsele
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "value": {},
-      "isSingle": true,
-      "isNullable": true,
-      "attributes": {
-        "metaType": "object",
-        "value": {
-          "value": {
-            "metaType": "primitive",
-            "value": "xs:boolean",
-            "isNullable": false
-          }
-        },
-        "isNullable": false
-      }
-    },
-    "name": "from_person_same_location_graph_node"
-  }
-*/

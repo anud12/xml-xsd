@@ -96,18 +96,3 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "attributes": {
-        "metaType": "object",
-        "value": {}
-      },
-      "value": {}
-    },
-    "name": "person_default"
-  }
-*/

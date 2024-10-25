@@ -53,20 +53,3 @@ namespace XSD {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "value": {},
-      "isSingle": true,
-      "isNullable": false,
-      "attributes": {
-        "metaType": "reference",
-        "value": "attributeGroup_range"
-      }
-    },
-    "name": "type_range"
-  }
-*/

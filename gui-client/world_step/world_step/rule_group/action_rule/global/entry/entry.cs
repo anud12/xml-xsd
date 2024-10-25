@@ -137,24 +137,3 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nglobal {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "attributes": {
-        "metaType": "object",
-        "value": {
-          "id": {
-            "metaType": "primitive",
-            "value": "xs:string",
-            "isNullable": false
-          }
-        }
-      },
-      "value": {}
-    },
-    "name": "entry"
-  }
-*/

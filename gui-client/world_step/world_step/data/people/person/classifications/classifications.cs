@@ -71,34 +71,3 @@ namespace XSD.Nworld_step.Ndata.Npeople.Nperson {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "isSingle": true,
-      "value": {
-        "classification": {
-          "metaType": "object",
-          "value": {},
-          "isSingle": false,
-          "isNullable": true,
-          "attributes": {
-            "metaType": "object",
-            "value": {
-              "classification_rule_ref": {
-                "metaType": "primitive",
-                "value": "xs:string",
-                "isNullable": false
-              }
-            },
-            "isNullable": false
-          }
-        }
-      },
-      "isNullable": true
-    },
-    "name": "classifications"
-  }
-*/

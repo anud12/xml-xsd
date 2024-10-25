@@ -73,32 +73,3 @@ namespace XSD {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "isSingle": true,
-      "value": {
-        "person_action_used": {
-          "metaType": "object",
-          "value": {},
-          "isSingle": true,
-          "isNullable": false,
-          "attributes": {
-            "metaType": "object",
-            "value": {
-              "action_rule_ref": {
-                "metaType": "unknown",
-                "isNullable": false
-              }
-            },
-            "isNullable": false
-          }
-        }
-      }
-    },
-    "name": "type__trigger"
-  }
-*/

@@ -64,33 +64,3 @@ namespace XSD.Nworld_step.Nrule_group {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "isSingle": true,
-      "value": {
-        "entry": {
-          "metaType": "reference",
-          "value": "group__name_token",
-          "isSingle": false,
-          "attributes": {
-            "metaType": "object",
-            "value": {
-              "id": {
-                "metaType": "unknown",
-                "isNullable": false
-              }
-            },
-            "isNullable": false
-          },
-          "isNullable": true
-        }
-      },
-      "isNullable": true
-    },
-    "name": "name_rule"
-  }
-*/

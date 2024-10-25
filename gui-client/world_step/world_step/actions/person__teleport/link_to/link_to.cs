@@ -84,34 +84,3 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "attributes": {
-        "metaType": "object",
-        "value": {
-          "accumulated_progress": {
-            "metaType": "primitive",
-            "value": "xs:int",
-            "isNullable": false
-          }
-        },
-        "isNullable": false
-      },
-      "isSingle": true,
-      "value": {
-        "selection": {
-          "metaType": "reference",
-          "value": "type__link_to__selection",
-          "isSingle": true,
-          "isNullable": false
-        }
-      },
-      "isNullable": false
-    },
-    "name": "link_to"
-  }
-*/

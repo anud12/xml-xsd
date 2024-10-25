@@ -73,30 +73,3 @@ namespace XSD.Nworld_step.Ndata.Npeople.Nperson.Nproperties {
     /* ignored attribute key={key} of type=System.Object*/
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "value": {},
-      "isSingle": false,
-      "isNullable": true,
-      "attributes": {
-        "metaType": "object",
-        "value": {
-          "property_rule_ref": {
-            "metaType": "primitive",
-            "value": "xs:string",
-            "isNullable": false
-          },
-          "value": {
-            "metaType": "unknown",
-            "isNullable": false
-          }
-        }
-      }
-    },
-    "name": "property"
-  }
-*/

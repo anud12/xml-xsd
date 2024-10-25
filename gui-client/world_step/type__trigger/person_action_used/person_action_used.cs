@@ -55,26 +55,3 @@ namespace XSD.Ntype__trigger {
     /* ignored attribute key={key} of type=System.Object*/
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "value": {},
-      "isSingle": true,
-      "isNullable": false,
-      "attributes": {
-        "metaType": "object",
-        "value": {
-          "action_rule_ref": {
-            "metaType": "unknown",
-            "isNullable": false
-          }
-        },
-        "isNullable": false
-      }
-    },
-    "name": "person_action_used"
-  }
-*/

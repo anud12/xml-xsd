@@ -71,27 +71,3 @@ namespace XSD.Nworld_step.Nworld_metadata {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "value": {},
-      "isSingle": true,
-      "isNullable": false,
-      "attributes": {
-        "metaType": "object",
-        "value": {
-          "value": {
-            "metaType": "primitive",
-            "value": "xs:int",
-            "isNullable": false
-          }
-        },
-        "isNullable": false
-      }
-    },
-    "name": "elapsed_time"
-  }
-*/

@@ -102,38 +102,3 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "attributes": {
-        "metaType": "object",
-        "value": {
-          "min": {
-            "metaType": "primitive",
-            "value": "xs:int",
-            "isNullable": false
-          },
-          "max": {
-            "metaType": "primitive",
-            "value": "xs:int",
-            "isNullable": true
-          }
-        }
-      },
-      "isSingle": true,
-      "value": {
-        "person_selection": {
-          "metaType": "reference",
-          "value": "type__person_selection",
-          "isSingle": true,
-          "isNullable": false
-        }
-      },
-      "isNullable": true
-    },
-    "name": "existing_person"
-  }
-*/

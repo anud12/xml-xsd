@@ -64,23 +64,3 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person {
     }
   }
 }
-
-/*dependantType
-  {
-    "type": "element",
-    "value": {
-      "metaType": "object",
-      "isSingle": true,
-      "value": {
-        "property_mutation": {
-          "metaType": "reference",
-          "value": "type__property_mutation",
-          "isSingle": false,
-          "isNullable": true
-        }
-      },
-      "isNullable": true
-    },
-    "name": "mutations"
-  }
-*/
