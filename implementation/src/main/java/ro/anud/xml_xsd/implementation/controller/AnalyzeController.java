@@ -1,12 +1,13 @@
 package ro.anud.xml_xsd.implementation.controller;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
-import ro.anud.xml_xsd.implementation.service.MyService;
 import ro.anud.xml_xsd.implementation.tmp.WorldStep;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
