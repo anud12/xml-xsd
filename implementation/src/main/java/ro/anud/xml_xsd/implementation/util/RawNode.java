@@ -10,6 +10,7 @@ import org.w3c.dom.Node;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.InvalidClassException;
 import java.util.*;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.*;
@@ -64,40 +65,75 @@ public final class RawNode {
     }
 
     public Optional<Integer> getAttributeInt(String key) {
+        logEnter("key:", key);
         var value = this.attributeMap.get(key);
-        return Optional.of(Integer.parseInt(value));
+        return logReturn(Optional.of(Integer.parseInt(value)));
     }
 
     public Optional<String> getAttribute(String key) {
+        logEnter("key:", key);
         return Optional.ofNullable(this.attributeMap.get(key));
     }
+
+    public RawNode setAttribute(String key, Object value) {
+        logEnter("key:", key, "value:", value);
+        setAttribute(key, Optional.of(value));
+        return this;
+    }
+
+    public RawNode setAttribute(String key, Optional<Object> value) {
+        logEnter("key:", key, "value:", value);
+        value.ifPresent(o -> attributeMap.put(key, o.toString()));
+        return this;
+    }
+
     public int getAttributeIntRequired(String key) {
-        return getAttributeInt(key).get();
+        logEnter("key:", key);
+        return logReturn(getAttributeInt(key).get());
     }
 
     public String getAttributeRequired(String key) {
+        logEnter("key:", key);
         return getAttribute(key).get();
     }
 
 
     public Optional<RawNode> getChildrenFirst(String key) {
-        return this.childrenMap.get(key).stream().findFirst();
+        logEnter("key:", key);
+        if (this.childrenMap.containsKey(key)) {
+            return logReturn(this.childrenMap.get(key).stream().findFirst());
+        }
+        return logReturn(Optional.empty(), "No value found");
     }
 
-    public RawNode getChildrenFirstRequired(String key) {
-        try {
-            return this.childrenMap.get(key).stream().findFirst().get();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public List<RawNode> getChildrenList(String key) {
-        return this.childrenMap.get(key);
+        logEnter("key:", key);
+        return logReturn(this.childrenMap.get(key));
+    }
+
+    public RawNode addChildren(String key, Object value) {
+        logEnter("key:", key, "value:", value);
+        switch (value) {
+            case Optional<?> optionalValue -> {
+                optionalValue.ifPresent(o -> addChildren(key, o));
+            }
+            case List<?> listValue -> listValue.forEach(o -> addChildren(key, o));
+            case RawNode rawNode -> {
+                var childrenList = this.childrenMap.getOrDefault(key, new ArrayList<>());
+                childrenList.add(rawNode);
+                this.childrenMap.put(key, childrenList);
+            }
+            case null -> throw new NullPointerException();
+            default -> throw new RuntimeException(new InvalidClassException(value.getClass().getName()));
+        }
+
+        logReturnVoid();
+        return this;
     }
 
     public Document toDocument(String rootElementName) throws ParserConfigurationException {
-        logEnter(this);
+        logEnter(rootElementName);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document document = builder.newDocument();
@@ -109,7 +145,7 @@ public final class RawNode {
     }
 
     public void populateNode(Document document, Element element) {
-        logEnter(this);
+        logEnter(getNodePath(element));
         this.attributeMap.forEach(element::setAttribute);
         this.childrenMap.forEach((childName, rawNodes) -> {
             rawNodes.forEach(rawNode -> {
@@ -123,7 +159,7 @@ public final class RawNode {
                 element.appendChild(childElement);
             });
         });
-        logReturnVoid(this);
+        logReturnVoid(getNodePath(element));
     }
 
 }

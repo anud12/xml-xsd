@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
-import ro.anud.xml_xsd.implementation.tmp.WorldStep;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
 import javax.xml.parsers.DocumentBuilder;
