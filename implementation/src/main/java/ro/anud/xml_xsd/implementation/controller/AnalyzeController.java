@@ -34,6 +34,7 @@ public class AnalyzeController {
             Document document = builder.parse(new InputSource(new StringReader(request)));
             var rawNode = RawNode.fromNode(document.getDocumentElement());
             var step = WorldStep.fromRawNode(rawNode);
+
             var outputDocument = step.getRawNode().toDocument("world_step");
             TransformerFactory tf = TransformerFactory.newInstance();
             Transformer transformer = tf.newTransformer();

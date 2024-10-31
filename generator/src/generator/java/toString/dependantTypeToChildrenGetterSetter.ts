@@ -4,8 +4,9 @@ import {normalizeNameClass, normalizeNameField} from "./normalizeNameClass";
 import {getTypeName} from "./geTypeName";
 import {Type} from "../../../type";
 import {getDependantTypeChildPackage} from "./getDependantTypeChildPackage";
+import {basePackage, getDependantTypePackage} from "./getDependantTypePackage";
 
-export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType): { dependantTypes:DependantType[], templateString: string } | undefined => {
+export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType, parentDependantType?:DependantType): { dependantTypes:DependantType[], templateString: string } | undefined => {
 
   const dependantTypeList: DependantType[] = [];
 
@@ -18,22 +19,44 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
     return [[key, value] as [string, Type]]
   })
     .map(([key, value]) => {
+
       let type = getTypeName(value, key, dependantType);
-      type = normalizeNameClass(type);
+      const normalizedName = normalizeNameClass(type);
 
-      const fullPathTypeString = value.isSingle
-        ? `${getDependantTypeChildPackage(dependantType)}.${type}`
-        : `List<${getDependantTypeChildPackage(dependantType)}.${type}>`;
-      const fullPathNullableTypeString = value.isNullable
-        ? `${fullPathTypeString}?`
-        : fullPathTypeString;
+      let nullableFullPathString =  "";
+      if(value.isSingle) {
+        nullableFullPathString = `${getDependantTypePackage(dependantType)}.${normalizedName}.${normalizedName}`;
+      }
+      if(value.isNullable) {
+        nullableFullPathString = `Optional<${getDependantTypePackage(dependantType)}.${normalizedName}.${normalizedName}>`
+      }
+      if(!value.isSingle) {
+        nullableFullPathString = `List<${getDependantTypePackage(dependantType)}.${normalizedName}.${normalizedName}>`
+      }
 
-      const typeString = value.isSingle
-        ? `${type}`
-        : `List<${type}>`;
-      const nullableTypeString = value.isNullable
-        ? `${typeString}?`
-        : typeString;
+      let nullableTypeString = ""
+      if(value.isSingle) {
+        nullableTypeString = `${basePackage}.${normalizedName}.${normalizedName}`;
+      }
+      if(value.isNullable) {
+        nullableTypeString = `Optional<${basePackage}.${normalizedName}.${normalizedName}>`
+      }
+      if(!value.isSingle) {
+        nullableTypeString = `List<${basePackage}.${normalizedName}.${normalizedName}>`
+      }
+
+
+      const fullPathTypeInitialization = !value.isSingle
+        ? `new ArrayList<>()`
+        : value.isNullable
+          ? `Optional.empty()`
+          : `new ${getDependantTypePackage(dependantType)}.${normalizedName}.${normalizedName}()`;
+
+      const typeInitialization = !value.isSingle
+        ? `new ArrayList<>()`
+        : value.isNullable
+          ? `Optional.empty()`
+          : `new ${basePackage}.${normalizedName}.${normalizedName}()`
 
       if (value.metaType === "object") {
         dependantTypeList.push({
@@ -43,20 +66,24 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
           parentType: dependantType,
         })
         return template()`
-              public ${fullPathNullableTypeString} Get_${normalizeNameClass(key)}()
+              public ${nullableFullPathString} get${normalizeNameClass(key)}()
               {
                 return this.${normalizeNameField(key)};
               }
-              public ${fullPathTypeString} GetOrInsertDefault_${normalizeNameClass(key)}()
+              /*
+              public ${nullableFullPathString} GetOrInsertDefault_${normalizeNameClass(key)}()
               {
-                if(this.${normalizeNameClass(key)} == null) {
-                  this.${normalizeNameClass(key)} = new ${fullPathTypeString}();
+                if(this.${normalizeNameField(key)} == null) {
+                  this.${normalizeNameField(key)} = ${fullPathTypeInitialization};
                 }
                 return this.${normalizeNameField(key)};
               }
-              public void Set_${normalizeNameClass(key)}(${fullPathNullableTypeString} value)
+              */
+              public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} set${normalizeNameClass(key)}(${nullableFullPathString} value)
               {
                 this.${normalizeNameField(key)} = value;
+                onChangeList.forEach(consumer -> consumer.accept(this));
+                return this;
               }
               `
       }
@@ -68,13 +95,15 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
           parentType: dependantType,
         })
         return template()`
-              public ${fullPathNullableTypeString} Get_${normalizeNameClass(key)}()
+              public ${nullableFullPathString} get${normalizeNameClass(key)}()
               {
                 return this.${normalizeNameField(key)};
               }
-              public void Set_${normalizeNameClass(key)}(${fullPathNullableTypeString} value)
+              public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} set${normalizeNameClass(key)}(${nullableFullPathString} value)
               {
                 this.${normalizeNameField(key)} = value;
+                onChangeList.forEach(consumer -> consumer.accept(this));
+                return this;
               }
               `
       }
@@ -85,13 +114,15 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
           name: type,
         })
         return template()`
-              public ${nullableTypeString} Get_${normalizeNameClass(key)}()
+              public ${nullableTypeString} get${normalizeNameClass(key)}()
               {
                 return this.${normalizeNameField(key)};
               }
-              public void Set_${normalizeNameClass(key)}(${nullableTypeString} value)
+              public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} set${normalizeNameClass(key)}(${nullableTypeString} value)
               {
                 this.${normalizeNameField(key)} = value;
+                onChangeList.forEach(consumer -> consumer.accept(this));
+                return this;
               }
               `
       }

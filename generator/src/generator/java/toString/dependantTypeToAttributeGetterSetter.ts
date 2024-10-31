@@ -3,7 +3,7 @@ import {template} from "../../../template/template";
 import {normalizeNameClass, normalizeNameField} from "./normalizeNameClass";
 import {getTypeName, primitives} from "./geTypeName";
 
-export const dependantTypeToAttributeGetterSetter = (dependantType: DependantType): string | undefined => {
+export const dependantTypeToAttributeGetterSetter = (dependantType: DependantType, parentDependantType?:DependantType): string | undefined => {
 
   if (dependantType.value.attributes?.metaType !== "object") {
     return undefined;
@@ -16,33 +16,37 @@ export const dependantTypeToAttributeGetterSetter = (dependantType: DependantTyp
     if (value.metaType === "primitive") {
       if (type !== primitives.int) {
         const typeString = value.isNullable
-          ? `${primitives.string}?`
+          ? `Optional<${primitives.string}>`
           : primitives.string;
 
         return template()`
-                public ${typeString} Get_${normalizeNameClass(key)}()
+                public ${typeString} get${normalizeNameClass(key)}()
                 {
                   return this.${normalizeNameField(key)};
                 }
-                public void Set_${normalizeNameClass(key)}(${typeString} value)
+                public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} set${normalizeNameClass(key)}(${typeString} value)
                 {
                   this.${normalizeNameField(key)} = value;
+                  onChangeList.forEach(consumer -> consumer.accept(this));
+                  return this;
                 }
                 `
       }
 
       const typeString = value.isNullable
-        ? `${type}?`
+        ? `Optional<${type}>`
         : type;
 
       return template()`
-              public ${typeString} Get_${normalizeNameClass(key)}()
+              public ${typeString} get${normalizeNameClass(key)}()
               {
                 return this.${normalizeNameField(key)};
               }
-              public void Set_${normalizeNameClass(key)}(${typeString} value)
+              public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} set${normalizeNameClass(key)}(${typeString} value)
               {
                 this.${normalizeNameField(key)} = value;
+                onChangeList.forEach(consumer -> consumer.accept(this));
+                return this;
               }
               `
     }
