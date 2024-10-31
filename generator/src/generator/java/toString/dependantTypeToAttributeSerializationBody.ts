@@ -1,0 +1,20 @@
+import {DependantType} from "../typeToString";
+import {template} from "../../../template/template";
+import {normalizeNameClass, normalizeNameField} from "./normalizeNameClass";
+
+export const dependantTypeToAttributeSerializationBody = (dependantType: DependantType): string | undefined => {
+
+  if (dependantType.value.attributes?.metaType !== "object") {
+    return undefined;
+  }
+
+
+  return Object.entries(dependantType.value.attributes.value ?? []).map(([key, value]) => {
+    if (value.metaType === "primitive") {
+      return template()`
+                rawNode.setAttribute("${key}", this.${normalizeNameField(key)});
+                `;
+    }
+  }).filter(e => e).join("\n")
+
+}

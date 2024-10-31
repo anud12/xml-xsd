@@ -11,6 +11,9 @@ namespace XSD {
 
 	public class RawNode {
 
+		public Dictionary<string, string?> attributes = new Dictionary<string, string?>();
+		public Dictionary<string, List<RawNode>> children = new Dictionary<string, List<RawNode>>();
+		
 		public List<T> InitializeWithRawNode<T>(string key, List<T> defaultValue) {
 			//get type of elements in the list
 			var type = typeof(T);
@@ -45,8 +48,6 @@ namespace XSD {
 
 		}
 
-		public Dictionary<string, string?> attributes = new Dictionary<string, string?>();
-		public Dictionary<string, List<RawNode>> children = new Dictionary<string, List<RawNode>>();
 
 		public XmlNode Deserialize(XmlNode xmlElement) {
 			foreach (XmlAttribute attribute in xmlElement.Attributes)
