@@ -47,8 +47,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
     public Runnable onChange(Consumer<Group_operation_and> onChange) {
+      logEnter();
       onChangeList.add(onChange);
-      return () -> onChangeList.remove(onChange);
+      return logReturn(() -> onChangeList.remove(onChange));
     }
 
     //Attributes

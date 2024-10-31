@@ -71,8 +71,9 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
       }
       
       public Runnable onChange(Consumer<${normalizeNameClass(dependantType.name)}> onChange) {
+        logEnter();
         onChangeList.add(onChange);
-        return () -> onChangeList.remove(onChange);
+        return logReturn(() -> onChangeList.remove(onChange));
       }
       
       //Attributes
