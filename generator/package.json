@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "generate_all": "npm run generate_typescript && npm run generate_csharp",
+    "generate_all": "npm run generate_typescript &&  && npm run generate_java",
     "generate_typescript": "npx ts-node ./src/run.ts",
     "generate_csharp": "npx ts-node ./src/run_csharp.ts",
     "generate_java": "npx ts-node ./src/run_java.ts"
