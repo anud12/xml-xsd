@@ -10,13 +10,14 @@ export type DependantType<T extends Type = Type> = {
   name: string,
   value: T,
   parentType?: DependantType,
+  typeDeclaration:TypeDeclaration | undefined,
   type: "element" | "union" | "reference" | "composition"
 }
 
 export type GetObjectBodyReturn = {
   dependantTypes: DependantType[],
-  templateString: string,
   writtenClass: string[],
+  templateString: string,
 }
 
 export function typeDeclarationToString(typeDeclarationArg: TypeDeclaration | Array<TypeDeclaration>): DirectoryMetadata {
@@ -40,6 +41,7 @@ export function typeDeclarationToString(typeDeclarationArg: TypeDeclaration | Ar
       return {
         type: "element",
         value: element.value,
+        typeDeclaration: element,
         name: element.name
       }
     });
@@ -48,17 +50,12 @@ export function typeDeclarationToString(typeDeclarationArg: TypeDeclaration | Ar
     const iterate = [...elementDeclarationList];
     elementDeclarationList = [];
     iterate?.forEach((element) => {
-      // if(writtenClassesList.includes(element.name)) {
-      //   console.log("Excluding", element.name, element.type)
-      //   return;
-      // }
       if (writtenClassesList.includes(dependantTypeGetFullQualifiedName(element))) {
         return;
       }
       if (element.type === "element") {
         const {
           dependantTypes,
-          templateString,
           writtenClass
         } = typeDeclarationElementToString(directoryMetadata, writtenClassesList, element);
         writtenClassesList.push(...writtenClass);
@@ -68,7 +65,6 @@ export function typeDeclarationToString(typeDeclarationArg: TypeDeclaration | Ar
       if (element.type === "union") {
         const {
           dependantTypes,
-          templateString,
           writtenClass
         } = unionTypeDeclarationToString(directoryMetadata, writtenClassesList, element);
         writtenClassesList.push(...writtenClass);
@@ -78,7 +74,6 @@ export function typeDeclarationToString(typeDeclarationArg: TypeDeclaration | Ar
       if (element.type === "composition") {
         const {
           dependantTypes,
-          templateString,
           writtenClass
         } = compositionTypeDeclarationToString(directoryMetadata, typeDeclarationList, writtenClassesList, element);
         writtenClassesList.push(...writtenClass);
@@ -89,9 +84,13 @@ export function typeDeclarationToString(typeDeclarationArg: TypeDeclaration | Ar
       if (element.type === "reference") {
         const referenceType = referenceList[element.name]
         if (referenceType) {
-          const {dependantTypes, templateString, writtenClass} = typeDeclarationElementToString(directoryMetadata, writtenClassesList, {
+          const {
+            dependantTypes,
+            writtenClass
+          } = typeDeclarationElementToString(directoryMetadata, writtenClassesList, {
             type: "element",
             value: referenceType.value,
+            typeDeclaration: referenceType,
             name: element.name
           });
           writtenClassesList.push(...writtenClass);

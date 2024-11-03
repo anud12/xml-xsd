@@ -19,7 +19,8 @@ export const findPersonLocation = (readJson: JsonUtil, personIdRef: string): Arr
         const person = nodeElement.queryAllOptional("people").flatMap(peopleElement => {
           return peopleElement.queryAllOptional("person");
 
-        }).find(personElement => personElement.attributeMap.person_id_ref === personIdRef)
+        })
+          .find(personElement => personElement.attributeMap.person_id_ref === personIdRef)
         if (person) {
           return [{
                     locationGraph: locationGraphElement,
@@ -30,10 +31,10 @@ export const findPersonLocation = (readJson: JsonUtil, personIdRef: string): Arr
         const linkToPerson = nodeElement.queryAllOptional("links")
           .flatMap(linksElement => linksElement.queryAllOptional("link_to"))
           .find(linkToElement => {
-          return linkToElement.queryAllOptional("people")
-            .flatMap(peopleElement => peopleElement.queryAllOptional("person"))
-            .find(personElement => personElement.attributeMap.person_id_ref === personIdRef)
-        })
+            return linkToElement.queryAllOptional("people")
+              .flatMap(peopleElement => peopleElement.queryAllOptional("person"))
+              .find(personElement => personElement.attributeMap.person_id_ref === personIdRef)
+          })
         return [{
                   locationGraph: locationGraphElement,
                   node: undefined,

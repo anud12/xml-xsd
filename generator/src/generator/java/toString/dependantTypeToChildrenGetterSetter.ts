@@ -3,7 +3,6 @@ import {template} from "../../../template/template";
 import {normalizeNameClass, normalizeNameField} from "./normalizeNameClass";
 import {getTypeName} from "./geTypeName";
 import {Type} from "../../../type";
-import {getDependantTypeChildPackage} from "./getDependantTypeChildPackage";
 import {basePackage, getDependantTypePackage} from "./getDependantTypePackage";
 
 export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType, parentDependantType?:DependantType): { dependantTypes:DependantType[], templateString: string } | undefined => {
@@ -23,108 +22,104 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
       let type = getTypeName(value, key, dependantType);
       const normalizedName = normalizeNameClass(type);
 
-      let nullableFullPathString =  "";
+      let baseTypeString = `${getDependantTypePackage(dependantType)}.${normalizedName}.${normalizedName}`;
+      if(value.metaType === "reference" ) {
+        baseTypeString = `${basePackage}.${normalizedName}.${normalizedName}`;
+      }
+
+
+      let pathString =  "";
       if(value.isSingle) {
-        nullableFullPathString = `${getDependantTypePackage(dependantType)}.${normalizedName}.${normalizedName}`;
+        pathString = baseTypeString;
       }
       if(value.isNullable) {
-        nullableFullPathString = `Optional<${getDependantTypePackage(dependantType)}.${normalizedName}.${normalizedName}>`
+        pathString = `Optional<${baseTypeString}>`
       }
       if(!value.isSingle) {
-        nullableFullPathString = `List<${getDependantTypePackage(dependantType)}.${normalizedName}.${normalizedName}>`
+        pathString = `List<${baseTypeString}>`
       }
 
-      let nullableTypeString = ""
+
+      let streamBody =  `Optional.ofNullable(${normalizeNameField(key)})`;
       if(value.isSingle) {
-        nullableTypeString = `${basePackage}.${normalizedName}.${normalizedName}`;
+        streamBody = `Optional.ofNullable(${normalizeNameField(key)}).stream()`;
       }
       if(value.isNullable) {
-        nullableTypeString = `Optional<${basePackage}.${normalizedName}.${normalizedName}>`
+        streamBody = `${normalizeNameField(key)}.stream()`
       }
       if(!value.isSingle) {
-        nullableTypeString = `List<${basePackage}.${normalizedName}.${normalizedName}>`
+        streamBody = `${normalizeNameField(key)}.stream()`
       }
 
-
-      const fullPathTypeInitialization = !value.isSingle
-        ? `new ArrayList<>()`
-        : value.isNullable
-          ? `Optional.empty()`
-          : `new ${getDependantTypePackage(dependantType)}.${normalizedName}.${normalizedName}()`;
-
-      const typeInitialization = !value.isSingle
-        ? `new ArrayList<>()`
-        : value.isNullable
-          ? `Optional.empty()`
-          : `new ${basePackage}.${normalizedName}.${normalizedName}()`
+      const templateString = template()`
+              public ${pathString} get${normalizeNameClass(key)}()
+              {
+                return this.${normalizeNameField(key)};
+              }
+              public Stream<${baseTypeString}> stream${normalizeNameClass(key)}()
+              {
+                return ${streamBody};
+              }
+              ${value.isSingle && template()`
+              public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} set${normalizeNameClass(key)}(${baseTypeString} value)
+              {
+                ${value.isNullable && `this.${normalizeNameField(key)} = Optional.ofNullable(value);`}
+                ${!value.isNullable && `this.${normalizeNameField(key)} = value;`}
+                onChangeList.forEach(consumer -> consumer.accept(this));
+                return this;
+              }
+              `}
+              ${!value.isSingle && template()`
+              public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} add${normalizeNameClass(key)}(${baseTypeString} value)
+              {
+                this.${normalizeNameField(key)}.add(value);
+                onChangeList.forEach(consumer -> consumer.accept(this));
+                return this;
+              }
+              public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} addAll${normalizeNameClass(key)}(List<${baseTypeString}> value)
+              {
+                this.${normalizeNameField(key)}.addAll(value);
+                onChangeList.forEach(consumer -> consumer.accept(this));
+                return this;
+              }
+              public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} remove${normalizeNameClass(key)}(${baseTypeString} value)
+              {
+                this.${normalizeNameField(key)}.remove(value);
+                onChangeList.forEach(consumer -> consumer.accept(this));
+                return this;
+              }
+              `}
+              
+              `
 
       if (value.metaType === "object") {
         dependantTypeList.push({
           type: "element",
           value: value,
           name: type,
+          typeDeclaration: undefined,
           parentType: dependantType,
         })
-        return template()`
-              public ${nullableFullPathString} get${normalizeNameClass(key)}()
-              {
-                return this.${normalizeNameField(key)};
-              }
-              /*
-              public ${nullableFullPathString} GetOrInsertDefault_${normalizeNameClass(key)}()
-              {
-                if(this.${normalizeNameField(key)} == null) {
-                  this.${normalizeNameField(key)} = ${fullPathTypeInitialization};
-                }
-                return this.${normalizeNameField(key)};
-              }
-              */
-              public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} set${normalizeNameClass(key)}(${nullableFullPathString} value)
-              {
-                this.${normalizeNameField(key)} = value;
-                onChangeList.forEach(consumer -> consumer.accept(this));
-                return this;
-              }
-              `
+        return templateString;
       }
       if (value.metaType === "union" || value.metaType === "composition") {
         dependantTypeList.push({
           type: value.metaType,
           value: value,
           name: type,
+          typeDeclaration: undefined,
           parentType: dependantType,
         })
-        return template()`
-              public ${nullableFullPathString} get${normalizeNameClass(key)}()
-              {
-                return this.${normalizeNameField(key)};
-              }
-              public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} set${normalizeNameClass(key)}(${nullableFullPathString} value)
-              {
-                this.${normalizeNameField(key)} = value;
-                onChangeList.forEach(consumer -> consumer.accept(this));
-                return this;
-              }
-              `
+        return templateString
       }
       if (value.metaType === "reference") {
         dependantTypeList.push({
           type: "reference",
           value: value,
+          typeDeclaration: undefined,
           name: type,
         })
-        return template()`
-              public ${nullableTypeString} get${normalizeNameClass(key)}()
-              {
-                return this.${normalizeNameField(key)};
-              }
-              public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} set${normalizeNameClass(key)}(${nullableTypeString} value)
-              {
-                this.${normalizeNameField(key)} = value;
-                onChangeList.forEach(consumer -> consumer.accept(this));
-                return this;
-              }
-              `
+        return templateString;
       }
       return template()`/* ignored children key:${key} of type:${type}*/`
     }).filter(e => e).join("\n")

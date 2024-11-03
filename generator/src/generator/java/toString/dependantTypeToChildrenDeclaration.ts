@@ -65,6 +65,7 @@ export const dependantTypeToChildrenDeclaration = (dependantType: DependantType)
         dependantTypeList.push({
           type: "element",
           value: value,
+          typeDeclaration: undefined,
           name: type,
           parentType: dependantType,
         })
@@ -76,6 +77,7 @@ export const dependantTypeToChildrenDeclaration = (dependantType: DependantType)
         dependantTypeList.push({
           type: value.metaType,
           value: value,
+          typeDeclaration: undefined,
           name: type,
           parentType: dependantType,
         })
@@ -87,6 +89,7 @@ export const dependantTypeToChildrenDeclaration = (dependantType: DependantType)
         dependantTypeList.push({
           type: "reference",
           value: value,
+          typeDeclaration: undefined,
           name: type,
           parentType: dependantType,
         })

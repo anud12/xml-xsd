@@ -28,6 +28,7 @@ export function unionTypeDeclarationToString(directoryMetadata: DirectoryMetadat
         type: "element",
         value: type,
         name: dependantType.name,
+        typeDeclaration: dependantType.typeDeclaration,
         parentType: dependantType.parentType,
       }, [])
       return {

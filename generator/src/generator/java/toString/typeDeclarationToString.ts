@@ -36,7 +36,9 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
   dependantTypeList.push(...(childrenDeclaration?.dependantTypes ?? []))
 
   const extensionNames = extensions.map(e => `${basePackage}.interfaces.I${normalizeNameClass(e.name)}.I${normalizeNameClass(e.name)}`)
-
+  if (dependantType.typeDeclaration?.type === "complex") {
+    extensionNames.push(`${basePackage}.interfaces.I${normalizeNameClass(dependantType.name)}.I${normalizeNameClass(dependantType.name)}`)
+  }
   const templateString = template()`
     @EqualsAndHashCode
     @ToString
@@ -44,15 +46,7 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
     @AllArgsConstructor
     @NoArgsConstructor
     public class ${normalizeNameClass(dependantType.name)} ${extensionNames.length > 0 && `implements ${extensionNames.map(e => e + `<${normalizeNameClass(dependantType.name)}>`).join(", ")}`} {
-    
-      @ToString.Exclude()
-      @EqualsAndHashCode.Exclude()
-      @JsonIgnore
-      @Getter
-      @Setter
-      private RawNode rawNode = new RawNode();
-      private List<Consumer<${normalizeNameClass(dependantType.name)}>> onChangeList = new ArrayList<>();
-      
+          
       public static ${normalizeNameClass(dependantType.name)} fromRawNode(RawNode rawNode) {
         logEnter();
         var instance = new ${normalizeNameClass(dependantType.name)}();
@@ -68,12 +62,6 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
         logEnter();
         List<${normalizeNameClass(dependantType.name)}> returnList = rawNodeList.stream().map(${normalizeNameClass(dependantType.name)}::fromRawNode).collect(Collectors.toList());
         return logReturn(returnList);
-      }
-      
-      public Runnable onChange(Consumer<${normalizeNameClass(dependantType.name)}> onChange) {
-        logEnter();
-        onChangeList.add(onChange);
-        return logReturn(() -> onChangeList.remove(onChange));
       }
       
       //Attributes
@@ -96,6 +84,22 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
         `
   }).join("\n")}
   
+  
+      @ToString.Exclude()
+      @EqualsAndHashCode.Exclude()
+      @JsonIgnore
+      @Getter
+      @Setter
+      private RawNode rawNode = new RawNode();
+      private List<Consumer<${normalizeNameClass(dependantType.name)}>> onChangeList = new ArrayList<>();
+  
+      
+      public Subscription onChange(Consumer<${normalizeNameClass(dependantType.name)}> onChange) {
+        logEnter();
+        onChangeList.add(onChange);
+        return logReturn(() -> onChangeList.remove(onChange));
+      }
+      
       public void deserialize (RawNode rawNode) {
         this.rawNode = rawNode;
         // Godot.GD.Print("Deserializing ${dependantType.name}");
@@ -104,20 +108,20 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
         
         ${extensions.map(extension => {
     return template()`
-             // Deserialize arguments of ${extension.name}
-             ${dependantTypeToAttributeDeserializationBody(extension)}
-            `
-  })}
+                   // Deserialize arguments of ${extension.name}
+                   ${dependantTypeToAttributeDeserializationBody(extension)}
+                  `
+  }).join("\n")}
         
         //Deserialize children
         ${dependantTypeToChildrenDeserializationBody(dependantType)}
         
         ${extensions.map(extension => {
     return template()`
-               // Deserialize children of ${extension.name}
-               ${dependantTypeToChildrenDeserializationBody(extension)}
-              `
-  })}
+                     // Deserialize children of ${extension.name}
+                     ${dependantTypeToChildrenDeserializationBody(extension)}
+                    `
+  }).join("\n")}
       }
       
       public RawNode serializeIntoRawNode() 
@@ -127,10 +131,10 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
         
         ${extensions.map(extension => {
     return template()`
-             // Serialize arguments of ${extension.name}
-             ${dependantTypeToAttributeSerializationBody(extension)}
-            `
-  })}
+                   // Serialize arguments of ${extension.name}
+                   ${dependantTypeToAttributeSerializationBody(extension)}
+                  `
+  }).join("\n")}
         
         //Serialize children
         ${dependantTypeToChildrenSerializationBody(dependantType)}
@@ -161,13 +165,9 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
     
     /*
       dependant type:
-      ${JSON.stringify(dependantType, null, 2)}
+      ${JSON.stringify({...dependantType, parentType: undefined}, null, 2)}
     */
   `
-//${dependantTypeToAttributeGetterSetter(dependantType)}
-//       ${extensions.map(extension => dependantTypeToAttributeGetterSetter(extension)).join("\n")}
-//       ${dependantTypeToChildrenGetterSetter(dependantType)?.templateString}
-//       ${extensions.map(extension => dependantTypeToChildrenGetterSetter(extension)?.templateString).join("\n")}
 
   return {
     writtenClass: [dependantTypeGetFullQualifiedName(dependantType)],
@@ -227,72 +227,62 @@ function typeDeclarationElementToInterfaceString(directoryMetadata: DirectoryMet
       let type = getTypeName(value, key, dependantType);
       const normalizedName = normalizeNameClass(type);
 
-
-      let nullableFullPathString =  "";
-      if(value.isSingle) {
-        nullableFullPathString = `${getDependantTypePackage(dependantType)}.${normalizedName}.${normalizedName}`;
-      }
-      if(value.isNullable) {
-        nullableFullPathString = `Optional<${getDependantTypePackage(dependantType)}.${normalizedName}.${normalizedName}>`
-      }
-      if(!value.isSingle) {
-        nullableFullPathString = `List<${getDependantTypePackage(dependantType)}.${normalizedName}.${normalizedName}>`
+      let baseTypeString = `${getDependantTypePackage(dependantType)}.${normalizedName}.${normalizedName}`;
+      if (value.metaType === "reference") {
+        baseTypeString = `${basePackage}.${normalizedName}.${normalizedName}`;
       }
 
-      let nullableTypeString = ""
-      if(value.isSingle) {
-        nullableTypeString = `${basePackage}.${normalizedName}.${normalizedName}`;
-      }
-      if(value.isNullable) {
-        nullableTypeString = `Optional<${basePackage}.${normalizedName}.${normalizedName}>`
-      }
-      if(!value.isSingle) {
-        nullableTypeString = `List<${basePackage}.${normalizedName}.${normalizedName}>`
-      }
-      
-      let typeString = value.isSingle
-        ? `${basePackage}.${type}.${type}`
-        : `List<${basePackage}.${type}.${type}>`
-      typeString = value.isNullable
-        ? `${typeString}?`
-        : typeString
 
-      const fullPathTypeString = value.isSingle
-        ? `${getDependantTypePackage(dependantType)}.${normalizeNameClass(type)}.${normalizeNameClass(type)}`
-        : `List<${getDependantTypePackage(dependantType)}.${normalizeNameClass(type)}.${normalizeNameClass(type)}>`;
-      
+      let pathString = "";
+      if (value.isSingle) {
+        pathString = baseTypeString;
+      }
+      if (value.isNullable) {
+        pathString = `Optional<${baseTypeString}>`
+      }
+      if (!value.isSingle) {
+        pathString = `List<${baseTypeString}>`
+      }
+
+      const templateString = template()`
+          public ${pathString} get${normalizeNameClass(key)}();
+          public Stream<${baseTypeString}> stream${normalizeNameClass(key)}();
+          ${value.isSingle && template()`
+            public T set${normalizeNameClass(key)}(${baseTypeString} value);
+          `}
+          ${!value.isSingle && template()`
+            public T add${normalizeNameClass(key)}(${baseTypeString} value);
+            public T addAll${normalizeNameClass(key)}(List<${baseTypeString}> value);
+            public T remove${normalizeNameClass(key)}(${baseTypeString} value);
+          `}
+      `
+
       if (value.metaType === "object") {
         dependantTypeList.push({
           type: "element",
           value: value,
+          typeDeclaration: undefined,
           name: type,
         })
-        return template()`
-          public ${nullableFullPathString} get${normalizeNameClass(key)}();
-          public T set${normalizeNameClass(key)}(${nullableFullPathString} value);
-          `
+        return templateString;
       }
       if (value.metaType === "union" || value.metaType === "composition") {
         dependantTypeList.push({
           type: "union",
           value: value,
+          typeDeclaration: undefined,
           name: type,
         })
-        return template()`
-        public ${nullableFullPathString} get${normalizeNameClass(key)}();
-        public T set${normalizeNameClass(key)}(${nullableFullPathString} value);
-        `
+        return templateString;
       }
       if (value.metaType === "reference") {
         dependantTypeList.push({
           type: "reference",
           value: value,
+          typeDeclaration: undefined,
           name: type,
         })
-        return template()`
-        public ${nullableTypeString} get${normalizeNameClass(key)}();
-        public T set${normalizeNameClass(key)}(${nullableTypeString} value);
-        `
+        return templateString;
       }
       return template()`/* ignored children key:${key} of type:${type}*/`
     }).filter(e => e).join("\n")}
@@ -303,6 +293,10 @@ function typeDeclarationElementToInterfaceString(directoryMetadata: DirectoryMet
 
       public void serialize(Document document, Element element);
     }
+    
+    /*
+    ${JSON.stringify({...dependantType, parentType: undefined}, null, 2)}
+    */
   `
 
 
@@ -329,11 +323,17 @@ export function typeDeclarationElementToString(directoryMetadata: DirectoryMetad
   let localWrittenClassesList = [...writtenClassesList];
   const classResult = typeDeclarationElementToClassString(directoryMetadata, dependantType, extensions);
 
+
+  if (dependantType.typeDeclaration?.type === "complex") {
+    extensions.push(dependantType);
+  }
+
   const interfaceResult = extensions.map(extensinon => {
     const result = typeDeclarationElementToInterfaceString(directoryMetadata, localWrittenClassesList, extensinon);
     localWrittenClassesList = [...localWrittenClassesList, ...result.writtenClass]
     return result;
   })
+
 
   const commonImports = template()`
       import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -342,9 +342,9 @@ export function typeDeclarationElementToString(directoryMetadata: DirectoryMetad
       import org.w3c.dom.Element;
       import ro.anud.xml_xsd.implementation.util.RawNode;
       
-      import java.util.List;
-      import java.util.ArrayList;
-      import java.util.Optional;
+      import java.util.*;
+      import java.util.stream.Stream;
+      import ro.anud.xml_xsd.implementation.util.Subscription;
       import java.util.function.Consumer;
       import java.util.stream.Collectors;
       
@@ -360,13 +360,6 @@ export function typeDeclarationElementToString(directoryMetadata: DirectoryMetad
       `;
 
 
-  // namespace ${getDependantTypeChildNamespace(dependantType)} {}
-  // namespace XSD {
-  //   ${interfaceResult.map(e => e.templateString).filter(e => e).join("\n")}
-  // }
-  // namespace ${getDependantTypeNamespace(dependantType)} {
-  //   ${classResult.templateString}
-  // }
   const directory = getDependantTypePackage(dependantType)
     .replace(basePackage, "").split(".")
     .reduce((acc, value) => {

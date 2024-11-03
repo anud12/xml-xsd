@@ -25,6 +25,7 @@ export function compositionTypeDeclarationToString(directoryMetadata: DirectoryM
         return {
           type: "element",
           value: e.value,
+          typeDeclaration: dependantType.typeDeclaration,
           name: e.name,
         } satisfies DependantType;
       });
@@ -64,6 +65,7 @@ export function compositionTypeDeclarationToString(directoryMetadata: DirectoryM
         type: "element",
         value: type,
         name: dependantType.name,
+        typeDeclaration: dependantType.typeDeclaration,
         parentType: dependantType.parentType,
       }, extensions)
       return {

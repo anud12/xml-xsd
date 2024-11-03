@@ -60,7 +60,9 @@
     <xs:sequence>
       <xs:element name="from" maxOccurs="unbounded">
         <xs:complexType>
-          <xs:group ref="group__math_operations"/>
+          <xs:sequence>
+            <xs:element name="operation" type="type__math_operations"/>
+          </xs:sequence>
           <xs:attribute name="participant"
                         type="type_person_select"
                         use="required"/>
@@ -157,7 +159,7 @@
               </xs:annotation>
             </xs:element>
           </xs:sequence>
-          <xs:attribute name="property_rule_ref" type="xs:string"/>
+          <xs:attribute name="property_rule_ref" type="xs:string" use="required"/>
         </xs:complexType>
       </xs:element>
       <xs:element name="classification" minOccurs="0" maxOccurs="unbounded">
@@ -167,7 +169,7 @@
       </xs:element>
       <xs:element name="race" minOccurs="0">
         <xs:complexType>
-          <xs:attribute name="race_rule_ref" use="required"/>
+          <xs:attribute name="race_rule_ref" type="xs:string" use="required"/>
         </xs:complexType>
       </xs:element>
 
@@ -243,7 +245,7 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:group name="group__operation__and">
+  <xs:complexType name="type__math_operations_and">
     <xs:sequence>
       <xs:element name="add_property" minOccurs="0">
         <xs:complexType>
@@ -252,37 +254,30 @@
       </xs:element>
       <xs:element name="and" minOccurs="0" maxOccurs="unbounded">
         <xs:complexType>
-          <xs:sequence>
-            <xs:group ref="group__operation__and" minOccurs="0"/>
-          </xs:sequence>
-          <xs:attribute name="do" use="required" type="type__group__operation__and"/>
-          <xs:attribute name="value" use="required" type="xs:int"/>
+          <xs:complexContent>
+            <xs:extension base="type__math_operations_and">
+              <xs:attribute name="do" use="required" type="type__group__operation__and"/>
+              <xs:attribute name="value" use="required" type="xs:int"/>
+            </xs:extension>
+          </xs:complexContent>
         </xs:complexType>
       </xs:element>
     </xs:sequence>
-  </xs:group>
-
-  <xs:complexType name="type__math_operations">
-    <xs:group ref="group__operation__and" minOccurs="0"/>
-    <xs:attribute name="initial" use="required" type="xs:int">
-      <xs:annotation>
-        <xs:documentation>
-          Represents the initial value of the operation.
-        </xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
   </xs:complexType>
 
-  <xs:group name="group__math_operations">
-    <xs:sequence>
-      <xs:element name="operation">
-        <xs:complexType>
-          <xs:group ref="group__operation__and" minOccurs="0"/>
-          <xs:attribute name="initial" use="required" type="xs:int"/>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:group>
+  <xs:complexType name="type__math_operations">
+    <xs:complexContent>
+      <xs:extension base="type__math_operations_and">
+        <xs:attribute name="initial" use="required" type="xs:int">
+          <xs:annotation>
+            <xs:documentation>
+              Represents the initial value of the operation.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
 
 
   <!--#########-->
@@ -633,8 +628,8 @@
                             </xs:complexType>
                           </xs:element>
                         </xs:sequence>
-                        <xs:attribute name="id" use="required"/>
-                        <xs:attribute name="units" use="required"/>
+                        <xs:attribute name="id" type="xs:string" use="required"/>
+                        <xs:attribute name="units" type="xs:string" use="required"/>
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>
@@ -651,7 +646,7 @@
                           <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
                             <xs:complexType>
                               <xs:sequence>
-                                <xs:group ref="group__math_operations"/>
+                                <xs:element name="operation" type="type__math_operations"/>
                               </xs:sequence>
                               <xs:attribute name="property_rule_ref" type="xs:string" use="required"/>
                               <xs:attribute name="is" use="required">
@@ -730,8 +725,11 @@
                           <xs:element name="property_bonus" minOccurs="0"
                                       maxOccurs="unbounded">
                             <xs:complexType>
-                              <xs:group ref="group__math_operations"/>
-                              <xs:attribute name="property_rule_ref" type="xs:string"/>
+                              <xs:complexContent>
+                                <xs:extension base="type__math_operations">
+                                  <xs:attribute name="property_rule_ref" type="xs:string" use="required"/>
+                                </xs:extension>
+                              </xs:complexContent>
                             </xs:complexType>
                           </xs:element>
                           <xs:element name="icon" type="type_icon" minOccurs="0"/>
@@ -759,12 +757,14 @@
                           <xs:element name="mutations" minOccurs="0">
                             <xs:annotation>
                               <xs:documentation>
-                                Represents the mutations that can be applied to the properties of the person initiating the action.
+                                Represents the mutations that can be applied to the properties of the person initiating
+                                the action.
                               </xs:documentation>
                             </xs:annotation>
                             <xs:complexType>
                               <xs:sequence>
-                                <xs:element name="property_mutation" minOccurs="0" maxOccurs="unbounded" type="type__property_mutation"/>
+                                <xs:element name="property_mutation" minOccurs="0" maxOccurs="unbounded"
+                                            type="type__property_mutation"/>
                               </xs:sequence>
                             </xs:complexType>
                           </xs:element>
@@ -794,12 +794,14 @@
                                 <xs:element name="mutations" minOccurs="0">
                                   <xs:annotation>
                                     <xs:documentation>
-                                      Represents the mutations that can be applied to the properties of the person the action is applied to.
+                                      Represents the mutations that can be applied to the properties of the person the
+                                      action is applied to.
                                     </xs:documentation>
                                   </xs:annotation>
                                   <xs:complexType>
                                     <xs:sequence>
-                                      <xs:element name="property_mutation" minOccurs="0" type="type__property_mutation"/>
+                                      <xs:element name="property_mutation" minOccurs="0"
+                                                  type="type__property_mutation"/>
                                     </xs:sequence>
                                   </xs:complexType>
                                 </xs:element>
@@ -835,7 +837,9 @@
                               <xs:sequence>
                                 <xs:element name="value">
                                   <xs:complexType>
-                                    <xs:group ref="group__math_operations"/>
+                                    <xs:sequence>
+                                      <xs:element name="operation" type="type__math_operations"/>
+                                    </xs:sequence>
                                     <xs:attribute name="target"
                                                   type="type_person_select"
                                                   use="required"/>
@@ -843,7 +847,9 @@
                                 </xs:element>
                                 <xs:element name="expected">
                                   <xs:complexType>
-                                    <xs:group ref="group__math_operations"/>
+                                    <xs:sequence>
+                                      <xs:element name="operation" type="type__math_operations"/>
+                                    </xs:sequence>
                                     <xs:attribute name="target"
                                                   type="type_person_select"
                                                   use="required"/>
@@ -858,7 +864,9 @@
                               <xs:sequence>
                                 <xs:element name="from" maxOccurs="unbounded">
                                   <xs:complexType>
-                                    <xs:group ref="group__math_operations"/>
+                                    <xs:sequence>
+                                      <xs:element name="operation" type="type__math_operations"/>
+                                    </xs:sequence>
                                     <xs:attribute name="participant"
                                                   type="type_person_select"
                                                   use="required"/>
@@ -1162,7 +1170,8 @@
                                           <xs:attribute name="adjacent_depth_limit" type="xs:int" use="required">
                                             <xs:annotation>
                                               <xs:documentation>
-                                                When node is created, it checks all links, recursive at the depth indicated,
+                                                When node is created, it checks all links, recursive at the depth
+                                                indicated,
                                                 to add links to this node, if applicable based on conditions of
                                                 this node and target node.
                                               </xs:documentation>
@@ -1175,7 +1184,8 @@
                                     <xs:attribute name="angle" type="xs:int" use="required">
                                       <xs:annotation>
                                         <xs:documentation>
-                                          Represents the angle of the link group, used as minimum value when creating a link.
+                                          Represents the angle of the link group, used as minimum value when creating a
+                                          link.
                                         </xs:documentation>
                                       </xs:annotation>
                                     </xs:attribute>
@@ -1267,7 +1277,7 @@
                         <xs:sequence>
                           <xs:element name="race" minOccurs="0">
                             <xs:complexType>
-                              <xs:attribute name="race_rule_ref" use="required"/>
+                              <xs:attribute name="race_rule_ref" type="xs:string" use="required"/>
                             </xs:complexType>
                           </xs:element>
                           <xs:element name="properties" minOccurs="0">
@@ -1278,6 +1288,7 @@
                                   <xs:complexType>
                                     <xs:attribute name="property_rule_ref" type="xs:string" use="required"/>
                                     <xs:attribute name="value"
+                                                  type="xs:int"
                                                   use="required"/>
                                   </xs:complexType>
                                 </xs:element>
@@ -1392,17 +1403,21 @@
                                                 <xs:sequence>
                                                   <xs:element name="person" minOccurs="0" maxOccurs="unbounded">
                                                     <xs:complexType>
-                                                      <xs:attribute name="person_id_ref" type="xs:string" use="required">
+                                                      <xs:attribute name="person_id_ref" type="xs:string"
+                                                                    use="required">
                                                         <xs:annotation>
                                                           <xs:documentation>
-                                                            Represents the reference to the person that will be linked to.
+                                                            Represents the reference to the person that will be linked
+                                                            to.
                                                           </xs:documentation>
                                                         </xs:annotation>
                                                       </xs:attribute>
-                                                      <xs:attribute name="accumulated_progress" type="xs:int" use="required">
+                                                      <xs:attribute name="accumulated_progress" type="xs:int"
+                                                                    use="required">
                                                         <xs:annotation>
                                                           <xs:documentation>
-                                                            Represents the accumulated progress of the person in the link.
+                                                            Represents the accumulated progress of the person in the
+                                                            link.
                                                           </xs:documentation>
                                                         </xs:annotation>
                                                       </xs:attribute>
