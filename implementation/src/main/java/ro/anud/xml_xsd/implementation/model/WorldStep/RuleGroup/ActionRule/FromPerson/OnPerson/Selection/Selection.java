@@ -19,6 +19,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
+  @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Selection implements  ro.anud.xml_xsd.implementation.model.interfaces.IType_personSelection.IType_personSelection<Selection>,  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static Selection fromRawNode(RawNode rawNode) {
@@ -70,6 +71,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @Getter
     @Setter
     private RawNode rawNode = new RawNode();
+
+    @Getter
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
@@ -78,10 +81,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
     public String nodeName() {
       return "selection";
-    }
-
-    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getParentNode() {
-      return parentNode;
     }
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -132,15 +131,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
 
       //Serialize children
-      rawNode.setChildren("from_person_same_location_graph_node", fromPersonSameLocationGraphNode.stream().map(o -> o.serializeIntoRawNode()).toList());
+      rawNode.setChildren("from_person_same_location_graph_node", fromPersonSameLocationGraphNode.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.Selection.FromPersonSameLocationGraphNode.FromPersonSameLocationGraphNode::serializeIntoRawNode).toList());
 
       // Serialize children of type__person_selection
-rawNode.setChildren("radius", radius.stream().map(o -> o.serializeIntoRawNode()).toList());
-rawNode.setChildren("min", min.stream().map(o -> o.serializeIntoRawNode()).toList());
-rawNode.setChildren("max", max.stream().map(o -> o.serializeIntoRawNode()).toList());
-rawNode.setChildren("property", property.stream().map(o -> o.serializeIntoRawNode()).toList());
-rawNode.setChildren("classification", classification.stream().map(o -> o.serializeIntoRawNode()).toList());
-rawNode.setChildren("race", race.stream().map(o -> o.serializeIntoRawNode()).toList());
+rawNode.setChildren("radius", radius.stream().map(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations::serializeIntoRawNode).toList());
+rawNode.setChildren("min", min.stream().map(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations::serializeIntoRawNode).toList());
+rawNode.setChildren("max", max.stream().map(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations::serializeIntoRawNode).toList());
+rawNode.setChildren("property", property.stream().map(ro.anud.xml_xsd.implementation.model.Type_personSelection.Property.Property::serializeIntoRawNode).toList());
+rawNode.setChildren("classification", classification.stream().map(ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification::serializeIntoRawNode).toList());
+rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race::serializeIntoRawNode).toList());
       return rawNode;
     }
 

@@ -19,6 +19,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
+  @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Person_moveTo implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static Person_moveTo fromRawNode(RawNode rawNode) {
@@ -61,6 +62,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @Getter
     @Setter
     private RawNode rawNode = new RawNode();
+
+    @Getter
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
@@ -69,10 +72,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
     public String nodeName() {
       return "person.move_to";
-    }
-
-    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getParentNode() {
-      return parentNode;
     }
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -115,8 +114,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       rawNode.setAttribute("person_id_ref", this.personIdRef);
 
       //Serialize children
-      rawNode.setChildren("find_path_towards", findPathTowards.stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("path", path.stream().map(o -> o.serializeIntoRawNode()).toList());
+      rawNode.setChildren("find_path_towards", findPathTowards.stream().map(ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection::serializeIntoRawNode).toList());
+      rawNode.setChildren("path", path.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Path.Path::serializeIntoRawNode).toList());
       return rawNode;
     }
 

@@ -1,6 +1,8 @@
 import {DependantType} from "../../typeToString";
 import {template} from "../../../../template/template";
 import {normalizeNameClass, normalizeNameField} from "../normalizeNameClass";
+import {basePackage, getDependantTypePackage} from "./getDependantTypePackage";
+import {getTypeName} from "../geTypeName";
 
 export const dependantTypeToChildrenSerializationBody = (dependantType: DependantType): string | undefined => {
 
@@ -12,13 +14,22 @@ export const dependantTypeToChildrenSerializationBody = (dependantType: Dependan
   return Object.entries(dependantType.value.value).map(([key, value]) => {
     if (value.metaType === "object" || value.metaType === "union" || value.metaType === "composition" || value.metaType === "reference") {
 
+
+      let type = getTypeName(value, key, dependantType);
+      const normalizedName = normalizeNameClass(type);
+      let fullClassName = `${getDependantTypePackage(dependantType)}.${normalizedName}.${normalizedName}`
+      if (value.metaType === "reference") {
+        fullClassName = `${basePackage}.${normalizedName}.${normalizedName}`;
+      }
+
+
       if(value.isNullable) {
-        return template()`rawNode.setChildren("${key}", ${normalizeNameField(key)}.stream().map(o -> o.serializeIntoRawNode()).toList());`;
+        return template()`rawNode.setChildren("${key}", ${normalizeNameField(key)}.stream().map(${fullClassName}::serializeIntoRawNode).toList());`;
       }
       if(value.isSingle) {
-        return template()`rawNode.setChildren("${key}", Optional.ofNullable(${normalizeNameField(key)}).stream().map(o -> o.serializeIntoRawNode()).toList());`;
+        return template()`rawNode.setChildren("${key}", Optional.ofNullable(${normalizeNameField(key)}).stream().map(${fullClassName}::serializeIntoRawNode).toList());`;
       }
-      return template()`rawNode.setChildren("${key}", ${normalizeNameField(key)}.stream().map(o -> o.serializeIntoRawNode()).toList());`;
+      return template()`rawNode.setChildren("${key}", ${normalizeNameField(key)}.stream().map(${fullClassName}::serializeIntoRawNode).toList());`;
 
 
     }

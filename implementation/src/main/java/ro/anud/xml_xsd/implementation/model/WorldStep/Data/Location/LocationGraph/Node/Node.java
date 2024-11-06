@@ -19,6 +19,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
+  @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Node implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static Node fromRawNode(RawNode rawNode) {
@@ -65,6 +66,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @Getter
     @Setter
     private RawNode rawNode = new RawNode();
+
+    @Getter
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
@@ -73,10 +76,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
     public String nodeName() {
       return "node";
-    }
-
-    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getParentNode() {
-      return parentNode;
     }
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -133,11 +132,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       rawNode.setAttribute("id", this.id);
 
       //Serialize children
-      rawNode.setChildren("name", name.stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("position", position.stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("classifications", classifications.stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("links", links.stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("people", people.stream().map(o -> o.serializeIntoRawNode()).toList());
+      rawNode.setChildren("name", name.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Name.Name::serializeIntoRawNode).toList());
+      rawNode.setChildren("position", position.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Position.Position::serializeIntoRawNode).toList());
+      rawNode.setChildren("classifications", classifications.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Classifications.Classifications::serializeIntoRawNode).toList());
+      rawNode.setChildren("links", links.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.Links::serializeIntoRawNode).toList());
+      rawNode.setChildren("people", people.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.People.People::serializeIntoRawNode).toList());
       return rawNode;
     }
 

@@ -19,6 +19,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
+  @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class ToOption implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static ToOption fromRawNode(RawNode rawNode) {
@@ -64,6 +65,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @Getter
     @Setter
     private RawNode rawNode = new RawNode();
+
+    @Getter
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
@@ -72,10 +75,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
     public String nodeName() {
       return "to_option";
-    }
-
-    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getParentNode() {
-      return parentNode;
     }
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -124,8 +123,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       rawNode.setAttribute("adjacent_depth_limit", this.adjacentDepthLimit);
 
       //Serialize children
-      rawNode.setChildren("distance_to_progress_multiplier", distanceToProgressMultiplier.stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("person_progress_property", personProgressProperty.stream().map(o -> o.serializeIntoRawNode()).toList());
+      rawNode.setChildren("distance_to_progress_multiplier", distanceToProgressMultiplier.stream().map(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations::serializeIntoRawNode).toList());
+      rawNode.setChildren("person_progress_property", personProgressProperty.stream().map(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations::serializeIntoRawNode).toList());
       return rawNode;
     }
 

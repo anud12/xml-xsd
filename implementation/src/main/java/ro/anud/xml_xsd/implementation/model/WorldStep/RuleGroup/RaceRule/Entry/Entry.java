@@ -19,6 +19,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
+  @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Entry implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static Entry fromRawNode(RawNode rawNode) {
@@ -64,6 +65,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @Getter
     @Setter
     private RawNode rawNode = new RawNode();
+
+    @Getter
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
@@ -72,10 +75,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
     public String nodeName() {
       return "entry";
-    }
-
-    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getParentNode() {
-      return parentNode;
     }
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -130,11 +129,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       rawNode.setAttribute("id", this.id);
 
       //Serialize children
-      rawNode.setChildren("vision", vision.stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("movement", movement.stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("name", name.stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("property_bonus", propertyBonus.stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("icon", icon.stream().map(o -> o.serializeIntoRawNode()).toList());
+      rawNode.setChildren("vision", vision.stream().map(ro.anud.xml_xsd.implementation.model.TypeRange.TypeRange::serializeIntoRawNode).toList());
+      rawNode.setChildren("movement", movement.stream().map(ro.anud.xml_xsd.implementation.model.TypeRange.TypeRange::serializeIntoRawNode).toList());
+      rawNode.setChildren("name", name.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.Entry.Name.Name::serializeIntoRawNode).toList());
+      rawNode.setChildren("property_bonus", propertyBonus.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.Entry.PropertyBonus.PropertyBonus::serializeIntoRawNode).toList());
+      rawNode.setChildren("icon", icon.stream().map(ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon::serializeIntoRawNode).toList());
       return rawNode;
     }
 

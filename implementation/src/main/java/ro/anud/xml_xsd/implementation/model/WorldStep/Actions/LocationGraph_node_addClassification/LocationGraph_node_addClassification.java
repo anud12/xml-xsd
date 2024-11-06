@@ -19,6 +19,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
+  @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class LocationGraph_node_addClassification implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static LocationGraph_node_addClassification fromRawNode(RawNode rawNode) {
@@ -60,6 +61,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @Getter
     @Setter
     private RawNode rawNode = new RawNode();
+
+    @Getter
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
@@ -68,10 +71,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
     public String nodeName() {
       return "location_graph.node.add_classification";
-    }
-
-    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getParentNode() {
-      return parentNode;
     }
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -112,8 +111,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       //Serialize arguments
 
       //Serialize children
-      rawNode.setChildren("node_graph_selection", Optional.ofNullable(nodeGraphSelection).stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("to_be_added__classification", Optional.ofNullable(toBeAdded_classification).stream().map(o -> o.serializeIntoRawNode()).toList());
+      rawNode.setChildren("node_graph_selection", Optional.ofNullable(nodeGraphSelection).stream().map(ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection::serializeIntoRawNode).toList());
+      rawNode.setChildren("to_be_added__classification", Optional.ofNullable(toBeAdded_classification).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_addClassification.ToBeAdded_classification.ToBeAdded_classification::serializeIntoRawNode).toList());
       return rawNode;
     }
 

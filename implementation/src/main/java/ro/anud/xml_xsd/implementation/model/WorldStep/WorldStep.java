@@ -19,6 +19,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
+  @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class WorldStep implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static WorldStep fromRawNode(RawNode rawNode) {
@@ -62,6 +63,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @Getter
     @Setter
     private RawNode rawNode = new RawNode();
+
+    @Getter
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
@@ -70,10 +73,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
     public String nodeName() {
       return "world_step";
-    }
-
-    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getParentNode() {
-      return parentNode;
     }
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -122,10 +121,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       //Serialize arguments
 
       //Serialize children
-      rawNode.setChildren("world_metadata", Optional.ofNullable(worldMetadata).stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("rule_group", ruleGroup.stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("data", Optional.ofNullable(data).stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("actions", actions.stream().map(o -> o.serializeIntoRawNode()).toList());
+      rawNode.setChildren("world_metadata", Optional.ofNullable(worldMetadata).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata::serializeIntoRawNode).toList());
+      rawNode.setChildren("rule_group", ruleGroup.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup::serializeIntoRawNode).toList());
+      rawNode.setChildren("data", Optional.ofNullable(data).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data::serializeIntoRawNode).toList());
+      rawNode.setChildren("actions", actions.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions::serializeIntoRawNode).toList());
       return rawNode;
     }
 

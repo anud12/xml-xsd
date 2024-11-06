@@ -19,6 +19,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
+  @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class WorldMetadata implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static WorldMetadata fromRawNode(RawNode rawNode) {
@@ -64,6 +65,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @Getter
     @Setter
     private RawNode rawNode = new RawNode();
+
+    @Getter
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
@@ -72,10 +75,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
     public String nodeName() {
       return "world_metadata";
-    }
-
-    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getParentNode() {
-      return parentNode;
     }
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -132,12 +131,12 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       //Serialize arguments
 
       //Serialize children
-      rawNode.setChildren("previous_world_step", previousWorldStep.stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("next_world_step", nextWorldStep.stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("elapsed_time", Optional.ofNullable(elapsedTime).stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("stepDuration", Optional.ofNullable(stepDuration).stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("counter", Optional.ofNullable(counter).stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("randomization_table", Optional.ofNullable(randomizationTable).stream().map(o -> o.serializeIntoRawNode()).toList());
+      rawNode.setChildren("previous_world_step", previousWorldStep.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.PreviousWorldStep.PreviousWorldStep::serializeIntoRawNode).toList());
+      rawNode.setChildren("next_world_step", nextWorldStep.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.NextWorldStep.NextWorldStep::serializeIntoRawNode).toList());
+      rawNode.setChildren("elapsed_time", Optional.ofNullable(elapsedTime).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.ElapsedTime.ElapsedTime::serializeIntoRawNode).toList());
+      rawNode.setChildren("stepDuration", Optional.ofNullable(stepDuration).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.StepDuration.StepDuration::serializeIntoRawNode).toList());
+      rawNode.setChildren("counter", Optional.ofNullable(counter).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.Counter.Counter::serializeIntoRawNode).toList());
+      rawNode.setChildren("randomization_table", Optional.ofNullable(randomizationTable).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.RandomizationTable.RandomizationTable::serializeIntoRawNode).toList());
       return rawNode;
     }
 

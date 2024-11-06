@@ -19,6 +19,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
+  @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class ExistingPerson implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static ExistingPerson fromRawNode(RawNode rawNode) {
@@ -61,6 +62,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @Getter
     @Setter
     private RawNode rawNode = new RawNode();
+
+    @Getter
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
@@ -69,10 +72,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
     public String nodeName() {
       return "existing_person";
-    }
-
-    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getParentNode() {
-      return parentNode;
     }
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -113,7 +112,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       this.max.ifPresent(o -> rawNode.setAttribute("max", o));
 
       //Serialize children
-      rawNode.setChildren("person_selection", Optional.ofNullable(personSelection).stream().map(o -> o.serializeIntoRawNode()).toList());
+      rawNode.setChildren("person_selection", Optional.ofNullable(personSelection).stream().map(ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection::serializeIntoRawNode).toList());
       return rawNode;
     }
 

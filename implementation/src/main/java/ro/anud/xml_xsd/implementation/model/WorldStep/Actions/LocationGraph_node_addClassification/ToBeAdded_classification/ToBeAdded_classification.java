@@ -19,6 +19,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
+  @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class ToBeAdded_classification implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static ToBeAdded_classification fromRawNode(RawNode rawNode) {
@@ -60,6 +61,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @Getter
     @Setter
     private RawNode rawNode = new RawNode();
+
+    @Getter
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
@@ -68,10 +71,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
     public String nodeName() {
       return "to_be_added__classification";
-    }
-
-    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getParentNode() {
-      return parentNode;
     }
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -110,7 +109,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       rawNode.setAttribute("location_classification_rule_ref", this.locationClassificationRuleRef);
 
       //Serialize children
-      rawNode.setChildren("and", and.stream().map(o -> o.serializeIntoRawNode()).toList());
+      rawNode.setChildren("and", and.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_addClassification.ToBeAdded_classification.And.And::serializeIntoRawNode).toList());
       return rawNode;
     }
 

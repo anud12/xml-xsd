@@ -19,6 +19,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
+  @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class NameToken implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static NameToken fromRawNode(RawNode rawNode) {
@@ -61,6 +62,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @Getter
     @Setter
     private RawNode rawNode = new RawNode();
+
+    @Getter
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
@@ -69,10 +72,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
     public String nodeName() {
       return "name_token";
-    }
-
-    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getParentNode() {
-      return parentNode;
     }
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -115,8 +114,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       rawNode.setAttribute("prefix", this.prefix);
 
       //Serialize children
-      rawNode.setChildren("ref", _ref.stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("one_of", Optional.ofNullable(oneOf).stream().map(o -> o.serializeIntoRawNode()).toList());
+      rawNode.setChildren("ref", _ref.stream().map(ro.anud.xml_xsd.implementation.model.Group_nameToken.NameToken._ref._ref::serializeIntoRawNode).toList());
+      rawNode.setChildren("one_of", Optional.ofNullable(oneOf).stream().map(ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken::serializeIntoRawNode).toList());
       return rawNode;
     }
 

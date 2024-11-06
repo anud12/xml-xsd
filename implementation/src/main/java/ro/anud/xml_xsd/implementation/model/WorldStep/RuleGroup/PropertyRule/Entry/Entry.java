@@ -19,6 +19,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
+  @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Entry implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static Entry fromRawNode(RawNode rawNode) {
@@ -63,6 +64,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @Getter
     @Setter
     private RawNode rawNode = new RawNode();
+
+    @Getter
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
@@ -71,10 +74,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
     public String nodeName() {
       return "entry";
-    }
-
-    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getParentNode() {
-      return parentNode;
     }
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -123,9 +122,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       rawNode.setAttribute("units", this.units);
 
       //Serialize children
-      rawNode.setChildren("person_default", personDefault.stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("item_default", itemDefault.stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("property-threshold", propertyThreshold.stream().map(o -> o.serializeIntoRawNode()).toList());
+      rawNode.setChildren("person_default", personDefault.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PersonDefault.PersonDefault::serializeIntoRawNode).toList());
+      rawNode.setChildren("item_default", itemDefault.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.ItemDefault.ItemDefault::serializeIntoRawNode).toList());
+      rawNode.setChildren("property-threshold", propertyThreshold.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PropertyThreshold.PropertyThreshold::serializeIntoRawNode).toList());
       return rawNode;
     }
 

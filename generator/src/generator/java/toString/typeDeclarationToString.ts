@@ -47,6 +47,7 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
     @Builder
     @AllArgsConstructor
     @NoArgsConstructor
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     public class ${normalizeNameClass(dependantType.name)} implements ${extensionNames.length > 0 && ` ${extensionNames.map(e => e + `<${normalizeNameClass(dependantType.name)}>`).join(", ")}, `} ro.anud.xml_xsd.implementation.util.LinkedNode {
           
           
@@ -104,6 +105,8 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
       @Getter
       @Setter
       private RawNode rawNode = new RawNode();
+      
+      @Getter
       @ToString.Exclude()
       @EqualsAndHashCode.Exclude()
       @JsonIgnore
@@ -114,10 +117,6 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
         return "${dependantType.name}";
       }
   
-      public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getParentNode() {
-        return parentNode;
-      }
-      
       public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
         this.parentNode = Optional.of(linkedNode);
       }

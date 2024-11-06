@@ -19,6 +19,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
+  @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class NodeRule implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static NodeRule fromRawNode(RawNode rawNode) {
@@ -63,6 +64,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @Getter
     @Setter
     private RawNode rawNode = new RawNode();
+
+    @Getter
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
@@ -71,10 +74,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
     public String nodeName() {
       return "node_rule";
-    }
-
-    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getParentNode() {
-      return parentNode;
     }
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -125,10 +124,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       rawNode.setAttribute("id", this.id);
 
       //Serialize children
-      rawNode.setChildren("name", name.stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("classifications", classifications.stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("link_group_list", linkGroupList.stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("existing_person", existingPerson.stream().map(o -> o.serializeIntoRawNode()).toList());
+      rawNode.setChildren("name", name.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.Name.Name::serializeIntoRawNode).toList());
+      rawNode.setChildren("classifications", classifications.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.Classifications.Classifications::serializeIntoRawNode).toList());
+      rawNode.setChildren("link_group_list", linkGroupList.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroupList::serializeIntoRawNode).toList());
+      rawNode.setChildren("existing_person", existingPerson.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.ExistingPerson.ExistingPerson::serializeIntoRawNode).toList());
       return rawNode;
     }
 

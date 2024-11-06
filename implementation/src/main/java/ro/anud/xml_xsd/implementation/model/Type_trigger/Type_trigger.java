@@ -19,6 +19,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
+  @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Type_trigger implements  ro.anud.xml_xsd.implementation.model.interfaces.IType_trigger.IType_trigger<Type_trigger>,  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static Type_trigger fromRawNode(RawNode rawNode) {
@@ -59,6 +60,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @Getter
     @Setter
     private RawNode rawNode = new RawNode();
+
+    @Getter
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
@@ -67,10 +70,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
     public String nodeName() {
       return "type__trigger";
-    }
-
-    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getParentNode() {
-      return parentNode;
     }
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -107,7 +106,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       //Serialize arguments
 
       //Serialize children
-      rawNode.setChildren("person_action_used", Optional.ofNullable(personActionUsed).stream().map(o -> o.serializeIntoRawNode()).toList());
+      rawNode.setChildren("person_action_used", Optional.ofNullable(personActionUsed).stream().map(ro.anud.xml_xsd.implementation.model.Type_trigger.PersonActionUsed.PersonActionUsed::serializeIntoRawNode).toList());
       return rawNode;
     }
 

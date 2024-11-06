@@ -19,6 +19,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
+  @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Person implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static Person fromRawNode(RawNode rawNode) {
@@ -65,6 +66,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @Getter
     @Setter
     private RawNode rawNode = new RawNode();
+
+    @Getter
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
@@ -73,10 +76,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
     public String nodeName() {
       return "person";
-    }
-
-    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getParentNode() {
-      return parentNode;
     }
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -133,11 +132,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       this.name.ifPresent(o -> rawNode.setAttribute("name", o));
 
       //Serialize children
-      rawNode.setChildren("race", race.stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("properties", properties.stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("relations", relations.stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("classifications", classifications.stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("icon", icon.stream().map(o -> o.serializeIntoRawNode()).toList());
+      rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race::serializeIntoRawNode).toList());
+      rawNode.setChildren("properties", properties.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties::serializeIntoRawNode).toList());
+      rawNode.setChildren("relations", relations.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Relations.Relations::serializeIntoRawNode).toList());
+      rawNode.setChildren("classifications", classifications.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications::serializeIntoRawNode).toList());
+      rawNode.setChildren("icon", icon.stream().map(ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon::serializeIntoRawNode).toList());
       return rawNode;
     }
 

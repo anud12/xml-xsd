@@ -19,6 +19,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
+  @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class PersonToPerson implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static PersonToPerson fromRawNode(RawNode rawNode) {
@@ -62,6 +63,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @Getter
     @Setter
     private RawNode rawNode = new RawNode();
+
+    @Getter
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
@@ -70,10 +73,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
     public String nodeName() {
       return "person_to_person";
-    }
-
-    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getParentNode() {
-      return parentNode;
     }
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -120,9 +119,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       rawNode.setAttribute("id", this.id);
 
       //Serialize children
-      rawNode.setChildren("test", Optional.ofNullable(test).stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("property_mutation", propertyMutation.stream().map(o -> o.serializeIntoRawNode()).toList());
-      rawNode.setChildren("location_mutation", locationMutation.stream().map(o -> o.serializeIntoRawNode()).toList());
+      rawNode.setChildren("test", Optional.ofNullable(test).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.Test.Test::serializeIntoRawNode).toList());
+      rawNode.setChildren("property_mutation", propertyMutation.stream().map(ro.anud.xml_xsd.implementation.model.Type_propertyMutationOn.Type_propertyMutationOn::serializeIntoRawNode).toList());
+      rawNode.setChildren("location_mutation", locationMutation.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.LocationMutation.LocationMutation::serializeIntoRawNode).toList());
       return rawNode;
     }
 
