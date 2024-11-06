@@ -180,12 +180,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public LinkGroupRule addToOption(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LinkGroupRuleList.LinkGroupRule.ToOption.ToOption value)
     {
       this.toOption.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public LinkGroupRule addAllToOption(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LinkGroupRuleList.LinkGroupRule.ToOption.ToOption> value)
     {
       this.toOption.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

@@ -143,6 +143,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Property setOperation(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations value)
     {
       this.operation = value;
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

@@ -133,6 +133,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public LocationGraph_node_addClassification setNodeGraphSelection(ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection value)
     {
       this.nodeGraphSelection = value;
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -148,6 +149,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public LocationGraph_node_addClassification setToBeAdded_classification(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_addClassification.ToBeAdded_classification.ToBeAdded_classification value)
     {
       this.toBeAdded_classification = value;
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

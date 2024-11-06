@@ -20,6 +20,9 @@ export function interfaceTypeDeclarationToString(directoryMetadata: DirectoryMet
 
   const templateString = template()`
     public interface ${interfaceName}<T> {
+    
+      public RawNode getRawNode();
+    
       ${dependantType.value.attributes?.metaType === "object" && template()`
         //Attributes
         ${Object.entries(dependantType.value.attributes.value ?? {}).map(([key, value]) => {

@@ -120,6 +120,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.person;
     }
+    public ro.anud.xml_xsd.implementation.model.Type_action.On.Person.Person getPersonOrDefault()
+    {
+      return this.person.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_action.On.Person.Person();
+        instance.setParentNode(this);
+        this.person = Optional.of(instance);
+        return this.person.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_action.On.Person.Person> streamPerson()
     {
       return person.stream();
@@ -127,6 +136,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public On setPerson(ro.anud.xml_xsd.implementation.model.Type_action.On.Person.Person value)
     {
       this.person = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

@@ -134,6 +134,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.and;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_addClassification.ToBeAdded_classification.And.And getAndOrDefault()
+    {
+      return this.and.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_addClassification.ToBeAdded_classification.And.And();
+        instance.setParentNode(this);
+        this.and = Optional.of(instance);
+        return this.and.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_addClassification.ToBeAdded_classification.And.And> streamAnd()
     {
       return and.stream();
@@ -141,6 +150,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public ToBeAdded_classification setAnd(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_addClassification.ToBeAdded_classification.And.And value)
     {
       this.and = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

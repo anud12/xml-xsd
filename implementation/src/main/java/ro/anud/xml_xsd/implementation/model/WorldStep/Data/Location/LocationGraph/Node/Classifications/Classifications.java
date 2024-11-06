@@ -127,12 +127,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Classifications addClassification(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Classifications.Classification.Classification value)
     {
       this.classification.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Classifications addAllClassification(List<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Classifications.Classification.Classification> value)
     {
       this.classification.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

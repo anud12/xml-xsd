@@ -140,6 +140,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.findPathTowards;
     }
+    public ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection getFindPathTowardsOrDefault()
+    {
+      return this.findPathTowards.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection();
+        instance.setParentNode(this);
+        this.findPathTowards = Optional.of(instance);
+        return this.findPathTowards.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection> streamFindPathTowards()
     {
       return findPathTowards.stream();
@@ -147,6 +156,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Person_moveTo setFindPathTowards(ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection value)
     {
       this.findPathTowards = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -155,6 +165,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.path;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Path.Path getPathOrDefault()
+    {
+      return this.path.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Path.Path();
+        instance.setParentNode(this);
+        this.path = Optional.of(instance);
+        return this.path.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Path.Path> streamPath()
     {
       return path.stream();
@@ -162,6 +181,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Person_moveTo setPath(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Path.Path value)
     {
       this.path = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

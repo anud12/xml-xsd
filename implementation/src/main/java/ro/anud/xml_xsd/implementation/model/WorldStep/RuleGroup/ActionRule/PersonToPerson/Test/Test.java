@@ -133,6 +133,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Test setValue(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.Test.Value.Value value)
     {
       this.value = value;
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -148,6 +149,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Test setExpected(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.Test.Expected.Expected value)
     {
       this.expected = value;
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

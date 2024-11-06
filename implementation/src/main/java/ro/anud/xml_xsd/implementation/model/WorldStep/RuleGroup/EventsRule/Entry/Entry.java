@@ -147,12 +147,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Entry addWhen(ro.anud.xml_xsd.implementation.model.Type_trigger.Type_trigger value)
     {
       this.when.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Entry addAllWhen(List<ro.anud.xml_xsd.implementation.model.Type_trigger.Type_trigger> value)
     {
       this.when.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -173,12 +175,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Entry addThen(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.Entry.Then.Then value)
     {
       this.then.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Entry addAllThen(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.Entry.Then.Then> value)
     {
       this.then.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

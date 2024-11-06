@@ -154,6 +154,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public FromPerson setOnPerson(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.FromPerson.OnPerson.OnPerson value)
     {
       this.onPerson = value;
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

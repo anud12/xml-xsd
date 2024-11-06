@@ -140,6 +140,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this._ref;
     }
+    public ro.anud.xml_xsd.implementation.model.Group_nameToken.NameToken._ref._ref get_refOrDefault()
+    {
+      return this._ref.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Group_nameToken.NameToken._ref._ref();
+        instance.setParentNode(this);
+        this._ref = Optional.of(instance);
+        return this._ref.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Group_nameToken.NameToken._ref._ref> stream_ref()
     {
       return _ref.stream();
@@ -147,6 +156,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public NameToken set_ref(ro.anud.xml_xsd.implementation.model.Group_nameToken.NameToken._ref._ref value)
     {
       this._ref = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -162,6 +172,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public NameToken setOneOf(ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken value)
     {
       this.oneOf = value;
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

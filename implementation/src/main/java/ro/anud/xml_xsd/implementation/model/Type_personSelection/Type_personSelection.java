@@ -150,6 +150,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.radius;
     }
+    public ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations getRadiusOrDefault()
+    {
+      return this.radius.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
+        instance.setParentNode(this);
+        this.radius = Optional.of(instance);
+        return this.radius.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamRadius()
     {
       return radius.stream();
@@ -157,6 +166,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Type_personSelection setRadius(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations value)
     {
       this.radius = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -165,6 +175,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.min;
     }
+    public ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations getMinOrDefault()
+    {
+      return this.min.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
+        instance.setParentNode(this);
+        this.min = Optional.of(instance);
+        return this.min.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamMin()
     {
       return min.stream();
@@ -172,6 +191,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Type_personSelection setMin(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations value)
     {
       this.min = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -180,6 +200,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.max;
     }
+    public ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations getMaxOrDefault()
+    {
+      return this.max.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
+        instance.setParentNode(this);
+        this.max = Optional.of(instance);
+        return this.max.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamMax()
     {
       return max.stream();
@@ -187,6 +216,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Type_personSelection setMax(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations value)
     {
       this.max = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -202,12 +232,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Type_personSelection addProperty(ro.anud.xml_xsd.implementation.model.Type_personSelection.Property.Property value)
     {
       this.property.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Type_personSelection addAllProperty(List<ro.anud.xml_xsd.implementation.model.Type_personSelection.Property.Property> value)
     {
       this.property.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -228,12 +260,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Type_personSelection addClassification(ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification value)
     {
       this.classification.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Type_personSelection addAllClassification(List<ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification> value)
     {
       this.classification.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -247,6 +281,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.race;
     }
+    public ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race getRaceOrDefault()
+    {
+      return this.race.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race();
+        instance.setParentNode(this);
+        this.race = Optional.of(instance);
+        return this.race.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race> streamRace()
     {
       return race.stream();
@@ -254,6 +297,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Type_personSelection setRace(ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race value)
     {
       this.race = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

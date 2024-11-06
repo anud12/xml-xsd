@@ -7,6 +7,7 @@ import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
@@ -18,7 +19,7 @@ public class PersonRepository {
     public PersonRepository(WorldStepInstance worldStepInstance) {
         logEnter();
         Data data = worldStepInstance.getWorldStep()
-                .getData();
+            .getData();
         loadData(data);
 
 
@@ -28,15 +29,19 @@ public class PersonRepository {
         logEnter();
         logEnter("Extracting personById");
         data.streamPeople()
-                .flatMap(People::streamPerson)
-                .forEach(person -> {
-                    personById.put(person.getId(), person);
-                    person.onChange(person1 -> {
-                        if (person1 == null) {
-                            personById.remove(person.getId());
-                        }
-                    }).unsubscribe();
-                });
+            .flatMap(People::streamPerson)
+            .forEach(person -> {
+                personById.put(person.getId(), person);
+                person.onChange(person1 -> {
+                    if (person1 == null) {
+                        personById.remove(person.getId());
+                    }
+                }).unsubscribe();
+            });
+    }
+
+    public Stream<Person> streamAll() {
+        return logEnter().logReturn(personById.values().stream());
     }
 
     public Optional<Person> personById(String id) {

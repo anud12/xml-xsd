@@ -147,6 +147,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public By setDoElement(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.DoElement.DoElement value)
     {
       this.doElement = value;
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -162,6 +163,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public By setMoveTowards(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards value)
     {
       this.moveTowards = value;
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

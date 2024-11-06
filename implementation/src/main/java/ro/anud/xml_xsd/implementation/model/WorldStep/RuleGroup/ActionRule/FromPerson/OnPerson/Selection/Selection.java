@@ -153,6 +153,15 @@ rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.mod
     {
       return this.fromPersonSameLocationGraphNode;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.Selection.FromPersonSameLocationGraphNode.FromPersonSameLocationGraphNode getFromPersonSameLocationGraphNodeOrDefault()
+    {
+      return this.fromPersonSameLocationGraphNode.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.Selection.FromPersonSameLocationGraphNode.FromPersonSameLocationGraphNode();
+        instance.setParentNode(this);
+        this.fromPersonSameLocationGraphNode = Optional.of(instance);
+        return this.fromPersonSameLocationGraphNode.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.Selection.FromPersonSameLocationGraphNode.FromPersonSameLocationGraphNode> streamFromPersonSameLocationGraphNode()
     {
       return fromPersonSameLocationGraphNode.stream();
@@ -160,6 +169,7 @@ rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.mod
     public Selection setFromPersonSameLocationGraphNode(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.Selection.FromPersonSameLocationGraphNode.FromPersonSameLocationGraphNode value)
     {
       this.fromPersonSameLocationGraphNode = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -168,6 +178,15 @@ rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.mod
     {
       return this.radius;
     }
+    public ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations getRadiusOrDefault()
+    {
+      return this.radius.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
+        instance.setParentNode(this);
+        this.radius = Optional.of(instance);
+        return this.radius.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamRadius()
     {
       return radius.stream();
@@ -175,6 +194,7 @@ rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.mod
     public Selection setRadius(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations value)
     {
       this.radius = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -183,6 +203,15 @@ rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.mod
     {
       return this.min;
     }
+    public ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations getMinOrDefault()
+    {
+      return this.min.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
+        instance.setParentNode(this);
+        this.min = Optional.of(instance);
+        return this.min.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamMin()
     {
       return min.stream();
@@ -190,6 +219,7 @@ rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.mod
     public Selection setMin(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations value)
     {
       this.min = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -198,6 +228,15 @@ rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.mod
     {
       return this.max;
     }
+    public ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations getMaxOrDefault()
+    {
+      return this.max.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
+        instance.setParentNode(this);
+        this.max = Optional.of(instance);
+        return this.max.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamMax()
     {
       return max.stream();
@@ -205,6 +244,7 @@ rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.mod
     public Selection setMax(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations value)
     {
       this.max = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -220,12 +260,14 @@ rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.mod
     public Selection addProperty(ro.anud.xml_xsd.implementation.model.Type_personSelection.Property.Property value)
     {
       this.property.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Selection addAllProperty(List<ro.anud.xml_xsd.implementation.model.Type_personSelection.Property.Property> value)
     {
       this.property.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -246,12 +288,14 @@ rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.mod
     public Selection addClassification(ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification value)
     {
       this.classification.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Selection addAllClassification(List<ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification> value)
     {
       this.classification.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -265,6 +309,15 @@ rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.mod
     {
       return this.race;
     }
+    public ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race getRaceOrDefault()
+    {
+      return this.race.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race();
+        instance.setParentNode(this);
+        this.race = Optional.of(instance);
+        return this.race.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race> streamRace()
     {
       return race.stream();
@@ -272,6 +325,7 @@ rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.mod
     public Selection setRace(ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race value)
     {
       this.race = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

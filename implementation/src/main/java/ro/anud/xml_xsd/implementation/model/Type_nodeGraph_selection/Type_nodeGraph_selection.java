@@ -126,6 +126,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.in_locationGraph;
     }
+    public ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.In_locationGraph.In_locationGraph getIn_locationGraphOrDefault()
+    {
+      return this.in_locationGraph.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.In_locationGraph.In_locationGraph();
+        instance.setParentNode(this);
+        this.in_locationGraph = Optional.of(instance);
+        return this.in_locationGraph.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.In_locationGraph.In_locationGraph> streamIn_locationGraph()
     {
       return in_locationGraph.stream();
@@ -133,6 +142,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Type_nodeGraph_selection setIn_locationGraph(ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.In_locationGraph.In_locationGraph value)
     {
       this.in_locationGraph = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -141,6 +151,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.has_nodeGraphId;
     }
+    public ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Has_nodeGraphId.Has_nodeGraphId getHas_nodeGraphIdOrDefault()
+    {
+      return this.has_nodeGraphId.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Has_nodeGraphId.Has_nodeGraphId();
+        instance.setParentNode(this);
+        this.has_nodeGraphId = Optional.of(instance);
+        return this.has_nodeGraphId.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Has_nodeGraphId.Has_nodeGraphId> streamHas_nodeGraphId()
     {
       return has_nodeGraphId.stream();
@@ -148,6 +167,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Type_nodeGraph_selection setHas_nodeGraphId(ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Has_nodeGraphId.Has_nodeGraphId value)
     {
       this.has_nodeGraphId = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

@@ -15,6 +15,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
 public interface ITypeIcon<T> {
+
+  public RawNode getRawNode();
   public void deserialize (RawNode rawNode);
 
   public RawNode serializeIntoRawNode();

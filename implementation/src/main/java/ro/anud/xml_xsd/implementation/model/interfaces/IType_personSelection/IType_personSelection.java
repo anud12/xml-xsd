@@ -16,6 +16,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
 public interface IType_personSelection<T> {
 
+  public RawNode getRawNode();
+
   //Children elements
   public Optional<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> getRadius();
   public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamRadius();

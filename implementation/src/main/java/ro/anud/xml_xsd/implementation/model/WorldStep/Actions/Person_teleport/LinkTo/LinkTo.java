@@ -141,6 +141,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public LinkTo setSelection(ro.anud.xml_xsd.implementation.model.Type_linkTo_selection.Type_linkTo_selection value)
     {
       this.selection = value;
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

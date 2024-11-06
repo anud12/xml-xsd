@@ -179,6 +179,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.distanceToProgressMultiplier;
     }
+    public ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations getDistanceToProgressMultiplierOrDefault()
+    {
+      return this.distanceToProgressMultiplier.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
+        instance.setParentNode(this);
+        this.distanceToProgressMultiplier = Optional.of(instance);
+        return this.distanceToProgressMultiplier.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamDistanceToProgressMultiplier()
     {
       return distanceToProgressMultiplier.stream();
@@ -186,6 +195,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public ToOption setDistanceToProgressMultiplier(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations value)
     {
       this.distanceToProgressMultiplier = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -194,6 +204,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.personProgressProperty;
     }
+    public ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations getPersonProgressPropertyOrDefault()
+    {
+      return this.personProgressProperty.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
+        instance.setParentNode(this);
+        this.personProgressProperty = Optional.of(instance);
+        return this.personProgressProperty.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamPersonProgressProperty()
     {
       return personProgressProperty.stream();
@@ -201,6 +220,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public ToOption setPersonProgressProperty(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations value)
     {
       this.personProgressProperty = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

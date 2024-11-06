@@ -145,6 +145,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public WorldStep setWorldMetadata(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata value)
     {
       this.worldMetadata = value;
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -160,12 +161,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public WorldStep addRuleGroup(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup value)
     {
       this.ruleGroup.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public WorldStep addAllRuleGroup(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup> value)
     {
       this.ruleGroup.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -186,6 +189,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public WorldStep setData(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data value)
     {
       this.data = value;
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -194,6 +198,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.actions;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions getActionsOrDefault()
+    {
+      return this.actions.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions();
+        instance.setParentNode(this);
+        this.actions = Optional.of(instance);
+        return this.actions.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions> streamActions()
     {
       return actions.stream();
@@ -201,6 +214,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public WorldStep setActions(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions value)
     {
       this.actions = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -445,7 +459,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
                       "metaType": "object",
                       "value": {
                         "id": {
-                          "metaType": "unknown",
+                          "metaType": "primitive",
+                          "value": "xs:string",
                           "isNullable": false
                         }
                       },
@@ -2326,7 +2341,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
                         "metaType": "object",
                         "value": {
                           "id": {
-                            "metaType": "unknown",
+                            "metaType": "primitive",
+                            "value": "xs:string",
                             "isNullable": false
                           }
                         },

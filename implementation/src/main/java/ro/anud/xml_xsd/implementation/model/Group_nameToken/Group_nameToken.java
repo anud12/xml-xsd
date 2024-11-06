@@ -127,12 +127,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Group_nameToken addNameToken(ro.anud.xml_xsd.implementation.model.Group_nameToken.NameToken.NameToken value)
     {
       this.nameToken.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Group_nameToken addAllNameToken(List<ro.anud.xml_xsd.implementation.model.Group_nameToken.NameToken.NameToken> value)
     {
       this.nameToken.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

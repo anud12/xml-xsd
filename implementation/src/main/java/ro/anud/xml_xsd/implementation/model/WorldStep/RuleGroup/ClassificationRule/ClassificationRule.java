@@ -127,12 +127,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public ClassificationRule addEntry(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.Entry.Entry value)
     {
       this.entry.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public ClassificationRule addAllEntry(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.Entry.Entry> value)
     {
       this.entry.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -160,7 +162,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
               "metaType": "object",
               "value": {
                 "id": {
-                  "metaType": "unknown",
+                  "metaType": "primitive",
+                  "value": "xs:string",
                   "isNullable": false
                 }
               },

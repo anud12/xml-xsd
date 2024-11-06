@@ -141,12 +141,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Has_nodeGraphId addOr(ro.anud.xml_xsd.implementation.model.Has_nodeGraphId.Or.Or value)
     {
       this.or.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Has_nodeGraphId addAllOr(List<ro.anud.xml_xsd.implementation.model.Has_nodeGraphId.Or.Or> value)
     {
       this.or.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

@@ -133,12 +133,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Then addSelectPerson(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.Entry.Then.SelectPerson.SelectPerson value)
     {
       this.selectPerson.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Then addAllSelectPerson(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.Entry.Then.SelectPerson.SelectPerson> value)
     {
       this.selectPerson.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -152,6 +154,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.propertyMutation;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.Entry.Then.PropertyMutation.PropertyMutation getPropertyMutationOrDefault()
+    {
+      return this.propertyMutation.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.Entry.Then.PropertyMutation.PropertyMutation();
+        instance.setParentNode(this);
+        this.propertyMutation = Optional.of(instance);
+        return this.propertyMutation.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.Entry.Then.PropertyMutation.PropertyMutation> streamPropertyMutation()
     {
       return propertyMutation.stream();
@@ -159,6 +170,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Then setPropertyMutation(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.Entry.Then.PropertyMutation.PropertyMutation value)
     {
       this.propertyMutation = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

@@ -153,6 +153,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public PersonToPerson setTest(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.Test.Test value)
     {
       this.test = value;
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -161,6 +162,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.propertyMutation;
     }
+    public ro.anud.xml_xsd.implementation.model.Type_propertyMutationOn.Type_propertyMutationOn getPropertyMutationOrDefault()
+    {
+      return this.propertyMutation.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_propertyMutationOn.Type_propertyMutationOn();
+        instance.setParentNode(this);
+        this.propertyMutation = Optional.of(instance);
+        return this.propertyMutation.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_propertyMutationOn.Type_propertyMutationOn> streamPropertyMutation()
     {
       return propertyMutation.stream();
@@ -168,6 +178,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public PersonToPerson setPropertyMutation(ro.anud.xml_xsd.implementation.model.Type_propertyMutationOn.Type_propertyMutationOn value)
     {
       this.propertyMutation = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -176,6 +187,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.locationMutation;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.LocationMutation.LocationMutation getLocationMutationOrDefault()
+    {
+      return this.locationMutation.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.LocationMutation.LocationMutation();
+        instance.setParentNode(this);
+        this.locationMutation = Optional.of(instance);
+        return this.locationMutation.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.LocationMutation.LocationMutation> streamLocationMutation()
     {
       return locationMutation.stream();
@@ -183,6 +203,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public PersonToPerson setLocationMutation(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.LocationMutation.LocationMutation value)
     {
       this.locationMutation = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

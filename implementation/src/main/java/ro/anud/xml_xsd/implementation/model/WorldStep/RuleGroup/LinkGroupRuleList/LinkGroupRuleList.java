@@ -127,12 +127,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public LinkGroupRuleList addLinkGroupRule(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LinkGroupRuleList.LinkGroupRule.LinkGroupRule value)
     {
       this.linkGroupRule.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public LinkGroupRuleList addAllLinkGroupRule(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LinkGroupRuleList.LinkGroupRule.LinkGroupRule> value)
     {
       this.linkGroupRule.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

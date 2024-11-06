@@ -127,12 +127,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Location addLocationGraph(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.LocationGraph value)
     {
       this.locationGraph.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Location addAllLocationGraph(List<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.LocationGraph> value)
     {
       this.locationGraph.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

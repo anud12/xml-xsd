@@ -15,6 +15,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
 public interface IType_propertyMutation<T> {
+
+  public RawNode getRawNode();
+
   //Attributes
   public String getPropertyRuleRef();
   public T setPropertyRuleRef(String value);

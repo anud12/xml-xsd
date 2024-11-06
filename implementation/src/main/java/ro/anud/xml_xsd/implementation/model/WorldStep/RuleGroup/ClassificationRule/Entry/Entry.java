@@ -50,7 +50,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
     //Attributes
-    /* ignored attribute key={key} of type=Object*/
+    private String id;
 
     //Children elements
     private List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.Entry.Property.Property> property = new ArrayList<>();
@@ -97,6 +97,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing entry");
       //Deserialize arguments
+      this.id = rawNode.getAttributeRequired("id");
 
       //Deserialize children
       this.property = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.Entry.Property.Property.fromRawNode(rawNode.getChildrenList("property"), this);
@@ -105,6 +106,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public RawNode serializeIntoRawNode()
     {
       //Serialize arguments
+      rawNode.setAttribute("id", this.id);
 
       //Serialize children
       rawNode.setChildren("property", property.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.Entry.Property.Property::serializeIntoRawNode).toList());
@@ -118,7 +120,16 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
         updatedRawNode.populateNode(document, element);
     }
 
-    /* ignored attribute key={key} of type=Object*/
+    public String getId()
+    {
+      return this.id;
+    }
+    public Entry setId(String value)
+    {
+      this.id = value;
+      onChangeList.forEach(consumer -> consumer.accept(this));
+      return this;
+    }
     public List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.Entry.Property.Property> getProperty()
     {
       return this.property;
@@ -130,12 +141,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Entry addProperty(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.Entry.Property.Property value)
     {
       this.property.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Entry addAllProperty(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.Entry.Property.Property> value)
     {
       this.property.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -159,7 +172,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
           "metaType": "object",
           "value": {
             "id": {
-              "metaType": "unknown",
+              "metaType": "primitive",
+              "value": "xs:string",
               "isNullable": false
             }
           },

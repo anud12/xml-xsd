@@ -150,6 +150,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.previousWorldStep;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.PreviousWorldStep.PreviousWorldStep getPreviousWorldStepOrDefault()
+    {
+      return this.previousWorldStep.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.PreviousWorldStep.PreviousWorldStep();
+        instance.setParentNode(this);
+        this.previousWorldStep = Optional.of(instance);
+        return this.previousWorldStep.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.PreviousWorldStep.PreviousWorldStep> streamPreviousWorldStep()
     {
       return previousWorldStep.stream();
@@ -157,6 +166,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public WorldMetadata setPreviousWorldStep(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.PreviousWorldStep.PreviousWorldStep value)
     {
       this.previousWorldStep = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -165,6 +175,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.nextWorldStep;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.NextWorldStep.NextWorldStep getNextWorldStepOrDefault()
+    {
+      return this.nextWorldStep.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.NextWorldStep.NextWorldStep();
+        instance.setParentNode(this);
+        this.nextWorldStep = Optional.of(instance);
+        return this.nextWorldStep.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.NextWorldStep.NextWorldStep> streamNextWorldStep()
     {
       return nextWorldStep.stream();
@@ -172,6 +191,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public WorldMetadata setNextWorldStep(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.NextWorldStep.NextWorldStep value)
     {
       this.nextWorldStep = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -187,6 +207,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public WorldMetadata setElapsedTime(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.ElapsedTime.ElapsedTime value)
     {
       this.elapsedTime = value;
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -202,6 +223,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public WorldMetadata setStepDuration(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.StepDuration.StepDuration value)
     {
       this.stepDuration = value;
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -217,6 +239,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public WorldMetadata setCounter(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.Counter.Counter value)
     {
       this.counter = value;
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -232,6 +255,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public WorldMetadata setRandomizationTable(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.RandomizationTable.RandomizationTable value)
     {
       this.randomizationTable = value;
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

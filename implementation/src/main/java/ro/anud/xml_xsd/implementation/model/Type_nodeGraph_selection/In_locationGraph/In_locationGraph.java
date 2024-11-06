@@ -120,6 +120,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.has_locationGraphId;
     }
+    public ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.In_locationGraph.Has_locationGraphId.Has_locationGraphId getHas_locationGraphIdOrDefault()
+    {
+      return this.has_locationGraphId.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.In_locationGraph.Has_locationGraphId.Has_locationGraphId();
+        instance.setParentNode(this);
+        this.has_locationGraphId = Optional.of(instance);
+        return this.has_locationGraphId.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.In_locationGraph.Has_locationGraphId.Has_locationGraphId> streamHas_locationGraphId()
     {
       return has_locationGraphId.stream();
@@ -127,6 +136,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public In_locationGraph setHas_locationGraphId(ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.In_locationGraph.Has_locationGraphId.Has_locationGraphId value)
     {
       this.has_locationGraphId = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

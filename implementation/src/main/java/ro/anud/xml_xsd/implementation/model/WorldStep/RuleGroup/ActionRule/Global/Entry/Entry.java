@@ -156,6 +156,7 @@ rawNode.setChildren("on", Optional.ofNullable(on).stream().map(ro.anud.xml_xsd.i
     public Entry setFrom(ro.anud.xml_xsd.implementation.model.Type_action.From.From value)
     {
       this.from = value;
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -171,6 +172,7 @@ rawNode.setChildren("on", Optional.ofNullable(on).stream().map(ro.anud.xml_xsd.i
     public Entry setOn(ro.anud.xml_xsd.implementation.model.Type_action.On.On value)
     {
       this.on = value;
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

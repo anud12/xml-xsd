@@ -133,6 +133,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Setup setStartingNode(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.StartingNode.StartingNode value)
     {
       this.startingNode = value;
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -148,12 +149,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Setup addNecessaryNode(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.NecessaryNode.NecessaryNode value)
     {
       this.necessaryNode.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Setup addAllNecessaryNode(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.NecessaryNode.NecessaryNode> value)
     {
       this.necessaryNode.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

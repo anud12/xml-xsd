@@ -16,6 +16,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
 public interface IType_action<T> {
 
+  public RawNode getRawNode();
+
   //Children elements
   public ro.anud.xml_xsd.implementation.model.Type_action.From.From getFrom();
   public Stream<ro.anud.xml_xsd.implementation.model.Type_action.From.From> streamFrom();

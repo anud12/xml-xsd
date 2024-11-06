@@ -133,6 +133,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Person_create setNodeGraph_selection(ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection value)
     {
       this.nodeGraph_selection = value;
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -148,6 +149,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Person_create setPerson_selection(ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection value)
     {
       this.person_selection = value;
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import ro.anud.xml_xsd.implementation.middleware.FromPersonAction;
+import ro.anud.xml_xsd.implementation.middleware.PersonAssignClassification;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 import ro.anud.xml_xsd.implementation.util.RawNode;
@@ -32,7 +33,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 public class AnalyzeController {
 
     private FromPersonAction fromPersonAction;
-
+private PersonAssignClassification personAssignClassification;
     @PostMapping("/execute")
     public ResponseEntity<String> execute(@RequestBody String request) {
         logEnter("");
@@ -45,8 +46,11 @@ public class AnalyzeController {
 
             var worldStepInstance = new WorldStepInstance(worldStep);
             var outWorldStepInstance = new WorldStepInstance(worldStep);
+            worldStepInstance.setOutInstance(outWorldStepInstance);
+            outWorldStepInstance.setOutInstance(worldStepInstance);
 
-            fromPersonAction.apply(worldStepInstance, outWorldStepInstance);
+            fromPersonAction.apply(worldStepInstance);
+            personAssignClassification.apply(worldStepInstance);
 
             var outputDocument = outWorldStepInstance.getWorldStep().serializeIntoRawNode()
                 .toDocument("world_step");

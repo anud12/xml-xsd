@@ -140,6 +140,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.locationGraph;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LocationGraph.LocationGraph getLocationGraphOrDefault()
+    {
+      return this.locationGraph.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LocationGraph.LocationGraph();
+        instance.setParentNode(this);
+        this.locationGraph = Optional.of(instance);
+        return this.locationGraph.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LocationGraph.LocationGraph> streamLocationGraph()
     {
       return locationGraph.stream();
@@ -147,6 +156,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Person_teleport setLocationGraph(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LocationGraph.LocationGraph value)
     {
       this.locationGraph = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -162,6 +172,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Person_teleport setLinkTo(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo value)
     {
       this.linkTo = value;
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

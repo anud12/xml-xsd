@@ -127,12 +127,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Path addNode(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Path.Node.Node value)
     {
       this.node.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Path addAllNode(List<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Path.Node.Node> value)
     {
       this.node.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

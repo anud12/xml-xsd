@@ -127,12 +127,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Properties addProperty(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Property.Property value)
     {
       this.property.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Properties addAllProperty(List<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Property.Property> value)
     {
       this.property.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

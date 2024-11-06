@@ -146,6 +146,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.selection;
     }
+    public ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection getSelectionOrDefault()
+    {
+      return this.selection.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection();
+        instance.setParentNode(this);
+        this.selection = Optional.of(instance);
+        return this.selection.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection> streamSelection()
     {
       return selection.stream();
@@ -153,6 +162,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public FromPerson setSelection(ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection value)
     {
       this.selection = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -161,6 +171,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.mutations;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.Mutations.Mutations getMutationsOrDefault()
+    {
+      return this.mutations.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.Mutations.Mutations();
+        instance.setParentNode(this);
+        this.mutations = Optional.of(instance);
+        return this.mutations.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.Mutations.Mutations> streamMutations()
     {
       return mutations.stream();
@@ -168,6 +187,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public FromPerson setMutations(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.Mutations.Mutations value)
     {
       this.mutations = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -176,6 +196,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.onPerson;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.OnPerson getOnPersonOrDefault()
+    {
+      return this.onPerson.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.OnPerson();
+        instance.setParentNode(this);
+        this.onPerson = Optional.of(instance);
+        return this.onPerson.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.OnPerson> streamOnPerson()
     {
       return onPerson.stream();
@@ -183,6 +212,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public FromPerson setOnPerson(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.OnPerson value)
     {
       this.onPerson = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

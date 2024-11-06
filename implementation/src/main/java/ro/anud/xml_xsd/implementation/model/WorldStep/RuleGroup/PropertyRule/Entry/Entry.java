@@ -159,6 +159,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.personDefault;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PersonDefault.PersonDefault getPersonDefaultOrDefault()
+    {
+      return this.personDefault.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PersonDefault.PersonDefault();
+        instance.setParentNode(this);
+        this.personDefault = Optional.of(instance);
+        return this.personDefault.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PersonDefault.PersonDefault> streamPersonDefault()
     {
       return personDefault.stream();
@@ -166,6 +175,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Entry setPersonDefault(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PersonDefault.PersonDefault value)
     {
       this.personDefault = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -174,6 +184,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.itemDefault;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.ItemDefault.ItemDefault getItemDefaultOrDefault()
+    {
+      return this.itemDefault.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.ItemDefault.ItemDefault();
+        instance.setParentNode(this);
+        this.itemDefault = Optional.of(instance);
+        return this.itemDefault.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.ItemDefault.ItemDefault> streamItemDefault()
     {
       return itemDefault.stream();
@@ -181,6 +200,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Entry setItemDefault(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.ItemDefault.ItemDefault value)
     {
       this.itemDefault = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -196,12 +216,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Entry addPropertyThreshold(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PropertyThreshold.PropertyThreshold value)
     {
       this.propertyThreshold.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Entry addAllPropertyThreshold(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PropertyThreshold.PropertyThreshold> value)
     {
       this.propertyThreshold.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

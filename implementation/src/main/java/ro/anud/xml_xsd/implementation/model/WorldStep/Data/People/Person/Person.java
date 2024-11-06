@@ -171,6 +171,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.race;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race getRaceOrDefault()
+    {
+      return this.race.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race();
+        instance.setParentNode(this);
+        this.race = Optional.of(instance);
+        return this.race.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race> streamRace()
     {
       return race.stream();
@@ -178,6 +187,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Person setRace(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race value)
     {
       this.race = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -186,6 +196,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.properties;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties getPropertiesOrDefault()
+    {
+      return this.properties.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties();
+        instance.setParentNode(this);
+        this.properties = Optional.of(instance);
+        return this.properties.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties> streamProperties()
     {
       return properties.stream();
@@ -193,6 +212,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Person setProperties(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties value)
     {
       this.properties = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -208,12 +228,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Person addRelations(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Relations.Relations value)
     {
       this.relations.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Person addAllRelations(List<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Relations.Relations> value)
     {
       this.relations.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -227,6 +249,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.classifications;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications getClassificationsOrDefault()
+    {
+      return this.classifications.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications();
+        instance.setParentNode(this);
+        this.classifications = Optional.of(instance);
+        return this.classifications.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications> streamClassifications()
     {
       return classifications.stream();
@@ -234,6 +265,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Person setClassifications(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications value)
     {
       this.classifications = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -242,6 +274,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.icon;
     }
+    public ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon getIconOrDefault()
+    {
+      return this.icon.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon();
+        instance.setParentNode(this);
+        this.icon = Optional.of(instance);
+        return this.icon.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon> streamIcon()
     {
       return icon.stream();
@@ -249,6 +290,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Person setIcon(ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon value)
     {
       this.icon = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

@@ -153,6 +153,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.people;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People getPeopleOrDefault()
+    {
+      return this.people.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People();
+        instance.setParentNode(this);
+        this.people = Optional.of(instance);
+        return this.people.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People> streamPeople()
     {
       return people.stream();
@@ -160,6 +169,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public LinkTo setPeople(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People value)
     {
       this.people = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -168,6 +178,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.personProgressProperty;
     }
+    public ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations getPersonProgressPropertyOrDefault()
+    {
+      return this.personProgressProperty.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
+        instance.setParentNode(this);
+        this.personProgressProperty = Optional.of(instance);
+        return this.personProgressProperty.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamPersonProgressProperty()
     {
       return personProgressProperty.stream();
@@ -175,6 +194,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public LinkTo setPersonProgressProperty(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations value)
     {
       this.personProgressProperty = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

@@ -126,6 +126,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.origin_nodeGraph_selection;
     }
+    public ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection getOrigin_nodeGraph_selectionOrDefault()
+    {
+      return this.origin_nodeGraph_selection.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection();
+        instance.setParentNode(this);
+        this.origin_nodeGraph_selection = Optional.of(instance);
+        return this.origin_nodeGraph_selection.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection> streamOrigin_nodeGraph_selection()
     {
       return origin_nodeGraph_selection.stream();
@@ -133,6 +142,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Type_linkTo_selection setOrigin_nodeGraph_selection(ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection value)
     {
       this.origin_nodeGraph_selection = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -141,6 +151,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.destination_nodeGraph_selection;
     }
+    public ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection getDestination_nodeGraph_selectionOrDefault()
+    {
+      return this.destination_nodeGraph_selection.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection();
+        instance.setParentNode(this);
+        this.destination_nodeGraph_selection = Optional.of(instance);
+        return this.destination_nodeGraph_selection.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection> streamDestination_nodeGraph_selection()
     {
       return destination_nodeGraph_selection.stream();
@@ -148,6 +167,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Type_linkTo_selection setDestination_nodeGraph_selection(ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection value)
     {
       this.destination_nodeGraph_selection = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

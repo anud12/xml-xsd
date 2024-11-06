@@ -175,12 +175,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Actions addBy(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.By value)
     {
       this.by.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Actions addAllBy(List<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.By> value)
     {
       this.by.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -201,12 +203,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Actions addLocationGraph_create(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_create.LocationGraph_create value)
     {
       this.locationGraph_create.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Actions addAllLocationGraph_create(List<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_create.LocationGraph_create> value)
     {
       this.locationGraph_create.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -227,12 +231,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Actions addLocationGraph_node_createAdjacent(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_createAdjacent.LocationGraph_node_createAdjacent value)
     {
       this.locationGraph_node_createAdjacent.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Actions addAllLocationGraph_node_createAdjacent(List<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_createAdjacent.LocationGraph_node_createAdjacent> value)
     {
       this.locationGraph_node_createAdjacent.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -253,12 +259,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Actions addLocationGraph_node_addClassification(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_addClassification.LocationGraph_node_addClassification value)
     {
       this.locationGraph_node_addClassification.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Actions addAllLocationGraph_node_addClassification(List<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_addClassification.LocationGraph_node_addClassification> value)
     {
       this.locationGraph_node_addClassification.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -272,6 +280,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.person_teleport;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.Person_teleport getPerson_teleportOrDefault()
+    {
+      return this.person_teleport.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.Person_teleport();
+        instance.setParentNode(this);
+        this.person_teleport = Optional.of(instance);
+        return this.person_teleport.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.Person_teleport> streamPerson_teleport()
     {
       return person_teleport.stream();
@@ -279,6 +296,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Actions setPerson_teleport(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.Person_teleport value)
     {
       this.person_teleport = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -294,12 +312,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Actions addPerson_onPerson_propertyMutation(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_onPerson_propertyMutation.Person_onPerson_propertyMutation value)
     {
       this.person_onPerson_propertyMutation.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Actions addAllPerson_onPerson_propertyMutation(List<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_onPerson_propertyMutation.Person_onPerson_propertyMutation> value)
     {
       this.person_onPerson_propertyMutation.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -320,12 +340,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Actions addPerson_create(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_create.Person_create value)
     {
       this.person_create.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Actions addAllPerson_create(List<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_create.Person_create> value)
     {
       this.person_create.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -346,12 +368,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Actions addPerson_moveTo(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Person_moveTo value)
     {
       this.person_moveTo.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Actions addAllPerson_moveTo(List<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Person_moveTo> value)
     {
       this.person_moveTo.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -372,12 +396,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Actions addFromPerson(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.FromPerson.FromPerson value)
     {
       this.fromPerson.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Actions addAllFromPerson(List<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.FromPerson.FromPerson> value)
     {
       this.fromPerson.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

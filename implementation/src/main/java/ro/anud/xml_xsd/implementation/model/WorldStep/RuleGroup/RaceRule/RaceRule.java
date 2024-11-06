@@ -127,12 +127,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public RaceRule addEntry(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.Entry.Entry value)
     {
       this.entry.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public RaceRule addAllEntry(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.Entry.Entry> value)
     {
       this.entry.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

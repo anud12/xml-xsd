@@ -126,6 +126,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.people;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People getPeopleOrDefault()
+    {
+      return this.people.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People();
+        instance.setParentNode(this);
+        this.people = Optional.of(instance);
+        return this.people.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People> streamPeople()
     {
       return people.stream();
@@ -133,6 +142,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Data setPeople(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People value)
     {
       this.people = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -141,6 +151,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.location;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location getLocationOrDefault()
+    {
+      return this.location.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location();
+        instance.setParentNode(this);
+        this.location = Optional.of(instance);
+        return this.location.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location> streamLocation()
     {
       return location.stream();
@@ -148,6 +167,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Data setLocation(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location value)
     {
       this.location = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

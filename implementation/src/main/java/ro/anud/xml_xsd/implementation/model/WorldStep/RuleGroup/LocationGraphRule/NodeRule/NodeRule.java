@@ -152,6 +152,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.name;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.Name.Name getNameOrDefault()
+    {
+      return this.name.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.Name.Name();
+        instance.setParentNode(this);
+        this.name = Optional.of(instance);
+        return this.name.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.Name.Name> streamName()
     {
       return name.stream();
@@ -159,6 +168,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public NodeRule setName(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.Name.Name value)
     {
       this.name = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -167,6 +177,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.classifications;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.Classifications.Classifications getClassificationsOrDefault()
+    {
+      return this.classifications.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.Classifications.Classifications();
+        instance.setParentNode(this);
+        this.classifications = Optional.of(instance);
+        return this.classifications.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.Classifications.Classifications> streamClassifications()
     {
       return classifications.stream();
@@ -174,6 +193,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public NodeRule setClassifications(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.Classifications.Classifications value)
     {
       this.classifications = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -182,6 +202,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.linkGroupList;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroupList getLinkGroupListOrDefault()
+    {
+      return this.linkGroupList.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroupList();
+        instance.setParentNode(this);
+        this.linkGroupList = Optional.of(instance);
+        return this.linkGroupList.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroupList> streamLinkGroupList()
     {
       return linkGroupList.stream();
@@ -189,6 +218,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public NodeRule setLinkGroupList(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroupList value)
     {
       this.linkGroupList = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -197,6 +227,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.existingPerson;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.ExistingPerson.ExistingPerson getExistingPersonOrDefault()
+    {
+      return this.existingPerson.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.ExistingPerson.ExistingPerson();
+        instance.setParentNode(this);
+        this.existingPerson = Optional.of(instance);
+        return this.existingPerson.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.ExistingPerson.ExistingPerson> streamExistingPerson()
     {
       return existingPerson.stream();
@@ -204,6 +243,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public NodeRule setExistingPerson(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.ExistingPerson.ExistingPerson value)
     {
       this.existingPerson = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

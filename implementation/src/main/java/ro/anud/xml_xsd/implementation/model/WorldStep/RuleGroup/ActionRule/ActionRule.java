@@ -139,12 +139,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public ActionRule addFromPerson(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.FromPerson value)
     {
       this.fromPerson.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public ActionRule addAllFromPerson(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.FromPerson> value)
     {
       this.fromPerson.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -158,6 +160,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.global;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.Global.Global getGlobalOrDefault()
+    {
+      return this.global.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.Global.Global();
+        instance.setParentNode(this);
+        this.global = Optional.of(instance);
+        return this.global.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.Global.Global> streamGlobal()
     {
       return global.stream();
@@ -165,6 +176,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public ActionRule setGlobal(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.Global.Global value)
     {
       this.global = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -180,12 +192,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public ActionRule addPersonToPerson(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.PersonToPerson value)
     {
       this.personToPerson.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public ActionRule addAllPersonToPerson(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.PersonToPerson> value)
     {
       this.personToPerson.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

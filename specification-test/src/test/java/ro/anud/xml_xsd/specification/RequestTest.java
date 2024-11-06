@@ -1,7 +1,16 @@
 package ro.anud.xml_xsd.specification;
 
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.Condition;
+import org.assertj.core.presentation.StandardRepresentation;
 import org.junit.jupiter.api.DynamicTest;
+import org.xmlunit.assertj3.CompareAssert;
+import org.xmlunit.assertj3.XmlAssert;
+import org.xmlunit.builder.DiffBuilder;
+import org.xmlunit.diff.ComparisonController;
+import org.xmlunit.diff.ComparisonControllers;
+import org.xmlunit.diff.ComparisonFormatter;
+import org.xmlunit.diff.Diff;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,8 +25,8 @@ import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
 import static ro.anud.xml_xsd.specification.TestBase.prettyFormat;
+
 
 public class RequestTest {
     public static final class AnalyzeExecute extends Endpoints {
@@ -64,12 +73,12 @@ public class RequestTest {
     static private Runnable launchChildProcess(String port) {
         System.out.println("Starting server on port " + port);
         ProcessBuilder processBuilder = new ProcessBuilder(
-                "node",
-                "../gui-client/dependencies_bin/node/bundle.js",
-                "--",
-                "--port",
-                port,
-                "--no-websocket"
+            "node",
+            "../gui-client/dependencies_bin/node/bundle.js",
+            "--",
+            "--port",
+            port,
+            "--no-websocket"
         );
         processBuilder.redirectErrorStream(true);
         Process process;
@@ -128,7 +137,7 @@ public class RequestTest {
                 Thread.currentThread().interrupt();
                 throw new RuntimeException("Thread was interrupted", e);
             }
-            currentDelay = (int)(currentDelay * 1.5);
+            currentDelay = (int) (currentDelay * 1.5);
         }
         throw new RuntimeException("All heartbeat attempts failed");
 
@@ -140,10 +149,10 @@ public class RequestTest {
             System.out.println("Sending request to " + resourcePath);
 
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(resourcePath))
-                    .header("Content-Type", "text/plain")
-                    .POST(HttpRequest.BodyPublishers.ofString(body))
-                    .build();
+                .uri(URI.create(resourcePath))
+                .header("Content-Type", "text/plain")
+                .POST(HttpRequest.BodyPublishers.ofString(body))
+                .build();
 
             try {
                 return client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -155,14 +164,14 @@ public class RequestTest {
 
 
     static public DynamicTest validateExecution(
-            Class<?> runningTestClass,
-            RequestTest.Endpoints endpoints,
-            int expectedCode) {
+        Class<?> runningTestClass,
+        RequestTest.Endpoints endpoints,
+        int expectedCode) {
         return DynamicTest.dynamicTest("Validating execution to endpoint" + endpoints.getEndpoint(), () -> {
             Runnable process = () -> {};
             try {
-//                var port = getFreePort();
-//                process = launchChildProcess(port);
+                //                var port = getFreePort();
+                //                process = launchChildProcess(port);
                 var port = "8080";
                 waitForHeartbeat("http://localhost:" + port + "/health");
                 String relativePath = Paths.get(runningTestClass.getResource("").toURI()).toString();
@@ -173,7 +182,12 @@ public class RequestTest {
                 try {
                     String expected = new String(Files.readAllBytes(Path.of(relativePath, "/2_expected.xml")));
 
-                    Assertions.assertThat(prettyFormat(responseBody)).isEqualTo(prettyFormat(expected));
+                    Diff diff = DiffBuilder.compare(prettyFormat(responseBody)).withTest(prettyFormat(expected))
+                            .build();
+                    if(diff.hasDifferences()) {
+                        Assertions.assertThat(prettyFormat(responseBody)).isEqualTo(prettyFormat(expected));
+                    }
+
                 } catch (java.nio.file.NoSuchFileException e) {
                     String expected = new String(Files.readAllBytes(Path.of(relativePath, "/2_expected.txt")));
 

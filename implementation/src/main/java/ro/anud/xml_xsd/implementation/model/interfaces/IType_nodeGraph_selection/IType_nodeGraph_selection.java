@@ -16,6 +16,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
 public interface IType_nodeGraph_selection<T> {
 
+  public RawNode getRawNode();
+
   //Children elements
   public Optional<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.In_locationGraph.In_locationGraph> getIn_locationGraph();
   public Stream<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.In_locationGraph.In_locationGraph> streamIn_locationGraph();

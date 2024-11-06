@@ -1,6 +1,5 @@
 package ro.anud.xml_xsd.implementation.service.person;
 
-import ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classification.Classification;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
@@ -26,18 +25,17 @@ public class SelectionInstance {
     }
 
     private boolean filterBasedOnProperties(IType_personSelection<?> selectPerson, Person person) {
-        var propertyInstance = worldStepInstance.getPropertyInstance();
         if (selectPerson.streamProperty().findAny().isEmpty()) {
             return true;
         }
         var ruleStream = selectPerson.streamProperty();
         var filteredRules = ruleStream.filter(propertyRule -> {
-            var value = worldStepInstance.getPersonInstance().getProperty(person, propertyRule.getPropertyRuleRef());
+            var value = worldStepInstance.person.getProperty(person, propertyRule.getPropertyRuleRef());
             if (value.isEmpty()) {
                 return false;
             }
             var minValue = propertyRule.streamMin()
-                    .flatMap(min -> propertyInstance.computeOperation(min, person).stream())
+                    .flatMap(min -> worldStepInstance.computeOperation(min, person).stream())
                     .findFirst();
             if (minValue.isPresent()) {
                 if (minValue.get() > value.get()) {
@@ -46,7 +44,7 @@ public class SelectionInstance {
             }
 
             var maxValue = propertyRule.streamMax()
-                    .flatMap(max -> propertyInstance.computeOperation(max, person).stream())
+                    .flatMap(max -> worldStepInstance.computeOperation(max, person).stream())
                     .findFirst();
             if (maxValue.isPresent()) {
                 if (value.get() > maxValue.get()) {

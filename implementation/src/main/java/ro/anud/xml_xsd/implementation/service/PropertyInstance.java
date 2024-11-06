@@ -20,18 +20,4 @@ public class PropertyInstance {
         this.worldStepInstance = worldStepInstance;
     }
 
-    public Optional<Integer> computeOperation(
-            IType_mathOperations<?> typeMathOperations,
-            PropertyInstanceGetter propertyInstanceGetter) {
-        var logger = logEnter("Not implemented");
-
-        return logger.logReturn(Optional.empty());
-    }
-
-    public Optional<Integer> computeOperation(
-            IType_mathOperations<?> typeMathOperations,
-            Person person) {
-        var logger = logEnter("Not implemented");
-        return logger.logReturn(Optional.empty());
-    }
 }

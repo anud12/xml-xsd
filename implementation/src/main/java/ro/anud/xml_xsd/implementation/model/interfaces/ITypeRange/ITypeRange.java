@@ -16,6 +16,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
 public interface ITypeRange<T> {
 
+  public RawNode getRawNode();
+
   //Children elements
 
   public void deserialize (RawNode rawNode);

@@ -10,19 +10,16 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromP
 import ro.anud.xml_xsd.implementation.service.Middleware;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
-import java.util.function.Consumer;
-import java.util.stream.Stream;
-
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 
 @Service
 public class FromPersonAction implements Middleware {
 
     @Override
-    public void apply(final WorldStepInstance worldStepInstance, WorldStepInstance outInstance) {
+    public void apply(final WorldStepInstance worldStepInstance) {
         var logger = logEnter();
-        var ruleRepository = worldStepInstance.getRuleRepository();
-        var personRepository = worldStepInstance.getPersonRepository();
+        var ruleRepository = worldStepInstance.ruleRepository;
+        var personRepository = worldStepInstance.person.repository;
 
         var fromPersonStream = worldStepInstance.getWorldStep()
             .streamActions()
@@ -33,7 +30,7 @@ public class FromPersonAction implements Middleware {
             actionElement.removeFromParent();
             var localLogger = logger.logEnter(actionElement.getNodeId());
             localLogger.log("personIdRef", actionElement.getPersonIdRef());
-            var actionRuleOptional = ruleRepository.fromPersonById(actionElement.getFromPersonRuleRef());
+            var actionRuleOptional = ruleRepository.getPersonById(actionElement.getFromPersonRuleRef());
             if (actionRuleOptional.isEmpty()) {
                 localLogger.log("early return actionRule is empty");
                 return;
@@ -47,7 +44,7 @@ public class FromPersonAction implements Middleware {
             var selfPerson = selfPersonOptional.get();
             var selfSelection = actionRule.getSelection();
             if (selfSelection.isPresent()) {
-                var result = worldStepInstance.getPersonInstance().selection().isSelectionApplicableTo(
+                var result = worldStepInstance.person.selection.isSelectionApplicableTo(
                     selfSelection.get(),
                     selfPersonOptional.get()
                 );
@@ -80,43 +77,39 @@ public class FromPersonAction implements Middleware {
                         localLocalLogger.logReturnVoid("onPersonApplicable false");
                         return;
                     }
-                    var result = actionRule.streamMutations()
+                    actionRule.streamMutations()
                         .flatMap(Mutations::streamPropertyMutation)
-                        .map(typePropertyMutation -> worldStepInstance.getPersonInstance()
+                        .forEach(typePropertyMutation -> worldStepInstance.person
                             .applyPropertyMutation(
                                 selfPerson,
                                 typePropertyMutation,
                                 selfPerson,
                                 targetPerson.get()
                             )
-                        ).toList();
-                    localLocalLogger.log("applyPropertyMutation result length:", result.size());
-                    result.forEach(worldStepInstanceConsumer -> worldStepInstanceConsumer.accept(outInstance));
+                        );
 
-                    result = onPersonHandle(
+                    onPersonHandle(
                         worldStepInstance,
                         onPersonRule.get(),
                         selfPerson,
-                        targetPerson.get())
-                        .toList();
-                    localLocalLogger.log("onPersonHandle result length:", result.size());
-                    result.forEach(worldStepInstanceConsumer -> worldStepInstanceConsumer.accept(outInstance));
+                        targetPerson.get()
+                    );
                 });
         });
 
 
     }
 
-    private Stream<Consumer<WorldStepInstance>> onPersonHandle(
+    private void onPersonHandle(
         final WorldStepInstance worldStepInstance,
         final OnPerson onPerson,
         final Person selfPerson,
         final Person targetPerson) {
         var logger = logEnter();
-        var result = onPerson.streamMutations()
+        onPerson.streamMutations()
             .flatMap(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.Mutations.Mutations::streamPropertyMutation)
-            .map(typePropertyMutation -> worldStepInstance
-                .getPersonInstance()
+            .forEach(typePropertyMutation -> worldStepInstance
+                .person
                 .applyPropertyMutation(
                     targetPerson,
                     typePropertyMutation,
@@ -124,7 +117,7 @@ public class FromPersonAction implements Middleware {
                     selfPerson
                 )
             );
-        return logger.logReturn(result);
+        logger.logReturnVoid();
     }
 
     private boolean onPersonApplicable(
@@ -148,7 +141,7 @@ public class FromPersonAction implements Middleware {
             return logger.logReturn(false, "isNotFromSameLocation is true");
 
         }
-        var selectionInstance = worldStepInstance.getPersonInstance().selection();
+        var selectionInstance = worldStepInstance.person.selection;
         var isSelectionApplicable = selection
             .stream()
             .filter(selection1 -> selectionInstance.isSelectionApplicableTo(
@@ -168,7 +161,7 @@ public class FromPersonAction implements Middleware {
         final Person selfPerson,
         final Person targetPerson,
         final FromPersonSameLocationGraphNode fromPersonSameLocationGraphNode) {
-        var locationGraphInstance = worldStepInstance.getLocationGraphInstance();
+        var locationGraphInstance = worldStepInstance.locationGraph;
         var originLocation = locationGraphInstance.findPersonLocation(selfPerson.getId());
         var targetLocation = locationGraphInstance.findPersonLocation(targetPerson.getId());
 

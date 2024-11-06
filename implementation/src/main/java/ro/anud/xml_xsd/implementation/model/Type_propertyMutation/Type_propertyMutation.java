@@ -141,12 +141,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Type_propertyMutation addFrom(ro.anud.xml_xsd.implementation.model.Type_propertyMutation.From.From value)
     {
       this.from.add(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
     public Type_propertyMutation addAllFrom(List<ro.anud.xml_xsd.implementation.model.Type_propertyMutation.From.From> value)
     {
       this.from.addAll(value);
+      value.forEach(e -> e.setParentNode(this));
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

@@ -126,6 +126,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.select;
     }
+    public ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection getSelectOrDefault()
+    {
+      return this.select.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection();
+        instance.setParentNode(this);
+        this.select = Optional.of(instance);
+        return this.select.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection> streamSelect()
     {
       return select.stream();
@@ -133,6 +142,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Person setSelect(ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection value)
     {
       this.select = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
@@ -141,6 +151,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.propertyMutation;
     }
+    public ro.anud.xml_xsd.implementation.model.Type_propertyMutation.Type_propertyMutation getPropertyMutationOrDefault()
+    {
+      return this.propertyMutation.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_propertyMutation.Type_propertyMutation();
+        instance.setParentNode(this);
+        this.propertyMutation = Optional.of(instance);
+        return this.propertyMutation.get();
+      });
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_propertyMutation.Type_propertyMutation> streamPropertyMutation()
     {
       return propertyMutation.stream();
@@ -148,6 +167,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Person setPropertyMutation(ro.anud.xml_xsd.implementation.model.Type_propertyMutation.Type_propertyMutation value)
     {
       this.propertyMutation = Optional.ofNullable(value);
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

@@ -27,10 +27,33 @@ public class LocalLogger {
             var filterStacktrace = filterStacktrace(stackTrace);
 
             var previousStackTrace = filterStacktrace.get(0);
-            var methodName = previousStackTrace.getMethodName();
-            var stream = Stream.concat(Arrays.stream(parentArgs), Arrays.stream(args));
+            var methodName = previousStackTrace.getMethodName();var stream = Stream.concat(
+                Arrays.stream(parentArgs),
+                Stream.concat(Stream.of("| "), Arrays.stream(args))
+            );
             StringBuilder line = new StringBuilder(stream.reduce(
-                methodName + "[ log  ]: ",
+                methodName + " [ log  ]:",
+                (string, o) -> string + " " + o,
+                (string, string2) -> string + string2
+            ));
+            for (var i = 0; i < filterStacktrace.size(); i++) {
+                line.insert(0, "\t");
+            }
+            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line));
+            return new LogClass(args);
+        }
+
+        public LogClass logTodo(Object... args) {
+            var stackTrace = Thread.currentThread().getStackTrace();
+            var filterStacktrace = filterStacktrace(stackTrace);
+
+            var previousStackTrace = filterStacktrace.get(0);
+            var methodName = previousStackTrace.getMethodName();var stream = Stream.concat(
+                Arrays.stream(parentArgs),
+                Stream.concat(Stream.of("| "), Arrays.stream(args))
+            );
+            StringBuilder line = new StringBuilder(stream.reduce(
+                methodName + " [ TODO ]:",
                 (string, o) -> string + " " + o,
                 (string, string2) -> string + string2
             ));
@@ -46,10 +69,12 @@ public class LocalLogger {
             var filterStacktrace = filterStacktrace(stackTrace);
 
             var previousStackTrace = filterStacktrace.get(0);
-            var methodName = previousStackTrace.getMethodName();
-            var stream = Stream.concat(Arrays.stream(parentArgs), Arrays.stream(args));
+            var methodName = previousStackTrace.getMethodName();var stream = Stream.concat(
+                Arrays.stream(parentArgs),
+                Stream.concat(Stream.of("| "), Arrays.stream(args))
+            );
             StringBuilder line = new StringBuilder(stream.reduce(
-                methodName + "[enter ]:",
+                methodName + " [enter ]:",
                 (string, o) -> string + " " + o,
                 (string, string2) -> string + string2
             ));
@@ -67,9 +92,12 @@ public class LocalLogger {
 
             var previousStackTrace = filterStacktrace.get(0);
             var methodName = previousStackTrace.getMethodName();
-            var stream = Stream.concat(Arrays.stream(parentArgs), Arrays.stream(args));
+            var stream = Stream.concat(
+                Arrays.stream(parentArgs),
+                Stream.concat(Stream.of("| "), Arrays.stream(args))
+            );
             StringBuilder line = new StringBuilder(stream.reduce(
-                methodName + "[return]:",
+                methodName + " [return]:",
                 (string, o) -> string + " " + o,
                 (string, string2) -> string + string2
             ));
@@ -87,9 +115,12 @@ public class LocalLogger {
 
             var previousStackTrace = filterStacktrace.get(0);
             var methodName = previousStackTrace.getMethodName();
-            var stream = Stream.concat(Arrays.stream(parentArgs), Arrays.stream(args));
+            var stream = Stream.concat(
+                Arrays.stream(parentArgs),
+                Stream.concat(Stream.of("| "), Arrays.stream(args))
+            );
             StringBuilder line = new StringBuilder(stream.reduce(
-                methodName + "[return]:",
+                methodName + " [return]:",
                 (string, o) -> string + " " + o,
                 (string, string2) -> string + string2
             ));
@@ -102,7 +133,7 @@ public class LocalLogger {
 
 
     private static List<StackTraceElement> filterStacktrace(StackTraceElement[] stackTraceElements) {
-        return  Arrays.stream(stackTraceElements)
+        return Arrays.stream(stackTraceElements)
             .toList()
             .reversed()
             .stream()

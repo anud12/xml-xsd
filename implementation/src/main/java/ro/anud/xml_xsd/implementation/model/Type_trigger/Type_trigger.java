@@ -127,6 +127,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public Type_trigger setPersonActionUsed(ro.anud.xml_xsd.implementation.model.Type_trigger.PersonActionUsed.PersonActionUsed value)
     {
       this.personActionUsed = value;
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }

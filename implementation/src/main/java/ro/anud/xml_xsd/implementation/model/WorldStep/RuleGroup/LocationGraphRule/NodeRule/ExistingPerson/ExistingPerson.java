@@ -154,6 +154,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     public ExistingPerson setPersonSelection(ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection value)
     {
       this.personSelection = value;
+      value.setParentNode(this);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
