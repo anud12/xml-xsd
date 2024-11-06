@@ -14,7 +14,7 @@ namespace XSD {
     public System.String property_rule_ref;
 
     //Children elements
-    public List<group__math_operations> from = new List<group__math_operations>();
+    public List<XSD.Ntype__property_mutation.from> from = new List<XSD.Ntype__property_mutation.from>();
     public type__property_mutation()
     {
     }
@@ -72,11 +72,18 @@ namespace XSD {
     {
       this.property_rule_ref = value;
     }
-    public List<group__math_operations> Get_from()
+    public List<XSD.Ntype__property_mutation.from> Get_from()
     {
       return this.from;
     }
-    public void Set_from(List<group__math_operations> value)
+    public List<XSD.Ntype__property_mutation.from> GetOrInsertDefault_from()
+    {
+      if(this.from == null) {
+        this.from = new List<XSD.Ntype__property_mutation.from>();
+      }
+      return this.from;
+    }
+    public void Set_from(List<XSD.Ntype__property_mutation.from> value)
     {
       this.from = value;
     }

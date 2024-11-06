@@ -11,7 +11,7 @@ namespace XSD {
   public class property  {
     public RawNode rawNode = new RawNode();
     //Attributes
-    public System.String? property_rule_ref;
+    public System.String property_rule_ref;
 
     //Children elements
     public type__math_operations? min = null;
@@ -52,7 +52,7 @@ namespace XSD {
       //Serialize arguments
       if(this.property_rule_ref != null)
       {
-        rawNode.attributes["property_rule_ref"] = this.property_rule_ref?.ToString();
+        rawNode.attributes["property_rule_ref"] = this.property_rule_ref.ToString();
       }
 
       //Serialize children
@@ -71,11 +71,11 @@ namespace XSD {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public System.String? Get_property_rule_ref()
+    public System.String Get_property_rule_ref()
     {
       return this.property_rule_ref;
     }
-    public void Set_property_rule_ref(System.String? value)
+    public void Set_property_rule_ref(System.String value)
     {
       this.property_rule_ref = value;
     }

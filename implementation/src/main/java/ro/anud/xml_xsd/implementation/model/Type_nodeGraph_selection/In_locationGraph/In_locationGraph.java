@@ -5,9 +5,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Stream;
+import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -19,15 +19,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
-  public class In_locationGraph  {
-
-    @ToString.Exclude()
-    @EqualsAndHashCode.Exclude()
-    @JsonIgnore
-    @Getter
-    @Setter
-    private RawNode rawNode = new RawNode();
-    private List<Consumer<In_locationGraph>> onChangeList = new ArrayList<>();
+  public class In_locationGraph implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static In_locationGraph fromRawNode(RawNode rawNode) {
       logEnter();
@@ -36,20 +28,24 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
-    public static Optional<In_locationGraph> fromRawNode(Optional<RawNode> rawNode) {
+    public static In_locationGraph fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+      logEnter();
+      var instance = fromRawNode(rawNode);
+      instance.setParentNode(parent);
+      return logReturn(instance);
+    }
+    public static Optional<In_locationGraph> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
         logEnter();
-        return logReturn(rawNode.map(In_locationGraph::fromRawNode));
+        return logReturn(rawNode.map(o -> In_locationGraph.fromRawNode(o, parent)));
     }
-    public static List<In_locationGraph> fromRawNode(List<RawNode> rawNodeList) {
+    public static List<In_locationGraph> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
-      List<In_locationGraph> returnList = rawNodeList.stream().map(In_locationGraph::fromRawNode).collect(Collectors.toList());
+      List<In_locationGraph> returnList = Optional.ofNullable(rawNodeList)
+          .orElse(List.of())
+          .stream()
+          .map(o -> In_locationGraph.fromRawNode(o, parent))
+          .collect(Collectors.toList());
       return logReturn(returnList);
-    }
-
-    public Runnable onChange(Consumer<In_locationGraph> onChange) {
-      logEnter();
-      onChangeList.add(onChange);
-      return logReturn(() -> onChangeList.remove(onChange));
     }
 
     //Attributes
@@ -57,13 +53,53 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     //Children elements
     private Optional<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.In_locationGraph.Has_locationGraphId.Has_locationGraphId> has_locationGraphId = Optional.empty();
 
+    @ToString.Exclude()
+    @EqualsAndHashCode.Exclude()
+    @JsonIgnore
+    @Getter
+    @Setter
+    private RawNode rawNode = new RawNode();
+    @ToString.Exclude()
+    @EqualsAndHashCode.Exclude()
+    @JsonIgnore
+    private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+    private List<Consumer<In_locationGraph>> onChangeList = new ArrayList<>();
+
+    public String nodeName() {
+      return "in__location_graph";
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getParentNode() {
+      return parentNode;
+    }
+
+    public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+      this.parentNode = Optional.of(linkedNode);
+    }
+
+    public void removeChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.In_locationGraph.Has_locationGraphId.Has_locationGraphId) {
+          this.has_locationGraphId = Optional.empty();
+        }
+    }
+
+    public void removeFromParent() {
+      parentNode.ifPresent(node -> node.removeChild(this));
+    }
+
+    public Subscription onChange(Consumer<In_locationGraph> onChange) {
+      logEnter();
+      onChangeList.add(onChange);
+      return logReturn(() -> onChangeList.remove(onChange));
+    }
+
     public void deserialize (RawNode rawNode) {
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing in__location_graph");
       //Deserialize arguments
 
       //Deserialize children
-      this.has_locationGraphId = ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.In_locationGraph.Has_locationGraphId.Has_locationGraphId.fromRawNode(rawNode.getChildrenFirst("has__location_graph_id"));
+      this.has_locationGraphId = ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.In_locationGraph.Has_locationGraphId.Has_locationGraphId.fromRawNode(rawNode.getChildrenFirst("has__location_graph_id"), this);
     }
 
     public RawNode serializeIntoRawNode()
@@ -71,7 +107,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       //Serialize arguments
 
       //Serialize children
-      rawNode.addChildren("has__location_graph_id", has_locationGraphId);
+      rawNode.setChildren("has__location_graph_id", has_locationGraphId.stream().map(o -> o.serializeIntoRawNode()).toList());
       return rawNode;
     }
 
@@ -85,23 +121,19 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.has_locationGraphId;
     }
-    /*
-    public Optional<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.In_locationGraph.Has_locationGraphId.Has_locationGraphId> GetOrInsertDefault_Has_locationGraphId()
+    public Stream<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.In_locationGraph.Has_locationGraphId.Has_locationGraphId> streamHas_locationGraphId()
     {
-      if(this.has_locationGraphId == null) {
-        this.has_locationGraphId = Optional.empty();
-      }
-      return this.has_locationGraphId;
+      return has_locationGraphId.stream();
     }
-    */
-    public In_locationGraph setHas_locationGraphId(Optional<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.In_locationGraph.Has_locationGraphId.Has_locationGraphId> value)
+    public In_locationGraph setHas_locationGraphId(ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.In_locationGraph.Has_locationGraphId.Has_locationGraphId value)
     {
-      this.has_locationGraphId = value;
+      this.has_locationGraphId = Optional.ofNullable(value);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
 
   }
+
 
   /*
     dependant type:
@@ -149,93 +181,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
         },
         "isNullable": true
       },
-      "name": "in__location_graph",
-      "parentType": {
-        "type": "element",
-        "value": {
-          "metaType": "object",
-          "isSingle": true,
-          "value": {
-            "in__location_graph": {
-              "metaType": "object",
-              "isSingle": true,
-              "value": {
-                "has__location_graph_id": {
-                  "metaType": "object",
-                  "attributes": {
-                    "metaType": "object",
-                    "value": {
-                      "location_graph_id_ref": {
-                        "metaType": "primitive",
-                        "value": "xs:string",
-                        "isNullable": false
-                      }
-                    },
-                    "isNullable": false
-                  },
-                  "isSingle": true,
-                  "value": {
-                    "or": {
-                      "metaType": "object",
-                      "value": {},
-                      "isSingle": false,
-                      "isNullable": true,
-                      "attributes": {
-                        "metaType": "object",
-                        "value": {
-                          "location_graph_id_ref": {
-                            "metaType": "primitive",
-                            "value": "xs:string",
-                            "isNullable": true
-                          }
-                        },
-                        "isNullable": true
-                      }
-                    }
-                  },
-                  "isNullable": true
-                }
-              },
-              "isNullable": true
-            },
-            "has__node_graph_id": {
-              "metaType": "object",
-              "attributes": {
-                "metaType": "object",
-                "value": {
-                  "node_graph_id_ref": {
-                    "metaType": "primitive",
-                    "value": "xs:string",
-                    "isNullable": false
-                  }
-                },
-                "isNullable": false
-              },
-              "isSingle": true,
-              "value": {
-                "or": {
-                  "metaType": "object",
-                  "value": {},
-                  "isSingle": false,
-                  "isNullable": true,
-                  "attributes": {
-                    "metaType": "object",
-                    "value": {
-                      "node_graph_id_ref": {
-                        "metaType": "primitive",
-                        "value": "xs:string",
-                        "isNullable": true
-                      }
-                    },
-                    "isNullable": true
-                  }
-                }
-              },
-              "isNullable": true
-            }
-          }
-        },
-        "name": "type__node_graph__selection"
-      }
+      "name": "in__location_graph"
     }
   */

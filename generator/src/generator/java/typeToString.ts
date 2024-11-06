@@ -4,7 +4,8 @@ import {typeDeclarationElementToString} from "./toString/typeDeclarationToString
 import {unionTypeDeclarationToString} from "./toString/unionTypeDeclarationToString";
 import {compositionTypeDeclarationToString} from "./toString/compositionTypeDeclarationToString";
 import {DirectoryMetadata} from "../../memory_fs/directoryMetadata";
-import {dependantTypeGetFullQualifiedName} from "./toString/dependantTypeGetFullQualifiedName";
+import {dependantTypeGetFullQualifiedName} from "./toString/depedantType/dependantTypeGetFullQualifiedName";
+import {dependantTypeToString} from "./toString/dependantTypeToString";
 
 export type DependantType<T extends Type = Type> = {
   name: string,
@@ -20,6 +21,8 @@ export type GetObjectBodyReturn = {
   templateString: string,
 }
 
+export type ReferenceMap = { [key: string]: TypeDeclaration }
+
 export function typeDeclarationToString(typeDeclarationArg: TypeDeclaration | Array<TypeDeclaration>): DirectoryMetadata {
 
   const directoryMetadata = new DirectoryMetadata();
@@ -33,7 +36,7 @@ export function typeDeclarationToString(typeDeclarationArg: TypeDeclaration | Ar
       ...acc,
       [element?.name]: element
     }
-  }, {} as { [key: string]: TypeDeclaration })
+  }, {} as ReferenceMap)
 
   let writtenClassesList: string[] = [];
   let elementDeclarationList: DependantType[] = typeDeclarationList.filter(element => element?.type === "element")
@@ -50,55 +53,8 @@ export function typeDeclarationToString(typeDeclarationArg: TypeDeclaration | Ar
     const iterate = [...elementDeclarationList];
     elementDeclarationList = [];
     iterate?.forEach((element) => {
-      if (writtenClassesList.includes(dependantTypeGetFullQualifiedName(element))) {
-        return;
-      }
-      if (element.type === "element") {
-        const {
-          dependantTypes,
-          writtenClass
-        } = typeDeclarationElementToString(directoryMetadata, writtenClassesList, element);
-        writtenClassesList.push(...writtenClass);
-        dependantTypes?.forEach(e => elementDeclarationList.push(e));
-        // directoryMetadata.createFile(`${element.name}.cs`, () => template()`${templateString}`)
-      }
-      if (element.type === "union") {
-        const {
-          dependantTypes,
-          writtenClass
-        } = unionTypeDeclarationToString(directoryMetadata, writtenClassesList, element);
-        writtenClassesList.push(...writtenClass);
-        dependantTypes?.forEach(e => elementDeclarationList.push(e));
-        // directoryMetadata.createFile(`${element.name}.cs`, () => template()`${templateString}`)
-      }
-      if (element.type === "composition") {
-        const {
-          dependantTypes,
-          writtenClass
-        } = compositionTypeDeclarationToString(directoryMetadata, typeDeclarationList, writtenClassesList, element);
-        writtenClassesList.push(...writtenClass);
-        dependantTypes?.forEach(e => elementDeclarationList.push(e));
-        // directoryMetadata.createFile(`${element.name}.cs`, () => template()`${templateString}`)
-      }
-
-      if (element.type === "reference") {
-        const referenceType = referenceList[element.name]
-        if (referenceType) {
-          const {
-            dependantTypes,
-            writtenClass
-          } = typeDeclarationElementToString(directoryMetadata, writtenClassesList, {
-            type: "element",
-            value: referenceType.value,
-            typeDeclaration: referenceType,
-            name: element.name
-          });
-          writtenClassesList.push(...writtenClass);
-          dependantTypes?.forEach(e => elementDeclarationList.push(e));
-          // directoryMetadata.createFile(`${element.name}.cs`, () => template()`${templateString}`)
-        }
-      }
-      writtenClassesList.push(element.name);
+      const dependantTypes = dependantTypeToString(directoryMetadata, typeDeclarationList, writtenClassesList, element, referenceList);
+      dependantTypes?.forEach(e => elementDeclarationList.push(e));
 
     })
   } while (elementDeclarationList.length > 0)

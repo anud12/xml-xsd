@@ -11,7 +11,7 @@ namespace XSD {
   public class race  {
     public RawNode rawNode = new RawNode();
     //Attributes
-    /* ignored attribute key={key} of type=System.Object*/
+    public System.String race_rule_ref;
 
     //Children elements
     public race()
@@ -34,6 +34,11 @@ namespace XSD {
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing race");
       //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("race_rule_ref"))
+      {
+        var attribute_race_rule_ref = rawNode.attributes["race_rule_ref"];
+        this.race_rule_ref = rawNode.attributes["race_rule_ref"];
+      }
 
       //Deserialize children
     }
@@ -41,6 +46,10 @@ namespace XSD {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
+      if(this.race_rule_ref != null)
+      {
+        rawNode.attributes["race_rule_ref"] = this.race_rule_ref.ToString();
+      }
 
       //Serialize children
       return rawNode;
@@ -52,6 +61,13 @@ namespace XSD {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    /* ignored attribute key={key} of type=System.Object*/
+    public System.String Get_race_rule_ref()
+    {
+      return this.race_rule_ref;
+    }
+    public void Set_race_rule_ref(System.String value)
+    {
+      this.race_rule_ref = value;
+    }
   }
 }

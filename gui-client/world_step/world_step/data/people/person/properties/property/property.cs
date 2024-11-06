@@ -12,7 +12,7 @@ namespace XSD.Nworld_step.Ndata.Npeople.Nperson.Nproperties {
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String property_rule_ref;
-    /* ignored attribute key={key} of type=System.Object*/
+    public System.Int32 value;
 
     //Children elements
     public property()
@@ -40,6 +40,11 @@ namespace XSD.Nworld_step.Ndata.Npeople.Nperson.Nproperties {
         var attribute_property_rule_ref = rawNode.attributes["property_rule_ref"];
         this.property_rule_ref = rawNode.attributes["property_rule_ref"];
       }
+      if(rawNode.attributes.ContainsKey("value"))
+      {
+        var attribute_value = rawNode.attributes["value"];
+        this.value = attribute_value.ToInt();
+      }
 
       //Deserialize children
     }
@@ -50,6 +55,10 @@ namespace XSD.Nworld_step.Ndata.Npeople.Nperson.Nproperties {
       if(this.property_rule_ref != null)
       {
         rawNode.attributes["property_rule_ref"] = this.property_rule_ref.ToString();
+      }
+      if(this.value != null)
+      {
+        rawNode.attributes["value"] = this.value.ToString();
       }
 
       //Serialize children
@@ -70,6 +79,13 @@ namespace XSD.Nworld_step.Ndata.Npeople.Nperson.Nproperties {
     {
       this.property_rule_ref = value;
     }
-    /* ignored attribute key={key} of type=System.Object*/
+    public System.Int32 Get_value()
+    {
+      return this.value;
+    }
+    public void Set_value(System.Int32 value)
+    {
+      this.value = value;
+    }
   }
 }

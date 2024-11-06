@@ -14,7 +14,7 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule {
     /* ignored attribute key={key} of type=System.Object*/
 
     //Children elements
-    public List<group__math_operations>? property = new List<group__math_operations>();
+    public List<XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property>? property = new List<XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property>();
     public entry()
     {
     }
@@ -56,11 +56,18 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule {
         updatedRawNode.Serialize(element);
     }
     /* ignored attribute key={key} of type=System.Object*/
-    public List<group__math_operations>? Get_property()
+    public List<XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property>? Get_property()
     {
       return this.property;
     }
-    public void Set_property(List<group__math_operations>? value)
+    public List<XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property> GetOrInsertDefault_property()
+    {
+      if(this.property == null) {
+        this.property = new List<XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property>();
+      }
+      return this.property;
+    }
+    public void Set_property(List<XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property>? value)
     {
       this.property = value;
     }

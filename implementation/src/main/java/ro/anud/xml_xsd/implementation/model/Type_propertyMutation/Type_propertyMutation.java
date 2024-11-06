@@ -5,9 +5,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Stream;
+import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -19,15 +19,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
-  public class Type_propertyMutation  {
-
-    @ToString.Exclude()
-    @EqualsAndHashCode.Exclude()
-    @JsonIgnore
-    @Getter
-    @Setter
-    private RawNode rawNode = new RawNode();
-    private List<Consumer<Type_propertyMutation>> onChangeList = new ArrayList<>();
+  public class Type_propertyMutation implements  ro.anud.xml_xsd.implementation.model.interfaces.IType_propertyMutation.IType_propertyMutation<Type_propertyMutation>,  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static Type_propertyMutation fromRawNode(RawNode rawNode) {
       logEnter();
@@ -36,27 +28,71 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
-    public static Optional<Type_propertyMutation> fromRawNode(Optional<RawNode> rawNode) {
+    public static Type_propertyMutation fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+      logEnter();
+      var instance = fromRawNode(rawNode);
+      instance.setParentNode(parent);
+      return logReturn(instance);
+    }
+    public static Optional<Type_propertyMutation> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
         logEnter();
-        return logReturn(rawNode.map(Type_propertyMutation::fromRawNode));
+        return logReturn(rawNode.map(o -> Type_propertyMutation.fromRawNode(o, parent)));
     }
-    public static List<Type_propertyMutation> fromRawNode(List<RawNode> rawNodeList) {
+    public static List<Type_propertyMutation> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
-      List<Type_propertyMutation> returnList = rawNodeList.stream().map(Type_propertyMutation::fromRawNode).collect(Collectors.toList());
+      List<Type_propertyMutation> returnList = Optional.ofNullable(rawNodeList)
+          .orElse(List.of())
+          .stream()
+          .map(o -> Type_propertyMutation.fromRawNode(o, parent))
+          .collect(Collectors.toList());
       return logReturn(returnList);
-    }
-
-    public Runnable onChange(Consumer<Type_propertyMutation> onChange) {
-      logEnter();
-      onChangeList.add(onChange);
-      return logReturn(() -> onChangeList.remove(onChange));
     }
 
     //Attributes
     private String propertyRuleRef;
 
     //Children elements
-    private List<ro.anud.xml_xsd.implementation.model.Group_mathOperations.Group_mathOperations> from = new ArrayList<>();
+    private List<ro.anud.xml_xsd.implementation.model.Type_propertyMutation.From.From> from = new ArrayList<>();
+
+    @ToString.Exclude()
+    @EqualsAndHashCode.Exclude()
+    @JsonIgnore
+    @Getter
+    @Setter
+    private RawNode rawNode = new RawNode();
+    @ToString.Exclude()
+    @EqualsAndHashCode.Exclude()
+    @JsonIgnore
+    private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+    private List<Consumer<Type_propertyMutation>> onChangeList = new ArrayList<>();
+
+    public String nodeName() {
+      return "type__property_mutation";
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getParentNode() {
+      return parentNode;
+    }
+
+    public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+      this.parentNode = Optional.of(linkedNode);
+    }
+
+    public void removeChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_propertyMutation.From.From) {
+          throw new RuntimeException("trying to delete from which is required");
+        }
+    }
+
+    public void removeFromParent() {
+      parentNode.ifPresent(node -> node.removeChild(this));
+    }
+
+    public Subscription onChange(Consumer<Type_propertyMutation> onChange) {
+      logEnter();
+      onChangeList.add(onChange);
+      return logReturn(() -> onChangeList.remove(onChange));
+    }
 
     public void deserialize (RawNode rawNode) {
       this.rawNode = rawNode;
@@ -65,7 +101,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       this.propertyRuleRef = rawNode.getAttributeRequired("property_rule_ref");
 
       //Deserialize children
-      this.from = ro.anud.xml_xsd.implementation.model.Group_mathOperations.Group_mathOperations.fromRawNode(rawNode.getChildrenList("from"));
+      this.from = ro.anud.xml_xsd.implementation.model.Type_propertyMutation.From.From.fromRawNode(rawNode.getChildrenList("from"), this);
     }
 
     public RawNode serializeIntoRawNode()
@@ -74,7 +110,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       rawNode.setAttribute("property_rule_ref", this.propertyRuleRef);
 
       //Serialize children
-      rawNode.addChildren("from", from);
+      rawNode.setChildren("from", from.stream().map(o -> o.serializeIntoRawNode()).toList());
       return rawNode;
     }
 
@@ -95,18 +131,35 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
-    public List<ro.anud.xml_xsd.implementation.model.Group_mathOperations.Group_mathOperations> getFrom()
+    public List<ro.anud.xml_xsd.implementation.model.Type_propertyMutation.From.From> getFrom()
     {
       return this.from;
     }
-    public Type_propertyMutation setFrom(List<ro.anud.xml_xsd.implementation.model.Group_mathOperations.Group_mathOperations> value)
+    public Stream<ro.anud.xml_xsd.implementation.model.Type_propertyMutation.From.From> streamFrom()
     {
-      this.from = value;
+      return from.stream();
+    }
+    public Type_propertyMutation addFrom(ro.anud.xml_xsd.implementation.model.Type_propertyMutation.From.From value)
+    {
+      this.from.add(value);
+      onChangeList.forEach(consumer -> consumer.accept(this));
+      return this;
+    }
+    public Type_propertyMutation addAllFrom(List<ro.anud.xml_xsd.implementation.model.Type_propertyMutation.From.From> value)
+    {
+      this.from.addAll(value);
+      onChangeList.forEach(consumer -> consumer.accept(this));
+      return this;
+    }
+    public Type_propertyMutation removeFrom(ro.anud.xml_xsd.implementation.model.Type_propertyMutation.From.From value)
+    {
+      this.from.remove(value);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
 
   }
+
 
   /*
     dependant type:
@@ -128,9 +181,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
         "isSingle": false,
         "value": {
           "from": {
-            "metaType": "reference",
-            "value": "group__math_operations",
-            "isSingle": false,
+            "metaType": "object",
             "attributes": {
               "metaType": "object",
               "value": {
@@ -142,7 +193,62 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
               },
               "isNullable": false
             },
+            "isSingle": false,
+            "value": {
+              "operation": {
+                "metaType": "reference",
+                "value": "type__math_operations",
+                "isSingle": true,
+                "isNullable": false
+              }
+            },
             "isNullable": false
+          }
+        }
+      },
+      "typeDeclaration": {
+        "name": "type__property_mutation",
+        "type": "complex",
+        "isSingle": false,
+        "value": {
+          "metaType": "object",
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "property_rule_ref": {
+                "metaType": "primitive",
+                "value": "xs:string",
+                "isNullable": false
+              }
+            },
+            "isNullable": false
+          },
+          "isSingle": false,
+          "value": {
+            "from": {
+              "metaType": "object",
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "participant": {
+                    "metaType": "primitive",
+                    "value": "type_person_select",
+                    "isNullable": false
+                  }
+                },
+                "isNullable": false
+              },
+              "isSingle": false,
+              "value": {
+                "operation": {
+                  "metaType": "reference",
+                  "value": "type__math_operations",
+                  "isSingle": true,
+                  "isNullable": false
+                }
+              },
+              "isNullable": false
+            }
           }
         }
       },

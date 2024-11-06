@@ -11,8 +11,8 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule {
   public class entry  {
     public RawNode rawNode = new RawNode();
     //Attributes
-    /* ignored attribute key={key} of type=System.Object*/
-    /* ignored attribute key={key} of type=System.Object*/
+    public System.String id;
+    public System.String units;
 
     //Children elements
     public XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.person_default? person_default = null;
@@ -38,6 +38,16 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule {
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing entry");
       //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("id"))
+      {
+        var attribute_id = rawNode.attributes["id"];
+        this.id = rawNode.attributes["id"];
+      }
+      if(rawNode.attributes.ContainsKey("units"))
+      {
+        var attribute_units = rawNode.attributes["units"];
+        this.units = rawNode.attributes["units"];
+      }
 
       //Deserialize children
       this.person_default = rawNode.InitializeWithRawNode("person_default", this.person_default);
@@ -48,6 +58,14 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
+      if(this.id != null)
+      {
+        rawNode.attributes["id"] = this.id.ToString();
+      }
+      if(this.units != null)
+      {
+        rawNode.attributes["units"] = this.units.ToString();
+      }
 
       //Serialize children
       if(person_default != null) {
@@ -66,8 +84,22 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    /* ignored attribute key={key} of type=System.Object*/
-    /* ignored attribute key={key} of type=System.Object*/
+    public System.String Get_id()
+    {
+      return this.id;
+    }
+    public void Set_id(System.String value)
+    {
+      this.id = value;
+    }
+    public System.String Get_units()
+    {
+      return this.units;
+    }
+    public void Set_units(System.String value)
+    {
+      this.units = value;
+    }
     public XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.person_default? Get_person_default()
     {
       return this.person_default;

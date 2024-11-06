@@ -17,7 +17,7 @@ namespace XSD.Nworld_step.Nrule_group.Nrace_rule {
     public type_range? vision = null;
     public type_range? movement = null;
     public XSD.Nworld_step.Nrule_group.Nrace_rule.Nentry.name? name = null;
-    public List<group__math_operations>? property_bonus = new List<group__math_operations>();
+    public List<XSD.Nworld_step.Nrule_group.Nrace_rule.Nentry.property_bonus>? property_bonus = new List<XSD.Nworld_step.Nrule_group.Nrace_rule.Nentry.property_bonus>();
     public type_icon? icon = null;
     public entry()
     {
@@ -123,11 +123,11 @@ namespace XSD.Nworld_step.Nrule_group.Nrace_rule {
     {
       this.name = value;
     }
-    public List<group__math_operations>? Get_property_bonus()
+    public List<XSD.Nworld_step.Nrule_group.Nrace_rule.Nentry.property_bonus>? Get_property_bonus()
     {
       return this.property_bonus;
     }
-    public void Set_property_bonus(List<group__math_operations>? value)
+    public void Set_property_bonus(List<XSD.Nworld_step.Nrule_group.Nrace_rule.Nentry.property_bonus>? value)
     {
       this.property_bonus = value;
     }

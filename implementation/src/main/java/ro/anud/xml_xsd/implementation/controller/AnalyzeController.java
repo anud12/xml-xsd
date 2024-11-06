@@ -1,6 +1,7 @@
 package ro.anud.xml_xsd.implementation.controller;
 
 
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
+import ro.anud.xml_xsd.implementation.middleware.FromPersonAction;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
+import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -21,21 +24,32 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Arrays;
 
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
+
 @RestController()
+@AllArgsConstructor
 @RequestMapping("/analyze")
 public class AnalyzeController {
 
+    private FromPersonAction fromPersonAction;
+
     @PostMapping("/execute")
     public ResponseEntity<String> execute(@RequestBody String request) {
-//        System.out.println(request);
+        logEnter("");
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document = builder.parse(new InputSource(new StringReader(request)));
             var rawNode = RawNode.fromNode(document.getDocumentElement());
-            var step = WorldStep.fromRawNode(rawNode);
+            var worldStep = WorldStep.fromRawNode(rawNode);
 
-            var outputDocument = step.getRawNode().toDocument("world_step");
+            var worldStepInstance = new WorldStepInstance(worldStep);
+            var outWorldStepInstance = new WorldStepInstance(worldStep);
+
+            fromPersonAction.apply(worldStepInstance, outWorldStepInstance);
+
+            var outputDocument = outWorldStepInstance.getWorldStep().serializeIntoRawNode()
+                .toDocument("world_step");
             TransformerFactory tf = TransformerFactory.newInstance();
             Transformer transformer = tf.newTransformer();
             StringWriter writer = new StringWriter();
@@ -46,6 +60,6 @@ public class AnalyzeController {
             e.printStackTrace();
             return ResponseEntity.status(400).body(Arrays.stream(e.getStackTrace()).toList().toString());
         }
-//        return ResponseEntity.ok(request);
+        //        return ResponseEntity.ok(request);
     }
 }

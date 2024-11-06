@@ -5,9 +5,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Stream;
+import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -19,15 +19,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
-  public class Type_action  {
-
-    @ToString.Exclude()
-    @EqualsAndHashCode.Exclude()
-    @JsonIgnore
-    @Getter
-    @Setter
-    private RawNode rawNode = new RawNode();
-    private List<Consumer<Type_action>> onChangeList = new ArrayList<>();
+  public class Type_action implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static Type_action fromRawNode(RawNode rawNode) {
       logEnter();
@@ -36,20 +28,24 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
-    public static Optional<Type_action> fromRawNode(Optional<RawNode> rawNode) {
+    public static Type_action fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+      logEnter();
+      var instance = fromRawNode(rawNode);
+      instance.setParentNode(parent);
+      return logReturn(instance);
+    }
+    public static Optional<Type_action> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
         logEnter();
-        return logReturn(rawNode.map(Type_action::fromRawNode));
+        return logReturn(rawNode.map(o -> Type_action.fromRawNode(o, parent)));
     }
-    public static List<Type_action> fromRawNode(List<RawNode> rawNodeList) {
+    public static List<Type_action> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
-      List<Type_action> returnList = rawNodeList.stream().map(Type_action::fromRawNode).collect(Collectors.toList());
+      List<Type_action> returnList = Optional.ofNullable(rawNodeList)
+          .orElse(List.of())
+          .stream()
+          .map(o -> Type_action.fromRawNode(o, parent))
+          .collect(Collectors.toList());
       return logReturn(returnList);
-    }
-
-    public Runnable onChange(Consumer<Type_action> onChange) {
-      logEnter();
-      onChangeList.add(onChange);
-      return logReturn(() -> onChangeList.remove(onChange));
     }
 
     //Attributes
@@ -58,14 +54,57 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     private ro.anud.xml_xsd.implementation.model.Type_action.From.From from = new ro.anud.xml_xsd.implementation.model.Type_action.From.From();
     private ro.anud.xml_xsd.implementation.model.Type_action.On.On on = new ro.anud.xml_xsd.implementation.model.Type_action.On.On();
 
+    @ToString.Exclude()
+    @EqualsAndHashCode.Exclude()
+    @JsonIgnore
+    @Getter
+    @Setter
+    private RawNode rawNode = new RawNode();
+    @ToString.Exclude()
+    @EqualsAndHashCode.Exclude()
+    @JsonIgnore
+    private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+    private List<Consumer<Type_action>> onChangeList = new ArrayList<>();
+
+    public String nodeName() {
+      return "type__action";
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getParentNode() {
+      return parentNode;
+    }
+
+    public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+      this.parentNode = Optional.of(linkedNode);
+    }
+
+    public void removeChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_action.From.From) {
+          throw new RuntimeException("trying to delete from which is required");
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_action.On.On) {
+          throw new RuntimeException("trying to delete on which is required");
+        }
+    }
+
+    public void removeFromParent() {
+      parentNode.ifPresent(node -> node.removeChild(this));
+    }
+
+    public Subscription onChange(Consumer<Type_action> onChange) {
+      logEnter();
+      onChangeList.add(onChange);
+      return logReturn(() -> onChangeList.remove(onChange));
+    }
+
     public void deserialize (RawNode rawNode) {
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing type__action");
       //Deserialize arguments
 
       //Deserialize children
-      this.from = ro.anud.xml_xsd.implementation.model.Type_action.From.From.fromRawNode(rawNode.getChildrenFirst("from").get());
-      this.on = ro.anud.xml_xsd.implementation.model.Type_action.On.On.fromRawNode(rawNode.getChildrenFirst("on").get());
+      this.from = ro.anud.xml_xsd.implementation.model.Type_action.From.From.fromRawNode(rawNode.getChildrenFirst("from").get(), this);
+      this.on = ro.anud.xml_xsd.implementation.model.Type_action.On.On.fromRawNode(rawNode.getChildrenFirst("on").get(), this);
     }
 
     public RawNode serializeIntoRawNode()
@@ -73,8 +112,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       //Serialize arguments
 
       //Serialize children
-      rawNode.addChildren("from", from);
-      rawNode.addChildren("on", on);
+      rawNode.setChildren("from", Optional.ofNullable(from).stream().map(o -> o.serializeIntoRawNode()).toList());
+      rawNode.setChildren("on", Optional.ofNullable(on).stream().map(o -> o.serializeIntoRawNode()).toList());
       return rawNode;
     }
 
@@ -88,34 +127,25 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.from;
     }
-    /*
-    public ro.anud.xml_xsd.implementation.model.Type_action.From.From GetOrInsertDefault_From()
+    public Stream<ro.anud.xml_xsd.implementation.model.Type_action.From.From> streamFrom()
     {
-      if(this.from == null) {
-        this.from = new ro.anud.xml_xsd.implementation.model.Type_action.From.From();
-      }
-      return this.from;
+      return Optional.ofNullable(from).stream();
     }
-    */
     public Type_action setFrom(ro.anud.xml_xsd.implementation.model.Type_action.From.From value)
     {
       this.from = value;
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
+
     public ro.anud.xml_xsd.implementation.model.Type_action.On.On getOn()
     {
       return this.on;
     }
-    /*
-    public ro.anud.xml_xsd.implementation.model.Type_action.On.On GetOrInsertDefault_On()
+    public Stream<ro.anud.xml_xsd.implementation.model.Type_action.On.On> streamOn()
     {
-      if(this.on == null) {
-        this.on = new ro.anud.xml_xsd.implementation.model.Type_action.On.On();
-      }
-      return this.on;
+      return Optional.ofNullable(on).stream();
     }
-    */
     public Type_action setOn(ro.anud.xml_xsd.implementation.model.Type_action.On.On value)
     {
       this.on = value;
@@ -124,6 +154,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
   }
+
 
   /*
     dependant type:

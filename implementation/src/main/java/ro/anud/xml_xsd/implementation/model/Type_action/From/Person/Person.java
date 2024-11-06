@@ -5,9 +5,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Stream;
+import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -19,15 +19,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
-  public class Person  {
-
-    @ToString.Exclude()
-    @EqualsAndHashCode.Exclude()
-    @JsonIgnore
-    @Getter
-    @Setter
-    private RawNode rawNode = new RawNode();
-    private List<Consumer<Person>> onChangeList = new ArrayList<>();
+  public class Person implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static Person fromRawNode(RawNode rawNode) {
       logEnter();
@@ -36,20 +28,24 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
-    public static Optional<Person> fromRawNode(Optional<RawNode> rawNode) {
+    public static Person fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+      logEnter();
+      var instance = fromRawNode(rawNode);
+      instance.setParentNode(parent);
+      return logReturn(instance);
+    }
+    public static Optional<Person> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
         logEnter();
-        return logReturn(rawNode.map(Person::fromRawNode));
+        return logReturn(rawNode.map(o -> Person.fromRawNode(o, parent)));
     }
-    public static List<Person> fromRawNode(List<RawNode> rawNodeList) {
+    public static List<Person> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
-      List<Person> returnList = rawNodeList.stream().map(Person::fromRawNode).collect(Collectors.toList());
+      List<Person> returnList = Optional.ofNullable(rawNodeList)
+          .orElse(List.of())
+          .stream()
+          .map(o -> Person.fromRawNode(o, parent))
+          .collect(Collectors.toList());
       return logReturn(returnList);
-    }
-
-    public Runnable onChange(Consumer<Person> onChange) {
-      logEnter();
-      onChangeList.add(onChange);
-      return logReturn(() -> onChangeList.remove(onChange));
     }
 
     //Attributes
@@ -58,14 +54,57 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     private Optional<ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection> select = Optional.empty();
     private Optional<ro.anud.xml_xsd.implementation.model.Type_propertyMutation.Type_propertyMutation> propertyMutation = Optional.empty();
 
+    @ToString.Exclude()
+    @EqualsAndHashCode.Exclude()
+    @JsonIgnore
+    @Getter
+    @Setter
+    private RawNode rawNode = new RawNode();
+    @ToString.Exclude()
+    @EqualsAndHashCode.Exclude()
+    @JsonIgnore
+    private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+    private List<Consumer<Person>> onChangeList = new ArrayList<>();
+
+    public String nodeName() {
+      return "person";
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getParentNode() {
+      return parentNode;
+    }
+
+    public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+      this.parentNode = Optional.of(linkedNode);
+    }
+
+    public void removeChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection) {
+          this.select = Optional.empty();
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_propertyMutation.Type_propertyMutation) {
+          this.propertyMutation = Optional.empty();
+        }
+    }
+
+    public void removeFromParent() {
+      parentNode.ifPresent(node -> node.removeChild(this));
+    }
+
+    public Subscription onChange(Consumer<Person> onChange) {
+      logEnter();
+      onChangeList.add(onChange);
+      return logReturn(() -> onChangeList.remove(onChange));
+    }
+
     public void deserialize (RawNode rawNode) {
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing person");
       //Deserialize arguments
 
       //Deserialize children
-      this.select = ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection.fromRawNode(rawNode.getChildrenFirst("select"));
-      this.propertyMutation = ro.anud.xml_xsd.implementation.model.Type_propertyMutation.Type_propertyMutation.fromRawNode(rawNode.getChildrenFirst("property_mutation"));
+      this.select = ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection.fromRawNode(rawNode.getChildrenFirst("select"), this);
+      this.propertyMutation = ro.anud.xml_xsd.implementation.model.Type_propertyMutation.Type_propertyMutation.fromRawNode(rawNode.getChildrenFirst("property_mutation"), this);
     }
 
     public RawNode serializeIntoRawNode()
@@ -73,8 +112,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       //Serialize arguments
 
       //Serialize children
-      rawNode.addChildren("select", select);
-      rawNode.addChildren("property_mutation", propertyMutation);
+      rawNode.setChildren("select", select.stream().map(o -> o.serializeIntoRawNode()).toList());
+      rawNode.setChildren("property_mutation", propertyMutation.stream().map(o -> o.serializeIntoRawNode()).toList());
       return rawNode;
     }
 
@@ -88,24 +127,34 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this.select;
     }
-    public Person setSelect(Optional<ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection> value)
+    public Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection> streamSelect()
     {
-      this.select = value;
+      return select.stream();
+    }
+    public Person setSelect(ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection value)
+    {
+      this.select = Optional.ofNullable(value);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
+
     public Optional<ro.anud.xml_xsd.implementation.model.Type_propertyMutation.Type_propertyMutation> getPropertyMutation()
     {
       return this.propertyMutation;
     }
-    public Person setPropertyMutation(Optional<ro.anud.xml_xsd.implementation.model.Type_propertyMutation.Type_propertyMutation> value)
+    public Stream<ro.anud.xml_xsd.implementation.model.Type_propertyMutation.Type_propertyMutation> streamPropertyMutation()
     {
-      this.propertyMutation = value;
+      return propertyMutation.stream();
+    }
+    public Person setPropertyMutation(ro.anud.xml_xsd.implementation.model.Type_propertyMutation.Type_propertyMutation value)
+    {
+      this.propertyMutation = Optional.ofNullable(value);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
 
   }
+
 
   /*
     dependant type:
@@ -130,98 +179,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
         },
         "isNullable": true
       },
-      "name": "person",
-      "parentType": {
-        "type": "element",
-        "value": {
-          "metaType": "object",
-          "isSingle": true,
-          "value": {
-            "person": {
-              "metaType": "object",
-              "isSingle": true,
-              "value": {
-                "select": {
-                  "metaType": "reference",
-                  "value": "type__person_selection",
-                  "isSingle": true,
-                  "isNullable": true
-                },
-                "property_mutation": {
-                  "metaType": "reference",
-                  "value": "type__property_mutation",
-                  "isSingle": true,
-                  "isNullable": true
-                }
-              },
-              "isNullable": true
-            }
-          },
-          "isNullable": false
-        },
-        "name": "from",
-        "parentType": {
-          "type": "element",
-          "value": {
-            "metaType": "object",
-            "isSingle": true,
-            "value": {
-              "from": {
-                "metaType": "object",
-                "isSingle": true,
-                "value": {
-                  "person": {
-                    "metaType": "object",
-                    "isSingle": true,
-                    "value": {
-                      "select": {
-                        "metaType": "reference",
-                        "value": "type__person_selection",
-                        "isSingle": true,
-                        "isNullable": true
-                      },
-                      "property_mutation": {
-                        "metaType": "reference",
-                        "value": "type__property_mutation",
-                        "isSingle": true,
-                        "isNullable": true
-                      }
-                    },
-                    "isNullable": true
-                  }
-                },
-                "isNullable": false
-              },
-              "on": {
-                "metaType": "object",
-                "isSingle": true,
-                "value": {
-                  "person": {
-                    "metaType": "object",
-                    "isSingle": true,
-                    "value": {
-                      "select": {
-                        "metaType": "reference",
-                        "value": "type__person_selection",
-                        "isSingle": true,
-                        "isNullable": true
-                      },
-                      "property_mutation": {
-                        "metaType": "reference",
-                        "value": "type__property_mutation",
-                        "isSingle": true,
-                        "isNullable": true
-                      }
-                    },
-                    "isNullable": true
-                  }
-                },
-                "isNullable": false
-              }
-            }
-          },
-          "name": "type__action"
-        }
-      }
+      "name": "person"
     }
   */

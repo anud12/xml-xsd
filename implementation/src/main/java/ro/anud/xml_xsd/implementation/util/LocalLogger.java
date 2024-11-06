@@ -5,96 +5,134 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public class LocalLogger {
     static Logger logger = LoggerFactory.getLogger(RawNode.class);
 
-    private static long depthLevel(StackTraceElement[] stackTraceElements) {
-        var depthLevel = Arrays.stream(stackTraceElements)
-                .toList()
-                .reversed()
-                .stream()
-                .filter(stackTraceElement -> StringUtils.startsWithIgnoreCase(
-                        stackTraceElement.getClassName(),
-                        "ro.anud.xml_xsd.implementation")
-                )
-                .filter(stackTraceElement -> !StringUtils.startsWithIgnoreCase(
-                        stackTraceElement.getClassName(),
-                        LocalLogger.class.getName()))
-                .count();
+    public static class LogClass {
+        private Object[] parentArgs = {};
 
-        return depthLevel;
-    }
+        public LogClass() {}
 
-    public static void logEnter(Object... args) {
-        var stackTrace = Thread.currentThread().getStackTrace();
-        var depthLevel = depthLevel(stackTrace);
-
-        var previousStackTrace = stackTrace[2];
-        var methodName = previousStackTrace.getMethodName();
-        StringBuilder line = new StringBuilder(Arrays.stream(args).reduce(
-                methodName + "[enter ]:",
-                (string, o) -> string + " " + o,
-                (string, string2) -> string + string2
-        ));
-        for (var i = 0; i < depthLevel; i++) {
-            line.insert(0, "\t");
+        public LogClass(Object... parentArgs) {
+            this.parentArgs = parentArgs;
         }
 
-        LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line));
-    }
+        public LogClass log(Object... args) {
+            var stackTrace = Thread.currentThread().getStackTrace();
+            var filterStacktrace = filterStacktrace(stackTrace);
 
-    public static <T>T logReturn(T returnValue, Object... args) {
-        var stackTrace = Thread.currentThread().getStackTrace();
-        var depthLevel = depthLevel(stackTrace);
-
-        var previousStackTrace = stackTrace[2];
-        var methodName = previousStackTrace.getMethodName();
-        StringBuilder line = new StringBuilder(Arrays.stream(args).reduce(
-                methodName + "[return]:",
-                (string, o) -> string + " " + o,
-                (string, string2) -> string + string2
-        ));
-        for (var i = 0; i < depthLevel; i++) {
-            line.insert(0, "\t");
-        }
-        LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + ", value: [" + returnValue.toString() + "]");
-        return returnValue;
-    }
-
-    public static void logReturnVoid(Object... args) {
-
-        var stackTrace = Thread.currentThread().getStackTrace();
-        var depthLevel = depthLevel(stackTrace);
-
-        var previousStackTrace = stackTrace[2];
-        var methodName = previousStackTrace.getMethodName();
-        StringBuilder line = new StringBuilder(Arrays.stream(args).reduce(
-                methodName + "[return]:",
-                (string, o) -> string + " " + o,
-                (string, string2) -> string + string2
-        ));
-        for (var i = 0; i < depthLevel; i++) {
-            line.insert(0, "\t");
-        }
-        LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + ", value: [void]");
-    }
-
-    public static void log(Object... args) {
-
-        var stackTrace = Thread.currentThread().getStackTrace();
-        var depthLevel = depthLevel(stackTrace);
-
-        var previousStackTrace = stackTrace[2];
-        var methodName = previousStackTrace.getMethodName();
-        StringBuilder line = new StringBuilder(Arrays.stream(args).reduce(
+            var previousStackTrace = filterStacktrace.get(0);
+            var methodName = previousStackTrace.getMethodName();
+            var stream = Stream.concat(Arrays.stream(parentArgs), Arrays.stream(args));
+            StringBuilder line = new StringBuilder(stream.reduce(
                 methodName + "[ log  ]: ",
                 (string, o) -> string + " " + o,
                 (string, string2) -> string + string2
-        ));
-        for (var i = 0; i < depthLevel; i++) {
-            line.insert(0, "\t");
+            ));
+            for (var i = 0; i < filterStacktrace.size(); i++) {
+                line.insert(0, "\t");
+            }
+            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line));
+            return new LogClass(args);
         }
-        LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line));
+
+        public LogClass logEnter(Object... args) {
+            var stackTrace = Thread.currentThread().getStackTrace();
+            var filterStacktrace = filterStacktrace(stackTrace);
+
+            var previousStackTrace = filterStacktrace.get(0);
+            var methodName = previousStackTrace.getMethodName();
+            var stream = Stream.concat(Arrays.stream(parentArgs), Arrays.stream(args));
+            StringBuilder line = new StringBuilder(stream.reduce(
+                methodName + "[enter ]:",
+                (string, o) -> string + " " + o,
+                (string, string2) -> string + string2
+            ));
+            for (var i = 0; i < filterStacktrace.size(); i++) {
+                line.insert(0, "\t");
+            }
+
+            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line));
+            return new LogClass(args);
+        }
+
+        public <T> T logReturn(T returnValue, Object... args) {
+            var stackTrace = Thread.currentThread().getStackTrace();
+            var filterStacktrace = filterStacktrace(stackTrace);
+
+            var previousStackTrace = filterStacktrace.get(0);
+            var methodName = previousStackTrace.getMethodName();
+            var stream = Stream.concat(Arrays.stream(parentArgs), Arrays.stream(args));
+            StringBuilder line = new StringBuilder(stream.reduce(
+                methodName + "[return]:",
+                (string, o) -> string + " " + o,
+                (string, string2) -> string + string2
+            ));
+            for (var i = 0; i < filterStacktrace.size(); i++) {
+                line.insert(0, "\t");
+            }
+            var returnValueString = Optional.ofNullable(returnValue).map(Objects::toString).orElse("null");
+            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + ", value: [" + returnValueString + "]");
+            return returnValue;
+        }
+
+        public void logReturnVoid(Object... args) {
+            var stackTrace = Thread.currentThread().getStackTrace();
+            var filterStacktrace = filterStacktrace(stackTrace);
+
+            var previousStackTrace = filterStacktrace.get(0);
+            var methodName = previousStackTrace.getMethodName();
+            var stream = Stream.concat(Arrays.stream(parentArgs), Arrays.stream(args));
+            StringBuilder line = new StringBuilder(stream.reduce(
+                methodName + "[return]:",
+                (string, o) -> string + " " + o,
+                (string, string2) -> string + string2
+            ));
+            for (var i = 0; i < filterStacktrace.size(); i++) {
+                line.insert(0, "\t");
+            }
+            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + ", value: [void]");
+        }
+    }
+
+
+    private static List<StackTraceElement> filterStacktrace(StackTraceElement[] stackTraceElements) {
+        return  Arrays.stream(stackTraceElements)
+            .toList()
+            .reversed()
+            .stream()
+            .filter(stackTraceElement -> StringUtils.startsWithIgnoreCase(
+                stackTraceElement.getClassName(),
+                "ro.anud.xml_xsd.implementation")
+            )
+            .filter(stackTraceElement -> !StringUtils.startsWithIgnoreCase(
+                stackTraceElement.getClassName(),
+                LocalLogger.class.getName()))
+            .filter(stackTraceElement -> !StringUtils.startsWithIgnoreCase(
+                stackTraceElement.getClassName(),
+                LogClass.class.getName()))
+            .toList()
+            .reversed();
+    }
+
+    public static LogClass logEnter(Object... args) {
+        return new LogClass().logEnter(args);
+    }
+
+    public static <T> T logReturn(T returnValue, Object... args) {
+        return new LogClass().logReturn(returnValue, args);
+    }
+
+    public static void logReturnVoid(Object... args) {
+        new LogClass().logReturnVoid(args);
+    }
+
+    public static LogClass log(Object... args) {
+        return new LogClass().log(args);
     }
 }

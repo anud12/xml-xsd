@@ -3,18 +3,20 @@ import {Type} from "../../../type";
 import {DependantType, GetObjectBodyReturn} from "../typeToString";
 import {getTypeName, primitives} from "./geTypeName";
 import {normalizeNameClass} from "./normalizeNameClass";
-import {dependantTypeToAttributeDeclaration} from "./dependantTypeToAttributeDeclaration";
-import {dependantTypeToChildrenDeclaration} from "./dependantTypeToChildrenDeclaration";
-import {dependantTypeToAttributeSerializationBody} from "./dependantTypeToAttributeSerializationBody";
-import {dependantTypeToChildrenSerializationBody} from "./dependantTypeToChildrenSerializationBody";
-import {dependantTypeToAttributeDeserializationBody} from "./dependantTypeToAttributeDeserializationBody";
-import {dependantTypeToChildrenDeserializationBody} from "./dependantTypeToChildrenDeserializationBody";
+import {dependantTypeToAttributeDeclaration} from "./depedantType/dependantTypeToAttributeDeclaration";
+import {dependantTypeToChildrenDeclaration} from "./depedantType/dependantTypeToChildrenDeclaration";
+import {dependantTypeToAttributeSerializationBody} from "./depedantType/dependantTypeToAttributeSerializationBody";
+import {dependantTypeToChildrenSerializationBody} from "./depedantType/dependantTypeToChildrenSerializationBody";
+import {dependantTypeToAttributeDeserializationBody} from "./depedantType/dependantTypeToAttributeDeserializationBody";
+import {dependantTypeToChildrenDeserializationBody} from "./depedantType/dependantTypeToChildrenDeserializationBody";
 import {DirectoryMetadata} from "../../../memory_fs/directoryMetadata";
-import {dependantTypeGetFullQualifiedName} from "./dependantTypeGetFullQualifiedName";
-import {basePackage, getDependantTypePackage} from "./getDependantTypePackage";
-import {getDependantTypeChildPackage} from "./getDependantTypeChildPackage";
-import {dependantTypeToAttributeGetterSetter} from "./dependantTypeToAttributeGetterSetter";
-import {dependantTypeToChildrenGetterSetter} from "./dependantTypeToChildrenGetterSetter";
+import {dependantTypeGetFullQualifiedName} from "./depedantType/dependantTypeGetFullQualifiedName";
+import {basePackage, getDependantTypePackage} from "./depedantType/getDependantTypePackage";
+import {getDependantTypeChildPackage} from "./depedantType/getDependantTypeChildPackage";
+import {dependantTypeToAttributeGetterSetter} from "./depedantType/dependantTypeToAttributeGetterSetter";
+import {dependantTypeToChildrenGetterSetter} from "./depedantType/dependantTypeToChildrenGetterSetter";
+import {interfaceTypeDeclarationToString} from "./interfaceTypeDeclarationToString";
+import {dependantTypeToRemoveChild} from "./depedantType/dependantTypeToRemoveChild";
 
 
 type ClassTemplateParts = {
@@ -45,7 +47,8 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
     @Builder
     @AllArgsConstructor
     @NoArgsConstructor
-    public class ${normalizeNameClass(dependantType.name)} ${extensionNames.length > 0 && `implements ${extensionNames.map(e => e + `<${normalizeNameClass(dependantType.name)}>`).join(", ")}`} {
+    public class ${normalizeNameClass(dependantType.name)} implements ${extensionNames.length > 0 && ` ${extensionNames.map(e => e + `<${normalizeNameClass(dependantType.name)}>`).join(", ")}, `} ro.anud.xml_xsd.implementation.util.LinkedNode {
+          
           
       public static ${normalizeNameClass(dependantType.name)} fromRawNode(RawNode rawNode) {
         logEnter();
@@ -54,13 +57,23 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
         instance.deserialize(rawNode);
         return logReturn(instance);
       }
-      public static Optional<${normalizeNameClass(dependantType.name)}> fromRawNode(Optional<RawNode> rawNode) {
-          logEnter();
-          return logReturn(rawNode.map(${normalizeNameClass(dependantType.name)}::fromRawNode));
-      }
-      public static List<${normalizeNameClass(dependantType.name)}> fromRawNode(List<RawNode> rawNodeList) {
+      public static ${normalizeNameClass(dependantType.name)} fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
         logEnter();
-        List<${normalizeNameClass(dependantType.name)}> returnList = rawNodeList.stream().map(${normalizeNameClass(dependantType.name)}::fromRawNode).collect(Collectors.toList());
+        var instance = fromRawNode(rawNode);
+        instance.setParentNode(parent);
+        return logReturn(instance);
+      }
+      public static Optional<${normalizeNameClass(dependantType.name)}> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+          logEnter();
+          return logReturn(rawNode.map(o -> ${normalizeNameClass(dependantType.name)}.fromRawNode(o, parent)));
+      }
+      public static List<${normalizeNameClass(dependantType.name)}> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+        logEnter();
+        List<${normalizeNameClass(dependantType.name)}> returnList = Optional.ofNullable(rawNodeList)
+            .orElse(List.of())
+            .stream()
+            .map(o -> ${normalizeNameClass(dependantType.name)}.fromRawNode(o, parent))
+            .collect(Collectors.toList());
         return logReturn(returnList);
       }
       
@@ -91,8 +104,31 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
       @Getter
       @Setter
       private RawNode rawNode = new RawNode();
+      @ToString.Exclude()
+      @EqualsAndHashCode.Exclude()
+      @JsonIgnore
+      private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
       private List<Consumer<${normalizeNameClass(dependantType.name)}>> onChangeList = new ArrayList<>();
   
+      public String nodeName() {
+        return "${dependantType.name}";
+      }
+  
+      public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getParentNode() {
+        return parentNode;
+      }
+      
+      public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+        this.parentNode = Optional.of(linkedNode);
+      }
+      
+      public void removeChild(Object object) {
+          ${dependantTypeToRemoveChild(dependantType)}
+      }
+      
+      public void removeFromParent() {
+        parentNode.ifPresent(node -> node.removeChild(this));
+      }
       
       public Subscription onChange(Consumer<${normalizeNameClass(dependantType.name)}> onChange) {
         logEnter();
@@ -176,137 +212,6 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
   }
 }
 
-
-function typeDeclarationElementToInterfaceString(directoryMetadata: DirectoryMetadata, writtenClasses: string[], dependantType: DependantType): GetObjectBodyReturn {
-  const dependantTypeList: DependantType[] = [];
-  const interfaceName = `I${normalizeNameClass(dependantType.name)}`;
-
-  if (writtenClasses.includes(interfaceName)) {
-    return {
-      dependantTypes: [],
-      templateString: "",
-      writtenClass: []
-    }
-  }
-
-  const templateString = template()`
-    public interface ${interfaceName}<T> {
-      ${dependantType.value.attributes?.metaType === "object" && template()`
-        //Attributes
-        ${Object.entries(dependantType.value.attributes.value ?? {}).map(([key, value]) => {
-    const type = getTypeName(value, key, dependantType);
-    if (value.metaType === "primitive") {
-      if (type !== primitives.int) {
-
-        const typeString = value.isNullable
-          ? `${primitives.string}?`
-          : primitives.string;
-        return template()`
-                    public ${typeString} get${normalizeNameClass(key)}();
-                    public T set${normalizeNameClass(key)}(${typeString} value);`
-      }
-
-      const typeString = value.isNullable
-        ? `${type}?`
-        : type;
-      return template()`
-                  public ${typeString} get${normalizeNameClass(key)}();
-                  public T set${normalizeNameClass(key)}(${typeString} value);`
-    }
-
-    return template()`/* ignored attribute key={key} of type=${type}*/`
-  }).filter(e => e).join("\n")}
-      `}
-
-      ${dependantType.value.metaType === "object" && template()`
-        //Children elements
-        ${Object.entries(dependantType.value.value).flatMap(([key, value]) => {
-    return [[key, value] as [string, Type]]
-  })
-    .map(([key, value]) => {
-      let type = getTypeName(value, key, dependantType);
-      const normalizedName = normalizeNameClass(type);
-
-      let baseTypeString = `${getDependantTypePackage(dependantType)}.${normalizedName}.${normalizedName}`;
-      if (value.metaType === "reference") {
-        baseTypeString = `${basePackage}.${normalizedName}.${normalizedName}`;
-      }
-
-
-      let pathString = "";
-      if (value.isSingle) {
-        pathString = baseTypeString;
-      }
-      if (value.isNullable) {
-        pathString = `Optional<${baseTypeString}>`
-      }
-      if (!value.isSingle) {
-        pathString = `List<${baseTypeString}>`
-      }
-
-      const templateString = template()`
-          public ${pathString} get${normalizeNameClass(key)}();
-          public Stream<${baseTypeString}> stream${normalizeNameClass(key)}();
-          ${value.isSingle && template()`
-            public T set${normalizeNameClass(key)}(${baseTypeString} value);
-          `}
-          ${!value.isSingle && template()`
-            public T add${normalizeNameClass(key)}(${baseTypeString} value);
-            public T addAll${normalizeNameClass(key)}(List<${baseTypeString}> value);
-            public T remove${normalizeNameClass(key)}(${baseTypeString} value);
-          `}
-      `
-
-      if (value.metaType === "object") {
-        dependantTypeList.push({
-          type: "element",
-          value: value,
-          typeDeclaration: undefined,
-          name: type,
-        })
-        return templateString;
-      }
-      if (value.metaType === "union" || value.metaType === "composition") {
-        dependantTypeList.push({
-          type: "union",
-          value: value,
-          typeDeclaration: undefined,
-          name: type,
-        })
-        return templateString;
-      }
-      if (value.metaType === "reference") {
-        dependantTypeList.push({
-          type: "reference",
-          value: value,
-          typeDeclaration: undefined,
-          name: type,
-        })
-        return templateString;
-      }
-      return template()`/* ignored children key:${key} of type:${type}*/`
-    }).filter(e => e).join("\n")}
-      `}
-      public void deserialize (RawNode rawNode);
-
-      public RawNode serializeIntoRawNode();
-
-      public void serialize(Document document, Element element);
-    }
-    
-    /*
-    ${JSON.stringify({...dependantType, parentType: undefined}, null, 2)}
-    */
-  `
-
-
-  return {
-    writtenClass: [interfaceName],
-    dependantTypes: dependantTypeList,
-    templateString: templateString
-  }
-}
-
 export function typeDeclarationElementToString(directoryMetadata: DirectoryMetadata, writtenClassesList: string[], dependantType: DependantType, extensions: DependantType[] = []): GetObjectBodyReturn {
 
 
@@ -329,7 +234,7 @@ export function typeDeclarationElementToString(directoryMetadata: DirectoryMetad
   }
 
   const interfaceResult = extensions.map(extensinon => {
-    const result = typeDeclarationElementToInterfaceString(directoryMetadata, localWrittenClassesList, extensinon);
+    const result = interfaceTypeDeclarationToString(directoryMetadata, localWrittenClassesList, extensinon);
     localWrittenClassesList = [...localWrittenClassesList, ...result.writtenClass]
     return result;
   })

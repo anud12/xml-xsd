@@ -5,9 +5,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Stream;
+import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -19,15 +19,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
-  public class NameToken  {
-
-    @ToString.Exclude()
-    @EqualsAndHashCode.Exclude()
-    @JsonIgnore
-    @Getter
-    @Setter
-    private RawNode rawNode = new RawNode();
-    private List<Consumer<NameToken>> onChangeList = new ArrayList<>();
+  public class NameToken implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static NameToken fromRawNode(RawNode rawNode) {
       logEnter();
@@ -36,20 +28,24 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
-    public static Optional<NameToken> fromRawNode(Optional<RawNode> rawNode) {
+    public static NameToken fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+      logEnter();
+      var instance = fromRawNode(rawNode);
+      instance.setParentNode(parent);
+      return logReturn(instance);
+    }
+    public static Optional<NameToken> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
         logEnter();
-        return logReturn(rawNode.map(NameToken::fromRawNode));
+        return logReturn(rawNode.map(o -> NameToken.fromRawNode(o, parent)));
     }
-    public static List<NameToken> fromRawNode(List<RawNode> rawNodeList) {
+    public static List<NameToken> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
-      List<NameToken> returnList = rawNodeList.stream().map(NameToken::fromRawNode).collect(Collectors.toList());
+      List<NameToken> returnList = Optional.ofNullable(rawNodeList)
+          .orElse(List.of())
+          .stream()
+          .map(o -> NameToken.fromRawNode(o, parent))
+          .collect(Collectors.toList());
       return logReturn(returnList);
-    }
-
-    public Runnable onChange(Consumer<NameToken> onChange) {
-      logEnter();
-      onChangeList.add(onChange);
-      return logReturn(() -> onChangeList.remove(onChange));
     }
 
     //Attributes
@@ -59,6 +55,49 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     private Optional<ro.anud.xml_xsd.implementation.model.Group_nameToken.NameToken._ref._ref> _ref = Optional.empty();
     private ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken oneOf = new ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken();
 
+    @ToString.Exclude()
+    @EqualsAndHashCode.Exclude()
+    @JsonIgnore
+    @Getter
+    @Setter
+    private RawNode rawNode = new RawNode();
+    @ToString.Exclude()
+    @EqualsAndHashCode.Exclude()
+    @JsonIgnore
+    private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+    private List<Consumer<NameToken>> onChangeList = new ArrayList<>();
+
+    public String nodeName() {
+      return "name_token";
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getParentNode() {
+      return parentNode;
+    }
+
+    public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+      this.parentNode = Optional.of(linkedNode);
+    }
+
+    public void removeChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.Group_nameToken.NameToken._ref._ref) {
+          this._ref = Optional.empty();
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken) {
+          throw new RuntimeException("trying to delete oneOf which is required");
+        }
+    }
+
+    public void removeFromParent() {
+      parentNode.ifPresent(node -> node.removeChild(this));
+    }
+
+    public Subscription onChange(Consumer<NameToken> onChange) {
+      logEnter();
+      onChangeList.add(onChange);
+      return logReturn(() -> onChangeList.remove(onChange));
+    }
+
     public void deserialize (RawNode rawNode) {
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing name_token");
@@ -66,8 +105,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       this.prefix = rawNode.getAttributeRequired("prefix");
 
       //Deserialize children
-      this._ref = ro.anud.xml_xsd.implementation.model.Group_nameToken.NameToken._ref._ref.fromRawNode(rawNode.getChildrenFirst("ref"));
-      this.oneOf = ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken.fromRawNode(rawNode.getChildrenFirst("one_of").get());
+      this._ref = ro.anud.xml_xsd.implementation.model.Group_nameToken.NameToken._ref._ref.fromRawNode(rawNode.getChildrenFirst("ref"), this);
+      this.oneOf = ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken.fromRawNode(rawNode.getChildrenFirst("one_of").get(), this);
     }
 
     public RawNode serializeIntoRawNode()
@@ -76,8 +115,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       rawNode.setAttribute("prefix", this.prefix);
 
       //Serialize children
-      rawNode.addChildren("ref", _ref);
-      rawNode.addChildren("one_of", oneOf);
+      rawNode.setChildren("ref", _ref.stream().map(o -> o.serializeIntoRawNode()).toList());
+      rawNode.setChildren("one_of", Optional.ofNullable(oneOf).stream().map(o -> o.serializeIntoRawNode()).toList());
       return rawNode;
     }
 
@@ -102,24 +141,24 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     {
       return this._ref;
     }
-    /*
-    public Optional<ro.anud.xml_xsd.implementation.model.Group_nameToken.NameToken._ref._ref> GetOrInsertDefault__ref()
+    public Stream<ro.anud.xml_xsd.implementation.model.Group_nameToken.NameToken._ref._ref> stream_ref()
     {
-      if(this._ref == null) {
-        this._ref = Optional.empty();
-      }
-      return this._ref;
+      return _ref.stream();
     }
-    */
-    public NameToken set_ref(Optional<ro.anud.xml_xsd.implementation.model.Group_nameToken.NameToken._ref._ref> value)
+    public NameToken set_ref(ro.anud.xml_xsd.implementation.model.Group_nameToken.NameToken._ref._ref value)
     {
-      this._ref = value;
+      this._ref = Optional.ofNullable(value);
       onChangeList.forEach(consumer -> consumer.accept(this));
       return this;
     }
+
     public ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken getOneOf()
     {
       return this.oneOf;
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken> streamOneOf()
+    {
+      return Optional.ofNullable(oneOf).stream();
     }
     public NameToken setOneOf(ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken value)
     {
@@ -129,6 +168,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
   }
+
 
   /*
     dependant type:
@@ -173,71 +213,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
           }
         }
       },
-      "name": "name_token",
-      "parentType": {
-        "type": "element",
-        "value": {
-          "metaType": "object",
-          "isSingle": false,
-          "value": {
-            "name_token": {
-              "metaType": "union",
-              "value": [
-                {
-                  "metaType": "object",
-                  "isSingle": true,
-                  "isNullable": true,
-                  "value": {
-                    "ref": {
-                      "metaType": "object",
-                      "value": {},
-                      "isSingle": true,
-                      "isNullable": true,
-                      "attributes": {
-                        "metaType": "object",
-                        "value": {
-                          "name_rule_ref": {
-                            "metaType": "primitive",
-                            "value": "xs:string",
-                            "isNullable": false
-                          }
-                        },
-                        "isNullable": false
-                      }
-                    }
-                  }
-                },
-                {
-                  "metaType": "object",
-                  "isSingle": true,
-                  "isNullable": false,
-                  "value": {
-                    "one_of": {
-                      "metaType": "reference",
-                      "value": "group__name_token",
-                      "isSingle": true,
-                      "isNullable": false
-                    }
-                  }
-                }
-              ],
-              "isSingle": false,
-              "attributes": {
-                "metaType": "object",
-                "value": {
-                  "prefix": {
-                    "metaType": "primitive",
-                    "value": "xs:string",
-                    "isNullable": false
-                  }
-                },
-                "isNullable": false
-              },
-              "isNullable": false
-            }
-          }
-        },
-        "name": "group__name_token"
-      }
+      "name": "name_token"
     }
   */

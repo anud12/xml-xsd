@@ -58,7 +58,7 @@
 
   <xs:complexType name="type__property_mutation">
     <xs:sequence>
-      <xs:element name="from" maxOccurs="unbounded">
+      <xs:element name="from" maxOccurs="unbounded" minOccurs="1">
         <xs:complexType>
           <xs:sequence>
             <xs:element name="operation" type="type__math_operations"/>

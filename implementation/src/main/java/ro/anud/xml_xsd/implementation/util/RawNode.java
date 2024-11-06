@@ -20,8 +20,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.*;
 @NoArgsConstructor
 public final class RawNode {
     static Logger logger = LoggerFactory.getLogger(RawNode.class);
-    private LinkedHashMap<String, String> attributeMap;
-    private LinkedHashMap<String, List<RawNode>> childrenMap;
+    private LinkedHashMap<String, String> attributeMap = new LinkedHashMap<>();
+    private LinkedHashMap<String, List<RawNode>> childrenMap = new LinkedHashMap<>();
 
     private static String getNodePath(Node node) {
         if (node == null) {
@@ -57,11 +57,11 @@ public final class RawNode {
         }
 
         return logReturn(
-                RawNode.builder()
-                        .childrenMap(childrenMap)
-                        .attributeMap(attributeMap)
-                        .build(),
-                getNodePath(node));
+            RawNode.builder()
+                .childrenMap(childrenMap)
+                .attributeMap(attributeMap)
+                .build(),
+            getNodePath(node));
     }
 
     public Optional<Integer> getAttributeInt(String key) {
@@ -110,6 +110,19 @@ public final class RawNode {
     public List<RawNode> getChildrenList(String key) {
         logEnter("key:", key);
         return logReturn(this.childrenMap.get(key));
+    }
+
+    public void setChildren(String key, Optional<RawNode> value) {
+        value.ifPresent(rawNode -> {
+            var childrenList = new ArrayList<RawNode>();
+            childrenList.add(rawNode);
+            this.childrenMap.put(key, childrenList);
+        });
+    }
+
+    public void setChildren(String key, List<RawNode> value) {
+        var childrenList = new ArrayList<>(value);
+        this.childrenMap.put(key, childrenList);
     }
 
     public RawNode addChildren(String key, Object value) {

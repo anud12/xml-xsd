@@ -15,7 +15,7 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nperson_to_person {
     public System.String on;
 
     //Children elements
-    public List<group__math_operations> from = new List<group__math_operations>();
+    public List<XSD.Nworld_step.Nrule_group.Naction_rule.Nperson_to_person.Nlocation_mutation.from> from = new List<XSD.Nworld_step.Nrule_group.Naction_rule.Nperson_to_person.Nlocation_mutation.from>();
     public location_mutation()
     {
     }
@@ -74,11 +74,18 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nperson_to_person {
     {
       this.on = value;
     }
-    public List<group__math_operations> Get_from()
+    public List<XSD.Nworld_step.Nrule_group.Naction_rule.Nperson_to_person.Nlocation_mutation.from> Get_from()
     {
       return this.from;
     }
-    public void Set_from(List<group__math_operations> value)
+    public List<XSD.Nworld_step.Nrule_group.Naction_rule.Nperson_to_person.Nlocation_mutation.from> GetOrInsertDefault_from()
+    {
+      if(this.from == null) {
+        this.from = new List<XSD.Nworld_step.Nrule_group.Naction_rule.Nperson_to_person.Nlocation_mutation.from>();
+      }
+      return this.from;
+    }
+    public void Set_from(List<XSD.Nworld_step.Nrule_group.Naction_rule.Nperson_to_person.Nlocation_mutation.from> value)
     {
       this.from = value;
     }

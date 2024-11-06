@@ -13,8 +13,8 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nperson_to_person {
     //Attributes
 
     //Children elements
-    public group__math_operations value = new group__math_operations();
-    public group__math_operations expected = new group__math_operations();
+    public XSD.Nworld_step.Nrule_group.Naction_rule.Nperson_to_person.Ntest.value value = new XSD.Nworld_step.Nrule_group.Naction_rule.Nperson_to_person.Ntest.value();
+    public XSD.Nworld_step.Nrule_group.Naction_rule.Nperson_to_person.Ntest.expected expected = new XSD.Nworld_step.Nrule_group.Naction_rule.Nperson_to_person.Ntest.expected();
     public test()
     {
     }
@@ -61,19 +61,33 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nperson_to_person {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public group__math_operations Get_value()
+    public XSD.Nworld_step.Nrule_group.Naction_rule.Nperson_to_person.Ntest.value Get_value()
     {
       return this.value;
     }
-    public void Set_value(group__math_operations value)
+    public XSD.Nworld_step.Nrule_group.Naction_rule.Nperson_to_person.Ntest.value GetOrInsertDefault_value()
+    {
+      if(this.value == null) {
+        this.value = new XSD.Nworld_step.Nrule_group.Naction_rule.Nperson_to_person.Ntest.value();
+      }
+      return this.value;
+    }
+    public void Set_value(XSD.Nworld_step.Nrule_group.Naction_rule.Nperson_to_person.Ntest.value value)
     {
       this.value = value;
     }
-    public group__math_operations Get_expected()
+    public XSD.Nworld_step.Nrule_group.Naction_rule.Nperson_to_person.Ntest.expected Get_expected()
     {
       return this.expected;
     }
-    public void Set_expected(group__math_operations value)
+    public XSD.Nworld_step.Nrule_group.Naction_rule.Nperson_to_person.Ntest.expected GetOrInsertDefault_expected()
+    {
+      if(this.expected == null) {
+        this.expected = new XSD.Nworld_step.Nrule_group.Naction_rule.Nperson_to_person.Ntest.expected();
+      }
+      return this.expected;
+    }
+    public void Set_expected(XSD.Nworld_step.Nrule_group.Naction_rule.Nperson_to_person.Ntest.expected value)
     {
       this.expected = value;
     }

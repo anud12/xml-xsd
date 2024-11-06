@@ -45,86 +45,8 @@
     }
   },
   {
-    "name": "group__operation__and",
-    "type": "complex",
-    "isSingle": false,
-    "value": {
-      "metaType": "object",
-      "isSingle": false,
-      "value": {
-        "add_property": {
-          "metaType": "object",
-          "value": {},
-          "isSingle": true,
-          "isNullable": true,
-          "attributes": {
-            "metaType": "object",
-            "value": {
-              "property_rule_ref": {
-                "metaType": "primitive",
-                "value": "xs:string",
-                "isNullable": false
-              }
-            },
-            "isNullable": false
-          }
-        },
-        "and": {
-          "metaType": "reference",
-          "value": "group__operation__and",
-          "isSingle": false,
-          "attributes": {
-            "metaType": "object",
-            "value": {
-              "do": {
-                "metaType": "primitive",
-                "value": "type__group__operation__and",
-                "isNullable": false
-              },
-              "value": {
-                "metaType": "primitive",
-                "value": "xs:int",
-                "isNullable": false
-              }
-            }
-          },
-          "isNullable": true
-        }
-      }
-    }
-  },
-  {
-    "name": "group__math_operations",
-    "type": "complex",
-    "isSingle": true,
-    "value": {
-      "metaType": "object",
-      "isSingle": true,
-      "value": {
-        "operation": {
-          "metaType": "reference",
-          "value": "group__operation__and",
-          "isSingle": true,
-          "attributes": {
-            "metaType": "object",
-            "value": {
-              "initial": {
-                "metaType": "primitive",
-                "value": "xs:int",
-                "isNullable": false
-              }
-            },
-            "isNullable": false
-          },
-          "isNullable": false
-        }
-      }
-    }
-  },
-  {
     "name": "group__name_token",
-    "type": "complex",
-    "isSingle": false,
+    "type": "group",
     "value": {
       "metaType": "object",
       "isSingle": false,
@@ -313,9 +235,7 @@
       "isSingle": false,
       "value": {
         "from": {
-          "metaType": "reference",
-          "value": "group__math_operations",
-          "isSingle": false,
+          "metaType": "object",
           "attributes": {
             "metaType": "object",
             "value": {
@@ -326,6 +246,15 @@
               }
             },
             "isNullable": false
+          },
+          "isSingle": false,
+          "value": {
+            "operation": {
+              "metaType": "reference",
+              "value": "type__math_operations",
+              "isSingle": true,
+              "isNullable": false
+            }
           },
           "isNullable": false
         }
@@ -373,10 +302,10 @@
               "property_rule_ref": {
                 "metaType": "primitive",
                 "value": "xs:string",
-                "isNullable": true
+                "isNullable": false
               }
             },
-            "isNullable": true
+            "isNullable": false
           },
           "isSingle": false,
           "value": {
@@ -421,7 +350,8 @@
             "metaType": "object",
             "value": {
               "race_rule_ref": {
-                "metaType": "unknown",
+                "metaType": "primitive",
+                "value": "xs:string",
                 "isNullable": false
               }
             },
@@ -459,13 +389,82 @@
     }
   },
   {
+    "name": "type__math_operations_and",
+    "type": "complex",
+    "isSingle": false,
+    "value": {
+      "metaType": "object",
+      "isSingle": false,
+      "value": {
+        "add_property": {
+          "metaType": "object",
+          "value": {},
+          "isSingle": true,
+          "isNullable": true,
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "property_rule_ref": {
+                "metaType": "primitive",
+                "value": "xs:string",
+                "isNullable": false
+              }
+            },
+            "isNullable": false
+          }
+        },
+        "and": {
+          "metaType": "composition",
+          "value": [
+            {
+              "metaType": "object",
+              "value": {},
+              "isSingle": true,
+              "isNullable": false
+            },
+            {
+              "metaType": "primitive",
+              "value": "type__math_operations_and"
+            }
+          ],
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "do": {
+                "metaType": "primitive",
+                "value": "type__group__operation__and",
+                "isNullable": false
+              },
+              "value": {
+                "metaType": "primitive",
+                "value": "xs:int",
+                "isNullable": false
+              }
+            }
+          },
+          "isSingle": false,
+          "isNullable": true
+        }
+      }
+    }
+  },
+  {
     "name": "type__math_operations",
     "type": "complex",
-    "isSingle": true,
     "value": {
-      "metaType": "reference",
-      "value": "group__operation__and",
-      "isSingle": true,
+      "metaType": "composition",
+      "value": [
+        {
+          "metaType": "object",
+          "value": {},
+          "isSingle": true,
+          "isNullable": false
+        },
+        {
+          "metaType": "primitive",
+          "value": "type__math_operations_and"
+        }
+      ],
       "attributes": {
         "metaType": "object",
         "value": {
@@ -802,11 +801,13 @@
                     "metaType": "object",
                     "value": {
                       "id": {
-                        "metaType": "unknown",
+                        "metaType": "primitive",
+                        "value": "xs:string",
                         "isNullable": false
                       },
                       "units": {
-                        "metaType": "unknown",
+                        "metaType": "primitive",
+                        "value": "xs:string",
                         "isNullable": false
                       }
                     }
@@ -898,9 +899,7 @@
                   "isSingle": false,
                   "value": {
                     "property": {
-                      "metaType": "reference",
-                      "value": "group__math_operations",
-                      "isSingle": false,
+                      "metaType": "object",
                       "attributes": {
                         "metaType": "object",
                         "value": {
@@ -934,6 +933,15 @@
                               }
                             ]
                           }
+                        }
+                      },
+                      "isSingle": false,
+                      "value": {
+                        "operation": {
+                          "metaType": "reference",
+                          "value": "type__math_operations",
+                          "isSingle": true,
+                          "isNullable": false
                         }
                       },
                       "isNullable": true
@@ -1016,20 +1024,31 @@
                       }
                     },
                     "property_bonus": {
-                      "metaType": "reference",
-                      "value": "group__math_operations",
-                      "isSingle": false,
-                      "attributes": {
-                        "metaType": "object",
-                        "value": {
-                          "property_rule_ref": {
-                            "metaType": "primitive",
-                            "value": "xs:string",
-                            "isNullable": true
+                      "metaType": "composition",
+                      "value": [
+                        {
+                          "metaType": "object",
+                          "value": {},
+                          "isSingle": true,
+                          "isNullable": false,
+                          "attributes": {
+                            "metaType": "object",
+                            "value": {
+                              "property_rule_ref": {
+                                "metaType": "primitive",
+                                "value": "xs:string",
+                                "isNullable": false
+                              }
+                            },
+                            "isNullable": false
                           }
                         },
-                        "isNullable": true
-                      },
+                        {
+                          "metaType": "primitive",
+                          "value": "type__math_operations"
+                        }
+                      ],
+                      "isSingle": false,
                       "isNullable": true
                     },
                     "icon": {
@@ -1194,9 +1213,7 @@
                       "isSingle": true,
                       "value": {
                         "value": {
-                          "metaType": "reference",
-                          "value": "group__math_operations",
-                          "isSingle": true,
+                          "metaType": "object",
                           "attributes": {
                             "metaType": "object",
                             "value": {
@@ -1208,12 +1225,19 @@
                             },
                             "isNullable": false
                           },
+                          "isSingle": true,
+                          "value": {
+                            "operation": {
+                              "metaType": "reference",
+                              "value": "type__math_operations",
+                              "isSingle": true,
+                              "isNullable": false
+                            }
+                          },
                           "isNullable": false
                         },
                         "expected": {
-                          "metaType": "reference",
-                          "value": "group__math_operations",
-                          "isSingle": true,
+                          "metaType": "object",
                           "attributes": {
                             "metaType": "object",
                             "value": {
@@ -1224,6 +1248,15 @@
                               }
                             },
                             "isNullable": false
+                          },
+                          "isSingle": true,
+                          "value": {
+                            "operation": {
+                              "metaType": "reference",
+                              "value": "type__math_operations",
+                              "isSingle": true,
+                              "isNullable": false
+                            }
                           },
                           "isNullable": false
                         }
@@ -1255,9 +1288,7 @@
                       "isSingle": true,
                       "value": {
                         "from": {
-                          "metaType": "reference",
-                          "value": "group__math_operations",
-                          "isSingle": false,
+                          "metaType": "object",
                           "attributes": {
                             "metaType": "object",
                             "value": {
@@ -1268,6 +1299,15 @@
                               }
                             },
                             "isNullable": false
+                          },
+                          "isSingle": false,
+                          "value": {
+                            "operation": {
+                              "metaType": "reference",
+                              "value": "type__math_operations",
+                              "isSingle": true,
+                              "isNullable": false
+                            }
                           },
                           "isNullable": false
                         }
@@ -1800,7 +1840,8 @@
                         "metaType": "object",
                         "value": {
                           "race_rule_ref": {
-                            "metaType": "unknown",
+                            "metaType": "primitive",
+                            "value": "xs:string",
                             "isNullable": false
                           }
                         },
@@ -1825,7 +1866,8 @@
                                 "isNullable": false
                               },
                               "value": {
-                                "metaType": "unknown",
+                                "metaType": "primitive",
+                                "value": "xs:int",
                                 "isNullable": false
                               }
                             }
