@@ -20,6 +20,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.*;
 @NoArgsConstructor
 public final class RawNode {
     static Logger logger = LoggerFactory.getLogger(RawNode.class);
+    private String tag;
     private LinkedHashMap<String, String> attributeMap = new LinkedHashMap<>();
     private LinkedHashMap<String, List<RawNode>> childrenMap = new LinkedHashMap<>();
 
@@ -58,6 +59,7 @@ public final class RawNode {
 
         return logReturn(
             RawNode.builder()
+                .tag(node.getNodeName())
                 .childrenMap(childrenMap)
                 .attributeMap(attributeMap)
                 .build(),
@@ -109,6 +111,10 @@ public final class RawNode {
 
     public List<RawNode> getChildrenList(String key) {
         logEnter("key:", key);
+        var value = this.childrenMap.get(key);
+        if(value == null) {
+            return new ArrayList<>();
+        }
         return logReturn(this.childrenMap.get(key));
     }
 
@@ -173,6 +179,15 @@ public final class RawNode {
             });
         });
         logReturnVoid(getNodePath(element));
+    }
+
+    public RawNode setTag(String tag) {
+        this.tag = tag;
+        return this;
+    }
+
+    public String getTag() {
+        return this.tag;
     }
 
 }

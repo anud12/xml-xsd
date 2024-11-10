@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
   @ToString
   @Builder
-  @AllArgsConstructor
   @NoArgsConstructor
+  @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class LocationGraph implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
@@ -60,6 +62,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @JsonIgnore
     @Getter
     @Setter
+    @Builder.Default
     private RawNode rawNode = new RawNode();
 
     @Getter
@@ -91,21 +94,31 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
     public void deserialize (RawNode rawNode) {
+      var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing location_graph");
-      //Deserialize arguments
+      var innerLogger = logger.log("attributes");
+      //Deserialize attributes
+      innerLogger.log("location_graph_id_ref");
       this.locationGraphIdRef = rawNode.getAttributeRequired("location_graph_id_ref");
+      innerLogger.log("node_id_ref");
       this.nodeIdRef = rawNode.getAttributeRequired("node_id_ref");
-
+      innerLogger = logger.log("children");
       //Deserialize children
+      logReturnVoid();
     }
 
     public RawNode serializeIntoRawNode()
     {
-      //Serialize arguments
+      var logger = logEnter();
+      var innerLogger = logger.log("attributes");
+      //Serialize attributes
+      innerLogger.log("location_graph_id_ref");
       rawNode.setAttribute("location_graph_id_ref", this.locationGraphIdRef);
+      innerLogger.log("node_id_ref");
       rawNode.setAttribute("node_id_ref", this.nodeIdRef);
 
+      innerLogger = logger.log("children");
       //Serialize children
       return rawNode;
     }

@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
   @ToString
   @Builder
-  @AllArgsConstructor
   @NoArgsConstructor
+  @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class LocationGraph implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
@@ -50,7 +52,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
     //Attributes
-    private Optional<String> id;
+    private String id;
 
     //Children elements
     private ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Rule.Rule rule = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Rule.Rule();
@@ -61,6 +63,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @JsonIgnore
     @Getter
     @Setter
+    @Builder.Default
     private RawNode rawNode = new RawNode();
 
     @Getter
@@ -98,23 +101,33 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
     public void deserialize (RawNode rawNode) {
+      var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing location_graph");
-      //Deserialize arguments
-      this.id = rawNode.getAttribute("id");
-
+      var innerLogger = logger.log("attributes");
+      //Deserialize attributes
+      innerLogger.log("id");
+      this.id = rawNode.getAttributeRequired("id");
+      innerLogger = logger.log("children");
       //Deserialize children
       this.rule = ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Rule.Rule.fromRawNode(rawNode.getChildrenFirst("rule").get(), this);
       this.node = ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node.fromRawNode(rawNode.getChildrenList("node"), this);
+      logReturnVoid();
     }
 
     public RawNode serializeIntoRawNode()
     {
-      //Serialize arguments
-      this.id.ifPresent(o -> rawNode.setAttribute("id", o));
+      var logger = logEnter();
+      var innerLogger = logger.log("attributes");
+      //Serialize attributes
+      innerLogger.log("id");
+      rawNode.setAttribute("id", this.id);
 
+      innerLogger = logger.log("children");
       //Serialize children
+      innerLogger.log("rule");
       rawNode.setChildren("rule", Optional.ofNullable(rule).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Rule.Rule::serializeIntoRawNode).toList());
+      innerLogger.log("node");
       rawNode.setChildren("node", node.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node::serializeIntoRawNode).toList());
       return rawNode;
     }
@@ -126,11 +139,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
         updatedRawNode.populateNode(document, element);
     }
 
-    public Optional<String> getId()
+    public String getId()
     {
       return this.id;
     }
-    public LocationGraph setId(Optional<String> value)
+    public LocationGraph setId(String value)
     {
       this.id = value;
       onChangeList.forEach(consumer -> consumer.accept(this));
@@ -196,10 +209,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
             "id": {
               "metaType": "primitive",
               "value": "xs:string",
-              "isNullable": true
+              "isNullable": false
             }
           },
-          "isNullable": true
+          "isNullable": false
         },
         "isSingle": false,
         "value": {

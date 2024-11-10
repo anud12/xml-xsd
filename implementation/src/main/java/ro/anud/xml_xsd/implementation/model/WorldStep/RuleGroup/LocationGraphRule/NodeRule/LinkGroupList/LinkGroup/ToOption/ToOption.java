@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
   @ToString
   @Builder
-  @AllArgsConstructor
   @NoArgsConstructor
+  @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class ToOption implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
@@ -64,6 +66,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @JsonIgnore
     @Getter
     @Setter
+    @Builder.Default
     private RawNode rawNode = new RawNode();
 
     @Getter
@@ -101,29 +104,47 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
     public void deserialize (RawNode rawNode) {
+      var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing to_option");
-      //Deserialize arguments
+      var innerLogger = logger.log("attributes");
+      //Deserialize attributes
+      innerLogger.log("node_rule_ref");
       this.nodeRuleRef = rawNode.getAttributeRequired("node_rule_ref");
+      innerLogger.log("distance");
       this.distance = rawNode.getAttributeIntRequired("distance");
+      innerLogger.log("maxDistance");
       this.maxDistance = rawNode.getAttributeInt("maxDistance");
+      innerLogger.log("adjacent_depth_limit");
       this.adjacentDepthLimit = rawNode.getAttributeIntRequired("adjacent_depth_limit");
-
+      innerLogger = logger.log("children");
       //Deserialize children
+      innerLogger.log("distance_to_progress_multiplier");
       this.distanceToProgressMultiplier = ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.fromRawNode(rawNode.getChildrenFirst("distance_to_progress_multiplier"), this);
+      innerLogger.log("person_progress_property");
       this.personProgressProperty = ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.fromRawNode(rawNode.getChildrenFirst("person_progress_property"), this);
+      logReturnVoid();
     }
 
     public RawNode serializeIntoRawNode()
     {
-      //Serialize arguments
+      var logger = logEnter();
+      var innerLogger = logger.log("attributes");
+      //Serialize attributes
+      innerLogger.log("node_rule_ref");
       rawNode.setAttribute("node_rule_ref", this.nodeRuleRef);
+      innerLogger.log("distance");
       rawNode.setAttribute("distance", this.distance);
+      innerLogger.log("maxDistance");
       this.maxDistance.ifPresent(o -> rawNode.setAttribute("maxDistance", o));
+      innerLogger.log("adjacent_depth_limit");
       rawNode.setAttribute("adjacent_depth_limit", this.adjacentDepthLimit);
 
+      innerLogger = logger.log("children");
       //Serialize children
+      innerLogger.log("distance_to_progress_multiplier");
       rawNode.setChildren("distance_to_progress_multiplier", distanceToProgressMultiplier.stream().map(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations::serializeIntoRawNode).toList());
+      innerLogger.log("person_progress_property");
       rawNode.setChildren("person_progress_property", personProgressProperty.stream().map(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations::serializeIntoRawNode).toList());
       return rawNode;
     }

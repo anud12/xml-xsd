@@ -20,11 +20,8 @@ const filterLocationGraph = (selectNodeGraphQueryType: SelectNodeGraphQueryType,
         })
         .includes(locationGraph?.attributeMap.id)
 
-      if (!hasLocationIdResult) {
-        return false;
-      }
+      return hasLocationIdResult;
 
-      return true;
     })
 
     return applicableLocationGraphList.length > 0;

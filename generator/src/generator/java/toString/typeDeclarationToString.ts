@@ -45,8 +45,8 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
     @EqualsAndHashCode
     @ToString
     @Builder
-    @AllArgsConstructor
     @NoArgsConstructor
+    @AllArgsConstructor
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     public class ${normalizeNameClass(dependantType.name)} implements ${extensionNames.length > 0 && ` ${extensionNames.map(e => e + `<${normalizeNameClass(dependantType.name)}>`).join(", ")}, `} ro.anud.xml_xsd.implementation.util.LinkedNode {
           
@@ -104,6 +104,7 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
       @JsonIgnore
       @Getter
       @Setter
+      @Builder.Default
       private RawNode rawNode = new RawNode();
       
       @Getter
@@ -112,7 +113,7 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
       @JsonIgnore
       private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
       private List<Consumer<${normalizeNameClass(dependantType.name)}>> onChangeList = new ArrayList<>();
-  
+      
       public String nodeName() {
         return "${dependantType.name}";
       }
@@ -136,9 +137,11 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
       }
       
       public void deserialize (RawNode rawNode) {
+        var logger = logEnter();
         this.rawNode = rawNode;
         // Godot.GD.Print("Deserializing ${dependantType.name}");
-        //Deserialize arguments
+        var innerLogger = logger.log("attributes");
+        //Deserialize attributes
         ${dependantTypeToAttributeDeserializationBody(dependantType)}
         
         ${extensions.map(extension => {
@@ -147,7 +150,7 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
                    ${dependantTypeToAttributeDeserializationBody(extension)}
                   `
   }).join("\n")}
-        
+        innerLogger = logger.log("children");
         //Deserialize children
         ${dependantTypeToChildrenDeserializationBody(dependantType)}
         
@@ -157,11 +160,14 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
                      ${dependantTypeToChildrenDeserializationBody(extension)}
                     `
   }).join("\n")}
+        logReturnVoid();
       }
       
       public RawNode serializeIntoRawNode() 
       {
-        //Serialize arguments
+        var logger = logEnter();
+        var innerLogger = logger.log("attributes");
+        //Serialize attributes
         ${dependantTypeToAttributeSerializationBody(dependantType)}
         
         ${extensions.map(extension => {
@@ -171,6 +177,7 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
                   `
   }).join("\n")}
         
+        innerLogger = logger.log("children");
         //Serialize children
         ${dependantTypeToChildrenSerializationBody(dependantType)}
         
@@ -254,6 +261,8 @@ export function typeDeclarationElementToString(directoryMetadata: DirectoryMetad
       
       import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
       import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
+      import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
+      import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       `
 
   const templateString = template()`

@@ -24,12 +24,21 @@ export const dependantTypeToChildrenSerializationBody = (dependantType: Dependan
 
 
       if(value.isNullable) {
-        return template()`rawNode.setChildren("${key}", ${normalizeNameField(key)}.stream().map(${fullClassName}::serializeIntoRawNode).toList());`;
+        return template()`
+          innerLogger.log("${key}");
+          rawNode.setChildren("${key}", ${normalizeNameField(key)}.stream().map(${fullClassName}::serializeIntoRawNode).toList());
+        `;
       }
       if(value.isSingle) {
-        return template()`rawNode.setChildren("${key}", Optional.ofNullable(${normalizeNameField(key)}).stream().map(${fullClassName}::serializeIntoRawNode).toList());`;
+        return template()`
+          innerLogger.log("${key}");
+          rawNode.setChildren("${key}", Optional.ofNullable(${normalizeNameField(key)}).stream().map(${fullClassName}::serializeIntoRawNode).toList());
+        `;
       }
-      return template()`rawNode.setChildren("${key}", ${normalizeNameField(key)}.stream().map(${fullClassName}::serializeIntoRawNode).toList());`;
+      return template()`
+        innerLogger.log("${key}");
+        rawNode.setChildren("${key}", ${normalizeNameField(key)}.stream().map(${fullClassName}::serializeIntoRawNode).toList());
+        `;
 
 
     }

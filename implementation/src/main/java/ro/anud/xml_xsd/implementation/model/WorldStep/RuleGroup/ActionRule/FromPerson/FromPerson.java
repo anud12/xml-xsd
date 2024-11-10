@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
   @ToString
   @Builder
-  @AllArgsConstructor
   @NoArgsConstructor
+  @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class FromPerson implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
@@ -62,6 +64,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @JsonIgnore
     @Getter
     @Setter
+    @Builder.Default
     private RawNode rawNode = new RawNode();
 
     @Getter
@@ -102,25 +105,37 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
     public void deserialize (RawNode rawNode) {
+      var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing from_person");
-      //Deserialize arguments
+      var innerLogger = logger.log("attributes");
+      //Deserialize attributes
+      innerLogger.log("id");
       this.id = rawNode.getAttributeRequired("id");
-
+      innerLogger = logger.log("children");
       //Deserialize children
+      innerLogger.log("selection");
       this.selection = ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection.fromRawNode(rawNode.getChildrenFirst("selection"), this);
       this.mutations = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.Mutations.Mutations.fromRawNode(rawNode.getChildrenFirst("mutations"), this);
       this.onPerson = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.OnPerson.fromRawNode(rawNode.getChildrenFirst("on_person"), this);
+      logReturnVoid();
     }
 
     public RawNode serializeIntoRawNode()
     {
-      //Serialize arguments
+      var logger = logEnter();
+      var innerLogger = logger.log("attributes");
+      //Serialize attributes
+      innerLogger.log("id");
       rawNode.setAttribute("id", this.id);
 
+      innerLogger = logger.log("children");
       //Serialize children
+      innerLogger.log("selection");
       rawNode.setChildren("selection", selection.stream().map(ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection::serializeIntoRawNode).toList());
+      innerLogger.log("mutations");
       rawNode.setChildren("mutations", mutations.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.Mutations.Mutations::serializeIntoRawNode).toList());
+      innerLogger.log("on_person");
       rawNode.setChildren("on_person", onPerson.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.OnPerson::serializeIntoRawNode).toList());
       return rawNode;
     }

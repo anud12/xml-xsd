@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
   @ToString
   @Builder
-  @AllArgsConstructor
   @NoArgsConstructor
+  @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Person_moveTo implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
@@ -61,6 +63,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @JsonIgnore
     @Getter
     @Setter
+    @Builder.Default
     private RawNode rawNode = new RawNode();
 
     @Getter
@@ -98,23 +101,34 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
     public void deserialize (RawNode rawNode) {
+      var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing person.move_to");
-      //Deserialize arguments
+      var innerLogger = logger.log("attributes");
+      //Deserialize attributes
+      innerLogger.log("person_id_ref");
       this.personIdRef = rawNode.getAttributeRequired("person_id_ref");
-
+      innerLogger = logger.log("children");
       //Deserialize children
+      innerLogger.log("find_path_towards");
       this.findPathTowards = ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection.fromRawNode(rawNode.getChildrenFirst("find_path_towards"), this);
       this.path = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Path.Path.fromRawNode(rawNode.getChildrenFirst("path"), this);
+      logReturnVoid();
     }
 
     public RawNode serializeIntoRawNode()
     {
-      //Serialize arguments
+      var logger = logEnter();
+      var innerLogger = logger.log("attributes");
+      //Serialize attributes
+      innerLogger.log("person_id_ref");
       rawNode.setAttribute("person_id_ref", this.personIdRef);
 
+      innerLogger = logger.log("children");
       //Serialize children
+      innerLogger.log("find_path_towards");
       rawNode.setChildren("find_path_towards", findPathTowards.stream().map(ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection::serializeIntoRawNode).toList());
+      innerLogger.log("path");
       rawNode.setChildren("path", path.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Path.Path::serializeIntoRawNode).toList());
       return rawNode;
     }

@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
   @ToString
   @Builder
-  @AllArgsConstructor
   @NoArgsConstructor
+  @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Actions implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
@@ -67,6 +69,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @JsonIgnore
     @Getter
     @Setter
+    @Builder.Default
     private RawNode rawNode = new RawNode();
 
     @Getter
@@ -125,10 +128,12 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
     public void deserialize (RawNode rawNode) {
+      var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing actions");
-      //Deserialize arguments
-
+      var innerLogger = logger.log("attributes");
+      //Deserialize attributes
+      innerLogger = logger.log("children");
       //Deserialize children
       this.by = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.By.fromRawNode(rawNode.getChildrenList("by"), this);
       this.locationGraph_create = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_create.LocationGraph_create.fromRawNode(rawNode.getChildrenList("location_graph.create"), this);
@@ -139,21 +144,34 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       this.person_create = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_create.Person_create.fromRawNode(rawNode.getChildrenList("person.create"), this);
       this.person_moveTo = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Person_moveTo.fromRawNode(rawNode.getChildrenList("person.move_to"), this);
       this.fromPerson = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.FromPerson.FromPerson.fromRawNode(rawNode.getChildrenList("from_person"), this);
+      logReturnVoid();
     }
 
     public RawNode serializeIntoRawNode()
     {
-      //Serialize arguments
+      var logger = logEnter();
+      var innerLogger = logger.log("attributes");
+      //Serialize attributes
 
+      innerLogger = logger.log("children");
       //Serialize children
+      innerLogger.log("by");
       rawNode.setChildren("by", by.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.By::serializeIntoRawNode).toList());
+      innerLogger.log("location_graph.create");
       rawNode.setChildren("location_graph.create", locationGraph_create.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_create.LocationGraph_create::serializeIntoRawNode).toList());
+      innerLogger.log("location_graph.node.create_adjacent");
       rawNode.setChildren("location_graph.node.create_adjacent", locationGraph_node_createAdjacent.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_createAdjacent.LocationGraph_node_createAdjacent::serializeIntoRawNode).toList());
+      innerLogger.log("location_graph.node.add_classification");
       rawNode.setChildren("location_graph.node.add_classification", locationGraph_node_addClassification.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_addClassification.LocationGraph_node_addClassification::serializeIntoRawNode).toList());
+      innerLogger.log("person.teleport");
       rawNode.setChildren("person.teleport", person_teleport.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.Person_teleport::serializeIntoRawNode).toList());
+      innerLogger.log("person.on_person.property_mutation");
       rawNode.setChildren("person.on_person.property_mutation", person_onPerson_propertyMutation.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_onPerson_propertyMutation.Person_onPerson_propertyMutation::serializeIntoRawNode).toList());
+      innerLogger.log("person.create");
       rawNode.setChildren("person.create", person_create.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_create.Person_create::serializeIntoRawNode).toList());
+      innerLogger.log("person.move_to");
       rawNode.setChildren("person.move_to", person_moveTo.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Person_moveTo::serializeIntoRawNode).toList());
+      innerLogger.log("from_person");
       rawNode.setChildren("from_person", fromPerson.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.FromPerson.FromPerson::serializeIntoRawNode).toList());
       return rawNode;
     }

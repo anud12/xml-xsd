@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
   @ToString
   @Builder
-  @AllArgsConstructor
   @NoArgsConstructor
+  @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class FromPerson implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
@@ -61,6 +63,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @JsonIgnore
     @Getter
     @Setter
+    @Builder.Default
     private RawNode rawNode = new RawNode();
 
     @Getter
@@ -95,23 +98,34 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
     public void deserialize (RawNode rawNode) {
+      var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing from_person");
-      //Deserialize arguments
+      var innerLogger = logger.log("attributes");
+      //Deserialize attributes
+      innerLogger.log("person_id_ref");
       this.personIdRef = rawNode.getAttributeRequired("person_id_ref");
+      innerLogger.log("from_person_rule_ref");
       this.fromPersonRuleRef = rawNode.getAttributeRequired("from_person_rule_ref");
-
+      innerLogger = logger.log("children");
       //Deserialize children
       this.onPerson = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.FromPerson.OnPerson.OnPerson.fromRawNode(rawNode.getChildrenFirst("on_person").get(), this);
+      logReturnVoid();
     }
 
     public RawNode serializeIntoRawNode()
     {
-      //Serialize arguments
+      var logger = logEnter();
+      var innerLogger = logger.log("attributes");
+      //Serialize attributes
+      innerLogger.log("person_id_ref");
       rawNode.setAttribute("person_id_ref", this.personIdRef);
+      innerLogger.log("from_person_rule_ref");
       rawNode.setAttribute("from_person_rule_ref", this.fromPersonRuleRef);
 
+      innerLogger = logger.log("children");
       //Serialize children
+      innerLogger.log("on_person");
       rawNode.setChildren("on_person", Optional.ofNullable(onPerson).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.FromPerson.OnPerson.OnPerson::serializeIntoRawNode).toList());
       return rawNode;
     }

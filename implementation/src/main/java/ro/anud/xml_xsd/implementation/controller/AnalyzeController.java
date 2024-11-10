@@ -11,6 +11,7 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import ro.anud.xml_xsd.implementation.middleware.FromPersonAction;
 import ro.anud.xml_xsd.implementation.middleware.PersonAssignClassification;
+import ro.anud.xml_xsd.implementation.middleware.PersonCreateAction;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 import ro.anud.xml_xsd.implementation.util.RawNode;
@@ -33,7 +34,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 public class AnalyzeController {
 
     private FromPersonAction fromPersonAction;
-private PersonAssignClassification personAssignClassification;
+    private PersonAssignClassification personAssignClassification;
+    private PersonCreateAction personCreateAction;
     @PostMapping("/execute")
     public ResponseEntity<String> execute(@RequestBody String request) {
         logEnter("");
@@ -42,17 +44,19 @@ private PersonAssignClassification personAssignClassification;
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document = builder.parse(new InputSource(new StringReader(request)));
             var rawNode = RawNode.fromNode(document.getDocumentElement());
-            var worldStep = WorldStep.fromRawNode(rawNode);
 
-            var worldStepInstance = new WorldStepInstance(worldStep);
-            var outWorldStepInstance = new WorldStepInstance(worldStep);
+            var worldStepInstance = new WorldStepInstance(WorldStep.fromRawNode(rawNode));
+            var outWorldStepInstance = new WorldStepInstance(WorldStep.fromRawNode(rawNode));
             worldStepInstance.setOutInstance(outWorldStepInstance);
             outWorldStepInstance.setOutInstance(worldStepInstance);
 
             fromPersonAction.apply(worldStepInstance);
+            personCreateAction.apply(worldStepInstance);
             personAssignClassification.apply(worldStepInstance);
 
-            var outputDocument = outWorldStepInstance.getWorldStep().serializeIntoRawNode()
+
+            var outputDocument = outWorldStepInstance.offsetRandomizationTable().getWorldStep()
+                .serializeIntoRawNode()
                 .toDocument("world_step");
             TransformerFactory tf = TransformerFactory.newInstance();
             Transformer transformer = tf.newTransformer();

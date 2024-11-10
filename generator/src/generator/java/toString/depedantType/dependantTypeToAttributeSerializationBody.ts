@@ -13,10 +13,12 @@ export const dependantTypeToAttributeSerializationBody = (dependantType: Dependa
     if (value.metaType === "primitive") {
       if(value.isNullable) {
         return template()`
+          innerLogger.log("${key}");
           this.${normalizeNameField(key)}.ifPresent(o -> rawNode.setAttribute("${key}", o));
           `
       }
       return template()`
+                innerLogger.log("${key}");
                 rawNode.setAttribute("${key}", this.${normalizeNameField(key)});
                 `;
     }

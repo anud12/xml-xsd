@@ -575,7 +575,7 @@
                             Integer to be used by the pseudo-random number generator.
                           </xs:documentation>
                         </xs:annotation>
-                        <xs:attribute name="value" type="xs:int"/>
+                        <xs:attribute name="value" use="required" type="xs:int"/>
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>
@@ -1488,7 +1488,7 @@
                             </xs:complexType>
                           </xs:element>
                         </xs:sequence>
-                        <xs:attribute name="id" type="xs:string">
+                        <xs:attribute name="id" type="xs:string" use="required">
                           <xs:annotation>
                             <xs:documentation>
                               Represents the unique identifier of the location graph.

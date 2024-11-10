@@ -64,15 +64,9 @@ public class GetProperty {
         Optional<PropertyBonus> propertyBonusOptional = raceMetadata.get().getPropertyBonus()
             .stream().filter(groupMathOperations -> groupMathOperations.getPropertyRuleRef().equals(propertyRef))
             .findFirst();
-        var bonus = propertyBonusOptional.map(propertyBonus -> {
-            worldStepInstance.computeOperation(
-                propertyBonus,
-                propertyRef1 -> worldStepInstance.person.getProperty(
-                    person,
-                    propertyRef1
-                ));
-            return 0;
-        }).orElse(0);
+        var bonus = propertyBonusOptional
+            .flatMap(propertyBonus -> worldStepInstance.computeOperation(propertyBonus, person))
+            .orElse(0);
 
         return java.util.Optional.ofNullable(base + bonus);
     }
@@ -127,15 +121,15 @@ public class GetProperty {
         }
 
         Consumer<Person> applyValue = innerPerson -> {
-            innerPerson.streamProperties().findFirst().ifPresent(properties -> {
-                properties.addProperty(Property.builder()
-                    .value(value.get())
-                    .propertyRuleRef(propertyRef)
-                    .build()
-                );
-            });
+            innerPerson.getPropertiesOrDefault().addProperty(Property.builder()
+                .value(value.get())
+                .propertyRuleRef(propertyRef)
+                .build());
+
         };
 
+
+        logger.log("adding property on person:", person.getId(), "propertyRef:", propertyRef, "value:", value);
         outInstance.person.repository.personById(person.getId())
             .ifPresent(applyValue);
         applyValue.accept(person);

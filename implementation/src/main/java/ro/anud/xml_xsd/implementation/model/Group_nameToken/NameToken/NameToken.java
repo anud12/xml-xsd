@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
   @ToString
   @Builder
-  @AllArgsConstructor
   @NoArgsConstructor
+  @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class NameToken implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
@@ -61,6 +63,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @JsonIgnore
     @Getter
     @Setter
+    @Builder.Default
     private RawNode rawNode = new RawNode();
 
     @Getter
@@ -98,23 +101,34 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
     public void deserialize (RawNode rawNode) {
+      var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing name_token");
-      //Deserialize arguments
+      var innerLogger = logger.log("attributes");
+      //Deserialize attributes
+      innerLogger.log("prefix");
       this.prefix = rawNode.getAttributeRequired("prefix");
-
+      innerLogger = logger.log("children");
       //Deserialize children
       this._ref = ro.anud.xml_xsd.implementation.model.Group_nameToken.NameToken._ref._ref.fromRawNode(rawNode.getChildrenFirst("ref"), this);
+      innerLogger.log("one_of");
       this.oneOf = ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken.fromRawNode(rawNode.getChildrenFirst("one_of").get(), this);
+      logReturnVoid();
     }
 
     public RawNode serializeIntoRawNode()
     {
-      //Serialize arguments
+      var logger = logEnter();
+      var innerLogger = logger.log("attributes");
+      //Serialize attributes
+      innerLogger.log("prefix");
       rawNode.setAttribute("prefix", this.prefix);
 
+      innerLogger = logger.log("children");
       //Serialize children
+      innerLogger.log("ref");
       rawNode.setChildren("ref", _ref.stream().map(ro.anud.xml_xsd.implementation.model.Group_nameToken.NameToken._ref._ref::serializeIntoRawNode).toList());
+      innerLogger.log("one_of");
       rawNode.setChildren("one_of", Optional.ofNullable(oneOf).stream().map(ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken::serializeIntoRawNode).toList());
       return rawNode;
     }

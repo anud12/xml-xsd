@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
   @ToString
   @Builder
-  @AllArgsConstructor
   @NoArgsConstructor
+  @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class WorldMetadata implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
@@ -64,6 +66,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @JsonIgnore
     @Getter
     @Setter
+    @Builder.Default
     private RawNode rawNode = new RawNode();
 
     @Getter
@@ -113,10 +116,12 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
     public void deserialize (RawNode rawNode) {
+      var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing world_metadata");
-      //Deserialize arguments
-
+      var innerLogger = logger.log("attributes");
+      //Deserialize attributes
+      innerLogger = logger.log("children");
       //Deserialize children
       this.previousWorldStep = ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.PreviousWorldStep.PreviousWorldStep.fromRawNode(rawNode.getChildrenFirst("previous_world_step"), this);
       this.nextWorldStep = ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.NextWorldStep.NextWorldStep.fromRawNode(rawNode.getChildrenFirst("next_world_step"), this);
@@ -124,18 +129,28 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
       this.stepDuration = ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.StepDuration.StepDuration.fromRawNode(rawNode.getChildrenFirst("stepDuration").get(), this);
       this.counter = ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.Counter.Counter.fromRawNode(rawNode.getChildrenFirst("counter").get(), this);
       this.randomizationTable = ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.RandomizationTable.RandomizationTable.fromRawNode(rawNode.getChildrenFirst("randomization_table").get(), this);
+      logReturnVoid();
     }
 
     public RawNode serializeIntoRawNode()
     {
-      //Serialize arguments
+      var logger = logEnter();
+      var innerLogger = logger.log("attributes");
+      //Serialize attributes
 
+      innerLogger = logger.log("children");
       //Serialize children
+      innerLogger.log("previous_world_step");
       rawNode.setChildren("previous_world_step", previousWorldStep.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.PreviousWorldStep.PreviousWorldStep::serializeIntoRawNode).toList());
+      innerLogger.log("next_world_step");
       rawNode.setChildren("next_world_step", nextWorldStep.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.NextWorldStep.NextWorldStep::serializeIntoRawNode).toList());
+      innerLogger.log("elapsed_time");
       rawNode.setChildren("elapsed_time", Optional.ofNullable(elapsedTime).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.ElapsedTime.ElapsedTime::serializeIntoRawNode).toList());
+      innerLogger.log("stepDuration");
       rawNode.setChildren("stepDuration", Optional.ofNullable(stepDuration).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.StepDuration.StepDuration::serializeIntoRawNode).toList());
+      innerLogger.log("counter");
       rawNode.setChildren("counter", Optional.ofNullable(counter).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.Counter.Counter::serializeIntoRawNode).toList());
+      innerLogger.log("randomization_table");
       rawNode.setChildren("randomization_table", Optional.ofNullable(randomizationTable).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.RandomizationTable.RandomizationTable::serializeIntoRawNode).toList());
       return rawNode;
     }
@@ -371,10 +386,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
                     "value": {
                       "metaType": "primitive",
                       "value": "xs:int",
-                      "isNullable": true
+                      "isNullable": false
                     }
                   },
-                  "isNullable": true
+                  "isNullable": false
                 }
               }
             },

@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
   @ToString
   @Builder
-  @AllArgsConstructor
   @NoArgsConstructor
+  @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class WorldStep implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
@@ -62,6 +64,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @JsonIgnore
     @Getter
     @Setter
+    @Builder.Default
     private RawNode rawNode = new RawNode();
 
     @Getter
@@ -105,25 +108,35 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
     public void deserialize (RawNode rawNode) {
+      var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing world_step");
-      //Deserialize arguments
-
+      var innerLogger = logger.log("attributes");
+      //Deserialize attributes
+      innerLogger = logger.log("children");
       //Deserialize children
       this.worldMetadata = ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata.fromRawNode(rawNode.getChildrenFirst("world_metadata").get(), this);
       this.ruleGroup = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup.fromRawNode(rawNode.getChildrenList("rule_group"), this);
       this.data = ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data.fromRawNode(rawNode.getChildrenFirst("data").get(), this);
       this.actions = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions.fromRawNode(rawNode.getChildrenFirst("actions"), this);
+      logReturnVoid();
     }
 
     public RawNode serializeIntoRawNode()
     {
-      //Serialize arguments
+      var logger = logEnter();
+      var innerLogger = logger.log("attributes");
+      //Serialize attributes
 
+      innerLogger = logger.log("children");
       //Serialize children
+      innerLogger.log("world_metadata");
       rawNode.setChildren("world_metadata", Optional.ofNullable(worldMetadata).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata::serializeIntoRawNode).toList());
+      innerLogger.log("rule_group");
       rawNode.setChildren("rule_group", ruleGroup.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup::serializeIntoRawNode).toList());
+      innerLogger.log("data");
       rawNode.setChildren("data", Optional.ofNullable(data).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data::serializeIntoRawNode).toList());
+      innerLogger.log("actions");
       rawNode.setChildren("actions", actions.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions::serializeIntoRawNode).toList());
       return rawNode;
     }
@@ -334,10 +347,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
                         "value": {
                           "metaType": "primitive",
                           "value": "xs:int",
-                          "isNullable": true
+                          "isNullable": false
                         }
                       },
-                      "isNullable": true
+                      "isNullable": false
                     }
                   }
                 },
@@ -1510,10 +1523,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
                         "id": {
                           "metaType": "primitive",
                           "value": "xs:string",
-                          "isNullable": true
+                          "isNullable": false
                         }
                       },
-                      "isNullable": true
+                      "isNullable": false
                     },
                     "isSingle": false,
                     "value": {
@@ -2216,10 +2229,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
                           "value": {
                             "metaType": "primitive",
                             "value": "xs:int",
-                            "isNullable": true
+                            "isNullable": false
                           }
                         },
-                        "isNullable": true
+                        "isNullable": false
                       }
                     }
                   },
@@ -3392,10 +3405,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
                           "id": {
                             "metaType": "primitive",
                             "value": "xs:string",
-                            "isNullable": true
+                            "isNullable": false
                           }
                         },
-                        "isNullable": true
+                        "isNullable": false
                       },
                       "isSingle": false,
                       "value": {

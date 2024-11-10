@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
   @ToString
   @Builder
-  @AllArgsConstructor
   @NoArgsConstructor
+  @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Person implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
@@ -65,6 +67,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @JsonIgnore
     @Getter
     @Setter
+    @Builder.Default
     private RawNode rawNode = new RawNode();
 
     @Getter
@@ -111,31 +114,47 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
     public void deserialize (RawNode rawNode) {
+      var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing person");
-      //Deserialize arguments
+      var innerLogger = logger.log("attributes");
+      //Deserialize attributes
+      innerLogger.log("id");
       this.id = rawNode.getAttributeRequired("id");
+      innerLogger.log("name");
       this.name = rawNode.getAttribute("name");
-
+      innerLogger = logger.log("children");
       //Deserialize children
       this.race = ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race.fromRawNode(rawNode.getChildrenFirst("race"), this);
       this.properties = ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties.fromRawNode(rawNode.getChildrenFirst("properties"), this);
       this.relations = ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Relations.Relations.fromRawNode(rawNode.getChildrenList("relations"), this);
       this.classifications = ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications.fromRawNode(rawNode.getChildrenFirst("classifications"), this);
+      innerLogger.log("icon");
       this.icon = ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon.fromRawNode(rawNode.getChildrenFirst("icon"), this);
+      logReturnVoid();
     }
 
     public RawNode serializeIntoRawNode()
     {
-      //Serialize arguments
+      var logger = logEnter();
+      var innerLogger = logger.log("attributes");
+      //Serialize attributes
+      innerLogger.log("id");
       rawNode.setAttribute("id", this.id);
+      innerLogger.log("name");
       this.name.ifPresent(o -> rawNode.setAttribute("name", o));
 
+      innerLogger = logger.log("children");
       //Serialize children
+      innerLogger.log("race");
       rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race::serializeIntoRawNode).toList());
+      innerLogger.log("properties");
       rawNode.setChildren("properties", properties.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties::serializeIntoRawNode).toList());
+      innerLogger.log("relations");
       rawNode.setChildren("relations", relations.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Relations.Relations::serializeIntoRawNode).toList());
+      innerLogger.log("classifications");
       rawNode.setChildren("classifications", classifications.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications::serializeIntoRawNode).toList());
+      innerLogger.log("icon");
       rawNode.setChildren("icon", icon.stream().map(ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon::serializeIntoRawNode).toList());
       return rawNode;
     }

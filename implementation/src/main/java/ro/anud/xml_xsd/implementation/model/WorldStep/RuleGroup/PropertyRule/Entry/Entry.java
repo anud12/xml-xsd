@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
   @ToString
   @Builder
-  @AllArgsConstructor
   @NoArgsConstructor
+  @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Entry implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
@@ -63,6 +65,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @JsonIgnore
     @Getter
     @Setter
+    @Builder.Default
     private RawNode rawNode = new RawNode();
 
     @Getter
@@ -103,27 +106,40 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
     public void deserialize (RawNode rawNode) {
+      var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing entry");
-      //Deserialize arguments
+      var innerLogger = logger.log("attributes");
+      //Deserialize attributes
+      innerLogger.log("id");
       this.id = rawNode.getAttributeRequired("id");
+      innerLogger.log("units");
       this.units = rawNode.getAttributeRequired("units");
-
+      innerLogger = logger.log("children");
       //Deserialize children
       this.personDefault = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PersonDefault.PersonDefault.fromRawNode(rawNode.getChildrenFirst("person_default"), this);
       this.itemDefault = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.ItemDefault.ItemDefault.fromRawNode(rawNode.getChildrenFirst("item_default"), this);
       this.propertyThreshold = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PropertyThreshold.PropertyThreshold.fromRawNode(rawNode.getChildrenList("property-threshold"), this);
+      logReturnVoid();
     }
 
     public RawNode serializeIntoRawNode()
     {
-      //Serialize arguments
+      var logger = logEnter();
+      var innerLogger = logger.log("attributes");
+      //Serialize attributes
+      innerLogger.log("id");
       rawNode.setAttribute("id", this.id);
+      innerLogger.log("units");
       rawNode.setAttribute("units", this.units);
 
+      innerLogger = logger.log("children");
       //Serialize children
+      innerLogger.log("person_default");
       rawNode.setChildren("person_default", personDefault.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PersonDefault.PersonDefault::serializeIntoRawNode).toList());
+      innerLogger.log("item_default");
       rawNode.setChildren("item_default", itemDefault.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.ItemDefault.ItemDefault::serializeIntoRawNode).toList());
+      innerLogger.log("property-threshold");
       rawNode.setChildren("property-threshold", propertyThreshold.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PropertyThreshold.PropertyThreshold::serializeIntoRawNode).toList());
       return rawNode;
     }

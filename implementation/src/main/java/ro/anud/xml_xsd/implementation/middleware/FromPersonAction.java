@@ -25,9 +25,12 @@ public class FromPersonAction implements Middleware {
             .streamActions()
             .flatMap(Actions::streamFromPerson)
             .toList();
+        if(fromPersonStream.isEmpty()) {
+            logger.logReturnVoid("fromPerson list is empty");
+            return;
+        }
 
         fromPersonStream.forEach(actionElement -> {
-            actionElement.removeFromParent();
             var localLogger = logger.logEnter(actionElement.getNodeId());
             localLogger.log("personIdRef", actionElement.getPersonIdRef());
             var actionRuleOptional = ruleRepository.getPersonById(actionElement.getFromPersonRuleRef());

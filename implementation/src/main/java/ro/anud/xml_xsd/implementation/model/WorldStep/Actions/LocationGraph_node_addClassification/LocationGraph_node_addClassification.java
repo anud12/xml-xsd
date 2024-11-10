@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
   @ToString
   @Builder
-  @AllArgsConstructor
   @NoArgsConstructor
+  @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class LocationGraph_node_addClassification implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
@@ -60,6 +62,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @JsonIgnore
     @Getter
     @Setter
+    @Builder.Default
     private RawNode rawNode = new RawNode();
 
     @Getter
@@ -97,21 +100,30 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
     public void deserialize (RawNode rawNode) {
+      var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing location_graph.node.add_classification");
-      //Deserialize arguments
-
+      var innerLogger = logger.log("attributes");
+      //Deserialize attributes
+      innerLogger = logger.log("children");
       //Deserialize children
+      innerLogger.log("node_graph_selection");
       this.nodeGraphSelection = ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection.fromRawNode(rawNode.getChildrenFirst("node_graph_selection").get(), this);
       this.toBeAdded_classification = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_addClassification.ToBeAdded_classification.ToBeAdded_classification.fromRawNode(rawNode.getChildrenFirst("to_be_added__classification").get(), this);
+      logReturnVoid();
     }
 
     public RawNode serializeIntoRawNode()
     {
-      //Serialize arguments
+      var logger = logEnter();
+      var innerLogger = logger.log("attributes");
+      //Serialize attributes
 
+      innerLogger = logger.log("children");
       //Serialize children
+      innerLogger.log("node_graph_selection");
       rawNode.setChildren("node_graph_selection", Optional.ofNullable(nodeGraphSelection).stream().map(ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection::serializeIntoRawNode).toList());
+      innerLogger.log("to_be_added__classification");
       rawNode.setChildren("to_be_added__classification", Optional.ofNullable(toBeAdded_classification).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_addClassification.ToBeAdded_classification.ToBeAdded_classification::serializeIntoRawNode).toList());
       return rawNode;
     }

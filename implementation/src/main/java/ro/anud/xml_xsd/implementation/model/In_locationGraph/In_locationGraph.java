@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
   @ToString
   @Builder
-  @AllArgsConstructor
   @NoArgsConstructor
+  @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class In_locationGraph implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
@@ -59,6 +61,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @JsonIgnore
     @Getter
     @Setter
+    @Builder.Default
     private RawNode rawNode = new RawNode();
 
     @Getter
@@ -93,19 +96,26 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
     public void deserialize (RawNode rawNode) {
+      var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing in__location_graph");
-      //Deserialize arguments
-
+      var innerLogger = logger.log("attributes");
+      //Deserialize attributes
+      innerLogger = logger.log("children");
       //Deserialize children
       this.has_locationGraphId = ro.anud.xml_xsd.implementation.model.In_locationGraph.Has_locationGraphId.Has_locationGraphId.fromRawNode(rawNode.getChildrenFirst("has__location_graph_id"), this);
+      logReturnVoid();
     }
 
     public RawNode serializeIntoRawNode()
     {
-      //Serialize arguments
+      var logger = logEnter();
+      var innerLogger = logger.log("attributes");
+      //Serialize attributes
 
+      innerLogger = logger.log("children");
       //Serialize children
+      innerLogger.log("has__location_graph_id");
       rawNode.setChildren("has__location_graph_id", has_locationGraphId.stream().map(ro.anud.xml_xsd.implementation.model.In_locationGraph.Has_locationGraphId.Has_locationGraphId::serializeIntoRawNode).toList());
       return rawNode;
     }

@@ -25,7 +25,7 @@
   <data>
     <people/>
     <location>
-      <location_graph>
+      <location_graph id="location_graph_id">
         <rule location_graph_rule_ref=""/>
         <node node_rule_ref="node_rule_ref" id="">
         </node>

@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
   @ToString
   @Builder
-  @AllArgsConstructor
   @NoArgsConstructor
+  @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class LinkTo implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
@@ -60,6 +62,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @JsonIgnore
     @Getter
     @Setter
+    @Builder.Default
     private RawNode rawNode = new RawNode();
 
     @Getter
@@ -94,21 +97,31 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
     public void deserialize (RawNode rawNode) {
+      var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing link_to");
-      //Deserialize arguments
+      var innerLogger = logger.log("attributes");
+      //Deserialize attributes
+      innerLogger.log("accumulated_progress");
       this.accumulatedProgress = rawNode.getAttributeIntRequired("accumulated_progress");
-
+      innerLogger = logger.log("children");
       //Deserialize children
+      innerLogger.log("selection");
       this.selection = ro.anud.xml_xsd.implementation.model.Type_linkTo_selection.Type_linkTo_selection.fromRawNode(rawNode.getChildrenFirst("selection").get(), this);
+      logReturnVoid();
     }
 
     public RawNode serializeIntoRawNode()
     {
-      //Serialize arguments
+      var logger = logEnter();
+      var innerLogger = logger.log("attributes");
+      //Serialize attributes
+      innerLogger.log("accumulated_progress");
       rawNode.setAttribute("accumulated_progress", this.accumulatedProgress);
 
+      innerLogger = logger.log("children");
       //Serialize children
+      innerLogger.log("selection");
       rawNode.setChildren("selection", Optional.ofNullable(selection).stream().map(ro.anud.xml_xsd.implementation.model.Type_linkTo_selection.Type_linkTo_selection::serializeIntoRawNode).toList());
       return rawNode;
     }

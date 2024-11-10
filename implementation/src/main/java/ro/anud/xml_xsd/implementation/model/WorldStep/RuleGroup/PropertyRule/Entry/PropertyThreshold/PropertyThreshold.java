@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
   @ToString
   @Builder
-  @AllArgsConstructor
   @NoArgsConstructor
+  @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class PropertyThreshold implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
@@ -61,6 +63,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @JsonIgnore
     @Getter
     @Setter
+    @Builder.Default
     private RawNode rawNode = new RawNode();
 
     @Getter
@@ -92,23 +95,35 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
     public void deserialize (RawNode rawNode) {
+      var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing property-threshold");
-      //Deserialize arguments
+      var innerLogger = logger.log("attributes");
+      //Deserialize attributes
+      innerLogger.log("name");
       this.name = rawNode.getAttributeRequired("name");
+      innerLogger.log("min-value-inclusive");
       this.minValueInclusive = rawNode.getAttributeInt("min-value-inclusive");
+      innerLogger.log("max-value-inclusive");
       this.maxValueInclusive = rawNode.getAttributeInt("max-value-inclusive");
-
+      innerLogger = logger.log("children");
       //Deserialize children
+      logReturnVoid();
     }
 
     public RawNode serializeIntoRawNode()
     {
-      //Serialize arguments
+      var logger = logEnter();
+      var innerLogger = logger.log("attributes");
+      //Serialize attributes
+      innerLogger.log("name");
       rawNode.setAttribute("name", this.name);
+      innerLogger.log("min-value-inclusive");
       this.minValueInclusive.ifPresent(o -> rawNode.setAttribute("min-value-inclusive", o));
+      innerLogger.log("max-value-inclusive");
       this.maxValueInclusive.ifPresent(o -> rawNode.setAttribute("max-value-inclusive", o));
 
+      innerLogger = logger.log("children");
       //Serialize children
       return rawNode;
     }

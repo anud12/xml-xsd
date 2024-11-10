@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
   @ToString
   @Builder
-  @AllArgsConstructor
   @NoArgsConstructor
+  @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class LinkGroup implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
@@ -63,6 +65,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @JsonIgnore
     @Getter
     @Setter
+    @Builder.Default
     private RawNode rawNode = new RawNode();
 
     @Getter
@@ -97,27 +100,42 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
     public void deserialize (RawNode rawNode) {
+      var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing link_group");
-      //Deserialize arguments
+      var innerLogger = logger.log("attributes");
+      //Deserialize attributes
+      innerLogger.log("id");
       this.id = rawNode.getAttributeRequired("id");
+      innerLogger.log("angle");
       this.angle = rawNode.getAttributeIntRequired("angle");
+      innerLogger.log("angleMax");
       this.angleMax = rawNode.getAttributeInt("angleMax");
+      innerLogger.log("limit");
       this.limit = rawNode.getAttributeInt("limit");
-
+      innerLogger = logger.log("children");
       //Deserialize children
       this.toOption = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroup.ToOption.ToOption.fromRawNode(rawNode.getChildrenList("to_option"), this);
+      logReturnVoid();
     }
 
     public RawNode serializeIntoRawNode()
     {
-      //Serialize arguments
+      var logger = logEnter();
+      var innerLogger = logger.log("attributes");
+      //Serialize attributes
+      innerLogger.log("id");
       rawNode.setAttribute("id", this.id);
+      innerLogger.log("angle");
       rawNode.setAttribute("angle", this.angle);
+      innerLogger.log("angleMax");
       this.angleMax.ifPresent(o -> rawNode.setAttribute("angleMax", o));
+      innerLogger.log("limit");
       this.limit.ifPresent(o -> rawNode.setAttribute("limit", o));
 
+      innerLogger = logger.log("children");
       //Serialize children
+      innerLogger.log("to_option");
       rawNode.setChildren("to_option", toOption.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroup.ToOption.ToOption::serializeIntoRawNode).toList());
       return rawNode;
     }

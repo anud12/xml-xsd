@@ -17,7 +17,7 @@ public class AddClassificationsBasedOnProperty {
             .streamAllClassificationRuleEntry()
             .toList();
 
-        if(ruleEntryList.isEmpty()){
+        if (ruleEntryList.isEmpty()) {
             logger.log("empty list returned");
         }
 
@@ -47,8 +47,7 @@ public class AddClassificationsBasedOnProperty {
                         return switch (isValue) {
                             case "lessThan": {
                                 var result = (propertyValue.get() < value.get());
-                                propertyLogger.log(
-                                    "'lessThan' case: ",
+                                propertyLogger.log("'lessThan'").log(
                                     result,
                                     "propertyValue:",
                                     propertyValue.get(),
@@ -58,8 +57,7 @@ public class AddClassificationsBasedOnProperty {
                             }
                             case "lessThanOrEqual": {
                                 var result = (propertyValue.get() <= value.get());
-                                propertyLogger.log(
-                                    "'lessThanOrEqual' case: ",
+                                propertyLogger.log("'lessThanOrEqual'").log(
                                     result,
                                     "propertyValue:",
                                     propertyValue.get(),
@@ -69,8 +67,7 @@ public class AddClassificationsBasedOnProperty {
                             }
                             case "greaterThan": {
                                 var result = (propertyValue.get() > value.get());
-                                propertyLogger.log(
-                                    "'greaterThan' case: ",
+                                propertyLogger.log("'greaterThan'").log(
                                     result,
                                     "propertyValue:",
                                     propertyValue.get(),
@@ -80,8 +77,7 @@ public class AddClassificationsBasedOnProperty {
                             }
                             case "greaterThanOrEqual": {
                                 var result = (propertyValue.get() >= value.get());
-                                propertyLogger.log(
-                                    "'greaterThanOrEqual' case: ",
+                                propertyLogger.log("'greaterThanOrEqual'").log(
                                     result,
                                     "propertyValue:",
                                     propertyValue.get(),
@@ -91,8 +87,7 @@ public class AddClassificationsBasedOnProperty {
                             }
                             case "equal": {
                                 var result = (propertyValue.get().equals(value.get()));
-                                propertyLogger.log(
-                                    "'equal' case: ",
+                                propertyLogger.log("'equal'").log(
                                     result,
                                     "propertyValue:",
                                     propertyValue.get(),

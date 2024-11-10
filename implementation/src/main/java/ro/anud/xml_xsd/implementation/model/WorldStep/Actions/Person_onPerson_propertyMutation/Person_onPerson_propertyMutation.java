@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
   @ToString
   @Builder
-  @AllArgsConstructor
   @NoArgsConstructor
+  @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Person_onPerson_propertyMutation implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
@@ -61,6 +63,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @JsonIgnore
     @Getter
     @Setter
+    @Builder.Default
     private RawNode rawNode = new RawNode();
 
     @Getter
@@ -92,23 +95,35 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
     public void deserialize (RawNode rawNode) {
+      var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing person.on_person.property_mutation");
-      //Deserialize arguments
+      var innerLogger = logger.log("attributes");
+      //Deserialize attributes
+      innerLogger.log("person_id_ref");
       this.personIdRef = rawNode.getAttributeRequired("person_id_ref");
+      innerLogger.log("target_person_id_ref");
       this.targetPersonIdRef = rawNode.getAttributeRequired("target_person_id_ref");
+      innerLogger.log("action_property_mutation_rule_ref");
       this.actionPropertyMutationRuleRef = rawNode.getAttributeRequired("action_property_mutation_rule_ref");
-
+      innerLogger = logger.log("children");
       //Deserialize children
+      logReturnVoid();
     }
 
     public RawNode serializeIntoRawNode()
     {
-      //Serialize arguments
+      var logger = logEnter();
+      var innerLogger = logger.log("attributes");
+      //Serialize attributes
+      innerLogger.log("person_id_ref");
       rawNode.setAttribute("person_id_ref", this.personIdRef);
+      innerLogger.log("target_person_id_ref");
       rawNode.setAttribute("target_person_id_ref", this.targetPersonIdRef);
+      innerLogger.log("action_property_mutation_rule_ref");
       rawNode.setAttribute("action_property_mutation_rule_ref", this.actionPropertyMutationRuleRef);
 
+      innerLogger = logger.log("children");
       //Serialize children
       return rawNode;
     }

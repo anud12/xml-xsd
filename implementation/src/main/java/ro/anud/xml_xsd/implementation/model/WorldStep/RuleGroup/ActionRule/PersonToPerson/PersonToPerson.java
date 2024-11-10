@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
   @ToString
   @Builder
-  @AllArgsConstructor
   @NoArgsConstructor
+  @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class PersonToPerson implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
@@ -62,6 +64,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @JsonIgnore
     @Getter
     @Setter
+    @Builder.Default
     private RawNode rawNode = new RawNode();
 
     @Getter
@@ -102,25 +105,37 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
     public void deserialize (RawNode rawNode) {
+      var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing person_to_person");
-      //Deserialize arguments
+      var innerLogger = logger.log("attributes");
+      //Deserialize attributes
+      innerLogger.log("id");
       this.id = rawNode.getAttributeRequired("id");
-
+      innerLogger = logger.log("children");
       //Deserialize children
       this.test = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.Test.Test.fromRawNode(rawNode.getChildrenFirst("test").get(), this);
+      innerLogger.log("property_mutation");
       this.propertyMutation = ro.anud.xml_xsd.implementation.model.Type_propertyMutationOn.Type_propertyMutationOn.fromRawNode(rawNode.getChildrenFirst("property_mutation"), this);
       this.locationMutation = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.LocationMutation.LocationMutation.fromRawNode(rawNode.getChildrenFirst("location_mutation"), this);
+      logReturnVoid();
     }
 
     public RawNode serializeIntoRawNode()
     {
-      //Serialize arguments
+      var logger = logEnter();
+      var innerLogger = logger.log("attributes");
+      //Serialize attributes
+      innerLogger.log("id");
       rawNode.setAttribute("id", this.id);
 
+      innerLogger = logger.log("children");
       //Serialize children
+      innerLogger.log("test");
       rawNode.setChildren("test", Optional.ofNullable(test).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.Test.Test::serializeIntoRawNode).toList());
+      innerLogger.log("property_mutation");
       rawNode.setChildren("property_mutation", propertyMutation.stream().map(ro.anud.xml_xsd.implementation.model.Type_propertyMutationOn.Type_propertyMutationOn::serializeIntoRawNode).toList());
+      innerLogger.log("location_mutation");
       rawNode.setChildren("location_mutation", locationMutation.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.LocationMutation.LocationMutation::serializeIntoRawNode).toList());
       return rawNode;
     }

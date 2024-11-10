@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
   @ToString
   @Builder
-  @AllArgsConstructor
   @NoArgsConstructor
+  @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Entry implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
@@ -50,7 +52,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
     //Attributes
-    private Optional<Integer> value;
+    private Integer value;
 
     //Children elements
 
@@ -59,6 +61,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     @JsonIgnore
     @Getter
     @Setter
+    @Builder.Default
     private RawNode rawNode = new RawNode();
 
     @Getter
@@ -90,19 +93,27 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
     }
 
     public void deserialize (RawNode rawNode) {
+      var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing entry");
-      //Deserialize arguments
-      this.value = rawNode.getAttributeInt("value");
-
+      var innerLogger = logger.log("attributes");
+      //Deserialize attributes
+      innerLogger.log("value");
+      this.value = rawNode.getAttributeIntRequired("value");
+      innerLogger = logger.log("children");
       //Deserialize children
+      logReturnVoid();
     }
 
     public RawNode serializeIntoRawNode()
     {
-      //Serialize arguments
-      this.value.ifPresent(o -> rawNode.setAttribute("value", o));
+      var logger = logEnter();
+      var innerLogger = logger.log("attributes");
+      //Serialize attributes
+      innerLogger.log("value");
+      rawNode.setAttribute("value", this.value);
 
+      innerLogger = logger.log("children");
       //Serialize children
       return rawNode;
     }
@@ -114,11 +125,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
         updatedRawNode.populateNode(document, element);
     }
 
-    public Optional<Integer> getValue()
+    public Integer getValue()
     {
       return this.value;
     }
-    public Entry setValue(Optional<Integer> value)
+    public Entry setValue(Integer value)
     {
       this.value = value;
       onChangeList.forEach(consumer -> consumer.accept(this));
@@ -143,10 +154,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
             "value": {
               "metaType": "primitive",
               "value": "xs:int",
-              "isNullable": true
+              "isNullable": false
             }
           },
-          "isNullable": true
+          "isNullable": false
         }
       },
       "name": "entry"

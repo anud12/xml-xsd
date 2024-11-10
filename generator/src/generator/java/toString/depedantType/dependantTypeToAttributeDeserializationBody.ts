@@ -14,19 +14,23 @@ export const dependantTypeToAttributeDeserializationBody = (dependantType: Depen
       if (value.value === "xs:int") {
         if(value.isNullable) {
           return template()`
+                    innerLogger.log("${key}");
                     this.${normalizeNameField(key)} = rawNode.getAttributeInt("${key}");
                   `;
         }
         return template()`
+                    innerLogger.log("${key}");
                     this.${normalizeNameField(key)} = rawNode.getAttributeIntRequired("${key}");
                   `;
       }
       if(value.isNullable) {
         return template()`
+                innerLogger.log("${key}");
                 this.${normalizeNameField(key)} = rawNode.getAttribute("${key}");
                 `;
       }
       return template()`
+                innerLogger.log("${key}");
                 this.${normalizeNameField(key)} = rawNode.getAttributeRequired("${key}");
                 `;
     }

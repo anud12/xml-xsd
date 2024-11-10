@@ -14,6 +14,8 @@ public class LocalLogger {
     static Logger logger = LoggerFactory.getLogger(RawNode.class);
 
     public static class LogClass {
+        static String PARENT_DELIMITER = "|>";
+        static String IDENT = "│ ";
         private Object[] parentArgs = {};
 
         public LogClass() {}
@@ -29,15 +31,15 @@ public class LocalLogger {
             var previousStackTrace = filterStacktrace.get(0);
             var methodName = previousStackTrace.getMethodName();var stream = Stream.concat(
                 Arrays.stream(parentArgs),
-                Stream.concat(Stream.of("| "), Arrays.stream(args))
+                Stream.concat(Stream.of(PARENT_DELIMITER), Arrays.stream(args))
             );
             StringBuilder line = new StringBuilder(stream.reduce(
-                methodName + " [ log  ]:",
+                methodName + " [ log  ]",
                 (string, o) -> string + " " + o,
                 (string, string2) -> string + string2
             ));
             for (var i = 0; i < filterStacktrace.size(); i++) {
-                line.insert(0, "\t");
+                line.insert(0, IDENT);
             }
             LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line));
             return new LogClass(args);
@@ -50,15 +52,15 @@ public class LocalLogger {
             var previousStackTrace = filterStacktrace.get(0);
             var methodName = previousStackTrace.getMethodName();var stream = Stream.concat(
                 Arrays.stream(parentArgs),
-                Stream.concat(Stream.of("| "), Arrays.stream(args))
+                Stream.concat(Stream.of(PARENT_DELIMITER), Arrays.stream(args))
             );
             StringBuilder line = new StringBuilder(stream.reduce(
-                methodName + " [ TODO ]:",
+                methodName + " [ TODO ]",
                 (string, o) -> string + " " + o,
                 (string, string2) -> string + string2
             ));
             for (var i = 0; i < filterStacktrace.size(); i++) {
-                line.insert(0, "\t");
+                line.insert(0, IDENT);
             }
             LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line));
             return new LogClass(args);
@@ -71,15 +73,15 @@ public class LocalLogger {
             var previousStackTrace = filterStacktrace.get(0);
             var methodName = previousStackTrace.getMethodName();var stream = Stream.concat(
                 Arrays.stream(parentArgs),
-                Stream.concat(Stream.of("| "), Arrays.stream(args))
+                Stream.concat(Stream.of(PARENT_DELIMITER), Arrays.stream(args))
             );
             StringBuilder line = new StringBuilder(stream.reduce(
-                methodName + " [enter ]:",
+                methodName + " [enter ]",
                 (string, o) -> string + " " + o,
                 (string, string2) -> string + string2
             ));
             for (var i = 0; i < filterStacktrace.size(); i++) {
-                line.insert(0, "\t");
+                line.insert(0, IDENT);
             }
 
             LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line));
@@ -94,18 +96,18 @@ public class LocalLogger {
             var methodName = previousStackTrace.getMethodName();
             var stream = Stream.concat(
                 Arrays.stream(parentArgs),
-                Stream.concat(Stream.of("| "), Arrays.stream(args))
+                Stream.concat(Stream.of(PARENT_DELIMITER), Arrays.stream(args))
             );
             StringBuilder line = new StringBuilder(stream.reduce(
-                methodName + " [return]:",
+                methodName + " [return]",
                 (string, o) -> string + " " + o,
                 (string, string2) -> string + string2
             ));
             for (var i = 0; i < filterStacktrace.size(); i++) {
-                line.insert(0, "\t");
+                line.insert(0, IDENT);
             }
             var returnValueString = Optional.ofNullable(returnValue).map(Objects::toString).orElse("null");
-            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + ", value: [" + returnValueString + "]");
+            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + " value: [" + returnValueString + "]");
             return returnValue;
         }
 
@@ -117,17 +119,17 @@ public class LocalLogger {
             var methodName = previousStackTrace.getMethodName();
             var stream = Stream.concat(
                 Arrays.stream(parentArgs),
-                Stream.concat(Stream.of("| "), Arrays.stream(args))
+                Stream.concat(Stream.of(PARENT_DELIMITER), Arrays.stream(args))
             );
             StringBuilder line = new StringBuilder(stream.reduce(
-                methodName + " [return]:",
+                methodName + " [return]",
                 (string, o) -> string + " " + o,
                 (string, string2) -> string + string2
             ));
             for (var i = 0; i < filterStacktrace.size(); i++) {
-                line.insert(0, "\t");
+                line.insert(0, IDENT);
             }
-            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + ", value: [void]");
+            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + " value: [void]");
         }
     }
 

@@ -5,6 +5,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classif
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.Entry.Entry;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
+import ro.anud.xml_xsd.implementation.util.RawNode;
 
 import java.util.function.BiConsumer;
 import java.util.stream.Stream;
@@ -17,6 +18,8 @@ public class ClassifyPerson {
 
     public static Stream<String> getPersonClassifications(WorldStepInstance worldStepInstance, final Person person) {
         var logger = logEnter("personId", person);
+        logger.logTodo("remove default empty classification");
+        var classification = person.getClassificationsOrDefault();
         var computedClassificationList = addClassificationsBasedOnProperty(worldStepInstance, person)
             .map(Entry::getId);
 

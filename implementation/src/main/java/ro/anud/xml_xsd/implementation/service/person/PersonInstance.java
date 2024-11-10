@@ -1,11 +1,14 @@
 package ro.anud.xml_xsd.implementation.service.person;
 
+import ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection;
 import ro.anud.xml_xsd.implementation.model.Type_propertyMutation.Type_propertyMutation;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
+import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Property.Property;
 import ro.anud.xml_xsd.implementation.repository.PersonRepository;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 import ro.anud.xml_xsd.implementation.service.person.util.ApplyPropertyMutation;
 import ro.anud.xml_xsd.implementation.service.person.util.ClassifyPerson;
+import ro.anud.xml_xsd.implementation.service.person.util.CreatePerson;
 import ro.anud.xml_xsd.implementation.service.person.util.GetProperty;
 
 import java.util.Optional;
@@ -48,5 +51,22 @@ public class PersonInstance {
     public Stream<String> classifyPerson(Person person) {
         var logger = logEnter("personId", person.getId());
         return logger.logReturn(ClassifyPerson.getPersonClassifications(this.worldStepInstance, person));
+    }
+
+    public Person createPerson(final Type_personSelection personSelection) {
+        return CreatePerson.createPerson(worldStepInstance, personSelection);
+    }
+
+    public void setProperty(final Person person, final String propertyRef, final int computedValue) {
+        person.getPropertiesOrDefault()
+            .streamProperty()
+            .filter(property -> property.getPropertyRuleRef().equals(propertyRef))
+            .findFirst()
+            .ifPresentOrElse(
+                property -> property.setValue(computedValue),
+                () -> person.getPropertiesOrDefault().addProperty(new Property()
+                    .setPropertyRuleRef(propertyRef)
+                    .setValue(computedValue)
+                ));
     }
 }

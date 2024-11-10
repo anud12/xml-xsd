@@ -32,6 +32,7 @@ export const dependantTypeToChildrenDeserializationBody = (dependantType: Depend
 
     if (value.metaType === "reference") {
       return template()`
+              innerLogger.log("${key}");
               this.${normalizeNameField(key)} = ${basePackage}.${normalizeNameClass(value.value)}.${normalizeNameClass(value.value)}.fromRawNode(${extractString}, this);
               `
     }
