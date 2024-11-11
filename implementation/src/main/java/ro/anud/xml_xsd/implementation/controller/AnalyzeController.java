@@ -37,6 +37,7 @@ public class AnalyzeController {
     private FromPersonAction fromPersonAction;
     private PersonAssignClassification personAssignClassification;
     private PersonCreateAction personCreateAction;
+
     @PostMapping("/execute")
     public ResponseEntity<String> execute(@RequestBody String request) {
         logEnter("");
@@ -56,6 +57,9 @@ public class AnalyzeController {
             fromPersonAction.apply(worldStepInstance);
             personCreateAction.apply(worldStepInstance);
             personAssignClassification.apply(worldStepInstance.getOutInstance());
+            outWorldStepInstance.getWorldStep().getWorldMetadata().getCounter().setValue(
+                worldStepInstance.getWorldStep().getWorldMetadata().getCounter().getValue()
+            );
 
 
             var outputDocument = outWorldStepInstance.offsetRandomizationTable().getWorldStep()
