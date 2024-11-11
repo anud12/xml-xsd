@@ -73,7 +73,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+
+    @Builder.Default
     private List<Consumer<ToOption>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
@@ -209,6 +212,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.distanceToProgressMultiplier.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamDistanceToProgressMultiplierOrDefault()
+    {
+      return Stream.of(getDistanceToProgressMultiplierOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamDistanceToProgressMultiplier()
     {
       return distanceToProgressMultiplier.stream();
@@ -233,6 +240,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.personProgressProperty = Optional.of(instance);
         return this.personProgressProperty.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamPersonProgressPropertyOrDefault()
+    {
+      return Stream.of(getPersonProgressPropertyOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamPersonProgressProperty()
     {

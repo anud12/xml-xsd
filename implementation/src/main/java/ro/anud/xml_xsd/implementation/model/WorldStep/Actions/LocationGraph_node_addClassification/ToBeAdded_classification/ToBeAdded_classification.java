@@ -69,7 +69,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+
+    @Builder.Default
     private List<Consumer<ToBeAdded_classification>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
@@ -154,6 +157,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.and = Optional.of(instance);
         return this.and.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_addClassification.ToBeAdded_classification.And.And> streamAndOrDefault()
+    {
+      return Stream.of(getAndOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_addClassification.ToBeAdded_classification.And.And> streamAnd()
     {

@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Ndata.Nlocation {
   public class location_graph  {
     public RawNode rawNode = new RawNode();
     //Attributes
-    public System.String? id;
+    public System.String id;
 
     //Children elements
     public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.rule rule = new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.rule();
@@ -52,7 +52,7 @@ namespace XSD.Nworld_step.Ndata.Nlocation {
       //Serialize arguments
       if(this.id != null)
       {
-        rawNode.attributes["id"] = this.id?.ToString();
+        rawNode.attributes["id"] = this.id.ToString();
       }
 
       //Serialize children
@@ -69,11 +69,11 @@ namespace XSD.Nworld_step.Ndata.Nlocation {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public System.String? Get_id()
+    public System.String Get_id()
     {
       return this.id;
     }
-    public void Set_id(System.String? value)
+    public void Set_id(System.String value)
     {
       this.id = value;
     }

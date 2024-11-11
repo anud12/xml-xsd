@@ -76,7 +76,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+
+    @Builder.Default
     private List<Consumer<Actions>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
@@ -306,6 +309,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.person_teleport = Optional.of(instance);
         return this.person_teleport.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.Person_teleport> streamPerson_teleportOrDefault()
+    {
+      return Stream.of(getPerson_teleportOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.Person_teleport> streamPerson_teleport()
     {

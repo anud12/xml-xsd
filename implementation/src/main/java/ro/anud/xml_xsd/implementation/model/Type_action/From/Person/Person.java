@@ -69,7 +69,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+
+    @Builder.Default
     private List<Consumer<Person>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
@@ -148,6 +151,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.select.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection> streamSelectOrDefault()
+    {
+      return Stream.of(getSelectOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection> streamSelect()
     {
       return select.stream();
@@ -172,6 +179,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.propertyMutation = Optional.of(instance);
         return this.propertyMutation.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.Type_propertyMutation.Type_propertyMutation> streamPropertyMutationOrDefault()
+    {
+      return Stream.of(getPropertyMutationOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_propertyMutation.Type_propertyMutation> streamPropertyMutation()
     {

@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nworld_metadata.Nrandomization_table {
   public class entry  {
     public RawNode rawNode = new RawNode();
     //Attributes
-    public System.Int32? value;
+    public System.Int32 value;
 
     //Children elements
     public entry()
@@ -37,7 +37,7 @@ namespace XSD.Nworld_step.Nworld_metadata.Nrandomization_table {
       if(rawNode.attributes.ContainsKey("value"))
       {
         var attribute_value = rawNode.attributes["value"];
-        this.value = attribute_value?.ToInt();
+        this.value = attribute_value.ToInt();
       }
 
       //Deserialize children
@@ -48,7 +48,7 @@ namespace XSD.Nworld_step.Nworld_metadata.Nrandomization_table {
       //Serialize arguments
       if(this.value != null)
       {
-        rawNode.attributes["value"] = this.value?.ToString();
+        rawNode.attributes["value"] = this.value.ToString();
       }
 
       //Serialize children
@@ -61,11 +61,11 @@ namespace XSD.Nworld_step.Nworld_metadata.Nrandomization_table {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public System.Int32? Get_value()
+    public System.Int32 Get_value()
     {
       return this.value;
     }
-    public void Set_value(System.Int32? value)
+    public void Set_value(System.Int32 value)
     {
       this.value = value;
     }

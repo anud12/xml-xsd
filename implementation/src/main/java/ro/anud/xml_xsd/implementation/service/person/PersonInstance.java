@@ -12,6 +12,7 @@ import ro.anud.xml_xsd.implementation.service.person.util.CreatePerson;
 import ro.anud.xml_xsd.implementation.service.person.util.GetProperty;
 
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
@@ -34,7 +35,7 @@ public class PersonInstance {
         return logger.logReturn(GetProperty.getProperty(this.worldStepInstance, person, propertyRef));
     }
 
-    public void applyPropertyMutation(
+    public void applyPropertyMutationOnOut(
         final Person selfPerson,
         final Type_propertyMutation typePropertyMutation,
         final Person originPerson,
@@ -57,16 +58,44 @@ public class PersonInstance {
         return CreatePerson.createPerson(worldStepInstance, personSelection);
     }
 
-    public void setProperty(final Person person, final String propertyRef, final int computedValue) {
-        person.getPropertiesOrDefault()
+    public void mutateProperty(
+        final Person person,
+        final String propertyRef,
+        Function<Integer, Integer> computedValue) {
+        var logger = logEnter("person", person.getId(), "propertyRef", propertyRef);
+        logger.log("creating default");
+        getProperty(person, propertyRef);
+        var propertyResult = person.getPropertiesOrDefault()
             .streamProperty()
             .filter(property -> property.getPropertyRuleRef().equals(propertyRef))
-            .findFirst()
-            .ifPresentOrElse(
-                property -> property.setValue(computedValue),
-                () -> person.getPropertiesOrDefault().addProperty(new Property()
-                    .setPropertyRuleRef(propertyRef)
-                    .setValue(computedValue)
-                ));
+            .findFirst();
+        var propertyElement = propertyResult.orElseGet(() -> {
+            logger.log("property is not present");
+            return new Property().setPropertyRuleRef(propertyRef)
+                .setValue(0);
+        });
+        var currentValue = propertyElement.getValue();
+        logger.log("currentValue", currentValue);
+        var newValue = computedValue.apply(currentValue);
+        logger.log("newValue", newValue);
+        propertyElement.setValue(newValue);
+        logger.logReturnVoid();
+//
+//        if (propertyResult.isPresent()) {
+//            var innerLogger = logger.log("property is present");
+//            var currentValue = propertyResult.get().getValue();
+//
+//            return;
+//        }
+//        var innerLogger = logger.log("property is not present");
+//        var currentValue = getProperty(person, propertyRef).orElse(0);
+//        innerLogger.log("currentValue", currentValue);
+//        var newValue = computedValue.apply(currentValue);
+//        innerLogger.log("newValue", newValue);
+//        person.getPropertiesOrDefault().addProperty(new Property()
+//            .setPropertyRuleRef(propertyRef)
+//            .setValue(newValue)
+//        );
+//        innerLogger.logReturnVoid();
     }
 }

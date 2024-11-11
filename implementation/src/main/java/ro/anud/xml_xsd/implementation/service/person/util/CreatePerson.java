@@ -50,7 +50,7 @@ public class CreatePerson {
                 innerLogger.log("min:", min, "max:", max);
                 int value = worldStepInstance.randomBetweenInt(min, max);
                 innerLogger.log("setting value:", value);
-                worldStepInstance.person.setProperty(person,property.getPropertyRuleRef(),value);
+                worldStepInstance.person.mutateProperty(person,property.getPropertyRuleRef(), (ignored) -> value);
 
             });
     }
@@ -105,7 +105,7 @@ public class CreatePerson {
                         );
                 };
                 logger.log("setting propertyRef", propertyRef, "to ", computedValue);
-                worldStepInstance.person.setProperty(person, propertyRef, computedValue);
+                worldStepInstance.person.mutateProperty(person, propertyRef, (ignored) ->computedValue);
             });
     }
 

@@ -70,7 +70,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+
+    @Builder.Default
     private List<Consumer<Person_teleport>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
@@ -161,6 +164,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.locationGraph = Optional.of(instance);
         return this.locationGraph.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LocationGraph.LocationGraph> streamLocationGraphOrDefault()
+    {
+      return Stream.of(getLocationGraphOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LocationGraph.LocationGraph> streamLocationGraph()
     {

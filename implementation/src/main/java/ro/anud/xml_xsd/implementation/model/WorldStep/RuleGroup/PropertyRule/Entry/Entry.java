@@ -72,7 +72,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+
+    @Builder.Default
     private List<Consumer<Entry>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
@@ -184,6 +187,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.personDefault.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PersonDefault.PersonDefault> streamPersonDefaultOrDefault()
+    {
+      return Stream.of(getPersonDefaultOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PersonDefault.PersonDefault> streamPersonDefault()
     {
       return personDefault.stream();
@@ -208,6 +215,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.itemDefault = Optional.of(instance);
         return this.itemDefault.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.ItemDefault.ItemDefault> streamItemDefaultOrDefault()
+    {
+      return Stream.of(getItemDefaultOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.ItemDefault.ItemDefault> streamItemDefault()
     {

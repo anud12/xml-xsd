@@ -68,7 +68,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+
+    @Builder.Default
     private List<Consumer<From>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
@@ -138,6 +141,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.person = Optional.of(instance);
         return this.person.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.From.Person.Person> streamPersonOrDefault()
+    {
+      return Stream.of(getPersonOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.From.Person.Person> streamPerson()
     {

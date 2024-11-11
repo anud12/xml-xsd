@@ -73,7 +73,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+
+    @Builder.Default
     private List<Consumer<Entry>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
@@ -186,6 +189,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.vision.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.TypeRange.TypeRange> streamVisionOrDefault()
+    {
+      return Stream.of(getVisionOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.TypeRange.TypeRange> streamVision()
     {
       return vision.stream();
@@ -211,6 +218,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.movement.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.TypeRange.TypeRange> streamMovementOrDefault()
+    {
+      return Stream.of(getMovementOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.TypeRange.TypeRange> streamMovement()
     {
       return movement.stream();
@@ -235,6 +246,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.name = Optional.of(instance);
         return this.name.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.Entry.Name.Name> streamNameOrDefault()
+    {
+      return Stream.of(getNameOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.Entry.Name.Name> streamName()
     {
@@ -288,6 +303,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.icon = Optional.of(instance);
         return this.icon.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon> streamIconOrDefault()
+    {
+      return Stream.of(getIconOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon> streamIcon()
     {

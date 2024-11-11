@@ -69,7 +69,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+
+    @Builder.Default
     private List<Consumer<Type_nodeGraph_selection>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
@@ -146,6 +149,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.in_locationGraph.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.In_locationGraph.In_locationGraph> streamIn_locationGraphOrDefault()
+    {
+      return Stream.of(getIn_locationGraphOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.In_locationGraph.In_locationGraph> streamIn_locationGraph()
     {
       return in_locationGraph.stream();
@@ -170,6 +177,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.has_nodeGraphId = Optional.of(instance);
         return this.has_nodeGraphId.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Has_nodeGraphId.Has_nodeGraphId> streamHas_nodeGraphIdOrDefault()
+    {
+      return Stream.of(getHas_nodeGraphIdOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Has_nodeGraphId.Has_nodeGraphId> streamHas_nodeGraphId()
     {

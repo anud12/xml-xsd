@@ -79,7 +79,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+
+    @Builder.Default
     private List<Consumer<SelectPerson>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
@@ -177,6 +180,10 @@ rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.mod
         return this.radius.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamRadiusOrDefault()
+    {
+      return Stream.of(getRadiusOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamRadius()
     {
       return radius.stream();
@@ -202,6 +209,10 @@ rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.mod
         return this.min.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamMinOrDefault()
+    {
+      return Stream.of(getMinOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamMin()
     {
       return min.stream();
@@ -226,6 +237,10 @@ rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.mod
         this.max = Optional.of(instance);
         return this.max.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamMaxOrDefault()
+    {
+      return Stream.of(getMaxOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamMax()
     {
@@ -307,6 +322,10 @@ rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.mod
         this.race = Optional.of(instance);
         return this.race.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race> streamRaceOrDefault()
+    {
+      return Stream.of(getRaceOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race> streamRace()
     {

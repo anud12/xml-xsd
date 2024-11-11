@@ -70,7 +70,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+
+    @Builder.Default
     private List<Consumer<ActionRule>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
@@ -180,6 +183,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.global = Optional.of(instance);
         return this.global.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.Global.Global> streamGlobalOrDefault()
+    {
+      return Stream.of(getGlobalOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.Global.Global> streamGlobal()
     {

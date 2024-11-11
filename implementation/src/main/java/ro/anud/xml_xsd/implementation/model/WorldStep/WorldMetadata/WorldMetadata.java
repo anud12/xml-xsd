@@ -73,7 +73,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+
+    @Builder.Default
     private List<Consumer<WorldMetadata>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
@@ -174,6 +177,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.previousWorldStep.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.PreviousWorldStep.PreviousWorldStep> streamPreviousWorldStepOrDefault()
+    {
+      return Stream.of(getPreviousWorldStepOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.PreviousWorldStep.PreviousWorldStep> streamPreviousWorldStep()
     {
       return previousWorldStep.stream();
@@ -198,6 +205,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.nextWorldStep = Optional.of(instance);
         return this.nextWorldStep.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.NextWorldStep.NextWorldStep> streamNextWorldStepOrDefault()
+    {
+      return Stream.of(getNextWorldStepOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.NextWorldStep.NextWorldStep> streamNextWorldStep()
     {

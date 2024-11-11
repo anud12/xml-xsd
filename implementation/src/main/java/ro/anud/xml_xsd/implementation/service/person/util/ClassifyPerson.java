@@ -30,15 +30,21 @@ public class ClassifyPerson {
         var staticClassificationId = person.streamClassifications()
             .flatMap(Classifications::streamClassification)
             .map(Classification::getClassificationRuleRef)
-            .filter(emptyClassificationRules::contains);
+            .filter(emptyClassificationRules::contains)
+            .toList();
 
         BiConsumer<Person, String> setClassification = (person1, string) -> {
-            person1.getClassificationsOrDefault().addClassification(Classification.builder()
-                .classificationRuleRef(string)
-                .build());
+            var classificationsElement = person1.getClassificationsOrDefault();
+            var doesntExists = classificationsElement.streamClassification()
+                .noneMatch(classification1 -> classification1.getClassificationRuleRef().equals(string));
+            if(doesntExists) {
+                person1.getClassificationsOrDefault().addClassification(Classification.builder()
+                    .classificationRuleRef(string)
+                    .build());
+            }
         };
         var outPerson = worldStepInstance.getOutInstance().person.repository.personById(person.getId());
-        return logger.logReturn(Stream.concat(computedClassificationList, staticClassificationId)
+        return logger.logReturn(Stream.concat(computedClassificationList, staticClassificationId.stream())
             .peek(string -> {
                 outPerson.ifPresent(out -> setClassification.accept(out, string));
                 setClassification.accept(person, string);

@@ -68,7 +68,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+
+    @Builder.Default
     private List<Consumer<In_locationGraph>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
@@ -138,6 +141,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.has_locationGraphId = Optional.of(instance);
         return this.has_locationGraphId.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.In_locationGraph.Has_locationGraphId.Has_locationGraphId> streamHas_locationGraphIdOrDefault()
+    {
+      return Stream.of(getHas_locationGraphIdOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.In_locationGraph.Has_locationGraphId.Has_locationGraphId> streamHas_locationGraphId()
     {

@@ -70,7 +70,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+
+    @Builder.Default
     private List<Consumer<NameToken>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
@@ -162,6 +165,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this._ref = Optional.of(instance);
         return this._ref.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.Group_nameToken.NameToken._ref._ref> stream_refOrDefault()
+    {
+      return Stream.of(get_refOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.Group_nameToken.NameToken._ref._ref> stream_ref()
     {

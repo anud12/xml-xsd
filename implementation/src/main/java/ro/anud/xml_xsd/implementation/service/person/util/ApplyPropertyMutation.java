@@ -16,7 +16,7 @@ public class ApplyPropertyMutation {
         final Person originPerson,
         final Person targetPerson) {
         var logger = logEnter(
-            "selfPerson:",
+            "selfPerson",
             selfPerson.getId(),
             "originPerson",
             originPerson.getId(),
@@ -32,26 +32,41 @@ public class ApplyPropertyMutation {
                     case "self" -> originPerson;
                     default -> targetPerson;
                 };
-                logger.log("on personId:", from.getParticipant());
+                var innerLog = logger.log("on personId:", person.getId());
                 var newValueOptional = worldStepInstance.computeOperation(
                     from.getOperation(),
                     person);
                 if (newValueOptional.isEmpty()) {
                     return;
                 }
-                var deltaValue = newValueOptional.get();
 
-                worldStepInstance.getOutInstance()
+                var deltaValue = newValueOptional.get();
+                innerLog.log("deltaValue", deltaValue);
+                innerLog.log("searching person in outInstance");
+                var outPerson = worldStepInstance.getOutInstance()
                     .person
                     .repository
-                    .personById(person.getId())
+                    .personById(selfPerson.getId());
+                var propertyElementList = outPerson
                     .stream()
-                    .flatMap(Person::streamProperties)
+                    .flatMap(Person::streamPropertiesOrDefault)
                     .flatMap(Properties::streamProperty)
                     .filter(property -> property.getPropertyRuleRef().equals(propertyRuleRef))
+                    .toList();
+                innerLog.log("found properties of ref", propertyRuleRef, "size", propertyElementList.size());
+                if (propertyElementList.isEmpty()) {
+                    innerLog.log("creating property");
+                    worldStepInstance.getOutInstance().person.mutateProperty(
+                        outPerson.get(),
+                        propertyRuleRef,
+                        integer -> integer + deltaValue
+                    );
+                }
+                propertyElementList
                     .forEach(property -> {
+                        innerLog.log("currentValue", property.getValue());
                         var newValue = property.getValue() + deltaValue;
-                        logger.log("newValue:", newValue);
+                        innerLog.log("newValue:", newValue);
                         property.setValue(newValue);
                     });
             });

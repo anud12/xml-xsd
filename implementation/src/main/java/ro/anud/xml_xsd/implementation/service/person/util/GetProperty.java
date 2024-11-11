@@ -121,15 +121,20 @@ public class GetProperty {
         }
 
         Consumer<Person> applyValue = innerPerson -> {
-            innerPerson.getPropertiesOrDefault().addProperty(Property.builder()
-                .value(value.get())
-                .propertyRuleRef(propertyRef)
-                .build());
-
+            var property = innerPerson.getPropertiesOrDefault();
+            property.streamProperty().filter(property1 -> property1.getPropertyRuleRef().equals(propertyRef))
+                .findFirst()
+                .ifPresentOrElse(
+                    property1 -> property1.setValue(value.get()),
+                    () -> property.addProperty(Property.builder()
+                        .value(value.get())
+                        .propertyRuleRef(propertyRef)
+                        .build())
+                );
         };
 
 
-        logger.log("adding property on person:", person.getId(), "propertyRef:", propertyRef, "value:", value);
+        logger.log("setting property on person:", person.getId(), "propertyRef:", propertyRef, "value:", value);
         outInstance.person.repository.personById(person.getId())
             .ifPresent(applyValue);
         applyValue.accept(person);

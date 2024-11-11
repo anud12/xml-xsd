@@ -74,7 +74,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+
+    @Builder.Default
     private List<Consumer<Person>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
@@ -199,6 +202,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.race.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race> streamRaceOrDefault()
+    {
+      return Stream.of(getRaceOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race> streamRace()
     {
       return race.stream();
@@ -223,6 +230,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.properties = Optional.of(instance);
         return this.properties.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties> streamPropertiesOrDefault()
+    {
+      return Stream.of(getPropertiesOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties> streamProperties()
     {
@@ -277,6 +288,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.classifications.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications> streamClassificationsOrDefault()
+    {
+      return Stream.of(getClassificationsOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications> streamClassifications()
     {
       return classifications.stream();
@@ -301,6 +316,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.icon = Optional.of(instance);
         return this.icon.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon> streamIconOrDefault()
+    {
+      return Stream.of(getIconOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon> streamIcon()
     {

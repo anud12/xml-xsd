@@ -111,7 +111,10 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
       @ToString.Exclude()
       @EqualsAndHashCode.Exclude()
       @JsonIgnore
+      @Builder.Default
       private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+      
+      @Builder.Default
       private List<Consumer<${normalizeNameClass(dependantType.name)}>> onChangeList = new ArrayList<>();
       
       public String nodeName() {

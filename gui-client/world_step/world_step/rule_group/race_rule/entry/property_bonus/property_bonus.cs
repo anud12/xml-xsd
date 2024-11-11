@@ -14,7 +14,6 @@ namespace XSD.Nworld_step.Nrule_group.Nrace_rule.Nentry {
     public System.String property_rule_ref;
 
     //Attributes of type__math_operations
-    public System.Int32 initial;
 
     //Children elements
 
@@ -47,11 +46,6 @@ namespace XSD.Nworld_step.Nrule_group.Nrace_rule.Nentry {
       }
 
       // Deserialize arguments of type__math_operations
-  if(rawNode.attributes.ContainsKey("initial"))
-  {
-    var attribute_initial = rawNode.attributes["initial"];
-    this.initial = attribute_initial.ToInt();
-  }
 
       //Deserialize children
 
@@ -68,10 +62,7 @@ namespace XSD.Nworld_step.Nrule_group.Nrace_rule.Nentry {
       }
 
       // Serialize arguments of type__math_operations
-  if(this.initial != null)
-  {
-    rawNode.attributes["initial"] = this.initial.ToString();
-  }
+
 
       //Serialize children
 
@@ -93,14 +84,6 @@ namespace XSD.Nworld_step.Nrule_group.Nrace_rule.Nentry {
     public void Set_property_rule_ref(System.String value)
     {
       this.property_rule_ref = value;
-    }
-    public System.Int32 Get_initial()
-    {
-      return this.initial;
-    }
-    public void Set_initial(System.Int32 value)
-    {
-      this.initial = value;
     }
   }
 }

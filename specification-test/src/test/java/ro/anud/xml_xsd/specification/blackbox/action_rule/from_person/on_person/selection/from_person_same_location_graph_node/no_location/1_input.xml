@@ -53,7 +53,7 @@
       </person>
     </people>
     <location>
-      <location_graph>
+      <location_graph id="location_graph_id">
         <rule location_graph_rule_ref="location_graph_id"/>
         <node node_rule_ref="node_rule_id" id="node_0"/>
       </location_graph>

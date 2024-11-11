@@ -13,6 +13,7 @@ import ro.anud.xml_xsd.implementation.middleware.FromPersonAction;
 import ro.anud.xml_xsd.implementation.middleware.PersonAssignClassification;
 import ro.anud.xml_xsd.implementation.middleware.PersonCreateAction;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
+import ro.anud.xml_xsd.implementation.service.InstanceTypeEnum;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
@@ -46,13 +47,15 @@ public class AnalyzeController {
             var rawNode = RawNode.fromNode(document.getDocumentElement());
 
             var worldStepInstance = new WorldStepInstance(WorldStep.fromRawNode(rawNode));
+            worldStepInstance.instance = InstanceTypeEnum.FIRST;
             var outWorldStepInstance = new WorldStepInstance(WorldStep.fromRawNode(rawNode));
+            worldStepInstance.instance = InstanceTypeEnum.SECOND;
             worldStepInstance.setOutInstance(outWorldStepInstance);
             outWorldStepInstance.setOutInstance(worldStepInstance);
 
             fromPersonAction.apply(worldStepInstance);
             personCreateAction.apply(worldStepInstance);
-            personAssignClassification.apply(worldStepInstance);
+            personAssignClassification.apply(worldStepInstance.getOutInstance());
 
 
             var outputDocument = outWorldStepInstance.offsetRandomizationTable().getWorldStep()

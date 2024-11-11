@@ -74,7 +74,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+
+    @Builder.Default
     private List<Consumer<Node>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
@@ -198,6 +201,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.name.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Name.Name> streamNameOrDefault()
+    {
+      return Stream.of(getNameOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Name.Name> streamName()
     {
       return name.stream();
@@ -222,6 +229,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.position = Optional.of(instance);
         return this.position.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Position.Position> streamPositionOrDefault()
+    {
+      return Stream.of(getPositionOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Position.Position> streamPosition()
     {
@@ -248,6 +259,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.classifications.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Classifications.Classifications> streamClassificationsOrDefault()
+    {
+      return Stream.of(getClassificationsOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Classifications.Classifications> streamClassifications()
     {
       return classifications.stream();
@@ -273,6 +288,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.links.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.Links> streamLinksOrDefault()
+    {
+      return Stream.of(getLinksOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.Links> streamLinks()
     {
       return links.stream();
@@ -297,6 +316,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.people = Optional.of(instance);
         return this.people.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.People.People> streamPeopleOrDefault()
+    {
+      return Stream.of(getPeopleOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.People.People> streamPeople()
     {

@@ -4,10 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class LocalLogger {
@@ -16,11 +13,12 @@ public class LocalLogger {
     public static class LogClass {
         static String PARENT_DELIMITER = "|>";
         static String IDENT = "│ ";
-        private Object[] parentArgs = {};
+        static String ARG_SEPARATOR = "\t";
+        private List<Object> parentArgs = new ArrayList<>();
 
         public LogClass() {}
 
-        public LogClass(Object... parentArgs) {
+        public LogClass(List parentArgs) {
             this.parentArgs = parentArgs;
         }
 
@@ -29,20 +27,17 @@ public class LocalLogger {
             var filterStacktrace = filterStacktrace(stackTrace);
 
             var previousStackTrace = filterStacktrace.get(0);
-            var methodName = previousStackTrace.getMethodName();var stream = Stream.concat(
-                Arrays.stream(parentArgs),
-                Stream.concat(Stream.of(PARENT_DELIMITER), Arrays.stream(args))
-            );
-            StringBuilder line = new StringBuilder(stream.reduce(
+            var methodName = previousStackTrace.getMethodName();
+            StringBuilder line = new StringBuilder(argumentsToString(args).reduce(
                 methodName + " [ log  ]",
-                (string, o) -> string + " " + o,
+                (string, o) -> string + ARG_SEPARATOR + o,
                 (string, string2) -> string + string2
             ));
             for (var i = 0; i < filterStacktrace.size(); i++) {
                 line.insert(0, IDENT);
             }
             LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line));
-            return new LogClass(args);
+            return new LogClass(argumentsToString(args).toList());
         }
 
         public LogClass logTodo(Object... args) {
@@ -50,20 +45,18 @@ public class LocalLogger {
             var filterStacktrace = filterStacktrace(stackTrace);
 
             var previousStackTrace = filterStacktrace.get(0);
-            var methodName = previousStackTrace.getMethodName();var stream = Stream.concat(
-                Arrays.stream(parentArgs),
-                Stream.concat(Stream.of(PARENT_DELIMITER), Arrays.stream(args))
-            );
-            StringBuilder line = new StringBuilder(stream.reduce(
+            var methodName = previousStackTrace.getMethodName();
+
+            StringBuilder line = new StringBuilder(argumentsToString(args).reduce(
                 methodName + " [ TODO ]",
-                (string, o) -> string + " " + o,
+                (string, o) -> string + ARG_SEPARATOR + o,
                 (string, string2) -> string + string2
             ));
             for (var i = 0; i < filterStacktrace.size(); i++) {
                 line.insert(0, IDENT);
             }
             LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line));
-            return new LogClass(args);
+            return new LogClass(argumentsToString(args).toList());
         }
 
         public LogClass logEnter(Object... args) {
@@ -71,13 +64,10 @@ public class LocalLogger {
             var filterStacktrace = filterStacktrace(stackTrace);
 
             var previousStackTrace = filterStacktrace.get(0);
-            var methodName = previousStackTrace.getMethodName();var stream = Stream.concat(
-                Arrays.stream(parentArgs),
-                Stream.concat(Stream.of(PARENT_DELIMITER), Arrays.stream(args))
-            );
-            StringBuilder line = new StringBuilder(stream.reduce(
+            var methodName = previousStackTrace.getMethodName();
+            StringBuilder line = new StringBuilder(argumentsToString(args).reduce(
                 methodName + " [enter ]",
-                (string, o) -> string + " " + o,
+                (string, o) -> string + ARG_SEPARATOR + o,
                 (string, string2) -> string + string2
             ));
             for (var i = 0; i < filterStacktrace.size(); i++) {
@@ -85,7 +75,7 @@ public class LocalLogger {
             }
 
             LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line));
-            return new LogClass(args);
+            return new LogClass(argumentsToString(args).toList());
         }
 
         public <T> T logReturn(T returnValue, Object... args) {
@@ -94,20 +84,16 @@ public class LocalLogger {
 
             var previousStackTrace = filterStacktrace.get(0);
             var methodName = previousStackTrace.getMethodName();
-            var stream = Stream.concat(
-                Arrays.stream(parentArgs),
-                Stream.concat(Stream.of(PARENT_DELIMITER), Arrays.stream(args))
-            );
-            StringBuilder line = new StringBuilder(stream.reduce(
+            StringBuilder line = new StringBuilder(argumentsToString(args).reduce(
                 methodName + " [return]",
-                (string, o) -> string + " " + o,
+                (string, o) -> string + ARG_SEPARATOR + o,
                 (string, string2) -> string + string2
             ));
             for (var i = 0; i < filterStacktrace.size(); i++) {
                 line.insert(0, IDENT);
             }
             var returnValueString = Optional.ofNullable(returnValue).map(Objects::toString).orElse("null");
-            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + " value: [" + returnValueString + "]");
+            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + ARG_SEPARATOR + "value: [" + returnValueString + "]");
             return returnValue;
         }
 
@@ -117,19 +103,26 @@ public class LocalLogger {
 
             var previousStackTrace = filterStacktrace.get(0);
             var methodName = previousStackTrace.getMethodName();
-            var stream = Stream.concat(
-                Arrays.stream(parentArgs),
-                Stream.concat(Stream.of(PARENT_DELIMITER), Arrays.stream(args))
-            );
-            StringBuilder line = new StringBuilder(stream.reduce(
+            StringBuilder line = new StringBuilder(argumentsToString(args).reduce(
                 methodName + " [return]",
-                (string, o) -> string + " " + o,
+                (string, o) -> string + ARG_SEPARATOR + o,
                 (string, string2) -> string + string2
             ));
             for (var i = 0; i < filterStacktrace.size(); i++) {
                 line.insert(0, IDENT);
             }
-            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + " value: [void]");
+            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + ARG_SEPARATOR + "value: [void]");
+        }
+
+        private Stream<String> argumentsToString(Object... args) {
+            var delimiter = Stream.of(PARENT_DELIMITER);
+            if (parentArgs.isEmpty()) {
+                delimiter = Stream.empty();
+            }
+            return Stream.concat(
+                parentArgs.stream(),
+                Stream.concat(delimiter, Arrays.stream(args))
+            ).map(Object::toString);
         }
     }
 
@@ -149,6 +142,7 @@ public class LocalLogger {
             .filter(stackTraceElement -> !StringUtils.startsWithIgnoreCase(
                 stackTraceElement.getClassName(),
                 LogClass.class.getName()))
+            .filter(stackTraceElement -> !stackTraceElement.getMethodName().startsWith("lambda$"))
             .toList()
             .reversed();
     }

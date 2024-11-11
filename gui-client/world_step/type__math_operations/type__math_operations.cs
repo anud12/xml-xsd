@@ -11,7 +11,6 @@ namespace XSD {
   public class type__math_operations  {
     public RawNode rawNode = new RawNode();
     //Attributes
-    public System.Int32 initial;
 
     //Children elements
     public type__math_operations()
@@ -34,11 +33,6 @@ namespace XSD {
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing type__math_operations");
       //Deserialize arguments
-      if(rawNode.attributes.ContainsKey("initial"))
-      {
-        var attribute_initial = rawNode.attributes["initial"];
-        this.initial = attribute_initial.ToInt();
-      }
 
       //Deserialize children
     }
@@ -46,10 +40,6 @@ namespace XSD {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.initial != null)
-      {
-        rawNode.attributes["initial"] = this.initial.ToString();
-      }
 
       //Serialize children
       return rawNode;
@@ -60,14 +50,6 @@ namespace XSD {
         // Godot.GD.Print("Serializing type__math_operations");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
-    }
-    public System.Int32 Get_initial()
-    {
-      return this.initial;
-    }
-    public void Set_initial(System.Int32 value)
-    {
-      this.initial = value;
     }
   }
 }

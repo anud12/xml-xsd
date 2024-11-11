@@ -9,6 +9,8 @@ import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 import java.util.Objects;
 
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
+
 
 public class SelectionInstance {
     private WorldStepInstance worldStepInstance;
@@ -18,15 +20,17 @@ public class SelectionInstance {
     }
 
     public boolean isSelectionApplicableTo(IType_personSelection<?> selectPerson, Person person) {
-
-        return filterBasedOnProperties(selectPerson, person)
-                && filterPersonListBasedOnClassification(selectPerson, person)
-                && filterPersonListBasedOnRace(selectPerson, person);
+        var logger = logEnter("personId", person.getId());
+        return logger.logReturn(filterBasedOnProperties(selectPerson, person)
+            && filterPersonListBasedOnClassification(selectPerson, person)
+            && filterPersonListBasedOnRace(selectPerson, person));
     }
 
     private boolean filterBasedOnProperties(IType_personSelection<?> selectPerson, Person person) {
+        var logger = logEnter("personId", person.getId());
         if (selectPerson.streamProperty().findAny().isEmpty()) {
-            return true;
+            logger.log("empty list");
+            return logger.logReturn(true);
         }
         var ruleStream = selectPerson.streamProperty();
         var filteredRules = ruleStream.filter(propertyRule -> {
@@ -53,40 +57,46 @@ public class SelectionInstance {
             }
             return true;
         });
-        return filteredRules.count() == selectPerson.streamProperty().count();
+        return logger.logReturn(filteredRules.count() == selectPerson.streamProperty().count());
     }
 
     private boolean filterPersonListBasedOnClassification(
             final IType_personSelection<?> selectPerson,
             final Person person) {
-        if (selectPerson.streamClassification().findAny().isEmpty()) {
-            return true;
+        var logger = logEnter("personId", person.getId());
+        var ruleList = selectPerson.streamClassification().toList();
+        if (ruleList.isEmpty()) {
+            logger.log("empty list");
+            return logger.logReturn(true);
         }
         var personRef = person.streamClassifications()
                 .flatMap(Classifications::streamClassification)
                 .map(Classification::getClassificationRuleRef)
                 .toList();
 
-        var filteredRules = selectPerson.streamClassification()
+        var filteredRules = ruleList.stream()
                 .map(ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification::getClassificationRuleRef)
                 .filter(ruleRef -> personRef.stream().anyMatch(string -> string.equals(ruleRef)));
-        return filteredRules.count() == selectPerson.streamRace().count();
+        return logger.logReturn(filteredRules.count() == ruleList.size());
     }
 
     private boolean filterPersonListBasedOnRace(
             final IType_personSelection<?> selectPerson,
             final Person person) {
-        if (selectPerson.streamRace().findAny().isEmpty()) {
-            return true;
+        var logger = logEnter("personId", person.getId());
+        var ruleList = selectPerson.streamRace().toList();
+        if (ruleList.isEmpty()) {
+            logger.log("empty list");
+            return logger.logReturn(true);
         }
         var personRaceRef = person.getRace().map(Race::getRaceRuleRef);
         if (personRaceRef.isEmpty()) {
             return false;
         }
-        var filteredRules = selectPerson.streamRace()
+        var filteredRules = ruleList.stream()
                 .map(ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race::getRaceRuleRef)
                 .filter(ref -> Objects.equals(ref, personRaceRef.get()));
-        return filteredRules.count() == selectPerson.streamRace().count();
+        return logger.logReturn(filteredRules.count() == ruleList.size());
     }
 
 }

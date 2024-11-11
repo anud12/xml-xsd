@@ -13,7 +13,6 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {
     //Attributes
 
     //Attributes of type__math_operations
-    public System.Int32 initial;
 
     //Children elements
 
@@ -41,11 +40,6 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {
       //Deserialize arguments
 
       // Deserialize arguments of type__math_operations
-  if(rawNode.attributes.ContainsKey("initial"))
-  {
-    var attribute_initial = rawNode.attributes["initial"];
-    this.initial = attribute_initial.ToInt();
-  }
 
       //Deserialize children
 
@@ -58,10 +52,7 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {
       //Serialize arguments
 
       // Serialize arguments of type__math_operations
-  if(this.initial != null)
-  {
-    rawNode.attributes["initial"] = this.initial.ToString();
-  }
+
 
       //Serialize children
 
@@ -75,14 +66,6 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {
         // Godot.GD.Print("Serializing item_default");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
-    }
-    public System.Int32 Get_initial()
-    {
-      return this.initial;
-    }
-    public void Set_initial(System.Int32 value)
-    {
-      this.initial = value;
     }
   }
 }

@@ -70,7 +70,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+
+    @Builder.Default
     private List<Consumer<Person_moveTo>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
@@ -163,6 +166,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.findPathTowards.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection> streamFindPathTowardsOrDefault()
+    {
+      return Stream.of(getFindPathTowardsOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection> streamFindPathTowards()
     {
       return findPathTowards.stream();
@@ -187,6 +194,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.path = Optional.of(instance);
         return this.path.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Path.Path> streamPathOrDefault()
+    {
+      return Stream.of(getPathOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Path.Path> streamPath()
     {

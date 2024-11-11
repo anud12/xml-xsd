@@ -69,7 +69,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+
+    @Builder.Default
     private List<Consumer<Data>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
@@ -146,6 +149,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.people.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People> streamPeopleOrDefault()
+    {
+      return Stream.of(getPeopleOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People> streamPeople()
     {
       return people.stream();
@@ -170,6 +177,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.location = Optional.of(instance);
         return this.location.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location> streamLocationOrDefault()
+    {
+      return Stream.of(getLocationOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location> streamLocation()
     {

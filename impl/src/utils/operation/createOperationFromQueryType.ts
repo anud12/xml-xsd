@@ -1,12 +1,12 @@
 
 import {JsonUtil} from "../util";
 import {JsonQueryType} from "../../JsonQueryType";
-import {group__operation__and} from "../../world_step.schema";
+import {type__math_operations_and} from "../../world_step.schema";
 
 
 export const createOperationFromQueryType = (
   readJson: JsonUtil,
-  operationValue: group__operation__and["childrenList"][number],
+  operationValue: type__math_operations_and["childrenList"][number],
   getExternalProperty: (key: string) => string = () => "0"
 ): (value: string) => string => {
 
@@ -28,7 +28,7 @@ export const createOperationFromQueryType = (
       };
     case "add_property":
       return wrapper(value => {
-        const addPropertyOpeartionValue = operationValue as group__operation__and["children"]["add_property"];
+        const addPropertyOpeartionValue = operationValue as type__math_operations_and["children"]["add_property"];
         const propertyRef = addPropertyOpeartionValue.attributeMap.property_rule_ref;
         if (propertyRef === undefined) {
           throw new Error(`Operation ${addPropertyOpeartionValue.getPath()} property is undefined`);
@@ -40,7 +40,7 @@ export const createOperationFromQueryType = (
         return result;
       })
     case "and":
-      let andOperationValue = operationValue as group__operation__and["children"]["and"];
+      let andOperationValue = operationValue as type__math_operations_and["children"]["and"];
       return wrapper(value => {
         switch (andOperationValue.attributeMap.do) {
           default: throw new Error(`Unknown attribute ${andOperationValue.attributeMap.do} for ${andOperationValue.tag} in ${andOperationValue.getPath()}`);

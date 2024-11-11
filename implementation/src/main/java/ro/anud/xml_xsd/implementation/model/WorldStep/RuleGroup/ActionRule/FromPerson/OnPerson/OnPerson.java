@@ -69,7 +69,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+
+    @Builder.Default
     private List<Consumer<OnPerson>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
@@ -146,6 +149,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.selection.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.Selection.Selection> streamSelectionOrDefault()
+    {
+      return Stream.of(getSelectionOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.Selection.Selection> streamSelection()
     {
       return selection.stream();
@@ -170,6 +177,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.mutations = Optional.of(instance);
         return this.mutations.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.Mutations.Mutations> streamMutationsOrDefault()
+    {
+      return Stream.of(getMutationsOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.Mutations.Mutations> streamMutations()
     {

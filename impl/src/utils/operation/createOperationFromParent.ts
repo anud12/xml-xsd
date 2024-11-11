@@ -16,7 +16,7 @@ export const createOperationFromParent = (
     console.log(`createOperationFromParent ${operationList.getPath()}`)
     const result = operationList.childrenList
       .reduce((acc, operation) => {
-      const operationValue = createOperationFromQueryType(readJson, operation , getExternalProperty);
+      const operationValue = createOperationFromQueryType(readJson, operation as any, getExternalProperty);
 
       return operationValue(acc)
     }, operationList.attributeMap.initial || "0");

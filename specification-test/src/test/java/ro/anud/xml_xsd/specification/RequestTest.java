@@ -4,6 +4,7 @@ import org.assertj.core.api.Assertions;
 import org.assertj.core.api.Condition;
 import org.assertj.core.presentation.StandardRepresentation;
 import org.junit.jupiter.api.DynamicTest;
+import org.xmlunit.XMLUnitException;
 import org.xmlunit.assertj3.CompareAssert;
 import org.xmlunit.assertj3.XmlAssert;
 import org.xmlunit.builder.DiffBuilder;
@@ -170,8 +171,8 @@ public class RequestTest {
         return DynamicTest.dynamicTest("Validating execution to endpoint" + endpoints.getEndpoint(), () -> {
             Runnable process = () -> {};
             try {
-                //                var port = getFreePort();
-                //                process = launchChildProcess(port);
+//                                var port = getFreePort();
+//                                process = launchChildProcess(port);
                 var port = "8080";
                 waitForHeartbeat("http://localhost:" + port + "/health");
                 String relativePath = Paths.get(runningTestClass.getResource("").toURI()).toString();
@@ -182,11 +183,16 @@ public class RequestTest {
                 try {
                     String expected = new String(Files.readAllBytes(Path.of(relativePath, "/2_expected.xml")));
 
-                    Diff diff = DiffBuilder.compare(prettyFormat(responseBody)).withTest(prettyFormat(expected))
+                    try {
+                        Diff diff = DiffBuilder.compare(prettyFormat(responseBody)).withTest(prettyFormat(expected))
                             .build();
-                    if(diff.hasDifferences()) {
+                        if(diff.hasDifferences()) {
+                            Assertions.assertThat(prettyFormat(responseBody)).isEqualTo(prettyFormat(expected));
+                        }
+                    } catch (XMLUnitException e) {
                         Assertions.assertThat(prettyFormat(responseBody)).isEqualTo(prettyFormat(expected));
                     }
+
 
                 } catch (java.nio.file.NoSuchFileException e) {
                     String expected = new String(Files.readAllBytes(Path.of(relativePath, "/2_expected.txt")));

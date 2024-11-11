@@ -14,7 +14,7 @@ public class PersonAssignClassification implements Middleware {
         inInstance.person.repository
             .streamAll()
             .flatMap(inInstance.person::classifyPerson)
-            .count();
+            .toList();
         logger.logReturnVoid();
     }
 }

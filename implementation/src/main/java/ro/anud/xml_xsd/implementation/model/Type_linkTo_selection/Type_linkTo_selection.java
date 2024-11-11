@@ -69,7 +69,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+
+    @Builder.Default
     private List<Consumer<Type_linkTo_selection>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
@@ -148,6 +151,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.origin_nodeGraph_selection.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection> streamOrigin_nodeGraph_selectionOrDefault()
+    {
+      return Stream.of(getOrigin_nodeGraph_selectionOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection> streamOrigin_nodeGraph_selection()
     {
       return origin_nodeGraph_selection.stream();
@@ -172,6 +179,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.destination_nodeGraph_selection = Optional.of(instance);
         return this.destination_nodeGraph_selection.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection> streamDestination_nodeGraph_selectionOrDefault()
+    {
+      return Stream.of(getDestination_nodeGraph_selectionOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection> streamDestination_nodeGraph_selection()
     {

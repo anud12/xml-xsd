@@ -2,6 +2,7 @@ package ro.anud.xml_xsd.implementation.middleware;
 
 import org.springframework.stereotype.Service;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions;
+import ro.anud.xml_xsd.implementation.model.WorldStep.Actions.FromPerson.FromPerson;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.Mutations.Mutations;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.OnPerson;
@@ -25,7 +26,7 @@ public class FromPersonAction implements Middleware {
             .streamActions()
             .flatMap(Actions::streamFromPerson)
             .toList();
-        if(fromPersonStream.isEmpty()) {
+        if (fromPersonStream.isEmpty()) {
             logger.logReturnVoid("fromPerson list is empty");
             return;
         }
@@ -57,7 +58,6 @@ public class FromPersonAction implements Middleware {
                     return;
                 }
             }
-
             actionElement.streamOnPerson()
                 .forEach(onPerson -> {
                     var localLocalLogger = localLogger.logEnter(onPerson.getNodeId());
@@ -65,10 +65,9 @@ public class FromPersonAction implements Middleware {
                     var targetPerson = personRepository.personById(onPerson.getPersonIdRef());
                     if (onPersonRule.isEmpty() || targetPerson.isEmpty()) {
                         localLocalLogger.logReturnVoid(
-                            "onPersonRule:",
-                            onPersonRule,
-                            "targetPerson",
-                            targetPerson);
+                            "onPersonRule:", onPersonRule,
+                            "targetPerson", targetPerson
+                        );
                         return;
                     }
                     if (!onPersonApplicable(
@@ -83,7 +82,7 @@ public class FromPersonAction implements Middleware {
                     actionRule.streamMutations()
                         .flatMap(Mutations::streamPropertyMutation)
                         .forEach(typePropertyMutation -> worldStepInstance.person
-                            .applyPropertyMutation(
+                            .applyPropertyMutationOnOut(
                                 selfPerson,
                                 typePropertyMutation,
                                 selfPerson,
@@ -101,6 +100,14 @@ public class FromPersonAction implements Middleware {
         });
 
 
+        worldStepInstance.getOutInstance()
+            .getWorldStep()
+            .streamActions()
+            .flatMap(Actions::streamFromPerson)
+            .toList()
+            .forEach(FromPerson::removeFromParent);
+
+
     }
 
     private void onPersonHandle(
@@ -108,12 +115,12 @@ public class FromPersonAction implements Middleware {
         final OnPerson onPerson,
         final Person selfPerson,
         final Person targetPerson) {
-        var logger = logEnter();
+        var logger = logEnter("selfPerson", selfPerson.getId(), "targetPerson", targetPerson.getId());
         onPerson.streamMutations()
             .flatMap(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.Mutations.Mutations::streamPropertyMutation)
             .forEach(typePropertyMutation -> worldStepInstance
                 .person
-                .applyPropertyMutation(
+                .applyPropertyMutationOnOut(
                     targetPerson,
                     typePropertyMutation,
                     targetPerson,
@@ -125,36 +132,40 @@ public class FromPersonAction implements Middleware {
 
     private boolean onPersonApplicable(
         final WorldStepInstance worldStepInstance,
-        final Person selfPerson,
+        final Person originPerson,
         final Person targetPerson,
         final OnPerson onPersonRule) {
-        var logger = logEnter();
+        var logger = logEnter("originPerson", originPerson.getId(), "targetPerson", targetPerson.getId());
         var selection = onPersonRule.getSelection();
-
+        if (selection.isEmpty()) {
+            return true;
+        }
         var isNotFromSameLocation = selection.flatMap(Selection::getFromPersonSameLocationGraphNode)
             .map(fromPersonSameLocationGraphNode -> !isFromPersonSameLocationGraphNode(
                 worldStepInstance,
-                selfPerson,
+                originPerson,
                 targetPerson,
                 fromPersonSameLocationGraphNode)
             )
             .orElse(false);
 
         if (isNotFromSameLocation) {
-            return logger.logReturn(false, "isNotFromSameLocation is true");
+            logger.log("isNotFromSameLocation");
+            return logger.logReturn(false);
 
         }
         var selectionInstance = worldStepInstance.person.selection;
-        var isSelectionApplicable = selection
+        var invalidSelectionList = selection
             .stream()
-            .filter(selection1 -> selectionInstance.isSelectionApplicableTo(
+            .filter(selection1 -> !selectionInstance.isSelectionApplicableTo(
                 selection1,
-                selfPerson)
+                targetPerson)
             )
             .findAny();
 
-        if (isSelectionApplicable.isEmpty()) {
-            return logger.logReturn(false, "isSelectionApplicable.isEmpty() is true");
+        if (invalidSelectionList.isPresent()) {
+            logger.log("invalid selection found");
+            return logger.logReturn(false);
         }
         return logger.logReturn(true);
     }
@@ -164,12 +175,14 @@ public class FromPersonAction implements Middleware {
         final Person selfPerson,
         final Person targetPerson,
         final FromPersonSameLocationGraphNode fromPersonSameLocationGraphNode) {
+        var logger = logEnter();
         var locationGraphInstance = worldStepInstance.locationGraph;
         var originLocation = locationGraphInstance.findPersonLocation(selfPerson.getId());
         var targetLocation = locationGraphInstance.findPersonLocation(targetPerson.getId());
 
         if (originLocation.isEmpty() || targetLocation.isEmpty()) {
-            return false;
+            logger.log("originLocation or targetLocation is empty");
+            return logger.logReturn(false);
         }
 
         var commonLocation = originLocation.stream().anyMatch(originFindPersonResult -> targetLocation.stream()
@@ -186,8 +199,8 @@ public class FromPersonAction implements Middleware {
         );
         var applicable = fromPersonSameLocationGraphNode.getValue().equals("true");
         if (applicable) {
-            return commonLocation;
+            return logger.logReturn(commonLocation);
         }
-        return !commonLocation;
+        return logger.logReturn(!commonLocation);
     }
 }

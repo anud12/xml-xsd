@@ -71,7 +71,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+
+    @Builder.Default
     private List<Consumer<PersonToPerson>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
@@ -186,6 +189,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.propertyMutation.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.Type_propertyMutationOn.Type_propertyMutationOn> streamPropertyMutationOrDefault()
+    {
+      return Stream.of(getPropertyMutationOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_propertyMutationOn.Type_propertyMutationOn> streamPropertyMutation()
     {
       return propertyMutation.stream();
@@ -210,6 +217,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.locationMutation = Optional.of(instance);
         return this.locationMutation.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.LocationMutation.LocationMutation> streamLocationMutationOrDefault()
+    {
+      return Stream.of(getLocationMutationOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.LocationMutation.LocationMutation> streamLocationMutation()
     {

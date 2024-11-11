@@ -72,7 +72,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+
+    @Builder.Default
     private List<Consumer<NodeRule>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
@@ -176,6 +179,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.name.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.Name.Name> streamNameOrDefault()
+    {
+      return Stream.of(getNameOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.Name.Name> streamName()
     {
       return name.stream();
@@ -200,6 +207,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.classifications = Optional.of(instance);
         return this.classifications.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.Classifications.Classifications> streamClassificationsOrDefault()
+    {
+      return Stream.of(getClassificationsOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.Classifications.Classifications> streamClassifications()
     {
@@ -226,6 +237,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.linkGroupList.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroupList> streamLinkGroupListOrDefault()
+    {
+      return Stream.of(getLinkGroupListOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroupList> streamLinkGroupList()
     {
       return linkGroupList.stream();
@@ -250,6 +265,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.existingPerson = Optional.of(instance);
         return this.existingPerson.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.ExistingPerson.ExistingPerson> streamExistingPersonOrDefault()
+    {
+      return Stream.of(getExistingPersonOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.ExistingPerson.ExistingPerson> streamExistingPerson()
     {

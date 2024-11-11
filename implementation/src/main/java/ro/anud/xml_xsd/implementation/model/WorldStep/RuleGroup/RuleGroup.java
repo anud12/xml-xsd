@@ -77,7 +77,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+
+    @Builder.Default
     private List<Consumer<RuleGroup>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
@@ -198,6 +201,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.propertyRule.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule> streamPropertyRuleOrDefault()
+    {
+      return Stream.of(getPropertyRuleOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule> streamPropertyRule()
     {
       return propertyRule.stream();
@@ -222,6 +229,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.classificationRule = Optional.of(instance);
         return this.classificationRule.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.ClassificationRule> streamClassificationRuleOrDefault()
+    {
+      return Stream.of(getClassificationRuleOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.ClassificationRule> streamClassificationRule()
     {
@@ -248,6 +259,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.nameRule.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.NameRule> streamNameRuleOrDefault()
+    {
+      return Stream.of(getNameRuleOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.NameRule> streamNameRule()
     {
       return nameRule.stream();
@@ -272,6 +287,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.raceRule = Optional.of(instance);
         return this.raceRule.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.RaceRule> streamRaceRuleOrDefault()
+    {
+      return Stream.of(getRaceRuleOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.RaceRule> streamRaceRule()
     {
@@ -298,6 +317,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.actionRule.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.ActionRule> streamActionRuleOrDefault()
+    {
+      return Stream.of(getActionRuleOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.ActionRule> streamActionRule()
     {
       return actionRule.stream();
@@ -322,6 +345,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.eventsRule = Optional.of(instance);
         return this.eventsRule.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.EventsRule> streamEventsRuleOrDefault()
+    {
+      return Stream.of(getEventsRuleOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.EventsRule> streamEventsRule()
     {
@@ -348,6 +375,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.linkGroupRuleList.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LinkGroupRuleList.LinkGroupRuleList> streamLinkGroupRuleListOrDefault()
+    {
+      return Stream.of(getLinkGroupRuleListOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LinkGroupRuleList.LinkGroupRuleList> streamLinkGroupRuleList()
     {
       return linkGroupRuleList.stream();
@@ -373,6 +404,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.locationGraphRule.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.LocationGraphRule> streamLocationGraphRuleOrDefault()
+    {
+      return Stream.of(getLocationGraphRuleOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.LocationGraphRule> streamLocationGraphRule()
     {
       return locationGraphRule.stream();
@@ -397,6 +432,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.locationClassificationRule = Optional.of(instance);
         return this.locationClassificationRule.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationClassificationRule.LocationClassificationRule> streamLocationClassificationRuleOrDefault()
+    {
+      return Stream.of(getLocationClassificationRuleOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationClassificationRule.LocationClassificationRule> streamLocationClassificationRule()
     {

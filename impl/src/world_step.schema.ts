@@ -46,11 +46,11 @@ export type type__trigger = JsonQueryType<{}, {
 }>
 export type type__math_operations_and = JsonQueryType<{}, {
   "add_property": JsonQueryType<{"property_rule_ref": string;}> & JsonQueryType<{}, {}>;
-  "and": JsonQueryType<{"do": type__group__operation__and;  "value": string;}, JsonQueryType<{}>
-    & type__math_operations_and | any> & JsonQueryType<{}, {}>;
+  "and": JsonQueryType<{"do": type__group__operation__and;  "value": string;}>
+    & type__math_operations_and | any & JsonQueryType<{}, {}>;
 }>
-export type type__math_operations = JsonQueryType<{"initial": string;}, JsonQueryType<{}>
-  & type__math_operations_and>
+export type type__math_operations = JsonQueryType<{"initial": string;}>
+  & type__math_operations_and
 export type type__action = JsonQueryType<{}, {
   "from": JsonQueryType<{}, {
     "person": JsonQueryType<{}, {
@@ -101,7 +101,7 @@ export type world_step = JsonQueryType<{}, {
       }> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
     "classification_rule": JsonQueryType<{}, {
-      "entry": JsonQueryType<{"id": any;}, {
+      "entry": JsonQueryType<{"id": string;}, {
         "property": JsonQueryType<{"property_rule_ref": string;  "is": "lessThan" | "lessThanOrEqual" | "greaterThan" | "greaterThanOrEqual" | "equal";}, {
           "operation": type__math_operations & JsonQueryType<{}, {}>;
         }> & JsonQueryType<{}, {}>;

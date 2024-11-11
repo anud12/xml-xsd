@@ -23,7 +23,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 @Setter
 public class WorldStepInstance {
 
-
+    public InstanceTypeEnum instance;
     public NameInstance name;
     private WorldStep worldStep;
 

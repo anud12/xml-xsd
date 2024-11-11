@@ -71,7 +71,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+
+    @Builder.Default
     private List<Consumer<LinkTo>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
@@ -178,6 +181,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.people.get();
       });
     }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People> streamPeopleOrDefault()
+    {
+      return Stream.of(getPeopleOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People> streamPeople()
     {
       return people.stream();
@@ -202,6 +209,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.personProgressProperty = Optional.of(instance);
         return this.personProgressProperty.get();
       });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamPersonProgressPropertyOrDefault()
+    {
+      return Stream.of(getPersonProgressPropertyOrDefault());
     }
     public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamPersonProgressProperty()
     {

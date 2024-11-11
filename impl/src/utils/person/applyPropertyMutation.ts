@@ -31,7 +31,7 @@ export const oldApplyPropertyMutation = (readJson: JsonUtil, personQueryType: Pe
         if (isNaN(currentValue)) {
           return
         }
-        fromElement.attributeMap.value = currentValue + Number(value);
+        fromElement.attributeMap.value = (currentValue + Number(value)) as any;
       })
 
   }

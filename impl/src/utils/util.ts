@@ -15,7 +15,11 @@ import {classifyPerson} from "./person/classifyPerson";
 import {setProperty} from "./person/setProperty";
 import {selectPerson} from "./person/selectPerson";
 import {applyPropertyMutation, oldApplyPropertyMutation} from "./person/applyPropertyMutation";
-import {group__name_token, group__operation__and, type__math_operations} from "../world_step.schema";
+import {
+  group__name_token,
+  type__math_operations,
+  type__math_operations_and
+} from "../world_step.schema";
 import {createLocationGraph} from "./locationGraph/createLocationGraph";
 import {createGraphNode, LocationGraphNodeQueryType, LocationGraphQueryType} from "./locationGraph/createGraphNode";
 import {createAdjacent} from "./locationGraph/createAdjacent";
@@ -108,7 +112,7 @@ export class JsonUtil {
     })
     return attribute;
   }
-  computeOperation = (operationQueryType: group__operation__and["childrenList"][number], getExternalProperty?: (string: string) => string) => {
+  computeOperation = (operationQueryType: type__math_operations_and["childrenList"][number], getExternalProperty?: (string: string) => string) => {
     return createOperationFromQueryType(this, operationQueryType, getExternalProperty)
   }
   computeOperationFromParent = (operationList: type__math_operations, getExternalProperty?: (string: string) => string) => {
