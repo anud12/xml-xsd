@@ -74,10 +74,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
 
     @Builder.Default
-    private List<Consumer<Person_onPerson_propertyMutation>> onChangeList = new ArrayList<>();
+    private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
       return "person.on_person.property_mutation";
+    }
+
+    public void childChanged(Set<Object> set) {
+      set.add(this);
+      onChangeList.forEach(consumer -> consumer.accept(set));
+      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(set));
+    }
+
+    private void triggerOnChange() {
+      childChanged(new HashSet<>());
     }
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -91,7 +101,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<Person_onPerson_propertyMutation> onChange) {
+    public Subscription onChange(Consumer<Set<Object>> onChange) {
       logEnter();
       onChangeList.add(onChange);
       return logReturn(() -> onChangeList.remove(onChange));
@@ -145,7 +155,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public Person_onPerson_propertyMutation setPersonIdRef(String value)
     {
       this.personIdRef = value;
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public String getTargetPersonIdRef()
@@ -155,7 +165,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public Person_onPerson_propertyMutation setTargetPersonIdRef(String value)
     {
       this.targetPersonIdRef = value;
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public String getActionPropertyMutationRuleRef()
@@ -165,7 +175,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public Person_onPerson_propertyMutation setActionPropertyMutationRuleRef(String value)
     {
       this.actionPropertyMutationRuleRef = value;
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
 

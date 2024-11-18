@@ -75,10 +75,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
 
     @Builder.Default
-    private List<Consumer<NecessaryNode>> onChangeList = new ArrayList<>();
+    private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
       return "necessary_node";
+    }
+
+    public void childChanged(Set<Object> set) {
+      set.add(this);
+      onChangeList.forEach(consumer -> consumer.accept(set));
+      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(set));
+    }
+
+    private void triggerOnChange() {
+      childChanged(new HashSet<>());
     }
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -95,7 +105,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<NecessaryNode> onChange) {
+    public Subscription onChange(Consumer<Set<Object>> onChange) {
       logEnter();
       onChangeList.add(onChange);
       return logReturn(() -> onChangeList.remove(onChange));
@@ -152,7 +162,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public NecessaryNode setNodeRuleRef(String value)
     {
       this.nodeRuleRef = value;
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public Integer getMin()
@@ -162,7 +172,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public NecessaryNode setMin(Integer value)
     {
       this.min = value;
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public Optional<Integer> getMax()
@@ -172,7 +182,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public NecessaryNode setMax(Optional<Integer> value)
     {
       this.max = value;
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.NecessaryNode.Or.Or> getOr()
@@ -187,20 +197,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.or.add(value);
       value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public NecessaryNode addAllOr(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.NecessaryNode.Or.Or> value)
     {
       this.or.addAll(value);
       value.forEach(e -> e.setParentNode(this));
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public NecessaryNode removeOr(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.NecessaryNode.Or.Or value)
     {
       this.or.remove(value);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
 

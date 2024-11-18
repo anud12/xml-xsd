@@ -315,7 +315,7 @@
                 </xs:attribute>
               </xs:complexType>
             </xs:element>
-            <xs:element name="one_of">
+            <xs:element name="one_of" minOccurs="0">
               <xs:annotation>
                 <xs:documentation>
                   Represents a single choice between multiple 'name_token' elements.
@@ -489,6 +489,82 @@
       <xs:element name="origin__node_graph__selection" minOccurs="0" type="type__node_graph__selection"/>
       <xs:element name="destination__node_graph__selection" minOccurs="0" type="type__node_graph__selection"/>
     </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="type__link_group">
+    <xs:sequence>
+      <xs:element name="to_option" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            Represents the options to go to the next node.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:all>
+            <xs:element name="distance_to_progress_multiplier" minOccurs="0"
+                        type="type__math_operations"/>
+            <xs:element name="person_progress_property" minOccurs="0"
+                        type="type__math_operations"/>
+          </xs:all>
+          <xs:attribute name="node_rule_ref" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation>
+                Represents the reference of the target node.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="distance" type="xs:int" use="required">
+            <xs:annotation>
+              <xs:documentation>
+                Represents the distance between the nodes.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="maxDistance" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>
+                Represents the maximum distance between the nodes.
+                If unset it defaults to distance value.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="adjacent_depth_limit" type="xs:int" use="required">
+            <xs:annotation>
+              <xs:documentation>
+                When node is created, it checks all links, recursive at the depth
+                indicated,
+                to add links to this node, if applicable based on conditions of
+                this node and target node.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+    <xs:attribute name="angle" type="xs:int" use="required">
+      <xs:annotation>
+        <xs:documentation>
+          Represents the angle of the link group, used as minimum value when creating a
+          link.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="angleMax" type="xs:int">
+      <xs:annotation>
+        <xs:documentation>
+          Represents the maximum angle of the link group, used when creating a link.
+          If unset it defaults to angle value.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="limit" type="xs:int">
+      <xs:annotation>
+        <xs:documentation>
+          Represents the maximum number of links that can be created from this group.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
   </xs:complexType>
 
   <xs:element name="world_step">
@@ -955,78 +1031,11 @@
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="link_group_rule" minOccurs="0" maxOccurs="unbounded">
+
                       <xs:complexType>
-                        <xs:sequence>
-                          <xs:element name="to_option" minOccurs="0" maxOccurs="unbounded">
-                            <xs:annotation>
-                              <xs:documentation>
-                                Represents the options to go to the next node.
-                              </xs:documentation>
-                            </xs:annotation>
-                            <xs:complexType>
-                              <xs:all>
-                                <xs:element name="distance_to_progress_multiplier" minOccurs="0"
-                                            type="type__math_operations"/>
-                                <xs:element name="person_progress_property" minOccurs="0"
-                                            type="type__math_operations"/>
-                              </xs:all>
-                              <xs:attribute name="node_rule_ref" type="xs:string" use="required">
-                                <xs:annotation>
-                                  <xs:documentation>
-                                    Represents the reference of the target node.
-                                  </xs:documentation>
-                                </xs:annotation>
-                              </xs:attribute>
-                              <xs:attribute name="distance" type="xs:int" use="required">
-                                <xs:annotation>
-                                  <xs:documentation>
-                                    Represents the distance between the nodes.
-                                  </xs:documentation>
-                                </xs:annotation>
-                              </xs:attribute>
-                              <xs:attribute name="maxDistance" type="xs:int">
-                                <xs:annotation>
-                                  <xs:documentation>
-                                    Represents the maximum distance between the nodes.
-                                    If unset it defaults to distance value.
-                                  </xs:documentation>
-                                </xs:annotation>
-                              </xs:attribute>
-                              <xs:attribute name="adjacent_depth_limit" type="xs:int" use="required">
-                                <xs:annotation>
-                                  <xs:documentation>
-                                    When node is created, it checks all links, recursive at the depth indicated,
-                                    to add links to this node, if applicable based on conditions of
-                                    this node and target node.
-                                  </xs:documentation>
-                                </xs:annotation>
-                              </xs:attribute>
-                            </xs:complexType>
-                          </xs:element>
-                        </xs:sequence>
-                        <xs:attribute name="id" type="xs:string" use="required"/>
-                        <xs:attribute name="angle" type="xs:int" use="required">
-                          <xs:annotation>
-                            <xs:documentation>
-                              Represents the angle of the link group, used as minimum value when creating a link.
-                            </xs:documentation>
-                          </xs:annotation>
-                        </xs:attribute>
-                        <xs:attribute name="angleMax" type="xs:int">
-                          <xs:annotation>
-                            <xs:documentation>
-                              Represents the maximum angle of the link group, used when creating a link.
-                              If unset it defaults to angle value.
-                            </xs:documentation>
-                          </xs:annotation>
-                        </xs:attribute>
-                        <xs:attribute name="limit" type="xs:int">
-                          <xs:annotation>
-                            <xs:documentation>
-                              Represents the maximum number of links that can be created from this group.
-                            </xs:documentation>
-                          </xs:annotation>
-                        </xs:attribute>
+                        <xs:complexContent>
+                          <xs:extension base="type__link_group"/>
+                        </xs:complexContent>
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>
@@ -1131,79 +1140,9 @@
                                     </xs:documentation>
                                   </xs:annotation>
                                   <xs:complexType>
-                                    <xs:sequence>
-                                      <xs:element name="to_option" minOccurs="0" maxOccurs="unbounded">
-                                        <xs:annotation>
-                                          <xs:documentation>
-                                            Represents the options to go to the next node.
-                                          </xs:documentation>
-                                        </xs:annotation>
-                                        <xs:complexType>
-                                          <xs:all>
-                                            <xs:element name="distance_to_progress_multiplier" minOccurs="0"
-                                                        type="type__math_operations"/>
-                                            <xs:element name="person_progress_property" minOccurs="0"
-                                                        type="type__math_operations"/>
-                                          </xs:all>
-                                          <xs:attribute name="node_rule_ref" type="xs:string" use="required">
-                                            <xs:annotation>
-                                              <xs:documentation>
-                                                Represents the reference of the target node.
-                                              </xs:documentation>
-                                            </xs:annotation>
-                                          </xs:attribute>
-                                          <xs:attribute name="distance" type="xs:int" use="required">
-                                            <xs:annotation>
-                                              <xs:documentation>
-                                                Represents the distance between the nodes.
-                                              </xs:documentation>
-                                            </xs:annotation>
-                                          </xs:attribute>
-                                          <xs:attribute name="maxDistance" type="xs:int">
-                                            <xs:annotation>
-                                              <xs:documentation>
-                                                Represents the maximum distance between the nodes.
-                                                If unset it defaults to distance value.
-                                              </xs:documentation>
-                                            </xs:annotation>
-                                          </xs:attribute>
-                                          <xs:attribute name="adjacent_depth_limit" type="xs:int" use="required">
-                                            <xs:annotation>
-                                              <xs:documentation>
-                                                When node is created, it checks all links, recursive at the depth
-                                                indicated,
-                                                to add links to this node, if applicable based on conditions of
-                                                this node and target node.
-                                              </xs:documentation>
-                                            </xs:annotation>
-                                          </xs:attribute>
-                                        </xs:complexType>
-                                      </xs:element>
-                                    </xs:sequence>
-                                    <xs:attribute name="id" type="xs:string" use="required"/>
-                                    <xs:attribute name="angle" type="xs:int" use="required">
-                                      <xs:annotation>
-                                        <xs:documentation>
-                                          Represents the angle of the link group, used as minimum value when creating a
-                                          link.
-                                        </xs:documentation>
-                                      </xs:annotation>
-                                    </xs:attribute>
-                                    <xs:attribute name="angleMax" type="xs:int">
-                                      <xs:annotation>
-                                        <xs:documentation>
-                                          Represents the maximum angle of the link group, used when creating a link.
-                                          If unset it defaults to angle value.
-                                        </xs:documentation>
-                                      </xs:annotation>
-                                    </xs:attribute>
-                                    <xs:attribute name="limit" type="xs:int">
-                                      <xs:annotation>
-                                        <xs:documentation>
-                                          Represents the maximum number of links that can be created from this group.
-                                        </xs:documentation>
-                                      </xs:annotation>
-                                    </xs:attribute>
+                                    <xs:complexContent>
+                                      <xs:extension base="type__link_group"/>
+                                    </xs:complexContent>
                                   </xs:complexType>
                                 </xs:element>
                               </xs:sequence>

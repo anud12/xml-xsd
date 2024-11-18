@@ -72,10 +72,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
 
     @Builder.Default
-    private List<Consumer<Links>> onChangeList = new ArrayList<>();
+    private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
       return "links";
+    }
+
+    public void childChanged(Set<Object> set) {
+      set.add(this);
+      onChangeList.forEach(consumer -> consumer.accept(set));
+      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(set));
+    }
+
+    private void triggerOnChange() {
+      childChanged(new HashSet<>());
     }
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -92,7 +102,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<Links> onChange) {
+    public Subscription onChange(Consumer<Set<Object>> onChange) {
       logEnter();
       onChangeList.add(onChange);
       return logReturn(() -> onChangeList.remove(onChange));
@@ -141,20 +151,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.linkTo.add(value);
       value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public Links addAllLinkTo(List<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.LinkTo> value)
     {
       this.linkTo.addAll(value);
       value.forEach(e -> e.setParentNode(this));
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public Links removeLinkTo(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.LinkTo value)
     {
       this.linkTo.remove(value);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
 

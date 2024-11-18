@@ -171,7 +171,7 @@ const positionBasedOnLink = (jsonUtil: JsonUtil, linkGroupElement: LinkGroupQuer
       }
     }
     angle = Math.floor(angle) % 360;
-    if(angle < 0 ){
+    if (angle < 0) {
       angle += 360;
     }
 
@@ -460,7 +460,7 @@ const precomputeTrig: { [key: number]: { sin: number, cos: number } } = {
   177: {sin: 0.0523, cos: -0.9986},
   178: {sin: 0.0349, cos: -0.9994},
   179: {sin: 0.0175, cos: -0.9998},
-  180: {sin: 0 - 1, cos: .0000},
+  180: {sin: 0, cos: -1},
   181: {sin: -0.0175, cos: -0.9998},
   182: {sin: -0.0349, cos: -0.9994},
   183: {sin: -0.0523, cos: -0.9986},

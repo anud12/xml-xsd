@@ -74,10 +74,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
 
     @Builder.Default
-    private List<Consumer<ExistingPerson>> onChangeList = new ArrayList<>();
+    private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
       return "existing_person";
+    }
+
+    public void childChanged(Set<Object> set) {
+      set.add(this);
+      onChangeList.forEach(consumer -> consumer.accept(set));
+      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(set));
+    }
+
+    private void triggerOnChange() {
+      childChanged(new HashSet<>());
     }
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -94,7 +104,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<ExistingPerson> onChange) {
+    public Subscription onChange(Consumer<Set<Object>> onChange) {
       logEnter();
       onChangeList.add(onChange);
       return logReturn(() -> onChangeList.remove(onChange));
@@ -148,7 +158,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public ExistingPerson setMin(Integer value)
     {
       this.min = value;
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public Optional<Integer> getMax()
@@ -158,7 +168,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public ExistingPerson setMax(Optional<Integer> value)
     {
       this.max = value;
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection getPersonSelection()
@@ -173,7 +183,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.personSelection = value;
       value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
 

@@ -56,7 +56,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
     //Children elements
     private Optional<ro.anud.xml_xsd.implementation.model.Group_nameToken.NameToken._ref._ref> _ref = Optional.empty();
-    private ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken oneOf = new ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken();
+    private Optional<ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken> oneOf = Optional.empty();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -74,10 +74,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
 
     @Builder.Default
-    private List<Consumer<NameToken>> onChangeList = new ArrayList<>();
+    private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
       return "name_token";
+    }
+
+    public void childChanged(Set<Object> set) {
+      set.add(this);
+      onChangeList.forEach(consumer -> consumer.accept(set));
+      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(set));
+    }
+
+    private void triggerOnChange() {
+      childChanged(new HashSet<>());
     }
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -89,7 +99,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           this._ref = Optional.empty();
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken) {
-          throw new RuntimeException("trying to delete oneOf which is required");
+          this.oneOf = Optional.empty();
         }
     }
 
@@ -97,7 +107,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<NameToken> onChange) {
+    public Subscription onChange(Consumer<Set<Object>> onChange) {
       logEnter();
       onChangeList.add(onChange);
       return logReturn(() -> onChangeList.remove(onChange));
@@ -115,7 +125,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       //Deserialize children
       this._ref = ro.anud.xml_xsd.implementation.model.Group_nameToken.NameToken._ref._ref.fromRawNode(rawNode.getChildrenFirst("ref"), this);
       innerLogger.log("one_of");
-      this.oneOf = ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken.fromRawNode(rawNode.getChildrenFirst("one_of").get(), this);
+      this.oneOf = ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken.fromRawNode(rawNode.getChildrenFirst("one_of"), this);
       logReturnVoid();
     }
 
@@ -132,7 +142,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       innerLogger.log("ref");
       rawNode.setChildren("ref", _ref.stream().map(ro.anud.xml_xsd.implementation.model.Group_nameToken.NameToken._ref._ref::serializeIntoRawNode).toList());
       innerLogger.log("one_of");
-      rawNode.setChildren("one_of", Optional.ofNullable(oneOf).stream().map(ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken::serializeIntoRawNode).toList());
+      rawNode.setChildren("one_of", oneOf.stream().map(ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken::serializeIntoRawNode).toList());
       return rawNode;
     }
 
@@ -150,7 +160,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public NameToken setPrefix(String value)
     {
       this.prefix = value;
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public Optional<ro.anud.xml_xsd.implementation.model.Group_nameToken.NameToken._ref._ref> get_ref()
@@ -178,23 +188,36 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this._ref = Optional.ofNullable(value);
       value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
 
-    public ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken getOneOf()
+    public Optional<ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken> getOneOf()
     {
       return this.oneOf;
     }
+    public ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken getOneOfOrDefault()
+    {
+      return this.oneOf.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken();
+        instance.setParentNode(this);
+        this.oneOf = Optional.of(instance);
+        return this.oneOf.get();
+      });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken> streamOneOfOrDefault()
+    {
+      return Stream.of(getOneOfOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken> streamOneOf()
     {
-      return Optional.ofNullable(oneOf).stream();
+      return oneOf.stream();
     }
     public NameToken setOneOf(ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken value)
     {
-      this.oneOf = value;
+      this.oneOf = Optional.ofNullable(value);
       value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
 
@@ -240,7 +263,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
             "metaType": "reference",
             "value": "group__name_token",
             "isSingle": true,
-            "isNullable": false
+            "isNullable": true
           }
         }
       },

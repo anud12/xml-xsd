@@ -76,13 +76,6 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
     {
       return this.link_group;
     }
-    public List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.link_group> GetOrInsertDefault_link_group()
-    {
-      if(this.link_group == null) {
-        this.link_group = new List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.link_group>();
-      }
-      return this.link_group;
-    }
     public void Set_link_group(List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.link_group>? value)
     {
       this.link_group = value;

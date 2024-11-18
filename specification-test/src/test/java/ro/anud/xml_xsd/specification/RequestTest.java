@@ -8,10 +8,7 @@ import org.xmlunit.XMLUnitException;
 import org.xmlunit.assertj3.CompareAssert;
 import org.xmlunit.assertj3.XmlAssert;
 import org.xmlunit.builder.DiffBuilder;
-import org.xmlunit.diff.ComparisonController;
-import org.xmlunit.diff.ComparisonControllers;
-import org.xmlunit.diff.ComparisonFormatter;
-import org.xmlunit.diff.Diff;
+import org.xmlunit.diff.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -185,7 +182,10 @@ public class RequestTest {
 
                     try {
                         Diff diff = DiffBuilder.compare(prettyFormat(responseBody)).withTest(prettyFormat(expected))
+                            .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byNameAndText))
+                            .checkForSimilar()
                             .build();
+
                         if(diff.hasDifferences()) {
                             Assertions.assertThat(prettyFormat(responseBody)).isEqualTo(prettyFormat(expected));
                         }

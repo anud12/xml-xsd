@@ -32,7 +32,7 @@
           <links>
             <link_to node_id_ref="0.0" total_progress="99"/>
             <link_to node_id_ref="0.1" total_progress="100"/>
-            <link_to node_id_ref="0.2" total_progress="99"/>
+            <link_to node_id_ref="0.2" total_progress="98"/>
           </links>
         </node>
         <node node_rule_ref="node" id="0.0">
@@ -48,12 +48,13 @@
           </links>
         </node>
         <node node_rule_ref="node" id="0.2">
-          <position x="-50" y="86"/>
+          <position x="-49" y="86"/>
           <links>
-            <link_to node_id_ref="node_id" total_progress="99"/>
+            <link_to node_id_ref="node_id" total_progress="98"/>
           </links>
         </node>
       </location_graph>
     </location>
   </data>
+  <actions/>
 </world_step>

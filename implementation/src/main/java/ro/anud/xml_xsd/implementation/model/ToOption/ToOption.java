@@ -1,4 +1,4 @@
-package ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LinkGroupRuleList.LinkGroupRule.ToOption;
+package ro.anud.xml_xsd.implementation.model.ToOption;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.w3c.dom.Document;
@@ -77,10 +77,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
 
     @Builder.Default
-    private List<Consumer<ToOption>> onChangeList = new ArrayList<>();
+    private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
       return "to_option";
+    }
+
+    public void childChanged(Set<Object> set) {
+      set.add(this);
+      onChangeList.forEach(consumer -> consumer.accept(set));
+      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(set));
+    }
+
+    private void triggerOnChange() {
+      childChanged(new HashSet<>());
     }
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -100,7 +110,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<ToOption> onChange) {
+    public Subscription onChange(Consumer<Set<Object>> onChange) {
       logEnter();
       onChangeList.add(onChange);
       return logReturn(() -> onChangeList.remove(onChange));
@@ -166,7 +176,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public ToOption setNodeRuleRef(String value)
     {
       this.nodeRuleRef = value;
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public Integer getDistance()
@@ -176,7 +186,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public ToOption setDistance(Integer value)
     {
       this.distance = value;
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public Optional<Integer> getMaxDistance()
@@ -186,7 +196,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public ToOption setMaxDistance(Optional<Integer> value)
     {
       this.maxDistance = value;
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public Integer getAdjacentDepthLimit()
@@ -196,7 +206,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public ToOption setAdjacentDepthLimit(Integer value)
     {
       this.adjacentDepthLimit = value;
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public Optional<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> getDistanceToProgressMultiplier()
@@ -224,7 +234,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.distanceToProgressMultiplier = Optional.ofNullable(value);
       value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
 
@@ -253,7 +263,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.personProgressProperty = Optional.ofNullable(value);
       value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
 

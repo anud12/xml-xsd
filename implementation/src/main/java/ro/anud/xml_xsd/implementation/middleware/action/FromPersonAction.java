@@ -1,4 +1,4 @@
-package ro.anud.xml_xsd.implementation.middleware;
+package ro.anud.xml_xsd.implementation.middleware.action;
 
 import org.springframework.stereotype.Service;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions;
@@ -8,16 +8,14 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromP
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.OnPerson;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.Selection.FromPersonSameLocationGraphNode.FromPersonSameLocationGraphNode;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.Selection.Selection;
-import ro.anud.xml_xsd.implementation.service.Middleware;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 
 @Service
-public class FromPersonAction implements Middleware {
+public class FromPersonAction {
 
-    @Override
-    public void apply(final WorldStepInstance worldStepInstance) {
+    public static void apply(final WorldStepInstance worldStepInstance) {
         var logger = logEnter();
         var ruleRepository = worldStepInstance.ruleRepository;
         var personRepository = worldStepInstance.person.repository;
@@ -110,7 +108,7 @@ public class FromPersonAction implements Middleware {
 
     }
 
-    private void onPersonHandle(
+    private static void onPersonHandle(
         final WorldStepInstance worldStepInstance,
         final OnPerson onPerson,
         final Person selfPerson,
@@ -130,7 +128,7 @@ public class FromPersonAction implements Middleware {
         logger.logReturnVoid();
     }
 
-    private boolean onPersonApplicable(
+    private static boolean onPersonApplicable(
         final WorldStepInstance worldStepInstance,
         final Person originPerson,
         final Person targetPerson,
@@ -170,7 +168,7 @@ public class FromPersonAction implements Middleware {
         return logger.logReturn(true);
     }
 
-    private boolean isFromPersonSameLocationGraphNode(
+    private static boolean isFromPersonSameLocationGraphNode(
         final WorldStepInstance worldStepInstance,
         final Person selfPerson,
         final Person targetPerson,

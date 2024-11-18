@@ -122,7 +122,12 @@ public class LocalLogger {
             return Stream.concat(
                 parentArgs.stream(),
                 Stream.concat(delimiter, Arrays.stream(args))
-            ).map(Object::toString);
+            ).map(o -> {
+                if(Objects.isNull(o)) {
+                    return "null";
+                }
+                return o.toString();
+            });
         }
     }
 

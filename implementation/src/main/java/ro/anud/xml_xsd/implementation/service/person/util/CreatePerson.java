@@ -141,6 +141,7 @@ public class CreatePerson {
 
         var people = worldStepInstance.getWorldStep().getData().getPeopleOrDefault();
         logger.log("adding person with id", person.getId());
+        logger.logTodo("remove people.addPerson(person)");
         people.addPerson(person);
         return person;
     }

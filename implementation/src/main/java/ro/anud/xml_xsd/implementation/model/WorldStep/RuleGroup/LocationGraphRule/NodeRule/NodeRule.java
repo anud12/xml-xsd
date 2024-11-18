@@ -76,10 +76,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
 
     @Builder.Default
-    private List<Consumer<NodeRule>> onChangeList = new ArrayList<>();
+    private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
       return "node_rule";
+    }
+
+    public void childChanged(Set<Object> set) {
+      set.add(this);
+      onChangeList.forEach(consumer -> consumer.accept(set));
+      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(set));
+    }
+
+    private void triggerOnChange() {
+      childChanged(new HashSet<>());
     }
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -105,7 +115,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<NodeRule> onChange) {
+    public Subscription onChange(Consumer<Set<Object>> onChange) {
       logEnter();
       onChangeList.add(onChange);
       return logReturn(() -> onChangeList.remove(onChange));
@@ -163,7 +173,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public NodeRule setId(String value)
     {
       this.id = value;
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.Name.Name> getName()
@@ -191,7 +201,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.name = Optional.ofNullable(value);
       value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
 
@@ -220,7 +230,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.classifications = Optional.ofNullable(value);
       value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
 
@@ -249,7 +259,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.linkGroupList = Optional.ofNullable(value);
       value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
 
@@ -278,7 +288,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.existingPerson = Optional.ofNullable(value);
       value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
 
@@ -367,79 +377,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                 }
               },
               "link_group": {
-                "metaType": "object",
-                "attributes": {
-                  "metaType": "object",
-                  "value": {
-                    "id": {
-                      "metaType": "primitive",
-                      "value": "xs:string",
-                      "isNullable": false
-                    },
-                    "angle": {
-                      "metaType": "primitive",
-                      "value": "xs:int",
-                      "isNullable": false
-                    },
-                    "angleMax": {
-                      "metaType": "primitive",
-                      "value": "xs:int",
-                      "isNullable": true
-                    },
-                    "limit": {
-                      "metaType": "primitive",
-                      "value": "xs:int",
-                      "isNullable": true
-                    }
-                  }
-                },
-                "isSingle": false,
-                "value": {
-                  "to_option": {
+                "metaType": "composition",
+                "value": [
+                  {
                     "metaType": "object",
-                    "attributes": {
-                      "metaType": "object",
-                      "value": {
-                        "node_rule_ref": {
-                          "metaType": "primitive",
-                          "value": "xs:string",
-                          "isNullable": false
-                        },
-                        "distance": {
-                          "metaType": "primitive",
-                          "value": "xs:int",
-                          "isNullable": false
-                        },
-                        "maxDistance": {
-                          "metaType": "primitive",
-                          "value": "xs:int",
-                          "isNullable": true
-                        },
-                        "adjacent_depth_limit": {
-                          "metaType": "primitive",
-                          "value": "xs:int",
-                          "isNullable": false
-                        }
-                      }
-                    },
-                    "isSingle": false,
-                    "value": {
-                      "distance_to_progress_multiplier": {
-                        "metaType": "reference",
-                        "value": "type__math_operations",
-                        "isSingle": true,
-                        "isNullable": true
-                      },
-                      "person_progress_property": {
-                        "metaType": "reference",
-                        "value": "type__math_operations",
-                        "isSingle": true,
-                        "isNullable": true
-                      }
-                    },
-                    "isNullable": true
+                    "value": {},
+                    "isSingle": true,
+                    "isNullable": false
+                  },
+                  {
+                    "metaType": "primitive",
+                    "value": "type__link_group"
                   }
-                },
+                ],
+                "isSingle": false,
                 "isNullable": true
               }
             },

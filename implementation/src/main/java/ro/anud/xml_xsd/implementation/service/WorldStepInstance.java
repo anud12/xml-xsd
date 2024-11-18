@@ -33,6 +33,8 @@ public class WorldStepInstance {
     public final LocationGraphInstance locationGraph;
     private WorldStepInstance outInstance = this;
 
+    private int counter = 0;
+
     public WorldStepInstance(WorldStep worldStep) {
         this.worldStep = worldStep;
         ruleRepository = new RuleRepository(this);
@@ -58,6 +60,12 @@ public class WorldStepInstance {
     }
 
     public <T extends IType_mathOperations<?>> Optional<Integer> computeOperation(
+        T typeMathOperations) {
+        var logger = logEnter();
+        return logger.logReturn(ComputeOperation.computeOperation(this, typeMathOperations));
+    }
+
+    public <T extends IType_mathOperations<?>> Optional<Integer> computeOperation(
         Optional<T> typeMathOperations,
         Person person) {
         var logger = logEnter();
@@ -73,6 +81,10 @@ public class WorldStepInstance {
             .getEntry();
         if (randomizationTable.isEmpty()) {
             logger.log("empty randomizationTable");
+            return this;
+        }
+        if(randomizationTable.size() == 1) {
+            logger.log("ignoring offset for single entry");
             return this;
         }
         logger.log("applying offset");
@@ -92,12 +104,11 @@ public class WorldStepInstance {
             return logger.logReturn(0, "empty randomization_table");
         }
         var max = entryList.stream().max(Comparator.comparingInt(o -> o)).get();
-        var counter = worldStep.getWorldMetadata().getCounter();
 
-        var index = counter.getValue() % entryList.size();
+        var index = counter % entryList.size();
         var value = entryList.get(index);
         var result = value / (float) (max);
-        counter.setValue(counter.getValue() + 1);
+        counter +=1;
         return logReturn(result, "max", max, "value", value, "index", index);
     }
 
@@ -128,6 +139,7 @@ public class WorldStepInstance {
     public int counterNext() {
         var logger = logEnter();
         var counter = worldStep.getWorldMetadata().getCounter().getValue();
+        logger.log("counter", counter);
         worldStep.getWorldMetadata().getCounter().setValue(counter + 1);
         return logger.logReturn(counter);
     }

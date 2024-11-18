@@ -36,15 +36,12 @@
   <data>
     <people>
       <person id="0.1">
-        <properties/>
         <classifications/>
       </person>
       <person id="0.2">
-        <properties/>
         <classifications/>
       </person>
       <person id="0.3">
-        <properties/>
         <classifications/>
       </person>
     </people>
@@ -71,4 +68,5 @@
       </location_graph>
     </location>
   </data>
+  <actions/>
 </world_step>

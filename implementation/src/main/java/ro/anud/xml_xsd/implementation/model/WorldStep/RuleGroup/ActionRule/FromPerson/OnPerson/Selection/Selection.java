@@ -83,10 +83,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
 
     @Builder.Default
-    private List<Consumer<Selection>> onChangeList = new ArrayList<>();
+    private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
       return "selection";
+    }
+
+    public void childChanged(Set<Object> set) {
+      set.add(this);
+      onChangeList.forEach(consumer -> consumer.accept(set));
+      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(set));
+    }
+
+    private void triggerOnChange() {
+      childChanged(new HashSet<>());
     }
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -103,7 +113,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<Selection> onChange) {
+    public Subscription onChange(Consumer<Set<Object>> onChange) {
       logEnter();
       onChangeList.add(onChange);
       return logReturn(() -> onChangeList.remove(onChange));
@@ -196,7 +206,7 @@ rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.mod
     {
       this.fromPersonSameLocationGraphNode = Optional.ofNullable(value);
       value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
 
@@ -225,7 +235,7 @@ rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.mod
     {
       this.radius = Optional.ofNullable(value);
       value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
 
@@ -254,7 +264,7 @@ rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.mod
     {
       this.min = Optional.ofNullable(value);
       value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
 
@@ -283,7 +293,7 @@ rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.mod
     {
       this.max = Optional.ofNullable(value);
       value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
 
@@ -299,20 +309,20 @@ rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.mod
     {
       this.property.add(value);
       value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public Selection addAllProperty(List<ro.anud.xml_xsd.implementation.model.Type_personSelection.Property.Property> value)
     {
       this.property.addAll(value);
       value.forEach(e -> e.setParentNode(this));
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public Selection removeProperty(ro.anud.xml_xsd.implementation.model.Type_personSelection.Property.Property value)
     {
       this.property.remove(value);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public List<ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification> getClassification()
@@ -327,20 +337,20 @@ rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.mod
     {
       this.classification.add(value);
       value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public Selection addAllClassification(List<ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification> value)
     {
       this.classification.addAll(value);
       value.forEach(e -> e.setParentNode(this));
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public Selection removeClassification(ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification value)
     {
       this.classification.remove(value);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public Optional<ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race> getRace()
@@ -368,7 +378,7 @@ rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.mod
     {
       this.race = Optional.ofNullable(value);
       value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
 

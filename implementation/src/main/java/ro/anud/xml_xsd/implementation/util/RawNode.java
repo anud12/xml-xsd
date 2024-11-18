@@ -1,6 +1,7 @@
 package ro.anud.xml_xsd.implementation.util;
 
 import lombok.*;
+import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -69,6 +70,9 @@ public final class RawNode {
     public Optional<Integer> getAttributeInt(String key) {
         logEnter("key:", key);
         var value = this.attributeMap.get(key);
+        if (Strings.isBlank(value)) {
+            return logReturn(Optional.empty());
+        }
         return logReturn(Optional.of(Integer.parseInt(value)));
     }
 
@@ -112,10 +116,17 @@ public final class RawNode {
     public List<RawNode> getChildrenList(String key) {
         logEnter("key:", key);
         var value = this.childrenMap.get(key);
-        if(value == null) {
+        if (value == null) {
             return new ArrayList<>();
         }
         return logReturn(this.childrenMap.get(key));
+    }
+
+    public boolean hasChildren() {
+        return !this.childrenMap.entrySet().stream()
+            .filter(stringListEntry -> !stringListEntry.getKey().equals("#text"))
+            .map(Map.Entry::getValue)
+            .allMatch(List::isEmpty);
     }
 
     public void setChildren(String key, Optional<RawNode> value) {

@@ -10,33 +10,42 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
 public class PersonRepository {
 
     private final HashMap<String, Person> personById = new HashMap<>();
 
     public PersonRepository(WorldStepInstance worldStepInstance) {
-        logEnter();
-        Data data = worldStepInstance.getWorldStep()
-            .getData();
-        loadData(data);
-
+        var logger = logEnter();
+        init(worldStepInstance);
 
     }
 
-    private void loadData(Data data) {
-        logEnter();
-        logEnter("Extracting personById");
-        data.streamPeople()
+    private void init(WorldStepInstance worldStepInstance) {
+        var logger = logEnter();
+        Data data = worldStepInstance.getWorldStep()
+            .getData();
+        loadData(data.streamPeople());
+        worldStepInstance.getWorldStep().onChange(classes -> {
+            classes.stream()
+                .filter(o -> o.getClass().equals(People.class))
+                .findAny()
+                .ifPresent(o -> {
+                    if (o instanceof People people) {
+                        logger.log("worldStep onChange triggered is instance of", People.class);
+                        loadData(Stream.of(people));
+                    }
+                });
+        });
+    }
+
+    private void loadData(Stream<People> people) {
+        logEnter("indexing by personId");
+        personById.clear();
+        people
             .flatMap(People::streamPerson)
             .forEach(person -> {
                 personById.put(person.getId(), person);
-                person.onChange(person1 -> {
-                    if (person1 == null) {
-                        personById.remove(person.getId());
-                    }
-                }).unsubscribe();
             });
     }
 
@@ -45,7 +54,7 @@ public class PersonRepository {
     }
 
     public Optional<Person> personById(String id) {
-        logEnter("id:", id);
-        return logReturn(Optional.ofNullable(personById.get(id)));
+        var logger = logEnter("id:", id);
+        return logger.logReturn(Optional.ofNullable(personById.get(id)));
     }
 }

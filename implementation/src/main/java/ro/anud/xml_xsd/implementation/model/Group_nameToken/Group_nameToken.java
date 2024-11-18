@@ -72,10 +72,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
 
     @Builder.Default
-    private List<Consumer<Group_nameToken>> onChangeList = new ArrayList<>();
+    private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
       return "group__name_token";
+    }
+
+    public void childChanged(Set<Object> set) {
+      set.add(this);
+      onChangeList.forEach(consumer -> consumer.accept(set));
+      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(set));
+    }
+
+    private void triggerOnChange() {
+      childChanged(new HashSet<>());
     }
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -92,7 +102,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<Group_nameToken> onChange) {
+    public Subscription onChange(Consumer<Set<Object>> onChange) {
       logEnter();
       onChangeList.add(onChange);
       return logReturn(() -> onChangeList.remove(onChange));
@@ -141,20 +151,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.nameToken.add(value);
       value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public Group_nameToken addAllNameToken(List<ro.anud.xml_xsd.implementation.model.Group_nameToken.NameToken.NameToken> value)
     {
       this.nameToken.addAll(value);
       value.forEach(e -> e.setParentNode(this));
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public Group_nameToken removeNameToken(ro.anud.xml_xsd.implementation.model.Group_nameToken.NameToken.NameToken value)
     {
       this.nameToken.remove(value);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
 
@@ -199,13 +209,13 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
               {
                 "metaType": "object",
                 "isSingle": true,
-                "isNullable": false,
+                "isNullable": true,
                 "value": {
                   "one_of": {
                     "metaType": "reference",
                     "value": "group__name_token",
                     "isSingle": true,
-                    "isNullable": false
+                    "isNullable": true
                   }
                 }
               }
@@ -263,13 +273,13 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                 {
                   "metaType": "object",
                   "isSingle": true,
-                  "isNullable": false,
+                  "isNullable": true,
                   "value": {
                     "one_of": {
                       "metaType": "reference",
                       "value": "group__name_token",
                       "isSingle": true,
-                      "isNullable": false
+                      "isNullable": true
                     }
                   }
                 }

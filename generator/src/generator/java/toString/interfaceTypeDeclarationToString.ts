@@ -31,7 +31,7 @@ export function interfaceTypeDeclarationToString(directoryMetadata: DirectoryMet
       if (type !== primitives.int) {
 
         const typeString = value.isNullable
-          ? `${primitives.string}?`
+          ? `Optional<${primitives.string}>`
           : primitives.string;
         return template()`
                     public ${typeString} get${normalizeNameClass(key)}();
@@ -39,7 +39,7 @@ export function interfaceTypeDeclarationToString(directoryMetadata: DirectoryMet
       }
 
       const typeString = value.isNullable
-        ? `${type}?`
+        ? `Optional<${type}>`
         : type;
       return template()`
                   public ${typeString} get${normalizeNameClass(key)}();

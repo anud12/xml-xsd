@@ -79,6 +79,12 @@ export type type__link_to__selection = JsonQueryType<{}, {
   "origin__node_graph__selection": type__node_graph__selection & JsonQueryType<{}, {}>;
   "destination__node_graph__selection": type__node_graph__selection & JsonQueryType<{}, {}>;
 }>
+export type type__link_group = JsonQueryType<{"id": string;  "angle": string;  "angleMax": string;  "limit": string;}, {
+  "to_option": JsonQueryType<{"node_rule_ref": string;  "distance": string;  "maxDistance": string;  "adjacent_depth_limit": string;}, {
+    "distance_to_progress_multiplier": type__math_operations & JsonQueryType<{}, {}>;
+    "person_progress_property": type__math_operations & JsonQueryType<{}, {}>;
+  }> & JsonQueryType<{}, {}>;
+}>
 export type world_step = JsonQueryType<{}, {
   "world_metadata": JsonQueryType<{}, {
     "previous_world_step": JsonQueryType<{"value": string;}> & JsonQueryType<{}, {}>;
@@ -169,12 +175,8 @@ export type world_step = JsonQueryType<{}, {
       }> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
     "link_group_rule_list": JsonQueryType<{}, {
-      "link_group_rule": JsonQueryType<{"id": string;  "angle": string;  "angleMax": string;  "limit": string;}, {
-        "to_option": JsonQueryType<{"node_rule_ref": string;  "distance": string;  "maxDistance": string;  "adjacent_depth_limit": string;}, {
-          "distance_to_progress_multiplier": type__math_operations & JsonQueryType<{}, {}>;
-          "person_progress_property": type__math_operations & JsonQueryType<{}, {}>;
-        }> & JsonQueryType<{}, {}>;
-      }> & JsonQueryType<{}, {}>;
+      "link_group_rule": JsonQueryType<{}>
+        & type__link_group & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
     "location_graph_rule": JsonQueryType<{"id": string;}, {
       "setup": JsonQueryType<{}, {
@@ -190,12 +192,8 @@ export type world_step = JsonQueryType<{}, {
         }> & JsonQueryType<{}, {}>;
         "link_group_list": JsonQueryType<{}, {
           "reference": JsonQueryType<{"link_group_rule_ref": string;}> & JsonQueryType<{}, {}>;
-          "link_group": JsonQueryType<{"id": string;  "angle": string;  "angleMax": string;  "limit": string;}, {
-            "to_option": JsonQueryType<{"node_rule_ref": string;  "distance": string;  "maxDistance": string;  "adjacent_depth_limit": string;}, {
-              "distance_to_progress_multiplier": type__math_operations & JsonQueryType<{}, {}>;
-              "person_progress_property": type__math_operations & JsonQueryType<{}, {}>;
-            }> & JsonQueryType<{}, {}>;
-          }> & JsonQueryType<{}, {}>;
+          "link_group": JsonQueryType<{}>
+            & type__link_group & JsonQueryType<{}, {}>;
         }> & JsonQueryType<{}, {}>;
         "existing_person": JsonQueryType<{"min": string;  "max": string;}, {
           "person_selection": type__person_selection & JsonQueryType<{}, {}>;
