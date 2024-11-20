@@ -93,6 +93,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
       this.parentNode = Optional.of(linkedNode);
+      triggerOnChange();
     }
 
     public void removeChild(Object object) {
@@ -557,19 +558,31 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                 "isSingle": true,
                 "value": {
                   "entry": {
-                    "metaType": "reference",
-                    "value": "group__name_token",
-                    "isSingle": false,
-                    "attributes": {
-                      "metaType": "object",
-                      "value": {
-                        "id": {
-                          "metaType": "unknown",
+                    "metaType": "composition",
+                    "value": [
+                      {
+                        "metaType": "object",
+                        "value": {},
+                        "isSingle": true,
+                        "isNullable": false,
+                        "attributes": {
+                          "metaType": "object",
+                          "value": {
+                            "id": {
+                              "metaType": "primitive",
+                              "value": "xs:string",
+                              "isNullable": false
+                            }
+                          },
                           "isNullable": false
                         }
                       },
-                      "isNullable": false
-                    },
+                      {
+                        "metaType": "primitive",
+                        "value": "type__name_token"
+                      }
+                    ],
+                    "isSingle": false,
                     "isNullable": true
                   }
                 },
@@ -2321,19 +2334,31 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                   "isSingle": true,
                   "value": {
                     "entry": {
-                      "metaType": "reference",
-                      "value": "group__name_token",
-                      "isSingle": false,
-                      "attributes": {
-                        "metaType": "object",
-                        "value": {
-                          "id": {
-                            "metaType": "unknown",
+                      "metaType": "composition",
+                      "value": [
+                        {
+                          "metaType": "object",
+                          "value": {},
+                          "isSingle": true,
+                          "isNullable": false,
+                          "attributes": {
+                            "metaType": "object",
+                            "value": {
+                              "id": {
+                                "metaType": "primitive",
+                                "value": "xs:string",
+                                "isNullable": false
+                              }
+                            },
                             "isNullable": false
                           }
                         },
-                        "isNullable": false
-                      },
+                        {
+                          "metaType": "primitive",
+                          "value": "type__name_token"
+                        }
+                      ],
+                      "isSingle": false,
                       "isNullable": true
                     }
                   },

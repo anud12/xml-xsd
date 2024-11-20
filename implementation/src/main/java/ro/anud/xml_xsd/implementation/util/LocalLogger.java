@@ -13,7 +13,7 @@ public class LocalLogger {
     public static class LogClass {
         static String PARENT_DELIMITER = "|>";
         static String IDENT = "│ ";
-        static String ARG_SEPARATOR = "\t";
+        static String ARG_SEPARATOR = "  ";
         private List<Object> parentArgs = new ArrayList<>();
 
         public LogClass() {}

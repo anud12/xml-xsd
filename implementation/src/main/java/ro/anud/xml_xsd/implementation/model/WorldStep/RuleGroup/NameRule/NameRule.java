@@ -54,7 +54,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     //Attributes
 
     //Children elements
-    private List<ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken> entry = new ArrayList<>();
+    private List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.Entry.Entry> entry = new ArrayList<>();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -90,10 +90,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
     public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
       this.parentNode = Optional.of(linkedNode);
+      triggerOnChange();
     }
 
     public void removeChild(Object object) {
-        if(object instanceof ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.Entry.Entry) {
           this.entry.remove(object);
         }
     }
@@ -116,8 +117,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       //Deserialize attributes
       innerLogger = logger.log("children");
       //Deserialize children
-      innerLogger.log("entry");
-      this.entry = ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken.fromRawNode(rawNode.getChildrenList("entry"), this);
+      this.entry = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.Entry.Entry.fromRawNode(rawNode.getChildrenList("entry"), this);
       logReturnVoid();
     }
 
@@ -130,7 +130,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       innerLogger = logger.log("children");
       //Serialize children
       innerLogger.log("entry");
-      rawNode.setChildren("entry", entry.stream().map(ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken::serializeIntoRawNode).toList());
+      rawNode.setChildren("entry", entry.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.Entry.Entry::serializeIntoRawNode).toList());
       return rawNode;
     }
 
@@ -140,29 +140,29 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         var updatedRawNode = serializeIntoRawNode();
         updatedRawNode.populateNode(document, element);
     }
-    public List<ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken> getEntry()
+    public List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.Entry.Entry> getEntry()
     {
       return this.entry;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken> streamEntry()
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.Entry.Entry> streamEntry()
     {
       return entry.stream();
     }
-    public NameRule addEntry(ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken value)
+    public NameRule addEntry(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.Entry.Entry value)
     {
       this.entry.add(value);
       value.setParentNode(this);
       triggerOnChange();
       return this;
     }
-    public NameRule addAllEntry(List<ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken> value)
+    public NameRule addAllEntry(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.Entry.Entry> value)
     {
       this.entry.addAll(value);
       value.forEach(e -> e.setParentNode(this));
       triggerOnChange();
       return this;
     }
-    public NameRule removeEntry(ro.anud.xml_xsd.implementation.model.Group_nameToken.Group_nameToken value)
+    public NameRule removeEntry(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.Entry.Entry value)
     {
       this.entry.remove(value);
       triggerOnChange();
@@ -181,19 +181,31 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         "isSingle": true,
         "value": {
           "entry": {
-            "metaType": "reference",
-            "value": "group__name_token",
-            "isSingle": false,
-            "attributes": {
-              "metaType": "object",
-              "value": {
-                "id": {
-                  "metaType": "unknown",
+            "metaType": "composition",
+            "value": [
+              {
+                "metaType": "object",
+                "value": {},
+                "isSingle": true,
+                "isNullable": false,
+                "attributes": {
+                  "metaType": "object",
+                  "value": {
+                    "id": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
+                    }
+                  },
                   "isNullable": false
                 }
               },
-              "isNullable": false
-            },
+              {
+                "metaType": "primitive",
+                "value": "type__name_token"
+              }
+            ],
+            "isSingle": false,
             "isNullable": true
           }
         },

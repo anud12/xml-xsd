@@ -51,6 +51,15 @@ export type type__math_operations_and = JsonQueryType<{}, {
 }>
 export type type__math_operations = JsonQueryType<{"initial": string;}>
   & type__math_operations_and
+export type type__name_token = JsonQueryType<{}, {
+  "name_token": JsonQueryType<{"prefix": string;}, {}> & JsonQueryType<{}, {
+      "ref": JsonQueryType<{"name_rule_ref": string;}> & JsonQueryType<{}, {}>;
+    }>
+    & JsonQueryType<{}, {
+      "one_of": JsonQueryType<{}>
+        & type__name_token | any & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
+}>
 export type type__action = JsonQueryType<{}, {
   "from": JsonQueryType<{}, {
     "person": JsonQueryType<{}, {
@@ -114,7 +123,8 @@ export type world_step = JsonQueryType<{}, {
       }> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
     "name_rule": JsonQueryType<{}, {
-      "entry": JsonQueryType<{"id": any;}, {}> & group__name_token & JsonQueryType<{}, {}>;
+      "entry": JsonQueryType<{"id": string;}>
+        & type__name_token & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
     "race_rule": JsonQueryType<{}, {
       "entry": JsonQueryType<{"id": string;}, {

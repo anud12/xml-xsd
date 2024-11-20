@@ -1,7 +1,6 @@
 package ro.anud.xml_xsd.implementation.service;
 
 import lombok.Setter;
-import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.RandomizationTable.Entry.Entry;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.RandomizationTable.RandomizationTable;
@@ -9,6 +8,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.model.interfaces.IType_mathOperations.IType_mathOperations;
 import ro.anud.xml_xsd.implementation.repository.RuleRepository;
 import ro.anud.xml_xsd.implementation.service.location_graph.LocationGraphInstance;
+import ro.anud.xml_xsd.implementation.service.name.NameInstance;
 import ro.anud.xml_xsd.implementation.service.person.PersonInstance;
 import ro.anud.xml_xsd.implementation.service.util.ComputeOperation;
 
@@ -24,14 +24,13 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 public class WorldStepInstance {
 
     public InstanceTypeEnum instance;
-    public NameInstance name;
+    private WorldStepInstance outInstance = this;
     private WorldStep worldStep;
-
     public final RuleRepository ruleRepository;
     public final PersonInstance person;
     public final PropertyInstance property;
     public final LocationGraphInstance locationGraph;
-    private WorldStepInstance outInstance = this;
+    public NameInstance name;
 
     private int counter = 0;
 

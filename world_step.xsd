@@ -346,6 +346,62 @@
     </xs:sequence>
   </xs:group>
 
+  <xs:complexType name="type__name_token">
+    <xs:annotation>
+      <xs:documentation>
+        Represents rule for name generation.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="name_token" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            Represents a token used in name generation.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:choice>
+            <xs:element name="ref" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  Represents a reference to another 'name_rule'.
+                </xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="name_rule_ref" type="xs:string" use="required">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Represents the ID of the referenced 'name_rule'.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="one_of" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  Represents a single choice between multiple 'name_token' elements.
+                </xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:complexContent>
+                  <xs:extension base="type__name_token"/>
+                </xs:complexContent>
+              </xs:complexType>
+            </xs:element>
+          </xs:choice>
+          <xs:attribute name="prefix" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation>
+                Represents a string that is added to the beginning of the generated name.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
   <!--#######-->
   <!-- Actions -->
   <!--#######-->
@@ -764,20 +820,17 @@
                         </xs:documentation>
                       </xs:annotation>
                       <xs:complexType>
-                        <xs:group ref="group__name_token">
-                          <xs:annotation>
-                            <xs:documentation>
-                              The 'group__name_token' is a reference to a group of 'name_token' elements.
-                            </xs:documentation>
-                          </xs:annotation>
-                        </xs:group>
-                        <xs:attribute name="id" use="required">
-                          <xs:annotation>
-                            <xs:documentation>
-                              The 'id' attribute is a required attribute that uniquely identifies each 'entry'.
-                            </xs:documentation>
-                          </xs:annotation>
-                        </xs:attribute>
+                        <xs:complexContent>
+                          <xs:extension base="type__name_token">
+                            <xs:attribute name="id" use="required" type="xs:string">
+                              <xs:annotation>
+                                <xs:documentation>
+                                  The 'id' attribute is a required attribute that uniquely identifies each 'entry'.
+                                </xs:documentation>
+                              </xs:annotation>
+                            </xs:attribute>
+                          </xs:extension>
+                        </xs:complexContent>
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>

@@ -479,6 +479,83 @@
     }
   },
   {
+    "name": "type__name_token",
+    "type": "complex",
+    "isSingle": false,
+    "value": {
+      "metaType": "object",
+      "isSingle": false,
+      "value": {
+        "name_token": {
+          "metaType": "union",
+          "value": [
+            {
+              "metaType": "object",
+              "isSingle": true,
+              "isNullable": true,
+              "value": {
+                "ref": {
+                  "metaType": "object",
+                  "value": {},
+                  "isSingle": true,
+                  "isNullable": true,
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "name_rule_ref": {
+                        "metaType": "primitive",
+                        "value": "xs:string",
+                        "isNullable": false
+                      }
+                    },
+                    "isNullable": false
+                  }
+                }
+              }
+            },
+            {
+              "metaType": "object",
+              "isSingle": true,
+              "isNullable": true,
+              "value": {
+                "one_of": {
+                  "metaType": "composition",
+                  "value": [
+                    {
+                      "metaType": "object",
+                      "value": {},
+                      "isSingle": true,
+                      "isNullable": false
+                    },
+                    {
+                      "metaType": "primitive",
+                      "value": "type__name_token"
+                    }
+                  ],
+                  "isSingle": true,
+                  "isNullable": true
+                }
+              }
+            }
+          ],
+          "isSingle": false,
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "prefix": {
+                "metaType": "primitive",
+                "value": "xs:string",
+                "isNullable": false
+              }
+            },
+            "isNullable": false
+          },
+          "isNullable": false
+        }
+      }
+    }
+  },
+  {
     "name": "type__action",
     "type": "complex",
     "isSingle": true,
@@ -1038,19 +1115,31 @@
               "isSingle": true,
               "value": {
                 "entry": {
-                  "metaType": "reference",
-                  "value": "group__name_token",
-                  "isSingle": false,
-                  "attributes": {
-                    "metaType": "object",
-                    "value": {
-                      "id": {
-                        "metaType": "unknown",
+                  "metaType": "composition",
+                  "value": [
+                    {
+                      "metaType": "object",
+                      "value": {},
+                      "isSingle": true,
+                      "isNullable": false,
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "id": {
+                            "metaType": "primitive",
+                            "value": "xs:string",
+                            "isNullable": false
+                          }
+                        },
                         "isNullable": false
                       }
                     },
-                    "isNullable": false
-                  },
+                    {
+                      "metaType": "primitive",
+                      "value": "type__name_token"
+                    }
+                  ],
+                  "isSingle": false,
                   "isNullable": true
                 }
               },
