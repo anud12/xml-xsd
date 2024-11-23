@@ -12,12 +12,18 @@ public interface LinkedNode {
         return "";
     }
 
+    public RawNode getRawNode();
+
     public void childChanged(Set<Object> clazzSet);
 
-    public default String getNodeId() {
+    public int buildIndexForChild(Object object);
+
+    public default String buildPath() {
+        var index = getParentNode().map(linkedNode -> linkedNode.buildIndexForChild(this)).orElse(0);
+
         return getParentNode().flatMap(LinkedNode::getParentNode)
-            .map(LinkedNode::getNodeId)
-            .map(string ->  string + "/" +nodeName())
+            .map(LinkedNode::buildPath)
+            .map(string -> string + "/" + nodeName() + "[" + index + "]")
             .orElse("/");
     }
 }

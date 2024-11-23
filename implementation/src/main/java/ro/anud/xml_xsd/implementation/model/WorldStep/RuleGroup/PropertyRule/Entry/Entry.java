@@ -109,6 +109,19 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         }
     }
 
+    public int buildIndexForChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PersonDefault.PersonDefault) {
+          return 0;
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.ItemDefault.ItemDefault) {
+          return 0;
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PropertyThreshold.PropertyThreshold) {
+          return this.propertyThreshold.indexOf(object);
+        }
+        return 0;
+    }
+
     public void removeFromParent() {
       parentNode.ifPresent(node -> node.removeChild(this));
     }

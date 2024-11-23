@@ -99,6 +99,13 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         }
     }
 
+    public int buildIndexForChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.LinkTo) {
+          return this.linkTo.indexOf(object);
+        }
+        return 0;
+    }
+
     public void removeFromParent() {
       parentNode.ifPresent(node -> node.removeChild(this));
     }

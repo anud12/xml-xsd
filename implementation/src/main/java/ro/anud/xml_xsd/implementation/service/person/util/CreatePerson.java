@@ -53,6 +53,7 @@ public class CreatePerson {
                 worldStepInstance.person.mutateProperty(person,property.getPropertyRuleRef(), (ignored) -> value);
 
             });
+        logger.logReturnVoid();
     }
 
     private static void applyClassification(
@@ -126,7 +127,7 @@ public class CreatePerson {
             )
             .or(() -> worldStepInstance.randomFrom(raceList));
 
-        var name = worldStepInstance.name.calculateNameFromRefString(selectRace.map(Entry::nodeName));
+        var name = worldStepInstance.name.calculateNameFromRefString(selectRace.map(Entry::getId));
         var person = new Person();
 
         person.setId(worldStepInstance.getNextId());

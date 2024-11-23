@@ -99,6 +99,13 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         }
     }
 
+    public int buildIndexForChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_propertyMutation.Type_propertyMutation) {
+          return this.propertyMutation.indexOf(object);
+        }
+        return 0;
+    }
+
     public void removeFromParent() {
       parentNode.ifPresent(node -> node.removeChild(this));
     }

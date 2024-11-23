@@ -1,7 +1,6 @@
 package ro.anud.xml_xsd.implementation.controller;
 
 
-import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +16,9 @@ import ro.anud.xml_xsd.implementation.middleware.locationGraph.LocationGraphCrea
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.InstanceTypeEnum;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
-import ro.anud.xml_xsd.implementation.service.name.CalculateName;
 import ro.anud.xml_xsd.implementation.util.RawNode;
+import ro.anud.xml_xsd.implementation.validator.AtrributeValidator;
+import ro.anud.xml_xsd.implementation.validator.attributeValidator.LocationGraphIdRefValidator;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 
@@ -56,6 +57,17 @@ public class AnalyzeController {
         var logger = logEnter("");
         try {
             var worldStepInstance = buildInstance(request);
+            var validationResult = new AtrributeValidator()
+                .validate(worldStepInstance.getWorldStep());
+            if (!validationResult.isEmpty()) {
+                return ResponseEntity.status(400).body(validationResult.stream()
+                    .map(invalidAttribute -> {
+                        var allowedValues = String.join(", ", invalidAttribute.allowedValues());
+                        return "ValidationError: " + invalidAttribute.value() + " at " + invalidAttribute.path() + " not in [" + allowedValues + "]";
+                    })
+                    .collect(Collectors.joining("\n"))
+                );
+            }
 
             FromPersonAction.apply(worldStepInstance);
             PersonCreateAction.apply(worldStepInstance);

@@ -65,14 +65,17 @@ public class PersonInstance {
         var logger = logEnter("person", person.getId(), "propertyRef", propertyRef);
         logger.log("creating default");
         getProperty(person, propertyRef);
-        var propertyResult = person.getPropertiesOrDefault()
+        var propertiesElement =person.getPropertiesOrDefault();
+        var propertyResult = propertiesElement
             .streamProperty()
             .filter(property -> property.getPropertyRuleRef().equals(propertyRef))
             .findFirst();
         var propertyElement = propertyResult.orElseGet(() -> {
             logger.log("property is not present");
-            return new Property().setPropertyRuleRef(propertyRef)
+            var property = new Property().setPropertyRuleRef(propertyRef)
                 .setValue(0);
+            propertiesElement.addProperty(property);
+            return property;
         });
         var currentValue = propertyElement.getValue();
         logger.log("currentValue", currentValue);

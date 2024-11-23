@@ -17,6 +17,7 @@ import {dependantTypeToAttributeGetterSetter} from "./depedantType/dependantType
 import {dependantTypeToChildrenGetterSetter} from "./depedantType/dependantTypeToChildrenGetterSetter";
 import {interfaceTypeDeclarationToString} from "./interfaceTypeDeclarationToString";
 import {dependantTypeToRemoveChild} from "./depedantType/dependantTypeToRemoveChild";
+import {dependantTypeToBuildIndexForChild} from "./depedantType/dependantTypeToBuildIndexForChild";
 
 
 type ClassTemplateParts = {
@@ -138,6 +139,11 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
       
       public void removeChild(Object object) {
           ${dependantTypeToRemoveChild(dependantType)}
+      }
+      
+      public int buildIndexForChild(Object object) {
+          ${dependantTypeToBuildIndexForChild(dependantType)}
+          return 0;
       }
       
       public void removeFromParent() {

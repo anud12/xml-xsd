@@ -38,13 +38,13 @@
     <people>
       <person id="0.1">
         <properties>
-          <property property_rule_ref="property_rule_id" value="2"/>
+          <property property_rule_ref="property_rule_id" value="1"/>
         </properties>
         <classifications/>
       </person>
       <person id="0.2">
         <properties>
-          <property property_rule_ref="property_rule_id" value="1"/>
+          <property property_rule_ref="property_rule_id" value="2"/>
         </properties>
         <classifications/>
       </person>
@@ -78,4 +78,5 @@
       </location_graph>
     </location>
   </data>
+  <actions/>
 </world_step>

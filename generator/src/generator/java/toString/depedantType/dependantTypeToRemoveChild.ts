@@ -1,7 +1,6 @@
 import {DependantType} from "../../typeToString";
 import {template} from "../../../../template/template";
 import {normalizeNameClass, normalizeNameField} from "../normalizeNameClass";
-import {getDependantTypeChildPackage} from "./getDependantTypeChildPackage";
 import {basePackage, getDependantTypePackage} from "./getDependantTypePackage";
 
 export const dependantTypeToRemoveChild = (dependantType: DependantType): string | undefined => {

@@ -30,7 +30,7 @@ public class FromPersonAction {
         }
 
         fromPersonStream.forEach(actionElement -> {
-            var localLogger = logger.logEnter(actionElement.getNodeId());
+            var localLogger = logger.logEnter(actionElement.buildPath());
             localLogger.log("personIdRef", actionElement.getPersonIdRef());
             var actionRuleOptional = ruleRepository.getPersonById(actionElement.getFromPersonRuleRef());
             if (actionRuleOptional.isEmpty()) {
@@ -58,7 +58,7 @@ public class FromPersonAction {
             }
             actionElement.streamOnPerson()
                 .forEach(onPerson -> {
-                    var localLocalLogger = localLogger.logEnter(onPerson.getNodeId());
+                    var localLocalLogger = localLogger.logEnter(onPerson.buildPath());
                     var onPersonRule = actionRule.getOnPerson();
                     var targetPerson = personRepository.personById(onPerson.getPersonIdRef());
                     if (onPersonRule.isEmpty() || targetPerson.isEmpty()) {

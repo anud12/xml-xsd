@@ -34,19 +34,16 @@
   <data>
     <people>
       <person id="0.1">
-        <properties/>
         <classifications>
           <classification classification_rule_ref="classification_rule_id"/>
         </classifications>
       </person>
       <person id="0.2">
-        <properties/>
         <classifications>
           <classification classification_rule_ref="classification_rule_id"/>
         </classifications>
       </person>
       <person id="0.3">
-        <properties/>
         <classifications>
           <classification classification_rule_ref="classification_rule_id"/>
         </classifications>

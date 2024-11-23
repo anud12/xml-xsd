@@ -131,6 +131,37 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         }
     }
 
+    public int buildIndexForChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.By) {
+          return this.by.indexOf(object);
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_create.LocationGraph_create) {
+          return this.locationGraph_create.indexOf(object);
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_createAdjacent.LocationGraph_node_createAdjacent) {
+          return this.locationGraph_node_createAdjacent.indexOf(object);
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_addClassification.LocationGraph_node_addClassification) {
+          return this.locationGraph_node_addClassification.indexOf(object);
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.Person_teleport) {
+          return 0;
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_onPerson_propertyMutation.Person_onPerson_propertyMutation) {
+          return this.person_onPerson_propertyMutation.indexOf(object);
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_create.Person_create) {
+          return this.person_create.indexOf(object);
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Person_moveTo) {
+          return this.person_moveTo.indexOf(object);
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.FromPerson.FromPerson) {
+          return this.fromPerson.indexOf(object);
+        }
+        return 0;
+    }
+
     public void removeFromParent() {
       parentNode.ifPresent(node -> node.removeChild(this));
     }

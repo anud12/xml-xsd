@@ -10,8 +10,8 @@ public class PersonAssignClassification {
         var logger = logEnter();
         inInstance.person.repository
             .streamAll()
-            .flatMap(inInstance.person::classifyPerson)
-            .toList();
+            .toList()
+            .forEach(inInstance.person::classifyPerson);
         logger.logReturnVoid();
     }
 }

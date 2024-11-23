@@ -174,7 +174,7 @@
           </links>
         </node>
         <node node_rule_ref="city" id="0.4">
-          <position x="5" y="0"/>
+          <position x="4" y="1"/>
           <links>
             <link_to node_id_ref="0.3" total_progress="1"/>
           </links>
