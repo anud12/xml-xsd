@@ -16,7 +16,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
-public interface IType_nodeGraph_selection<T> {
+public interface IType_nodeGraph_selection<T> extends ro.anud.xml_xsd.implementation.util.LinkedNode {
 
   public RawNode getRawNode();
 

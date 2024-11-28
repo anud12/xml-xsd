@@ -209,7 +209,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
             "isNullable": false
           }
         },
-        "isNullable": false
+        "isNullable": true
       },
       "name": "link_to"
     }

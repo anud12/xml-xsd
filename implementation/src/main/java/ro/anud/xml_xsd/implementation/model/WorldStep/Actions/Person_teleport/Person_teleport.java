@@ -56,7 +56,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
     //Children elements
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LocationGraph.LocationGraph> locationGraph = Optional.empty();
-    private ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo linkTo = new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo();
+    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo> linkTo = Optional.empty();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -100,7 +100,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           this.locationGraph = Optional.empty();
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo) {
-          throw new RuntimeException("trying to delete linkTo which is required");
+          this.linkTo = Optional.empty();
         }
     }
 
@@ -135,7 +135,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       innerLogger = logger.log("children");
       //Deserialize children
       this.locationGraph = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LocationGraph.LocationGraph.fromRawNode(rawNode.getChildrenFirst("location_graph"), this);
-      this.linkTo = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo.fromRawNode(rawNode.getChildrenFirst("link_to").get(), this);
+      this.linkTo = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo.fromRawNode(rawNode.getChildrenFirst("link_to"), this);
       logReturnVoid();
     }
 
@@ -152,7 +152,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       innerLogger.log("location_graph");
       rawNode.setChildren("location_graph", locationGraph.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LocationGraph.LocationGraph::serializeIntoRawNode).toList());
       innerLogger.log("link_to");
-      rawNode.setChildren("link_to", Optional.ofNullable(linkTo).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo::serializeIntoRawNode).toList());
+      rawNode.setChildren("link_to", linkTo.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo::serializeIntoRawNode).toList());
       return rawNode;
     }
 
@@ -202,17 +202,30 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return this;
     }
 
-    public ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo getLinkTo()
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo> getLinkTo()
     {
       return this.linkTo;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo getLinkToOrDefault()
+    {
+      return this.linkTo.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo();
+        instance.setParentNode(this);
+        this.linkTo = Optional.of(instance);
+        return this.linkTo.get();
+      });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo> streamLinkToOrDefault()
+    {
+      return Stream.of(getLinkToOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo> streamLinkTo()
     {
-      return Optional.ofNullable(linkTo).stream();
+      return linkTo.stream();
     }
     public Person_teleport setLinkTo(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo value)
     {
-      this.linkTo = value;
+      this.linkTo = Optional.ofNullable(value);
       value.setParentNode(this);
       triggerOnChange();
       return this;
@@ -282,7 +295,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                 "isNullable": false
               }
             },
-            "isNullable": false
+            "isNullable": true
           }
         }
       },

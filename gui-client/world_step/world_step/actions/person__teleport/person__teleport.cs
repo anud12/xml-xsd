@@ -15,7 +15,7 @@ namespace XSD.Nworld_step.Nactions {
 
     //Children elements
     public XSD.Nworld_step.Nactions.Nperson__teleport.location_graph? location_graph = null;
-    public XSD.Nworld_step.Nactions.Nperson__teleport.link_to link_to = new XSD.Nworld_step.Nactions.Nperson__teleport.link_to();
+    public XSD.Nworld_step.Nactions.Nperson__teleport.link_to? link_to = null;
     public person__teleport()
     {
     }
@@ -94,7 +94,7 @@ namespace XSD.Nworld_step.Nactions {
     {
       this.location_graph = value;
     }
-    public XSD.Nworld_step.Nactions.Nperson__teleport.link_to Get_link_to()
+    public XSD.Nworld_step.Nactions.Nperson__teleport.link_to? Get_link_to()
     {
       return this.link_to;
     }
@@ -105,7 +105,7 @@ namespace XSD.Nworld_step.Nactions {
       }
       return this.link_to;
     }
-    public void Set_link_to(XSD.Nworld_step.Nactions.Nperson__teleport.link_to value)
+    public void Set_link_to(XSD.Nworld_step.Nactions.Nperson__teleport.link_to? value)
     {
       this.link_to = value;
     }

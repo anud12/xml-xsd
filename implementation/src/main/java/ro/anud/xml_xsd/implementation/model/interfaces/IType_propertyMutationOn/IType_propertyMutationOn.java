@@ -16,7 +16,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
-public interface IType_propertyMutationOn<T> {
+public interface IType_propertyMutationOn<T> extends ro.anud.xml_xsd.implementation.util.LinkedNode {
 
   public RawNode getRawNode();
   public void deserialize (RawNode rawNode);

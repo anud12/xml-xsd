@@ -2404,7 +2404,7 @@
                 {
                   "metaType": "object",
                   "isSingle": true,
-                  "isNullable": false,
+                  "isNullable": true,
                   "value": {
                     "link_to": {
                       "metaType": "object",
@@ -2428,7 +2428,7 @@
                           "isNullable": false
                         }
                       },
-                      "isNullable": false
+                      "isNullable": true
                     }
                   }
                 }

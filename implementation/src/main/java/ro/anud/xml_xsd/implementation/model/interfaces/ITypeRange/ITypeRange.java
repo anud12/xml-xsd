@@ -16,7 +16,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
-public interface ITypeRange<T> {
+public interface ITypeRange<T> extends ro.anud.xml_xsd.implementation.util.LinkedNode {
 
   public RawNode getRawNode();
 

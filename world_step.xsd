@@ -1615,7 +1615,7 @@
                         </xs:attribute>
                       </xs:complexType>
                     </xs:element>
-                    <xs:element name="link_to">
+                    <xs:element name="link_to" minOccurs="0">
                       <xs:complexType>
                         <xs:sequence>
                           <xs:element name="selection" type="type__link_to__selection"/>

@@ -19,7 +19,7 @@ export function interfaceTypeDeclarationToString(directoryMetadata: DirectoryMet
   }
 
   const templateString = template()`
-    public interface ${interfaceName}<T> {
+    public interface ${interfaceName}<T> extends ro.anud.xml_xsd.implementation.util.LinkedNode {
     
       public RawNode getRawNode();
     

@@ -1,5 +1,6 @@
 package ro.anud.xml_xsd.implementation.service.location_graph;
 
+import ro.anud.xml_xsd.implementation.model.Type_linkTo_selection.Type_linkTo_selection;
 import ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location;
@@ -100,6 +101,10 @@ public class LocationGraphInstance {
 
     public List<List<Node>> shortestPathsInGraphExcludeStart(final LocationGraph locationGraph, final Node startNode, final Node destinationNode, final int numberOfPaths) {
         return ShortestPathsInGraphExcludeStart.shortestPathInGraphExcludeStart(locationGraph,startNode,destinationNode,numberOfPaths);
+    }
+
+    public Stream<LinkTo> selectLinkTo(final Type_linkTo_selection selection) {
+        return SelectLinkTo.selectLinkTo(worldStepInstance, selection);
     }
 
     public record FindPersonResult(LocationGraph locationGraph, Optional<Node> node, Optional<LinkTo> linkTo) {}
