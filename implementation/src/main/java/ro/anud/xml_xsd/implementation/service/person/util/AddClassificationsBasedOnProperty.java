@@ -99,6 +99,8 @@ public class AddClassificationsBasedOnProperty {
                             }
                         };
                     }, (aBoolean, aBoolean2) -> aBoolean && aBoolean2);
-            });
+            })
+            .toList()
+            .stream();
     }
 }

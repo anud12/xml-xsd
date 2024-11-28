@@ -125,11 +125,17 @@ public class GetProperty {
             property.streamProperty().filter(property1 -> property1.getPropertyRuleRef().equals(propertyRef))
                 .findFirst()
                 .ifPresentOrElse(
-                    property1 -> property1.setValue(value.get()),
-                    () -> property.addProperty(Property.builder()
-                        .value(value.get())
-                        .propertyRuleRef(propertyRef)
-                        .build())
+                    property1 -> {
+                        logger.log("setting property on person:", innerPerson.getId(), "propertyRef:", propertyRef, "value:", value);
+                        property1.setValue(value.get());
+                    },
+                    () -> {
+                        logger.log("adding property to person:", innerPerson.getId(), "propertyRef:", propertyRef, "value:", value);
+                        property.addProperty(Property.builder()
+                            .value(value.get())
+                            .propertyRuleRef(propertyRef)
+                            .build());
+                    }
                 );
         };
 

@@ -33,6 +33,7 @@ It should create
 - location_graph.node.create_adjacent
  */
 
+
 @Execution(ExecutionMode.CONCURRENT)
 public class IndexTest {
 

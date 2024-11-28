@@ -11,7 +11,8 @@ public class PersonAssignClassification {
         inInstance.person.repository
             .streamAll()
             .toList()
-            .forEach(inInstance.person::classifyPerson);
+            .stream().flatMap(inInstance.person::classifyPerson)
+            .toList();
         logger.logReturnVoid();
     }
 }
