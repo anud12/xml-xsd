@@ -9,10 +9,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGrap
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.People.People;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
-import ro.anud.xml_xsd.implementation.service.location_graph.util.CreateAdjacent;
-import ro.anud.xml_xsd.implementation.service.location_graph.util.CreateGraphNode;
-import ro.anud.xml_xsd.implementation.service.location_graph.util.CreateLocationGraph;
-import ro.anud.xml_xsd.implementation.service.location_graph.util.SelectNodeGraph;
+import ro.anud.xml_xsd.implementation.service.location_graph.util.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -59,15 +56,50 @@ public class LocationGraphInstance {
     public Optional<Node> createAdjacent(final LocationGraph locationGraph, final String nodeRuleRefId) {
         return CreateAdjacent.createAdjacent(worldStepInstance, locationGraph, nodeRuleRefId);
     }
+
     public Optional<Node> createAdjacent(final String locationGraphId, final String nodeRuleId) {
         var logger = logEnter();
-        var locationGraphElementResult = this.worldStepInstance.locationGraph.repository.getLocationGraphById(locationGraphId);
+        var locationGraphElementResult = this.worldStepInstance.locationGraph.repository.getLocationGraphById(
+            locationGraphId);
         if (locationGraphElementResult.isEmpty()) {
             logger.log("locationGraph not found");
             return logger.logReturn(Optional.empty());
         }
         var locationGraphElement = locationGraphElementResult.get();
         return CreateAdjacent.createAdjacent(worldStepInstance, locationGraphElement, nodeRuleId);
+    }
+
+    public void removePerson(final String personIdRef) {
+        var logger = logEnter("personIdRef:", personIdRef);
+        worldStepInstance.getWorldStep()
+            .streamData()
+            .flatMap(Data::streamLocation)
+            .flatMap(Location::streamLocationGraph)
+            .flatMap(LocationGraph::streamNode)
+            .forEach(node -> {
+                node.streamPeople()
+                    .flatMap(People::streamPerson)
+                    .filter(person -> person.getPersonIdRef().equals(personIdRef))
+                    .toList()
+                    .forEach(person -> {
+                        logger.log("removing person", person.buildPath());
+                        person.removeFromParent();
+                    });
+                node.streamLinks()
+                    .flatMap(Links::streamLinkTo)
+                    .flatMap(LinkTo::streamPeople)
+                    .flatMap(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People::streamPerson)
+                    .filter(person -> person.getPersonIdRef().equals(personIdRef))
+                    .toList()
+                    .forEach(person -> {
+                        logger.log("removing person", person.buildPath());
+                        person.removeFromParent();
+                    });
+            });
+    }
+
+    public List<List<Node>> shortestPathsInGraphExcludeStart(final LocationGraph locationGraph, final Node startNode, final Node destinationNode, final int numberOfPaths) {
+        return ShortestPathsInGraphExcludeStart.shortestPathInGraphExcludeStart(locationGraph,startNode,destinationNode,numberOfPaths);
     }
 
     public record FindPersonResult(LocationGraph locationGraph, Optional<Node> node, Optional<LinkTo> linkTo) {}

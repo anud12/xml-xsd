@@ -70,9 +70,5 @@
       </location_graph>
     </location>
   </data>
-  <actions>
-    <person.move_to person_id_ref="0">
-      <path/>
-    </person.move_to>
-  </actions>
+  <actions/>
 </world_step>

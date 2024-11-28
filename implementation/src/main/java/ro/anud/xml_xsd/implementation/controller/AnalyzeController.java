@@ -13,6 +13,7 @@ import ro.anud.xml_xsd.implementation.middleware.action.PersonCreateAction;
 import ro.anud.xml_xsd.implementation.middleware.locationGraph.LocationGraphAddClassification;
 import ro.anud.xml_xsd.implementation.middleware.locationGraph.LocationGraphCreate;
 import ro.anud.xml_xsd.implementation.middleware.locationGraph.LocationGraphCreateAdjacent;
+import ro.anud.xml_xsd.implementation.middleware.person.PersonMoveTo;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.InstanceTypeEnum;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
@@ -73,6 +74,7 @@ public class AnalyzeController {
             PersonCreateAction.apply(worldStepInstance);
             LocationGraphCreate.apply(worldStepInstance);
             LocationGraphCreateAdjacent.apply(worldStepInstance);
+            PersonMoveTo.apply(worldStepInstance);
             LocationGraphAddClassification.apply(worldStepInstance);
             PersonAssignClassification.apply(worldStepInstance);
 
