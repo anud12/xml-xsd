@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import ro.anud.xml_xsd.implementation.middleware.EventsMetadata;
 import ro.anud.xml_xsd.implementation.middleware.PersonAssignClassification;
 import ro.anud.xml_xsd.implementation.middleware.action.FromPersonAction;
 import ro.anud.xml_xsd.implementation.middleware.action.PersonCreateAction;
@@ -77,6 +78,7 @@ public class AnalyzeController {
             LocationGraphCreateAdjacent.apply(worldStepInstance);
             PersonMoveTo.apply(worldStepInstance);
             PersonTeleportTo.apply(worldStepInstance);
+            EventsMetadata.apply(worldStepInstance);
             LocationGraphAddClassification.apply(worldStepInstance);
             PersonAssignClassification.apply(worldStepInstance);
 

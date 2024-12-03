@@ -56,7 +56,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
     //Children elements
     private ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.DoElement.DoElement doElement = new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.DoElement.DoElement();
-    private ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards moveTowards = new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards();
+    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards> moveTowards = Optional.empty();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -100,7 +100,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           throw new RuntimeException("trying to delete doElement which is required");
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards) {
-          throw new RuntimeException("trying to delete moveTowards which is required");
+          this.moveTowards = Optional.empty();
         }
     }
 
@@ -135,7 +135,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       innerLogger = logger.log("children");
       //Deserialize children
       this.doElement = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.DoElement.DoElement.fromRawNode(rawNode.getChildrenFirst("do").get(), this);
-      this.moveTowards = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards.fromRawNode(rawNode.getChildrenFirst("move_towards").get(), this);
+      this.moveTowards = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards.fromRawNode(rawNode.getChildrenFirst("move_towards"), this);
       logReturnVoid();
     }
 
@@ -152,7 +152,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       innerLogger.log("do");
       rawNode.setChildren("do", Optional.ofNullable(doElement).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.DoElement.DoElement::serializeIntoRawNode).toList());
       innerLogger.log("move_towards");
-      rawNode.setChildren("move_towards", Optional.ofNullable(moveTowards).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards::serializeIntoRawNode).toList());
+      rawNode.setChildren("move_towards", moveTowards.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards::serializeIntoRawNode).toList());
       return rawNode;
     }
 
@@ -189,17 +189,30 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return this;
     }
 
-    public ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards getMoveTowards()
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards> getMoveTowards()
     {
       return this.moveTowards;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards getMoveTowardsOrDefault()
+    {
+      return this.moveTowards.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards();
+        instance.setParentNode(this);
+        this.moveTowards = Optional.of(instance);
+        return this.moveTowards.get();
+      });
+    }
+    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards> streamMoveTowardsOrDefault()
+    {
+      return Stream.of(getMoveTowardsOrDefault());
+    }
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards> streamMoveTowards()
     {
-      return Optional.ofNullable(moveTowards).stream();
+      return moveTowards.stream();
     }
     public By setMoveTowards(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards value)
     {
-      this.moveTowards = value;
+      this.moveTowards = Optional.ofNullable(value);
       value.setParentNode(this);
       triggerOnChange();
       return this;
@@ -256,7 +269,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
             "metaType": "object",
             "value": {},
             "isSingle": true,
-            "isNullable": false,
+            "isNullable": true,
             "attributes": {
               "metaType": "object",
               "value": {

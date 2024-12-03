@@ -52,7 +52,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     //Attributes
-    /* ignored attribute key={key} of type=Object*/
+    private String actionRuleRef;
 
     //Children elements
 
@@ -116,6 +116,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       // Godot.GD.Print("Deserializing person_action_used");
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
+      innerLogger.log("action_rule_ref");
+      this.actionRuleRef = rawNode.getAttributeRequired("action_rule_ref");
       innerLogger = logger.log("children");
       //Deserialize children
       logReturnVoid();
@@ -126,6 +128,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       var innerLogger = logger.log("attributes");
       //Serialize attributes
+      innerLogger.log("action_rule_ref");
+      rawNode.setAttribute("action_rule_ref", this.actionRuleRef);
 
       innerLogger = logger.log("children");
       //Serialize children
@@ -139,7 +143,16 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         updatedRawNode.populateNode(document, element);
     }
 
-    /* ignored attribute key={key} of type=Object*/
+    public String getActionRuleRef()
+    {
+      return this.actionRuleRef;
+    }
+    public PersonActionUsed setActionRuleRef(String value)
+    {
+      this.actionRuleRef = value;
+      triggerOnChange();
+      return this;
+    }
 
   }
 
@@ -157,7 +170,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           "metaType": "object",
           "value": {
             "action_rule_ref": {
-              "metaType": "unknown",
+              "metaType": "primitive",
+              "value": "xs:string",
               "isNullable": false
             }
           },

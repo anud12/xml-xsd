@@ -531,13 +531,13 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
               {
                 "metaType": "object",
                 "isSingle": true,
-                "isNullable": false,
+                "isNullable": true,
                 "value": {
                   "move_towards": {
                     "metaType": "object",
                     "value": {},
                     "isSingle": true,
-                    "isNullable": false,
+                    "isNullable": true,
                     "attributes": {
                       "metaType": "object",
                       "value": {

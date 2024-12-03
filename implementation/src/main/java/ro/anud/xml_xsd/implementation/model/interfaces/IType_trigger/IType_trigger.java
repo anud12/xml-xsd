@@ -47,7 +47,8 @@ public interface IType_trigger<T> extends ro.anud.xml_xsd.implementation.util.Li
             "metaType": "object",
             "value": {
               "action_rule_ref": {
-                "metaType": "unknown",
+                "metaType": "primitive",
+                "value": "xs:string",
                 "isNullable": false
               }
             },
@@ -73,7 +74,8 @@ public interface IType_trigger<T> extends ro.anud.xml_xsd.implementation.util.Li
               "metaType": "object",
               "value": {
                 "action_rule_ref": {
-                  "metaType": "unknown",
+                  "metaType": "primitive",
+                  "value": "xs:string",
                   "isNullable": false
                 }
               },

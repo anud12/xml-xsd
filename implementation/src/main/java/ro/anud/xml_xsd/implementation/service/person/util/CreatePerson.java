@@ -8,12 +8,13 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRu
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.Entry.Entry;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.RaceRule;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup;
+import ro.anud.xml_xsd.implementation.model.interfaces.IType_personSelection.IType_personSelection;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 
 public class CreatePerson {
-    public static Person createPerson(WorldStepInstance worldStepInstance, Type_personSelection typePersonSelection) {
+    public static Person createPerson(WorldStepInstance worldStepInstance, IType_personSelection<?> typePersonSelection) {
         var logger = logEnter();
         logger.log("creating");
         var person = createNewPerson(worldStepInstance, typePersonSelection);
@@ -29,7 +30,7 @@ public class CreatePerson {
 
     private static void applyProperty(
         final WorldStepInstance worldStepInstance,
-        final Type_personSelection typePersonSelection,
+        final IType_personSelection<?> typePersonSelection,
         final Person person) {
         var logger = logEnter();
         typePersonSelection.streamProperty()
@@ -66,6 +67,7 @@ public class CreatePerson {
             .filter(entry -> entry.getId().equals(classification.getClassificationRuleRef()))
             .findAny();
         if (classificationRuleOptional.isEmpty()) {
+            logger.log("classificationRule not found");
             return;
         }
         var classificationRule = classificationRuleOptional.get();
@@ -74,30 +76,31 @@ public class CreatePerson {
         );
         classificationRule.streamProperty()
             .forEach(property -> {
+                var innerLogger = logger.log("property", property.getPropertyRuleRef());
                 var propertyRef = property.getPropertyRuleRef();
                 int classificationValue = worldStepInstance.computeOperation(property.getOperation(), person).orElse(0);
                 int propertyValue = worldStepInstance.person.getProperty(person, propertyRef).orElse(0);
 
-                logger.logTodo("remove rawNode.getAttributeRequired(\"is\")");
+                innerLogger.logTodo("remove rawNode.getAttributeRequired(\"is\")");
                 var computedValue = switch (property.getRawNode().getAttributeRequired("is")) {
                     case "lessThan": {
-                        logger.log("lessThan");
+                        innerLogger.log("lessThan");
                         yield Math.min(classificationValue - 1, propertyValue);
                     }
                     case "lessThanOrEqual": {
-                        logger.log("lessThanOrEqual");
+                        innerLogger.log("lessThanOrEqual");
                         yield Math.min(classificationValue, propertyValue);
                     }
                     case "greaterThan": {
-                        logger.log("greaterThan");
+                        innerLogger.log("greaterThan");
                         yield Math.max(classificationValue + 1, propertyValue);
                     }
                     case "greaterThanOrEqual": {
-                        logger.log("greaterThanOrEqual");
+                        innerLogger.log("greaterThanOrEqual");
                         yield Math.max(classificationValue, propertyValue);
                     }
                     case "equal": {
-                        logger.log("equal");
+                        innerLogger.log("equal");
                         yield classificationValue;
                     }
                     default:
@@ -105,14 +108,14 @@ public class CreatePerson {
                             "Unknown operation " + property.getRawNode().getAttributeRequired("is")
                         );
                 };
-                logger.log("setting propertyRef", propertyRef, "to ", computedValue);
+                innerLogger.log("setting propertyRef", propertyRef, "to ", computedValue);
                 worldStepInstance.person.mutateProperty(person, propertyRef, (ignored) ->computedValue);
             });
     }
 
     private static Person createNewPerson(
         final WorldStepInstance worldStepInstance,
-        final Type_personSelection typePersonSelection) {
+        final IType_personSelection<?> typePersonSelection) {
         var logger = logEnter();
         var ruleGroup = worldStepInstance.getWorldStep().streamRuleGroup();
 

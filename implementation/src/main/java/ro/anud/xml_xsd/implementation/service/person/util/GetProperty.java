@@ -117,7 +117,7 @@ public class GetProperty {
 
         var value = computeProperty(worldStepInstance, person, propertyRef);
         if (value.isEmpty()) {
-            return Optional.empty();
+            return logger.logReturn(value, "value is empty");
         }
 
         Consumer<Person> applyValue = innerPerson -> {

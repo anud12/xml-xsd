@@ -33,7 +33,6 @@ public class ComputeOperation {
                     acc),
                 Integer::sum
             );
-
         return logger.logReturn(Optional.of(value));
     }
 

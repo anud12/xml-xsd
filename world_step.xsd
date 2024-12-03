@@ -181,7 +181,7 @@
     <xs:sequence>
       <xs:element name="person_action_used">
         <xs:complexType>
-          <xs:attribute name="action_rule_ref" use="required"/>
+          <xs:attribute name="action_rule_ref" type="xs:string" use="required"/>
         </xs:complexType>
       </xs:element>
     </xs:sequence>
@@ -1509,7 +1509,7 @@
                         <xs:attribute name="person_ref" type="xs:string" use="required"/>
                       </xs:complexType>
                     </xs:element>
-                    <xs:element name="move_towards">
+                    <xs:element name="move_towards" minOccurs="0">
                       <xs:complexType>
                         <xs:attribute name="layer" type="xs:string"/>
                         <xs:attribute name="x" type="xs:int" use="required"/>

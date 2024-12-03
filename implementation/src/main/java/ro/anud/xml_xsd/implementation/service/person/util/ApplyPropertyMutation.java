@@ -3,6 +3,7 @@ package ro.anud.xml_xsd.implementation.service.person.util;
 import ro.anud.xml_xsd.implementation.model.Type_propertyMutation.Type_propertyMutation;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties;
+import ro.anud.xml_xsd.implementation.model.interfaces.IType_propertyMutation.IType_propertyMutation;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
@@ -12,7 +13,7 @@ public class ApplyPropertyMutation {
     public static void applyPropertyMutation(
         final WorldStepInstance worldStepInstance,
         final Person selfPerson,
-        final Type_propertyMutation typePropertyMutation,
+        final IType_propertyMutation<?> typePropertyMutation,
         final Person originPerson,
         final Person targetPerson) {
         var logger = logEnter(

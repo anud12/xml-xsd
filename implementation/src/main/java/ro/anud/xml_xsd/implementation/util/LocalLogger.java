@@ -7,6 +7,8 @@ import org.springframework.util.StringUtils;
 import java.util.*;
 import java.util.stream.Stream;
 
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.LogClass.IDENT;
+
 public class LocalLogger {
     static Logger logger = LoggerFactory.getLogger(RawNode.class);
 
@@ -28,6 +30,8 @@ public class LocalLogger {
 
             var previousStackTrace = filterStacktrace.get(0);
             var methodName = previousStackTrace.getMethodName();
+            var logLine = logLine(previousStackTrace);
+
             StringBuilder line = new StringBuilder(argumentsToString(args).reduce(
                 methodName + " [ log  ]",
                 (string, o) -> string + ARG_SEPARATOR + o,
@@ -36,7 +40,8 @@ public class LocalLogger {
             for (var i = 0; i < filterStacktrace.size(); i++) {
                 line.insert(0, IDENT);
             }
-            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line));
+            print(filterStacktrace, line);
+//            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + logLine);
             return new LogClass(argumentsToString(args).toList());
         }
 
@@ -45,6 +50,7 @@ public class LocalLogger {
             var filterStacktrace = filterStacktrace(stackTrace);
 
             var previousStackTrace = filterStacktrace.get(0);
+            var logLine = logLine(previousStackTrace);
             var methodName = previousStackTrace.getMethodName();
 
             StringBuilder line = new StringBuilder(argumentsToString(args).reduce(
@@ -55,7 +61,8 @@ public class LocalLogger {
             for (var i = 0; i < filterStacktrace.size(); i++) {
                 line.insert(0, IDENT);
             }
-            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line));
+            print(filterStacktrace, line);
+//            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + logLine);
             return new LogClass(argumentsToString(args).toList());
         }
 
@@ -65,16 +72,19 @@ public class LocalLogger {
 
             var previousStackTrace = filterStacktrace.get(0);
             var methodName = previousStackTrace.getMethodName();
+            var logLine = logLine(previousStackTrace);
+
+
             StringBuilder line = new StringBuilder(argumentsToString(args).reduce(
-                methodName + " [enter ]",
+                methodName + ":"  + " [enter ]",
                 (string, o) -> string + ARG_SEPARATOR + o,
                 (string, string2) -> string + string2
             ));
             for (var i = 0; i < filterStacktrace.size(); i++) {
                 line.insert(0, IDENT);
             }
-
-            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line));
+            print(filterStacktrace, line);
+//            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + logLine);
             return new LogClass(argumentsToString(args).toList());
         }
 
@@ -83,7 +93,9 @@ public class LocalLogger {
             var filterStacktrace = filterStacktrace(stackTrace);
 
             var previousStackTrace = filterStacktrace.get(0);
+            var logLine = logLine(previousStackTrace);
             var methodName = previousStackTrace.getMethodName();
+
             StringBuilder line = new StringBuilder(argumentsToString(args).reduce(
                 methodName + " [return]",
                 (string, o) -> string + ARG_SEPARATOR + o,
@@ -92,8 +104,13 @@ public class LocalLogger {
             for (var i = 0; i < filterStacktrace.size(); i++) {
                 line.insert(0, IDENT);
             }
+
+            line.append(ARG_SEPARATOR);
             var returnValueString = Optional.ofNullable(returnValue).map(Objects::toString).orElse("null");
-            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + ARG_SEPARATOR + "value: [" + returnValueString + "]");
+            line.append("value: [" + returnValueString + "]");
+            print(filterStacktrace, line);
+
+//            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + ARG_SEPARATOR + "value: [" + returnValueString + "]" + logLine);
             return returnValue;
         }
 
@@ -103,15 +120,15 @@ public class LocalLogger {
 
             var previousStackTrace = filterStacktrace.get(0);
             var methodName = previousStackTrace.getMethodName();
+
             StringBuilder line = new StringBuilder(argumentsToString(args).reduce(
-                methodName + " [return]",
+                methodName +  " [return]",
                 (string, o) -> string + ARG_SEPARATOR + o,
                 (string, string2) -> string + string2
             ));
-            for (var i = 0; i < filterStacktrace.size(); i++) {
-                line.insert(0, IDENT);
-            }
-            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + ARG_SEPARATOR + "value: [void]");
+            line.append(ARG_SEPARATOR);
+            line.append("value: [void]");
+            print(filterStacktrace, line );
         }
 
         private Stream<String> argumentsToString(Object... args) {
@@ -150,6 +167,26 @@ public class LocalLogger {
             .filter(stackTraceElement -> !stackTraceElement.getMethodName().startsWith("lambda$"))
             .toList()
             .reversed();
+    }
+
+    private static void print(List<StackTraceElement> filterStacktrace, StringBuilder line) {
+        for (var i = 0; i < filterStacktrace.size(); i++) {
+            line.insert(0, IDENT);
+        }
+
+        var previousStackTrace = filterStacktrace.get(0);
+        var logLine = logLine(previousStackTrace);
+        logLine = " ".repeat(Math.max(0,100 - line.toString().length())) + logLine;
+        line.append(logLine);
+        LoggerFactory.getLogger(previousStackTrace.getClassName()).info(line.toString());
+
+    }
+
+    private static String logLine(StackTraceElement previousStackTrace) {
+        var className = previousStackTrace.getFileName();
+        var lineNumber = previousStackTrace.getLineNumber();
+        var logLine = " at " + previousStackTrace.getClassName() + "(" +className + ":" + lineNumber + ")";
+        return logLine;
     }
 
     public static LogClass logEnter(Object... args) {

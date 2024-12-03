@@ -42,7 +42,7 @@ export type type__person_selection = JsonQueryType<{}, {
   "race": JsonQueryType<{"race_rule_ref": string;}> & JsonQueryType<{}, {}>;
 }>
 export type type__trigger = JsonQueryType<{}, {
-  "person_action_used": JsonQueryType<{"action_rule_ref": any;}> & JsonQueryType<{}, {}>;
+  "person_action_used": JsonQueryType<{"action_rule_ref": string;}> & JsonQueryType<{}, {}>;
 }>
 export type type__math_operations_and = JsonQueryType<{}, {
   "add_property": JsonQueryType<{"property_rule_ref": string;}> & JsonQueryType<{}, {}>;

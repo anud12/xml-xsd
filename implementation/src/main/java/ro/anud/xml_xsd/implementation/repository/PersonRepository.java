@@ -5,8 +5,11 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
@@ -14,7 +17,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 public class PersonRepository {
 
     private final HashMap<String, Person> personById = new HashMap<>();
-
+    private final List<Person> personList = new ArrayList<>();
     public PersonRepository(WorldStepInstance worldStepInstance) {
         var logger = logEnter();
         init(worldStepInstance);
@@ -42,9 +45,11 @@ public class PersonRepository {
     private void loadData(Stream<People> people) {
         logEnter("indexing by personId");
         personById.clear();
+        personList.clear();
         people
             .flatMap(People::streamPerson)
             .forEach(person -> {
+                personList.add(person);
                 personById.put(person.getId(), person);
             });
     }
@@ -56,5 +61,9 @@ public class PersonRepository {
     public Optional<Person> personById(String id) {
         var logger = logEnter("id:", id);
         return logger.logReturn(Optional.ofNullable(personById.get(id)));
+    }
+
+    public Stream<Person> streamPerson() {
+        return logEnter().logReturn(personList.stream());
     }
 }

@@ -378,7 +378,8 @@
             "metaType": "object",
             "value": {
               "action_rule_ref": {
-                "metaType": "unknown",
+                "metaType": "primitive",
+                "value": "xs:string",
                 "isNullable": false
               }
             },
@@ -2239,13 +2240,13 @@
                 {
                   "metaType": "object",
                   "isSingle": true,
-                  "isNullable": false,
+                  "isNullable": true,
                   "value": {
                     "move_towards": {
                       "metaType": "object",
                       "value": {},
                       "isSingle": true,
-                      "isNullable": false,
+                      "isNullable": true,
                       "attributes": {
                         "metaType": "object",
                         "value": {

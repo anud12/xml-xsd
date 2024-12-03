@@ -183,7 +183,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
               "metaType": "object",
               "value": {
                 "action_rule_ref": {
-                  "metaType": "unknown",
+                  "metaType": "primitive",
+                  "value": "xs:string",
                   "isNullable": false
                 }
               },
@@ -209,7 +210,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                 "metaType": "object",
                 "value": {
                   "action_rule_ref": {
-                    "metaType": "unknown",
+                    "metaType": "primitive",
+                    "value": "xs:string",
                     "isNullable": false
                   }
                 },
