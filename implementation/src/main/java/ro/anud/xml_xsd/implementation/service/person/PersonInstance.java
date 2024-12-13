@@ -60,7 +60,7 @@ public class PersonInstance {
         return CreatePerson.createPerson(worldStepInstance, personSelection);
     }
 
-    public void mutateProperty(
+    public Optional<Integer> mutateProperty(
         final Person person,
         final String propertyRef,
         Function<Integer, Integer> computedValue) {
@@ -72,20 +72,29 @@ public class PersonInstance {
             .streamProperty()
             .filter(property -> property.getPropertyRuleRef().equals(propertyRef))
             .findFirst();
-        propertyResult.ifPresent(property -> {
+
+        return propertyResult.map(property -> {
             var currentValue = property.getValue();
-            logger.log("currentValue", currentValue);
             var newValue = computedValue.apply(currentValue);
-            logger.log("newValue", newValue);
+            logger.log("mutating", "currentValue", currentValue, "computedValue", computedValue);
             property.setValue(newValue);
+            return newValue;
         });
-        if(propertyResult.isEmpty()) {
-            logger.log("creating property");
-            propertiesElement.addProperty(Property.builder()
-                .propertyRuleRef(propertyRef)
-                .value(computedValue.apply(0))
-                .build());
-        }
+
+    }
+
+    public void setProperty(final Person person, final String propertyRef, final int newValue) {
+        var logger = logEnter("person", person.getId(), "propertyRef", propertyRef);
+        logger.log("creating default");
+        mutateProperty(person, propertyRef, (ignored) -> newValue)
+            .orElseGet(() -> {
+                logger.log("creating property");
+                var property = new Property();
+                property.setPropertyRuleRef(propertyRef);
+                property.setValue(newValue);
+                person.getPropertiesOrDefault().addProperty(property);
+                return newValue;
+            });
         logger.logReturnVoid();
     }
 }

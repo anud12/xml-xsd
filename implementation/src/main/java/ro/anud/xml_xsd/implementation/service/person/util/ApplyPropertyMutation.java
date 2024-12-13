@@ -57,6 +57,7 @@ public class ApplyPropertyMutation {
                 innerLog.log("found properties of ref", propertyRuleRef, "size", propertyElementList.size());
                 if (propertyElementList.isEmpty()) {
                     innerLog.log("creating property");
+
                     worldStepInstance.getOutInstance().person.mutateProperty(
                         outPerson.get(),
                         propertyRuleRef,

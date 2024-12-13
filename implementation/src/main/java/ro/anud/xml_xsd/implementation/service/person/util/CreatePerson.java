@@ -14,7 +14,9 @@ import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 
 public class CreatePerson {
-    public static Person createPerson(WorldStepInstance worldStepInstance, IType_personSelection<?> typePersonSelection) {
+    public static Person createPerson(
+        WorldStepInstance worldStepInstance,
+        IType_personSelection<?> typePersonSelection) {
         var logger = logEnter();
         logger.log("creating");
         var person = createNewPerson(worldStepInstance, typePersonSelection);
@@ -36,14 +38,14 @@ public class CreatePerson {
         typePersonSelection.streamProperty()
             .forEach(property -> {
                 var innerLogger = logger.log(property.getPropertyRuleRef());
-//                worldStepInstance.person.getProperty(person,property.getPropertyRuleRef());
                 innerLogger.log("compute max");
                 var maxOptional = worldStepInstance.computeOperation(property.getMax(), person);
                 innerLogger.log("compute min");
                 var minOptional = worldStepInstance.computeOperation(property.getMin(), person);
 
-                if(minOptional.isEmpty() && maxOptional.isEmpty()) {
+                if (minOptional.isEmpty() && maxOptional.isEmpty()) {
                     innerLogger.logReturnVoid("min and max are empty");
+                    worldStepInstance.person.getProperty(person, property.getPropertyRuleRef());
                     return;
                 }
                 var min = minOptional.orElse(maxOptional.orElse(0));
@@ -51,7 +53,7 @@ public class CreatePerson {
                 innerLogger.log("min:", min, "max:", max);
                 int value = worldStepInstance.randomBetweenInt(min, max);
                 innerLogger.log("setting value:", value);
-                worldStepInstance.person.mutateProperty(person,property.getPropertyRuleRef(), (ignored) -> value);
+                worldStepInstance.person.setProperty(person, property.getPropertyRuleRef(), value);
 
             });
         logger.logReturnVoid();
@@ -109,7 +111,7 @@ public class CreatePerson {
                         );
                 };
                 innerLogger.log("setting propertyRef", propertyRef, "to ", computedValue);
-                worldStepInstance.person.mutateProperty(person, propertyRef, (ignored) ->computedValue);
+                worldStepInstance.person.mutateProperty(person, propertyRef, (ignored) -> computedValue);
             });
     }
 
@@ -136,12 +138,13 @@ public class CreatePerson {
         person.setId(worldStepInstance.getNextId());
         logger.log("name", name);
         person.setName(name);
-        selectRace.ifPresentOrElse(entry -> {
-            logger.log("race", entry.getId());
-            person.setRace(new Race()
-                .setRaceRuleRef(entry.getId())
-            );
-        }, () -> logger.log("no race set"));
+        selectRace.ifPresentOrElse(
+            entry -> {
+                logger.log("race", entry.getId());
+                person.setRace(new Race()
+                    .setRaceRuleRef(entry.getId())
+                );
+            }, () -> logger.log("no race set"));
 
         var people = worldStepInstance.getWorldStep().getData().getPeopleOrDefault();
         logger.log("adding person with id", person.getId());
