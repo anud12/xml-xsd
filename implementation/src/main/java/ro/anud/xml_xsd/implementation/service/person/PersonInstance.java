@@ -67,7 +67,7 @@ public class PersonInstance {
         var logger = logEnter("person", person.getId(), "propertyRef", propertyRef);
         logger.log("creating default");
         getProperty(person, propertyRef);
-        var propertiesElement =person.getPropertiesOrDefault();
+        var propertiesElement = person.getPropertiesOrDefault();
         var propertyResult = propertiesElement
             .streamProperty()
             .filter(property -> property.getPropertyRuleRef().equals(propertyRef))
@@ -79,6 +79,13 @@ public class PersonInstance {
             logger.log("newValue", newValue);
             property.setValue(newValue);
         });
+        if(propertyResult.isEmpty()) {
+            logger.log("creating property");
+            propertiesElement.addProperty(Property.builder()
+                .propertyRuleRef(propertyRef)
+                .value(computedValue.apply(0))
+                .build());
+        }
         logger.logReturnVoid();
     }
 }

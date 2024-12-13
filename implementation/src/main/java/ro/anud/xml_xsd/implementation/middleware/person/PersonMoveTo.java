@@ -149,11 +149,14 @@ public class PersonMoveTo {
             .findFirst();
         if (linkElement.isEmpty()) {
             logger.log("empty linkElement");
-            worldStepInstance.locationGraph.removePerson(personIdRef);
-            originNode.get().getPeopleOrDefault().addPerson(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.People.Person.Person()
-                .setPersonIdRef(personIdRef)
-            );
-            return logger.logReturn(Optional.empty());
+
+            return logger.logReturn(Optional.of(outWorldStepInstance -> {
+                outWorldStepInstance     .locationGraph.removePerson(personIdRef);
+                logger.log("adding person [" + personIdRef + "] to destination node [" + destinationNode.getNodeIdRef() + "]");
+                originNode.get().getPeopleOrDefault().addPerson(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.People.Person.Person()
+                    .setPersonIdRef(personIdRef)
+                );
+            }));
         }
 
         var progressProperty = linkElement.get().getPersonProgressProperty();
@@ -285,6 +288,7 @@ public class PersonMoveTo {
         }
 
         var linkTo = linkElementAndPersonLink.get().linkTo;
+        logger.log("linkTo", linkTo.buildPath());
         var personNodeElement = linkElementAndPersonLink.get().person;
         var progressPropertyResult = linkTo.getPersonProgressProperty();
         if (progressPropertyResult.isEmpty()) {
@@ -292,13 +296,15 @@ public class PersonMoveTo {
             return logger.logReturn(Optional.empty());
         }
         var accumulatedProgress = personNodeElement.getAccumulatedProgress();
+        logger.log("accumulatedProgress", accumulatedProgress);
         var progressValue = worldStepInstance.computeOperation(progressPropertyResult.get()).orElse(0) + accumulatedProgress;
         var totalProgress = linkTo.getTotalProgress();
         Consumer<WorldStepInstance> mutationResult = outWorldStepInstance -> {
             outWorldStepInstance.locationGraph.removePerson(personIdRef);
+            logger.log("adding person to linkTo", linkTo.buildPath(), "with accumulatedProgress", totalProgress);
             linkTo.getPeopleOrDefault().addPerson(new Person()
                 .setPersonIdRef(personIdRef)
-                .setAccumulatedProgress(accumulatedProgress)
+                .setAccumulatedProgress(totalProgress)
             );
         };
 

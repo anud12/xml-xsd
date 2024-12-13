@@ -36,7 +36,7 @@ public class CreatePerson {
         typePersonSelection.streamProperty()
             .forEach(property -> {
                 var innerLogger = logger.log(property.getPropertyRuleRef());
-                worldStepInstance.person.getProperty(person,property.getPropertyRuleRef());
+//                worldStepInstance.person.getProperty(person,property.getPropertyRuleRef());
                 innerLogger.log("compute max");
                 var maxOptional = worldStepInstance.computeOperation(property.getMax(), person);
                 innerLogger.log("compute min");

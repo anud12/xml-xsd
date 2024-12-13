@@ -5,6 +5,8 @@ import ro.anud.xml_xsd.implementation.validator.attributeValidator.*;
 
 import java.util.List;
 
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
+
 public class AtrributeValidator {
 
     List<AttributeValidator> attributeValidatorList = List.of(
@@ -22,8 +24,12 @@ public class AtrributeValidator {
     );
 
     public List<AttributeValidator.InvalidAttribute> validate(WorldStep worldStep) {
+        var logger = logEnter("validate");
         return attributeValidatorList.stream()
-            .flatMap(attributeValidator -> attributeValidator.validate(worldStep).stream())
+            .flatMap(attributeValidator -> {
+                logger.log("validating using", attributeValidator.getClass().getSimpleName());
+                return attributeValidator.validate(worldStep).stream();
+            })
             .toList();
 
     }

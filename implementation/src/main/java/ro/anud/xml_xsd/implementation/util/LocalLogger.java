@@ -185,7 +185,7 @@ public class LocalLogger {
     private static String logLine(StackTraceElement previousStackTrace) {
         var className = previousStackTrace.getFileName();
         var lineNumber = previousStackTrace.getLineNumber();
-        var logLine = " at " + previousStackTrace.getClassName() + "(" +className + ":" + lineNumber + ")";
+        var logLine = " ---  at " + previousStackTrace.getClassName() + "(" +className + ":" + lineNumber + ")";
         return logLine;
     }
 

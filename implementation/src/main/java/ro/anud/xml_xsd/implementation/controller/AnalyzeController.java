@@ -60,9 +60,11 @@ public class AnalyzeController {
         var logger = logEnter("");
         try {
             var worldStepInstance = buildInstance(request);
+            logger.log("validating");
             var validationResult = new AtrributeValidator()
                 .validate(worldStepInstance.getWorldStep());
             if (!validationResult.isEmpty()) {
+                logger.log("validation failed");
                 return ResponseEntity.status(400).body(validationResult.stream()
                     .map(invalidAttribute -> {
                         var allowedValues = String.join(", ", invalidAttribute.allowedValues());
@@ -71,7 +73,7 @@ public class AnalyzeController {
                     .collect(Collectors.joining("\n"))
                 );
             }
-
+            logger.log("validating done");
             FromPersonAction.apply(worldStepInstance);
             PersonCreateAction.apply(worldStepInstance);
             LocationGraphCreate.apply(worldStepInstance);
