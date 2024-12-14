@@ -23,6 +23,12 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 @Setter
 public class WorldStepInstance {
 
+
+    @FunctionalInterface
+    public interface Mutation {
+        void apply(WorldStepInstance outInstance);
+    }
+
     public InstanceTypeEnum instance;
     private WorldStepInstance outInstance = this;
     private WorldStep worldStep;

@@ -27,14 +27,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public static PersonToPerson fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new PersonToPerson();
-      instance.setRawNode(rawNode);
+      instance.rawNode(rawNode);
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
     public static PersonToPerson fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
       var instance = fromRawNode(rawNode);
-      instance.setParentNode(parent);
+      instance.parentNode(parent);
       return logReturn(instance);
     }
     public static Optional<PersonToPerson> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
@@ -55,24 +55,35 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     private String id;
 
     //Children elements
+    @Builder.Default
     private ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.Test.Test test = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.Test.Test();
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.Type_propertyMutationOn.Type_propertyMutationOn> propertyMutation = Optional.empty();
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.LocationMutation.LocationMutation> locationMutation = Optional.empty();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
-    @Getter
-    @Setter
     @Builder.Default
     private RawNode rawNode = new RawNode();
 
-    @Getter
+    public RawNode rawNode() {
+      return rawNode;
+    }
+    public void rawNode(RawNode rawNode) {
+      this.rawNode = rawNode;
+    }
+
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
+
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode() {
+      return parentNode;
+    }
 
     @Builder.Default
     private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
@@ -91,9 +102,18 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       childChanged(new HashSet<>());
     }
 
-    public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+    public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
       this.parentNode = Optional.of(linkedNode);
       triggerOnChange();
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.ActionRule> parentAsActionRule() {
+      return parentNode.flatMap(node -> {
+       if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.ActionRule casted){
+         return Optional.of(casted);
+       }
+       return Optional.empty();
+     });
     }
 
     public void removeChild(Object object) {
@@ -195,7 +215,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public PersonToPerson setTest(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.Test.Test value)
     {
       this.test = value;
-      value.setParentNode(this);
+      value.parentNode(this);
       triggerOnChange();
       return this;
     }
@@ -208,7 +228,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.propertyMutation.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.Type_propertyMutationOn.Type_propertyMutationOn();
-        instance.setParentNode(this);
+        instance.parentNode(this);
         this.propertyMutation = Optional.of(instance);
         return this.propertyMutation.get();
       });
@@ -224,7 +244,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public PersonToPerson setPropertyMutation(ro.anud.xml_xsd.implementation.model.Type_propertyMutationOn.Type_propertyMutationOn value)
     {
       this.propertyMutation = Optional.ofNullable(value);
-      value.setParentNode(this);
+      value.parentNode(this);
       triggerOnChange();
       return this;
     }
@@ -237,7 +257,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.locationMutation.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.LocationMutation.LocationMutation();
-        instance.setParentNode(this);
+        instance.parentNode(this);
         this.locationMutation = Optional.of(instance);
         return this.locationMutation.get();
       });
@@ -253,7 +273,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public PersonToPerson setLocationMutation(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.LocationMutation.LocationMutation value)
     {
       this.locationMutation = Optional.ofNullable(value);
-      value.setParentNode(this);
+      value.parentNode(this);
       triggerOnChange();
       return this;
     }

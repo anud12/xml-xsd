@@ -18,8 +18,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
 public interface IType_trigger<T> extends ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-  public RawNode getRawNode();
-
   //Children elements
   public ro.anud.xml_xsd.implementation.model.Type_trigger.PersonActionUsed.PersonActionUsed getPersonActionUsed();
   public Stream<ro.anud.xml_xsd.implementation.model.Type_trigger.PersonActionUsed.PersonActionUsed> streamPersonActionUsed();

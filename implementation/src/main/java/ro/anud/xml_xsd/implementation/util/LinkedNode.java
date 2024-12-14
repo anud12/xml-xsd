@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface LinkedNode {
-    Optional<LinkedNode> getParentNode();
+    Optional<LinkedNode> parentNode();
 
     void removeChild(Object object);
 
@@ -12,16 +12,16 @@ public interface LinkedNode {
         return "";
     }
 
-    public RawNode getRawNode();
+    public RawNode rawNode();
 
     public void childChanged(Set<Object> clazzSet);
 
     public int buildIndexForChild(Object object);
 
     public default String buildPath() {
-        var index = getParentNode().map(linkedNode -> linkedNode.buildIndexForChild(this)).orElse(0);
+        var index = parentNode().map(linkedNode -> linkedNode.buildIndexForChild(this)).orElse(0);
 
-        return getParentNode().flatMap(LinkedNode::getParentNode)
+        return parentNode().flatMap(LinkedNode::parentNode)
             .map(LinkedNode::buildPath)
             .map(string -> string + "/" + nodeName() + "[" + index + "]")
             .orElse("/");

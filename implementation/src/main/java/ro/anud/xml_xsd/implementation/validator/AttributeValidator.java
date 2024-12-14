@@ -45,6 +45,6 @@ public interface AttributeValidator {
     }
 
     public default List<InvalidAttribute> validate(WorldStep worldStep) {
-        return validate(worldStep, worldStep.getRawNode());
+        return validate(worldStep, worldStep.rawNode());
     }
 }

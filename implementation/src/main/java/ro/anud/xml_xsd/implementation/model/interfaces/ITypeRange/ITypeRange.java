@@ -18,8 +18,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
 public interface ITypeRange<T> extends ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-  public RawNode getRawNode();
-
   //Children elements
 
   public void deserialize (RawNode rawNode);

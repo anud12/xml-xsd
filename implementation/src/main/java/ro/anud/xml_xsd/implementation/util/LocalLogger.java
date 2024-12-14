@@ -20,8 +20,8 @@ public class LocalLogger {
 
         public LogClass() {}
 
-        public LogClass(List parentArgs) {
-            this.parentArgs = parentArgs;
+        public LogClass(List<?> parentArgs) {
+            this.parentArgs = Collections.unmodifiableList(parentArgs);
         }
 
         public LogClass log(Object... args) {

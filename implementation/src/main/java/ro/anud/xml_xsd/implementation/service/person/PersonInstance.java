@@ -37,12 +37,12 @@ public class PersonInstance {
         return logger.logReturn(GetProperty.getProperty(this.worldStepInstance, person, propertyRef));
     }
 
-    public void applyPropertyMutationOnOut(
+    public Stream<WorldStepInstance.Mutation> applyPropertyMutationOnOut(
         final Person selfPerson,
         final IType_propertyMutation<?> typePropertyMutation,
         final Person originPerson,
         final Person targetPerson) {
-        ApplyPropertyMutation.applyPropertyMutation(
+        return ApplyPropertyMutation.applyPropertyMutation(
             worldStepInstance,
             selfPerson,
             typePropertyMutation,

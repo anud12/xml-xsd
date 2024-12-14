@@ -17,8 +17,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
 public interface IType_mathOperations<T> extends ro.anud.xml_xsd.implementation.util.LinkedNode {
-
-  public RawNode getRawNode();
   public void deserialize (RawNode rawNode);
 
   public RawNode serializeIntoRawNode();

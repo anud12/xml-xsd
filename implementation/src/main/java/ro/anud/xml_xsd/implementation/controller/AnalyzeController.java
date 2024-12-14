@@ -84,11 +84,6 @@ public class AnalyzeController {
             LocationGraphAddClassification.apply(worldStepInstance);
             PersonAssignClassification.apply(worldStepInstance);
 
-            logger.logTodo("make creating person use out instance");
-            //            outWorldStepInstance.getWorldStep().getWorldMetadata().getCounter().setValue(
-            //                outWorldStepInstance.getWorldStep().getWorldMetadata().getCounter().getValue() +
-            //                    worldStepInstance.getWorldStep().getWorldMetadata().getCounter().getValue()
-            //            );
             return ResponseEntity.ok(serializeWorldStepInstance(worldStepInstance));
 
         } catch (Exception e) {
@@ -106,10 +101,10 @@ public class AnalyzeController {
 
         var worldStepInstance = new WorldStepInstance(WorldStep.fromRawNode(rawNode));
         worldStepInstance.instance = InstanceTypeEnum.FIRST;
-        //            var outWorldStepInstance = new WorldStepInstance(WorldStep.fromRawNode(rawNode));
-        //            outWorldStepInstance.instance = InstanceTypeEnum.SECOND;
-        worldStepInstance.setOutInstance(worldStepInstance);
-        //            outWorldStepInstance.setOutInstance(worldStepInstance);
+        var outWorldStepInstance = new WorldStepInstance(WorldStep.fromRawNode(rawNode));
+        outWorldStepInstance.instance = InstanceTypeEnum.SECOND;
+        worldStepInstance.setOutInstance(outWorldStepInstance);
+        outWorldStepInstance.setOutInstance(worldStepInstance);
         return worldStepInstance;
     }
 

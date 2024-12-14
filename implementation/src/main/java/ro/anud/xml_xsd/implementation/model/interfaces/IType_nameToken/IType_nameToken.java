@@ -18,8 +18,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
 public interface IType_nameToken<T> extends ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-  public RawNode getRawNode();
-
   //Children elements
   public List<ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.NameToken> getNameToken();
   public Stream<ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.NameToken> streamNameToken();

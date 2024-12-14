@@ -84,7 +84,7 @@ public class CreatePerson {
                 int propertyValue = worldStepInstance.person.getProperty(person, propertyRef).orElse(0);
 
                 innerLogger.logTodo("remove rawNode.getAttributeRequired(\"is\")");
-                var computedValue = switch (property.getRawNode().getAttributeRequired("is")) {
+                var computedValue = switch (property.rawNode().getAttributeRequired("is")) {
                     case "lessThan": {
                         innerLogger.log("lessThan");
                         yield Math.min(classificationValue - 1, propertyValue);
@@ -107,7 +107,7 @@ public class CreatePerson {
                     }
                     default:
                         throw new RuntimeException(
-                            "Unknown operation " + property.getRawNode().getAttributeRequired("is")
+                            "Unknown operation " + property.rawNode().getAttributeRequired("is")
                         );
                 };
                 innerLogger.log("setting propertyRef", propertyRef, "to ", computedValue);

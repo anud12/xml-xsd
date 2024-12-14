@@ -19,7 +19,7 @@ public class ComputeOperation {
         IType_mathOperations<?> typeMathOperations,
         Person person) {
         var logger = logEnter();
-        var rawNode = typeMathOperations.getRawNode();
+        var rawNode = typeMathOperations.rawNode();
         var initial = rawNode.getAttributeInt("initial").orElse(0);
         logger.log("initial:", initial);
 
@@ -41,7 +41,7 @@ public class ComputeOperation {
         IType_mathOperations<?> typeMathOperations
     ) {
         var logger = logEnter();
-        var rawNode = typeMathOperations.getRawNode();
+        var rawNode = typeMathOperations.rawNode();
         var initial = rawNode.getAttributeInt("initial").orElse(0);
         logger.log("initial:", initial);
 

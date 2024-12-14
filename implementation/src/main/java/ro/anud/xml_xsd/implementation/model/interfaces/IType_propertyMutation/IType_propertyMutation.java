@@ -18,8 +18,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
 public interface IType_propertyMutation<T> extends ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-  public RawNode getRawNode();
-
   //Attributes
   public String getPropertyRuleRef();
   public T setPropertyRuleRef(String value);

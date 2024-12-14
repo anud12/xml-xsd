@@ -61,7 +61,7 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
               {
                 return this.${normalizeNameField(key)}.orElseGet(() -> {
                   var instance = new ${baseTypeString}();
-                  instance.setParentNode(this);
+                  instance.parentNode(this);
                   this.${normalizeNameField(key)} = Optional.of(instance);
                   return this.${normalizeNameField(key)}.get();
                 });
@@ -80,7 +80,7 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
               {
                 ${value.isNullable && `this.${normalizeNameField(key)} = Optional.ofNullable(value);`}
                 ${!value.isNullable && `this.${normalizeNameField(key)} = value;`}
-                value.setParentNode(this);
+                value.parentNode(this);
                 triggerOnChange();
                 return this;
               }
@@ -89,14 +89,14 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
               public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} add${normalizeNameClass(key)}(${baseTypeString} value)
               {
                 this.${normalizeNameField(key)}.add(value);
-                value.setParentNode(this);
+                value.parentNode(this);
                 triggerOnChange();
                 return this;
               }
               public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} addAll${normalizeNameClass(key)}(List<${baseTypeString}> value)
               {
                 this.${normalizeNameField(key)}.addAll(value);
-                value.forEach(e -> e.setParentNode(this));
+                value.forEach(e -> e.parentNode(this));
                 triggerOnChange();
                 return this;
               }
