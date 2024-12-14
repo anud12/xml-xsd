@@ -6,14 +6,12 @@ import org.w3c.dom.Element;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
 import java.util.*;
-import java.util.stream.Stream;
 import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
@@ -231,11 +229,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.personDefault.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PersonDefault.PersonDefault> streamPersonDefaultOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PersonDefault.PersonDefault> streamPersonDefaultOrDefault()
     {
-      return Stream.of(getPersonDefaultOrDefault());
+      return java.util.stream.Stream.of(getPersonDefaultOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PersonDefault.PersonDefault> streamPersonDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PersonDefault.PersonDefault> streamPersonDefault()
     {
       return personDefault.stream();
     }
@@ -260,11 +258,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.itemDefault.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.ItemDefault.ItemDefault> streamItemDefaultOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.ItemDefault.ItemDefault> streamItemDefaultOrDefault()
     {
-      return Stream.of(getItemDefaultOrDefault());
+      return java.util.stream.Stream.of(getItemDefaultOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.ItemDefault.ItemDefault> streamItemDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.ItemDefault.ItemDefault> streamItemDefault()
     {
       return itemDefault.stream();
     }
@@ -280,7 +278,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.propertyThreshold;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PropertyThreshold.PropertyThreshold> streamPropertyThreshold()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PropertyThreshold.PropertyThreshold> streamPropertyThreshold()
     {
       return propertyThreshold.stream();
     }

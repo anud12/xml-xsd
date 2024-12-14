@@ -296,14 +296,12 @@ export function typeDeclarationElementToString(directoryMetadata: DirectoryMetad
       import ro.anud.xml_xsd.implementation.util.RawNode;
       
       import java.util.*;
-      import java.util.stream.Stream;
       import ro.anud.xml_xsd.implementation.util.Subscription;
       import java.util.function.Consumer;
       import java.util.stream.Collectors;
       
       import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
       import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-      import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
       import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       `
 
@@ -329,7 +327,6 @@ export function typeDeclarationElementToString(directoryMetadata: DirectoryMetad
     directory.createOrGetFile(`${result.writtenClass[0]}.java`, () => {
       return template()`
         package ${basePackage}.interfaces.${result.writtenClass[0]};
-        ${commonImports}
         
         ${result.templateString}
       `

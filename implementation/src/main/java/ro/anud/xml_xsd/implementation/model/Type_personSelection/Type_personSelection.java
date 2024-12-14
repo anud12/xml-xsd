@@ -6,14 +6,12 @@ import org.w3c.dom.Element;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
 import java.util.*;
-import java.util.stream.Stream;
 import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
@@ -227,11 +225,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.radius.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamRadiusOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamRadiusOrDefault()
     {
-      return Stream.of(getRadiusOrDefault());
+      return java.util.stream.Stream.of(getRadiusOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamRadius()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamRadius()
     {
       return radius.stream();
     }
@@ -256,11 +254,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.min.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamMinOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamMinOrDefault()
     {
-      return Stream.of(getMinOrDefault());
+      return java.util.stream.Stream.of(getMinOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamMin()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamMin()
     {
       return min.stream();
     }
@@ -285,11 +283,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.max.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamMaxOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamMaxOrDefault()
     {
-      return Stream.of(getMaxOrDefault());
+      return java.util.stream.Stream.of(getMaxOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamMax()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamMax()
     {
       return max.stream();
     }
@@ -305,7 +303,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.property;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Property.Property> streamProperty()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Property.Property> streamProperty()
     {
       return property.stream();
     }
@@ -333,7 +331,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.classification;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification> streamClassification()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification> streamClassification()
     {
       return classification.stream();
     }
@@ -370,11 +368,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.race.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race> streamRaceOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race> streamRaceOrDefault()
     {
-      return Stream.of(getRaceOrDefault());
+      return java.util.stream.Stream.of(getRaceOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race> streamRace()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race> streamRace()
     {
       return race.stream();
     }

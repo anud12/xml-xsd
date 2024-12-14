@@ -6,14 +6,12 @@ import org.w3c.dom.Element;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
 import java.util.*;
-import java.util.stream.Stream;
 import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
@@ -205,11 +203,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.locationGraph.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LocationGraph.LocationGraph> streamLocationGraphOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LocationGraph.LocationGraph> streamLocationGraphOrDefault()
     {
-      return Stream.of(getLocationGraphOrDefault());
+      return java.util.stream.Stream.of(getLocationGraphOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LocationGraph.LocationGraph> streamLocationGraph()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LocationGraph.LocationGraph> streamLocationGraph()
     {
       return locationGraph.stream();
     }
@@ -234,11 +232,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.linkTo.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo> streamLinkToOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo> streamLinkToOrDefault()
     {
-      return Stream.of(getLinkToOrDefault());
+      return java.util.stream.Stream.of(getLinkToOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo> streamLinkTo()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo> streamLinkTo()
     {
       return linkTo.stream();
     }

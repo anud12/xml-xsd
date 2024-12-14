@@ -6,14 +6,12 @@ import org.w3c.dom.Element;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
 import java.util.*;
-import java.util.stream.Stream;
 import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
@@ -193,7 +191,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.worldMetadata;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata> streamWorldMetadata()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata> streamWorldMetadata()
     {
       return Optional.ofNullable(worldMetadata).stream();
     }
@@ -209,7 +207,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.ruleGroup;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup> streamRuleGroup()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup> streamRuleGroup()
     {
       return ruleGroup.stream();
     }
@@ -237,7 +235,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.data;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data> streamData()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data> streamData()
     {
       return Optional.ofNullable(data).stream();
     }
@@ -262,11 +260,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.actions.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions> streamActionsOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions> streamActionsOrDefault()
     {
-      return Stream.of(getActionsOrDefault());
+      return java.util.stream.Stream.of(getActionsOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions> streamActions()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions> streamActions()
     {
       return actions.stream();
     }

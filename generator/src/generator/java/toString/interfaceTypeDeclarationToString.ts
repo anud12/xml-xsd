@@ -29,19 +29,19 @@ export function interfaceTypeDeclarationToString(directoryMetadata: DirectoryMet
       if (type !== primitives.int) {
 
         const typeString = value.isNullable
-          ? `Optional<${primitives.string}>`
+          ? `java.util.Optional<${primitives.string}>`
           : primitives.string;
         return template()`
-                    public ${typeString} get${normalizeNameClass(key)}();
-                    public T set${normalizeNameClass(key)}(${typeString} value);`
+                    ${typeString} get${normalizeNameClass(key)}();
+                    T set${normalizeNameClass(key)}(${typeString} value);`
       }
 
       const typeString = value.isNullable
-        ? `Optional<${type}>`
+        ? `java.util.Optional<${type}>`
         : type;
       return template()`
-                  public ${typeString} get${normalizeNameClass(key)}();
-                  public T set${normalizeNameClass(key)}(${typeString} value);`
+                  ${typeString} get${normalizeNameClass(key)}();
+                  T set${normalizeNameClass(key)}(${typeString} value);`
     }
 
     return template()`/* ignored attribute key={key} of type=${type}*/`
@@ -68,22 +68,22 @@ export function interfaceTypeDeclarationToString(directoryMetadata: DirectoryMet
         pathString = baseTypeString;
       }
       if (value.isNullable) {
-        pathString = `Optional<${baseTypeString}>`
+        pathString = `java.util.Optional<${baseTypeString}>`
       }
       if (!value.isSingle) {
-        pathString = `List<${baseTypeString}>`
+        pathString = `java.util.List<${baseTypeString}>`
       }
 
       const templateString = template()`
-          public ${pathString} get${normalizeNameClass(key)}();
-          public Stream<${baseTypeString}> stream${normalizeNameClass(key)}();
+          ${pathString} get${normalizeNameClass(key)}();
+          java.util.stream.Stream<${baseTypeString}> stream${normalizeNameClass(key)}();
           ${value.isSingle && template()`
-            public T set${normalizeNameClass(key)}(${baseTypeString} value);
+            T set${normalizeNameClass(key)}(${baseTypeString} value);
           `}
           ${!value.isSingle && template()`
-            public T add${normalizeNameClass(key)}(${baseTypeString} value);
-            public T addAll${normalizeNameClass(key)}(List<${baseTypeString}> value);
-            public T remove${normalizeNameClass(key)}(${baseTypeString} value);
+            T add${normalizeNameClass(key)}(${baseTypeString} value);
+            T addAll${normalizeNameClass(key)}(java.util.List<${baseTypeString}> value);
+            T remove${normalizeNameClass(key)}(${baseTypeString} value);
           `}
       `
 
@@ -117,11 +117,11 @@ export function interfaceTypeDeclarationToString(directoryMetadata: DirectoryMet
       return template()`/* ignored children key:${key} of type:${type}*/`
     }).filter(e => e).join("\n")}
       `}
-      public void deserialize (RawNode rawNode);
+      void deserialize (ro.anud.xml_xsd.implementation.util.RawNode rawNode);
 
-      public RawNode serializeIntoRawNode();
+      ro.anud.xml_xsd.implementation.util.RawNode serializeIntoRawNode();
 
-      public void serialize(Document document, Element element);
+      void serialize(org.w3c.dom.Document document, org.w3c.dom.Element element);
     }
     
     /*

@@ -6,14 +6,12 @@ import org.w3c.dom.Element;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
 import java.util.*;
-import java.util.stream.Stream;
 import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
@@ -160,7 +158,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.personActionUsed;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.Type_trigger.PersonActionUsed.PersonActionUsed> streamPersonActionUsed()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_trigger.PersonActionUsed.PersonActionUsed> streamPersonActionUsed()
     {
       return Optional.ofNullable(personActionUsed).stream();
     }

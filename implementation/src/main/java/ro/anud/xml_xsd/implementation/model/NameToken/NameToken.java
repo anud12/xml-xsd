@@ -6,14 +6,12 @@ import org.w3c.dom.Element;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
 import java.util.*;
-import java.util.stream.Stream;
 import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
@@ -196,11 +194,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this._ref.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.NameToken._ref._ref> stream_refOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.NameToken._ref._ref> stream_refOrDefault()
     {
-      return Stream.of(get_refOrDefault());
+      return java.util.stream.Stream.of(get_refOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.NameToken._ref._ref> stream_ref()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.NameToken._ref._ref> stream_ref()
     {
       return _ref.stream();
     }
@@ -225,11 +223,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.oneOf.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.NameToken.OneOf.OneOf> streamOneOfOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.NameToken.OneOf.OneOf> streamOneOfOrDefault()
     {
-      return Stream.of(getOneOfOrDefault());
+      return java.util.stream.Stream.of(getOneOfOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.NameToken.OneOf.OneOf> streamOneOf()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.NameToken.OneOf.OneOf> streamOneOf()
     {
       return oneOf.stream();
     }

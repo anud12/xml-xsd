@@ -97,4 +97,12 @@ public class PersonInstance {
             });
         logger.logReturnVoid();
     }
+
+    public Person getOrCreate(final Person person) {
+        Optional<Person> personOptional = repository.personById(person.getId());
+        return personOptional.orElseGet(() -> {
+
+            return person;
+        });
+    }
 }

@@ -1,54 +1,38 @@
 package ro.anud.xml_xsd.implementation.model.interfaces.IType_personSelection;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import ro.anud.xml_xsd.implementation.util.RawNode;
-
-import java.util.*;
-import java.util.stream.Stream;
-import ro.anud.xml_xsd.implementation.util.Subscription;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
-
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
 public interface IType_personSelection<T> extends ro.anud.xml_xsd.implementation.util.LinkedNode {
 
   //Children elements
-  public Optional<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> getRadius();
-  public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamRadius();
-  public T setRadius(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations value);
+  java.util.Optional<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> getRadius();
+  java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamRadius();
+  T setRadius(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations value);
 
-  public Optional<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> getMin();
-  public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamMin();
-  public T setMin(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations value);
+  java.util.Optional<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> getMin();
+  java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamMin();
+  T setMin(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations value);
 
-  public Optional<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> getMax();
-  public Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamMax();
-  public T setMax(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations value);
+  java.util.Optional<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> getMax();
+  java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamMax();
+  T setMax(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations value);
 
-  public List<ro.anud.xml_xsd.implementation.model.Type_personSelection.Property.Property> getProperty();
-  public Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Property.Property> streamProperty();
-  public T addProperty(ro.anud.xml_xsd.implementation.model.Type_personSelection.Property.Property value);
-  public T addAllProperty(List<ro.anud.xml_xsd.implementation.model.Type_personSelection.Property.Property> value);
-  public T removeProperty(ro.anud.xml_xsd.implementation.model.Type_personSelection.Property.Property value);
-  public List<ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification> getClassification();
-  public Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification> streamClassification();
-  public T addClassification(ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification value);
-  public T addAllClassification(List<ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification> value);
-  public T removeClassification(ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification value);
-  public Optional<ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race> getRace();
-  public Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race> streamRace();
-  public T setRace(ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race value);
-  public void deserialize (RawNode rawNode);
+  java.util.List<ro.anud.xml_xsd.implementation.model.Type_personSelection.Property.Property> getProperty();
+  java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Property.Property> streamProperty();
+  T addProperty(ro.anud.xml_xsd.implementation.model.Type_personSelection.Property.Property value);
+  T addAllProperty(java.util.List<ro.anud.xml_xsd.implementation.model.Type_personSelection.Property.Property> value);
+  T removeProperty(ro.anud.xml_xsd.implementation.model.Type_personSelection.Property.Property value);
+  java.util.List<ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification> getClassification();
+  java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification> streamClassification();
+  T addClassification(ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification value);
+  T addAllClassification(java.util.List<ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification> value);
+  T removeClassification(ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification value);
+  java.util.Optional<ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race> getRace();
+  java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race> streamRace();
+  T setRace(ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race value);
+  void deserialize (ro.anud.xml_xsd.implementation.util.RawNode rawNode);
 
-  public RawNode serializeIntoRawNode();
+  ro.anud.xml_xsd.implementation.util.RawNode serializeIntoRawNode();
 
-  public void serialize(Document document, Element element);
+  void serialize(org.w3c.dom.Document document, org.w3c.dom.Element element);
 }
 
 /*

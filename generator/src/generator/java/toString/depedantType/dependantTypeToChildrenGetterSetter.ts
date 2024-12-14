@@ -66,12 +66,12 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
                   return this.${normalizeNameField(key)}.get();
                 });
               }
-              public Stream<${baseTypeString}> stream${normalizeNameClass(key)}OrDefault()
+              public java.util.stream.Stream<${baseTypeString}> stream${normalizeNameClass(key)}OrDefault()
               {
-                return Stream.of(get${normalizeNameClass(key)}OrDefault());
+                return java.util.stream.Stream.of(get${normalizeNameClass(key)}OrDefault());
               }
               `}
-              public Stream<${baseTypeString}> stream${normalizeNameClass(key)}()
+              public java.util.stream.Stream<${baseTypeString}> stream${normalizeNameClass(key)}()
               {
                 return ${streamBody};
               }

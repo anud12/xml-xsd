@@ -6,14 +6,12 @@ import org.w3c.dom.Element;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
 import java.util.*;
-import java.util.stream.Stream;
 import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
@@ -233,11 +231,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.previousWorldStep.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.PreviousWorldStep.PreviousWorldStep> streamPreviousWorldStepOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.PreviousWorldStep.PreviousWorldStep> streamPreviousWorldStepOrDefault()
     {
-      return Stream.of(getPreviousWorldStepOrDefault());
+      return java.util.stream.Stream.of(getPreviousWorldStepOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.PreviousWorldStep.PreviousWorldStep> streamPreviousWorldStep()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.PreviousWorldStep.PreviousWorldStep> streamPreviousWorldStep()
     {
       return previousWorldStep.stream();
     }
@@ -262,11 +260,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.nextWorldStep.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.NextWorldStep.NextWorldStep> streamNextWorldStepOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.NextWorldStep.NextWorldStep> streamNextWorldStepOrDefault()
     {
-      return Stream.of(getNextWorldStepOrDefault());
+      return java.util.stream.Stream.of(getNextWorldStepOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.NextWorldStep.NextWorldStep> streamNextWorldStep()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.NextWorldStep.NextWorldStep> streamNextWorldStep()
     {
       return nextWorldStep.stream();
     }
@@ -282,7 +280,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.elapsedTime;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.ElapsedTime.ElapsedTime> streamElapsedTime()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.ElapsedTime.ElapsedTime> streamElapsedTime()
     {
       return Optional.ofNullable(elapsedTime).stream();
     }
@@ -298,7 +296,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.stepDuration;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.StepDuration.StepDuration> streamStepDuration()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.StepDuration.StepDuration> streamStepDuration()
     {
       return Optional.ofNullable(stepDuration).stream();
     }
@@ -314,7 +312,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.counter;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.Counter.Counter> streamCounter()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.Counter.Counter> streamCounter()
     {
       return Optional.ofNullable(counter).stream();
     }
@@ -330,7 +328,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.randomizationTable;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.RandomizationTable.RandomizationTable> streamRandomizationTable()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.RandomizationTable.RandomizationTable> streamRandomizationTable()
     {
       return Optional.ofNullable(randomizationTable).stream();
     }

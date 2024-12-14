@@ -6,14 +6,12 @@ import org.w3c.dom.Element;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
 import java.util.*;
-import java.util.stream.Stream;
 import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
@@ -241,11 +239,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.vision.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.TypeRange.TypeRange> streamVisionOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.TypeRange.TypeRange> streamVisionOrDefault()
     {
-      return Stream.of(getVisionOrDefault());
+      return java.util.stream.Stream.of(getVisionOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.TypeRange.TypeRange> streamVision()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.TypeRange.TypeRange> streamVision()
     {
       return vision.stream();
     }
@@ -270,11 +268,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.movement.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.TypeRange.TypeRange> streamMovementOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.TypeRange.TypeRange> streamMovementOrDefault()
     {
-      return Stream.of(getMovementOrDefault());
+      return java.util.stream.Stream.of(getMovementOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.TypeRange.TypeRange> streamMovement()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.TypeRange.TypeRange> streamMovement()
     {
       return movement.stream();
     }
@@ -299,11 +297,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.name.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.Entry.Name.Name> streamNameOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.Entry.Name.Name> streamNameOrDefault()
     {
-      return Stream.of(getNameOrDefault());
+      return java.util.stream.Stream.of(getNameOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.Entry.Name.Name> streamName()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.Entry.Name.Name> streamName()
     {
       return name.stream();
     }
@@ -319,7 +317,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.propertyBonus;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.Entry.PropertyBonus.PropertyBonus> streamPropertyBonus()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.Entry.PropertyBonus.PropertyBonus> streamPropertyBonus()
     {
       return propertyBonus.stream();
     }
@@ -356,11 +354,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.icon.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon> streamIconOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon> streamIconOrDefault()
     {
-      return Stream.of(getIconOrDefault());
+      return java.util.stream.Stream.of(getIconOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon> streamIcon()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon> streamIcon()
     {
       return icon.stream();
     }

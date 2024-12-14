@@ -6,14 +6,12 @@ import org.w3c.dom.Element;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
 import java.util.*;
-import java.util.stream.Stream;
 import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
@@ -189,11 +187,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.people.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People> streamPeopleOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People> streamPeopleOrDefault()
     {
-      return Stream.of(getPeopleOrDefault());
+      return java.util.stream.Stream.of(getPeopleOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People> streamPeople()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People> streamPeople()
     {
       return people.stream();
     }
@@ -218,11 +216,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.location.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location> streamLocationOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location> streamLocationOrDefault()
     {
-      return Stream.of(getLocationOrDefault());
+      return java.util.stream.Stream.of(getLocationOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location> streamLocation()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location> streamLocation()
     {
       return location.stream();
     }

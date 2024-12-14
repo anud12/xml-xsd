@@ -6,14 +6,12 @@ import org.w3c.dom.Element;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
 import java.util.*;
-import java.util.stream.Stream;
 import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
@@ -254,11 +252,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.race.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race> streamRaceOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race> streamRaceOrDefault()
     {
-      return Stream.of(getRaceOrDefault());
+      return java.util.stream.Stream.of(getRaceOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race> streamRace()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race> streamRace()
     {
       return race.stream();
     }
@@ -283,11 +281,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.properties.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties> streamPropertiesOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties> streamPropertiesOrDefault()
     {
-      return Stream.of(getPropertiesOrDefault());
+      return java.util.stream.Stream.of(getPropertiesOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties> streamProperties()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties> streamProperties()
     {
       return properties.stream();
     }
@@ -303,7 +301,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.relations;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Relations.Relations> streamRelations()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Relations.Relations> streamRelations()
     {
       return relations.stream();
     }
@@ -340,11 +338,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.classifications.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications> streamClassificationsOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications> streamClassificationsOrDefault()
     {
-      return Stream.of(getClassificationsOrDefault());
+      return java.util.stream.Stream.of(getClassificationsOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications> streamClassifications()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications> streamClassifications()
     {
       return classifications.stream();
     }
@@ -369,11 +367,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.icon.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon> streamIconOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon> streamIconOrDefault()
     {
-      return Stream.of(getIconOrDefault());
+      return java.util.stream.Stream.of(getIconOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon> streamIcon()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon> streamIcon()
     {
       return icon.stream();
     }

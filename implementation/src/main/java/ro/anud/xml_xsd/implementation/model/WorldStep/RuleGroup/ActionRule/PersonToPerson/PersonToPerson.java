@@ -6,14 +6,12 @@ import org.w3c.dom.Element;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
 import java.util.*;
-import java.util.stream.Stream;
 import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
@@ -208,7 +206,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.test;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.Test.Test> streamTest()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.Test.Test> streamTest()
     {
       return Optional.ofNullable(test).stream();
     }
@@ -233,11 +231,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.propertyMutation.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.Type_propertyMutationOn.Type_propertyMutationOn> streamPropertyMutationOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_propertyMutationOn.Type_propertyMutationOn> streamPropertyMutationOrDefault()
     {
-      return Stream.of(getPropertyMutationOrDefault());
+      return java.util.stream.Stream.of(getPropertyMutationOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.Type_propertyMutationOn.Type_propertyMutationOn> streamPropertyMutation()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_propertyMutationOn.Type_propertyMutationOn> streamPropertyMutation()
     {
       return propertyMutation.stream();
     }
@@ -262,11 +260,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.locationMutation.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.LocationMutation.LocationMutation> streamLocationMutationOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.LocationMutation.LocationMutation> streamLocationMutationOrDefault()
     {
-      return Stream.of(getLocationMutationOrDefault());
+      return java.util.stream.Stream.of(getLocationMutationOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.LocationMutation.LocationMutation> streamLocationMutation()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.LocationMutation.LocationMutation> streamLocationMutation()
     {
       return locationMutation.stream();
     }

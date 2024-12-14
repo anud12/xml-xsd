@@ -6,14 +6,12 @@ import org.w3c.dom.Element;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
 import java.util.*;
-import java.util.stream.Stream;
 import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
@@ -257,7 +255,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.by;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.By> streamBy()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.By> streamBy()
     {
       return by.stream();
     }
@@ -285,7 +283,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.locationGraph_create;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_create.LocationGraph_create> streamLocationGraph_create()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_create.LocationGraph_create> streamLocationGraph_create()
     {
       return locationGraph_create.stream();
     }
@@ -313,7 +311,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.locationGraph_node_createAdjacent;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_createAdjacent.LocationGraph_node_createAdjacent> streamLocationGraph_node_createAdjacent()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_createAdjacent.LocationGraph_node_createAdjacent> streamLocationGraph_node_createAdjacent()
     {
       return locationGraph_node_createAdjacent.stream();
     }
@@ -341,7 +339,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.locationGraph_node_addClassification;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_addClassification.LocationGraph_node_addClassification> streamLocationGraph_node_addClassification()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_addClassification.LocationGraph_node_addClassification> streamLocationGraph_node_addClassification()
     {
       return locationGraph_node_addClassification.stream();
     }
@@ -378,11 +376,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         return this.person_teleport.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.Person_teleport> streamPerson_teleportOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.Person_teleport> streamPerson_teleportOrDefault()
     {
-      return Stream.of(getPerson_teleportOrDefault());
+      return java.util.stream.Stream.of(getPerson_teleportOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.Person_teleport> streamPerson_teleport()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.Person_teleport> streamPerson_teleport()
     {
       return person_teleport.stream();
     }
@@ -398,7 +396,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.person_onPerson_propertyMutation;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_onPerson_propertyMutation.Person_onPerson_propertyMutation> streamPerson_onPerson_propertyMutation()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_onPerson_propertyMutation.Person_onPerson_propertyMutation> streamPerson_onPerson_propertyMutation()
     {
       return person_onPerson_propertyMutation.stream();
     }
@@ -426,7 +424,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.person_create;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_create.Person_create> streamPerson_create()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_create.Person_create> streamPerson_create()
     {
       return person_create.stream();
     }
@@ -454,7 +452,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.person_moveTo;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Person_moveTo> streamPerson_moveTo()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Person_moveTo> streamPerson_moveTo()
     {
       return person_moveTo.stream();
     }
@@ -482,7 +480,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.fromPerson;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.FromPerson.FromPerson> streamFromPerson()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.FromPerson.FromPerson> streamFromPerson()
     {
       return fromPerson.stream();
     }

@@ -1,44 +1,28 @@
 package ro.anud.xml_xsd.implementation.model.interfaces.IType_linkGroup;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import ro.anud.xml_xsd.implementation.util.RawNode;
-
-import java.util.*;
-import java.util.stream.Stream;
-import ro.anud.xml_xsd.implementation.util.Subscription;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
-
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
 public interface IType_linkGroup<T> extends ro.anud.xml_xsd.implementation.util.LinkedNode {
 
   //Attributes
-  public String getId();
-  public T setId(String value);
-  public Integer getAngle();
-  public T setAngle(Integer value);
-  public Optional<Integer> getAngleMax();
-  public T setAngleMax(Optional<Integer> value);
-  public Optional<Integer> getLimit();
-  public T setLimit(Optional<Integer> value);
+  String getId();
+  T setId(String value);
+  Integer getAngle();
+  T setAngle(Integer value);
+  java.util.Optional<Integer> getAngleMax();
+  T setAngleMax(java.util.Optional<Integer> value);
+  java.util.Optional<Integer> getLimit();
+  T setLimit(java.util.Optional<Integer> value);
 
   //Children elements
-  public List<ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption> getToOption();
-  public Stream<ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption> streamToOption();
-  public T addToOption(ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption value);
-  public T addAllToOption(List<ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption> value);
-  public T removeToOption(ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption value);
-  public void deserialize (RawNode rawNode);
+  java.util.List<ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption> getToOption();
+  java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption> streamToOption();
+  T addToOption(ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption value);
+  T addAllToOption(java.util.List<ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption> value);
+  T removeToOption(ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption value);
+  void deserialize (ro.anud.xml_xsd.implementation.util.RawNode rawNode);
 
-  public RawNode serializeIntoRawNode();
+  ro.anud.xml_xsd.implementation.util.RawNode serializeIntoRawNode();
 
-  public void serialize(Document document, Element element);
+  void serialize(org.w3c.dom.Document document, org.w3c.dom.Element element);
 }
 
 /*
