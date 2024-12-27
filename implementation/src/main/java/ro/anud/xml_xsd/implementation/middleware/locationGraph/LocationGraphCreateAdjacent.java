@@ -13,17 +13,23 @@ public class LocationGraphCreateAdjacent {
         worldStepInstance.getWorldStep()
             .streamActions()
             .flatMap(Actions::streamLocationGraph_node_createAdjacent)
-            .forEach(locationGraphNodeCreateAdjacent -> worldStepInstance.getOutInstance()
+            .forEach(locationGraphNodeCreateAdjacent -> worldStepInstance
                 .locationGraph
                 .createAdjacent(
                     locationGraphNodeCreateAdjacent.getLocationGraphIdRef(),
                     locationGraphNodeCreateAdjacent.getNodeIdRef()
                 )
-                .ifPresent(node -> worldStepInstance.getOutInstance()
-                    .locationGraph
-                    .repository
-                    .getLocationGraphById(locationGraphNodeCreateAdjacent.getLocationGraphIdRef())
-                    .ifPresent(locationGraph -> locationGraph.addNode(node)))
+                .ifPresent(node -> {
+                    var outInstance = worldStepInstance.getOutInstance();
+                    var createdNode = node.apply(outInstance);
+                    outInstance.locationGraph.locationGraphRepository.getLocationGraphById(locationGraphNodeCreateAdjacent.getLocationGraphIdRef())
+                        .ifPresent(locationGraph -> locationGraph.addNode(createdNode));
+//                    worldStepInstance.getOutInstance()
+//                        .locationGraph
+//                        .locationGraphRepository
+//                        .getLocationGraphById(locationGraphNodeCreateAdjacent.getLocationGraphIdRef())
+//                        .ifPresent(locationGraph -> locationGraph.addNode(node))
+                })
             );
 
         worldStepInstance.getOutInstance().getWorldStep()

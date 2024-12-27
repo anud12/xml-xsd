@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Net.Http;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
@@ -12,7 +13,50 @@ using XSD;
 public class ImplProgram
 {
 
-    static public Task<String?> Send(world_step worldStep)
+    static public Task<String> SendHttp(world_step worldStep) {
+        return Task.Run(() =>
+        {
+            var document = new XmlDocument();
+            XmlElement worldStepElement = document.CreateElement("world_step");
+            document.AppendChild(worldStepElement);
+            GD.Print("Serializing world step");
+            worldStep.Serialize(worldStepElement);
+
+            // Deserialize document to string
+            var stringWriter = new StringWriter();
+            var xmlTextWriter = new XmlTextWriter(stringWriter);
+            document.WriteTo(xmlTextWriter);
+            xmlTextWriter.Flush();
+            var documentString = stringWriter.GetStringBuilder().ToString();
+
+            // Save the document string to a file
+            using (StreamWriter sw = new StreamWriter("request.xml"))
+            {
+                document.Save(sw);
+            }
+
+            // Send the document string to the server
+            using (var client = new System.Net.Http.HttpClient())
+            {
+                var content = new StringContent(documentString, Encoding.UTF8, "text/xml");
+                var response = client.PostAsync("http://localhost:8080/analyze/execute", content).Result;
+                var responseString = response.Content.ReadAsStringAsync().Result;
+                GD.Print(responseString);
+                //write the received message to a file
+                using (StreamWriter sw = new StreamWriter("response.xml"))
+                {
+                    //format xml file
+                    XmlDocument responseDocument = new XmlDocument();
+                    responseDocument.LoadXml(responseString);
+                    responseDocument.Save(sw);
+                }
+
+                return responseString;
+            }
+        });
+    }
+
+    static public Task<String?> SendWebsocket(world_step worldStep)
     {
         return Task.Run(() =>
         {

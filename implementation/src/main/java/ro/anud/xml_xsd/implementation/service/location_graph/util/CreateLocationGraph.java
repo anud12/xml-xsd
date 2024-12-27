@@ -5,6 +5,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGrap
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Rule.Rule;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.LocationGraphRule;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup;
+import ro.anud.xml_xsd.implementation.service.Mutation;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 import java.util.ArrayList;
@@ -14,7 +15,10 @@ import java.util.Optional;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 
 public class CreateLocationGraph {
-    public static Optional<LocationGraph> createLocationGraph(WorldStepInstance worldStepInstance, String ref) {
+
+    public static Optional<Mutation<LocationGraph>> createLocationGraph(
+        WorldStepInstance worldStepInstance,
+        String ref) {
         var logger = logEnter("ref", ref);
         var ruleOptional = worldStepInstance.getWorldStep().getRuleGroup()
             .stream()
@@ -41,26 +45,36 @@ public class CreateLocationGraph {
             return Optional.empty();
         }
 
-        var createdNode = new ArrayList<Node>();
-        locationGraph.addNode(startNodeOptional.get());
-        createdNode.add(startNodeOptional.get());
 
-        while (!isNecessaryNodeSatisfied(rule, createdNode)) {
-            if (createdNode.isEmpty()) {
-                break;
+        return Optional.of(Mutation.of(outInstance -> {
+
+            startNodeOptional.get().personList().forEach(outInstance.person.repository::getOrCreate);
+            var outLocationGraph = outInstance.locationGraph.locationGraphRepository.getLocationGraphOrDefault(locationGraph);
+
+            var createdNode = new ArrayList<Node>();
+            outLocationGraph.addNode(startNodeOptional.get().node());
+            createdNode.add(startNodeOptional.get().node());
+
+            while (!isNecessaryNodeSatisfied(rule, createdNode)) {
+                if (createdNode.isEmpty()) {
+                    break;
+                }
+                Optional<Node> adjacentNode = worldStepInstance
+                    .locationGraph
+                    .createAdjacent(
+                        outLocationGraph,
+                        createdNode.getFirst().getId()
+                    ).map(nodeMutation -> nodeMutation.apply(outInstance));
+                if (adjacentNode.isEmpty()) {
+                    createdNode.removeFirst();
+                    continue;
+                }
+                outLocationGraph.addNode(adjacentNode.get());
+                createdNode.add(adjacentNode.get());
             }
-            Optional<Node> adjacentNode = worldStepInstance.locationGraph.createAdjacent(
-                locationGraph,
-                createdNode.getFirst().getId()
-            );
-            if (adjacentNode.isEmpty()) {
-                createdNode.removeFirst();
-                continue;
-            }
-            locationGraph.addNode(adjacentNode.get());
-            createdNode.add(adjacentNode.get());
-        }
-        return Optional.of(locationGraph);
+            return outLocationGraph;
+        }));
+
     }
 
     private static boolean isNecessaryNodeSatisfied(final LocationGraphRule rule, final ArrayList<Node> createdNode) {

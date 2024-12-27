@@ -9,7 +9,10 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGrap
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.Links;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.People.People;
+import ro.anud.xml_xsd.implementation.service.Mutation;
+import ro.anud.xml_xsd.implementation.service.location_graph.repository.LocationGraphRepository;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
+import ro.anud.xml_xsd.implementation.service.location_graph.repository.NodeRepository;
 import ro.anud.xml_xsd.implementation.service.location_graph.util.*;
 
 import java.util.List;
@@ -20,26 +23,30 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 
 public class LocationGraphInstance {
     final WorldStepInstance worldStepInstance;
-    public final Repository repository = new Repository();
+    public final LocationGraphRepository locationGraphRepository;
+    public final NodeRepository nodeRepository;
 
     public LocationGraphInstance(final WorldStepInstance worldStepInstance) {
         this.worldStepInstance = worldStepInstance;
-        repository.index(worldStepInstance);
+        locationGraphRepository = new LocationGraphRepository(worldStepInstance)
+            .index(worldStepInstance);
+        nodeRepository = new NodeRepository(worldStepInstance)
+            .index(worldStepInstance);
     }
 
     public Stream<Node> selectNodeGraph(final Type_nodeGraph_selection nodeGraphSelection) {
         return SelectNodeGraph.streamSelectNodeGraph(worldStepInstance, nodeGraphSelection);
     }
 
-    public Optional<LocationGraph> createLocationGraph(final String locationGraphRuleRef) {
+    public Optional<Mutation<LocationGraph>> createLocationGraph(final String locationGraphRuleRef) {
         return CreateLocationGraph.createLocationGraph(worldStepInstance, locationGraphRuleRef);
     }
 
-    public Optional<Node> createGraphNode(final LocationGraph locationGraph, final String startNodeRef) {
+    public Optional<CreateGraphNode.Result> createGraphNode(final LocationGraph locationGraph, final String startNodeRef) {
         return CreateGraphNode.createGraphNode(worldStepInstance, locationGraph, startNodeRef);
     }
 
-    public Optional<Node> createGraphNode(
+    public Optional<CreateGraphNode.Result> createGraphNode(
         WorldStepInstance worldStepInstance,
         LocationGraph locationGraph,
         String startNodeRef,
@@ -54,13 +61,13 @@ public class LocationGraphInstance {
         );
     }
 
-    public Optional<Node> createAdjacent(final LocationGraph locationGraph, final String nodeRuleRefId) {
+    public Optional<Mutation<Node>> createAdjacent(final LocationGraph locationGraph, final String nodeRuleRefId) {
         return CreateAdjacent.createAdjacent(worldStepInstance, locationGraph, nodeRuleRefId);
     }
 
-    public Optional<Node> createAdjacent(final String locationGraphId, final String nodeRuleId) {
+    public Optional<Mutation<Node>> createAdjacent(final String locationGraphId, final String nodeRuleId) {
         var logger = logEnter();
-        var locationGraphElementResult = this.worldStepInstance.locationGraph.repository.getLocationGraphById(
+        var locationGraphElementResult = this.worldStepInstance.locationGraph.locationGraphRepository.getLocationGraphById(
             locationGraphId);
         if (locationGraphElementResult.isEmpty()) {
             logger.log("locationGraph not found");
@@ -99,8 +106,16 @@ public class LocationGraphInstance {
             });
     }
 
-    public List<List<Node>> shortestPathsInGraphExcludeStart(final LocationGraph locationGraph, final Node startNode, final Node destinationNode, final int numberOfPaths) {
-        return ShortestPathsInGraphExcludeStart.shortestPathInGraphExcludeStart(locationGraph,startNode,destinationNode,numberOfPaths);
+    public List<List<Node>> shortestPathsInGraphExcludeStart(
+        final LocationGraph locationGraph,
+        final Node startNode,
+        final Node destinationNode,
+        final int numberOfPaths) {
+        return ShortestPathsInGraphExcludeStart.shortestPathInGraphExcludeStart(
+            locationGraph,
+            startNode,
+            destinationNode,
+            numberOfPaths);
     }
 
     public Stream<LinkTo> selectLinkTo(final Type_linkTo_selection selection) {

@@ -75,7 +75,7 @@ public class PersonTeleportTo {
         return Optional.of(outWorldStepInstance -> {
             personTeleport.removeFromParent();
             var locationGraphList = outWorldStepInstance.locationGraph
-                .repository
+                .locationGraphRepository
                 .getLocationGraphById(targetLocationGraphId.get().getLocationGraphIdRef());
             if(locationGraphList.isEmpty()) {
                 logger.log("locationGraphList is empty");

@@ -4,6 +4,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGrap
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup;
+import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +46,5 @@ public class NodeRuleRepository {
         var logger = logEnter();
         return logger.logReturn(getNodeRuleByLocationGraphAndNode(locationGraph, node).stream());
     }
-
 
 }

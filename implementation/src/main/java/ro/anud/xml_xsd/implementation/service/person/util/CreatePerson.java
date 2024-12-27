@@ -1,7 +1,6 @@
 package ro.anud.xml_xsd.implementation.service.person.util;
 
 import ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification;
-import ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.ClassificationRule;
@@ -111,7 +110,7 @@ public class CreatePerson {
                         );
                 };
                 innerLogger.log("setting propertyRef", propertyRef, "to ", computedValue);
-                worldStepInstance.person.mutateProperty(person, propertyRef, (ignored) -> computedValue);
+                worldStepInstance.person.mutatePropertyIfExists(person, propertyRef, (ignored) -> computedValue);
             });
     }
 
@@ -146,10 +145,8 @@ public class CreatePerson {
                 );
             }, () -> logger.log("no race set"));
 
-        var people = worldStepInstance.getWorldStep().getData().getPeopleOrDefault();
         logger.log("adding person with id", person.getId());
         logger.logTodo("remove people.addPerson(person)");
-        people.addPerson(person);
         return person;
     }
 }

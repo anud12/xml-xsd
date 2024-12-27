@@ -8,8 +8,11 @@ import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 
 public class PersonCreateAction {
-    public static void apply(final WorldStepInstance worldStepInstance) {
+    public static void personCreateAction(final WorldStepInstance worldStepInstance) {
         var logger = logEnter();
+
+        var outInstance = worldStepInstance.getOutInstance();
+
         var actionList = worldStepInstance.getWorldStep()
             .streamActions()
             .flatMap(Actions::streamPerson_create)
@@ -17,20 +20,26 @@ public class PersonCreateAction {
 
         actionList.forEach(personCreate -> {
             var nodeGraphSelection = personCreate.getNodeGraph_selection();
-            var locationList = worldStepInstance.getOutInstance().locationGraph.selectNodeGraph(nodeGraphSelection);
+            var locationList = worldStepInstance.locationGraph.selectNodeGraph(nodeGraphSelection);
             var locatioElementOptional = worldStepInstance.randomFrom(locationList);
             if (locatioElementOptional.isEmpty()) {
                 return;
             }
             var personSelection = personCreate.getPerson_selection();
-            var person = worldStepInstance.getOutInstance().person.createPerson(personSelection);
+            var person = worldStepInstance.person.createPerson(personSelection);
+            outInstance.person.repository.getOrCreate(person);
             locatioElementOptional.ifPresent(node -> {
-                node.getPeopleOrDefault().addPerson(new Person().setPersonIdRef(person.getId()));
+                outInstance.locationGraph.nodeRepository.getNodeOrDefault(node)
+                    .getPeopleOrDefault()
+                    .addPerson(new Person()
+                        .setPersonIdRef(person.getId())
+                    );
             });
             logger.logTodo("move to person creation function");
-            worldStepInstance.getOutInstance().person.classifyPerson(person);
+            outInstance.person.classifyPerson(person);
         });
-        worldStepInstance.getOutInstance().getWorldStep()
+
+        outInstance.getWorldStep()
             .streamActions()
             .flatMap(Actions::streamPerson_create)
             .toList()

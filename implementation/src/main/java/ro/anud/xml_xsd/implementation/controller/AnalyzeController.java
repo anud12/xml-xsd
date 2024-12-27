@@ -18,10 +18,10 @@ import ro.anud.xml_xsd.implementation.middleware.person.PersonMoveTo;
 import ro.anud.xml_xsd.implementation.middleware.person.PersonTeleportTo;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.InstanceTypeEnum;
+import ro.anud.xml_xsd.implementation.service.Mutation;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 import ro.anud.xml_xsd.implementation.validator.AtrributeValidator;
-import ro.anud.xml_xsd.implementation.validator.attributeValidator.LocationGraphIdRefValidator;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -36,6 +36,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 
@@ -74,17 +75,18 @@ public class AnalyzeController {
                 );
             }
             logger.log("validating done");
+
             FromPersonAction.apply(worldStepInstance);
-            PersonCreateAction.apply(worldStepInstance);
+            PersonCreateAction.personCreateAction(worldStepInstance);
             LocationGraphCreate.apply(worldStepInstance);
             LocationGraphCreateAdjacent.apply(worldStepInstance);
             PersonMoveTo.apply(worldStepInstance);
             PersonTeleportTo.apply(worldStepInstance);
             EventsMetadata.apply(worldStepInstance);
-            LocationGraphAddClassification.apply(worldStepInstance);
+            LocationGraphAddClassification.locationGraphAddClassification(worldStepInstance);
             PersonAssignClassification.apply(worldStepInstance);
 
-            return ResponseEntity.ok(serializeWorldStepInstance(worldStepInstance));
+            return ResponseEntity.ok(serializeWorldStepInstance(worldStepInstance.getOutInstance()));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -109,9 +111,12 @@ public class AnalyzeController {
     }
 
     private String serializeWorldStepInstance(WorldStepInstance worldStepInstance) throws ParserConfigurationException, TransformerException {
-        var outputDocument = worldStepInstance.getOutInstance().offsetRandomizationTable().getWorldStep()
+        worldStepInstance.getWorldStep().getWorldMetadata()
+            .setCounter(worldStepInstance.getOutInstance().getWorldStep().getWorldMetadata().getCounter());
+        var outputDocument = worldStepInstance.offsetRandomizationTable().getWorldStep()
             .serializeIntoRawNode()
             .toDocument("world_step");
+
         TransformerFactory tf = TransformerFactory.newInstance();
         Transformer transformer = tf.newTransformer();
         StringWriter writer = new StringWriter();

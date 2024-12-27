@@ -62,7 +62,7 @@ public class EventsMetadata {
         var logger = logEnter("then", then.buildPath(), "person", person.getId());
         then.streamPropertyMutation()
             .forEach(propertyMutation -> {
-                worldStepInstance.person.mutateProperty(
+                worldStepInstance.person.mutatePropertyIfExists(
                     person, propertyMutation.getPropertyRuleRef(), (value) -> {
                         var newValueOptional = worldStepInstance.computeOperation(propertyMutation, person);
                         var deltaValue = newValueOptional

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
@@ -18,8 +17,10 @@ public class PersonRepository {
 
     private final HashMap<String, Person> personById = new HashMap<>();
     private final List<Person> personList = new ArrayList<>();
+    private final WorldStepInstance worldStepInstance;
     public PersonRepository(WorldStepInstance worldStepInstance) {
         var logger = logEnter();
+        this.worldStepInstance = worldStepInstance;
         init(worldStepInstance);
 
     }
@@ -65,5 +66,16 @@ public class PersonRepository {
 
     public Stream<Person> streamPerson() {
         return logEnter().logReturn(personList.stream());
+    }
+
+    public Person getOrCreate(final Person person) {
+        var logger = logEnter("personId", person.getId());
+        Optional<Person> personOptional = personById(person.getId());
+        return personOptional.orElseGet(() -> {
+            logger.log("creating new person");
+            var newPerson = Person.fromRawNode(person.serializeIntoRawNode());
+            worldStepInstance.getWorldStep().getData().getPeopleOrDefault().addPerson(newPerson);
+            return newPerson;
+        });
     }
 }

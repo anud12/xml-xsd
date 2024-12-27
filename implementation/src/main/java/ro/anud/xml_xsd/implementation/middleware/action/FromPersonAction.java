@@ -8,7 +8,10 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromP
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.OnPerson;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.Selection.FromPersonSameLocationGraphNode.FromPersonSameLocationGraphNode;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.Selection.Selection;
+import ro.anud.xml_xsd.implementation.service.Mutation;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
+
+import java.util.stream.Stream;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 
@@ -28,6 +31,15 @@ public class FromPersonAction {
             logger.logReturnVoid("fromPerson list is empty");
             return;
         }
+
+
+        worldStepInstance.getOutInstance()
+            .getWorldStep()
+            .streamActions()
+            .flatMap(Actions::streamFromPerson)
+            .toList()
+            .forEach(FromPerson::removeFromParent);
+
 
         fromPersonStream.forEach(actionElement -> {
             var localLogger = logger.logEnter(actionElement.buildPath());
@@ -77,55 +89,35 @@ public class FromPersonAction {
                         localLocalLogger.logReturnVoid("onPersonApplicable false");
                         return;
                     }
-                    actionRule.streamMutations()
+                    Stream<Mutation<Person>> fromMutationResult = actionRule.streamMutations()
                         .flatMap(Mutations::streamPropertyMutation)
-                        .forEach(typePropertyMutation -> worldStepInstance.person
-                            .applyPropertyMutationOnOut(
+                        .map(typePropertyMutation -> worldStepInstance.person
+                            .applyPropertyMutation(
                                 selfPerson,
                                 typePropertyMutation,
                                 selfPerson,
                                 targetPerson.get()
                             )
                         );
+                    Stream<Mutation<Person>> onPersonMutationResult = onPersonRule.flatMap(OnPerson::getMutations)
+                        .stream()
+                        .flatMap(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.Mutations.Mutations::streamPropertyMutation)
+                        .map(typePropertyMutation -> worldStepInstance
+                            .person
+                            .applyPropertyMutation(
+                                targetPerson.get(),
+                                typePropertyMutation,
+                                targetPerson.get(),
+                                selfPerson
+                            )
+                        );
 
-                    onPersonHandle(
-                        worldStepInstance,
-                        onPersonRule.get(),
-                        selfPerson,
-                        targetPerson.get()
-                    );
+                    Stream.concat(fromMutationResult, onPersonMutationResult)
+                        .forEach(mutation -> {
+                            mutation.apply(worldStepInstance.getOutInstance());
+                        });
                 });
         });
-
-
-        worldStepInstance.getOutInstance()
-            .getWorldStep()
-            .streamActions()
-            .flatMap(Actions::streamFromPerson)
-            .toList()
-            .forEach(FromPerson::removeFromParent);
-
-
-    }
-
-    private static void onPersonHandle(
-        final WorldStepInstance worldStepInstance,
-        final OnPerson onPerson,
-        final Person selfPerson,
-        final Person targetPerson) {
-        var logger = logEnter("selfPerson", selfPerson.getId(), "targetPerson", targetPerson.getId());
-        onPerson.streamMutations()
-            .flatMap(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.Mutations.Mutations::streamPropertyMutation)
-            .forEach(typePropertyMutation -> worldStepInstance
-                .person
-                .applyPropertyMutationOnOut(
-                    targetPerson,
-                    typePropertyMutation,
-                    targetPerson,
-                    selfPerson
-                )
-            );
-        logger.logReturnVoid();
     }
 
     private static boolean onPersonApplicable(

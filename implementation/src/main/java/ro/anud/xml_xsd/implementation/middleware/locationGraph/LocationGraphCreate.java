@@ -23,8 +23,7 @@ public class LocationGraphCreate {
                 logger.logReturnVoid();
                 return;
             }
-            worldStepInstance.getOutInstance().getWorldStep().getData().getLocationOrDefault().addLocationGraph(
-                locationGraphResult.orElseThrow());
+            locationGraphResult.get().apply(worldStepInstance.getOutInstance());
         });
 
         worldStepInstance.getOutInstance().getWorldStep().streamActions()

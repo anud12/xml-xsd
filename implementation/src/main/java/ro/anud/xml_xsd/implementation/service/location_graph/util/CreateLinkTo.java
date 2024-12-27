@@ -3,6 +3,7 @@ package ro.anud.xml_xsd.implementation.service.location_graph.util;
 import ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.LinkTo;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node;
+import ro.anud.xml_xsd.implementation.service.Mutation;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 import java.util.Optional;
@@ -31,15 +32,12 @@ public class CreateLinkTo {
         var linkTo = new LinkTo()
             .setNodeIdRef(node.getId())
             .setTotalProgress((int) totalProgress);
-        targetNode.getLinksOrDefault().addLinkTo(linkTo);
         logger.log("setting personProgressProperty");
         var personProgressProperty = toOption.getPersonProgressProperty();
         if (personProgressProperty.isEmpty()) {
             logger.log("personProgressProperty is empty");
         }
-        toOption.getPersonProgressProperty().ifPresent(typeMathOperations -> {
-            linkTo.setPersonProgressProperty(typeMathOperations);
-        });
+        toOption.getPersonProgressProperty().ifPresent(linkTo::setPersonProgressProperty);
 
         return Optional.of(linkTo);
     }

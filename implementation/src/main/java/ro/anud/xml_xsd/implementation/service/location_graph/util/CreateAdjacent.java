@@ -1,11 +1,10 @@
 package ro.anud.xml_xsd.implementation.service.location_graph.util;
 
 import ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption;
-import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data;
-import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.LocationGraph;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Classifications.Classification.Classification;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Classifications.Classifications;
+import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.LinkTo;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LinkGroupRuleList.LinkGroupRule.LinkGroupRule;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroup.LinkGroup;
@@ -13,11 +12,13 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRul
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.Reference.Reference;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule;
 import ro.anud.xml_xsd.implementation.model.interfaces.IType_linkGroup.IType_linkGroup;
+import ro.anud.xml_xsd.implementation.service.Mutation;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static ro.anud.xml_xsd.implementation.service.location_graph.util.CreateGraphNode.createGraphNode;
 import static ro.anud.xml_xsd.implementation.service.location_graph.util.CreateLinkTo.createLinkTo;
@@ -27,7 +28,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
 public class CreateAdjacent {
-    public static Optional<Node> createAdjacent(
+
+
+    public static Optional<Mutation<Node>> createAdjacent(
         WorldStepInstance worldStepInstance,
         LocationGraph locationGraphElement,
         String nodeRef) {
@@ -41,6 +44,14 @@ public class CreateAdjacent {
             return logger.logReturn(Optional.empty());
         }
         var nodeGraphElement = nodeGraphElementResult.get();
+        return createAdjacent(worldStepInstance, locationGraphElement, nodeGraphElement);
+    }
+
+    public static Optional<Mutation<Node>> createAdjacent(
+        WorldStepInstance worldStepInstance,
+        LocationGraph locationGraphElement,
+        Node nodeGraphElement) {
+        var logger = logEnter();
 
         var nodeRule = worldStepInstance.ruleRepository.nodeRule.streamNodeRuleByLocationGraphAndNode(
             locationGraphElement,
@@ -60,8 +71,8 @@ public class CreateAdjacent {
             return Optional.empty();
         }
         var linkGroupElement = linkGroupElementResult.get();
-        var position = positionBasedOnLink(worldStepInstance, linkGroupElement, nodeGraphElementResult.get());
-        var classificationLocationList = nodeGraphElementResult.stream().flatMap(Node::streamClassifications)
+        var position = positionBasedOnLink(worldStepInstance, linkGroupElement, nodeGraphElement);
+        var classificationLocationList = nodeGraphElement.streamClassifications()
             .flatMap(Classifications::streamClassification)
             .map(Classification::getLocationClassificationRuleRef);
 
@@ -71,18 +82,19 @@ public class CreateAdjacent {
             return Optional.empty();
         }
         var toOptionElement = toOptionElementResult.get();
-        var newGraphNodeResult = createGraphNode(
+        var resultOptional = createGraphNode(
             worldStepInstance,
             locationGraphElement,
             toOptionElement.getNodeRuleRef(),
             position,
             classificationLocationList
         );
-        if (newGraphNodeResult.isEmpty()) {
+        if (resultOptional.isEmpty()) {
             logger.log("newGraphNode is empty");
             return Optional.empty();
         }
-        var newGraphNode = newGraphNodeResult.get();
+        var result = resultOptional.get();
+        var newGraphNode = result.node();
 
         logger.logTodo("use random between int for distance");
         var adjacentDistanceMin = toOptionElement.getDistance();
@@ -92,32 +104,39 @@ public class CreateAdjacent {
             locationGraphElement,
             nodeGraphElement,
             toOptionElement.getAdjacentDepthLimit()
-        ).stream()
-            .map(Node::getId)
-            .map(worldStepInstance.getOutInstance().locationGraph.repository::getNodeById)
-            .flatMap(Optional::stream)
-            .toList();
+        ).stream().toList();
 
-        createLinkTo(worldStepInstance, toOptionElement, nodeGraphElement, newGraphNode);
-        createLinkTo(worldStepInstance, toOptionElement, newGraphNode, nodeGraphElement);
+        return Optional.of(Mutation.of(outInstance -> {
+            var outNodeGraphElement = outInstance.locationGraph.nodeRepository.getNodeOrDefault(nodeGraphElement);
+            var outAdjacentNodes = adjacentNodes.stream().map(outInstance.locationGraph.nodeRepository::getNodeOrDefault);
 
-        adjacentNodes.stream().filter(node ->
-                isDistanceBetweenPointsLessThan(node, newGraphNode, adjacentDistanceMin) &&
-                    isDistanceBetweenPointsGreaterThan(node, newGraphNode, adjacentDistance)
-            )
-            .forEach(node -> {
-                Optional<ToOption> option = canCreateLinkBetween(
-                    worldStepInstance,
-                    locationGraphElement,
-                    node,
-                    newGraphNode);
-                option.ifPresent(object -> {
-                    createLinkTo(worldStepInstance, object, node, newGraphNode);
-                    createLinkTo(worldStepInstance, object, newGraphNode, node);
+            result.personList().forEach(outInstance.person.repository::getOrCreate);
+
+            createLinkTo(worldStepInstance, toOptionElement, outNodeGraphElement, newGraphNode)
+                .ifPresent(linkTo -> newGraphNode.getLinksOrDefault().addLinkTo(linkTo));
+            createLinkTo(worldStepInstance, toOptionElement, newGraphNode, outNodeGraphElement)
+                .ifPresent(linkTo -> outNodeGraphElement.getLinksOrDefault().addLinkTo(linkTo));
+
+            outAdjacentNodes.filter(node ->
+                    isDistanceBetweenPointsLessThan(node, newGraphNode, adjacentDistanceMin) &&
+                        isDistanceBetweenPointsGreaterThan(node, newGraphNode, adjacentDistance)
+                )
+                .forEach(node -> {
+                    Optional<ToOption> option = canCreateLinkBetween(
+                        worldStepInstance,
+                        locationGraphElement,
+                        node,
+                        newGraphNode);
+                    option.ifPresent(object -> {
+                        createLinkTo(worldStepInstance, object, node, newGraphNode)
+                            .ifPresent(linkTo -> newGraphNode.getLinksOrDefault().addLinkTo(linkTo));
+                        createLinkTo(worldStepInstance, object, newGraphNode, node)
+                            .ifPresent(linkTo -> node.getLinksOrDefault().addLinkTo(linkTo));
+                    });
                 });
-            });
 
-        return Optional.of(newGraphNode);
+            return newGraphNode;
+        }));
     }
 
     private static Optional<ToOption> canCreateLinkBetween(
