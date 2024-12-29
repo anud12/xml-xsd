@@ -2,20 +2,18 @@ package ro.anud.xml_xsd.implementation.middleware.person;
 
 import ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.Person_teleport;
-import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.LinkTo;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.People.Person.Person;
 import ro.anud.xml_xsd.implementation.service.Mutation;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 import java.util.Optional;
-import java.util.function.Consumer;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 
 public class PersonTeleportTo {
 
     public static void apply(WorldStepInstance worldStepInstance) {
-        var logger = logEnter();
+        logEnter();
 
         worldStepInstance.getOutInstance().getWorldStep().streamActions()
             .flatMap(Actions::streamPerson_teleport)
@@ -64,12 +62,11 @@ public class PersonTeleportTo {
             var accumulatedProgress = personTeleport.getLinkTo().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo::getAccumulatedProgress);
             outWorldStepInstance.locationGraph.removePerson(personIdRef);
             outLinkTo.streamPeopleOrDefault()
-                .forEach(people -> {
-                    people.addPerson(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.Person.Person()
-                        .setPersonIdRef(personIdRef)
-                        .setAccumulatedProgress(accumulatedProgress.orElse(0))
-                    );
-                });
+                .forEach(people -> people
+                    .addPerson(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.Person.Person()
+                    .setPersonIdRef(personIdRef)
+                    .setAccumulatedProgress(accumulatedProgress.orElse(0))
+                ));
             return outWorldStepInstance;
         }));
     }
