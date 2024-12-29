@@ -10,6 +10,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGrap
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.People.People;
 import ro.anud.xml_xsd.implementation.service.Mutation;
+import ro.anud.xml_xsd.implementation.service.location_graph.repository.LinkToRepository;
 import ro.anud.xml_xsd.implementation.service.location_graph.repository.LocationGraphRepository;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 import ro.anud.xml_xsd.implementation.service.location_graph.repository.NodeRepository;
@@ -25,12 +26,15 @@ public class LocationGraphInstance {
     final WorldStepInstance worldStepInstance;
     public final LocationGraphRepository locationGraphRepository;
     public final NodeRepository nodeRepository;
+    public final LinkToRepository linkToRepository;
 
     public LocationGraphInstance(final WorldStepInstance worldStepInstance) {
         this.worldStepInstance = worldStepInstance;
         locationGraphRepository = new LocationGraphRepository(worldStepInstance)
             .index(worldStepInstance);
         nodeRepository = new NodeRepository(worldStepInstance)
+            .index(worldStepInstance);
+        linkToRepository = new LinkToRepository(worldStepInstance)
             .index(worldStepInstance);
     }
 

@@ -36,6 +36,7 @@ public class WorldStepInstance {
     public final PersonInstance person;
     public final PropertyInstance property;
     public final LocationGraphInstance locationGraph;
+
     public NameInstance name;
 
     private int counter = 0;
