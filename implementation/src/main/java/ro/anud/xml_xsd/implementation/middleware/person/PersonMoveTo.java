@@ -1,6 +1,5 @@
 package ro.anud.xml_xsd.implementation.middleware.person;
 
-import ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Path.Node.Node;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Path.Path;
@@ -12,26 +11,45 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGrap
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.Person.Person;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.Links;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.People.People;
+import ro.anud.xml_xsd.implementation.service.Mutation;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Consumer;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 
 public class PersonMoveTo {
     public static void apply(WorldStepInstance worldStepInstance) {
         var logger = logEnter();
+
+        worldStepInstance.getOutInstance().getWorldStep()
+            .streamActions()
+            .flatMap(Actions::streamPerson_moveTo)
+            .toList()
+            .forEach(Person_moveTo::removeFromParent);
+
+
         worldStepInstance.getWorldStep()
             .streamActions()
             .flatMap(Actions::streamPerson_moveTo)
             .toList()
             .forEach(personMoveTo -> {
-                applyFindPath(worldStepInstance, personMoveTo)
-                    .or(() -> applyPath(worldStepInstance, personMoveTo))
-                    .ifPresent(worldStepInstanceConsumer -> worldStepInstanceConsumer.accept(worldStepInstance));
+                var findPathResult = applyFindPath(worldStepInstance, personMoveTo);
+                if (findPathResult.isEmpty()) {
+                    applyPath(worldStepInstance, personMoveTo)
+                        .ifPresent(worldStepInstanceConsumer -> worldStepInstanceConsumer.apply(worldStepInstance.getOutInstance()));
+                }
+                findPathResult.ifPresent(worldStepInstanceConsumer -> worldStepInstanceConsumer.apply(worldStepInstance.getOutInstance()));
+            });
+
+        worldStepInstance.getOutInstance()
+            .getWorldStep()
+            .streamActions()
+            .flatMap(Actions::streamPerson_moveTo)
+            .toList()
+            .forEach(personMoveTo -> {
                 personMoveTo.getPath().ifPresent(path -> {
                     if (path.getNode().isEmpty()) {
                         personMoveTo.removeFromParent();
@@ -40,9 +58,10 @@ public class PersonMoveTo {
                 personMoveTo.getFindPathTowards()
                     .ifPresent(ignored -> personMoveTo.removeFromParent());
             });
+        logger.logReturnVoid();
     }
 
-    private static Optional<Consumer<WorldStepInstance>> applyPath(
+    private static Optional<Mutation<WorldStepInstance>> applyPath(
         final WorldStepInstance worldStepInstance,
         final Person_moveTo personMoveTo) {
         var logger = logEnter();
@@ -65,7 +84,10 @@ public class PersonMoveTo {
         var hasExecuted = applyPathRecursiveFromLink(worldStepInstance, pathElement, destinationNode, personIdRef);
         if (hasExecuted.isPresent()) {
             logger.log("hasExecuted");
-            return logger.logReturn(hasExecuted);
+            return logger.logReturn(Optional.of(Mutation.of(outInstance -> {
+                hasExecuted.get().apply(outInstance);
+                return outInstance;
+            })));
         }
 
         var originNodeOptional = worldStepInstance.getWorldStep()
@@ -96,9 +118,11 @@ public class PersonMoveTo {
             personIdRef,
             1);
 
-        return Optional.of(outWorldStepInstance -> {
-            result.ifPresent(consumer -> consumer.accept(outWorldStepInstance));
-            pathElement.getNode()
+        return Optional.of(Mutation.of(outInstance -> {
+            result.ifPresent(consumer -> consumer.apply(outInstance));
+            var moveTo = getPersonMoveTo(outInstance, personIdRef);
+
+            moveTo.getPathOrDefault().getNode()
                 .stream()
                 .filter(node -> node.getNodeIdRef().equals(originNode.getId()))
                 .toList()
@@ -106,10 +130,28 @@ public class PersonMoveTo {
                     logger.log("removing node", node);
                     pathElement.removeNode(node);
                 });
+            return outInstance;
+        }));
+
+    }
+
+    private static Person_moveTo getPersonMoveTo(final WorldStepInstance outInstance, final String personIdRef) {
+        var moveToOptional = outInstance.getWorldStep()
+            .streamActions()
+            .flatMap(Actions::streamPerson_moveTo)
+            .filter(personMoveToElement -> personMoveToElement.getPersonIdRef().equals(personIdRef))
+            .findFirst();
+        return moveToOptional.orElseGet(() -> {
+            var actionElement = outInstance.getWorldStep()
+                .getActionsOrDefault();
+            var personMoveToElement = new Person_moveTo()
+                .setPersonIdRef(personIdRef);
+            actionElement.addPerson_moveTo(personMoveToElement);
+            return personMoveToElement;
         });
     }
 
-    private static Optional<Consumer<WorldStepInstance>> applyPathRecursive(
+    private static Optional<Mutation<WorldStepInstance>> applyPathRecursive(
         final WorldStepInstance worldStepInstance,
         final Path pathElement,
         final String currentNodeId,
@@ -142,6 +184,11 @@ public class PersonMoveTo {
             .filter(node -> node.getId().equals(currentNodeId))
             .findFirst();
 
+        if (originNode.isEmpty()) {
+            logger.log("empty originNode");
+            return logger.logReturn(Optional.empty());
+        }
+
         var linkElement = originNode.stream()
             .flatMap(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node::streamLinks)
             .flatMap(Links::streamLinkTo)
@@ -150,13 +197,15 @@ public class PersonMoveTo {
         if (linkElement.isEmpty()) {
             logger.log("empty linkElement");
 
-            return logger.logReturn(Optional.of(outWorldStepInstance -> {
-                outWorldStepInstance     .locationGraph.removePerson(personIdRef);
+            return logger.logReturn(Optional.of(Mutation.of(outWorldStepInstance -> {
+                outWorldStepInstance.locationGraph.removePerson(personIdRef);
                 logger.log("adding person [" + personIdRef + "] to destination node [" + destinationNode.getNodeIdRef() + "]");
-                originNode.get().getPeopleOrDefault().addPerson(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.People.Person.Person()
-                    .setPersonIdRef(personIdRef)
-                );
-            }));
+                outWorldStepInstance.locationGraph.nodeRepository.getNodeOrDefault(originNode.get())
+                    .getPeopleOrDefault().addPerson(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.People.Person.Person()
+                        .setPersonIdRef(personIdRef)
+                    );
+                return outWorldStepInstance;
+            })));
         }
 
         var progressProperty = linkElement.get().getPersonProgressProperty();
@@ -187,7 +236,6 @@ public class PersonMoveTo {
         if (progressValue >= totalProgress) {
             logger.log("progressValue (" + progressValue + ") >= totalProgress(" + totalProgress + ")");
             var nextRemainingProgressFraction = (float) (progressValue - totalProgress) / progressValue;
-            destinationNode.removeFromParent();
             var filteredDestinationNodeList = filteredDestinationNode.stream()
                 .filter(node -> {
                     var keep = !node.getNodeIdRef().equals(destinationNode.getNodeIdRef());
@@ -206,11 +254,49 @@ public class PersonMoveTo {
                 nextRemainingProgressFraction
             );
             if (applyPathRecursiveResult.isPresent()) {
-                return logger.logReturn(applyPathRecursiveResult);
+                logger.log("applyPathRecursive has result");
+                return logger.logReturn(Optional.of(Mutation.of(outWorldStepInstance -> {
+
+                    logger.logTodo("merge duplicated code [id: 1]");
+                    var personMoveTo = getPersonMoveTo(outWorldStepInstance, personIdRef);
+                    var newPath = personMoveTo.getPath()
+                        .orElseGet(() -> {
+                            var transientPath = Path.fromRawNode(pathElement.serializeIntoRawNode());
+                            personMoveTo.setPath(transientPath);
+                            return transientPath;
+                        });
+                    newPath.streamNode()
+                        .filter(node -> node.getNodeIdRef().equals(destinationNode.getNodeIdRef()))
+                        .toList()
+                        .forEach(node -> {
+                            logger.log("removing node", node);
+                            node.removeFromParent();
+                        });
+
+                    applyPathRecursiveResult.get().apply(outWorldStepInstance);
+                    return outWorldStepInstance;
+                })));
             }
             logger.log("reached destination to node " + destinationNode.getNodeIdRef());
-            return logger.logReturn(Optional.of(outWorldStepInstance -> {
+            return logger.logReturn(Optional.of(Mutation.of(outWorldStepInstance -> {
                 outWorldStepInstance.locationGraph.removePerson(personIdRef);
+
+                logger.logTodo("merge duplicated code [id: 1]");
+                var personMoveTo = getPersonMoveTo(outWorldStepInstance, personIdRef);
+                var newPath = personMoveTo.getPath()
+                    .orElseGet(() -> {
+                        var transientPath = Path.fromRawNode(pathElement.serializeIntoRawNode());
+                        personMoveTo.setPath(transientPath);
+                        return transientPath;
+                    });
+                newPath.streamNode()
+                    .filter(node -> node.getNodeIdRef().equals(destinationNode.getNodeIdRef()))
+                    .toList()
+                    .forEach(node -> {
+                        logger.log("removing node", node);
+                        node.removeFromParent();
+                    });
+
                 outWorldStepInstance.getWorldStep()
                     .streamData()
                     .flatMap(Data::streamLocation)
@@ -218,30 +304,50 @@ public class PersonMoveTo {
                     .flatMap(LocationGraph::streamNode)
                     .filter(node -> node.getId().equals(destinationNode.getNodeIdRef()))
                     .findFirst()
-                    .ifPresent(endNode -> {
-                        endNode.getPeopleOrDefault()
-                            .addPerson(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.People.Person.Person()
-                                .setPersonIdRef(personIdRef)
-                            );
-                    });
-            }));
+                    .ifPresent(endNode -> endNode.getPeopleOrDefault()
+                        .addPerson(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.People.Person.Person()
+                            .setPersonIdRef(personIdRef)
+                        ));
+                return outWorldStepInstance;
+            })));
         }
 
         logger.log("reach destination to link_to " + originNode.get().getId() + " -> " + linkElement.get().getNodeIdRef() + " with progressValue " + progressValue);
-        return logger.logReturn(Optional.of(outWorldStepInstance -> {
-            logger.log("removing person from node " + originNode.get().getId());
-            worldStepInstance.locationGraph.removePerson(personIdRef);
+
+        return logger.logReturn(Optional.of(Mutation.of(outWorldStepInstance -> {
+            logger.log("applyPathRecursiveMutation: removing person from node " + originNode.get().getId());
+            outWorldStepInstance.locationGraph.removePerson(personIdRef);
+
+            logger.logTodo("merge duplicated code [id: 1]");
+            var personMoveTo = getPersonMoveTo(outWorldStepInstance, personIdRef);
+            var newPath = personMoveTo.getPath()
+                .orElseGet(() -> {
+                    var transientPath = Path.fromRawNode(pathElement.serializeIntoRawNode());
+                    personMoveTo.setPath(transientPath);
+                    return transientPath;
+                });
+            newPath.streamNode()
+                .filter(node -> !node.getNodeIdRef().equals(destinationNode.getNodeIdRef()))
+                .toList()
+                .forEach(node -> {
+                    logger.log("removing node", node);
+                    node.removeFromParent();
+                });
+
+
             logger.log("on link " + linkElement.get().getNodeIdRef() + " with accumulatedProgress " + progressValue);
-            linkElement.get().getPeopleOrDefault()
+            outWorldStepInstance.locationGraph.linkToRepository.getOrDefault(linkElement.get())
+                .getPeopleOrDefault()
                 .addPerson(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.Person.Person()
                     .setPersonIdRef(personIdRef)
                     .setAccumulatedProgress((int) progressValue)
                 );
-        }));
+            return outWorldStepInstance;
+        })));
 
     }
 
-    private static Optional<Consumer<WorldStepInstance>> applyPathRecursiveFromLink(
+    private static Optional<Mutation<WorldStepInstance>> applyPathRecursiveFromLink(
         final WorldStepInstance worldStepInstance,
         final Path pathElement,
         final List<Node> destinationNode,
@@ -299,16 +405,20 @@ public class PersonMoveTo {
         logger.log("accumulatedProgress", accumulatedProgress);
         var progressValue = worldStepInstance.computeOperation(progressPropertyResult.get()).orElse(0) + accumulatedProgress;
         var totalProgress = linkTo.getTotalProgress();
-        Consumer<WorldStepInstance> mutationResult = outWorldStepInstance -> {
+        Mutation<WorldStepInstance> mutationResult = Mutation.of(outWorldStepInstance -> {
+            logger.log("mutation applyPathRecursiveFromLink: removing person from node", personIdRef);
             outWorldStepInstance.locationGraph.removePerson(personIdRef);
-            logger.log("adding person to linkTo", linkTo.buildPath(), "with accumulatedProgress", totalProgress);
-            linkTo.getPeopleOrDefault().addPerson(new Person()
-                .setPersonIdRef(personIdRef)
-                .setAccumulatedProgress(totalProgress)
-            );
-        };
+            logger.log("mutation applyPathRecursiveFromLink: adding person to linkTo", linkTo.buildPath(), "with accumulatedProgress", totalProgress);
+            outWorldStepInstance.locationGraph.linkToRepository.getOrDefault(linkTo)
+                .getPeopleOrDefault().addPerson(new Person()
+                    .setPersonIdRef(personIdRef)
+                    .setAccumulatedProgress(totalProgress)
+                );
+            return outWorldStepInstance;
+        });
 
         if (progressValue >= totalProgress) {
+            logger.log("progressValue (" + progressValue + ") >= totalProgress(" + totalProgress + ")");
             float nextRemainingProgressFraction = (float) (progressValue - totalProgress) / progressValue;
             var filterDestinationNodeList = destinationNode.stream()
                 .filter(node -> {
@@ -332,21 +442,23 @@ public class PersonMoveTo {
             }
         }
 
-        final Consumer<WorldStepInstance> finalMutationResult = mutationResult;
-        return logger.logReturn(Optional.of(outWorldStepInstance -> {
-            pathElement.streamNode()
-                .filter(node -> node.getNodeIdRef().equals(personNodeResult.get().getId()))
-                .toList()
-                .forEach(node -> {
-                    logger.log("removing node", node);
-                    pathElement.removeNode(node);
-                });
+        final Mutation<WorldStepInstance> finalMutationResult = mutationResult;
 
-            finalMutationResult.accept(outWorldStepInstance);
-        }));
+        return logger.logReturn(Optional.of(Mutation.of(outWorldStepInstance -> {
+            logger.log("applying finalMutationResult");
+            getPersonMoveTo(outWorldStepInstance, personIdRef)
+                .setPath(new Path()
+                    .addAllNode(pathElement.streamNode()
+                        .filter(node -> !node.getNodeIdRef().equals(personNodeResult.get().getId()))
+                        .toList())
+                );
+            finalMutationResult.apply(outWorldStepInstance);
+            return outWorldStepInstance;
+        })));
+
     }
 
-    private static Optional<Consumer<WorldStepInstance>> applyFindPath(
+    private static Optional<Mutation<Person_moveTo>> applyFindPath(
         final WorldStepInstance worldStepInstance,
         final Person_moveTo personMoveTo) {
         var logger = logEnter(personMoveTo.buildPath());
@@ -370,7 +482,7 @@ public class PersonMoveTo {
             .toList();
         Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node> originNodeResult = Optional.empty();
         if (!originNodeList.isEmpty()) {
-            originNodeResult = Optional.of(originNodeList.get(0));
+            originNodeResult = Optional.of(originNodeList.getFirst());
         }
         if (originNodeList.isEmpty()) {
             originNodeResult = worldStepInstance
@@ -413,31 +525,37 @@ public class PersonMoveTo {
             worldStepInstance.randomFrom(destinationNode).get(),
             1
         );
-        return Optional.of(outWorldStepInstance -> {
-            logger.log("removing personMoveTo", personMoveTo.buildPath());
-            personMoveTo.removeFromParent();
-            if (nodePath.isEmpty()) {
-                logger.log("empty nodePath");
-                return;
-            }
 
+        if (nodePath.isEmpty()) {
+            logger.log("empty nodePath");
+            return Optional.empty();
+        }
+
+        return Optional.of(Mutation.of(outWorldStepInstance -> {
+            logger.log("removing personMoveTo", personMoveTo.buildPath());
+            outWorldStepInstance.getWorldStep()
+                .streamActions()
+                .flatMap(Actions::streamPerson_moveTo)
+                .filter(personMoveToElement -> personMoveToElement.getPersonIdRef().equals(personIdRef))
+                .toList()
+                .forEach(Person_moveTo::removeFromParent);
             var actionElement = outWorldStepInstance.getWorldStep()
                 .getActionsOrDefault();
 
             var path = new Path();
 
-            nodePath.getFirst().forEach(node -> {
-                path.addNode(new Node()
-                    .setNodeIdRef(node.getId())
-                );
-            });
+            nodePath.getFirst().forEach(node -> path
+                .addNode(new Node()
+                .setNodeIdRef(node.getId())
+            ));
 
-            actionElement.addPerson_moveTo(new Person_moveTo()
+            var personMoveToElement = new Person_moveTo()
                 .setPersonIdRef(personIdRef)
-                .setPath(path)
-            );
+                .setPath(path);
 
+            actionElement.addPerson_moveTo(personMoveToElement);
 
-        });
+            return personMoveToElement;
+        }));
     }
 }

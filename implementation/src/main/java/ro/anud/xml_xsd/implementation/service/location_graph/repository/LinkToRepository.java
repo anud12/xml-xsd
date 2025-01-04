@@ -9,7 +9,6 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGrap
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Optional;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
@@ -42,21 +41,24 @@ public class LinkToRepository {
             .flatMap(Data::streamLocation)
             .flatMap(Location::streamLocationGraph)
             .flatMap(LocationGraph::streamNode)
-            .forEach(node -> {
-                node.streamLinks()
-                    .flatMap(Links::streamLinkTo)
-                    .forEach(linkTo -> linkToByTargetNodeIdMapByNode
-                        .computeIfAbsent(node, k -> new HashMap<>())
-                        .put(linkTo.getNodeIdRef(), linkTo)
-                    );
-            });
-
+            .forEach(node -> node
+                .streamLinks()
+                .flatMap(Links::streamLinkTo)
+                .forEach(linkTo -> linkToByTargetNodeIdMapByNode
+                    .computeIfAbsent(node, k -> new HashMap<>())
+                    .put(linkTo.getNodeIdRef(), linkTo)
+                ));
+        logger.logReturnVoid();
         return this;
     }
 
     public Optional<LinkTo> getByParentNodeAndNodeIdRef(Node parentNode, String nodeIdRef) {
         var logger = logEnter("parentNode", parentNode.getId(), "nodeIdRef", nodeIdRef);
-        return logger.logReturn(Optional.ofNullable(linkToByTargetNodeIdMapByNode.get(parentNode).get(nodeIdRef)));
+        var nodeMap = linkToByTargetNodeIdMapByNode.getOrDefault(parentNode, new HashMap<>());
+        if (nodeMap.containsKey(nodeIdRef)) {
+            return logger.logReturn(Optional.of(nodeMap.get(nodeIdRef)));
+        }
+        return logger.logReturn(Optional.empty());
     }
 
     public LinkTo getOrDefault(LinkTo linkTo) {
