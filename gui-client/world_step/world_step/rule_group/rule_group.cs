@@ -17,7 +17,6 @@ namespace XSD.Nworld_step {
     public XSD.Nworld_step.Nrule_group.property_rule? property_rule = null;
     public XSD.Nworld_step.Nrule_group.classification_rule? classification_rule = null;
     public XSD.Nworld_step.Nrule_group.name_rule? name_rule = null;
-    public XSD.Nworld_step.Nrule_group.race_rule? race_rule = null;
     public XSD.Nworld_step.Nrule_group.action_rule? action_rule = null;
     public XSD.Nworld_step.Nrule_group.events_rule? events_rule = null;
     public XSD.Nworld_step.Nrule_group.link_group_rule_list? link_group_rule_list = null;
@@ -48,7 +47,6 @@ namespace XSD.Nworld_step {
       this.property_rule = rawNode.InitializeWithRawNode("property_rule", this.property_rule);
       this.classification_rule = rawNode.InitializeWithRawNode("classification_rule", this.classification_rule);
       this.name_rule = rawNode.InitializeWithRawNode("name_rule", this.name_rule);
-      this.race_rule = rawNode.InitializeWithRawNode("race_rule", this.race_rule);
       this.action_rule = rawNode.InitializeWithRawNode("action_rule", this.action_rule);
       this.events_rule = rawNode.InitializeWithRawNode("events_rule", this.events_rule);
       this.link_group_rule_list = rawNode.InitializeWithRawNode("link_group_rule_list", this.link_group_rule_list);
@@ -69,9 +67,6 @@ namespace XSD.Nworld_step {
       }
       if(name_rule != null) {
         rawNode.children["name_rule"] = new List<RawNode> { name_rule.SerializeIntoRawNode() };
-      }
-      if(race_rule != null) {
-        rawNode.children["race_rule"] = new List<RawNode> { race_rule.SerializeIntoRawNode() };
       }
       if(action_rule != null) {
         rawNode.children["action_rule"] = new List<RawNode> { action_rule.SerializeIntoRawNode() };
@@ -142,21 +137,6 @@ namespace XSD.Nworld_step {
     public void Set_name_rule(XSD.Nworld_step.Nrule_group.name_rule? value)
     {
       this.name_rule = value;
-    }
-    public XSD.Nworld_step.Nrule_group.race_rule? Get_race_rule()
-    {
-      return this.race_rule;
-    }
-    public XSD.Nworld_step.Nrule_group.race_rule GetOrInsertDefault_race_rule()
-    {
-      if(this.race_rule == null) {
-        this.race_rule = new XSD.Nworld_step.Nrule_group.race_rule();
-      }
-      return this.race_rule;
-    }
-    public void Set_race_rule(XSD.Nworld_step.Nrule_group.race_rule? value)
-    {
-      this.race_rule = value;
     }
     public XSD.Nworld_step.Nrule_group.action_rule? Get_action_rule()
     {

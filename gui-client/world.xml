@@ -453,25 +453,6 @@
           </mutations>
         </on_person>
       </from_person>
-      <person_to_person id="meleeAttack">
-        <test>
-          <value target="self">
-            <operation initial="0" />
-          </value>
-          <expected target="self">
-            <operation initial="0" />
-          </expected>
-        </test>
-        <property_mutation property_rule_ref="health" on="target">
-          <from participant="self">
-            <operation initial="0">
-              <add_property property_rule_ref="strength" />
-              <and do="divide" value="2" />
-              <and do="multiply" value="-1" />
-            </operation>
-          </from>
-        </property_mutation>
-      </person_to_person>
     </action_rule>
 
     <link_group_rule_list>

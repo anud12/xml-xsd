@@ -11,7 +11,6 @@ public class AtrributeValidator {
 
     List<AttributeValidator> attributeValidatorList = List.of(
         new PropertyRefValidator(),
-        new RaceRefValidator(),
         new ActionRuleRefValidation(),
         new ClassificationRuleRefValidator(),
         new LocationClassificationRuleRefValidator(),

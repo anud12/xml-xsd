@@ -39,7 +39,6 @@ export type type__person_selection = JsonQueryType<{}, {
     "max": type__math_operations & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
   "classification": JsonQueryType<{"classification_rule_ref": string;}> & JsonQueryType<{}, {}>;
-  "race": JsonQueryType<{"race_rule_ref": string;}> & JsonQueryType<{}, {}>;
 }>
 export type type__trigger = JsonQueryType<{}, {
   "person_action_used": JsonQueryType<{"action_rule_ref": string;}> & JsonQueryType<{}, {}>;
@@ -126,16 +125,6 @@ export type world_step = JsonQueryType<{}, {
       "entry": JsonQueryType<{"id": string;}>
         & type__name_token & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
-    "race_rule": JsonQueryType<{}, {
-      "entry": JsonQueryType<{"id": string;}, {
-        "vision": type_range & JsonQueryType<{}, {}>;
-        "movement": type_range & JsonQueryType<{}, {}>;
-        "name": JsonQueryType<{"name_rule_ref": string;}> & JsonQueryType<{}, {}>;
-        "property_bonus": JsonQueryType<{"property_rule_ref": string;}>
-          & type__math_operations & JsonQueryType<{}, {}>;
-        "icon": type_icon & JsonQueryType<{}, {}>;
-      }> & JsonQueryType<{}, {}>;
-    }> & JsonQueryType<{}, {}>;
     "action_rule": JsonQueryType<{}, {
       "from_person": JsonQueryType<{"id": string;}, {
         "selection": type__person_selection & JsonQueryType<{}, {}>;
@@ -201,7 +190,6 @@ export type world_step = JsonQueryType<{}, {
   "data": JsonQueryType<{}, {
     "people": JsonQueryType<{}, {
       "person": JsonQueryType<{"id": string;  "name": string;}, {
-        "race": JsonQueryType<{"race_rule_ref": string;}> & JsonQueryType<{}, {}>;
         "properties": JsonQueryType<{}, {
           "property": JsonQueryType<{"property_rule_ref": string;  "value": string;}> & JsonQueryType<{}, {}>;
         }> & JsonQueryType<{}, {}>;

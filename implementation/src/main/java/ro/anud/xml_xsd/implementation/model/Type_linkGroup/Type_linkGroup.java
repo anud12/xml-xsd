@@ -50,10 +50,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     //Attributes
+
     private String id;
+
     private Integer angle;
-    private Optional<Integer> angleMax;
-    private Optional<Integer> limit;
+    @Builder.Default
+    private Optional<Integer> angleMax = Optional.empty();
+    @Builder.Default
+    private Optional<Integer> limit = Optional.empty();
 
     //Children elements
     @Builder.Default

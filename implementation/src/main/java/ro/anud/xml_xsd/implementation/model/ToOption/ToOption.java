@@ -50,9 +50,13 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     //Attributes
+
     private String nodeRuleRef;
+
     private Integer distance;
-    private Optional<Integer> maxDistance;
+    @Builder.Default
+    private Optional<Integer> maxDistance = Optional.empty();
+
     private Integer adjacentDepthLimit;
 
     //Children elements

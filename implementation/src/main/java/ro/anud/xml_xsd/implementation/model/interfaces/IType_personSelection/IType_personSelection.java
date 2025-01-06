@@ -25,9 +25,6 @@ public interface IType_personSelection<T> extends ro.anud.xml_xsd.implementation
   T addClassification(ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification value);
   T addAllClassification(java.util.List<ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification> value);
   T removeClassification(ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification value);
-  java.util.Optional<ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race> getRace();
-  java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race> streamRace();
-  T setRace(ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race value);
   void deserialize (ro.anud.xml_xsd.implementation.util.RawNode rawNode);
 
   ro.anud.xml_xsd.implementation.util.RawNode serializeIntoRawNode();
@@ -106,23 +103,6 @@ public interface IType_personSelection<T> extends ro.anud.xml_xsd.implementation
             },
             "isNullable": false
           }
-        },
-        "race": {
-          "metaType": "object",
-          "value": {},
-          "isSingle": true,
-          "isNullable": true,
-          "attributes": {
-            "metaType": "object",
-            "value": {
-              "race_rule_ref": {
-                "metaType": "primitive",
-                "value": "xs:string",
-                "isNullable": false
-              }
-            },
-            "isNullable": false
-          }
         }
       }
     },
@@ -191,23 +171,6 @@ public interface IType_personSelection<T> extends ro.anud.xml_xsd.implementation
               "metaType": "object",
               "value": {
                 "classification_rule_ref": {
-                  "metaType": "primitive",
-                  "value": "xs:string",
-                  "isNullable": false
-                }
-              },
-              "isNullable": false
-            }
-          },
-          "race": {
-            "metaType": "object",
-            "value": {},
-            "isSingle": true,
-            "isNullable": true,
-            "attributes": {
-              "metaType": "object",
-              "value": {
-                "race_rule_ref": {
                   "metaType": "primitive",
                   "value": "xs:string",
                   "isNullable": false

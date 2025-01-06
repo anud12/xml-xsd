@@ -34,42 +34,6 @@ public class GetProperty {
         return logger.logReturn(returnValue);
     }
 
-    private static Optional<Integer> getRaceProperty(
-        final WorldStepInstance worldStepInstance,
-        final Person person,
-        String propertyRef,
-        String raceRef) {
-        var logger = logEnter("personId", person.getId(), "propertyRef:", propertyRef, "raceRef:", raceRef);
-        var personRaceOptional = person.getRace();
-        var personRace = personRaceOptional.get();
-        var raceMetadataList = worldStepInstance.getWorldStep()
-            .streamRuleGroup()
-            .flatMap(RuleGroup::streamRaceRule)
-            .flatMap(RaceRule::streamEntry)
-            .toList();
-        var raceMetadata = raceMetadataList.stream().filter(entry -> {
-                if (entry.getName().isPresent()) {
-                    return personRace.getRaceRuleRef().equals(entry.getName().get());
-                }
-                return false;
-            })
-            .findFirst();
-        if (raceMetadata.isEmpty()) {
-            return java.util.Optional.empty();
-        }
-
-        logger.log("Computing base property");
-        var base = getBaseProperty(worldStepInstance, person, propertyRef).orElse(0);
-
-        Optional<PropertyBonus> propertyBonusOptional = raceMetadata.get().getPropertyBonus()
-            .stream().filter(groupMathOperations -> groupMathOperations.getPropertyRuleRef().equals(propertyRef))
-            .findFirst();
-        var bonus = propertyBonusOptional
-            .flatMap(propertyBonus -> worldStepInstance.computeOperation(propertyBonus, person))
-            .orElse(0);
-
-        return java.util.Optional.ofNullable(base + bonus);
-    }
 
 
     private static Optional<Integer> computeProperty(
@@ -87,17 +51,7 @@ public class GetProperty {
             logger.log("on person is present");
             return logger.logReturn(personProperty.map(Property::getValue));
         }
-        logger.log("on person not present");
-        var personRaceOptional = person.getRace();
 
-        var raceValue = personRaceOptional
-            .map(Race::getRaceRuleRef)
-            .flatMap(raceRule -> getRaceProperty(worldStepInstance, person, propertyRef, raceRule));
-
-        if (raceValue.isPresent()) {
-            logger.log("on race is present");
-            return logger.logReturn(raceValue);
-        }
         logger.log("on race not present");
         var baseValue = getBaseProperty(worldStepInstance, person, propertyRef);
         if (baseValue.isPresent()) {

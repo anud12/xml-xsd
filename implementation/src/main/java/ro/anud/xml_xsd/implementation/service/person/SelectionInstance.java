@@ -25,8 +25,7 @@ public class SelectionInstance {
     public boolean isSelectionApplicableTo(IType_personSelection<?> selectPerson, Person person) {
         var logger = logEnter("personId", person.getId());
         return logger.logReturn(filterBasedOnProperties(selectPerson, person)
-            && filterPersonListBasedOnClassification(selectPerson, person)
-            && filterPersonListBasedOnRace(selectPerson, person));
+            && filterPersonListBasedOnClassification(selectPerson, person));
     }
 
     private boolean filterBasedOnProperties(IType_personSelection<?> selectPerson, Person person) {
@@ -83,24 +82,6 @@ public class SelectionInstance {
         return logger.logReturn(filteredRules.count() == ruleList.size());
     }
 
-    private boolean filterPersonListBasedOnRace(
-        final IType_personSelection<?> selectPerson,
-        final Person person) {
-        var logger = logEnter("personId", person.getId());
-        var ruleList = selectPerson.streamRace().toList();
-        if (ruleList.isEmpty()) {
-            logger.log("empty list");
-            return logger.logReturn(true);
-        }
-        var personRaceRef = person.getRace().map(Race::getRaceRuleRef);
-        if (personRaceRef.isEmpty()) {
-            return false;
-        }
-        var filteredRules = ruleList.stream()
-            .map(ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race::getRaceRuleRef)
-            .filter(ref -> Objects.equals(ref, personRaceRef.get()));
-        return logger.logReturn(filteredRules.count() == ruleList.size());
-    }
 
     public List<Person> selectPersonOrCreate(final IType_personSelection<?> selectPerson) {
         var logger = logEnter();

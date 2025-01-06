@@ -50,8 +50,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     //Attributes
+
     private Integer min;
-    private Optional<Integer> max;
+    @Builder.Default
+    private Optional<Integer> max = Optional.empty();
 
     //Children elements
     @Builder.Default

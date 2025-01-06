@@ -50,8 +50,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     //Attributes
-    private Optional<String> actionRuleRef;
-    private Optional<String> actionRef;
+    @Builder.Default
+    private Optional<String> actionRuleRef = Optional.empty();
+    @Builder.Default
+    private Optional<String> actionRef = Optional.empty();
+
     private String personRef;
 
     //Children elements

@@ -266,23 +266,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                 },
                 "isSingle": false,
                 "value": {
-                  "race": {
-                    "metaType": "object",
-                    "value": {},
-                    "isSingle": true,
-                    "isNullable": true,
-                    "attributes": {
-                      "metaType": "object",
-                      "value": {
-                        "race_rule_ref": {
-                          "metaType": "primitive",
-                          "value": "xs:string",
-                          "isNullable": false
-                        }
-                      },
-                      "isNullable": false
-                    }
-                  },
                   "properties": {
                     "metaType": "object",
                     "isSingle": true,

@@ -50,7 +50,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     //Attributes
-    private Optional<String> nodeGraphIdRef;
+    @Builder.Default
+    private Optional<String> nodeGraphIdRef = Optional.empty();
 
     //Children elements
 

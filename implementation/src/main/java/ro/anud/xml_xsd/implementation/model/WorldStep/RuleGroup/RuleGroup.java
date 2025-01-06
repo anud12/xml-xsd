@@ -60,8 +60,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.NameRule> nameRule = Optional.empty();
     @Builder.Default
-    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.RaceRule> raceRule = Optional.empty();
-    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.ActionRule> actionRule = Optional.empty();
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.EventsRule> eventsRule = Optional.empty();
@@ -136,9 +134,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.NameRule) {
           this.nameRule = Optional.empty();
         }
-        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.RaceRule) {
-          this.raceRule = Optional.empty();
-        }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.ActionRule) {
           this.actionRule = Optional.empty();
         }
@@ -164,9 +159,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           return 0;
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.NameRule) {
-          return 0;
-        }
-        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.RaceRule) {
           return 0;
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.ActionRule) {
@@ -208,7 +200,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       this.propertyRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule.fromRawNode(rawNode.getChildrenFirst("property_rule"), this);
       this.classificationRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.ClassificationRule.fromRawNode(rawNode.getChildrenFirst("classification_rule"), this);
       this.nameRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.NameRule.fromRawNode(rawNode.getChildrenFirst("name_rule"), this);
-      this.raceRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.RaceRule.fromRawNode(rawNode.getChildrenFirst("race_rule"), this);
       this.actionRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.ActionRule.fromRawNode(rawNode.getChildrenFirst("action_rule"), this);
       this.eventsRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.EventsRule.fromRawNode(rawNode.getChildrenFirst("events_rule"), this);
       this.linkGroupRuleList = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LinkGroupRuleList.LinkGroupRuleList.fromRawNode(rawNode.getChildrenFirst("link_group_rule_list"), this);
@@ -231,8 +222,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       rawNode.setChildren("classification_rule", classificationRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.ClassificationRule::serializeIntoRawNode).toList());
       innerLogger.log("name_rule");
       rawNode.setChildren("name_rule", nameRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.NameRule::serializeIntoRawNode).toList());
-      innerLogger.log("race_rule");
-      rawNode.setChildren("race_rule", raceRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.RaceRule::serializeIntoRawNode).toList());
       innerLogger.log("action_rule");
       rawNode.setChildren("action_rule", actionRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.ActionRule::serializeIntoRawNode).toList());
       innerLogger.log("events_rule");
@@ -336,35 +325,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RuleGroup setNameRule(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.NameRule value)
     {
       this.nameRule = Optional.ofNullable(value);
-      value.parentNode(this);
-      triggerOnChange();
-      return this;
-    }
-
-    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.RaceRule> getRaceRule()
-    {
-      return this.raceRule;
-    }
-    public ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.RaceRule getRaceRuleOrDefault()
-    {
-      return this.raceRule.orElseGet(() -> {
-        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.RaceRule();
-        instance.parentNode(this);
-        this.raceRule = Optional.of(instance);
-        return this.raceRule.get();
-      });
-    }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.RaceRule> streamRaceRuleOrDefault()
-    {
-      return java.util.stream.Stream.of(getRaceRuleOrDefault());
-    }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.RaceRule> streamRaceRule()
-    {
-      return raceRule.stream();
-    }
-    public RuleGroup setRaceRule(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.RaceRule value)
-    {
-      this.raceRule = Optional.ofNullable(value);
       value.parentNode(this);
       triggerOnChange();
       return this;
@@ -728,94 +688,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                   }
                 ],
                 "isSingle": false,
-                "isNullable": true
-              }
-            },
-            "isNullable": true
-          },
-          "race_rule": {
-            "metaType": "object",
-            "isSingle": true,
-            "value": {
-              "entry": {
-                "metaType": "object",
-                "attributes": {
-                  "metaType": "object",
-                  "value": {
-                    "id": {
-                      "metaType": "primitive",
-                      "value": "xs:string",
-                      "isNullable": false
-                    }
-                  },
-                  "isNullable": false
-                },
-                "isSingle": false,
-                "value": {
-                  "vision": {
-                    "metaType": "reference",
-                    "value": "type_range",
-                    "isSingle": true,
-                    "isNullable": true
-                  },
-                  "movement": {
-                    "metaType": "reference",
-                    "value": "type_range",
-                    "isSingle": true,
-                    "isNullable": true
-                  },
-                  "name": {
-                    "metaType": "object",
-                    "value": {},
-                    "isSingle": true,
-                    "isNullable": true,
-                    "attributes": {
-                      "metaType": "object",
-                      "value": {
-                        "name_rule_ref": {
-                          "metaType": "primitive",
-                          "value": "xs:string",
-                          "isNullable": false
-                        }
-                      },
-                      "isNullable": false
-                    }
-                  },
-                  "property_bonus": {
-                    "metaType": "composition",
-                    "value": [
-                      {
-                        "metaType": "object",
-                        "value": {},
-                        "isSingle": true,
-                        "isNullable": false,
-                        "attributes": {
-                          "metaType": "object",
-                          "value": {
-                            "property_rule_ref": {
-                              "metaType": "primitive",
-                              "value": "xs:string",
-                              "isNullable": false
-                            }
-                          },
-                          "isNullable": false
-                        }
-                      },
-                      {
-                        "metaType": "primitive",
-                        "value": "type__math_operations"
-                      }
-                    ],
-                    "isSingle": false,
-                    "isNullable": true
-                  },
-                  "icon": {
-                    "metaType": "reference",
-                    "value": "type_icon",
-                    "isSingle": true,
-                    "isNullable": true
-                  }
-                },
                 "isNullable": true
               }
             },

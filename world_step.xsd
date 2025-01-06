@@ -167,11 +167,6 @@
           <xs:attribute name="classification_rule_ref" type="xs:string" use="required"/>
         </xs:complexType>
       </xs:element>
-      <xs:element name="race" minOccurs="0">
-        <xs:complexType>
-          <xs:attribute name="race_rule_ref" type="xs:string" use="required"/>
-        </xs:complexType>
-      </xs:element>
 
     </xs:sequence>
   </xs:complexType>
@@ -838,39 +833,6 @@
               </xs:element>
 
 
-              <xs:element name="race_rule" minOccurs="0">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element name="vision" type="type_range" minOccurs="0"/>
-                          <xs:element name="movement" type="type_range" minOccurs="0"/>
-                          <xs:element name="name" minOccurs="0">
-                            <xs:complexType>
-                              <xs:attribute name="name_rule_ref" type="xs:string" use="required"/>
-                            </xs:complexType>
-                          </xs:element>
-                          <xs:element name="property_bonus" minOccurs="0"
-                                      maxOccurs="unbounded">
-                            <xs:complexType>
-                              <xs:complexContent>
-                                <xs:extension base="type__math_operations">
-                                  <xs:attribute name="property_rule_ref" type="xs:string" use="required"/>
-                                </xs:extension>
-                              </xs:complexContent>
-                            </xs:complexType>
-                          </xs:element>
-                          <xs:element name="icon" type="type_icon" minOccurs="0"/>
-                        </xs:sequence>
-                        <xs:attribute name="id" type="xs:string" use="required"/>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:sequence>
-                </xs:complexType>
-              </xs:element>
-
-
               <xs:element name="action_rule" minOccurs="0">
                 <xs:complexType>
                   <xs:sequence>
@@ -1213,11 +1175,6 @@
                     <xs:element name="person" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="race" minOccurs="0">
-                            <xs:complexType>
-                              <xs:attribute name="race_rule_ref" type="xs:string" use="required"/>
-                            </xs:complexType>
-                          </xs:element>
                           <xs:element name="properties" minOccurs="0">
                             <xs:complexType>
                               <xs:sequence>

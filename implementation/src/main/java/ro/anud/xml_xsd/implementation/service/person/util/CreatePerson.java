@@ -2,10 +2,7 @@ package ro.anud.xml_xsd.implementation.service.person.util;
 
 import ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
-import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.ClassificationRule;
-import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.Entry.Entry;
-import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.RaceRule;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup;
 import ro.anud.xml_xsd.implementation.model.interfaces.IType_personSelection.IType_personSelection;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
@@ -118,32 +115,9 @@ public class CreatePerson {
         final WorldStepInstance worldStepInstance,
         final IType_personSelection<?> typePersonSelection) {
         var logger = logEnter();
-        var ruleGroup = worldStepInstance.getWorldStep().streamRuleGroup();
-
-        var raceList = ruleGroup.flatMap(RuleGroup::streamRaceRule)
-            .flatMap(RaceRule::streamEntry)
-            .toList();
-
-        var selectRace = typePersonSelection.getRace()
-            .flatMap(race -> raceList.stream()
-                .filter(entry -> entry.getId().equals(race.getRaceRuleRef()))
-                .findAny()
-            )
-            .or(() -> worldStepInstance.randomFrom(raceList));
-
-        var name = worldStepInstance.name.calculateNameFromRefString(selectRace.map(Entry::getId));
         var person = new Person();
 
         person.setId(worldStepInstance.getNextId());
-        logger.log("name", name);
-        person.setName(name);
-        selectRace.ifPresentOrElse(
-            entry -> {
-                logger.log("race", entry.getId());
-                person.setRace(new Race()
-                    .setRaceRuleRef(entry.getId())
-                );
-            }, () -> logger.log("no race set"));
 
         logger.log("adding person with id", person.getId());
         logger.logTodo("remove people.addPerson(person)");

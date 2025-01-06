@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import ro.anud.xml_xsd.implementation.middleware.DefaultPropertyInitializer;
 import ro.anud.xml_xsd.implementation.middleware.EventsMetadata;
 import ro.anud.xml_xsd.implementation.middleware.PersonAssignClassification;
 import ro.anud.xml_xsd.implementation.middleware.action.FromPersonAction;
@@ -18,7 +19,6 @@ import ro.anud.xml_xsd.implementation.middleware.person.PersonMoveTo;
 import ro.anud.xml_xsd.implementation.middleware.person.PersonTeleportTo;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.InstanceTypeEnum;
-import ro.anud.xml_xsd.implementation.service.Mutation;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 import ro.anud.xml_xsd.implementation.validator.AtrributeValidator;
@@ -36,7 +36,6 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 
@@ -76,6 +75,7 @@ public class AnalyzeController {
             }
             logger.log("validating done");
 
+            DefaultPropertyInitializer.apply(worldStepInstance);
             FromPersonAction.apply(worldStepInstance);
             PersonCreateAction.personCreateAction(worldStepInstance);
             LocationGraphCreate.apply(worldStepInstance);

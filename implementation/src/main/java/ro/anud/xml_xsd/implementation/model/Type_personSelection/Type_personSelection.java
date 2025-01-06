@@ -62,8 +62,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     private List<ro.anud.xml_xsd.implementation.model.Type_personSelection.Property.Property> property = new ArrayList<>();
     @Builder.Default
     private List<ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification> classification = new ArrayList<>();
-    @Builder.Default
-    private Optional<ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race> race = Optional.empty();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -126,9 +124,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         if(object instanceof ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification) {
           this.classification.remove(object);
         }
-        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race) {
-          this.race = Optional.empty();
-        }
     }
 
     public int buildIndexForChild(Object object) {
@@ -146,9 +141,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification) {
           return this.classification.indexOf(object);
-        }
-        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race) {
-          return 0;
         }
         return 0;
     }
@@ -179,7 +171,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       this.max = ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.fromRawNode(rawNode.getChildrenFirst("max"), this);
       this.property = ro.anud.xml_xsd.implementation.model.Type_personSelection.Property.Property.fromRawNode(rawNode.getChildrenList("property"), this);
       this.classification = ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification.fromRawNode(rawNode.getChildrenList("classification"), this);
-      this.race = ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race.fromRawNode(rawNode.getChildrenFirst("race"), this);
       logReturnVoid();
     }
 
@@ -201,8 +192,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       rawNode.setChildren("property", property.stream().map(ro.anud.xml_xsd.implementation.model.Type_personSelection.Property.Property::serializeIntoRawNode).toList());
       innerLogger.log("classification");
       rawNode.setChildren("classification", classification.stream().map(ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification::serializeIntoRawNode).toList());
-      innerLogger.log("race");
-      rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race::serializeIntoRawNode).toList());
       return rawNode;
     }
 
@@ -355,34 +344,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       triggerOnChange();
       return this;
     }
-    public Optional<ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race> getRace()
-    {
-      return this.race;
-    }
-    public ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race getRaceOrDefault()
-    {
-      return this.race.orElseGet(() -> {
-        var instance = new ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race();
-        instance.parentNode(this);
-        this.race = Optional.of(instance);
-        return this.race.get();
-      });
-    }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race> streamRaceOrDefault()
-    {
-      return java.util.stream.Stream.of(getRaceOrDefault());
-    }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race> streamRace()
-    {
-      return race.stream();
-    }
-    public Type_personSelection setRace(ro.anud.xml_xsd.implementation.model.Type_personSelection.Race.Race value)
-    {
-      this.race = Optional.ofNullable(value);
-      value.parentNode(this);
-      triggerOnChange();
-      return this;
-    }
 
   }
 
@@ -459,23 +420,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
               },
               "isNullable": false
             }
-          },
-          "race": {
-            "metaType": "object",
-            "value": {},
-            "isSingle": true,
-            "isNullable": true,
-            "attributes": {
-              "metaType": "object",
-              "value": {
-                "race_rule_ref": {
-                  "metaType": "primitive",
-                  "value": "xs:string",
-                  "isNullable": false
-                }
-              },
-              "isNullable": false
-            }
           }
         }
       },
@@ -544,23 +488,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                 "metaType": "object",
                 "value": {
                   "classification_rule_ref": {
-                    "metaType": "primitive",
-                    "value": "xs:string",
-                    "isNullable": false
-                  }
-                },
-                "isNullable": false
-              }
-            },
-            "race": {
-              "metaType": "object",
-              "value": {},
-              "isSingle": true,
-              "isNullable": true,
-              "attributes": {
-                "metaType": "object",
-                "value": {
-                  "race_rule_ref": {
                     "metaType": "primitive",
                     "value": "xs:string",
                     "isNullable": false

@@ -614,94 +614,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                 },
                 "isNullable": true
               },
-              "race_rule": {
-                "metaType": "object",
-                "isSingle": true,
-                "value": {
-                  "entry": {
-                    "metaType": "object",
-                    "attributes": {
-                      "metaType": "object",
-                      "value": {
-                        "id": {
-                          "metaType": "primitive",
-                          "value": "xs:string",
-                          "isNullable": false
-                        }
-                      },
-                      "isNullable": false
-                    },
-                    "isSingle": false,
-                    "value": {
-                      "vision": {
-                        "metaType": "reference",
-                        "value": "type_range",
-                        "isSingle": true,
-                        "isNullable": true
-                      },
-                      "movement": {
-                        "metaType": "reference",
-                        "value": "type_range",
-                        "isSingle": true,
-                        "isNullable": true
-                      },
-                      "name": {
-                        "metaType": "object",
-                        "value": {},
-                        "isSingle": true,
-                        "isNullable": true,
-                        "attributes": {
-                          "metaType": "object",
-                          "value": {
-                            "name_rule_ref": {
-                              "metaType": "primitive",
-                              "value": "xs:string",
-                              "isNullable": false
-                            }
-                          },
-                          "isNullable": false
-                        }
-                      },
-                      "property_bonus": {
-                        "metaType": "composition",
-                        "value": [
-                          {
-                            "metaType": "object",
-                            "value": {},
-                            "isSingle": true,
-                            "isNullable": false,
-                            "attributes": {
-                              "metaType": "object",
-                              "value": {
-                                "property_rule_ref": {
-                                  "metaType": "primitive",
-                                  "value": "xs:string",
-                                  "isNullable": false
-                                }
-                              },
-                              "isNullable": false
-                            }
-                          },
-                          {
-                            "metaType": "primitive",
-                            "value": "type__math_operations"
-                          }
-                        ],
-                        "isSingle": false,
-                        "isNullable": true
-                      },
-                      "icon": {
-                        "metaType": "reference",
-                        "value": "type_icon",
-                        "isSingle": true,
-                        "isNullable": true
-                      }
-                    },
-                    "isNullable": true
-                  }
-                },
-                "isNullable": true
-              },
               "action_rule": {
                 "metaType": "object",
                 "isSingle": true,
@@ -1228,23 +1140,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                     },
                     "isSingle": false,
                     "value": {
-                      "race": {
-                        "metaType": "object",
-                        "value": {},
-                        "isSingle": true,
-                        "isNullable": true,
-                        "attributes": {
-                          "metaType": "object",
-                          "value": {
-                            "race_rule_ref": {
-                              "metaType": "primitive",
-                              "value": "xs:string",
-                              "isNullable": false
-                            }
-                          },
-                          "isNullable": false
-                        }
-                      },
                       "properties": {
                         "metaType": "object",
                         "isSingle": true,
@@ -2266,94 +2161,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                   },
                   "isNullable": true
                 },
-                "race_rule": {
-                  "metaType": "object",
-                  "isSingle": true,
-                  "value": {
-                    "entry": {
-                      "metaType": "object",
-                      "attributes": {
-                        "metaType": "object",
-                        "value": {
-                          "id": {
-                            "metaType": "primitive",
-                            "value": "xs:string",
-                            "isNullable": false
-                          }
-                        },
-                        "isNullable": false
-                      },
-                      "isSingle": false,
-                      "value": {
-                        "vision": {
-                          "metaType": "reference",
-                          "value": "type_range",
-                          "isSingle": true,
-                          "isNullable": true
-                        },
-                        "movement": {
-                          "metaType": "reference",
-                          "value": "type_range",
-                          "isSingle": true,
-                          "isNullable": true
-                        },
-                        "name": {
-                          "metaType": "object",
-                          "value": {},
-                          "isSingle": true,
-                          "isNullable": true,
-                          "attributes": {
-                            "metaType": "object",
-                            "value": {
-                              "name_rule_ref": {
-                                "metaType": "primitive",
-                                "value": "xs:string",
-                                "isNullable": false
-                              }
-                            },
-                            "isNullable": false
-                          }
-                        },
-                        "property_bonus": {
-                          "metaType": "composition",
-                          "value": [
-                            {
-                              "metaType": "object",
-                              "value": {},
-                              "isSingle": true,
-                              "isNullable": false,
-                              "attributes": {
-                                "metaType": "object",
-                                "value": {
-                                  "property_rule_ref": {
-                                    "metaType": "primitive",
-                                    "value": "xs:string",
-                                    "isNullable": false
-                                  }
-                                },
-                                "isNullable": false
-                              }
-                            },
-                            {
-                              "metaType": "primitive",
-                              "value": "type__math_operations"
-                            }
-                          ],
-                          "isSingle": false,
-                          "isNullable": true
-                        },
-                        "icon": {
-                          "metaType": "reference",
-                          "value": "type_icon",
-                          "isSingle": true,
-                          "isNullable": true
-                        }
-                      },
-                      "isNullable": true
-                    }
-                  },
-                  "isNullable": true
-                },
                 "action_rule": {
                   "metaType": "object",
                   "isSingle": true,
@@ -2880,23 +2687,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                       },
                       "isSingle": false,
                       "value": {
-                        "race": {
-                          "metaType": "object",
-                          "value": {},
-                          "isSingle": true,
-                          "isNullable": true,
-                          "attributes": {
-                            "metaType": "object",
-                            "value": {
-                              "race_rule_ref": {
-                                "metaType": "primitive",
-                                "value": "xs:string",
-                                "isNullable": false
-                              }
-                            },
-                            "isNullable": false
-                          }
-                        },
                         "properties": {
                           "metaType": "object",
                           "isSingle": true,

@@ -50,7 +50,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     //Attributes
+
     private Integer x;
+
     private Integer y;
 
     //Children elements

@@ -50,7 +50,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     //Attributes
-    private Optional<String> value;
+    @Builder.Default
+    private Optional<String> value = Optional.empty();
 
     //Children elements
 

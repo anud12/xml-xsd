@@ -50,8 +50,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     //Attributes
+
     private String personIdRef;
+
     private String targetPersonIdRef;
+
     private String actionPropertyMutationRuleRef;
 
     //Children elements
