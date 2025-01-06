@@ -1,8 +1,4 @@
 import {JsonQueryType} from "./JsonQueryType"
-export type property_rule_ref = {
-  "property_rule_ref": string & JsonQueryType<{}, {}>;
-}
-export type attributeGroup_range = {"value": string;  "max_value": string;  "inclusive": string;}
 export type group__name_token = JsonQueryType<{}, {
   "name_token": JsonQueryType<{"prefix": string;}, {}> & JsonQueryType<{}, {
       "ref": JsonQueryType<{"name_rule_ref": string;}> & JsonQueryType<{}, {}>;
@@ -21,7 +17,6 @@ export type type__group__operation__and = "add"
   | "divide_dice"
   | "modulo"
   | "modulo_dice"
-export type type_range = JsonQueryType<unknown>
 export type type__property_mutation_on = JsonQueryType<{"on": type_person_select;}>
   & type__property_mutation
 export type type__property_mutation = JsonQueryType<{"property_rule_ref": string;}, {
@@ -29,7 +24,6 @@ export type type__property_mutation = JsonQueryType<{"property_rule_ref": string
     "operation": type__math_operations & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
 }>
-export type type_icon = any
 export type type__person_selection = JsonQueryType<{}, {
   "radius": type__math_operations & JsonQueryType<{}, {}>;
   "min": type__math_operations & JsonQueryType<{}, {}>;
@@ -197,7 +191,6 @@ export type world_step = JsonQueryType<{}, {
         "classifications": JsonQueryType<{}, {
           "classification": JsonQueryType<{"classification_rule_ref": string;}> & JsonQueryType<{}, {}>;
         }> & JsonQueryType<{}, {}>;
-        "icon": type_icon & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
     "location": JsonQueryType<{}, {

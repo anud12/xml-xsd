@@ -62,8 +62,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     private List<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Relations.Relations> relations = new ArrayList<>();
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications> classifications = Optional.empty();
-    @Builder.Default
-    private Optional<ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon> icon = Optional.empty();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -129,9 +127,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications) {
           this.classifications = Optional.empty();
         }
-        if(object instanceof ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon) {
-          this.icon = Optional.empty();
-        }
     }
 
     public int buildIndexForChild(Object object) {
@@ -142,9 +137,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           return this.relations.indexOf(object);
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications) {
-          return 0;
-        }
-        if(object instanceof ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon) {
           return 0;
         }
         return 0;
@@ -175,8 +167,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       this.properties = ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties.fromRawNode(rawNode.getChildrenFirst("properties"), this);
       this.relations = ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Relations.Relations.fromRawNode(rawNode.getChildrenList("relations"), this);
       this.classifications = ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications.fromRawNode(rawNode.getChildrenFirst("classifications"), this);
-      innerLogger.log("icon");
-      this.icon = ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon.fromRawNode(rawNode.getChildrenFirst("icon"), this);
       logReturnVoid();
     }
 
@@ -198,8 +188,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       rawNode.setChildren("relations", relations.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Relations.Relations::serializeIntoRawNode).toList());
       innerLogger.log("classifications");
       rawNode.setChildren("classifications", classifications.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications::serializeIntoRawNode).toList());
-      innerLogger.log("icon");
-      rawNode.setChildren("icon", icon.stream().map(ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon::serializeIntoRawNode).toList());
       return rawNode;
     }
 
@@ -316,35 +304,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return this;
     }
 
-    public Optional<ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon> getIcon()
-    {
-      return this.icon;
-    }
-    public ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon getIconOrDefault()
-    {
-      return this.icon.orElseGet(() -> {
-        var instance = new ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon();
-        instance.parentNode(this);
-        this.icon = Optional.of(instance);
-        return this.icon.get();
-      });
-    }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon> streamIconOrDefault()
-    {
-      return java.util.stream.Stream.of(getIconOrDefault());
-    }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon> streamIcon()
-    {
-      return icon.stream();
-    }
-    public Person setIcon(ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon value)
-    {
-      this.icon = Optional.ofNullable(value);
-      value.parentNode(this);
-      triggerOnChange();
-      return this;
-    }
-
   }
 
 
@@ -437,12 +396,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                 }
               }
             },
-            "isNullable": true
-          },
-          "icon": {
-            "metaType": "reference",
-            "value": "type_icon",
-            "isSingle": true,
             "isNullable": true
           }
         },

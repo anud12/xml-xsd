@@ -1,50 +1,5 @@
 [
   {
-    "name": "property_rule_ref",
-    "type": "attribute",
-    "value": {
-      "metaType": "object",
-      "value": {
-        "property_rule_ref": {
-          "metaType": "primitive",
-          "value": "xs:string",
-          "isNullable": true
-        }
-      },
-      "isNullable": true
-    }
-  },
-  {
-    "name": "attributeGroup_range",
-    "type": "attributeGroup",
-    "value": {
-      "metaType": "object",
-      "value": {},
-      "isSingle": true,
-      "isNullable": false,
-      "attributes": {
-        "metaType": "object",
-        "value": {
-          "value": {
-            "metaType": "primitive",
-            "value": "xs:int",
-            "isNullable": false
-          },
-          "max_value": {
-            "metaType": "primitive",
-            "value": "xs:int",
-            "isNullable": true
-          },
-          "inclusive": {
-            "metaType": "primitive",
-            "value": "xs:boolean",
-            "isNullable": false
-          }
-        }
-      }
-    }
-  },
-  {
     "name": "group__name_token",
     "type": "group",
     "value": {
@@ -170,22 +125,6 @@
     "isNullable": true
   },
   {
-    "name": "type_range",
-    "type": "complex",
-    "isSingle": true,
-    "isNullable": false,
-    "value": {
-      "metaType": "object",
-      "value": {},
-      "isSingle": true,
-      "isNullable": false,
-      "attributes": {
-        "metaType": "reference",
-        "value": "attributeGroup_range"
-      }
-    }
-  },
-  {
     "name": "type__property_mutation_on",
     "type": "complex",
     "value": {
@@ -259,13 +198,6 @@
           "isNullable": false
         }
       }
-    }
-  },
-  {
-    "name": "type_icon",
-    "type": "complex",
-    "value": {
-      "metaType": "any"
     }
   },
   {
@@ -1721,12 +1653,6 @@
                           }
                         }
                       },
-                      "isNullable": true
-                    },
-                    "icon": {
-                      "metaType": "reference",
-                      "value": "type_icon",
-                      "isSingle": true,
                       "isNullable": true
                     }
                   },

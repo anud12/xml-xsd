@@ -1207,12 +1207,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                           }
                         },
                         "isNullable": true
-                      },
-                      "icon": {
-                        "metaType": "reference",
-                        "value": "type_icon",
-                        "isSingle": true,
-                        "isNullable": true
                       }
                     },
                     "isNullable": true
@@ -2753,12 +2747,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                               }
                             }
                           },
-                          "isNullable": true
-                        },
-                        "icon": {
-                          "metaType": "reference",
-                          "value": "type_icon",
-                          "isSingle": true,
                           "isNullable": true
                         }
                       },
