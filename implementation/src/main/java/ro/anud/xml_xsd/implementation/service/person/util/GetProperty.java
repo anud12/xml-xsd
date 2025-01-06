@@ -3,22 +3,19 @@ package ro.anud.xml_xsd.implementation.service.person.util;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Property.Property;
-import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.Entry;
-import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.Entry.PropertyBonus.PropertyBonus;
-import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RaceRule.RaceRule;
-import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup;
+import ro.anud.xml_xsd.implementation.service.Mutation;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 import java.util.Optional;
 import java.util.function.Consumer;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.*;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 
 public class GetProperty {
 
-    private static Optional<Integer> getBaseProperty(
+
+    private static Optional<Mutation<Integer>> getBaseProperty(
         final WorldStepInstance worldStepInstance,
         final Person person,
         final String propertyRef) {
@@ -26,14 +23,18 @@ public class GetProperty {
         var property = worldStepInstance.ruleRepository.getPropertyById(propertyRef).stream();
         var personDefaultOptional = property.flatMap(Entry::streamPersonDefault).findAny();
 
-        var returnValue = personDefaultOptional.flatMap(personDefault1 -> logger
-            .log("personId:", person.getId(), "propertyRef:", propertyRef)
-            .logReturn(worldStepInstance.computeOperation(personDefault1, person))
-        );
-
-        return logger.logReturn(returnValue);
+        var value = worldStepInstance.computeOperation(personDefaultOptional, person);
+        logger.log("computed value", value);
+        return value.map(integer -> Mutation.of(outInstance -> {
+            outInstance.person.repository.getOrCreate(person)
+                .getPropertiesOrDefault()
+                .addProperty(new Property()
+                    .setValue(integer)
+                    .setPropertyRuleRef(propertyRef)
+                );
+            return integer;
+        }));
     }
-
 
 
     private static Optional<Integer> computeProperty(
@@ -52,14 +53,15 @@ public class GetProperty {
             return logger.logReturn(personProperty.map(Property::getValue));
         }
 
-        logger.log("on race not present");
         var baseValue = getBaseProperty(worldStepInstance, person, propertyRef);
-        if (baseValue.isPresent()) {
+        return baseValue.map(integerMutation -> {
             logger.log("base value is present");
-            return logger.logReturn(baseValue);
-        }
-        logger.log("base value is not present");
-        return logger.logReturn(Optional.empty());
+            integerMutation.apply(worldStepInstance.getOutInstance());
+            return integerMutation.apply(worldStepInstance);
+        }).or(() -> {
+            logger.log("base value is not present");
+            return Optional.empty();
+        });
     }
 
     public static Optional<Integer> getProperty(
@@ -78,12 +80,24 @@ public class GetProperty {
                 .findFirst()
                 .ifPresentOrElse(
                     property1 -> {
-                        logger.log("setting property on person:", innerPerson.getId(), "propertyRef:", propertyRef, "value:", value);
+                        logger.log(
+                            "setting property on person:",
+                            innerPerson.getId(),
+                            "propertyRef:",
+                            propertyRef,
+                            "value:",
+                            value);
                         property1.setValue(value.get());
                     },
                     () -> {
 
-                        logger.log("adding property to person:", innerPerson.getId(), "propertyRef:", propertyRef, "value:", value);
+                        logger.log(
+                            "adding property to person:",
+                            innerPerson.getId(),
+                            "propertyRef:",
+                            propertyRef,
+                            "value:",
+                            value);
                         var newProperty = Property.builder()
                             .value(value.get())
                             .propertyRuleRef(propertyRef)
