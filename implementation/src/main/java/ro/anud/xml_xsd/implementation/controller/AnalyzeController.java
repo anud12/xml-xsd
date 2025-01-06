@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import ro.anud.xml_xsd.implementation.middleware.DefaultPropertyInitializer;
 import ro.anud.xml_xsd.implementation.middleware.EventsMetadata;
 import ro.anud.xml_xsd.implementation.middleware.PersonAssignClassification;
 import ro.anud.xml_xsd.implementation.middleware.action.FromPersonAction;
@@ -75,7 +74,6 @@ public class AnalyzeController {
             }
             logger.log("validating done");
 
-            DefaultPropertyInitializer.apply(worldStepInstance);
             FromPersonAction.apply(worldStepInstance);
             PersonCreateAction.personCreateAction(worldStepInstance);
             LocationGraphCreate.apply(worldStepInstance);
