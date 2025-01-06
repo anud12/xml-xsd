@@ -34,17 +34,6 @@
     <xs:attribute name="property_rule_ref" type="xs:string" use="required"/>
   </xs:complexType>
 
-  <xs:complexType name="type_icon">
-    <xs:annotation>
-      <xs:documentation>
-        SVG Icon.
-      </xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:any processContents="skip"/>
-    </xs:sequence>
-  </xs:complexType>
-
 
   <xs:simpleType name="type_person_select">
     <xs:annotation>
@@ -1170,7 +1159,6 @@
                               </xs:sequence>
                             </xs:complexType>
                           </xs:element>
-                          <xs:element name="icon" type="type_icon" minOccurs="0"/>
                         </xs:sequence>
                         <xs:attribute name="id" use="required" type="xs:string"/>
                         <xs:attribute name="name" type="xs:string"/>
