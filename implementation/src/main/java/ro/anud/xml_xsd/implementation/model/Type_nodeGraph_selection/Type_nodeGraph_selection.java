@@ -22,6 +22,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Type_nodeGraph_selection implements  ro.anud.xml_xsd.implementation.model.interfaces.IType_nodeGraph_selection.IType_nodeGraph_selection<Type_nodeGraph_selection>,  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static final String TYPE_ID = "/type__node_graph__selection";
+
     public static Type_nodeGraph_selection fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Type_nodeGraph_selection();
@@ -224,7 +226,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
   }
-
 
   /*
     dependant type:

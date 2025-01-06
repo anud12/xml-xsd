@@ -22,6 +22,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class ToOption implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static final String TYPE_ID = "/type__link_group/to_option";
+
     public static ToOption fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new ToOption();
@@ -300,7 +302,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
   }
-
 
   /*
     dependant type:

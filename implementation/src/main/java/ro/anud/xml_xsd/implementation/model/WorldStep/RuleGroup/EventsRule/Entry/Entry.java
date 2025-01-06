@@ -22,6 +22,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Entry implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static final String TYPE_ID = "/world_step/rule_group/events_rule/entry";
+
     public static Entry fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Entry();
@@ -250,7 +252,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
   }
-
 
   /*
     dependant type:

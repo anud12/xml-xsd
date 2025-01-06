@@ -18,6 +18,7 @@ import {dependantTypeToChildrenGetterSetter} from "./depedantType/dependantTypeT
 import {interfaceTypeDeclarationToString} from "./interfaceTypeDeclarationToString";
 import {dependantTypeToRemoveChild} from "./depedantType/dependantTypeToRemoveChild";
 import {dependantTypeToBuildIndexForChild} from "./depedantType/dependantTypeToBuildIndexForChild";
+import {dependantTypeBuildXpath} from "./depedantType/dependantTypeBuildXpath";
 
 
 type ClassTemplateParts = {
@@ -54,6 +55,7 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     public class ${normalizeNameClass(dependantType.name)} implements ${extensionNames.length > 0 && ` ${extensionNames.map(e => e + `<${normalizeNameClass(dependantType.name)}>`).join(", ")}, `} ro.anud.xml_xsd.implementation.util.LinkedNode {
           
+      public static final String TYPE_ID = "${dependantTypeBuildXpath(dependantType)}";
           
       public static ${normalizeNameClass(dependantType.name)} fromRawNode(RawNode rawNode) {
         logEnter();

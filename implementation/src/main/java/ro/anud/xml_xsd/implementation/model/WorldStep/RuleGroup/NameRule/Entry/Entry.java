@@ -22,6 +22,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Entry implements  ro.anud.xml_xsd.implementation.model.interfaces.IType_nameToken.IType_nameToken<Entry>,  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static final String TYPE_ID = "/world_step/rule_group/name_rule/entry";
+
     public static Entry fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Entry();
@@ -60,7 +62,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     //Children of type__name_token
     @Builder.Default
     private List<ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.NameToken> nameToken = new ArrayList<>();
-
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()

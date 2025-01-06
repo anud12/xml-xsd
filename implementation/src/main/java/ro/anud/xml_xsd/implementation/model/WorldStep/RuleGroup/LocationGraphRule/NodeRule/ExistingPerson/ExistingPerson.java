@@ -22,6 +22,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class ExistingPerson implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static final String TYPE_ID = "/world_step/rule_group/location_graph_rule/node_rule/existing_person";
+
     public static ExistingPerson fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new ExistingPerson();
@@ -214,7 +216,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
   }
-
 
   /*
     dependant type:

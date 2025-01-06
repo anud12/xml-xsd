@@ -22,6 +22,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class LocationGraph_node_addClassification implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static final String TYPE_ID = "/world_step/actions/location_graph.node.add_classification";
+
     public static LocationGraph_node_addClassification fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new LocationGraph_node_addClassification();
@@ -208,7 +210,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
   }
-
 
   /*
     dependant type:

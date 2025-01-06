@@ -22,6 +22,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class OneOf implements  ro.anud.xml_xsd.implementation.model.interfaces.IType_nameToken.IType_nameToken<OneOf>,  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static final String TYPE_ID = "/name_token/one_of";
+
     public static OneOf fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new OneOf();
@@ -58,7 +60,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     //Children of type__name_token
     @Builder.Default
     private List<ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.NameToken> nameToken = new ArrayList<>();
-
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()

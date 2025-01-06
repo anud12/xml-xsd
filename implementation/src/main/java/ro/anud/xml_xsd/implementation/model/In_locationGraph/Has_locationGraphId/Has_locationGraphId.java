@@ -22,6 +22,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Has_locationGraphId implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static final String TYPE_ID = "/in__location_graph/has__location_graph_id";
+
     public static Has_locationGraphId fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Has_locationGraphId();
@@ -210,7 +212,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
   }
-
 
   /*
     dependant type:

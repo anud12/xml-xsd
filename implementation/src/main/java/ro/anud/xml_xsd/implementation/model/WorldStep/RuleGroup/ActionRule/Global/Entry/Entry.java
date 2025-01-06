@@ -22,6 +22,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Entry implements  ro.anud.xml_xsd.implementation.model.interfaces.IType_action.IType_action<Entry>,  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static final String TYPE_ID = "/world_step/rule_group/action_rule/global/entry";
+
     public static Entry fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Entry();
@@ -62,7 +64,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     private ro.anud.xml_xsd.implementation.model.Type_action.From.From from = new ro.anud.xml_xsd.implementation.model.Type_action.From.From();
     @Builder.Default
     private ro.anud.xml_xsd.implementation.model.Type_action.On.On on = new ro.anud.xml_xsd.implementation.model.Type_action.On.On();
-
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()

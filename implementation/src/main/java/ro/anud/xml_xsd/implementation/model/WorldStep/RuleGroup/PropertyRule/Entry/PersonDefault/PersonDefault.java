@@ -22,6 +22,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class PersonDefault implements  ro.anud.xml_xsd.implementation.model.interfaces.IType_mathOperations.IType_mathOperations<PersonDefault>,  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static final String TYPE_ID = "/world_step/rule_group/property_rule/entry/person_default";
+
     public static PersonDefault fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new PersonDefault();
@@ -56,7 +58,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     //Children elements
 
     //Children of type__math_operations
-
 
 
     @ToString.Exclude()
