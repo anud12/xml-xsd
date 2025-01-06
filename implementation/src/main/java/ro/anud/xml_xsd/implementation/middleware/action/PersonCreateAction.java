@@ -26,8 +26,7 @@ public class PersonCreateAction {
                 return;
             }
             var personSelection = personCreate.getPerson_selection();
-            var person = worldStepInstance.person.createPerson(personSelection);
-            outInstance.person.repository.getOrCreate(person);
+            var person = worldStepInstance.person.createPerson(personSelection).apply(outInstance);
             locatioElementOptional.ifPresent(node -> {
                 outInstance.locationGraph.nodeRepository.getNodeOrDefault(node)
                     .getPeopleOrDefault()

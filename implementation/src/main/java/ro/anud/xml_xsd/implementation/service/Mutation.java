@@ -7,6 +7,9 @@ public class Mutation<T>{
         return new Mutation<T>(function);
     }
 
+    public static <T> Mutation<T> of (T value) {
+        return new Mutation<>(worldStepInstance -> value);
+    }
     private final Function<WorldStepInstance, T> function;
 
     private Mutation(Function<WorldStepInstance, T> function) {

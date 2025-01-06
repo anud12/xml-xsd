@@ -5,6 +5,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classif
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race;
 import ro.anud.xml_xsd.implementation.model.interfaces.IType_personSelection.IType_personSelection;
+import ro.anud.xml_xsd.implementation.service.Mutation;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 import java.util.ArrayList;
@@ -83,10 +84,11 @@ public class SelectionInstance {
     }
 
 
-    public List<Person> selectPersonOrCreate(final IType_personSelection<?> selectPerson) {
+    public List<Mutation<Person>> selectPersonOrCreate(final IType_personSelection<?> selectPerson) {
         var logger = logEnter();
         var filteredPersonList = worldStepInstance.person.repository.streamPerson()
             .filter(person -> isSelectionApplicableTo(selectPerson, person))
+            .map(person -> Mutation.of(person))
             .collect(Collectors.toCollection(ArrayList::new));
         logger.log("filteredPersonList count", filteredPersonList.size());
         int min = selectPerson.getMin().flatMap(worldStepInstance::computeOperation).orElse(0);

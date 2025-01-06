@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import static ro.anud.xml_xsd.implementation.service.person.util.GetProperty.computeBaseProperty;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 
 public class PersonInstance {
@@ -55,44 +56,64 @@ public class PersonInstance {
         return logger.logReturn(ClassifyPerson.getPersonClassifications(this.worldStepInstance, person));
     }
 
-    public Person createPerson(final IType_personSelection<?> personSelection) {
+    public Mutation<Person> createPerson(final IType_personSelection<?> personSelection) {
         return CreatePerson.createPerson(worldStepInstance, personSelection);
     }
 
-    public Optional<Property> mutatePropertyIfExists(
+    public Optional<Property> mutatePropertyIfPresent(
         final Person person,
         final String propertyRef,
         Function<Integer, Integer> computedValue) {
         var logger = logEnter("person", person.getId(), "propertyRef", propertyRef);
-        logger.log("creating default");
-        getProperty(person, propertyRef);
         var propertiesElement = person.getPropertiesOrDefault();
-        var propertyResult = propertiesElement
+        var propertyValue = propertiesElement
             .streamProperty()
             .filter(property -> property.getPropertyRuleRef().equals(propertyRef))
-            .findFirst();
+            .findFirst()
+            .map(property -> {
+                var currentValue = property.getValue();
+                var newValue = computedValue.apply(currentValue);
+                logger.log("mutating currentValue", currentValue, "newValue", newValue);
+                property.setValue(newValue);
+                return property;
+            });
 
-        return propertyResult.map(property -> {
-            var currentValue = property.getValue();
-            var newValue = computedValue.apply(currentValue);
-            logger.log("mutating currentValue", currentValue, "newValue", newValue);
+        if(propertyValue.isPresent()) {
+            return propertyValue;
+        }
+        logger.log("computing base property");
+        return computeBaseProperty(worldStepInstance, person, propertyRef).map(integer -> {
+            var property = new Property();
+            var newValue = computedValue.apply(integer);
+            logger.log("mutating currentValue", integer, "newValue", newValue);
             property.setValue(newValue);
+            property.setPropertyRuleRef(propertyRef);
+            propertiesElement.addProperty(property);
             return property;
         });
+
+    }
+
+    public Property mutateProperty(
+        final Person person,
+        final String propertyRef,
+        Function<Optional<Integer>, Integer> computedValue) {
+        var logger = logEnter("person", person.getId(), "propertyRef", propertyRef);
+        return mutatePropertyIfPresent(person,propertyRef,integer -> computedValue.apply(Optional.of(integer)))
+            .orElseGet(() -> {
+                var newProperty = new Property()
+                    .setValue(computedValue.apply(computeBaseProperty(worldStepInstance, person, propertyRef)))
+                    .setPropertyRuleRef(propertyRef);
+                var propertiesElement = person.getPropertiesOrDefault();
+                propertiesElement.addProperty(newProperty);
+                return newProperty;
+            });
     }
 
     public Property setProperty(final Person person, final String propertyRef, final int newValue) {
         var logger = logEnter("person", person.getId(), "propertyRef", propertyRef);
         logger.log("creating default");
-        return mutatePropertyIfExists(person, propertyRef, (ignored) -> newValue)
-            .orElseGet(() -> {
-                logger.log("creating property");
-                var property = new Property();
-                property.setPropertyRuleRef(propertyRef);
-                property.setValue(newValue);
-                person.getPropertiesOrDefault().addProperty(property);
-                return property;
-            });
+        return mutateProperty(person, propertyRef, (ignored) -> newValue);
     }
 
 }

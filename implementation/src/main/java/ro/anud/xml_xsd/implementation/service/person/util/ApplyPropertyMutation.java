@@ -37,7 +37,7 @@ public class ApplyPropertyMutation {
                 .person.repository.getOrCreate(applicablePerson);
             result.forEach(mutation -> {
                     logger.log("outPerson", outPerson.getId(), "propertyRuleRef", mutation.propertyRuleRef(), "deltaValue", mutation.deltaValue());
-                    outInstance.person.mutatePropertyIfExists(
+                    outInstance.person.mutatePropertyIfPresent(
                         outPerson,
                         mutation.propertyRuleRef(),
                         integer -> integer + mutation.deltaValue()

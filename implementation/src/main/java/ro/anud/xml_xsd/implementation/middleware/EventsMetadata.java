@@ -47,7 +47,7 @@ public class EventsMetadata {
                             logger.logTodo("selectPerson", selectPerson.buildPath());
                             var targetElement = worldStepInstance.person.selection.selectPersonOrCreate(selectPerson);
                             targetElement.forEach(person -> {
-                                applyPropertyMutationToPerson(worldStepInstance, then, person);
+                                applyPropertyMutationToPerson(worldStepInstance, then, person.apply(worldStepInstance));
                             });
                         });
 
@@ -62,12 +62,12 @@ public class EventsMetadata {
         var logger = logEnter("then", then.buildPath(), "person", person.getId());
         then.streamPropertyMutation()
             .forEach(propertyMutation -> {
-                worldStepInstance.person.mutatePropertyIfExists(
+                worldStepInstance.person.mutateProperty(
                     person, propertyMutation.getPropertyRuleRef(), (value) -> {
                         var newValueOptional = worldStepInstance.computeOperation(propertyMutation, person);
                         var deltaValue = newValueOptional
-                            .map(integer -> integer + value)
-                            .orElse(value);
+                            .map(integer -> integer + value.orElse(0))
+                            .orElse(value.orElse(0));
                         logger.log("deltaValue", deltaValue);
                         return deltaValue;
                     });

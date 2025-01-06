@@ -87,7 +87,6 @@ public class LocalLogger {
 
             var previousStackTrace = filterStacktrace.get(0);
             var methodName = previousStackTrace.getMethodName();
-            var logLine = logLine(previousStackTrace);
 
             printWithStack(filterStacktrace, getStringBuilder(methodName + prefix, args , filterStacktrace));
 //            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + logLine);
@@ -135,11 +134,10 @@ public class LocalLogger {
         }
 
         private StringBuilder argumentsToString(Object... args) {
-            if (parentArgs.isEmpty()) {
-                return new StringBuilder();
-            }
-            var builder = new StringBuilder().append(PARENT_DELIMITER);
-            builder.append(parentArgs);
+            var builder = new StringBuilder()
+                .append(parentArgs)
+                .append(PARENT_DELIMITER);
+
             for (int i = 0; i < args.length; i++) {
                 builder.append(args[i]);
                 if(i < args.length -1) {

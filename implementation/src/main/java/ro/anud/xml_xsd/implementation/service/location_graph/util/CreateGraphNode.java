@@ -10,6 +10,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRul
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.Name.Name;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup;
+import ro.anud.xml_xsd.implementation.service.Mutation;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 import java.util.List;
@@ -100,7 +101,10 @@ public class CreateGraphNode {
                 return IntStream.range(0, iterations)
                     .boxed()
                     .map(ignored -> {
-                        var person = worldStepInstance.person.createPerson(existingPerson.getPersonSelection());
+                        var personMutation = worldStepInstance.person.createPerson(existingPerson.getPersonSelection());
+                        personMutation.apply(worldStepInstance.getOutInstance());
+                        var person = personMutation.apply(worldStepInstance);
+                        logger.logTodo("Remove mutation on outInstance");
                         logger.log("adding personId ", person.getId());
                         return person;
                     });

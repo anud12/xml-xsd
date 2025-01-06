@@ -15,23 +15,39 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 public class GetProperty {
 
 
+    public static Optional<Integer> computeBaseProperty(
+        final WorldStepInstance worldStepInstance,
+        final Person person,
+        final String propertyRef) {
+        var logger = logEnter( "propertyRef:", propertyRef);
+        var property = worldStepInstance.ruleRepository.getPropertyById(propertyRef).stream();
+        var personDefaultOptional = property.flatMap(Entry::streamPersonDefault).findAny();
+
+        return logger.logReturn(worldStepInstance.computeOperation(personDefaultOptional, person));
+
+    }
+
     private static Optional<Mutation<Integer>> getBaseProperty(
         final WorldStepInstance worldStepInstance,
         final Person person,
         final String propertyRef) {
         var logger = logEnter("personId:", person.getId(), "propertyRef:", propertyRef);
-        var property = worldStepInstance.ruleRepository.getPropertyById(propertyRef).stream();
-        var personDefaultOptional = property.flatMap(Entry::streamPersonDefault).findAny();
-
-        var value = worldStepInstance.computeOperation(personDefaultOptional, person);
-        logger.log("computed value", value);
+        var value = computeBaseProperty(worldStepInstance,person,propertyRef);
+        var innerLog = logger.log("computed value", value);
         return value.map(integer -> Mutation.of(outInstance -> {
-            outInstance.person.repository.getOrCreate(person)
-                .getPropertiesOrDefault()
-                .addProperty(new Property()
+            var properties = outInstance.person.repository.getOrCreate(person)
+                .getPropertiesOrDefault();
+
+            var outProperty = properties.streamProperty()
+                .filter(property1 -> property1.getPropertyRuleRef().equals(propertyRef))
+                .findAny();
+            if(outProperty.isEmpty()){
+                innerLog.log("adding default property");
+                properties.addProperty(new Property()
                     .setValue(integer)
                     .setPropertyRuleRef(propertyRef)
                 );
+            }
             return integer;
         }));
     }

@@ -354,6 +354,12 @@
         <person_default initial="0">
         </person_default>
       </entry>
+      <entry id="weaponSkill" units="">
+        <person_default initial="0" />
+      </entry>
+      <entry id="weaponSkillXP" units="">
+        <person_default initial="0" />
+      </entry>
     </property_rule>
     <classification_rule>
       <entry id="alive">
@@ -422,6 +428,25 @@
           </selection>
         </on_person>
       </from_person>
+      <from_person id="learnWeaponSkill">
+        <selection>
+          <property property_rule_ref="weaponSkillXP">
+            <min initial="100" />
+          </property>
+        </selection>
+        <mutations>
+          <property_mutation property_rule_ref="weaponSkillXP">
+            <from participant="self">
+              <operation initial="-100" />
+            </from>
+          </property_mutation>
+          <property_mutation property_rule_ref="weaponSkill">
+            <from participant="self">
+              <operation initial="1" />
+            </from>
+          </property_mutation>
+        </mutations>
+      </from_person>
       <from_person id="globalMeleeAttack">
         <selection>
           <property property_rule_ref="strength">
@@ -432,6 +457,13 @@
           <property_mutation property_rule_ref="strength">
             <from participant="self">
               <operation initial="-1" />
+            </from>
+          </property_mutation>
+          <property_mutation property_rule_ref="weaponSkillXP">
+            <from participant="self">
+              <operation initial="1">
+                <and do="add_dice" value="4"></and>
+              </operation>
             </from>
           </property_mutation>
         </mutations>
@@ -447,6 +479,9 @@
                   <add_property property_rule_ref="strength" />
                   <and do="divide" value="2" />
                   <and do="multiply" value="-1" />
+                  <and do="add" value="0">
+                    <add_property property_rule_ref="weaponSkill" />
+                  </and>
                 </operation>
               </from>
             </property_mutation>
@@ -502,7 +537,7 @@
         <name name_rule_ref="wildernessNodeName" />
         <link_group_list>
         </link_group_list>
-        <existing_person min="1" max="4">
+        <existing_person min="1" max="1">
           <person_selection>
             <property property_rule_ref="gold">
               <min initial="5" />
