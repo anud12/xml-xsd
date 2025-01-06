@@ -145,7 +145,7 @@ public partial class PersonComponent : Control
 					});
 				});
 
-				worldStep.rule_group.ForEach(ruleGroup => ruleGroup.action_rule.person_to_person.ForEach(entry =>
+				worldStep.rule_group.ForEach(ruleGroup => ruleGroup.action_rule.from_person.ForEach(entry =>
 				{
 
 					//add buttons per entry

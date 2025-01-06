@@ -156,22 +156,6 @@ export type world_step = JsonQueryType<{}, {
         "entry": JsonQueryType<{"id": string;}>
           & type__action & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
-      "person_to_person": JsonQueryType<{"id": string;}, {
-        "test": JsonQueryType<{}, {
-          "value": JsonQueryType<{"target": type_person_select;}, {
-            "operation": type__math_operations & JsonQueryType<{}, {}>;
-          }> & JsonQueryType<{}, {}>;
-          "expected": JsonQueryType<{"target": type_person_select;}, {
-            "operation": type__math_operations & JsonQueryType<{}, {}>;
-          }> & JsonQueryType<{}, {}>;
-        }> & JsonQueryType<{}, {}>;
-        "property_mutation": type__property_mutation_on & JsonQueryType<{}, {}>;
-        "location_mutation": JsonQueryType<{"name": any;  "on": type_person_select;}, {
-          "from": JsonQueryType<{"participant": type_person_select;}, {
-            "operation": type__math_operations & JsonQueryType<{}, {}>;
-          }> & JsonQueryType<{}, {}>;
-        }> & JsonQueryType<{}, {}>;
-      }> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
     "events_rule": JsonQueryType<{}, {
       "entry": JsonQueryType<{"id": string;}, {

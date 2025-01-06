@@ -43,6 +43,7 @@ public class FromPersonAction {
 
         fromPersonStream.forEach(actionElement -> {
             var localLogger = logger.logEnter(actionElement.buildPath());
+            logger.log("fromPersonRuleRef", actionElement.getFromPersonRuleRef());
             localLogger.log("personIdRef", actionElement.getPersonIdRef());
             var actionRuleOptional = ruleRepository.getPersonById(actionElement.getFromPersonRuleRef());
             if (actionRuleOptional.isEmpty()) {

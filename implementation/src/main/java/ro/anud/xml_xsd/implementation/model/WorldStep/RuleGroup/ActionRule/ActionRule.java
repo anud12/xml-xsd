@@ -56,8 +56,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     private List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.FromPerson> fromPerson = new ArrayList<>();
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.Global.Global> global = Optional.empty();
-    @Builder.Default
-    private List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.PersonToPerson> personToPerson = new ArrayList<>();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -120,9 +118,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.Global.Global) {
           this.global = Optional.empty();
         }
-        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.PersonToPerson) {
-          this.personToPerson.remove(object);
-        }
     }
 
     public int buildIndexForChild(Object object) {
@@ -131,9 +126,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.Global.Global) {
           return 0;
-        }
-        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.PersonToPerson) {
-          return this.personToPerson.indexOf(object);
         }
         return 0;
     }
@@ -158,7 +150,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       //Deserialize children
       this.fromPerson = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.FromPerson.fromRawNode(rawNode.getChildrenList("from_person"), this);
       this.global = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.Global.Global.fromRawNode(rawNode.getChildrenFirst("global"), this);
-      this.personToPerson = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.PersonToPerson.fromRawNode(rawNode.getChildrenList("person_to_person"), this);
       logReturnVoid();
     }
 
@@ -174,8 +165,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       rawNode.setChildren("from_person", fromPerson.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.FromPerson::serializeIntoRawNode).toList());
       innerLogger.log("global");
       rawNode.setChildren("global", global.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.Global.Global::serializeIntoRawNode).toList());
-      innerLogger.log("person_to_person");
-      rawNode.setChildren("person_to_person", personToPerson.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.PersonToPerson::serializeIntoRawNode).toList());
       return rawNode;
     }
 
@@ -238,35 +227,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.global = Optional.ofNullable(value);
       value.parentNode(this);
-      triggerOnChange();
-      return this;
-    }
-
-    public List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.PersonToPerson> getPersonToPerson()
-    {
-      return this.personToPerson;
-    }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.PersonToPerson> streamPersonToPerson()
-    {
-      return personToPerson.stream();
-    }
-    public ActionRule addPersonToPerson(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.PersonToPerson value)
-    {
-      this.personToPerson.add(value);
-      value.parentNode(this);
-      triggerOnChange();
-      return this;
-    }
-    public ActionRule addAllPersonToPerson(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.PersonToPerson> value)
-    {
-      this.personToPerson.addAll(value);
-      value.forEach(e -> e.parentNode(this));
-      triggerOnChange();
-      return this;
-    }
-    public ActionRule removePersonToPerson(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.PersonToPerson value)
-    {
-      this.personToPerson.remove(value);
       triggerOnChange();
       return this;
     }
@@ -403,130 +363,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                   }
                 ],
                 "isSingle": false,
-                "isNullable": true
-              }
-            },
-            "isNullable": true
-          },
-          "person_to_person": {
-            "metaType": "object",
-            "attributes": {
-              "metaType": "object",
-              "value": {
-                "id": {
-                  "metaType": "primitive",
-                  "value": "xs:string",
-                  "isNullable": false
-                }
-              },
-              "isNullable": false
-            },
-            "isSingle": false,
-            "value": {
-              "test": {
-                "metaType": "object",
-                "isSingle": true,
-                "value": {
-                  "value": {
-                    "metaType": "object",
-                    "attributes": {
-                      "metaType": "object",
-                      "value": {
-                        "target": {
-                          "metaType": "primitive",
-                          "value": "type_person_select",
-                          "isNullable": false
-                        }
-                      },
-                      "isNullable": false
-                    },
-                    "isSingle": true,
-                    "value": {
-                      "operation": {
-                        "metaType": "reference",
-                        "value": "type__math_operations",
-                        "isSingle": true,
-                        "isNullable": false
-                      }
-                    },
-                    "isNullable": false
-                  },
-                  "expected": {
-                    "metaType": "object",
-                    "attributes": {
-                      "metaType": "object",
-                      "value": {
-                        "target": {
-                          "metaType": "primitive",
-                          "value": "type_person_select",
-                          "isNullable": false
-                        }
-                      },
-                      "isNullable": false
-                    },
-                    "isSingle": true,
-                    "value": {
-                      "operation": {
-                        "metaType": "reference",
-                        "value": "type__math_operations",
-                        "isSingle": true,
-                        "isNullable": false
-                      }
-                    },
-                    "isNullable": false
-                  }
-                },
-                "isNullable": false
-              },
-              "property_mutation": {
-                "metaType": "reference",
-                "value": "type__property_mutation_on",
-                "isSingle": true,
-                "isNullable": true
-              },
-              "location_mutation": {
-                "metaType": "object",
-                "attributes": {
-                  "metaType": "object",
-                  "value": {
-                    "name": {
-                      "metaType": "unknown",
-                      "isNullable": true
-                    },
-                    "on": {
-                      "metaType": "primitive",
-                      "value": "type_person_select",
-                      "isNullable": false
-                    }
-                  }
-                },
-                "isSingle": true,
-                "value": {
-                  "from": {
-                    "metaType": "object",
-                    "attributes": {
-                      "metaType": "object",
-                      "value": {
-                        "participant": {
-                          "metaType": "primitive",
-                          "value": "type_person_select",
-                          "isNullable": false
-                        }
-                      },
-                      "isNullable": false
-                    },
-                    "isSingle": false,
-                    "value": {
-                      "operation": {
-                        "metaType": "reference",
-                        "value": "type__math_operations",
-                        "isSingle": true,
-                        "isNullable": false
-                      }
-                    },
-                    "isNullable": false
-                  }
-                },
                 "isNullable": true
               }
             },

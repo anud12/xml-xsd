@@ -75,7 +75,7 @@ public class PersonInstance {
         return propertyResult.map(property -> {
             var currentValue = property.getValue();
             var newValue = computedValue.apply(currentValue);
-            logger.log("mutating", "currentValue", currentValue, "newValue", newValue);
+            logger.log("mutating currentValue", currentValue, "newValue", newValue);
             property.setValue(newValue);
             return property;
         });

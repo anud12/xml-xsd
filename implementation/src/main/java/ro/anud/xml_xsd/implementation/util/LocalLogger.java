@@ -5,26 +5,32 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.LogClass.IDENT;
 
 public class LocalLogger {
     static Logger logger = LoggerFactory.getLogger(RawNode.class);
 
+    private static boolean SKIP_STACK = false;
+
     public static class LogClass {
         static String PARENT_DELIMITER = "|>";
         static String IDENT = "│ ";
         static String ARG_SEPARATOR = "  ";
-        private List<Object> parentArgs = new ArrayList<>();
+        private StringBuilder parentArgs = new StringBuilder();
 
         public LogClass() {}
 
-        public LogClass(List<?> parentArgs) {
-            this.parentArgs = Collections.unmodifiableList(parentArgs);
+        public LogClass(StringBuilder parentArgs) {
+            this.parentArgs = parentArgs;
         }
 
         public LogClass log(Object... args) {
+            var prefix = " [ log  ]";
+            if(SKIP_STACK) {
+                print(getStringBuilder(prefix, args , List.of()));
+                return new LogClass(argumentsToString(args));
+            }
             var stackTrace = Thread.currentThread().getStackTrace();
             var filterStacktrace = filterStacktrace(stackTrace);
 
@@ -32,20 +38,32 @@ public class LocalLogger {
             var methodName = previousStackTrace.getMethodName();
             var logLine = logLine(previousStackTrace);
 
-            StringBuilder line = new StringBuilder(argumentsToString(args).reduce(
-                methodName + " [ log  ]",
-                (string, o) -> string + ARG_SEPARATOR + o,
-                (string, string2) -> string + string2
-            ));
+            printWithStack(filterStacktrace, getStringBuilder(methodName + prefix, args , filterStacktrace));
+//            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + logLine);
+            return new LogClass(argumentsToString(args));
+        }
+
+        private StringBuilder getStringBuilder(
+            final String methodName,
+            final Object[] args,
+            final List<StackTraceElement> filterStacktrace) {
+
+            var line = new StringBuilder();
+            line.append(methodName);
+            line.append(argumentsToString(args));
+
             for (var i = 0; i < filterStacktrace.size(); i++) {
                 line.insert(0, IDENT);
             }
-            print(filterStacktrace, line);
-//            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + logLine);
-            return new LogClass(argumentsToString(args).toList());
+            return line;
         }
 
         public LogClass logTodo(Object... args) {
+            var prefix = " [ TODO ]";
+            if(SKIP_STACK) {
+                print(getStringBuilder(prefix, args , List.of()));
+                return new LogClass(argumentsToString(args));
+            }
             var stackTrace = Thread.currentThread().getStackTrace();
             var filterStacktrace = filterStacktrace(stackTrace);
 
@@ -53,20 +71,17 @@ public class LocalLogger {
             var logLine = logLine(previousStackTrace);
             var methodName = previousStackTrace.getMethodName();
 
-            StringBuilder line = new StringBuilder(argumentsToString(args).reduce(
-                methodName + " [ TODO ]",
-                (string, o) -> string + ARG_SEPARATOR + o,
-                (string, string2) -> string + string2
-            ));
-            for (var i = 0; i < filterStacktrace.size(); i++) {
-                line.insert(0, IDENT);
-            }
-            print(filterStacktrace, line);
+            printWithStack(filterStacktrace, getStringBuilder(methodName + prefix, args , filterStacktrace));
 //            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + logLine);
-            return new LogClass(argumentsToString(args).toList());
+            return new LogClass(argumentsToString(args));
         }
 
         public LogClass logEnter(Object... args) {
+            var prefix = " [enter ]";
+            if(SKIP_STACK) {
+                print(getStringBuilder(prefix, args , List.of()));
+                return new LogClass(argumentsToString(args));
+            }
             var stackTrace = Thread.currentThread().getStackTrace();
             var filterStacktrace = filterStacktrace(stackTrace);
 
@@ -74,77 +89,64 @@ public class LocalLogger {
             var methodName = previousStackTrace.getMethodName();
             var logLine = logLine(previousStackTrace);
 
-
-            StringBuilder line = new StringBuilder(argumentsToString(args).reduce(
-                methodName + ":"  + " [enter ]",
-                (string, o) -> string + ARG_SEPARATOR + o,
-                (string, string2) -> string + string2
-            ));
-            for (var i = 0; i < filterStacktrace.size(); i++) {
-                line.insert(0, IDENT);
-            }
-            print(filterStacktrace, line);
+            printWithStack(filterStacktrace, getStringBuilder(methodName + prefix, args , filterStacktrace));
 //            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + logLine);
-            return new LogClass(argumentsToString(args).toList());
+            return new LogClass(argumentsToString(args));
         }
 
         public <T> T logReturn(T returnValue, Object... args) {
+            var prefix = " [return]";
+            if(SKIP_STACK) {
+                print(getStringBuilder(prefix, args , List.of()));
+                return returnValue;
+            }
             var stackTrace = Thread.currentThread().getStackTrace();
             var filterStacktrace = filterStacktrace(stackTrace);
 
             var previousStackTrace = filterStacktrace.get(0);
             var logLine = logLine(previousStackTrace);
             var methodName = previousStackTrace.getMethodName();
-
-            StringBuilder line = new StringBuilder(argumentsToString(args).reduce(
-                methodName + " [return]",
-                (string, o) -> string + ARG_SEPARATOR + o,
-                (string, string2) -> string + string2
-            ));
-            for (var i = 0; i < filterStacktrace.size(); i++) {
-                line.insert(0, IDENT);
-            }
-
-            line.append(ARG_SEPARATOR);
+            var line = getStringBuilder(methodName + prefix, args , filterStacktrace);
             var returnValueString = Optional.ofNullable(returnValue).map(Objects::toString).orElse("null");
             line.append("value: [" + returnValueString + "]");
-            print(filterStacktrace, line);
+
+            printWithStack(filterStacktrace, line);
 
 //            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + ARG_SEPARATOR + "value: [" + returnValueString + "]" + logLine);
             return returnValue;
         }
 
         public void logReturnVoid(Object... args) {
+            var prefix = " [return]";
+            if(SKIP_STACK) {
+                print(getStringBuilder(prefix, args , List.of()));
+                return;
+            }
             var stackTrace = Thread.currentThread().getStackTrace();
             var filterStacktrace = filterStacktrace(stackTrace);
 
             var previousStackTrace = filterStacktrace.get(0);
             var methodName = previousStackTrace.getMethodName();
 
-            StringBuilder line = new StringBuilder(argumentsToString(args).reduce(
-                methodName +  " [return]",
-                (string, o) -> string + ARG_SEPARATOR + o,
-                (string, string2) -> string + string2
-            ));
+            StringBuilder line = getStringBuilder(methodName +  prefix, args , filterStacktrace);
             line.append(ARG_SEPARATOR);
             line.append("value: [void]");
-            print(filterStacktrace, line );
+            printWithStack(filterStacktrace, line );
         }
 
-        private Stream<String> argumentsToString(Object... args) {
-            var delimiter = Stream.of(PARENT_DELIMITER);
+        private StringBuilder argumentsToString(Object... args) {
             if (parentArgs.isEmpty()) {
-                delimiter = Stream.empty();
+                return new StringBuilder();
             }
-            return Stream.concat(
-                parentArgs.stream(),
-                Stream.concat(delimiter, Arrays.stream(args))
-            ).map(o -> {
-                if(Objects.isNull(o)) {
-                    return "null";
+            var builder = new StringBuilder().append(PARENT_DELIMITER);
+            builder.append(parentArgs);
+            for (int i = 0; i < args.length; i++) {
+                builder.append(args[i]);
+                if(i < args.length -1) {
+                    builder.append(ARG_SEPARATOR);
                 }
-                return o.toString();
-            });
+            }
+            return builder;
         }
     }
 
@@ -169,23 +171,35 @@ public class LocalLogger {
             .reversed();
     }
 
-    private static void print(List<StackTraceElement> filterStacktrace, StringBuilder line) {
+    private static void print(StringBuilder line) {
+        LoggerFactory.getLogger(LocalLogger.class).info(line.toString());
+
+    }
+
+    private static void printWithStack(List<StackTraceElement> filterStacktrace, StringBuilder line) {
         for (var i = 0; i < filterStacktrace.size(); i++) {
             line.insert(0, IDENT);
         }
 
         var previousStackTrace = filterStacktrace.get(0);
         var logLine = logLine(previousStackTrace);
-        logLine = " ".repeat(Math.max(0,100 - line.toString().length())) + logLine;
         line.append(logLine);
         LoggerFactory.getLogger(previousStackTrace.getClassName()).info(line.toString());
 
     }
 
-    private static String logLine(StackTraceElement previousStackTrace) {
+    private static StringBuilder logLine(StackTraceElement previousStackTrace) {
         var className = previousStackTrace.getFileName();
         var lineNumber = previousStackTrace.getLineNumber();
-        var logLine = " ---  at " + previousStackTrace.getClassName() + "(" +className + ":" + lineNumber + ")";
+        var logLine = new StringBuilder()
+            .append(" ---  at ")
+            .append(previousStackTrace.getClassName())
+            .append("(")
+            .append(className)
+            .append(":")
+            .append(lineNumber)
+            .append(")");
+//        var logLine = " ---  at " + previousStackTrace.getClassName() + "(" +className + ":" + lineNumber + ")";
         return logLine;
     }
 

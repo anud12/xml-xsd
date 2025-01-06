@@ -113,8 +113,6 @@ public class GetProperty {
         final Person person,
         final String propertyRef) {
         var logger = logEnter("personId:", person.getId(), "propertyRef:", propertyRef);
-        var outInstance = worldStepInstance.getOutInstance();
-
         var value = computeProperty(worldStepInstance, person, propertyRef);
         if (value.isEmpty()) {
             return logger.logReturn(value, "value is empty");
@@ -130,19 +128,20 @@ public class GetProperty {
                         property1.setValue(value.get());
                     },
                     () -> {
+
                         logger.log("adding property to person:", innerPerson.getId(), "propertyRef:", propertyRef, "value:", value);
-                        property.addProperty(Property.builder()
+                        var newProperty = Property.builder()
                             .value(value.get())
                             .propertyRuleRef(propertyRef)
-                            .build());
+                            .build();
+                        property.addProperty(newProperty);
+
                     }
                 );
         };
 
 
         logger.log("setting property on person:", person.getId(), "propertyRef:", propertyRef, "value:", value);
-        outInstance.person.repository.personById(person.getId())
-            .ifPresent(applyValue);
         applyValue.accept(person);
 
         return logger.logReturn(value);
