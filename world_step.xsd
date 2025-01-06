@@ -7,44 +7,6 @@
       </xs:documentation>
     </xs:annotation>
   </xs:attribute>
-  <xs:attributeGroup name="attributeGroup_range">
-    <xs:annotation>
-      <xs:documentation>
-        Represents a range with a value, maximum value, and a boolean to indicate
-        if the range is inclusive.
-      </xs:documentation>
-    </xs:annotation>
-    <xs:attribute name="value" use="required" type="xs:int">
-      <xs:annotation>
-        <xs:documentation>
-          Represents the current value of the range.
-        </xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="max_value" type="xs:int">
-      <xs:annotation>
-        <xs:documentation>
-          Represents the maximum value that the range can have.
-        </xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="inclusive" type="xs:boolean" use="required">
-      <xs:annotation>
-        <xs:documentation>
-          Indicates whether the range includes the maximum value or not.
-        </xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-  </xs:attributeGroup>
-  <xs:complexType name="type_range">
-    <xs:annotation>
-      <xs:documentation>
-        Represents a range with a value, maximum value, and a boolean to indicate
-        if the range is inclusive.
-      </xs:documentation>
-    </xs:annotation>
-    <xs:attributeGroup ref="attributeGroup_range"/>
-  </xs:complexType>
 
   <xs:complexType name="type__property_mutation_on">
     <xs:complexContent>
