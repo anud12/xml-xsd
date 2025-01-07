@@ -6,14 +6,12 @@ import org.w3c.dom.Element;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
 import java.util.*;
-import java.util.stream.Stream;
 import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
@@ -24,17 +22,19 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class WorldStep implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static final String TYPE_ID = "/world_step";
+
     public static WorldStep fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new WorldStep();
-      instance.setRawNode(rawNode);
+      instance.rawNode(rawNode);
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
     public static WorldStep fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
       var instance = fromRawNode(rawNode);
-      instance.setParentNode(parent);
+      instance.parentNode(parent);
       return logReturn(instance);
     }
     public static Optional<WorldStep> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
@@ -54,35 +54,58 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     //Attributes
 
     //Children elements
+    @Builder.Default
     private ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata worldMetadata = new ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata();
+    @Builder.Default
     private List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup> ruleGroup = new ArrayList<>();
+    @Builder.Default
     private ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data data = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data();
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions> actions = Optional.empty();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
-    @Getter
-    @Setter
     @Builder.Default
     private RawNode rawNode = new RawNode();
 
-    @Getter
+    public RawNode rawNode() {
+      return rawNode;
+    }
+    public void rawNode(RawNode rawNode) {
+      this.rawNode = rawNode;
+    }
+
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
 
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode() {
+      return parentNode;
+    }
+
     @Builder.Default
-    private List<Consumer<WorldStep>> onChangeList = new ArrayList<>();
+    private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
       return "world_step";
     }
 
-    public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+    public void childChanged(Set<Object> set) {
+      set.add(this);
+      onChangeList.forEach(consumer -> consumer.accept(set));
+      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(set));
+    }
+
+    private void triggerOnChange() {
+      childChanged(new HashSet<>());
+    }
+
+    public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
       this.parentNode = Optional.of(linkedNode);
+      triggerOnChange();
     }
 
     public void removeChild(Object object) {
@@ -100,11 +123,27 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         }
     }
 
+    public int buildIndexForChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata) {
+          return 0;
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup) {
+          return this.ruleGroup.indexOf(object);
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data) {
+          return 0;
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions) {
+          return 0;
+        }
+        return 0;
+    }
+
     public void removeFromParent() {
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<WorldStep> onChange) {
+    public Subscription onChange(Consumer<Set<Object>> onChange) {
       logEnter();
       onChangeList.add(onChange);
       return logReturn(() -> onChangeList.remove(onChange));
@@ -154,15 +193,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.worldMetadata;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata> streamWorldMetadata()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata> streamWorldMetadata()
     {
       return Optional.ofNullable(worldMetadata).stream();
     }
     public WorldStep setWorldMetadata(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata value)
     {
       this.worldMetadata = value;
-      value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      value.parentNode(this);
+      triggerOnChange();
       return this;
     }
 
@@ -170,43 +209,43 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.ruleGroup;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup> streamRuleGroup()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup> streamRuleGroup()
     {
       return ruleGroup.stream();
     }
     public WorldStep addRuleGroup(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup value)
     {
       this.ruleGroup.add(value);
-      value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      value.parentNode(this);
+      triggerOnChange();
       return this;
     }
     public WorldStep addAllRuleGroup(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup> value)
     {
       this.ruleGroup.addAll(value);
-      value.forEach(e -> e.setParentNode(this));
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      value.forEach(e -> e.parentNode(this));
+      triggerOnChange();
       return this;
     }
     public WorldStep removeRuleGroup(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup value)
     {
       this.ruleGroup.remove(value);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data getData()
     {
       return this.data;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data> streamData()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data> streamData()
     {
       return Optional.ofNullable(data).stream();
     }
     public WorldStep setData(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data value)
     {
       this.data = value;
-      value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      value.parentNode(this);
+      triggerOnChange();
       return this;
     }
 
@@ -218,29 +257,28 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.actions.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions();
-        instance.setParentNode(this);
+        instance.parentNode(this);
         this.actions = Optional.of(instance);
         return this.actions.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions> streamActionsOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions> streamActionsOrDefault()
     {
-      return Stream.of(getActionsOrDefault());
+      return java.util.stream.Stream.of(getActionsOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions> streamActions()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions> streamActions()
     {
       return actions.stream();
     }
     public WorldStep setActions(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions value)
     {
       this.actions = Optional.ofNullable(value);
-      value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      value.parentNode(this);
+      triggerOnChange();
       return this;
     }
 
   }
-
 
   /*
     dependant type:
@@ -547,64 +585,17 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                 "isSingle": true,
                 "value": {
                   "entry": {
-                    "metaType": "reference",
-                    "value": "group__name_token",
-                    "isSingle": false,
-                    "attributes": {
-                      "metaType": "object",
-                      "value": {
-                        "id": {
-                          "metaType": "unknown",
-                          "isNullable": false
-                        }
-                      },
-                      "isNullable": false
-                    },
-                    "isNullable": true
-                  }
-                },
-                "isNullable": true
-              },
-              "race_rule": {
-                "metaType": "object",
-                "isSingle": true,
-                "value": {
-                  "entry": {
-                    "metaType": "object",
-                    "attributes": {
-                      "metaType": "object",
-                      "value": {
-                        "id": {
-                          "metaType": "primitive",
-                          "value": "xs:string",
-                          "isNullable": false
-                        }
-                      },
-                      "isNullable": false
-                    },
-                    "isSingle": false,
-                    "value": {
-                      "vision": {
-                        "metaType": "reference",
-                        "value": "type_range",
-                        "isSingle": true,
-                        "isNullable": true
-                      },
-                      "movement": {
-                        "metaType": "reference",
-                        "value": "type_range",
-                        "isSingle": true,
-                        "isNullable": true
-                      },
-                      "name": {
+                    "metaType": "composition",
+                    "value": [
+                      {
                         "metaType": "object",
                         "value": {},
                         "isSingle": true,
-                        "isNullable": true,
+                        "isNullable": false,
                         "attributes": {
                           "metaType": "object",
                           "value": {
-                            "name_rule_ref": {
+                            "id": {
                               "metaType": "primitive",
                               "value": "xs:string",
                               "isNullable": false
@@ -613,41 +604,12 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                           "isNullable": false
                         }
                       },
-                      "property_bonus": {
-                        "metaType": "composition",
-                        "value": [
-                          {
-                            "metaType": "object",
-                            "value": {},
-                            "isSingle": true,
-                            "isNullable": false,
-                            "attributes": {
-                              "metaType": "object",
-                              "value": {
-                                "property_rule_ref": {
-                                  "metaType": "primitive",
-                                  "value": "xs:string",
-                                  "isNullable": false
-                                }
-                              },
-                              "isNullable": false
-                            }
-                          },
-                          {
-                            "metaType": "primitive",
-                            "value": "type__math_operations"
-                          }
-                        ],
-                        "isSingle": false,
-                        "isNullable": true
-                      },
-                      "icon": {
-                        "metaType": "reference",
-                        "value": "type_icon",
-                        "isSingle": true,
-                        "isNullable": true
+                      {
+                        "metaType": "primitive",
+                        "value": "type__name_token"
                       }
-                    },
+                    ],
+                    "isSingle": false,
                     "isNullable": true
                   }
                 },
@@ -782,130 +744,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                       }
                     },
                     "isNullable": true
-                  },
-                  "person_to_person": {
-                    "metaType": "object",
-                    "attributes": {
-                      "metaType": "object",
-                      "value": {
-                        "id": {
-                          "metaType": "primitive",
-                          "value": "xs:string",
-                          "isNullable": false
-                        }
-                      },
-                      "isNullable": false
-                    },
-                    "isSingle": false,
-                    "value": {
-                      "test": {
-                        "metaType": "object",
-                        "isSingle": true,
-                        "value": {
-                          "value": {
-                            "metaType": "object",
-                            "attributes": {
-                              "metaType": "object",
-                              "value": {
-                                "target": {
-                                  "metaType": "primitive",
-                                  "value": "type_person_select",
-                                  "isNullable": false
-                                }
-                              },
-                              "isNullable": false
-                            },
-                            "isSingle": true,
-                            "value": {
-                              "operation": {
-                                "metaType": "reference",
-                                "value": "type__math_operations",
-                                "isSingle": true,
-                                "isNullable": false
-                              }
-                            },
-                            "isNullable": false
-                          },
-                          "expected": {
-                            "metaType": "object",
-                            "attributes": {
-                              "metaType": "object",
-                              "value": {
-                                "target": {
-                                  "metaType": "primitive",
-                                  "value": "type_person_select",
-                                  "isNullable": false
-                                }
-                              },
-                              "isNullable": false
-                            },
-                            "isSingle": true,
-                            "value": {
-                              "operation": {
-                                "metaType": "reference",
-                                "value": "type__math_operations",
-                                "isSingle": true,
-                                "isNullable": false
-                              }
-                            },
-                            "isNullable": false
-                          }
-                        },
-                        "isNullable": false
-                      },
-                      "property_mutation": {
-                        "metaType": "reference",
-                        "value": "type__property_mutation_on",
-                        "isSingle": true,
-                        "isNullable": true
-                      },
-                      "location_mutation": {
-                        "metaType": "object",
-                        "attributes": {
-                          "metaType": "object",
-                          "value": {
-                            "name": {
-                              "metaType": "unknown",
-                              "isNullable": true
-                            },
-                            "on": {
-                              "metaType": "primitive",
-                              "value": "type_person_select",
-                              "isNullable": false
-                            }
-                          }
-                        },
-                        "isSingle": true,
-                        "value": {
-                          "from": {
-                            "metaType": "object",
-                            "attributes": {
-                              "metaType": "object",
-                              "value": {
-                                "participant": {
-                                  "metaType": "primitive",
-                                  "value": "type_person_select",
-                                  "isNullable": false
-                                }
-                              },
-                              "isNullable": false
-                            },
-                            "isSingle": false,
-                            "value": {
-                              "operation": {
-                                "metaType": "reference",
-                                "value": "type__math_operations",
-                                "isSingle": true,
-                                "isNullable": false
-                              }
-                            },
-                            "isNullable": false
-                          }
-                        },
-                        "isNullable": true
-                      }
-                    },
-                    "isNullable": true
                   }
                 },
                 "isNullable": true
@@ -1016,79 +854,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                 "isSingle": true,
                 "value": {
                   "link_group_rule": {
-                    "metaType": "object",
-                    "attributes": {
-                      "metaType": "object",
-                      "value": {
-                        "id": {
-                          "metaType": "primitive",
-                          "value": "xs:string",
-                          "isNullable": false
-                        },
-                        "angle": {
-                          "metaType": "primitive",
-                          "value": "xs:int",
-                          "isNullable": false
-                        },
-                        "angleMax": {
-                          "metaType": "primitive",
-                          "value": "xs:int",
-                          "isNullable": true
-                        },
-                        "limit": {
-                          "metaType": "primitive",
-                          "value": "xs:int",
-                          "isNullable": true
-                        }
-                      }
-                    },
-                    "isSingle": false,
-                    "value": {
-                      "to_option": {
+                    "metaType": "composition",
+                    "value": [
+                      {
                         "metaType": "object",
-                        "attributes": {
-                          "metaType": "object",
-                          "value": {
-                            "node_rule_ref": {
-                              "metaType": "primitive",
-                              "value": "xs:string",
-                              "isNullable": false
-                            },
-                            "distance": {
-                              "metaType": "primitive",
-                              "value": "xs:int",
-                              "isNullable": false
-                            },
-                            "maxDistance": {
-                              "metaType": "primitive",
-                              "value": "xs:int",
-                              "isNullable": true
-                            },
-                            "adjacent_depth_limit": {
-                              "metaType": "primitive",
-                              "value": "xs:int",
-                              "isNullable": false
-                            }
-                          }
-                        },
-                        "isSingle": false,
-                        "value": {
-                          "distance_to_progress_multiplier": {
-                            "metaType": "reference",
-                            "value": "type__math_operations",
-                            "isSingle": true,
-                            "isNullable": true
-                          },
-                          "person_progress_property": {
-                            "metaType": "reference",
-                            "value": "type__math_operations",
-                            "isSingle": true,
-                            "isNullable": true
-                          }
-                        },
-                        "isNullable": true
+                        "value": {},
+                        "isSingle": true,
+                        "isNullable": false
+                      },
+                      {
+                        "metaType": "primitive",
+                        "value": "type__link_group"
                       }
-                    },
+                    ],
+                    "isSingle": false,
                     "isNullable": true
                   }
                 },
@@ -1255,79 +1034,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                             }
                           },
                           "link_group": {
-                            "metaType": "object",
-                            "attributes": {
-                              "metaType": "object",
-                              "value": {
-                                "id": {
-                                  "metaType": "primitive",
-                                  "value": "xs:string",
-                                  "isNullable": false
-                                },
-                                "angle": {
-                                  "metaType": "primitive",
-                                  "value": "xs:int",
-                                  "isNullable": false
-                                },
-                                "angleMax": {
-                                  "metaType": "primitive",
-                                  "value": "xs:int",
-                                  "isNullable": true
-                                },
-                                "limit": {
-                                  "metaType": "primitive",
-                                  "value": "xs:int",
-                                  "isNullable": true
-                                }
-                              }
-                            },
-                            "isSingle": false,
-                            "value": {
-                              "to_option": {
+                            "metaType": "composition",
+                            "value": [
+                              {
                                 "metaType": "object",
-                                "attributes": {
-                                  "metaType": "object",
-                                  "value": {
-                                    "node_rule_ref": {
-                                      "metaType": "primitive",
-                                      "value": "xs:string",
-                                      "isNullable": false
-                                    },
-                                    "distance": {
-                                      "metaType": "primitive",
-                                      "value": "xs:int",
-                                      "isNullable": false
-                                    },
-                                    "maxDistance": {
-                                      "metaType": "primitive",
-                                      "value": "xs:int",
-                                      "isNullable": true
-                                    },
-                                    "adjacent_depth_limit": {
-                                      "metaType": "primitive",
-                                      "value": "xs:int",
-                                      "isNullable": false
-                                    }
-                                  }
-                                },
-                                "isSingle": false,
-                                "value": {
-                                  "distance_to_progress_multiplier": {
-                                    "metaType": "reference",
-                                    "value": "type__math_operations",
-                                    "isSingle": true,
-                                    "isNullable": true
-                                  },
-                                  "person_progress_property": {
-                                    "metaType": "reference",
-                                    "value": "type__math_operations",
-                                    "isSingle": true,
-                                    "isNullable": true
-                                  }
-                                },
-                                "isNullable": true
+                                "value": {},
+                                "isSingle": true,
+                                "isNullable": false
+                              },
+                              {
+                                "metaType": "primitive",
+                                "value": "type__link_group"
                               }
-                            },
+                            ],
+                            "isSingle": false,
                             "isNullable": true
                           }
                         },
@@ -1421,23 +1141,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                     },
                     "isSingle": false,
                     "value": {
-                      "race": {
-                        "metaType": "object",
-                        "value": {},
-                        "isSingle": true,
-                        "isNullable": true,
-                        "attributes": {
-                          "metaType": "object",
-                          "value": {
-                            "race_rule_ref": {
-                              "metaType": "primitive",
-                              "value": "xs:string",
-                              "isNullable": false
-                            }
-                          },
-                          "isNullable": false
-                        }
-                      },
                       "properties": {
                         "metaType": "object",
                         "isSingle": true,
@@ -1504,12 +1207,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                             }
                           }
                         },
-                        "isNullable": true
-                      },
-                      "icon": {
-                        "metaType": "reference",
-                        "value": "type_icon",
-                        "isSingle": true,
                         "isNullable": true
                       }
                     },
@@ -1777,13 +1474,13 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                   {
                     "metaType": "object",
                     "isSingle": true,
-                    "isNullable": false,
+                    "isNullable": true,
                     "value": {
                       "move_towards": {
                         "metaType": "object",
                         "value": {},
                         "isSingle": true,
-                        "isNullable": false,
+                        "isNullable": true,
                         "attributes": {
                           "metaType": "object",
                           "value": {
@@ -1942,7 +1639,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                   {
                     "metaType": "object",
                     "isSingle": true,
-                    "isNullable": false,
+                    "isNullable": true,
                     "value": {
                       "link_to": {
                         "metaType": "object",
@@ -1966,7 +1663,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                             "isNullable": false
                           }
                         },
-                        "isNullable": false
+                        "isNullable": true
                       }
                     }
                   }
@@ -2429,64 +2126,17 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                   "isSingle": true,
                   "value": {
                     "entry": {
-                      "metaType": "reference",
-                      "value": "group__name_token",
-                      "isSingle": false,
-                      "attributes": {
-                        "metaType": "object",
-                        "value": {
-                          "id": {
-                            "metaType": "unknown",
-                            "isNullable": false
-                          }
-                        },
-                        "isNullable": false
-                      },
-                      "isNullable": true
-                    }
-                  },
-                  "isNullable": true
-                },
-                "race_rule": {
-                  "metaType": "object",
-                  "isSingle": true,
-                  "value": {
-                    "entry": {
-                      "metaType": "object",
-                      "attributes": {
-                        "metaType": "object",
-                        "value": {
-                          "id": {
-                            "metaType": "primitive",
-                            "value": "xs:string",
-                            "isNullable": false
-                          }
-                        },
-                        "isNullable": false
-                      },
-                      "isSingle": false,
-                      "value": {
-                        "vision": {
-                          "metaType": "reference",
-                          "value": "type_range",
-                          "isSingle": true,
-                          "isNullable": true
-                        },
-                        "movement": {
-                          "metaType": "reference",
-                          "value": "type_range",
-                          "isSingle": true,
-                          "isNullable": true
-                        },
-                        "name": {
+                      "metaType": "composition",
+                      "value": [
+                        {
                           "metaType": "object",
                           "value": {},
                           "isSingle": true,
-                          "isNullable": true,
+                          "isNullable": false,
                           "attributes": {
                             "metaType": "object",
                             "value": {
-                              "name_rule_ref": {
+                              "id": {
                                 "metaType": "primitive",
                                 "value": "xs:string",
                                 "isNullable": false
@@ -2495,41 +2145,12 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                             "isNullable": false
                           }
                         },
-                        "property_bonus": {
-                          "metaType": "composition",
-                          "value": [
-                            {
-                              "metaType": "object",
-                              "value": {},
-                              "isSingle": true,
-                              "isNullable": false,
-                              "attributes": {
-                                "metaType": "object",
-                                "value": {
-                                  "property_rule_ref": {
-                                    "metaType": "primitive",
-                                    "value": "xs:string",
-                                    "isNullable": false
-                                  }
-                                },
-                                "isNullable": false
-                              }
-                            },
-                            {
-                              "metaType": "primitive",
-                              "value": "type__math_operations"
-                            }
-                          ],
-                          "isSingle": false,
-                          "isNullable": true
-                        },
-                        "icon": {
-                          "metaType": "reference",
-                          "value": "type_icon",
-                          "isSingle": true,
-                          "isNullable": true
+                        {
+                          "metaType": "primitive",
+                          "value": "type__name_token"
                         }
-                      },
+                      ],
+                      "isSingle": false,
                       "isNullable": true
                     }
                   },
@@ -2664,130 +2285,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                         }
                       },
                       "isNullable": true
-                    },
-                    "person_to_person": {
-                      "metaType": "object",
-                      "attributes": {
-                        "metaType": "object",
-                        "value": {
-                          "id": {
-                            "metaType": "primitive",
-                            "value": "xs:string",
-                            "isNullable": false
-                          }
-                        },
-                        "isNullable": false
-                      },
-                      "isSingle": false,
-                      "value": {
-                        "test": {
-                          "metaType": "object",
-                          "isSingle": true,
-                          "value": {
-                            "value": {
-                              "metaType": "object",
-                              "attributes": {
-                                "metaType": "object",
-                                "value": {
-                                  "target": {
-                                    "metaType": "primitive",
-                                    "value": "type_person_select",
-                                    "isNullable": false
-                                  }
-                                },
-                                "isNullable": false
-                              },
-                              "isSingle": true,
-                              "value": {
-                                "operation": {
-                                  "metaType": "reference",
-                                  "value": "type__math_operations",
-                                  "isSingle": true,
-                                  "isNullable": false
-                                }
-                              },
-                              "isNullable": false
-                            },
-                            "expected": {
-                              "metaType": "object",
-                              "attributes": {
-                                "metaType": "object",
-                                "value": {
-                                  "target": {
-                                    "metaType": "primitive",
-                                    "value": "type_person_select",
-                                    "isNullable": false
-                                  }
-                                },
-                                "isNullable": false
-                              },
-                              "isSingle": true,
-                              "value": {
-                                "operation": {
-                                  "metaType": "reference",
-                                  "value": "type__math_operations",
-                                  "isSingle": true,
-                                  "isNullable": false
-                                }
-                              },
-                              "isNullable": false
-                            }
-                          },
-                          "isNullable": false
-                        },
-                        "property_mutation": {
-                          "metaType": "reference",
-                          "value": "type__property_mutation_on",
-                          "isSingle": true,
-                          "isNullable": true
-                        },
-                        "location_mutation": {
-                          "metaType": "object",
-                          "attributes": {
-                            "metaType": "object",
-                            "value": {
-                              "name": {
-                                "metaType": "unknown",
-                                "isNullable": true
-                              },
-                              "on": {
-                                "metaType": "primitive",
-                                "value": "type_person_select",
-                                "isNullable": false
-                              }
-                            }
-                          },
-                          "isSingle": true,
-                          "value": {
-                            "from": {
-                              "metaType": "object",
-                              "attributes": {
-                                "metaType": "object",
-                                "value": {
-                                  "participant": {
-                                    "metaType": "primitive",
-                                    "value": "type_person_select",
-                                    "isNullable": false
-                                  }
-                                },
-                                "isNullable": false
-                              },
-                              "isSingle": false,
-                              "value": {
-                                "operation": {
-                                  "metaType": "reference",
-                                  "value": "type__math_operations",
-                                  "isSingle": true,
-                                  "isNullable": false
-                                }
-                              },
-                              "isNullable": false
-                            }
-                          },
-                          "isNullable": true
-                        }
-                      },
-                      "isNullable": true
                     }
                   },
                   "isNullable": true
@@ -2898,79 +2395,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                   "isSingle": true,
                   "value": {
                     "link_group_rule": {
-                      "metaType": "object",
-                      "attributes": {
-                        "metaType": "object",
-                        "value": {
-                          "id": {
-                            "metaType": "primitive",
-                            "value": "xs:string",
-                            "isNullable": false
-                          },
-                          "angle": {
-                            "metaType": "primitive",
-                            "value": "xs:int",
-                            "isNullable": false
-                          },
-                          "angleMax": {
-                            "metaType": "primitive",
-                            "value": "xs:int",
-                            "isNullable": true
-                          },
-                          "limit": {
-                            "metaType": "primitive",
-                            "value": "xs:int",
-                            "isNullable": true
-                          }
-                        }
-                      },
-                      "isSingle": false,
-                      "value": {
-                        "to_option": {
+                      "metaType": "composition",
+                      "value": [
+                        {
                           "metaType": "object",
-                          "attributes": {
-                            "metaType": "object",
-                            "value": {
-                              "node_rule_ref": {
-                                "metaType": "primitive",
-                                "value": "xs:string",
-                                "isNullable": false
-                              },
-                              "distance": {
-                                "metaType": "primitive",
-                                "value": "xs:int",
-                                "isNullable": false
-                              },
-                              "maxDistance": {
-                                "metaType": "primitive",
-                                "value": "xs:int",
-                                "isNullable": true
-                              },
-                              "adjacent_depth_limit": {
-                                "metaType": "primitive",
-                                "value": "xs:int",
-                                "isNullable": false
-                              }
-                            }
-                          },
-                          "isSingle": false,
-                          "value": {
-                            "distance_to_progress_multiplier": {
-                              "metaType": "reference",
-                              "value": "type__math_operations",
-                              "isSingle": true,
-                              "isNullable": true
-                            },
-                            "person_progress_property": {
-                              "metaType": "reference",
-                              "value": "type__math_operations",
-                              "isSingle": true,
-                              "isNullable": true
-                            }
-                          },
-                          "isNullable": true
+                          "value": {},
+                          "isSingle": true,
+                          "isNullable": false
+                        },
+                        {
+                          "metaType": "primitive",
+                          "value": "type__link_group"
                         }
-                      },
+                      ],
+                      "isSingle": false,
                       "isNullable": true
                     }
                   },
@@ -3137,79 +2575,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                               }
                             },
                             "link_group": {
-                              "metaType": "object",
-                              "attributes": {
-                                "metaType": "object",
-                                "value": {
-                                  "id": {
-                                    "metaType": "primitive",
-                                    "value": "xs:string",
-                                    "isNullable": false
-                                  },
-                                  "angle": {
-                                    "metaType": "primitive",
-                                    "value": "xs:int",
-                                    "isNullable": false
-                                  },
-                                  "angleMax": {
-                                    "metaType": "primitive",
-                                    "value": "xs:int",
-                                    "isNullable": true
-                                  },
-                                  "limit": {
-                                    "metaType": "primitive",
-                                    "value": "xs:int",
-                                    "isNullable": true
-                                  }
-                                }
-                              },
-                              "isSingle": false,
-                              "value": {
-                                "to_option": {
+                              "metaType": "composition",
+                              "value": [
+                                {
                                   "metaType": "object",
-                                  "attributes": {
-                                    "metaType": "object",
-                                    "value": {
-                                      "node_rule_ref": {
-                                        "metaType": "primitive",
-                                        "value": "xs:string",
-                                        "isNullable": false
-                                      },
-                                      "distance": {
-                                        "metaType": "primitive",
-                                        "value": "xs:int",
-                                        "isNullable": false
-                                      },
-                                      "maxDistance": {
-                                        "metaType": "primitive",
-                                        "value": "xs:int",
-                                        "isNullable": true
-                                      },
-                                      "adjacent_depth_limit": {
-                                        "metaType": "primitive",
-                                        "value": "xs:int",
-                                        "isNullable": false
-                                      }
-                                    }
-                                  },
-                                  "isSingle": false,
-                                  "value": {
-                                    "distance_to_progress_multiplier": {
-                                      "metaType": "reference",
-                                      "value": "type__math_operations",
-                                      "isSingle": true,
-                                      "isNullable": true
-                                    },
-                                    "person_progress_property": {
-                                      "metaType": "reference",
-                                      "value": "type__math_operations",
-                                      "isSingle": true,
-                                      "isNullable": true
-                                    }
-                                  },
-                                  "isNullable": true
+                                  "value": {},
+                                  "isSingle": true,
+                                  "isNullable": false
+                                },
+                                {
+                                  "metaType": "primitive",
+                                  "value": "type__link_group"
                                 }
-                              },
+                              ],
+                              "isSingle": false,
                               "isNullable": true
                             }
                           },
@@ -3303,23 +2682,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                       },
                       "isSingle": false,
                       "value": {
-                        "race": {
-                          "metaType": "object",
-                          "value": {},
-                          "isSingle": true,
-                          "isNullable": true,
-                          "attributes": {
-                            "metaType": "object",
-                            "value": {
-                              "race_rule_ref": {
-                                "metaType": "primitive",
-                                "value": "xs:string",
-                                "isNullable": false
-                              }
-                            },
-                            "isNullable": false
-                          }
-                        },
                         "properties": {
                           "metaType": "object",
                           "isSingle": true,
@@ -3386,12 +2748,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                               }
                             }
                           },
-                          "isNullable": true
-                        },
-                        "icon": {
-                          "metaType": "reference",
-                          "value": "type_icon",
-                          "isSingle": true,
                           "isNullable": true
                         }
                       },
@@ -3659,13 +3015,13 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                     {
                       "metaType": "object",
                       "isSingle": true,
-                      "isNullable": false,
+                      "isNullable": true,
                       "value": {
                         "move_towards": {
                           "metaType": "object",
                           "value": {},
                           "isSingle": true,
-                          "isNullable": false,
+                          "isNullable": true,
                           "attributes": {
                             "metaType": "object",
                             "value": {
@@ -3824,7 +3180,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                     {
                       "metaType": "object",
                       "isSingle": true,
-                      "isNullable": false,
+                      "isNullable": true,
                       "value": {
                         "link_to": {
                           "metaType": "object",
@@ -3848,7 +3204,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                               "isNullable": false
                             }
                           },
-                          "isNullable": false
+                          "isNullable": true
                         }
                       }
                     }

@@ -1,7 +1,6 @@
 package ro.anud.xml_xsd.implementation.service;
 
 import lombok.Setter;
-import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.RandomizationTable.Entry.Entry;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.RandomizationTable.RandomizationTable;
@@ -9,6 +8,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.model.interfaces.IType_mathOperations.IType_mathOperations;
 import ro.anud.xml_xsd.implementation.repository.RuleRepository;
 import ro.anud.xml_xsd.implementation.service.location_graph.LocationGraphInstance;
+import ro.anud.xml_xsd.implementation.service.name.NameInstance;
 import ro.anud.xml_xsd.implementation.service.person.PersonInstance;
 import ro.anud.xml_xsd.implementation.service.util.ComputeOperation;
 
@@ -23,15 +23,23 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 @Setter
 public class WorldStepInstance {
 
-    public InstanceTypeEnum instance;
-    public NameInstance name;
-    private WorldStep worldStep;
 
+    @FunctionalInterface
+    public interface Mutation {
+        void apply(WorldStepInstance outInstance);
+    }
+
+    public InstanceTypeEnum instance;
+    private WorldStepInstance outInstance = this;
+    private WorldStep worldStep;
     public final RuleRepository ruleRepository;
     public final PersonInstance person;
     public final PropertyInstance property;
     public final LocationGraphInstance locationGraph;
-    private WorldStepInstance outInstance = this;
+
+    public NameInstance name;
+
+    private int counter = 0;
 
     public WorldStepInstance(WorldStep worldStep) {
         this.worldStep = worldStep;
@@ -58,6 +66,12 @@ public class WorldStepInstance {
     }
 
     public <T extends IType_mathOperations<?>> Optional<Integer> computeOperation(
+        T typeMathOperations) {
+        var logger = logEnter();
+        return logger.logReturn(ComputeOperation.computeOperation(this, typeMathOperations));
+    }
+
+    public <T extends IType_mathOperations<?>> Optional<Integer> computeOperation(
         Optional<T> typeMathOperations,
         Person person) {
         var logger = logEnter();
@@ -73,6 +87,10 @@ public class WorldStepInstance {
             .getEntry();
         if (randomizationTable.isEmpty()) {
             logger.log("empty randomizationTable");
+            return this;
+        }
+        if(randomizationTable.size() == 1) {
+            logger.log("ignoring offset for single entry");
             return this;
         }
         logger.log("applying offset");
@@ -92,12 +110,11 @@ public class WorldStepInstance {
             return logger.logReturn(0, "empty randomization_table");
         }
         var max = entryList.stream().max(Comparator.comparingInt(o -> o)).get();
-        var counter = worldStep.getWorldMetadata().getCounter();
 
-        var index = counter.getValue() % entryList.size();
+        var index = counter % entryList.size();
         var value = entryList.get(index);
         var result = value / (float) (max);
-        counter.setValue(counter.getValue() + 1);
+        counter +=1;
         return logReturn(result, "max", max, "value", value, "index", index);
     }
 
@@ -128,6 +145,7 @@ public class WorldStepInstance {
     public int counterNext() {
         var logger = logEnter();
         var counter = worldStep.getWorldMetadata().getCounter().getValue();
+        logger.log("counter", counter);
         worldStep.getWorldMetadata().getCounter().setValue(counter + 1);
         return logger.logReturn(counter);
     }

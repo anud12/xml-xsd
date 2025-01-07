@@ -6,14 +6,12 @@ import org.w3c.dom.Element;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
 import java.util.*;
-import java.util.stream.Stream;
 import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
@@ -24,17 +22,19 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class LocationGraphRule implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static final String TYPE_ID = "/world_step/rule_group/location_graph_rule";
+
     public static LocationGraphRule fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new LocationGraphRule();
-      instance.setRawNode(rawNode);
+      instance.rawNode(rawNode);
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
     public static LocationGraphRule fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
       var instance = fromRawNode(rawNode);
-      instance.setParentNode(parent);
+      instance.parentNode(parent);
       return logReturn(instance);
     }
     public static Optional<LocationGraphRule> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
@@ -52,36 +52,67 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     //Attributes
+
     private String id;
 
     //Children elements
+    @Builder.Default
     private ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.Setup setup = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.Setup();
+    @Builder.Default
     private List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule> nodeRule = new ArrayList<>();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
-    @Getter
-    @Setter
     @Builder.Default
     private RawNode rawNode = new RawNode();
 
-    @Getter
+    public RawNode rawNode() {
+      return rawNode;
+    }
+    public void rawNode(RawNode rawNode) {
+      this.rawNode = rawNode;
+    }
+
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
 
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode() {
+      return parentNode;
+    }
+
     @Builder.Default
-    private List<Consumer<LocationGraphRule>> onChangeList = new ArrayList<>();
+    private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
       return "location_graph_rule";
     }
 
-    public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+    public void childChanged(Set<Object> set) {
+      set.add(this);
+      onChangeList.forEach(consumer -> consumer.accept(set));
+      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(set));
+    }
+
+    private void triggerOnChange() {
+      childChanged(new HashSet<>());
+    }
+
+    public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
       this.parentNode = Optional.of(linkedNode);
+      triggerOnChange();
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup> parentAsRuleGroup() {
+      return parentNode.flatMap(node -> {
+       if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup casted){
+         return Optional.of(casted);
+       }
+       return Optional.empty();
+     });
     }
 
     public void removeChild(Object object) {
@@ -93,11 +124,21 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         }
     }
 
+    public int buildIndexForChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.Setup) {
+          return 0;
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule) {
+          return this.nodeRule.indexOf(object);
+        }
+        return 0;
+    }
+
     public void removeFromParent() {
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<LocationGraphRule> onChange) {
+    public Subscription onChange(Consumer<Set<Object>> onChange) {
       logEnter();
       onChangeList.add(onChange);
       return logReturn(() -> onChangeList.remove(onChange));
@@ -149,22 +190,22 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public LocationGraphRule setId(String value)
     {
       this.id = value;
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.Setup getSetup()
     {
       return this.setup;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.Setup> streamSetup()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.Setup> streamSetup()
     {
       return Optional.ofNullable(setup).stream();
     }
     public LocationGraphRule setSetup(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.Setup value)
     {
       this.setup = value;
-      value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      value.parentNode(this);
+      triggerOnChange();
       return this;
     }
 
@@ -172,33 +213,32 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.nodeRule;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule> streamNodeRule()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule> streamNodeRule()
     {
       return nodeRule.stream();
     }
     public LocationGraphRule addNodeRule(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule value)
     {
       this.nodeRule.add(value);
-      value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      value.parentNode(this);
+      triggerOnChange();
       return this;
     }
     public LocationGraphRule addAllNodeRule(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule> value)
     {
       this.nodeRule.addAll(value);
-      value.forEach(e -> e.setParentNode(this));
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      value.forEach(e -> e.parentNode(this));
+      triggerOnChange();
       return this;
     }
     public LocationGraphRule removeNodeRule(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule value)
     {
       this.nodeRule.remove(value);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
 
   }
-
 
   /*
     dependant type:
@@ -365,79 +405,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                     }
                   },
                   "link_group": {
-                    "metaType": "object",
-                    "attributes": {
-                      "metaType": "object",
-                      "value": {
-                        "id": {
-                          "metaType": "primitive",
-                          "value": "xs:string",
-                          "isNullable": false
-                        },
-                        "angle": {
-                          "metaType": "primitive",
-                          "value": "xs:int",
-                          "isNullable": false
-                        },
-                        "angleMax": {
-                          "metaType": "primitive",
-                          "value": "xs:int",
-                          "isNullable": true
-                        },
-                        "limit": {
-                          "metaType": "primitive",
-                          "value": "xs:int",
-                          "isNullable": true
-                        }
-                      }
-                    },
-                    "isSingle": false,
-                    "value": {
-                      "to_option": {
+                    "metaType": "composition",
+                    "value": [
+                      {
                         "metaType": "object",
-                        "attributes": {
-                          "metaType": "object",
-                          "value": {
-                            "node_rule_ref": {
-                              "metaType": "primitive",
-                              "value": "xs:string",
-                              "isNullable": false
-                            },
-                            "distance": {
-                              "metaType": "primitive",
-                              "value": "xs:int",
-                              "isNullable": false
-                            },
-                            "maxDistance": {
-                              "metaType": "primitive",
-                              "value": "xs:int",
-                              "isNullable": true
-                            },
-                            "adjacent_depth_limit": {
-                              "metaType": "primitive",
-                              "value": "xs:int",
-                              "isNullable": false
-                            }
-                          }
-                        },
-                        "isSingle": false,
-                        "value": {
-                          "distance_to_progress_multiplier": {
-                            "metaType": "reference",
-                            "value": "type__math_operations",
-                            "isSingle": true,
-                            "isNullable": true
-                          },
-                          "person_progress_property": {
-                            "metaType": "reference",
-                            "value": "type__math_operations",
-                            "isSingle": true,
-                            "isNullable": true
-                          }
-                        },
-                        "isNullable": true
+                        "value": {},
+                        "isSingle": true,
+                        "isNullable": false
+                      },
+                      {
+                        "metaType": "primitive",
+                        "value": "type__link_group"
                       }
-                    },
+                    ],
+                    "isSingle": false,
                     "isNullable": true
                   }
                 },

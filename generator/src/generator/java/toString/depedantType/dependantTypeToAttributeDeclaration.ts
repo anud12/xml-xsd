@@ -20,7 +20,8 @@ export const dependantTypeToAttributeDeclaration = (dependantType: DependantType
           : primitives.string;
 
         return template()`
-                private ${typeString} ${normalizeNameField(key)};
+                ${value.isNullable && "@Builder.Default"}
+                private ${typeString} ${normalizeNameField(key)}${value.isNullable && " = Optional.empty()"};
                 `
       }
 
@@ -29,7 +30,8 @@ export const dependantTypeToAttributeDeclaration = (dependantType: DependantType
         : type;
 
       return template()`
-              private ${typeString} ${normalizeNameField(key)};
+              ${value.isNullable && "@Builder.Default"}
+              private ${typeString} ${normalizeNameField(key)}${value.isNullable && " = Optional.empty()"};
               `
     }
 

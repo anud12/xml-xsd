@@ -1,50 +1,5 @@
 [
   {
-    "name": "property_rule_ref",
-    "type": "attribute",
-    "value": {
-      "metaType": "object",
-      "value": {
-        "property_rule_ref": {
-          "metaType": "primitive",
-          "value": "xs:string",
-          "isNullable": true
-        }
-      },
-      "isNullable": true
-    }
-  },
-  {
-    "name": "attributeGroup_range",
-    "type": "attributeGroup",
-    "value": {
-      "metaType": "object",
-      "value": {},
-      "isSingle": true,
-      "isNullable": false,
-      "attributes": {
-        "metaType": "object",
-        "value": {
-          "value": {
-            "metaType": "primitive",
-            "value": "xs:int",
-            "isNullable": false
-          },
-          "max_value": {
-            "metaType": "primitive",
-            "value": "xs:int",
-            "isNullable": true
-          },
-          "inclusive": {
-            "metaType": "primitive",
-            "value": "xs:boolean",
-            "isNullable": false
-          }
-        }
-      }
-    }
-  },
-  {
     "name": "group__name_token",
     "type": "group",
     "value": {
@@ -81,13 +36,13 @@
             {
               "metaType": "object",
               "isSingle": true,
-              "isNullable": false,
+              "isNullable": true,
               "value": {
                 "one_of": {
                   "metaType": "reference",
                   "value": "group__name_token",
                   "isSingle": true,
-                  "isNullable": false
+                  "isNullable": true
                 }
               }
             }
@@ -170,22 +125,6 @@
     "isNullable": true
   },
   {
-    "name": "type_range",
-    "type": "complex",
-    "isSingle": true,
-    "isNullable": false,
-    "value": {
-      "metaType": "object",
-      "value": {},
-      "isSingle": true,
-      "isNullable": false,
-      "attributes": {
-        "metaType": "reference",
-        "value": "attributeGroup_range"
-      }
-    }
-  },
-  {
     "name": "type__property_mutation_on",
     "type": "complex",
     "value": {
@@ -262,13 +201,6 @@
     }
   },
   {
-    "name": "type_icon",
-    "type": "complex",
-    "value": {
-      "metaType": "any"
-    }
-  },
-  {
     "name": "type__person_selection",
     "type": "complex",
     "isSingle": false,
@@ -340,23 +272,6 @@
             },
             "isNullable": false
           }
-        },
-        "race": {
-          "metaType": "object",
-          "value": {},
-          "isSingle": true,
-          "isNullable": true,
-          "attributes": {
-            "metaType": "object",
-            "value": {
-              "race_rule_ref": {
-                "metaType": "primitive",
-                "value": "xs:string",
-                "isNullable": false
-              }
-            },
-            "isNullable": false
-          }
         }
       }
     }
@@ -378,7 +293,8 @@
             "metaType": "object",
             "value": {
               "action_rule_ref": {
-                "metaType": "unknown",
+                "metaType": "primitive",
+                "value": "xs:string",
                 "isNullable": false
               }
             },
@@ -476,6 +392,83 @@
           "value": "type__math_operations_and"
         }
       ]
+    }
+  },
+  {
+    "name": "type__name_token",
+    "type": "complex",
+    "isSingle": false,
+    "value": {
+      "metaType": "object",
+      "isSingle": false,
+      "value": {
+        "name_token": {
+          "metaType": "union",
+          "value": [
+            {
+              "metaType": "object",
+              "isSingle": true,
+              "isNullable": true,
+              "value": {
+                "ref": {
+                  "metaType": "object",
+                  "value": {},
+                  "isSingle": true,
+                  "isNullable": true,
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "name_rule_ref": {
+                        "metaType": "primitive",
+                        "value": "xs:string",
+                        "isNullable": false
+                      }
+                    },
+                    "isNullable": false
+                  }
+                }
+              }
+            },
+            {
+              "metaType": "object",
+              "isSingle": true,
+              "isNullable": true,
+              "value": {
+                "one_of": {
+                  "metaType": "composition",
+                  "value": [
+                    {
+                      "metaType": "object",
+                      "value": {},
+                      "isSingle": true,
+                      "isNullable": false
+                    },
+                    {
+                      "metaType": "primitive",
+                      "value": "type__name_token"
+                    }
+                  ],
+                  "isSingle": true,
+                  "isNullable": true
+                }
+              }
+            }
+          ],
+          "isSingle": false,
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "prefix": {
+                "metaType": "primitive",
+                "value": "xs:string",
+                "isNullable": false
+              }
+            },
+            "isNullable": false
+          },
+          "isNullable": false
+        }
+      }
     }
   },
   {
@@ -647,6 +640,86 @@
           "metaType": "reference",
           "value": "type__node_graph__selection",
           "isSingle": true,
+          "isNullable": true
+        }
+      }
+    }
+  },
+  {
+    "name": "type__link_group",
+    "type": "complex",
+    "isSingle": false,
+    "value": {
+      "metaType": "object",
+      "attributes": {
+        "metaType": "object",
+        "value": {
+          "id": {
+            "metaType": "primitive",
+            "value": "xs:string",
+            "isNullable": false
+          },
+          "angle": {
+            "metaType": "primitive",
+            "value": "xs:int",
+            "isNullable": false
+          },
+          "angleMax": {
+            "metaType": "primitive",
+            "value": "xs:int",
+            "isNullable": true
+          },
+          "limit": {
+            "metaType": "primitive",
+            "value": "xs:int",
+            "isNullable": true
+          }
+        }
+      },
+      "isSingle": false,
+      "value": {
+        "to_option": {
+          "metaType": "object",
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "node_rule_ref": {
+                "metaType": "primitive",
+                "value": "xs:string",
+                "isNullable": false
+              },
+              "distance": {
+                "metaType": "primitive",
+                "value": "xs:int",
+                "isNullable": false
+              },
+              "maxDistance": {
+                "metaType": "primitive",
+                "value": "xs:int",
+                "isNullable": true
+              },
+              "adjacent_depth_limit": {
+                "metaType": "primitive",
+                "value": "xs:int",
+                "isNullable": false
+              }
+            }
+          },
+          "isSingle": false,
+          "value": {
+            "distance_to_progress_multiplier": {
+              "metaType": "reference",
+              "value": "type__math_operations",
+              "isSingle": true,
+              "isNullable": true
+            },
+            "person_progress_property": {
+              "metaType": "reference",
+              "value": "type__math_operations",
+              "isSingle": true,
+              "isNullable": true
+            }
+          },
           "isNullable": true
         }
       }
@@ -958,64 +1031,17 @@
               "isSingle": true,
               "value": {
                 "entry": {
-                  "metaType": "reference",
-                  "value": "group__name_token",
-                  "isSingle": false,
-                  "attributes": {
-                    "metaType": "object",
-                    "value": {
-                      "id": {
-                        "metaType": "unknown",
-                        "isNullable": false
-                      }
-                    },
-                    "isNullable": false
-                  },
-                  "isNullable": true
-                }
-              },
-              "isNullable": true
-            },
-            "race_rule": {
-              "metaType": "object",
-              "isSingle": true,
-              "value": {
-                "entry": {
-                  "metaType": "object",
-                  "attributes": {
-                    "metaType": "object",
-                    "value": {
-                      "id": {
-                        "metaType": "primitive",
-                        "value": "xs:string",
-                        "isNullable": false
-                      }
-                    },
-                    "isNullable": false
-                  },
-                  "isSingle": false,
-                  "value": {
-                    "vision": {
-                      "metaType": "reference",
-                      "value": "type_range",
-                      "isSingle": true,
-                      "isNullable": true
-                    },
-                    "movement": {
-                      "metaType": "reference",
-                      "value": "type_range",
-                      "isSingle": true,
-                      "isNullable": true
-                    },
-                    "name": {
+                  "metaType": "composition",
+                  "value": [
+                    {
                       "metaType": "object",
                       "value": {},
                       "isSingle": true,
-                      "isNullable": true,
+                      "isNullable": false,
                       "attributes": {
                         "metaType": "object",
                         "value": {
-                          "name_rule_ref": {
+                          "id": {
                             "metaType": "primitive",
                             "value": "xs:string",
                             "isNullable": false
@@ -1024,41 +1050,12 @@
                         "isNullable": false
                       }
                     },
-                    "property_bonus": {
-                      "metaType": "composition",
-                      "value": [
-                        {
-                          "metaType": "object",
-                          "value": {},
-                          "isSingle": true,
-                          "isNullable": false,
-                          "attributes": {
-                            "metaType": "object",
-                            "value": {
-                              "property_rule_ref": {
-                                "metaType": "primitive",
-                                "value": "xs:string",
-                                "isNullable": false
-                              }
-                            },
-                            "isNullable": false
-                          }
-                        },
-                        {
-                          "metaType": "primitive",
-                          "value": "type__math_operations"
-                        }
-                      ],
-                      "isSingle": false,
-                      "isNullable": true
-                    },
-                    "icon": {
-                      "metaType": "reference",
-                      "value": "type_icon",
-                      "isSingle": true,
-                      "isNullable": true
+                    {
+                      "metaType": "primitive",
+                      "value": "type__name_token"
                     }
-                  },
+                  ],
+                  "isSingle": false,
                   "isNullable": true
                 }
               },
@@ -1193,130 +1190,6 @@
                     }
                   },
                   "isNullable": true
-                },
-                "person_to_person": {
-                  "metaType": "object",
-                  "attributes": {
-                    "metaType": "object",
-                    "value": {
-                      "id": {
-                        "metaType": "primitive",
-                        "value": "xs:string",
-                        "isNullable": false
-                      }
-                    },
-                    "isNullable": false
-                  },
-                  "isSingle": false,
-                  "value": {
-                    "test": {
-                      "metaType": "object",
-                      "isSingle": true,
-                      "value": {
-                        "value": {
-                          "metaType": "object",
-                          "attributes": {
-                            "metaType": "object",
-                            "value": {
-                              "target": {
-                                "metaType": "primitive",
-                                "value": "type_person_select",
-                                "isNullable": false
-                              }
-                            },
-                            "isNullable": false
-                          },
-                          "isSingle": true,
-                          "value": {
-                            "operation": {
-                              "metaType": "reference",
-                              "value": "type__math_operations",
-                              "isSingle": true,
-                              "isNullable": false
-                            }
-                          },
-                          "isNullable": false
-                        },
-                        "expected": {
-                          "metaType": "object",
-                          "attributes": {
-                            "metaType": "object",
-                            "value": {
-                              "target": {
-                                "metaType": "primitive",
-                                "value": "type_person_select",
-                                "isNullable": false
-                              }
-                            },
-                            "isNullable": false
-                          },
-                          "isSingle": true,
-                          "value": {
-                            "operation": {
-                              "metaType": "reference",
-                              "value": "type__math_operations",
-                              "isSingle": true,
-                              "isNullable": false
-                            }
-                          },
-                          "isNullable": false
-                        }
-                      },
-                      "isNullable": false
-                    },
-                    "property_mutation": {
-                      "metaType": "reference",
-                      "value": "type__property_mutation_on",
-                      "isSingle": true,
-                      "isNullable": true
-                    },
-                    "location_mutation": {
-                      "metaType": "object",
-                      "attributes": {
-                        "metaType": "object",
-                        "value": {
-                          "name": {
-                            "metaType": "unknown",
-                            "isNullable": true
-                          },
-                          "on": {
-                            "metaType": "primitive",
-                            "value": "type_person_select",
-                            "isNullable": false
-                          }
-                        }
-                      },
-                      "isSingle": true,
-                      "value": {
-                        "from": {
-                          "metaType": "object",
-                          "attributes": {
-                            "metaType": "object",
-                            "value": {
-                              "participant": {
-                                "metaType": "primitive",
-                                "value": "type_person_select",
-                                "isNullable": false
-                              }
-                            },
-                            "isNullable": false
-                          },
-                          "isSingle": false,
-                          "value": {
-                            "operation": {
-                              "metaType": "reference",
-                              "value": "type__math_operations",
-                              "isSingle": true,
-                              "isNullable": false
-                            }
-                          },
-                          "isNullable": false
-                        }
-                      },
-                      "isNullable": true
-                    }
-                  },
-                  "isNullable": true
                 }
               },
               "isNullable": true
@@ -1427,79 +1300,20 @@
               "isSingle": true,
               "value": {
                 "link_group_rule": {
-                  "metaType": "object",
-                  "attributes": {
-                    "metaType": "object",
-                    "value": {
-                      "id": {
-                        "metaType": "primitive",
-                        "value": "xs:string",
-                        "isNullable": false
-                      },
-                      "angle": {
-                        "metaType": "primitive",
-                        "value": "xs:int",
-                        "isNullable": false
-                      },
-                      "angleMax": {
-                        "metaType": "primitive",
-                        "value": "xs:int",
-                        "isNullable": true
-                      },
-                      "limit": {
-                        "metaType": "primitive",
-                        "value": "xs:int",
-                        "isNullable": true
-                      }
-                    }
-                  },
-                  "isSingle": false,
-                  "value": {
-                    "to_option": {
+                  "metaType": "composition",
+                  "value": [
+                    {
                       "metaType": "object",
-                      "attributes": {
-                        "metaType": "object",
-                        "value": {
-                          "node_rule_ref": {
-                            "metaType": "primitive",
-                            "value": "xs:string",
-                            "isNullable": false
-                          },
-                          "distance": {
-                            "metaType": "primitive",
-                            "value": "xs:int",
-                            "isNullable": false
-                          },
-                          "maxDistance": {
-                            "metaType": "primitive",
-                            "value": "xs:int",
-                            "isNullable": true
-                          },
-                          "adjacent_depth_limit": {
-                            "metaType": "primitive",
-                            "value": "xs:int",
-                            "isNullable": false
-                          }
-                        }
-                      },
-                      "isSingle": false,
-                      "value": {
-                        "distance_to_progress_multiplier": {
-                          "metaType": "reference",
-                          "value": "type__math_operations",
-                          "isSingle": true,
-                          "isNullable": true
-                        },
-                        "person_progress_property": {
-                          "metaType": "reference",
-                          "value": "type__math_operations",
-                          "isSingle": true,
-                          "isNullable": true
-                        }
-                      },
-                      "isNullable": true
+                      "value": {},
+                      "isSingle": true,
+                      "isNullable": false
+                    },
+                    {
+                      "metaType": "primitive",
+                      "value": "type__link_group"
                     }
-                  },
+                  ],
+                  "isSingle": false,
                   "isNullable": true
                 }
               },
@@ -1666,79 +1480,20 @@
                           }
                         },
                         "link_group": {
-                          "metaType": "object",
-                          "attributes": {
-                            "metaType": "object",
-                            "value": {
-                              "id": {
-                                "metaType": "primitive",
-                                "value": "xs:string",
-                                "isNullable": false
-                              },
-                              "angle": {
-                                "metaType": "primitive",
-                                "value": "xs:int",
-                                "isNullable": false
-                              },
-                              "angleMax": {
-                                "metaType": "primitive",
-                                "value": "xs:int",
-                                "isNullable": true
-                              },
-                              "limit": {
-                                "metaType": "primitive",
-                                "value": "xs:int",
-                                "isNullable": true
-                              }
-                            }
-                          },
-                          "isSingle": false,
-                          "value": {
-                            "to_option": {
+                          "metaType": "composition",
+                          "value": [
+                            {
                               "metaType": "object",
-                              "attributes": {
-                                "metaType": "object",
-                                "value": {
-                                  "node_rule_ref": {
-                                    "metaType": "primitive",
-                                    "value": "xs:string",
-                                    "isNullable": false
-                                  },
-                                  "distance": {
-                                    "metaType": "primitive",
-                                    "value": "xs:int",
-                                    "isNullable": false
-                                  },
-                                  "maxDistance": {
-                                    "metaType": "primitive",
-                                    "value": "xs:int",
-                                    "isNullable": true
-                                  },
-                                  "adjacent_depth_limit": {
-                                    "metaType": "primitive",
-                                    "value": "xs:int",
-                                    "isNullable": false
-                                  }
-                                }
-                              },
-                              "isSingle": false,
-                              "value": {
-                                "distance_to_progress_multiplier": {
-                                  "metaType": "reference",
-                                  "value": "type__math_operations",
-                                  "isSingle": true,
-                                  "isNullable": true
-                                },
-                                "person_progress_property": {
-                                  "metaType": "reference",
-                                  "value": "type__math_operations",
-                                  "isSingle": true,
-                                  "isNullable": true
-                                }
-                              },
-                              "isNullable": true
+                              "value": {},
+                              "isSingle": true,
+                              "isNullable": false
+                            },
+                            {
+                              "metaType": "primitive",
+                              "value": "type__link_group"
                             }
-                          },
+                          ],
+                          "isSingle": false,
                           "isNullable": true
                         }
                       },
@@ -1832,23 +1587,6 @@
                   },
                   "isSingle": false,
                   "value": {
-                    "race": {
-                      "metaType": "object",
-                      "value": {},
-                      "isSingle": true,
-                      "isNullable": true,
-                      "attributes": {
-                        "metaType": "object",
-                        "value": {
-                          "race_rule_ref": {
-                            "metaType": "primitive",
-                            "value": "xs:string",
-                            "isNullable": false
-                          }
-                        },
-                        "isNullable": false
-                      }
-                    },
                     "properties": {
                       "metaType": "object",
                       "isSingle": true,
@@ -1915,12 +1653,6 @@
                           }
                         }
                       },
-                      "isNullable": true
-                    },
-                    "icon": {
-                      "metaType": "reference",
-                      "value": "type_icon",
-                      "isSingle": true,
                       "isNullable": true
                     }
                   },
@@ -2188,13 +1920,13 @@
                 {
                   "metaType": "object",
                   "isSingle": true,
-                  "isNullable": false,
+                  "isNullable": true,
                   "value": {
                     "move_towards": {
                       "metaType": "object",
                       "value": {},
                       "isSingle": true,
-                      "isNullable": false,
+                      "isNullable": true,
                       "attributes": {
                         "metaType": "object",
                         "value": {
@@ -2353,7 +2085,7 @@
                 {
                   "metaType": "object",
                   "isSingle": true,
-                  "isNullable": false,
+                  "isNullable": true,
                   "value": {
                     "link_to": {
                       "metaType": "object",
@@ -2377,7 +2109,7 @@
                           "isNullable": false
                         }
                       },
-                      "isNullable": false
+                      "isNullable": true
                     }
                   }
                 }

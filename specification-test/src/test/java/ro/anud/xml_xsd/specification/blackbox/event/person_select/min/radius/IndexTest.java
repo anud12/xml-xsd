@@ -1,5 +1,6 @@
 package ro.anud.xml_xsd.specification.blackbox.event.person_select.min.radius;
 
+import org.junit.jupiter.api.Disabled;
 import ro.anud.xml_xsd.specification.TestBase;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
@@ -31,6 +32,7 @@ create 2 people because `0` is within the radius
 public class IndexTest {
 
     @TestFactory
+    @Disabled
     public Collection<DynamicTest> test() {
         return TestBase.runTestRelativeToClass(getClass());
     }

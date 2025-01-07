@@ -6,14 +6,12 @@ import org.w3c.dom.Element;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
 import java.util.*;
-import java.util.stream.Stream;
 import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
@@ -24,17 +22,19 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class ActionRule implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static final String TYPE_ID = "/world_step/rule_group/action_rule";
+
     public static ActionRule fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new ActionRule();
-      instance.setRawNode(rawNode);
+      instance.rawNode(rawNode);
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
     public static ActionRule fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
       var instance = fromRawNode(rawNode);
-      instance.setParentNode(parent);
+      instance.parentNode(parent);
       return logReturn(instance);
     }
     public static Optional<ActionRule> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
@@ -54,34 +54,63 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     //Attributes
 
     //Children elements
+    @Builder.Default
     private List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.FromPerson> fromPerson = new ArrayList<>();
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.Global.Global> global = Optional.empty();
-    private List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.PersonToPerson> personToPerson = new ArrayList<>();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
-    @Getter
-    @Setter
     @Builder.Default
     private RawNode rawNode = new RawNode();
 
-    @Getter
+    public RawNode rawNode() {
+      return rawNode;
+    }
+    public void rawNode(RawNode rawNode) {
+      this.rawNode = rawNode;
+    }
+
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
 
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode() {
+      return parentNode;
+    }
+
     @Builder.Default
-    private List<Consumer<ActionRule>> onChangeList = new ArrayList<>();
+    private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
       return "action_rule";
     }
 
-    public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+    public void childChanged(Set<Object> set) {
+      set.add(this);
+      onChangeList.forEach(consumer -> consumer.accept(set));
+      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(set));
+    }
+
+    private void triggerOnChange() {
+      childChanged(new HashSet<>());
+    }
+
+    public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
       this.parentNode = Optional.of(linkedNode);
+      triggerOnChange();
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup> parentAsRuleGroup() {
+      return parentNode.flatMap(node -> {
+       if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup casted){
+         return Optional.of(casted);
+       }
+       return Optional.empty();
+     });
     }
 
     public void removeChild(Object object) {
@@ -91,16 +120,23 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.Global.Global) {
           this.global = Optional.empty();
         }
-        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.PersonToPerson) {
-          this.personToPerson.remove(object);
+    }
+
+    public int buildIndexForChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.FromPerson) {
+          return this.fromPerson.indexOf(object);
         }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.Global.Global) {
+          return 0;
+        }
+        return 0;
     }
 
     public void removeFromParent() {
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<ActionRule> onChange) {
+    public Subscription onChange(Consumer<Set<Object>> onChange) {
       logEnter();
       onChangeList.add(onChange);
       return logReturn(() -> onChangeList.remove(onChange));
@@ -116,7 +152,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       //Deserialize children
       this.fromPerson = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.FromPerson.fromRawNode(rawNode.getChildrenList("from_person"), this);
       this.global = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.Global.Global.fromRawNode(rawNode.getChildrenFirst("global"), this);
-      this.personToPerson = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.PersonToPerson.fromRawNode(rawNode.getChildrenList("person_to_person"), this);
       logReturnVoid();
     }
 
@@ -132,8 +167,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       rawNode.setChildren("from_person", fromPerson.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.FromPerson::serializeIntoRawNode).toList());
       innerLogger.log("global");
       rawNode.setChildren("global", global.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.Global.Global::serializeIntoRawNode).toList());
-      innerLogger.log("person_to_person");
-      rawNode.setChildren("person_to_person", personToPerson.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.PersonToPerson::serializeIntoRawNode).toList());
       return rawNode;
     }
 
@@ -147,28 +180,28 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.fromPerson;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.FromPerson> streamFromPerson()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.FromPerson> streamFromPerson()
     {
       return fromPerson.stream();
     }
     public ActionRule addFromPerson(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.FromPerson value)
     {
       this.fromPerson.add(value);
-      value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      value.parentNode(this);
+      triggerOnChange();
       return this;
     }
     public ActionRule addAllFromPerson(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.FromPerson> value)
     {
       this.fromPerson.addAll(value);
-      value.forEach(e -> e.setParentNode(this));
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      value.forEach(e -> e.parentNode(this));
+      triggerOnChange();
       return this;
     }
     public ActionRule removeFromPerson(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.FromPerson value)
     {
       this.fromPerson.remove(value);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.Global.Global> getGlobal()
@@ -179,58 +212,28 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.global.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.Global.Global();
-        instance.setParentNode(this);
+        instance.parentNode(this);
         this.global = Optional.of(instance);
         return this.global.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.Global.Global> streamGlobalOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.Global.Global> streamGlobalOrDefault()
     {
-      return Stream.of(getGlobalOrDefault());
+      return java.util.stream.Stream.of(getGlobalOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.Global.Global> streamGlobal()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.Global.Global> streamGlobal()
     {
       return global.stream();
     }
     public ActionRule setGlobal(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.Global.Global value)
     {
       this.global = Optional.ofNullable(value);
-      value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
-      return this;
-    }
-
-    public List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.PersonToPerson> getPersonToPerson()
-    {
-      return this.personToPerson;
-    }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.PersonToPerson> streamPersonToPerson()
-    {
-      return personToPerson.stream();
-    }
-    public ActionRule addPersonToPerson(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.PersonToPerson value)
-    {
-      this.personToPerson.add(value);
-      value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
-      return this;
-    }
-    public ActionRule addAllPersonToPerson(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.PersonToPerson> value)
-    {
-      this.personToPerson.addAll(value);
-      value.forEach(e -> e.setParentNode(this));
-      onChangeList.forEach(consumer -> consumer.accept(this));
-      return this;
-    }
-    public ActionRule removePersonToPerson(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.PersonToPerson.PersonToPerson value)
-    {
-      this.personToPerson.remove(value);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      value.parentNode(this);
+      triggerOnChange();
       return this;
     }
 
   }
-
 
   /*
     dependant type:
@@ -361,130 +364,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                   }
                 ],
                 "isSingle": false,
-                "isNullable": true
-              }
-            },
-            "isNullable": true
-          },
-          "person_to_person": {
-            "metaType": "object",
-            "attributes": {
-              "metaType": "object",
-              "value": {
-                "id": {
-                  "metaType": "primitive",
-                  "value": "xs:string",
-                  "isNullable": false
-                }
-              },
-              "isNullable": false
-            },
-            "isSingle": false,
-            "value": {
-              "test": {
-                "metaType": "object",
-                "isSingle": true,
-                "value": {
-                  "value": {
-                    "metaType": "object",
-                    "attributes": {
-                      "metaType": "object",
-                      "value": {
-                        "target": {
-                          "metaType": "primitive",
-                          "value": "type_person_select",
-                          "isNullable": false
-                        }
-                      },
-                      "isNullable": false
-                    },
-                    "isSingle": true,
-                    "value": {
-                      "operation": {
-                        "metaType": "reference",
-                        "value": "type__math_operations",
-                        "isSingle": true,
-                        "isNullable": false
-                      }
-                    },
-                    "isNullable": false
-                  },
-                  "expected": {
-                    "metaType": "object",
-                    "attributes": {
-                      "metaType": "object",
-                      "value": {
-                        "target": {
-                          "metaType": "primitive",
-                          "value": "type_person_select",
-                          "isNullable": false
-                        }
-                      },
-                      "isNullable": false
-                    },
-                    "isSingle": true,
-                    "value": {
-                      "operation": {
-                        "metaType": "reference",
-                        "value": "type__math_operations",
-                        "isSingle": true,
-                        "isNullable": false
-                      }
-                    },
-                    "isNullable": false
-                  }
-                },
-                "isNullable": false
-              },
-              "property_mutation": {
-                "metaType": "reference",
-                "value": "type__property_mutation_on",
-                "isSingle": true,
-                "isNullable": true
-              },
-              "location_mutation": {
-                "metaType": "object",
-                "attributes": {
-                  "metaType": "object",
-                  "value": {
-                    "name": {
-                      "metaType": "unknown",
-                      "isNullable": true
-                    },
-                    "on": {
-                      "metaType": "primitive",
-                      "value": "type_person_select",
-                      "isNullable": false
-                    }
-                  }
-                },
-                "isSingle": true,
-                "value": {
-                  "from": {
-                    "metaType": "object",
-                    "attributes": {
-                      "metaType": "object",
-                      "value": {
-                        "participant": {
-                          "metaType": "primitive",
-                          "value": "type_person_select",
-                          "isNullable": false
-                        }
-                      },
-                      "isNullable": false
-                    },
-                    "isSingle": false,
-                    "value": {
-                      "operation": {
-                        "metaType": "reference",
-                        "value": "type__math_operations",
-                        "isSingle": true,
-                        "isNullable": false
-                      }
-                    },
-                    "isNullable": false
-                  }
-                },
                 "isNullable": true
               }
             },

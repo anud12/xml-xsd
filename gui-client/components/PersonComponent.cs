@@ -144,20 +144,6 @@ public partial class PersonComponent : Control
 
 					});
 				});
-
-				worldStep.rule_group.ForEach(ruleGroup => ruleGroup.action_rule.person_to_person.ForEach(entry =>
-				{
-
-					//add buttons per entry
-					var button = new Button();
-					button.Text = entry.id;
-					button.Pressed += () =>
-				{
-					var mainPersonId = StoreSession.mainPersonId.data;
-					ProcessPersonToPersonAction(person.data.id, entry.id);
-				};
-					actionsContainer.AddChild(button);
-				}));
 			});
 		});
 

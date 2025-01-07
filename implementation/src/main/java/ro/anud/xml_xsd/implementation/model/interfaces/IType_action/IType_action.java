@@ -1,38 +1,20 @@
 package ro.anud.xml_xsd.implementation.model.interfaces.IType_action;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import ro.anud.xml_xsd.implementation.util.RawNode;
 
-import java.util.*;
-import java.util.stream.Stream;
-import ro.anud.xml_xsd.implementation.util.Subscription;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
-
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
-
-public interface IType_action<T> {
-
-  public RawNode getRawNode();
+public interface IType_action<T> extends ro.anud.xml_xsd.implementation.util.LinkedNode {
 
   //Children elements
-  public ro.anud.xml_xsd.implementation.model.Type_action.From.From getFrom();
-  public Stream<ro.anud.xml_xsd.implementation.model.Type_action.From.From> streamFrom();
-  public T setFrom(ro.anud.xml_xsd.implementation.model.Type_action.From.From value);
+  ro.anud.xml_xsd.implementation.model.Type_action.From.From getFrom();
+  java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_action.From.From> streamFrom();
+  T setFrom(ro.anud.xml_xsd.implementation.model.Type_action.From.From value);
 
-  public ro.anud.xml_xsd.implementation.model.Type_action.On.On getOn();
-  public Stream<ro.anud.xml_xsd.implementation.model.Type_action.On.On> streamOn();
-  public T setOn(ro.anud.xml_xsd.implementation.model.Type_action.On.On value);
-  public void deserialize (RawNode rawNode);
+  ro.anud.xml_xsd.implementation.model.Type_action.On.On getOn();
+  java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_action.On.On> streamOn();
+  T setOn(ro.anud.xml_xsd.implementation.model.Type_action.On.On value);
+  void deserialize (ro.anud.xml_xsd.implementation.util.RawNode rawNode);
 
-  public RawNode serializeIntoRawNode();
+  ro.anud.xml_xsd.implementation.util.RawNode serializeIntoRawNode();
 
-  public void serialize(Document document, Element element);
+  void serialize(org.w3c.dom.Document document, org.w3c.dom.Element element);
 }
 
 /*

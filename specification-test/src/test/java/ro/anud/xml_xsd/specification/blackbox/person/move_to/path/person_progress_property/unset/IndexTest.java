@@ -18,6 +18,7 @@ import java.util.Collection;
 - 1 `actions` with `person.move_to` having `path` including only `node_id_destination`
 ## Then
 It should do nothing because `link_to` doesn't have `person_progress_property` set.
+Should remove `person.move_to` action from `actions`
  */
 
 /*tags

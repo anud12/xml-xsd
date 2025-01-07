@@ -8,16 +8,20 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_grou
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list {
-  public class link_group  {
+  public class link_group : Itype__link_group {
     public RawNode rawNode = new RawNode();
     //Attributes
+
+    //Attributes of type__link_group
     public System.String id;
     public System.Int32 angle;
     public System.Int32? angleMax;
     public System.Int32? limit;
 
     //Children elements
-    public List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.Nlink_group.to_option>? to_option = new List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.Nlink_group.to_option>();
+
+    //Children of type__link_group
+    public List<XSD.Ntype__link_group.to_option>? to_option = new List<XSD.Ntype__link_group.to_option>();
     public link_group()
     {
     }
@@ -38,53 +42,61 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_grou
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing link_group");
       //Deserialize arguments
-      if(rawNode.attributes.ContainsKey("id"))
-      {
-        var attribute_id = rawNode.attributes["id"];
-        this.id = rawNode.attributes["id"];
-      }
-      if(rawNode.attributes.ContainsKey("angle"))
-      {
-        var attribute_angle = rawNode.attributes["angle"];
-        this.angle = attribute_angle.ToInt();
-      }
-      if(rawNode.attributes.ContainsKey("angleMax"))
-      {
-        var attribute_angleMax = rawNode.attributes["angleMax"];
-        this.angleMax = attribute_angleMax?.ToInt();
-      }
-      if(rawNode.attributes.ContainsKey("limit"))
-      {
-        var attribute_limit = rawNode.attributes["limit"];
-        this.limit = attribute_limit?.ToInt();
-      }
+
+      // Deserialize arguments of type__link_group
+  if(rawNode.attributes.ContainsKey("id"))
+  {
+    var attribute_id = rawNode.attributes["id"];
+    this.id = rawNode.attributes["id"];
+  }
+  if(rawNode.attributes.ContainsKey("angle"))
+  {
+    var attribute_angle = rawNode.attributes["angle"];
+    this.angle = attribute_angle.ToInt();
+  }
+  if(rawNode.attributes.ContainsKey("angleMax"))
+  {
+    var attribute_angleMax = rawNode.attributes["angleMax"];
+    this.angleMax = attribute_angleMax?.ToInt();
+  }
+  if(rawNode.attributes.ContainsKey("limit"))
+  {
+    var attribute_limit = rawNode.attributes["limit"];
+    this.limit = attribute_limit?.ToInt();
+  }
 
       //Deserialize children
-      this.to_option = rawNode.InitializeWithRawNode("to_option", this.to_option);
+
+      // Deserialize children of type__link_group
+  this.to_option = rawNode.InitializeWithRawNode("to_option", this.to_option);
     }
 
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.id != null)
-      {
-        rawNode.attributes["id"] = this.id.ToString();
-      }
-      if(this.angle != null)
-      {
-        rawNode.attributes["angle"] = this.angle.ToString();
-      }
-      if(this.angleMax != null)
-      {
-        rawNode.attributes["angleMax"] = this.angleMax?.ToString();
-      }
-      if(this.limit != null)
-      {
-        rawNode.attributes["limit"] = this.limit?.ToString();
-      }
+
+      // Serialize arguments of type__link_group
+  if(this.id != null)
+  {
+    rawNode.attributes["id"] = this.id.ToString();
+  }
+  if(this.angle != null)
+  {
+    rawNode.attributes["angle"] = this.angle.ToString();
+  }
+  if(this.angleMax != null)
+  {
+    rawNode.attributes["angleMax"] = this.angleMax?.ToString();
+  }
+  if(this.limit != null)
+  {
+    rawNode.attributes["limit"] = this.limit?.ToString();
+  }
 
       //Serialize children
-      rawNode.children["to_option"] = to_option.Select(x => x.SerializeIntoRawNode()).ToList();
+
+      // Serialize children of type__link_group
+  rawNode.children["to_option"] = to_option.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 
@@ -126,18 +138,18 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_grou
     {
       this.limit = value;
     }
-    public List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.Nlink_group.to_option>? Get_to_option()
+    public List<XSD.Ntype__link_group.to_option>? Get_to_option()
     {
       return this.to_option;
     }
-    public List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.Nlink_group.to_option> GetOrInsertDefault_to_option()
+    public List<XSD.Ntype__link_group.to_option> GetOrInsertDefault_to_option()
     {
       if(this.to_option == null) {
-        this.to_option = new List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.Nlink_group.to_option>();
+        this.to_option = new List<XSD.Ntype__link_group.to_option>();
       }
       return this.to_option;
     }
-    public void Set_to_option(List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.Nlink_group.to_option>? value)
+    public void Set_to_option(List<XSD.Ntype__link_group.to_option>? value)
     {
       this.to_option = value;
     }

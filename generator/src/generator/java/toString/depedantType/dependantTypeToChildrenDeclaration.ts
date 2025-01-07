@@ -70,6 +70,7 @@ export const dependantTypeToChildrenDeclaration = (dependantType: DependantType)
           parentType: dependantType,
         })
         return template()`
+              @Builder.Default
               private ${nullableFullPathString} ${normalizeNameField(key)} = ${fullPathTypeInitialization};
               `
       }
@@ -82,6 +83,7 @@ export const dependantTypeToChildrenDeclaration = (dependantType: DependantType)
           parentType: dependantType,
         })
         return template()`
+              @Builder.Default
               private ${nullableFullPathString} ${normalizeNameField(key)} = ${fullPathTypeInitialization};
               `
       }
@@ -94,6 +96,7 @@ export const dependantTypeToChildrenDeclaration = (dependantType: DependantType)
           parentType: dependantType,
         })
         return template()`
+              @Builder.Default
               private ${nullableTypeString} ${normalizeNameField(key)} = ${typeInitialization};
               `
       }

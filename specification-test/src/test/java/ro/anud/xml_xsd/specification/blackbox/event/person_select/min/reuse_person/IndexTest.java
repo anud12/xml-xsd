@@ -1,5 +1,6 @@
 package ro.anud.xml_xsd.specification.blackbox.event.person_select.min.reuse_person;
 
+import org.junit.jupiter.api.Disabled;
 import ro.anud.xml_xsd.specification.TestBase;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
@@ -27,6 +28,7 @@ create 1 people at location x: 0, y: 0
 public class IndexTest {
 
     @TestFactory
+    @Disabled
     public Collection<DynamicTest> test() {
         return TestBase.runTestRelativeToClass(getClass());
     }

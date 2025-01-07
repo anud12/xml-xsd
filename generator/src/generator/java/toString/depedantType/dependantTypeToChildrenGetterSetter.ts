@@ -61,17 +61,17 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
               {
                 return this.${normalizeNameField(key)}.orElseGet(() -> {
                   var instance = new ${baseTypeString}();
-                  instance.setParentNode(this);
+                  instance.parentNode(this);
                   this.${normalizeNameField(key)} = Optional.of(instance);
                   return this.${normalizeNameField(key)}.get();
                 });
               }
-              public Stream<${baseTypeString}> stream${normalizeNameClass(key)}OrDefault()
+              public java.util.stream.Stream<${baseTypeString}> stream${normalizeNameClass(key)}OrDefault()
               {
-                return Stream.of(get${normalizeNameClass(key)}OrDefault());
+                return java.util.stream.Stream.of(get${normalizeNameClass(key)}OrDefault());
               }
               `}
-              public Stream<${baseTypeString}> stream${normalizeNameClass(key)}()
+              public java.util.stream.Stream<${baseTypeString}> stream${normalizeNameClass(key)}()
               {
                 return ${streamBody};
               }
@@ -80,8 +80,8 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
               {
                 ${value.isNullable && `this.${normalizeNameField(key)} = Optional.ofNullable(value);`}
                 ${!value.isNullable && `this.${normalizeNameField(key)} = value;`}
-                value.setParentNode(this);
-                onChangeList.forEach(consumer -> consumer.accept(this));
+                value.parentNode(this);
+                triggerOnChange();
                 return this;
               }
               `}
@@ -89,21 +89,21 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
               public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} add${normalizeNameClass(key)}(${baseTypeString} value)
               {
                 this.${normalizeNameField(key)}.add(value);
-                value.setParentNode(this);
-                onChangeList.forEach(consumer -> consumer.accept(this));
+                value.parentNode(this);
+                triggerOnChange();
                 return this;
               }
               public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} addAll${normalizeNameClass(key)}(List<${baseTypeString}> value)
               {
                 this.${normalizeNameField(key)}.addAll(value);
-                value.forEach(e -> e.setParentNode(this));
-                onChangeList.forEach(consumer -> consumer.accept(this));
+                value.forEach(e -> e.parentNode(this));
+                triggerOnChange();
                 return this;
               }
               public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} remove${normalizeNameClass(key)}(${baseTypeString} value)
               {
                 this.${normalizeNameField(key)}.remove(value);
-                onChangeList.forEach(consumer -> consumer.accept(this));
+                triggerOnChange();
                 return this;
               }
               `}

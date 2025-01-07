@@ -15,11 +15,9 @@ namespace XSD.Nworld_step.Ndata.Npeople {
     public System.String? name;
 
     //Children elements
-    public XSD.Nworld_step.Ndata.Npeople.Nperson.race? race = null;
     public XSD.Nworld_step.Ndata.Npeople.Nperson.properties? properties = null;
     public List<XSD.Nworld_step.Ndata.Npeople.Nperson.relations>? relations = new List<XSD.Nworld_step.Ndata.Npeople.Nperson.relations>();
     public XSD.Nworld_step.Ndata.Npeople.Nperson.classifications? classifications = null;
-    public type_icon? icon = null;
     public person()
     {
     }
@@ -52,11 +50,9 @@ namespace XSD.Nworld_step.Ndata.Npeople {
       }
 
       //Deserialize children
-      this.race = rawNode.InitializeWithRawNode("race", this.race);
       this.properties = rawNode.InitializeWithRawNode("properties", this.properties);
       this.relations = rawNode.InitializeWithRawNode("relations", this.relations);
       this.classifications = rawNode.InitializeWithRawNode("classifications", this.classifications);
-      this.icon = rawNode.InitializeWithRawNode("icon", this.icon);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -72,18 +68,12 @@ namespace XSD.Nworld_step.Ndata.Npeople {
       }
 
       //Serialize children
-      if(race != null) {
-        rawNode.children["race"] = new List<RawNode> { race.SerializeIntoRawNode() };
-      }
       if(properties != null) {
         rawNode.children["properties"] = new List<RawNode> { properties.SerializeIntoRawNode() };
       }
       rawNode.children["relations"] = relations.Select(x => x.SerializeIntoRawNode()).ToList();
       if(classifications != null) {
         rawNode.children["classifications"] = new List<RawNode> { classifications.SerializeIntoRawNode() };
-      }
-      if(icon != null) {
-        rawNode.children["icon"] = new List<RawNode> { icon.SerializeIntoRawNode() };
       }
       return rawNode;
     }
@@ -109,21 +99,6 @@ namespace XSD.Nworld_step.Ndata.Npeople {
     public void Set_name(System.String? value)
     {
       this.name = value;
-    }
-    public XSD.Nworld_step.Ndata.Npeople.Nperson.race? Get_race()
-    {
-      return this.race;
-    }
-    public XSD.Nworld_step.Ndata.Npeople.Nperson.race GetOrInsertDefault_race()
-    {
-      if(this.race == null) {
-        this.race = new XSD.Nworld_step.Ndata.Npeople.Nperson.race();
-      }
-      return this.race;
-    }
-    public void Set_race(XSD.Nworld_step.Ndata.Npeople.Nperson.race? value)
-    {
-      this.race = value;
     }
     public XSD.Nworld_step.Ndata.Npeople.Nperson.properties? Get_properties()
     {
@@ -169,14 +144,6 @@ namespace XSD.Nworld_step.Ndata.Npeople {
     public void Set_classifications(XSD.Nworld_step.Ndata.Npeople.Nperson.classifications? value)
     {
       this.classifications = value;
-    }
-    public type_icon? Get_icon()
-    {
-      return this.icon;
-    }
-    public void Set_icon(type_icon? value)
-    {
-      this.icon = value;
     }
   }
 }

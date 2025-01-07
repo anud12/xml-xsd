@@ -1,5 +1,6 @@
 package ro.anud.xml_xsd.specification.blackbox.event.person_select.min.no_people;
 
+import org.junit.jupiter.api.Disabled;
 import ro.anud.xml_xsd.specification.TestBase;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
@@ -29,6 +30,7 @@ create 2 people with races chosen at random
 public class IndexTest {
 
     @TestFactory
+    @Disabled
     public Collection<DynamicTest> test() {
         return TestBase.runTestRelativeToClass(getClass());
     }

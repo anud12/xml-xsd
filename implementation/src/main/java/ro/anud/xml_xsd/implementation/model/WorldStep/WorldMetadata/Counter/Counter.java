@@ -6,14 +6,12 @@ import org.w3c.dom.Element;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
 import java.util.*;
-import java.util.stream.Stream;
 import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
@@ -24,17 +22,19 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Counter implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static final String TYPE_ID = "/world_step/world_metadata/counter";
+
     public static Counter fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Counter();
-      instance.setRawNode(rawNode);
+      instance.rawNode(rawNode);
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
     public static Counter fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
       var instance = fromRawNode(rawNode);
-      instance.setParentNode(parent);
+      instance.parentNode(parent);
       return logReturn(instance);
     }
     public static Optional<Counter> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
@@ -52,6 +52,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     //Attributes
+
     private Integer value;
 
     //Children elements
@@ -59,37 +60,69 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
-    @Getter
-    @Setter
     @Builder.Default
     private RawNode rawNode = new RawNode();
 
-    @Getter
+    public RawNode rawNode() {
+      return rawNode;
+    }
+    public void rawNode(RawNode rawNode) {
+      this.rawNode = rawNode;
+    }
+
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
 
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode() {
+      return parentNode;
+    }
+
     @Builder.Default
-    private List<Consumer<Counter>> onChangeList = new ArrayList<>();
+    private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
       return "counter";
     }
 
-    public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+    public void childChanged(Set<Object> set) {
+      set.add(this);
+      onChangeList.forEach(consumer -> consumer.accept(set));
+      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(set));
+    }
+
+    private void triggerOnChange() {
+      childChanged(new HashSet<>());
+    }
+
+    public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
       this.parentNode = Optional.of(linkedNode);
+      triggerOnChange();
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata> parentAsWorldMetadata() {
+      return parentNode.flatMap(node -> {
+       if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata casted){
+         return Optional.of(casted);
+       }
+       return Optional.empty();
+     });
     }
 
     public void removeChild(Object object) {
+    }
+
+    public int buildIndexForChild(Object object) {
+        return 0;
     }
 
     public void removeFromParent() {
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<Counter> onChange) {
+    public Subscription onChange(Consumer<Set<Object>> onChange) {
       logEnter();
       onChangeList.add(onChange);
       return logReturn(() -> onChangeList.remove(onChange));
@@ -135,12 +168,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public Counter setValue(Integer value)
     {
       this.value = value;
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
 
   }
-
 
   /*
     dependant type:

@@ -13,7 +13,7 @@ namespace XSD.Nworld_step.Nrule_group {
     //Attributes
 
     //Children elements
-    public List<group__name_token>? entry = new List<group__name_token>();
+    public List<XSD.Nworld_step.Nrule_group.Nname_rule.entry>? entry = new List<XSD.Nworld_step.Nrule_group.Nname_rule.entry>();
     public name_rule()
     {
     }
@@ -54,11 +54,11 @@ namespace XSD.Nworld_step.Nrule_group {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public List<group__name_token>? Get_entry()
+    public List<XSD.Nworld_step.Nrule_group.Nname_rule.entry>? Get_entry()
     {
       return this.entry;
     }
-    public void Set_entry(List<group__name_token>? value)
+    public void Set_entry(List<XSD.Nworld_step.Nrule_group.Nname_rule.entry>? value)
     {
       this.entry = value;
     }

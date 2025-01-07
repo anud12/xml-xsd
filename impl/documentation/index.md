@@ -69,7 +69,7 @@ action,person,person.create,
   <data>
     <people/>
     <location>
-      <location_graph>
+      <location_graph id="location_graph_id">
         <rule location_graph_rule_ref=""/>
         <node node_rule_ref="node_rule_ref" id="">
         </node>
@@ -208,6 +208,160 @@ action,person,person.create,
         </properties>
       </person>
       <person id="2"/>
+    </people>
+  </data>
+  <actions>
+    <from_person person_id_ref="1" from_person_rule_ref="from_person_rule">
+      <on_person person_id_ref="2"/>
+    </from_person>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/from_person/mutate_from/participant_self/mutate_on/participant_self](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__from_person__mutate_from__participant_self__mutate_on__participant_self.md)
+
+#### Tags:
+- from_person
+  - participant `self`
+  - property_mutation
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../../../world_step.xsd"
+>
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points">
+      </entry>
+      <entry id="property_dependant" units="points">
+      </entry>
+    </property_rule>
+
+    <action_rule>
+      <from_person id="from_person_rule">
+        <mutations>
+          <property_mutation property_rule_ref="property">
+            <from participant="self">
+              <operation initial="1">
+                <add_property property_rule_ref="property_dependant"/>
+              </operation>
+            </from>
+          </property_mutation>
+        </mutations>
+        <on_person>
+          <mutations>
+            <property_mutation property_rule_ref="property">
+              <from participant="self">
+                <operation initial="1"/>
+              </from>
+            </property_mutation>
+          </mutations>
+        </on_person>
+      </from_person>
+    </action_rule>
+  </rule_group>
+
+  <data>
+    <people>
+      <person id="1">
+        <properties>
+          <property property_rule_ref="property" value="1"/>
+          <property property_rule_ref="property_dependant" value="1"/>
+        </properties>
+      </person>
+      <person id="2">
+        <properties>
+          <property property_rule_ref="property" value="1"/>
+        </properties>
+      </person>
+    </people>
+  </data>
+  <actions>
+    <from_person person_id_ref="1" from_person_rule_ref="from_person_rule">
+      <on_person person_id_ref="2"/>
+    </from_person>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/from_person/mutate_from/participant_self/mutate_on/participant_target](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__from_person__mutate_from__participant_self__mutate_on__participant_target.md)
+
+#### Tags:
+- from_person
+  - participant `self`
+  - property_mutation
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../../../world_step.xsd"
+>
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="strength" units="points">
+      </entry>
+      <entry id="health" units="points">
+      </entry>
+    </property_rule>
+
+    <action_rule>
+      <from_person id="from_person_rule">
+        <selection>
+          <property property_rule_ref="strength">
+            <min initial="1" />
+          </property>
+        </selection>
+        <mutations>
+          <property_mutation property_rule_ref="strength">
+            <from participant="self">
+              <operation initial="-1" />
+            </from>
+          </property_mutation>
+        </mutations>
+        <on_person>
+          <mutations>
+            <property_mutation property_rule_ref="health">
+              <from participant="target">
+                <operation initial="1"/>
+              </from>
+            </property_mutation>
+          </mutations>
+        </on_person>
+      </from_person>
+    </action_rule>
+  </rule_group>
+
+  <data>
+    <people>
+      <person id="1">
+        <properties>
+          <property property_rule_ref="strength" value="10" />
+        </properties>
+      </person>
+      <person id="2">
+        <properties>
+          <property property_rule_ref="health" value="1"/>
+        </properties>
+      </person>
     </people>
   </data>
   <actions>
@@ -862,7 +1016,7 @@ action,person,person.create,
       </person>
     </people>
     <location>
-      <location_graph>
+      <location_graph id="location_graph_id">
         <rule location_graph_rule_ref="location_graph_id"/>
         <node node_rule_ref="node_rule_id" id="node_0"/>
       </location_graph>
@@ -938,7 +1092,7 @@ action,person,person.create,
       </person>
     </people>
     <location>
-      <location_graph>
+      <location_graph id="location_graph_id">
         <rule location_graph_rule_ref="location_graph_id"/>
         <node node_rule_ref="node_rule_id" id="node_0">
           <people>
@@ -1171,683 +1325,6 @@ action,person,person.create,
     <from_person person_id_ref="1" from_person_rule_ref="from_person_rule">
       <on_person person_id_ref="2"/>
     </from_person>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/global/minimal](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__global__minimal.md)
-
-#### Tags:
-- action_rule
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="units"/>
-    </property_rule>
-    <action_rule>
-      <global>
-        <entry id="global_action">
-          <from/>
-          <on/>
-        </entry>
-      </global>
-    </action_rule>
-  </rule_group>
-  <data>
-    <people>
-      <person id="1"/>
-    </people>
-  </data>
-  <actions>
-    <by person_ref="1">
-      <do action_ref="global_action" person_ref="1" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/global/person/from/property_mutation/add_to_existing](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__global__person__from__property_mutation__add_to_existing.md)
-
-#### Tags:
-- global_action
-- property
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="units"/>
-    </property_rule>
-    <action_rule>
-      <global>
-        <entry id="global_action">
-          <from>
-            <person>
-              <property_mutation property_rule_ref="property">
-                <from participant="self">
-                  <operation initial="10">
-                    <add_property property_rule_ref="property"/>
-                  </operation>
-                </from>
-              </property_mutation>
-            </person>
-          </from>
-          <on>
-            <person/>
-          </on>
-        </entry>
-      </global>
-    </action_rule>
-  </rule_group>
-  <data>
-    <people>
-      <person id="1">
-        <properties>
-          <property property_rule_ref="property" value="1"/>
-        </properties>
-      </person>
-      <person id="2"/>
-    </people>
-  </data>
-  <actions>
-    <by person_ref="1">
-      <do action_ref="global_action" person_ref="2" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/global/person/from/property_mutation/existing](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__global__person__from__property_mutation__existing.md)
-
-#### Tags:
-- global_action
-- property
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="units"/>
-    </property_rule>
-    <action_rule>
-      <global>
-        <entry id="global_action">
-          <from>
-            <person>
-              <property_mutation property_rule_ref="property">
-                <from participant="self">
-                  <operation initial="10"/>
-                </from>
-              </property_mutation>
-            </person>
-          </from>
-          <on>
-            <person/>
-          </on>
-        </entry>
-      </global>
-    </action_rule>
-  </rule_group>
-  <data>
-    <people>
-      <person id="1">
-        <properties>
-          <property property_rule_ref="property" value="1"/>
-        </properties>
-      </person>
-      <person id="2"/>
-    </people>
-  </data>
-  <actions>
-    <by person_ref="1">
-      <do action_ref="global_action" person_ref="2"/>
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/global/person/from/property_mutation/no_property](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__global__person__from__property_mutation__no_property.md)
-
-#### Tags:
-- global_action
-- property
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="units"/>
-    </property_rule>
-    <action_rule>
-      <global>
-        <entry id="global_action">
-          <from>
-            <person>
-              <property_mutation property_rule_ref="property">
-                <from participant="self">
-                  <operation initial="1"/>
-                </from>
-              </property_mutation>
-            </person>
-          </from>
-          <on>
-            <person/>
-          </on>
-        </entry>
-      </global>
-    </action_rule>
-  </rule_group>
-  <data>
-    <people>
-      <person id="1"/>
-      <person id="2"/>
-    </people>
-  </data>
-  <actions>
-    <by person_ref="1">
-      <do action_ref="global_action" person_ref="2" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/global/person/from/selection/apply](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__global__person__from__selection__apply.md)
-
-#### Tags:
-- global_action
-- property
-- type__person_selection
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="units"/>
-    </property_rule>
-    <classification_rule>
-      <entry id="classification"/>
-    </classification_rule>
-    <action_rule>
-      <global>
-        <entry id="global_action">
-          <from>
-            <person>
-              <select>
-                <classification classification_rule_ref="classification"/>
-              </select>
-              <property_mutation property_rule_ref="property">
-                <from participant="self">
-                  <operation initial="10"/>
-                </from>
-              </property_mutation>
-            </person>
-          </from>
-          <on>
-            <person/>
-          </on>
-        </entry>
-      </global>
-    </action_rule>
-  </rule_group>
-  <data>
-    <people>
-      <person id="1">
-        <properties>
-          <property property_rule_ref="property" value="1"/>
-        </properties>
-        <classifications>
-          <classification classification_rule_ref="classification"/>
-        </classifications>
-      </person>
-      <person id="2"/>
-    </people>
-  </data>
-  <actions>
-    <by person_ref="1">
-      <do action_ref="global_action" person_ref="2" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/global/person/from/selection/exclude](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__global__person__from__selection__exclude.md)
-
-#### Tags:
-- global_action
-- property
-- type__person_selection
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="units"/>
-    </property_rule>
-    <classification_rule>
-      <entry id="classification"/>
-    </classification_rule>
-    <action_rule>
-      <global>
-        <entry id="global_action">
-          <from>
-            <person>
-              <select>
-                <classification classification_rule_ref="classification"/>
-              </select>
-              <property_mutation property_rule_ref="property">
-                <from participant="self">
-                  <operation initial="10"/>
-                </from>
-              </property_mutation>
-            </person>
-          </from>
-          <on>
-            <person/>
-          </on>
-        </entry>
-      </global>
-    </action_rule>
-  </rule_group>
-  <data>
-    <people>
-      <person id="1">
-        <properties>
-          <property property_rule_ref="property" value="1"/>
-        </properties>
-      </person>
-      <person id="2"/>
-    </people>
-  </data>
-  <actions>
-    <by person_ref="1">
-      <do action_ref="global_action" person_ref="2" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/global/person/on/property_mutation/add_to_existing](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__global__person__on__property_mutation__add_to_existing.md)
-
-#### Tags:
-- global_action
-- property
-- type__person_selection
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="units"/>
-    </property_rule>
-    <action_rule>
-      <global>
-        <entry id="global_action">
-          <from>
-            <person/>
-          </from>
-          <on>
-            <person>
-              <property_mutation property_rule_ref="property">
-                <from participant="self">
-                  <operation initial="10">
-                    <add_property property_rule_ref="property"/>
-                  </operation>
-                </from>
-              </property_mutation>
-            </person>
-          </on>
-        </entry>
-      </global>
-    </action_rule>
-  </rule_group>
-  <data>
-    <people>
-      <person id="1"/>
-      <person id="2">
-        <properties>
-          <property property_rule_ref="property" value="1"/>
-        </properties>
-      </person>
-    </people>
-  </data>
-  <actions>
-    <by person_ref="1">
-      <do action_ref="global_action" person_ref="2" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/global/person/on/property_mutation/existing](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__global__person__on__property_mutation__existing.md)
-
-#### Tags:
-- global_action
-- property
-- type__person_selection
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="units"/>
-    </property_rule>
-    <action_rule>
-      <global>
-        <entry id="global_action">
-          <from>
-            <person/>
-          </from>
-          <on>
-            <person>
-              <property_mutation property_rule_ref="property">
-                <from participant="self">
-                  <operation initial="10"/>
-                </from>
-              </property_mutation>
-            </person>
-          </on>
-        </entry>
-      </global>
-    </action_rule>
-  </rule_group>
-  <data>
-    <people>
-      <person id="1"/>
-      <person id="2">
-        <properties>
-          <property property_rule_ref="property" value="1"/>
-        </properties>
-      </person>
-    </people>
-  </data>
-  <actions>
-    <by person_ref="1">
-      <do action_ref="global_action" person_ref="2" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/global/person/on/property_mutation/no_property](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__global__person__on__property_mutation__no_property.md)
-
-#### Tags:
-- global_action
-- property
-- type__person_selection
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="units"/>
-    </property_rule>
-    <action_rule>
-      <global>
-        <entry id="global_action">
-          <from>
-            <person/>
-          </from>
-          <on>
-            <person>
-              <property_mutation property_rule_ref="property">
-                <from participant="self">
-                  <operation initial="1"/>
-                </from>
-              </property_mutation>
-            </person>
-          </on>
-        </entry>
-      </global>
-    </action_rule>
-  </rule_group>
-  <data>
-    <people>
-      <person id="1"/>
-      <person id="2"/>
-    </people>
-  </data>
-  <actions>
-    <by person_ref="1">
-      <do action_ref="global_action" person_ref="2" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/global/person/on/selection/apply](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__global__person__on__selection__apply.md)
-
-#### Tags:
-- global_action
-- property
-- type__person_selection
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="units"/>
-    </property_rule>
-    <classification_rule>
-      <entry id="classification"/>
-    </classification_rule>
-    <action_rule>
-      <global>
-        <entry id="global_action">
-          <from>
-            <person/>
-          </from>
-          <on>
-            <person>
-              <select>
-                <classification classification_rule_ref="classification"/>
-              </select>
-              <property_mutation property_rule_ref="property">
-                <from participant="self">
-                  <operation initial="10"/>
-                </from>
-              </property_mutation>
-            </person>
-          </on>
-        </entry>
-      </global>
-    </action_rule>
-  </rule_group>
-  <data>
-    <people>
-      <person id="1"/>
-      <person id="2">
-        <properties>
-          <property property_rule_ref="property" value="1"/>
-        </properties>
-        <classifications>
-          <classification classification_rule_ref="classification"/>
-        </classifications>
-      </person>
-    </people>
-  </data>
-  <actions>
-    <by person_ref="1">
-      <do action_ref="global_action" person_ref="2" />
-    </by>
-  </actions>
-</world_step>
-```
-
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/global/person/on/selection/exclude](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__global__person__on__selection__exclude.md)
-
-#### Tags:
-- global_action
-- property
-- type__person_selection
-
-#### Input XML
-```xml
-<world_step
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../../../world_step.xsd">
-  <world_metadata>
-    <elapsed_time value="0"/>
-    <stepDuration value="0"/>
-    <counter value="0"/>
-    <randomization_table>
-      <entry value="2"/>
-    </randomization_table>
-  </world_metadata>
-  <rule_group id="rule_group_id">
-    <property_rule>
-      <entry id="property" units="units"/>
-    </property_rule>
-    <classification_rule>
-      <entry id="classification"/>
-    </classification_rule>
-    <action_rule>
-      <global>
-        <entry id="global_action">
-          <from>
-            <person/>
-          </from>
-          <on>
-            <person>
-              <select>
-                <classification classification_rule_ref="classification"/>
-              </select>
-              <property_mutation property_rule_ref="property">
-                <from participant="self">
-                  <operation initial="10"/>
-                </from>
-              </property_mutation>
-            </person>
-          </on>
-        </entry>
-      </global>
-    </action_rule>
-  </rule_group>
-  <data>
-    <people>
-      <person id="1"/>
-      <person id="2">
-        <properties>
-          <property property_rule_ref="property" value="1"/>
-        </properties>
-      </person>
-    </people>
-  </data>
-  <actions>
-    <by person_ref="1">
-      <do action_ref="global_action" person_ref="2" />
-    </by>
   </actions>
 </world_step>
 ```
@@ -3166,6 +2643,148 @@ undefined
   <rule_group id="rule_group_id">
     <classification_rule>
       <entry id="classification_rule_id"/>
+    </classification_rule>
+    <location_graph_rule id="location_graph_rule_id">
+      <setup>
+        <starting_node node_rule_ref="node"/>
+      </setup>
+      <node_rule id="node">
+        <link_group_list>
+          <link_group id="all" angle="0" angleMax="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="1"/>
+          </link_group>
+        </link_group_list>
+        <existing_person min="3">
+          <person_selection>
+            <classification classification_rule_ref="classification_rule_id"/>
+          </person_selection>
+        </existing_person>
+      </node_rule>
+    </location_graph_rule>
+  </rule_group>
+  <data>
+    <people/>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
+  <actions>
+    <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/existing_person/apply_classification/property](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__existing_person__apply_classification__property.md)
+
+#### Tags:
+- location_graph
+- location_graph.node.create_adjacent
+- classification
+- existing_person
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="1"/>
+      <entry value="2"/>
+      <entry value="3"/>
+    </randomization_table>
+  </world_metadata>
+
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property_rule_id" units=""/>
+    </property_rule>
+    <classification_rule>
+      <entry id="classification_rule_id">
+        <property property_rule_ref="property_rule_id" is="greaterThan">
+          <operation initial="1"/>
+        </property>
+      </entry>
+    </classification_rule>
+    <location_graph_rule id="location_graph_rule_id">
+      <setup>
+        <starting_node node_rule_ref="node"/>
+      </setup>
+      <node_rule id="node">
+        <link_group_list>
+          <link_group id="all" angle="0" angleMax="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="1"/>
+          </link_group>
+        </link_group_list>
+        <existing_person min="3">
+          <person_selection>
+            <classification classification_rule_ref="classification_rule_id"/>
+          </person_selection>
+        </existing_person>
+      </node_rule>
+    </location_graph_rule>
+  </rule_group>
+  <data>
+    <people/>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
+  <actions>
+    <location_graph.node.create_adjacent location_graph_id_ref="location_graph_id" node_id_ref="node_id"/>
+  </actions>
+</world_step>
+```
+
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/existing_person/apply_classification/property/person_default](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__existing_person__apply_classification__property__person_default.md)
+
+#### Tags:
+- location_graph
+- location_graph.node.create_adjacent
+- classification
+- existing_person
+
+#### Input XML
+```xml
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="1"/>
+      <entry value="2"/>
+      <entry value="3"/>
+    </randomization_table>
+  </world_metadata>
+
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property_rule_id" units="">
+        <person_default initial="10"/>
+      </entry>
+    </property_rule>
+    <classification_rule>
+      <entry id="classification_rule_id">
+        <property property_rule_ref="property_rule_id" is="greaterThan">
+          <operation initial="1"/>
+        </property>
+      </entry>
     </classification_rule>
     <location_graph_rule id="location_graph_rule_id">
       <setup>

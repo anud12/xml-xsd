@@ -19,7 +19,7 @@ public class ComputeOperation {
         IType_mathOperations<?> typeMathOperations,
         Person person) {
         var logger = logEnter();
-        var rawNode = typeMathOperations.getRawNode();
+        var rawNode = typeMathOperations.rawNode();
         var initial = rawNode.getAttributeInt("initial").orElse(0);
         logger.log("initial:", initial);
 
@@ -29,7 +29,30 @@ public class ComputeOperation {
                 rawNode.getChildrenList("and").stream())
             .reduce(
                 initial,
-                (acc, rawNode1) -> createOperationFromQueryType(worldStepInstance, rawNode1, person).apply(acc),
+                (acc, rawNode1) -> createOperationFromQueryType(worldStepInstance, rawNode1, Optional.of(person)).apply(
+                    acc),
+                Integer::sum
+            );
+        return logger.logReturn(Optional.of(value));
+    }
+
+    public static Optional<Integer> computeOperation(
+        WorldStepInstance worldStepInstance,
+        IType_mathOperations<?> typeMathOperations
+    ) {
+        var logger = logEnter();
+        var rawNode = typeMathOperations.rawNode();
+        var initial = rawNode.getAttributeInt("initial").orElse(0);
+        logger.log("initial:", initial);
+
+
+        var value = Stream.concat(
+                rawNode.getChildrenList("add_property").stream(),
+                rawNode.getChildrenList("and").stream())
+            .reduce(
+                initial,
+                (acc, rawNode1) -> createOperationFromQueryType(worldStepInstance, rawNode1, Optional.empty()).apply(
+                    acc),
                 Integer::sum
             );
 
@@ -39,14 +62,17 @@ public class ComputeOperation {
     private static Function<Integer, Integer> createOperationFromQueryType(
         WorldStepInstance worldStepInstance,
         RawNode rawNode,
-        Person person) {
+        Optional<Person> person) {
         var logger = logEnter();
         switch (rawNode.getTag()) {
             case "add_property": {
+                if (person.isEmpty()) {
+                    throw new RuntimeException("empty person");
+                }
                 var innerLogger = logger.log("add_property");
                 var propertyRef = rawNode.getAttribute("property_rule_ref")
                     .orElseThrow(() -> new RuntimeException("property_rule_ref is undefined"));
-                var newValue = worldStepInstance.person.getProperty(person, propertyRef).orElseThrow();
+                var newValue = worldStepInstance.person.getProperty(person.get(), propertyRef).orElseThrow();
                 innerLogger.log("propertyRef:", propertyRef, "newValue:", newValue);
                 return integer -> innerLogger.logReturn(integer + newValue);
             }

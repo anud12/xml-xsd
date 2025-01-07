@@ -15,7 +15,7 @@ namespace XSD.Ngroup__name_token {
 
     //Children elements
     public XSD.Ngroup__name_token.Nname_token._ref? _ref = null;
-    public group__name_token one_of = new group__name_token();
+    public group__name_token? one_of = null;
     public name_token()
     {
     }
@@ -94,11 +94,11 @@ namespace XSD.Ngroup__name_token {
     {
       this._ref = value;
     }
-    public group__name_token Get_one_of()
+    public group__name_token? Get_one_of()
     {
       return this.one_of;
     }
-    public void Set_one_of(group__name_token value)
+    public void Set_one_of(group__name_token? value)
     {
       this.one_of = value;
     }

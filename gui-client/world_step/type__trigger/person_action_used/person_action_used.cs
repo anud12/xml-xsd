@@ -11,7 +11,7 @@ namespace XSD.Ntype__trigger {
   public class person_action_used  {
     public RawNode rawNode = new RawNode();
     //Attributes
-    /* ignored attribute key={key} of type=System.Object*/
+    public System.String action_rule_ref;
 
     //Children elements
     public person_action_used()
@@ -34,6 +34,11 @@ namespace XSD.Ntype__trigger {
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing person_action_used");
       //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("action_rule_ref"))
+      {
+        var attribute_action_rule_ref = rawNode.attributes["action_rule_ref"];
+        this.action_rule_ref = rawNode.attributes["action_rule_ref"];
+      }
 
       //Deserialize children
     }
@@ -41,6 +46,10 @@ namespace XSD.Ntype__trigger {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
+      if(this.action_rule_ref != null)
+      {
+        rawNode.attributes["action_rule_ref"] = this.action_rule_ref.ToString();
+      }
 
       //Serialize children
       return rawNode;
@@ -52,6 +61,13 @@ namespace XSD.Ntype__trigger {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    /* ignored attribute key={key} of type=System.Object*/
+    public System.String Get_action_rule_ref()
+    {
+      return this.action_rule_ref;
+    }
+    public void Set_action_rule_ref(System.String value)
+    {
+      this.action_rule_ref = value;
+    }
   }
 }

@@ -17,6 +17,8 @@ import {dependantTypeToAttributeGetterSetter} from "./depedantType/dependantType
 import {dependantTypeToChildrenGetterSetter} from "./depedantType/dependantTypeToChildrenGetterSetter";
 import {interfaceTypeDeclarationToString} from "./interfaceTypeDeclarationToString";
 import {dependantTypeToRemoveChild} from "./depedantType/dependantTypeToRemoveChild";
+import {dependantTypeToBuildIndexForChild} from "./depedantType/dependantTypeToBuildIndexForChild";
+import {dependantTypeBuildXpath} from "./depedantType/dependantTypeBuildXpath";
 
 
 type ClassTemplateParts = {
@@ -37,6 +39,9 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
   const childrenDeclaration = dependantTypeToChildrenDeclaration(dependantType);
   dependantTypeList.push(...(childrenDeclaration?.dependantTypes ?? []))
 
+  let parentTypeName = dependantType.parentType?.name ? normalizeNameClass(dependantType.parentType?.name) : undefined;
+  let parentFullTypeName = dependantType.parentType?.name ? `${getDependantTypePackage(dependantType.parentType)}.${normalizeNameClass(dependantType.parentType?.name)}` : "ro.anud.xml_xsd.implementation.util.LinkedNode";
+
   const extensionNames = extensions.map(e => `${basePackage}.interfaces.I${normalizeNameClass(e.name)}.I${normalizeNameClass(e.name)}`)
   if (dependantType.typeDeclaration?.type === "complex") {
     extensionNames.push(`${basePackage}.interfaces.I${normalizeNameClass(dependantType.name)}.I${normalizeNameClass(dependantType.name)}`)
@@ -50,18 +55,19 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     public class ${normalizeNameClass(dependantType.name)} implements ${extensionNames.length > 0 && ` ${extensionNames.map(e => e + `<${normalizeNameClass(dependantType.name)}>`).join(", ")}, `} ro.anud.xml_xsd.implementation.util.LinkedNode {
           
+      public static final String TYPE_ID = "${dependantTypeBuildXpath(dependantType)}";
           
       public static ${normalizeNameClass(dependantType.name)} fromRawNode(RawNode rawNode) {
         logEnter();
         var instance = new ${normalizeNameClass(dependantType.name)}();
-        instance.setRawNode(rawNode);
+        instance.rawNode(rawNode);
         instance.deserialize(rawNode);
         return logReturn(instance);
       }
       public static ${normalizeNameClass(dependantType.name)} fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
         logEnter();
         var instance = fromRawNode(rawNode);
-        instance.setParentNode(parent);
+        instance.parentNode(parent);
         return logReturn(instance);
       }
       public static Optional<${normalizeNameClass(dependantType.name)}> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
@@ -102,38 +108,73 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
       @ToString.Exclude()
       @EqualsAndHashCode.Exclude()
       @JsonIgnore
-      @Getter
-      @Setter
       @Builder.Default
       private RawNode rawNode = new RawNode();
       
-      @Getter
+      public RawNode rawNode() {
+        return rawNode;
+      }
+      public void rawNode(RawNode rawNode) {
+        this.rawNode = rawNode;
+      }
+      
       @ToString.Exclude()
       @EqualsAndHashCode.Exclude()
       @JsonIgnore
       @Builder.Default
       private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
       
+      public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode() {
+        return parentNode;
+      }
+      
       @Builder.Default
-      private List<Consumer<${normalizeNameClass(dependantType.name)}>> onChangeList = new ArrayList<>();
+      private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
       
       public String nodeName() {
         return "${dependantType.name}";
       }
-  
-      public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
-        this.parentNode = Optional.of(linkedNode);
+      
+      public void childChanged(Set<Object> set) {
+        set.add(this);
+        onChangeList.forEach(consumer -> consumer.accept(set));
+        parentNode.ifPresent(linkedNode -> linkedNode.childChanged(set));
       }
+      
+      private void triggerOnChange() {
+        childChanged(new HashSet<>());
+      }
+  
+      public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+        this.parentNode = Optional.of(linkedNode);
+        triggerOnChange();
+      }
+      
+      ${parentTypeName && template()`
+       public Optional<${parentFullTypeName}> parentAs${parentTypeName}() {
+         return parentNode.flatMap(node -> {
+          if (node instanceof ${parentFullTypeName} casted){
+            return Optional.of(casted);
+          }
+          return Optional.empty();
+        });
+       }
+      `}
       
       public void removeChild(Object object) {
           ${dependantTypeToRemoveChild(dependantType)}
+      }
+      
+      public int buildIndexForChild(Object object) {
+          ${dependantTypeToBuildIndexForChild(dependantType)}
+          return 0;
       }
       
       public void removeFromParent() {
         parentNode.ifPresent(node -> node.removeChild(this));
       }
       
-      public Subscription onChange(Consumer<${normalizeNameClass(dependantType.name)}> onChange) {
+      public Subscription onChange(Consumer<Set<Object>> onChange) {
         logEnter();
         onChangeList.add(onChange);
         return logReturn(() -> onChangeList.remove(onChange));
@@ -189,7 +230,7 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
            // Serialize children of ${extension.name}
            ${dependantTypeToChildrenSerializationBody(extension)}
           `
-  })}
+  }).join("\n")}
         return rawNode;
       }
       
@@ -257,14 +298,12 @@ export function typeDeclarationElementToString(directoryMetadata: DirectoryMetad
       import ro.anud.xml_xsd.implementation.util.RawNode;
       
       import java.util.*;
-      import java.util.stream.Stream;
       import ro.anud.xml_xsd.implementation.util.Subscription;
       import java.util.function.Consumer;
       import java.util.stream.Collectors;
       
       import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
       import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-      import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
       import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       `
 
@@ -290,7 +329,6 @@ export function typeDeclarationElementToString(directoryMetadata: DirectoryMetad
     directory.createOrGetFile(`${result.writtenClass[0]}.java`, () => {
       return template()`
         package ${basePackage}.interfaces.${result.writtenClass[0]};
-        ${commonImports}
         
         ${result.templateString}
       `

@@ -58,13 +58,6 @@ namespace XSD.Nworld_step.Nrule_group {
     {
       return this.link_group_rule;
     }
-    public List<XSD.Nworld_step.Nrule_group.Nlink_group_rule_list.link_group_rule> GetOrInsertDefault_link_group_rule()
-    {
-      if(this.link_group_rule == null) {
-        this.link_group_rule = new List<XSD.Nworld_step.Nrule_group.Nlink_group_rule_list.link_group_rule>();
-      }
-      return this.link_group_rule;
-    }
     public void Set_link_group_rule(List<XSD.Nworld_step.Nrule_group.Nlink_group_rule_list.link_group_rule>? value)
     {
       this.link_group_rule = value;

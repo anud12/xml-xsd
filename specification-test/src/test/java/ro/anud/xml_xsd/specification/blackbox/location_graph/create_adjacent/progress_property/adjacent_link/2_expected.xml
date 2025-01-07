@@ -79,9 +79,17 @@
                 </and>
               </person_progress_property>
             </link_to>
+            <link_to node_id_ref="C" total_progress="100">
+              <person_progress_property initial="2">
+                <and do="add" value="1">
+                  <and do="divide" value="1"/>
+                </and>
+              </person_progress_property>
+            </link_to>
           </links>
         </node>
       </location_graph>
     </location>
   </data>
+  <actions/>
 </world_step>

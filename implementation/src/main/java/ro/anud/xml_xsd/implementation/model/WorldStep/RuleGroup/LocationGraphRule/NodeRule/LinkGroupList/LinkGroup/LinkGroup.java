@@ -6,14 +6,12 @@ import org.w3c.dom.Element;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
 import java.util.*;
-import java.util.stream.Stream;
 import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
@@ -22,19 +20,21 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @NoArgsConstructor
   @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-  public class LinkGroup implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
+  public class LinkGroup implements  ro.anud.xml_xsd.implementation.model.interfaces.IType_linkGroup.IType_linkGroup<LinkGroup>,  ro.anud.xml_xsd.implementation.util.LinkedNode {
+
+    public static final String TYPE_ID = "/world_step/rule_group/location_graph_rule/node_rule/link_group_list/link_group";
 
     public static LinkGroup fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new LinkGroup();
-      instance.setRawNode(rawNode);
+      instance.rawNode(rawNode);
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
     public static LinkGroup fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
       var instance = fromRawNode(rawNode);
-      instance.setParentNode(parent);
+      instance.parentNode(parent);
       return logReturn(instance);
     }
     public static Optional<LinkGroup> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
@@ -52,51 +52,89 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     //Attributes
+
+    //Attributes of type__link_group
+
     private String id;
+
     private Integer angle;
-    private Optional<Integer> angleMax;
-    private Optional<Integer> limit;
+    @Builder.Default
+    private Optional<Integer> angleMax = Optional.empty();
+    @Builder.Default
+    private Optional<Integer> limit = Optional.empty();
 
     //Children elements
-    private List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroup.ToOption.ToOption> toOption = new ArrayList<>();
+
+    //Children of type__link_group
+    @Builder.Default
+    private List<ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption> toOption = new ArrayList<>();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
-    @Getter
-    @Setter
     @Builder.Default
     private RawNode rawNode = new RawNode();
 
-    @Getter
+    public RawNode rawNode() {
+      return rawNode;
+    }
+    public void rawNode(RawNode rawNode) {
+      this.rawNode = rawNode;
+    }
+
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
 
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode() {
+      return parentNode;
+    }
+
     @Builder.Default
-    private List<Consumer<LinkGroup>> onChangeList = new ArrayList<>();
+    private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
       return "link_group";
     }
 
-    public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+    public void childChanged(Set<Object> set) {
+      set.add(this);
+      onChangeList.forEach(consumer -> consumer.accept(set));
+      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(set));
+    }
+
+    private void triggerOnChange() {
+      childChanged(new HashSet<>());
+    }
+
+    public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
       this.parentNode = Optional.of(linkedNode);
+      triggerOnChange();
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroupList> parentAsLinkGroupList() {
+      return parentNode.flatMap(node -> {
+       if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroupList casted){
+         return Optional.of(casted);
+       }
+       return Optional.empty();
+     });
     }
 
     public void removeChild(Object object) {
-        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroup.ToOption.ToOption) {
-          this.toOption.remove(object);
-        }
+    }
+
+    public int buildIndexForChild(Object object) {
+        return 0;
     }
 
     public void removeFromParent() {
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<LinkGroup> onChange) {
+    public Subscription onChange(Consumer<Set<Object>> onChange) {
       logEnter();
       onChangeList.add(onChange);
       return logReturn(() -> onChangeList.remove(onChange));
@@ -108,6 +146,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       // Godot.GD.Print("Deserializing link_group");
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
+
+      // Deserialize arguments of type__link_group
       innerLogger.log("id");
       this.id = rawNode.getAttributeRequired("id");
       innerLogger.log("angle");
@@ -118,7 +158,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       this.limit = rawNode.getAttributeInt("limit");
       innerLogger = logger.log("children");
       //Deserialize children
-      this.toOption = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroup.ToOption.ToOption.fromRawNode(rawNode.getChildrenList("to_option"), this);
+
+      // Deserialize children of type__link_group
+      this.toOption = ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption.fromRawNode(rawNode.getChildrenList("to_option"), this);
       logReturnVoid();
     }
 
@@ -127,6 +169,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       var innerLogger = logger.log("attributes");
       //Serialize attributes
+
+      // Serialize arguments of type__link_group
       innerLogger.log("id");
       rawNode.setAttribute("id", this.id);
       innerLogger.log("angle");
@@ -138,8 +182,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
       innerLogger = logger.log("children");
       //Serialize children
+
+      // Serialize children of type__link_group
       innerLogger.log("to_option");
-      rawNode.setChildren("to_option", toOption.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroup.ToOption.ToOption::serializeIntoRawNode).toList());
+      rawNode.setChildren("to_option", toOption.stream().map(ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption::serializeIntoRawNode).toList());
       return rawNode;
     }
 
@@ -149,7 +195,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         var updatedRawNode = serializeIntoRawNode();
         updatedRawNode.populateNode(document, element);
     }
-
     public String getId()
     {
       return this.id;
@@ -157,7 +202,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public LinkGroup setId(String value)
     {
       this.id = value;
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public Integer getAngle()
@@ -167,7 +212,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public LinkGroup setAngle(Integer value)
     {
       this.angle = value;
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public Optional<Integer> getAngleMax()
@@ -177,7 +222,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public LinkGroup setAngleMax(Optional<Integer> value)
     {
       this.angleMax = value;
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public Optional<Integer> getLimit()
@@ -187,40 +232,39 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public LinkGroup setLimit(Optional<Integer> value)
     {
       this.limit = value;
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
-    public List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroup.ToOption.ToOption> getToOption()
+    public List<ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption> getToOption()
     {
       return this.toOption;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroup.ToOption.ToOption> streamToOption()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption> streamToOption()
     {
       return toOption.stream();
     }
-    public LinkGroup addToOption(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroup.ToOption.ToOption value)
+    public LinkGroup addToOption(ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption value)
     {
       this.toOption.add(value);
-      value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      value.parentNode(this);
+      triggerOnChange();
       return this;
     }
-    public LinkGroup addAllToOption(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroup.ToOption.ToOption> value)
+    public LinkGroup addAllToOption(List<ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption> value)
     {
       this.toOption.addAll(value);
-      value.forEach(e -> e.setParentNode(this));
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      value.forEach(e -> e.parentNode(this));
+      triggerOnChange();
       return this;
     }
-    public LinkGroup removeToOption(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroup.ToOption.ToOption value)
+    public LinkGroup removeToOption(ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption value)
     {
       this.toOption.remove(value);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
 
   }
-
 
   /*
     dependant type:
@@ -230,77 +274,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         "metaType": "object",
         "attributes": {
           "metaType": "object",
-          "value": {
-            "id": {
-              "metaType": "primitive",
-              "value": "xs:string",
-              "isNullable": false
-            },
-            "angle": {
-              "metaType": "primitive",
-              "value": "xs:int",
-              "isNullable": false
-            },
-            "angleMax": {
-              "metaType": "primitive",
-              "value": "xs:int",
-              "isNullable": true
-            },
-            "limit": {
-              "metaType": "primitive",
-              "value": "xs:int",
-              "isNullable": true
-            }
-          }
+          "value": {}
         },
-        "isSingle": false,
-        "value": {
-          "to_option": {
-            "metaType": "object",
-            "attributes": {
-              "metaType": "object",
-              "value": {
-                "node_rule_ref": {
-                  "metaType": "primitive",
-                  "value": "xs:string",
-                  "isNullable": false
-                },
-                "distance": {
-                  "metaType": "primitive",
-                  "value": "xs:int",
-                  "isNullable": false
-                },
-                "maxDistance": {
-                  "metaType": "primitive",
-                  "value": "xs:int",
-                  "isNullable": true
-                },
-                "adjacent_depth_limit": {
-                  "metaType": "primitive",
-                  "value": "xs:int",
-                  "isNullable": false
-                }
-              }
-            },
-            "isSingle": false,
-            "value": {
-              "distance_to_progress_multiplier": {
-                "metaType": "reference",
-                "value": "type__math_operations",
-                "isSingle": true,
-                "isNullable": true
-              },
-              "person_progress_property": {
-                "metaType": "reference",
-                "value": "type__math_operations",
-                "isSingle": true,
-                "isNullable": true
-              }
-            },
-            "isNullable": true
-          }
-        },
-        "isNullable": true
+        "value": {}
       },
       "name": "link_group"
     }

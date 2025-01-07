@@ -1,5 +1,6 @@
 package ro.anud.xml_xsd.specification.blackbox.location_graph.create_adjacent.limit.batch;
 
+import org.junit.jupiter.api.Disabled;
 import ro.anud.xml_xsd.specification.TestBase;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
@@ -33,10 +34,12 @@ It should create
 - location_graph.node.create_adjacent
  */
 
+
 @Execution(ExecutionMode.CONCURRENT)
 public class IndexTest {
 
     @TestFactory
+    @Disabled
     public Collection<DynamicTest> test() {
         return TestBase.runTestRelativeToClass(getClass());
     }

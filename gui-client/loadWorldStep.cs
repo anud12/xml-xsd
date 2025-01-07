@@ -73,7 +73,7 @@ public class LoadWorldStep
 	{
 		GD.Print("Executing next step");
 		var worldStep = StoreWorld_Step.instance.data;
-		ImplProgram.Send(worldStep)
+		ImplProgram.SendHttp(worldStep)
 			.ContinueWith(async result =>
 			{
 				if (result == null)

@@ -1,29 +1,11 @@
 package ro.anud.xml_xsd.implementation.model.interfaces.IType_propertyMutationOn;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import ro.anud.xml_xsd.implementation.util.RawNode;
 
-import java.util.*;
-import java.util.stream.Stream;
-import ro.anud.xml_xsd.implementation.util.Subscription;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
+public interface IType_propertyMutationOn<T> extends ro.anud.xml_xsd.implementation.util.LinkedNode {
+  void deserialize (ro.anud.xml_xsd.implementation.util.RawNode rawNode);
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
+  ro.anud.xml_xsd.implementation.util.RawNode serializeIntoRawNode();
 
-public interface IType_propertyMutationOn<T> {
-
-  public RawNode getRawNode();
-  public void deserialize (RawNode rawNode);
-
-  public RawNode serializeIntoRawNode();
-
-  public void serialize(Document document, Element element);
+  void serialize(org.w3c.dom.Document document, org.w3c.dom.Element element);
 }
 
 /*

@@ -5,38 +5,53 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 
 public class PersonRepository {
 
     private final HashMap<String, Person> personById = new HashMap<>();
-
+    private final List<Person> personList = new ArrayList<>();
+    private final WorldStepInstance worldStepInstance;
     public PersonRepository(WorldStepInstance worldStepInstance) {
-        logEnter();
-        Data data = worldStepInstance.getWorldStep()
-            .getData();
-        loadData(data);
-
+        var logger = logEnter();
+        this.worldStepInstance = worldStepInstance;
+        init(worldStepInstance);
 
     }
 
-    private void loadData(Data data) {
-        logEnter();
-        logEnter("Extracting personById");
-        data.streamPeople()
+    private void init(WorldStepInstance worldStepInstance) {
+        var logger = logEnter();
+        Data data = worldStepInstance.getWorldStep()
+            .getData();
+        loadData(data.streamPeople());
+        worldStepInstance.getWorldStep().onChange(classes -> {
+            classes.stream()
+                .filter(o -> o.getClass().equals(People.class))
+                .findAny()
+                .ifPresent(o -> {
+                    if (o instanceof People people) {
+                        logger.log("worldStep onChange triggered is instance of", People.class);
+                        loadData(Stream.of(people));
+                    }
+                });
+        });
+    }
+
+    private void loadData(Stream<People> people) {
+        logEnter("indexing by personId");
+        personById.clear();
+        personList.clear();
+        people
             .flatMap(People::streamPerson)
             .forEach(person -> {
+                personList.add(person);
                 personById.put(person.getId(), person);
-                person.onChange(person1 -> {
-                    if (person1 == null) {
-                        personById.remove(person.getId());
-                    }
-                }).unsubscribe();
             });
     }
 
@@ -45,7 +60,22 @@ public class PersonRepository {
     }
 
     public Optional<Person> personById(String id) {
-        logEnter("id:", id);
-        return logReturn(Optional.ofNullable(personById.get(id)));
+        var logger = logEnter("id:", id);
+        return logger.logReturn(Optional.ofNullable(personById.get(id)));
+    }
+
+    public Stream<Person> streamPerson() {
+        return logEnter().logReturn(personList.stream());
+    }
+
+    public Person getOrCreate(final Person person) {
+        var logger = logEnter("personId", person.getId());
+        Optional<Person> personOptional = personById(person.getId());
+        return personOptional.orElseGet(() -> {
+            logger.log("creating new person");
+            var newPerson = Person.fromRawNode(person.serializeIntoRawNode());
+            worldStepInstance.getWorldStep().getData().getPeopleOrDefault().addPerson(newPerson);
+            return newPerson;
+        });
     }
 }

@@ -15,7 +15,7 @@ namespace XSD.Nworld_step.Nactions {
 
     //Children elements
     public XSD.Nworld_step.Nactions.Nby._do _do = new XSD.Nworld_step.Nactions.Nby._do();
-    public XSD.Nworld_step.Nactions.Nby.move_towards move_towards = new XSD.Nworld_step.Nactions.Nby.move_towards();
+    public XSD.Nworld_step.Nactions.Nby.move_towards? move_towards = null;
     public by()
     {
     }
@@ -94,7 +94,7 @@ namespace XSD.Nworld_step.Nactions {
     {
       this._do = value;
     }
-    public XSD.Nworld_step.Nactions.Nby.move_towards Get_move_towards()
+    public XSD.Nworld_step.Nactions.Nby.move_towards? Get_move_towards()
     {
       return this.move_towards;
     }
@@ -105,7 +105,7 @@ namespace XSD.Nworld_step.Nactions {
       }
       return this.move_towards;
     }
-    public void Set_move_towards(XSD.Nworld_step.Nactions.Nby.move_towards value)
+    public void Set_move_towards(XSD.Nworld_step.Nactions.Nby.move_towards? value)
     {
       this.move_towards = value;
     }

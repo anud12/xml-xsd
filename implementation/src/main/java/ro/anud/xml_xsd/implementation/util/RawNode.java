@@ -1,6 +1,9 @@
 package ro.anud.xml_xsd.implementation.util;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -21,54 +24,71 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.*;
 public final class RawNode {
     static Logger logger = LoggerFactory.getLogger(RawNode.class);
     private String tag;
+    @Builder.Default
     private LinkedHashMap<String, String> attributeMap = new LinkedHashMap<>();
+    @Builder.Default
+    private Optional<RawNode> parentNode = Optional.empty();
+    @Builder.Default
+    private List<RawNode> childrenList = new ArrayList<>();
+    @Builder.Default
     private LinkedHashMap<String, List<RawNode>> childrenMap = new LinkedHashMap<>();
 
-    private static String getNodePath(Node node) {
+    public static String getNodePath(Node node) {
         if (node == null) {
             return "";
         }
         if (node.getParentNode() == null) {
             return node.getNodeName();
         }
-        return getNodePath(node.getParentNode()) + "/" + node.getNodeName();
+        var parentNode = node.getParentNode();
+        return getNodePath(parentNode) + "/" + node.getNodeName();
     }
 
-    public static RawNode fromNode(Node node) {
-        logEnter(getNodePath(node));
-        var attributeMap = new LinkedHashMap<String, String>();
+    public static RawNode fromNode(Node node, Optional<RawNode> parentNode) {
+
+        var rawNode = RawNode.builder()
+            .tag(node.getNodeName())
+            .parentNode(parentNode)
+            .build();
+        var logger = logEnter();
+
 
         if (node.hasAttributes()) {
             var attributeNodeList = node.getAttributes();
             for (var index = 0; index < attributeNodeList.getLength(); index++) {
                 var item = attributeNodeList.item(index);
-                attributeMap.put(item.getNodeName(), item.getNodeValue());
+                var attributeKey = item.getNodeName();
+                var value = item.getNodeValue();
+                rawNode.setAttribute(attributeKey, value);
             }
         }
-        var childrenMap = new LinkedHashMap<String, List<RawNode>>();
+
         if (node.hasChildNodes()) {
             var childrenNodeList = node.getChildNodes();
             for (var index = 0; index < childrenNodeList.getLength(); index++) {
                 var item = childrenNodeList.item(index);
-                var list = childrenMap.getOrDefault(item.getNodeName(), new ArrayList<>());
-                childrenMap.put(item.getNodeName(), list);
-                list.addLast(RawNode.fromNode(item));
+                var childRawNode = RawNode.fromNode(item, Optional.of(rawNode));
+                rawNode.addChildren(item.getNodeName(), childRawNode);
+                logger.log("adding child", childRawNode.getPath());
             }
-
         }
 
+
         return logReturn(
-            RawNode.builder()
-                .tag(node.getNodeName())
-                .childrenMap(childrenMap)
-                .attributeMap(attributeMap)
-                .build(),
-            getNodePath(node));
+            rawNode
+        );
+    }
+
+    public static RawNode fromNode(Node node) {
+        return fromNode(node, Optional.empty());
     }
 
     public Optional<Integer> getAttributeInt(String key) {
         logEnter("key:", key);
         var value = this.attributeMap.get(key);
+        if (Strings.isBlank(value)) {
+            return logReturn(Optional.empty());
+        }
         return logReturn(Optional.of(Integer.parseInt(value)));
     }
 
@@ -99,6 +119,14 @@ public final class RawNode {
         return getAttribute(key).get();
     }
 
+    public Optional<RawNode> getParentNode() {
+        return parentNode;
+    }
+
+    public RawNode setParentNode(final RawNode parentNode) {
+        this.parentNode = Optional.ofNullable(parentNode);
+        return this;
+    }
 
     public Optional<RawNode> getChildrenFirst(String key) {
         logEnter("key:", key);
@@ -112,10 +140,17 @@ public final class RawNode {
     public List<RawNode> getChildrenList(String key) {
         logEnter("key:", key);
         var value = this.childrenMap.get(key);
-        if(value == null) {
+        if (value == null) {
             return new ArrayList<>();
         }
         return logReturn(this.childrenMap.get(key));
+    }
+
+    public boolean hasChildren() {
+        return !this.childrenMap.entrySet().stream()
+            .filter(stringListEntry -> !stringListEntry.getKey().equals("#text"))
+            .map(Map.Entry::getValue)
+            .allMatch(List::isEmpty);
     }
 
     public void setChildren(String key, Optional<RawNode> value) {
@@ -124,6 +159,10 @@ public final class RawNode {
             childrenList.add(rawNode);
             this.childrenMap.put(key, childrenList);
         });
+    }
+
+    public List<RawNode> getAllChildren() {
+        return this.childrenList;
     }
 
     public void setChildren(String key, List<RawNode> value) {
@@ -142,6 +181,7 @@ public final class RawNode {
                 var childrenList = this.childrenMap.getOrDefault(key, new ArrayList<>());
                 childrenList.add(rawNode);
                 this.childrenMap.put(key, childrenList);
+                this.childrenList.add(rawNode);
             }
             case null -> throw new NullPointerException();
             default -> throw new RuntimeException(new InvalidClassException(value.getClass().getName()));
@@ -179,6 +219,20 @@ public final class RawNode {
             });
         });
         logReturnVoid(getNodePath(element));
+    }
+
+    public int getChildIndex(RawNode object) {
+        return childrenMap.values().stream()
+            .map(rawNodes -> rawNodes.indexOf(object))
+            .filter(integer -> integer != -1)
+            .findFirst()
+            .orElse(0);
+    }
+
+    public String getPath() {
+        var parentPath = parentNode.map(RawNode::getPath).orElse("/");
+        var index = parentNode.map(rawNode -> rawNode.getChildIndex(this)).orElse(0);
+        return parentPath + "/" + getTag() + "[" + index + "]";
     }
 
     public RawNode setTag(String tag) {

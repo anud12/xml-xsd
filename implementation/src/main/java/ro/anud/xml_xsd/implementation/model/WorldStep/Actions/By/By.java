@@ -6,14 +6,12 @@ import org.w3c.dom.Element;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
 import java.util.*;
-import java.util.stream.Stream;
 import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
@@ -24,17 +22,19 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class By implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static final String TYPE_ID = "/world_step/actions/by";
+
     public static By fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new By();
-      instance.setRawNode(rawNode);
+      instance.rawNode(rawNode);
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
     public static By fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
       var instance = fromRawNode(rawNode);
-      instance.setParentNode(parent);
+      instance.parentNode(parent);
       return logReturn(instance);
     }
     public static Optional<By> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
@@ -52,36 +52,67 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     //Attributes
+
     private String personRef;
 
     //Children elements
+    @Builder.Default
     private ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.DoElement.DoElement doElement = new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.DoElement.DoElement();
-    private ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards moveTowards = new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards();
+    @Builder.Default
+    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards> moveTowards = Optional.empty();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
-    @Getter
-    @Setter
     @Builder.Default
     private RawNode rawNode = new RawNode();
 
-    @Getter
+    public RawNode rawNode() {
+      return rawNode;
+    }
+    public void rawNode(RawNode rawNode) {
+      this.rawNode = rawNode;
+    }
+
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
 
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode() {
+      return parentNode;
+    }
+
     @Builder.Default
-    private List<Consumer<By>> onChangeList = new ArrayList<>();
+    private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
       return "by";
     }
 
-    public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+    public void childChanged(Set<Object> set) {
+      set.add(this);
+      onChangeList.forEach(consumer -> consumer.accept(set));
+      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(set));
+    }
+
+    private void triggerOnChange() {
+      childChanged(new HashSet<>());
+    }
+
+    public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
       this.parentNode = Optional.of(linkedNode);
+      triggerOnChange();
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions> parentAsActions() {
+      return parentNode.flatMap(node -> {
+       if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions casted){
+         return Optional.of(casted);
+       }
+       return Optional.empty();
+     });
     }
 
     public void removeChild(Object object) {
@@ -89,15 +120,25 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           throw new RuntimeException("trying to delete doElement which is required");
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards) {
-          throw new RuntimeException("trying to delete moveTowards which is required");
+          this.moveTowards = Optional.empty();
         }
+    }
+
+    public int buildIndexForChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.DoElement.DoElement) {
+          return 0;
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards) {
+          return 0;
+        }
+        return 0;
     }
 
     public void removeFromParent() {
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<By> onChange) {
+    public Subscription onChange(Consumer<Set<Object>> onChange) {
       logEnter();
       onChangeList.add(onChange);
       return logReturn(() -> onChangeList.remove(onChange));
@@ -114,7 +155,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       innerLogger = logger.log("children");
       //Deserialize children
       this.doElement = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.DoElement.DoElement.fromRawNode(rawNode.getChildrenFirst("do").get(), this);
-      this.moveTowards = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards.fromRawNode(rawNode.getChildrenFirst("move_towards").get(), this);
+      this.moveTowards = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards.fromRawNode(rawNode.getChildrenFirst("move_towards"), this);
       logReturnVoid();
     }
 
@@ -131,7 +172,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       innerLogger.log("do");
       rawNode.setChildren("do", Optional.ofNullable(doElement).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.DoElement.DoElement::serializeIntoRawNode).toList());
       innerLogger.log("move_towards");
-      rawNode.setChildren("move_towards", Optional.ofNullable(moveTowards).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards::serializeIntoRawNode).toList());
+      rawNode.setChildren("move_towards", moveTowards.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards::serializeIntoRawNode).toList());
       return rawNode;
     }
 
@@ -149,43 +190,55 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public By setPersonRef(String value)
     {
       this.personRef = value;
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.DoElement.DoElement getDoElement()
     {
       return this.doElement;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.DoElement.DoElement> streamDoElement()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.DoElement.DoElement> streamDoElement()
     {
       return Optional.ofNullable(doElement).stream();
     }
     public By setDoElement(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.DoElement.DoElement value)
     {
       this.doElement = value;
-      value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      value.parentNode(this);
+      triggerOnChange();
       return this;
     }
 
-    public ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards getMoveTowards()
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards> getMoveTowards()
     {
       return this.moveTowards;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards> streamMoveTowards()
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards getMoveTowardsOrDefault()
     {
-      return Optional.ofNullable(moveTowards).stream();
+      return this.moveTowards.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards();
+        instance.parentNode(this);
+        this.moveTowards = Optional.of(instance);
+        return this.moveTowards.get();
+      });
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards> streamMoveTowardsOrDefault()
+    {
+      return java.util.stream.Stream.of(getMoveTowardsOrDefault());
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards> streamMoveTowards()
+    {
+      return moveTowards.stream();
     }
     public By setMoveTowards(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.MoveTowards.MoveTowards value)
     {
-      this.moveTowards = value;
-      value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      this.moveTowards = Optional.ofNullable(value);
+      value.parentNode(this);
+      triggerOnChange();
       return this;
     }
 
   }
-
 
   /*
     dependant type:
@@ -235,7 +288,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
             "metaType": "object",
             "value": {},
             "isSingle": true,
-            "isNullable": false,
+            "isNullable": true,
             "attributes": {
               "metaType": "object",
               "value": {

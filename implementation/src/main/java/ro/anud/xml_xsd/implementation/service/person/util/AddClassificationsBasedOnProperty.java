@@ -43,7 +43,7 @@ public class AddClassificationsBasedOnProperty {
                             return false;
                         }
                         logger.logTodo("should add enum values to property 'is'");
-                        var isValue = property.getRawNode().getAttribute("is").get();
+                        var isValue = property.rawNode().getAttribute("is").get();
                         return switch (isValue) {
                             case "lessThan": {
                                 var result = (propertyValue.get() < value.get());
@@ -99,6 +99,8 @@ public class AddClassificationsBasedOnProperty {
                             }
                         };
                     }, (aBoolean, aBoolean2) -> aBoolean && aBoolean2);
-            });
+            })
+            .toList()
+            .stream();
     }
 }

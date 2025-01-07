@@ -15,7 +15,6 @@ namespace XSD.Nworld_step.Nrule_group {
     //Children elements
     public List<XSD.Nworld_step.Nrule_group.Naction_rule.from_person>? from_person = new List<XSD.Nworld_step.Nrule_group.Naction_rule.from_person>();
     public XSD.Nworld_step.Nrule_group.Naction_rule.global? global = null;
-    public List<XSD.Nworld_step.Nrule_group.Naction_rule.person_to_person>? person_to_person = new List<XSD.Nworld_step.Nrule_group.Naction_rule.person_to_person>();
     public action_rule()
     {
     }
@@ -40,7 +39,6 @@ namespace XSD.Nworld_step.Nrule_group {
       //Deserialize children
       this.from_person = rawNode.InitializeWithRawNode("from_person", this.from_person);
       this.global = rawNode.InitializeWithRawNode("global", this.global);
-      this.person_to_person = rawNode.InitializeWithRawNode("person_to_person", this.person_to_person);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -52,7 +50,6 @@ namespace XSD.Nworld_step.Nrule_group {
       if(global != null) {
         rawNode.children["global"] = new List<RawNode> { global.SerializeIntoRawNode() };
       }
-      rawNode.children["person_to_person"] = person_to_person.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 
@@ -91,21 +88,6 @@ namespace XSD.Nworld_step.Nrule_group {
     public void Set_global(XSD.Nworld_step.Nrule_group.Naction_rule.global? value)
     {
       this.global = value;
-    }
-    public List<XSD.Nworld_step.Nrule_group.Naction_rule.person_to_person>? Get_person_to_person()
-    {
-      return this.person_to_person;
-    }
-    public List<XSD.Nworld_step.Nrule_group.Naction_rule.person_to_person> GetOrInsertDefault_person_to_person()
-    {
-      if(this.person_to_person == null) {
-        this.person_to_person = new List<XSD.Nworld_step.Nrule_group.Naction_rule.person_to_person>();
-      }
-      return this.person_to_person;
-    }
-    public void Set_person_to_person(List<XSD.Nworld_step.Nrule_group.Naction_rule.person_to_person>? value)
-    {
-      this.person_to_person = value;
     }
   }
 }

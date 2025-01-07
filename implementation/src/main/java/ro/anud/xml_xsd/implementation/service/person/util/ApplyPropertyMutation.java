@@ -1,74 +1,50 @@
 package ro.anud.xml_xsd.implementation.service.person.util;
 
-import ro.anud.xml_xsd.implementation.model.Type_propertyMutation.Type_propertyMutation;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
-import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties;
+import ro.anud.xml_xsd.implementation.model.interfaces.IType_propertyMutation.IType_propertyMutation;
+import ro.anud.xml_xsd.implementation.service.Mutation;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 
 public class ApplyPropertyMutation {
 
-    public static void applyPropertyMutation(
+    public static Mutation<Person> applyPropertyMutation(
         final WorldStepInstance worldStepInstance,
+        final Person applicablePerson,
+        final IType_propertyMutation<?> typePropertyMutation,
         final Person selfPerson,
-        final Type_propertyMutation typePropertyMutation,
-        final Person originPerson,
         final Person targetPerson) {
         var logger = logEnter(
+            "applicablePerson",
+            applicablePerson.getId(),
             "selfPerson",
             selfPerson.getId(),
-            "originPerson",
-            originPerson.getId(),
             "targetPerson",
             targetPerson.getId()
         );
-        var propertyRuleRef = typePropertyMutation.getPropertyRuleRef();
-        logger.log("propertyRuleRef:", propertyRuleRef);
-        typePropertyMutation.streamFrom()
-            .forEach(from -> {
-                logger.log("participant:", from.getParticipant());
-                var person = switch (from.getParticipant()) {
-                    case "self" -> originPerson;
-                    default -> targetPerson;
-                };
-                var innerLog = logger.log("on personId:", person.getId());
-                var newValueOptional = worldStepInstance.computeOperation(
-                    from.getOperation(),
-                    person);
-                if (newValueOptional.isEmpty()) {
-                    return;
-                }
 
-                var deltaValue = newValueOptional.get();
-                innerLog.log("deltaValue", deltaValue);
-                innerLog.log("searching person in outInstance");
-                var outPerson = worldStepInstance.getOutInstance()
-                    .person
-                    .repository
-                    .personById(selfPerson.getId());
-                var propertyElementList = outPerson
-                    .stream()
-                    .flatMap(Person::streamPropertiesOrDefault)
-                    .flatMap(Properties::streamProperty)
-                    .filter(property -> property.getPropertyRuleRef().equals(propertyRuleRef))
-                    .toList();
-                innerLog.log("found properties of ref", propertyRuleRef, "size", propertyElementList.size());
-                if (propertyElementList.isEmpty()) {
-                    innerLog.log("creating property");
-                    worldStepInstance.getOutInstance().person.mutateProperty(
-                        outPerson.get(),
-                        propertyRuleRef,
-                        integer -> integer + deltaValue
+        var result = ComputePropertyMutation.computePropertyMutation(
+            worldStepInstance,
+            typePropertyMutation,
+            selfPerson,
+            targetPerson);
+
+        logger.log("applying mutation");
+
+        return Mutation.of(outInstance -> {
+            var outPerson = outInstance
+                .person.repository.getOrCreate(applicablePerson);
+            result.forEach(mutation -> {
+                    logger.log("outPerson", outPerson.getId(), "propertyRuleRef", mutation.propertyRuleRef(), "deltaValue", mutation.deltaValue());
+                    outInstance.person.mutatePropertyIfPresent(
+                        outPerson,
+                        mutation.propertyRuleRef(),
+                        integer -> integer + mutation.deltaValue()
                     );
-                }
-                propertyElementList
-                    .forEach(property -> {
-                        innerLog.log("currentValue", property.getValue());
-                        var newValue = property.getValue() + deltaValue;
-                        innerLog.log("newValue:", newValue);
-                        property.setValue(newValue);
-                    });
-            });
+                });
+            return outPerson;
+            }
+        );
     }
 }

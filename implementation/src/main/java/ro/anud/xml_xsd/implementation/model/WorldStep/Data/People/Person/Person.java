@@ -6,14 +6,12 @@ import org.w3c.dom.Element;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 
 import java.util.*;
-import java.util.stream.Stream;
 import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
   @EqualsAndHashCode
@@ -24,17 +22,19 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Person implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static final String TYPE_ID = "/world_step/data/people/person";
+
     public static Person fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Person();
-      instance.setRawNode(rawNode);
+      instance.rawNode(rawNode);
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
     public static Person fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
       var instance = fromRawNode(rawNode);
-      instance.setParentNode(parent);
+      instance.parentNode(parent);
       return logReturn(instance);
     }
     public static Optional<Person> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
@@ -52,46 +52,74 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     //Attributes
+
     private String id;
-    private Optional<String> name;
+    @Builder.Default
+    private Optional<String> name = Optional.empty();
 
     //Children elements
-    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race> race = Optional.empty();
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties> properties = Optional.empty();
+    @Builder.Default
     private List<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Relations.Relations> relations = new ArrayList<>();
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications> classifications = Optional.empty();
-    private Optional<ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon> icon = Optional.empty();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
-    @Getter
-    @Setter
     @Builder.Default
     private RawNode rawNode = new RawNode();
 
-    @Getter
+    public RawNode rawNode() {
+      return rawNode;
+    }
+    public void rawNode(RawNode rawNode) {
+      this.rawNode = rawNode;
+    }
+
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
     @JsonIgnore
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode = Optional.empty();
 
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> parentNode() {
+      return parentNode;
+    }
+
     @Builder.Default
-    private List<Consumer<Person>> onChangeList = new ArrayList<>();
+    private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
       return "person";
     }
 
-    public void setParentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+    public void childChanged(Set<Object> set) {
+      set.add(this);
+      onChangeList.forEach(consumer -> consumer.accept(set));
+      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(set));
+    }
+
+    private void triggerOnChange() {
+      childChanged(new HashSet<>());
+    }
+
+    public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
       this.parentNode = Optional.of(linkedNode);
+      triggerOnChange();
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People> parentAsPeople() {
+      return parentNode.flatMap(node -> {
+       if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People casted){
+         return Optional.of(casted);
+       }
+       return Optional.empty();
+     });
     }
 
     public void removeChild(Object object) {
-        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race) {
-          this.race = Optional.empty();
-        }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties) {
           this.properties = Optional.empty();
         }
@@ -101,16 +129,26 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications) {
           this.classifications = Optional.empty();
         }
-        if(object instanceof ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon) {
-          this.icon = Optional.empty();
+    }
+
+    public int buildIndexForChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties) {
+          return 0;
         }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Relations.Relations) {
+          return this.relations.indexOf(object);
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications) {
+          return 0;
+        }
+        return 0;
     }
 
     public void removeFromParent() {
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<Person> onChange) {
+    public Subscription onChange(Consumer<Set<Object>> onChange) {
       logEnter();
       onChangeList.add(onChange);
       return logReturn(() -> onChangeList.remove(onChange));
@@ -128,12 +166,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       this.name = rawNode.getAttribute("name");
       innerLogger = logger.log("children");
       //Deserialize children
-      this.race = ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race.fromRawNode(rawNode.getChildrenFirst("race"), this);
       this.properties = ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties.fromRawNode(rawNode.getChildrenFirst("properties"), this);
       this.relations = ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Relations.Relations.fromRawNode(rawNode.getChildrenList("relations"), this);
       this.classifications = ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications.fromRawNode(rawNode.getChildrenFirst("classifications"), this);
-      innerLogger.log("icon");
-      this.icon = ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon.fromRawNode(rawNode.getChildrenFirst("icon"), this);
       logReturnVoid();
     }
 
@@ -149,16 +184,12 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
       innerLogger = logger.log("children");
       //Serialize children
-      innerLogger.log("race");
-      rawNode.setChildren("race", race.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race::serializeIntoRawNode).toList());
       innerLogger.log("properties");
       rawNode.setChildren("properties", properties.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties::serializeIntoRawNode).toList());
       innerLogger.log("relations");
       rawNode.setChildren("relations", relations.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Relations.Relations::serializeIntoRawNode).toList());
       innerLogger.log("classifications");
       rawNode.setChildren("classifications", classifications.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications::serializeIntoRawNode).toList());
-      innerLogger.log("icon");
-      rawNode.setChildren("icon", icon.stream().map(ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon::serializeIntoRawNode).toList());
       return rawNode;
     }
 
@@ -176,7 +207,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public Person setId(String value)
     {
       this.id = value;
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public Optional<String> getName()
@@ -186,38 +217,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public Person setName(Optional<String> value)
     {
       this.name = value;
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
-    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race> getRace()
-    {
-      return this.race;
-    }
-    public ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race getRaceOrDefault()
-    {
-      return this.race.orElseGet(() -> {
-        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race();
-        instance.setParentNode(this);
-        this.race = Optional.of(instance);
-        return this.race.get();
-      });
-    }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race> streamRaceOrDefault()
-    {
-      return Stream.of(getRaceOrDefault());
-    }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race> streamRace()
-    {
-      return race.stream();
-    }
-    public Person setRace(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race value)
-    {
-      this.race = Optional.ofNullable(value);
-      value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
-      return this;
-    }
-
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties> getProperties()
     {
       return this.properties;
@@ -226,24 +228,24 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.properties.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties();
-        instance.setParentNode(this);
+        instance.parentNode(this);
         this.properties = Optional.of(instance);
         return this.properties.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties> streamPropertiesOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties> streamPropertiesOrDefault()
     {
-      return Stream.of(getPropertiesOrDefault());
+      return java.util.stream.Stream.of(getPropertiesOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties> streamProperties()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties> streamProperties()
     {
       return properties.stream();
     }
     public Person setProperties(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties value)
     {
       this.properties = Optional.ofNullable(value);
-      value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      value.parentNode(this);
+      triggerOnChange();
       return this;
     }
 
@@ -251,28 +253,28 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.relations;
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Relations.Relations> streamRelations()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Relations.Relations> streamRelations()
     {
       return relations.stream();
     }
     public Person addRelations(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Relations.Relations value)
     {
       this.relations.add(value);
-      value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      value.parentNode(this);
+      triggerOnChange();
       return this;
     }
     public Person addAllRelations(List<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Relations.Relations> value)
     {
       this.relations.addAll(value);
-      value.forEach(e -> e.setParentNode(this));
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      value.forEach(e -> e.parentNode(this));
+      triggerOnChange();
       return this;
     }
     public Person removeRelations(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Relations.Relations value)
     {
       this.relations.remove(value);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      triggerOnChange();
       return this;
     }
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications> getClassifications()
@@ -283,58 +285,28 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.classifications.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications();
-        instance.setParentNode(this);
+        instance.parentNode(this);
         this.classifications = Optional.of(instance);
         return this.classifications.get();
       });
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications> streamClassificationsOrDefault()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications> streamClassificationsOrDefault()
     {
-      return Stream.of(getClassificationsOrDefault());
+      return java.util.stream.Stream.of(getClassificationsOrDefault());
     }
-    public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications> streamClassifications()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications> streamClassifications()
     {
       return classifications.stream();
     }
     public Person setClassifications(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications value)
     {
       this.classifications = Optional.ofNullable(value);
-      value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
-      return this;
-    }
-
-    public Optional<ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon> getIcon()
-    {
-      return this.icon;
-    }
-    public ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon getIconOrDefault()
-    {
-      return this.icon.orElseGet(() -> {
-        var instance = new ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon();
-        instance.setParentNode(this);
-        this.icon = Optional.of(instance);
-        return this.icon.get();
-      });
-    }
-    public Stream<ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon> streamIconOrDefault()
-    {
-      return Stream.of(getIconOrDefault());
-    }
-    public Stream<ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon> streamIcon()
-    {
-      return icon.stream();
-    }
-    public Person setIcon(ro.anud.xml_xsd.implementation.model.TypeIcon.TypeIcon value)
-    {
-      this.icon = Optional.ofNullable(value);
-      value.setParentNode(this);
-      onChangeList.forEach(consumer -> consumer.accept(this));
+      value.parentNode(this);
+      triggerOnChange();
       return this;
     }
 
   }
-
 
   /*
     dependant type:
@@ -359,23 +331,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         },
         "isSingle": false,
         "value": {
-          "race": {
-            "metaType": "object",
-            "value": {},
-            "isSingle": true,
-            "isNullable": true,
-            "attributes": {
-              "metaType": "object",
-              "value": {
-                "race_rule_ref": {
-                  "metaType": "primitive",
-                  "value": "xs:string",
-                  "isNullable": false
-                }
-              },
-              "isNullable": false
-            }
-          },
           "properties": {
             "metaType": "object",
             "isSingle": true,
@@ -442,12 +397,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                 }
               }
             },
-            "isNullable": true
-          },
-          "icon": {
-            "metaType": "reference",
-            "value": "type_icon",
-            "isSingle": true,
             "isNullable": true
           }
         },

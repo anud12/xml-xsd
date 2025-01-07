@@ -1,5 +1,6 @@
 package ro.anud.xml_xsd.implementation.repository;
 
+import ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.ActionRule;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.FromPerson;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.ClassificationRule;
@@ -23,6 +24,8 @@ public class RuleRepository {
     private final HashMap<String, Entry> propertyRuleHashMap = new HashMap<>();
     private final HashMap<String, ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.Entry.Entry> classificationRulesNoPropertiesMap = new HashMap<>();
     private final HashMap<String, ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.Entry.Entry> classificationRules = new HashMap<>();
+    public final NodeRuleRepository nodeRule = new NodeRuleRepository();
+    public LinkGroupRuleRepository linkGroupRule = new LinkGroupRuleRepository();
     private PropertyInstance propertyInstance;
 
     public RuleRepository(WorldStepInstance worldStepInstance) {
@@ -57,8 +60,10 @@ public class RuleRepository {
                 if (entry.getProperty().isEmpty()) {
                     classificationRulesNoPropertiesMap.put(entry.getId(), entry);
                 }
-                classificationRules.put(entry.getId(),entry);
+                classificationRules.put(entry.getId(), entry);
             });
+        nodeRule.index(ruleGroups);
+        linkGroupRule.index(ruleGroups);
     }
 
     public Optional<FromPerson> getPersonById(String id) {
@@ -75,6 +80,7 @@ public class RuleRepository {
         var logger = logEnter();
         return logger.logReturn(classificationRulesNoPropertiesMap.values().stream());
     }
+
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.Entry.Entry> streamAllClassificationRuleEntry() {
         var logger = logEnter();
         return logger.logReturn(classificationRules.values().stream());

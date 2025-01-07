@@ -48,11 +48,5 @@
       </location_graph>
     </location>
   </data>
-  <actions>
-  <person.move_to person_id_ref="person_id">
-    <path>
-      <node node_id_ref="node_id_destination"/>
-    </path>
-  </person.move_to>
-</actions>
+  <actions/>
 </world_step>

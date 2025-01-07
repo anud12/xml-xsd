@@ -23,7 +23,6 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen {
     public type__math_operations? max = null;
     public List<XSD.Ntype__person_selection.property>? property = new List<XSD.Ntype__person_selection.property>();
     public List<XSD.Ntype__person_selection.classification>? classification = new List<XSD.Ntype__person_selection.classification>();
-    public XSD.Ntype__person_selection.race? race = null;
     public select_person()
     {
     }
@@ -55,7 +54,6 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen {
   this.max = rawNode.InitializeWithRawNode("max", this.max);
   this.property = rawNode.InitializeWithRawNode("property", this.property);
   this.classification = rawNode.InitializeWithRawNode("classification", this.classification);
-  this.race = rawNode.InitializeWithRawNode("race", this.race);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -79,9 +77,6 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen {
   }
   rawNode.children["property"] = property.Select(x => x.SerializeIntoRawNode()).ToList();
   rawNode.children["classification"] = classification.Select(x => x.SerializeIntoRawNode()).ToList();
-  if(race != null) {
-    rawNode.children["race"] = new List<RawNode> { race.SerializeIntoRawNode() };
-  }
       return rawNode;
     }
 
@@ -145,21 +140,6 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen {
     public void Set_classification(List<XSD.Ntype__person_selection.classification>? value)
     {
       this.classification = value;
-    }
-    public XSD.Ntype__person_selection.race? Get_race()
-    {
-      return this.race;
-    }
-    public XSD.Ntype__person_selection.race GetOrInsertDefault_race()
-    {
-      if(this.race == null) {
-        this.race = new XSD.Ntype__person_selection.race();
-      }
-      return this.race;
-    }
-    public void Set_race(XSD.Ntype__person_selection.race? value)
-    {
-      this.race = value;
     }
   }
 }
