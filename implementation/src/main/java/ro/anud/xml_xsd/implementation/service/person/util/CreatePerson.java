@@ -139,7 +139,7 @@ public class CreatePerson {
                         );
                 };
                 innerLogger.log("setting propertyRef", propertyRef, "to ", computedValue);
-                worldStepInstance.person.mutateProperty(person, propertyRef, (integer) -> integer.orElse(0) + computedValue);
+                worldStepInstance.person.mutateProperty(person, propertyRef, (ignored) -> computedValue);
             });
     }
 

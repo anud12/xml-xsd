@@ -462,7 +462,7 @@
           <property_mutation property_rule_ref="weaponSkillXP">
             <from participant="self">
               <operation initial="1">
-                <and do="add_dice" value="4"></and>
+                <and do="add_dice" value="4"/>
               </operation>
             </from>
           </property_mutation>
@@ -478,10 +478,11 @@
                 <operation initial="0">
                   <add_property property_rule_ref="strength" />
                   <and do="divide" value="2" />
-                  <and do="multiply" value="-1" />
+                  <and do="add" value="1" />
                   <and do="add" value="0">
                     <add_property property_rule_ref="weaponSkill" />
                   </and>
+                  <and do="multiply" value="-1" />
                 </operation>
               </from>
             </property_mutation>
@@ -537,7 +538,7 @@
         <name name_rule_ref="wildernessNodeName" />
         <link_group_list>
         </link_group_list>
-        <existing_person min="1" max="1">
+        <existing_person min="1" max="4">
           <person_selection>
             <property property_rule_ref="gold">
               <min initial="5" />
