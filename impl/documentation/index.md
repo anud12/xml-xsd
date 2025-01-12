@@ -1,6 +1,6 @@
 # Index
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action/person/create/empty](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action__person__create__empty.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/action/person/create/empty](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__action__person__create__empty.md)
 
 #### Tags:
 action,person,person.create,
@@ -32,7 +32,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action/person/create/property](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action__person__create__property.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/action/person/create/property](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__action__person__create__property.md)
 
 #### Tags:
 - action
@@ -88,7 +88,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/from_person/mutate_from](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__from_person__mutate_from.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/action_rule/from_person/mutate_from](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__action_rule__from_person__mutate_from.md)
 
 #### Tags:
 - from_person
@@ -154,7 +154,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/from_person/mutate_from/participant_self](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__from_person__mutate_from__participant_self.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/action_rule/from_person/mutate_from/participant_self](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__action_rule__from_person__mutate_from__participant_self.md)
 
 #### Tags:
 - from_person
@@ -218,7 +218,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/from_person/mutate_from/participant_self/mutate_on/participant_self](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__from_person__mutate_from__participant_self__mutate_on__participant_self.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/action_rule/from_person/mutate_from/participant_self/mutate_on/participant_self](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__action_rule__from_person__mutate_from__participant_self__mutate_on__participant_self.md)
 
 #### Tags:
 - from_person
@@ -294,7 +294,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/from_person/mutate_from/participant_self/mutate_on/participant_target](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__from_person__mutate_from__participant_self__mutate_on__participant_target.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/action_rule/from_person/mutate_from/participant_self/mutate_on/participant_target](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__action_rule__from_person__mutate_from__participant_self__mutate_on__participant_target.md)
 
 #### Tags:
 - from_person
@@ -372,7 +372,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/from_person/mutate_from/participant_target](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__from_person__mutate_from__participant_target.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/action_rule/from_person/mutate_from/participant_target](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__action_rule__from_person__mutate_from__participant_target.md)
 
 #### Tags:
 - from_person
@@ -440,7 +440,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/from_person/mutate_from/property_unset/default_value/dependant_value](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__from_person__mutate_from__property_unset__default_value__dependant_value.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/action_rule/from_person/mutate_from/property_unset/default_value/dependant_value](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__action_rule__from_person__mutate_from__property_unset__default_value__dependant_value.md)
 
 #### Tags:
 - from_person
@@ -500,7 +500,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/from_person/mutate_from/property_unset/default_value](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__from_person__mutate_from__property_unset__default_value.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/action_rule/from_person/mutate_from/property_unset/default_value](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__action_rule__from_person__mutate_from__property_unset__default_value.md)
 
 #### Tags:
 - from_person
@@ -558,7 +558,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/from_person/mutate_from/property_unset](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__from_person__mutate_from__property_unset.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/action_rule/from_person/mutate_from/property_unset](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__action_rule__from_person__mutate_from__property_unset.md)
 
 #### Tags:
 - from_person
@@ -616,7 +616,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/from_person/on_person/mutate_on](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__from_person__on_person__mutate_on.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/action_rule/from_person/on_person/mutate_on](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__action_rule__from_person__on_person__mutate_on.md)
 
 #### Tags:
 - from_person
@@ -683,7 +683,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/from_person/on_person/mutate_on/participant_self](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__from_person__on_person__mutate_on__participant_self.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/action_rule/from_person/on_person/mutate_on/participant_self](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__action_rule__from_person__on_person__mutate_on__participant_self.md)
 
 #### Tags:
 - from_person
@@ -749,7 +749,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/from_person/on_person/mutate_on/participant_target](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__from_person__on_person__mutate_on__participant_target.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/action_rule/from_person/on_person/mutate_on/participant_target](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__action_rule__from_person__on_person__mutate_on__participant_target.md)
 
 #### Tags:
 - from_person
@@ -817,7 +817,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/from_person/on_person/selection/classificaiton/invalid](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__from_person__on_person__selection__classificaiton__invalid.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/action_rule/from_person/on_person/selection/classificaiton/invalid](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__action_rule__from_person__on_person__selection__classificaiton__invalid.md)
 
 #### Tags:
 - from_person
@@ -886,7 +886,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/from_person/on_person/selection/classificaiton/valid](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__from_person__on_person__selection__classificaiton__valid.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/action_rule/from_person/on_person/selection/classificaiton/valid](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__action_rule__from_person__on_person__selection__classificaiton__valid.md)
 
 #### Tags:
 - from_person
@@ -954,7 +954,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/from_person/on_person/selection/from_person_same_location_graph_node/no_location](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__from_person__on_person__selection__from_person_same_location_graph_node__no_location.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/action_rule/from_person/on_person/selection/from_person_same_location_graph_node/no_location](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__action_rule__from_person__on_person__selection__from_person_same_location_graph_node__no_location.md)
 
 #### Tags:
 - from_person
@@ -1030,7 +1030,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/from_person/on_person/selection/from_person_same_location_graph_node/same_location](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__from_person__on_person__selection__from_person_same_location_graph_node__same_location.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/action_rule/from_person/on_person/selection/from_person_same_location_graph_node/same_location](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__action_rule__from_person__on_person__selection__from_person_same_location_graph_node__same_location.md)
 
 #### Tags:
 - from_person
@@ -1111,7 +1111,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/from_person/selection](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__from_person__selection.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/action_rule/from_person/selection](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__action_rule__from_person__selection.md)
 
 #### Tags:
 - from_person
@@ -1183,7 +1183,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/from_person/selection/property/max/min_unset](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__from_person__selection__property__max__min_unset.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/action_rule/from_person/selection/property/max/min_unset](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__action_rule__from_person__selection__property__max__min_unset.md)
 
 #### Tags:
 - from_person
@@ -1256,7 +1256,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/action_rule/from_person/selection/property/min/max_unset](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__action_rule__from_person__selection__property__min__max_unset.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/action_rule/from_person/selection/property/min/max_unset](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__action_rule__from_person__selection__property__min__max_unset.md)
 
 #### Tags:
 - from_person
@@ -1329,7 +1329,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/classification/person/empty__property_rule](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__classification__person__empty__property_rule.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/classification/person/empty__property_rule](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__classification__person__empty__property_rule.md)
 
 #### Tags:
 - person
@@ -1374,7 +1374,7 @@ action,person,person.create,
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/classification/person/property_rule__with__person_default](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__classification__person__property_rule__with__person_default.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/classification/person/property_rule__with__person_default](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__classification__person__property_rule__with__person_default.md)
 
 #### Tags:
 - person
@@ -1434,10 +1434,10 @@ action,person,person.create,
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/empty](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__empty.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/empty](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__empty.md)
 
 #### Tags:
-undefined
+action,person,person.create,
 
 #### Input XML
 ```xml
@@ -1457,7 +1457,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/min/classification](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__min__classification.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/event/person_select/min/classification](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__event__person_select__min__classification.md)
 
 #### Tags:
 - person_select
@@ -1536,7 +1536,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/min/no_people](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__min__no_people.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/event/person_select/min/no_people](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__event__person_select__min__no_people.md)
 
 #### Tags:
 - person_select
@@ -1608,7 +1608,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/min/property/max](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__min__property__max.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/event/person_select/min/property/max](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__event__person_select__min__property__max.md)
 
 #### Tags:
 - person_select
@@ -1685,7 +1685,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/min/property/min](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__min__property__min.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/event/person_select/min/property/min](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__event__person_select__min__property__min.md)
 
 #### Tags:
 - person_select
@@ -1763,7 +1763,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/min/race](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__min__race.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/event/person_select/min/race](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__event__person_select__min__race.md)
 
 #### Tags:
 - person_select
@@ -1829,7 +1829,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/min/radius](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__min__radius.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/event/person_select/min/radius](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__event__person_select__min__radius.md)
 
 #### Tags:
 - person_select
@@ -1896,7 +1896,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/min/reuse_person](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__min__reuse_person.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/event/person_select/min/reuse_person](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__event__person_select__min__reuse_person.md)
 
 #### Tags:
 - person_select
@@ -1959,7 +1959,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__add.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/event/person_select/property_mutation/add](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__event__person_select__property_mutation__add.md)
 
 #### Tags:
 - person_select
@@ -2024,7 +2024,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__item.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/event/person_select/property_mutation/item](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__event__person_select__property_mutation__item.md)
 
 #### Tags:
 - person_select
@@ -2093,7 +2093,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__event__person_select__property_mutation__modify.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/event/person_select/property_mutation/modify](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__event__person_select__property_mutation__modify.md)
 
 #### Tags:
 - person_select
@@ -2162,7 +2162,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/add_classification/append_classification](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__add_classification__append_classification.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/add_classification/append_classification](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__add_classification__append_classification.md)
 
 #### Tags:
 - location_graph
@@ -2229,7 +2229,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/add_classification/empty](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__add_classification__empty.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/add_classification/empty](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__add_classification__empty.md)
 
 #### Tags:
 - location_graph
@@ -2287,7 +2287,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/add_classification/location_graph_id](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__add_classification__location_graph_id.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/add_classification/location_graph_id](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__add_classification__location_graph_id.md)
 
 #### Tags:
 - location_graph
@@ -2362,7 +2362,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/add_classification/node_id](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__add_classification__node_id.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/add_classification/node_id](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__add_classification__node_id.md)
 
 #### Tags:
 - location_graph
@@ -2434,7 +2434,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/adjacentDepthLimit_2](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__adjacentDepthLimit_2.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_adjacent/adjacentDepthLimit_2](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_adjacent__adjacentDepthLimit_2.md)
 
 #### Tags:
 - location_graph
@@ -2502,7 +2502,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/classification_location](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__classification_location.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_adjacent/classification_location](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_adjacent__classification_location.md)
 
 #### Tags:
 - location_graph
@@ -2561,7 +2561,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/distance_to_progress_multiplier](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__distance_to_progress_multiplier.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_adjacent/distance_to_progress_multiplier](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_adjacent__distance_to_progress_multiplier.md)
 
 #### Tags:
 - location_graph
@@ -2616,7 +2616,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/existing_person/apply_classification](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__existing_person__apply_classification.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_adjacent/existing_person/apply_classification](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_adjacent__existing_person__apply_classification.md)
 
 #### Tags:
 - location_graph
@@ -2679,7 +2679,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/existing_person/apply_classification/property](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__existing_person__apply_classification__property.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_adjacent/existing_person/apply_classification/property](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_adjacent__existing_person__apply_classification__property.md)
 
 #### Tags:
 - location_graph
@@ -2749,7 +2749,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/existing_person/apply_classification/property/person_default](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__existing_person__apply_classification__property__person_default.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_adjacent/existing_person/apply_classification/property/person_default](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_adjacent__existing_person__apply_classification__property__person_default.md)
 
 #### Tags:
 - location_graph
@@ -2821,7 +2821,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/existing_person](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__existing_person.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_adjacent/existing_person](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_adjacent__existing_person.md)
 
 #### Tags:
 - location_graph
@@ -2878,7 +2878,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/existing_person/multiple_rules](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__existing_person__multiple_rules.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_adjacent/existing_person/multiple_rules](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_adjacent__existing_person__multiple_rules.md)
 
 #### Tags:
 - location_graph
@@ -2942,7 +2942,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/existing_person/property_selection](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__existing_person__property_selection.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_adjacent/existing_person/property_selection](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_adjacent__existing_person__property_selection.md)
 
 #### Tags:
 - location_graph
@@ -3009,7 +3009,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_adjacent](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_adjacent.md)
 
 #### Tags:
 - location_graph
@@ -3063,7 +3063,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/limit/batch](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__limit__batch.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_adjacent/limit/batch](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_adjacent__limit__batch.md)
 
 #### Tags:
 - location_graph
@@ -3116,7 +3116,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/limit](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__limit.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_adjacent/limit](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_adjacent__limit.md)
 
 #### Tags:
 - location_graph
@@ -3174,7 +3174,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/limit/multipleLinkGroups](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__limit__multipleLinkGroups.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_adjacent/limit/multipleLinkGroups](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_adjacent__limit__multipleLinkGroups.md)
 
 #### Tags:
 - location_graph
@@ -3235,7 +3235,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/link_group_rule](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__link_group_rule.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_adjacent/link_group_rule](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_adjacent__link_group_rule.md)
 
 #### Tags:
 - location_graph
@@ -3292,7 +3292,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/maintain_link_limits/adjacent_depth_limit](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__maintain_link_limits__adjacent_depth_limit.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_adjacent/maintain_link_limits/adjacent_depth_limit](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_adjacent__maintain_link_limits__adjacent_depth_limit.md)
 
 #### Tags:
 - location_graph
@@ -3486,7 +3486,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/maintain_link_limits/angle](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__maintain_link_limits__angle.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_adjacent/maintain_link_limits/angle](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_adjacent__maintain_link_limits__angle.md)
 
 #### Tags:
 - location_graph
@@ -3565,7 +3565,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/maintain_link_limits/angle/no_op](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__maintain_link_limits__angle__no_op.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_adjacent/maintain_link_limits/angle/no_op](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_adjacent__maintain_link_limits__angle__no_op.md)
 
 #### Tags:
 undefined
@@ -3731,7 +3731,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/maxAngle](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__maxAngle.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_adjacent/maxAngle](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_adjacent__maxAngle.md)
 
 #### Tags:
 - location_graph
@@ -3785,7 +3785,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/maxAngle/negative_value](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__maxAngle__negative_value.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_adjacent/maxAngle/negative_value](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_adjacent__maxAngle__negative_value.md)
 
 #### Tags:
 - location_graph
@@ -3839,7 +3839,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/maxDistance](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__maxDistance.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_adjacent/maxDistance](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_adjacent__maxDistance.md)
 
 #### Tags:
 - location_graph
@@ -3893,7 +3893,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/name/existing_person](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__name__existing_person.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_adjacent/name/existing_person](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_adjacent__name__existing_person.md)
 
 #### Tags:
 - location_graph
@@ -3961,7 +3961,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/name](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__name.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_adjacent/name](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_adjacent__name.md)
 
 #### Tags:
 - location_graph
@@ -4026,7 +4026,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/progress_property/adjacent_link](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__progress_property__adjacent_link.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_adjacent/progress_property/adjacent_link](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_adjacent__progress_property__adjacent_link.md)
 
 #### Tags:
 - location_graph
@@ -4103,7 +4103,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_adjacent/progress_property](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_adjacent__progress_property.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_adjacent/progress_property](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_adjacent__progress_property.md)
 
 #### Tags:
 - location_graph
@@ -4161,7 +4161,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_location_graph](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_location_graph.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_location_graph](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_location_graph.md)
 
 #### Tags:
 - location_graph
@@ -4202,7 +4202,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/create_location_graph/necesary_node](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__create_location_graph__necesary_node.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/create_location_graph/necesary_node](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__create_location_graph__necesary_node.md)
 
 #### Tags:
 - location_graph
@@ -4245,7 +4245,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/validation/node_graph_id_ref](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__validation__node_graph_id_ref.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/validation/node_graph_id_ref](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__validation__node_graph_id_ref.md)
 
 #### Tags:
 - validation
@@ -4293,7 +4293,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/validation/node_id_ref](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__validation__node_id_ref.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/validation/node_id_ref](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__validation__node_id_ref.md)
 
 #### Tags:
 - validation
@@ -4341,7 +4341,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/location_graph/validation/node_rule_ref](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__location_graph__validation__node_rule_ref.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/location_graph/validation/node_rule_ref](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__location_graph__validation__node_rule_ref.md)
 
 #### Tags:
 - validation
@@ -4378,7 +4378,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/name_rule/name_token/one_of](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__name_rule__name_token__one_of.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/name_rule/name_token/one_of](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__name_rule__name_token__one_of.md)
 
 #### Tags:
 - name_rule
@@ -4411,7 +4411,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/name_rule/name_token/prefix](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__name_rule__name_token__prefix.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/name_rule/name_token/prefix](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__name_rule__name_token__prefix.md)
 
 #### Tags:
 undefined
@@ -4440,7 +4440,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/name_rule/name_token/recursive](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__name_rule__name_token__recursive.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/name_rule/name_token/recursive](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__name_rule__name_token__recursive.md)
 
 #### Tags:
 undefined
@@ -4482,7 +4482,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/name_rule/name_token/ref](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__name_rule__name_token__ref.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/name_rule/name_token/ref](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__name_rule__name_token__ref.md)
 
 #### Tags:
 undefined
@@ -4516,7 +4516,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/person/move_to/find_path_towards/from_link](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__person__move_to__find_path_towards__from_link.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/person/move_to/find_path_towards/from_link](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__person__move_to__find_path_towards__from_link.md)
 
 #### Tags:
 - person
@@ -4605,7 +4605,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/person/move_to/find_path_towards](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__person__move_to__find_path_towards.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/person/move_to/find_path_towards](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__person__move_to__find_path_towards.md)
 
 #### Tags:
 - person
@@ -4694,7 +4694,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/person/move_to/find_path_towards/multiple_paths](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__person__move_to__find_path_towards__multiple_paths.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/person/move_to/find_path_towards/multiple_paths](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__person__move_to__find_path_towards__multiple_paths.md)
 
 #### Tags:
 - person
@@ -4784,7 +4784,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/person/move_to/find_path_towards/multiple_paths/multiple_costs](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__person__move_to__find_path_towards__multiple_paths__multiple_costs.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/person/move_to/find_path_towards/multiple_paths/multiple_costs](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__person__move_to__find_path_towards__multiple_paths__multiple_costs.md)
 
 #### Tags:
 - person
@@ -4873,7 +4873,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/person/move_to/path/empty_path](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__person__move_to__path__empty_path.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/person/move_to/path/empty_path](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__person__move_to__path__empty_path.md)
 
 #### Tags:
 - person
@@ -4948,7 +4948,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/person/move_to/path/node_to_node/from_link](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__person__move_to__path__node_to_node__from_link.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/person/move_to/path/node_to_node/from_link](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__person__move_to__path__node_to_node__from_link.md)
 
 #### Tags:
 - person
@@ -5030,7 +5030,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/person/move_to/path/node_to_node/from_link/middle_of_path](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__person__move_to__path__node_to_node__from_link__middle_of_path.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/person/move_to/path/node_to_node/from_link/middle_of_path](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__person__move_to__path__node_to_node__from_link__middle_of_path.md)
 
 #### Tags:
 - person
@@ -5113,7 +5113,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/person/move_to/path/node_to_node/from_link/middle_of_path/to_empty](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__person__move_to__path__node_to_node__from_link__middle_of_path__to_empty.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/person/move_to/path/node_to_node/from_link/middle_of_path/to_empty](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__person__move_to__path__node_to_node__from_link__middle_of_path__to_empty.md)
 
 #### Tags:
 - person
@@ -5207,7 +5207,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/person/move_to/path/node_to_node](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__person__move_to__path__node_to_node.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/person/move_to/path/node_to_node](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__person__move_to__path__node_to_node.md)
 
 #### Tags:
 - person
@@ -5290,7 +5290,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/person/move_to/path/node_to_node/middle_of_path](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__person__move_to__path__node_to_node__middle_of_path.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/person/move_to/path/node_to_node/middle_of_path](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__person__move_to__path__node_to_node__middle_of_path.md)
 
 #### Tags:
 - person
@@ -5373,7 +5373,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/person/move_to/path/node_to_node/no_path](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__person__move_to__path__node_to_node__no_path.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/person/move_to/path/node_to_node/no_path](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__person__move_to__path__node_to_node__no_path.md)
 
 #### Tags:
 - person
@@ -5451,7 +5451,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/person/move_to/path/node_to_node/partial_over_node](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__person__move_to__path__node_to_node__partial_over_node.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/person/move_to/path/node_to_node/partial_over_node](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__person__move_to__path__node_to_node__partial_over_node.md)
 
 #### Tags:
 - person
@@ -5534,7 +5534,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/person/move_to/path/person_progress_property](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__person__move_to__path__person_progress_property.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/person/move_to/path/person_progress_property](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__person__move_to__path__person_progress_property.md)
 
 #### Tags:
 - person
@@ -5608,7 +5608,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/person/move_to/path/person_progress_property/unset](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__person__move_to__path__person_progress_property__unset.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/person/move_to/path/person_progress_property/unset](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__person__move_to__path__person_progress_property__unset.md)
 
 #### Tags:
 - person
@@ -5680,7 +5680,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/person/teleport_to/has_location](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__person__teleport_to__has_location.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/person/teleport_to/has_location](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__person__teleport_to__has_location.md)
 
 #### Tags:
 - person
@@ -5744,7 +5744,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/person/teleport_to](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__person__teleport_to.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/person/teleport_to](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__person__teleport_to.md)
 
 #### Tags:
 - person
@@ -5803,7 +5803,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/person/teleport_to/link_to/has_location](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__person__teleport_to__link_to__has_location.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/person/teleport_to/link_to/has_location](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__person__teleport_to__link_to__has_location.md)
 
 #### Tags:
 undefined
@@ -5879,7 +5879,7 @@ undefined
 </world_step>
 ```
 
-## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/blackbox/person/teleport_to/link_to](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__blackbox__person__teleport_to__link_to.md)
+## [../specification-test/src/test/java/ro/anud/xml_xsd/specification/analyze/person/teleport_to/link_to](./..__specification-test__src__test__java__ro__anud__xml_xsd__specification__analyze__person__teleport_to__link_to.md)
 
 #### Tags:
 undefined
