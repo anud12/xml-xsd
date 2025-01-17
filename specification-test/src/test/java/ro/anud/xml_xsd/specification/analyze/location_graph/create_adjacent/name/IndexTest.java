@@ -23,7 +23,7 @@ It should create 3 new nodes and links them to the node references by `node_id_r
 - name
  */
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

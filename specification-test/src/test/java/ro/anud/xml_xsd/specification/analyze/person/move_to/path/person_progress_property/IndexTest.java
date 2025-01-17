@@ -27,7 +27,7 @@ It should do nothing because `link_to` doesn't have `person_progress_property` s
 - person_progress_property
  */
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

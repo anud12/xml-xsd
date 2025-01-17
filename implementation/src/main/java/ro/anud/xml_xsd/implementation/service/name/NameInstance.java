@@ -13,8 +13,11 @@ public class NameInstance {
 
     public NameInstance(WorldStepInstance worldStepInstance) {
         this.worldStepInstance = worldStepInstance;
-        this.repository = new Repository();
-        repository.index(worldStepInstance);
+        this.repository = new Repository(worldStepInstance);
+    }
+    public NameInstance index() {
+        repository.index();
+        return this;
     }
 
     public Optional<String> calculateNameFromRefString(String nameRuleRef) {
@@ -30,4 +33,5 @@ public class NameInstance {
         }
         return logger.logReturn(calculateNameFromRefString(nameRuleRef.get()));
     }
+
 }

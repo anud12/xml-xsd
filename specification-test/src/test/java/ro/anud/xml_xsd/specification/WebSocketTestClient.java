@@ -4,6 +4,7 @@ import jakarta.websocket.*;
 
 import java.net.URI;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -12,6 +13,7 @@ public class WebSocketTestClient {
     private Session session;
     private String receivedMessage;
     private final CountDownLatch latch = new CountDownLatch(1);
+
 
     public void connect(String uri) throws Exception {
         WebSocketContainer container = ContainerProvider.getWebSocketContainer();
@@ -25,6 +27,7 @@ public class WebSocketTestClient {
 
     @OnMessage
     public void onMessage(String message) {
+        System.out.println("Received: " + message);
         this.receivedMessage = message;
         latch.countDown();
     }
@@ -37,6 +40,24 @@ public class WebSocketTestClient {
     public void sendMessage(String message) throws Exception {
         session.getBasicRemote().sendText(message);
     }
+    public String sendMessageSync(String message) throws Exception {
+        // Reset the latch and received message for a new operation
+        receivedMessage = null;
+        var future = CompletableFuture.runAsync(() -> {
+            while(receivedMessage == null) {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        // Send the message
+        sendMessage(message);
+        future.get();
+        return receivedMessage;
+    }
 
     public String getReceivedMessage()  {
         try {
@@ -44,6 +65,8 @@ public class WebSocketTestClient {
         } catch (InterruptedException e) {
             return null;
         }
-        return receivedMessage;
+        var message =receivedMessage;
+        receivedMessage = null;
+        return message;
     }
 }

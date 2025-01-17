@@ -32,7 +32,7 @@ It should replace `find_path_towards with `path` element containing in order
 - find_path_towards
  */
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

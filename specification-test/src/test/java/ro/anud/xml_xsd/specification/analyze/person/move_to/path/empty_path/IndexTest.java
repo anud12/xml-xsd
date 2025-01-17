@@ -21,7 +21,7 @@ It should remove `path`, and then remove the whole action.
 - path
  */
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

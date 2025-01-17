@@ -35,7 +35,7 @@ It should move person_id to `link_to` from `node_id_2` to `node_id_destination` 
 - person_progress_property
  */
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

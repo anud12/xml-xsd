@@ -28,8 +28,13 @@ public class PersonInstance {
     public PersonInstance(WorldStepInstance worldStepInstance) {
         this.worldStepInstance = worldStepInstance;
         selection = new SelectionInstance(worldStepInstance);
-        this.repository = new PersonRepository(worldStepInstance);
+        repository = new PersonRepository(worldStepInstance);
+    }
 
+    public PersonInstance index() {
+        selection.index();
+        repository.index();
+        return this;
     }
 
     public Optional<Integer> getProperty(final Person person, final String propertyRef) {

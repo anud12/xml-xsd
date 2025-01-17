@@ -29,7 +29,7 @@ It should move person_id to node_id_2 because it doesn't have a link to `node_id
 - person_progress_property
  */
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

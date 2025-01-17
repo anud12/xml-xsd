@@ -3,14 +3,12 @@ package ro.anud.xml_xsd.implementation.service.person;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classification.Classification;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
-import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Race.Race;
 import ro.anud.xml_xsd.implementation.model.interfaces.IType_personSelection.IType_personSelection;
 import ro.anud.xml_xsd.implementation.service.Mutation;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
@@ -21,6 +19,9 @@ public class SelectionInstance {
 
     public SelectionInstance(WorldStepInstance worldStepInstance) {
         this.worldStepInstance = worldStepInstance;
+    }
+    public SelectionInstance index() {
+        return this;
     }
 
     public boolean isSelectionApplicableTo(IType_personSelection<?> selectPerson, Person person) {
@@ -100,4 +101,5 @@ public class SelectionInstance {
             .orElse(filteredPersonList.size());
         return logger.logReturn(filteredPersonList.subList(0, max));
     }
+
 }

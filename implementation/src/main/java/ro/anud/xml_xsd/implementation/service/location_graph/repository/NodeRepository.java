@@ -3,8 +3,9 @@ package ro.anud.xml_xsd.implementation.service.location_graph.repository;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node;
-import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
+import ro.anud.xml_xsd.implementation.util.Subscription;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,29 +13,38 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 
 public class NodeRepository {
     private final WorldStepInstance worldStepInstance;
     public Map<String, List<Node>> nodeById = new HashMap<>();
     public Map<String, Map<String, List<Node>>> nodeByGraphIdAndNodeId = new HashMap<>();
+    private Optional<Subscription> subscription = Optional.empty();
 
     public NodeRepository(final WorldStepInstance worldStepInstance) {
         var logger = logEnter();
         this.worldStepInstance = worldStepInstance;
-        worldStepInstance.getWorldStep().onChange(objects -> {
-            logger.logTodo("Streamline checking for Node.class");
-            if (objects.stream().map(Object::getClass).anyMatch(o -> o.equals(Node.class))) {
-                index(this.worldStepInstance);
-            }
-        });
     }
 
-    public NodeRepository index(final WorldStepInstance worldStepInstance) {
+    public NodeRepository index() {
         var logger = logEnter();
-        worldStepInstance.getWorldStep()
-            .streamData()
+
+        subscription.ifPresent(Subscription::unsubscribe);
+        subscription = worldStepInstance.getWorldStep().map(worldStep -> worldStep.onChange(objects -> {
+            logger.logTodo("Streamline checking for Node.class");
+            if (objects.stream().map(Object::getClass).anyMatch(o -> o.equals(Node.class))) {
+                loadData();
+            }
+        }));
+
+        loadData();
+        return this;
+    }
+
+    private void loadData() {
+        var logger = logEnter("loadData");
+        worldStepInstance.streamWorldStep()
+            .flatMap(WorldStep::streamData)
             .flatMap(Data::streamLocation)
             .flatMap(Location::streamLocationGraph)
             .forEach(locationGraph -> {
@@ -42,7 +52,7 @@ public class NodeRepository {
                 nodeByGraphIdAndNodeId.put(locationGraph.getId(), nodeById);
                 this.nodeById.putAll(nodeById);
             });
-        return this;
+        logger.logReturnVoid();
     }
 
     public Optional<Node> getNodeById(final String id) {

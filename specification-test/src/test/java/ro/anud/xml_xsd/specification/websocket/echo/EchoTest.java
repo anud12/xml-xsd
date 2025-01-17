@@ -2,6 +2,8 @@ package ro.anud.xml_xsd.specification.websocket.echo;
 
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import ro.anud.xml_xsd.specification.WebSocketTestBase;
 
 import java.util.Collection;
@@ -17,9 +19,10 @@ resend on main client and other client
  */
 
 /*tags
-  echo
+  websocket, echo
  */
 
+@Execution(ExecutionMode.SAME_THREAD)
 public class EchoTest {
 
     @TestFactory

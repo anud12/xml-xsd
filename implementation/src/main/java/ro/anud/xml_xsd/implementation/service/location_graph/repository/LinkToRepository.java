@@ -6,7 +6,9 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGrap
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.LinkTo;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.Links;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
+import ro.anud.xml_xsd.implementation.util.Subscription;
 
 import java.util.HashMap;
 import java.util.Optional;
@@ -18,26 +20,32 @@ public class LinkToRepository {
     private final WorldStepInstance worldStepInstance;
 
     private final HashMap<Node, HashMap<String, LinkTo>> linkToByTargetNodeIdMapByNode = new HashMap<>();
+    private Optional<Subscription> subscription = Optional.empty();
 
     public LinkToRepository(WorldStepInstance worldStepInstance) {
         var logger = logEnter();
         this.worldStepInstance = worldStepInstance;
-
-        worldStepInstance.getWorldStep().onChange(objects -> {
-            logger.logTodo("Streamline checking");
-            if (objects.stream().map(Object::getClass).anyMatch(o -> o.equals(LocationGraph.class))) {
-                index(this.worldStepInstance);
-            }
-        });
-
-        index(worldStepInstance);
     }
 
-    public LinkToRepository index(final WorldStepInstance worldStepInstance) {
+    public LinkToRepository index() {
         var logger = logEnter("LinkToRepository indexing");
 
+        subscription.ifPresent(Subscription::unsubscribe);
+        subscription = worldStepInstance.getWorldStep().map(worldStep -> worldStep.onChange(objects -> {
+            logger.logTodo("Streamline checking");
+            if (objects.stream().map(Object::getClass).anyMatch(o -> o.equals(LocationGraph.class))) {
+                loadData();
+            }
+        }));
+
+        logger.logReturnVoid();
+        return this;
+    }
+    private void loadData() {
+        var logger = logEnter("loadData");
         linkToByTargetNodeIdMapByNode.clear();
-        worldStepInstance.getWorldStep().streamData()
+        worldStepInstance.streamWorldStep()
+            .flatMap(WorldStep::streamData)
             .flatMap(Data::streamLocation)
             .flatMap(Location::streamLocationGraph)
             .flatMap(LocationGraph::streamNode)
@@ -49,7 +57,6 @@ public class LinkToRepository {
                     .put(linkTo.getNodeIdRef(), linkTo)
                 ));
         logger.logReturnVoid();
-        return this;
     }
 
     public Optional<LinkTo> getByParentNodeAndNodeIdRef(Node parentNode, String nodeIdRef) {

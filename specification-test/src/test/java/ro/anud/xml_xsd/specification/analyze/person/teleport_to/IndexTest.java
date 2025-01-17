@@ -27,7 +27,7 @@ It should create a `person` with `person_id_ref` under the target node.
 - person.teleport
  */
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

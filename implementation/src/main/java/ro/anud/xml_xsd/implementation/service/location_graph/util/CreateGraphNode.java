@@ -10,6 +10,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRul
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.Name.Name;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.Mutation;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
@@ -32,8 +33,8 @@ public class CreateGraphNode {
         String startNodeRef) {
         var logger = logEnter("locationGraphId", locationGraph.getId(), "nodeRef", startNodeRef);
 
-        var rule = worldStepInstance.getWorldStep()
-            .streamRuleGroup()
+        var rule = worldStepInstance.streamWorldStep()
+            .flatMap(WorldStep::streamRuleGroup)
             .flatMap(RuleGroup::streamLocationGraphRule)
             .filter(locationGraphRule -> locationGraphRule.getId().equals(locationGraph.getRule().getLocationGraphRuleRef()))
             .flatMap(LocationGraphRule::streamNodeRule)

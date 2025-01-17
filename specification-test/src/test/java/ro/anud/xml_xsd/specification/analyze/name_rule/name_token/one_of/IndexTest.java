@@ -36,7 +36,7 @@ the selected name_token from the one_of list ("first one_of"). This results in t
 - name_rule
  */
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

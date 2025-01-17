@@ -6,6 +6,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.Entry
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.Entry.Then.Then;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.EventsRule;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
@@ -14,8 +15,8 @@ public class EventsMetadata {
 
     public static void apply(WorldStepInstance worldStepInstance) {
         var logger = logEnter();
-        var entryList = worldStepInstance.getWorldStep()
-            .streamRuleGroup()
+        var entryList = worldStepInstance.streamWorldStep()
+            .flatMap(WorldStep::streamRuleGroup)
             .flatMap(RuleGroup::streamEventsRule)
             .flatMap(EventsRule::streamEntry)
             .toList();
@@ -27,8 +28,8 @@ public class EventsMetadata {
 
     private static void applyFromPersonActionUsed(final WorldStepInstance worldStepInstance, final Entry entry) {
         var logger = logEnter("entry", entry.buildPath());
-        var byList = worldStepInstance.getWorldStep()
-            .streamActions()
+        var byList = worldStepInstance.streamWorldStep()
+            .flatMap(WorldStep::streamActions)
             .flatMap(Actions::streamBy)
             .filter(by -> by.getDoElement()
                 .getActionRuleRef()

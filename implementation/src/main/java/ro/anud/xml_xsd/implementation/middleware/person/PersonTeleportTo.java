@@ -3,6 +3,7 @@ package ro.anud.xml_xsd.implementation.middleware.person;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.Person_teleport;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.People.Person.Person;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.Mutation;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
@@ -15,13 +16,14 @@ public class PersonTeleportTo {
     public static void apply(WorldStepInstance worldStepInstance) {
         logEnter();
 
-        worldStepInstance.getOutInstance().getWorldStep().streamActions()
+        worldStepInstance.getOutInstance().streamWorldStep()
+            .flatMap(WorldStep::streamActions)
             .flatMap(Actions::streamPerson_teleport)
             .toList()
             .forEach(Person_teleport::removeFromParent);
 
         worldStepInstance.getWorldStep()
-            .getActions()
+            .flatMap(WorldStep::getActions)
             .flatMap(Actions::getPerson_teleport)
             .ifPresent(personTeleport -> {
                 locationGraph(worldStepInstance, personTeleport)

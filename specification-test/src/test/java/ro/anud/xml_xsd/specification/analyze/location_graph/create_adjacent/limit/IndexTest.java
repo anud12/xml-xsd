@@ -27,7 +27,7 @@ It should do nothing because the `link_group` doesn't allow another node to be c
 - location_graph.node.create_adjacent
  */
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

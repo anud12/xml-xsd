@@ -9,6 +9,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGrap
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.Links;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.People.People;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.Mutation;
 import ro.anud.xml_xsd.implementation.service.location_graph.repository.LinkToRepository;
 import ro.anud.xml_xsd.implementation.service.location_graph.repository.LocationGraphRepository;
@@ -30,12 +31,17 @@ public class LocationGraphInstance {
 
     public LocationGraphInstance(final WorldStepInstance worldStepInstance) {
         this.worldStepInstance = worldStepInstance;
-        locationGraphRepository = new LocationGraphRepository(worldStepInstance)
-            .index(worldStepInstance);
-        nodeRepository = new NodeRepository(worldStepInstance)
-            .index(worldStepInstance);
-        linkToRepository = new LinkToRepository(worldStepInstance)
-            .index(worldStepInstance);
+        locationGraphRepository = new LocationGraphRepository(worldStepInstance);
+        nodeRepository = new NodeRepository(worldStepInstance);
+        linkToRepository = new LinkToRepository(worldStepInstance);
+    }
+
+
+    public LocationGraphInstance index() {
+        locationGraphRepository.index();
+        nodeRepository.index();
+        linkToRepository.index();
+        return this;
     }
 
     public Stream<Node> selectNodeGraph(final Type_nodeGraph_selection nodeGraphSelection) {
@@ -83,8 +89,8 @@ public class LocationGraphInstance {
 
     public void removePerson(final String personIdRef) {
         var logger = logEnter("personIdRef:", personIdRef);
-        worldStepInstance.getWorldStep()
-            .streamData()
+        worldStepInstance.streamWorldStep()
+            .flatMap(WorldStep::streamData)
             .flatMap(Data::streamLocation)
             .flatMap(Location::streamLocationGraph)
             .flatMap(LocationGraph::streamNode)
@@ -130,8 +136,8 @@ public class LocationGraphInstance {
 
     public List<FindPersonResult> findPersonLocation(String personId) {
         var logger = logEnter("personId:", personId);
-        var locationGraphStream = worldStepInstance.getWorldStep()
-            .streamData()
+        var locationGraphStream = worldStepInstance.streamWorldStep()
+            .flatMap(WorldStep::streamData)
             .flatMap(Data::streamLocation)
             .flatMap(Location::streamLocationGraph);
 

@@ -32,7 +32,7 @@ It should move person_id to node_id_destination because it can reach it
 - person_progress_property
  */
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

@@ -26,7 +26,7 @@ modify person `1` by adding property with value 1
 - person_select
  */
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

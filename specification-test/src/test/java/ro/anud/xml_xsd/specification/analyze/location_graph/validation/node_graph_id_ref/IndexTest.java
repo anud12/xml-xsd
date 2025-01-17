@@ -22,7 +22,7 @@ It should throw an error.
 - location_graph_id_ref
  */
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

@@ -21,7 +21,7 @@ import java.util.Collection;
 /*tags
   - from_person
  */
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

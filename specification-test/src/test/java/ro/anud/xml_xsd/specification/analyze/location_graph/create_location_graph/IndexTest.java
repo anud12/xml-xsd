@@ -21,7 +21,7 @@ It should create a new location graph starting from `setup > starting node` rule
 - location_graph.create
  */
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

@@ -848,7 +848,7 @@
               "isNullable": false
             }
           },
-          "isNullable": false
+          "isNullable": true
         },
         "rule_group": {
           "metaType": "object",
@@ -1558,7 +1558,7 @@
               "isNullable": true
             }
           },
-          "isNullable": false
+          "isNullable": true
         },
         "data": {
           "metaType": "object",
@@ -1875,7 +1875,7 @@
               "isNullable": true
             }
           },
-          "isNullable": false
+          "isNullable": true
         },
         "actions": {
           "metaType": "object",

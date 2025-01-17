@@ -25,7 +25,7 @@ and `node_id_ref` set to `node_id`
 - name
  */
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

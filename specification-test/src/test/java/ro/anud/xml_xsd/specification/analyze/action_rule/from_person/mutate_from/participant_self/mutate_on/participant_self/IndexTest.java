@@ -24,7 +24,7 @@ import java.util.Collection;
   - participant `self`
   - property_mutation
  */
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

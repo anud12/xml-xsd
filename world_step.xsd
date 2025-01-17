@@ -566,7 +566,7 @@
       <xs:sequence>
 
 
-        <xs:element name="world_metadata">
+        <xs:element name="world_metadata" minOccurs="0">
           <xs:annotation>
             <xs:documentation>
               Configuration of the world step.
@@ -656,7 +656,7 @@
         </xs:element>
 
 
-        <xs:element name="rule_group" maxOccurs="unbounded">
+        <xs:element name="rule_group" minOccurs="0" maxOccurs="unbounded">
           <xs:annotation>
             <xs:documentation>
               Represents a group of rules that can be applied to the world step.
@@ -1109,7 +1109,7 @@
           </xs:complexType>
         </xs:element>
 
-        <xs:element name="data">
+        <xs:element name="data" minOccurs="0">
           <xs:complexType>
             <xs:all>
               <xs:element name="people" minOccurs="0">

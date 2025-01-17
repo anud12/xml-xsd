@@ -6,6 +6,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.ClassificationRule;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.model.interfaces.IType_personSelection.IType_personSelection;
 import ro.anud.xml_xsd.implementation.service.Mutation;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
@@ -60,8 +61,8 @@ public class CreatePerson {
 
             });
         var propertyRuleRefList = typePersonSelection.streamProperty().map(Property::getPropertyRuleRef).toList();
-        worldStepInstance.getWorldStep()
-            .streamRuleGroup()
+        worldStepInstance.streamWorldStep()
+            .flatMap(WorldStep::streamRuleGroup)
             .flatMap(RuleGroup::streamPropertyRule)
             .flatMap(PropertyRule::streamEntry)
             .forEach(entry -> {
@@ -92,7 +93,9 @@ public class CreatePerson {
         final Classification classification,
         final Person person) {
         var logger = logEnter("classification:", classification.getClassificationRuleRef(), "person", person.getId());
-        var classificationRuleOptional = worldStepInstance.getWorldStep().streamRuleGroup().flatMap(RuleGroup::streamClassificationRule)
+        var classificationRuleOptional = worldStepInstance.streamWorldStep()
+            .flatMap(WorldStep::streamRuleGroup)
+            .flatMap(RuleGroup::streamClassificationRule)
             .flatMap(ClassificationRule::streamEntry)
             .filter(entry -> entry.getId().equals(classification.getClassificationRuleRef()))
             .findAny();

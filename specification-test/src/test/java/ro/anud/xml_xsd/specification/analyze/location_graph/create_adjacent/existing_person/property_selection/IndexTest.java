@@ -29,7 +29,7 @@ It should create persons with a random property value between `min` and `max`
 - existing_person
  */
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

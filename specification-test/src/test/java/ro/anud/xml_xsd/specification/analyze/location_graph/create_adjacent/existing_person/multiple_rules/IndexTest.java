@@ -34,7 +34,7 @@ It should use `existing_person` rule for the one that is being created, rather t
 - existing_person
  */
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

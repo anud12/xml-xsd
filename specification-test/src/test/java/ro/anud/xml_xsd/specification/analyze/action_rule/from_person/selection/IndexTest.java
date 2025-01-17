@@ -22,7 +22,7 @@ import java.util.Collection;
   - from_person
   - type__person_selection
  */
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

@@ -28,7 +28,7 @@ then it should repeat the process for the next created node.
 - necessary_node
  */
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

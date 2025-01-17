@@ -3,6 +3,7 @@ package ro.anud.xml_xsd.implementation.middleware.action;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_create.Person_create;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.People.Person.Person;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
@@ -13,8 +14,8 @@ public class PersonCreateAction {
 
         var outInstance = worldStepInstance.getOutInstance();
 
-        var actionList = worldStepInstance.getWorldStep()
-            .streamActions()
+        var actionList = worldStepInstance.streamWorldStep()
+            .flatMap(WorldStep::streamActions)
             .flatMap(Actions::streamPerson_create)
             .toList();
 
@@ -38,8 +39,8 @@ public class PersonCreateAction {
             outInstance.person.classifyPerson(person);
         });
 
-        outInstance.getWorldStep()
-            .streamActions()
+        outInstance.streamWorldStep()
+            .flatMap(WorldStep::streamActions)
             .flatMap(Actions::streamPerson_create)
             .toList()
             .forEach(Person_create::removeFromParent);

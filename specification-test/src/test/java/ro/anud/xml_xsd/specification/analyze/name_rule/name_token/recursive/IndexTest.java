@@ -10,7 +10,7 @@ import java.util.Collection;
 
 import static ro.anud.xml_xsd.specification.HttpRequestTest.Endpoints.analyzeExecuteNameRule;
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

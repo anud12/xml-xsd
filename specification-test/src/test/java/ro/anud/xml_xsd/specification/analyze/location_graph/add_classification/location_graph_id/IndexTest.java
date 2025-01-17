@@ -23,7 +23,7 @@ It should add classification to the node with the given node id.
 - type__node_graph__selection
  */
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

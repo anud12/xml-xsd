@@ -55,11 +55,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
     //Children elements
     @Builder.Default
-    private ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata worldMetadata = new ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata();
+    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata> worldMetadata = Optional.empty();
     @Builder.Default
     private List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup> ruleGroup = new ArrayList<>();
     @Builder.Default
-    private ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data data = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data();
+    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data> data = Optional.empty();
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions> actions = Optional.empty();
 
@@ -110,13 +110,13 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
     public void removeChild(Object object) {
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata) {
-          throw new RuntimeException("trying to delete worldMetadata which is required");
+          this.worldMetadata = Optional.empty();
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup) {
-          throw new RuntimeException("trying to delete ruleGroup which is required");
+          this.ruleGroup.remove(object);
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data) {
-          throw new RuntimeException("trying to delete data which is required");
+          this.data = Optional.empty();
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions) {
           this.actions = Optional.empty();
@@ -157,9 +157,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       //Deserialize attributes
       innerLogger = logger.log("children");
       //Deserialize children
-      this.worldMetadata = ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata.fromRawNode(rawNode.getChildrenFirst("world_metadata").get(), this);
+      this.worldMetadata = ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata.fromRawNode(rawNode.getChildrenFirst("world_metadata"), this);
       this.ruleGroup = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup.fromRawNode(rawNode.getChildrenList("rule_group"), this);
-      this.data = ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data.fromRawNode(rawNode.getChildrenFirst("data").get(), this);
+      this.data = ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data.fromRawNode(rawNode.getChildrenFirst("data"), this);
       this.actions = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions.fromRawNode(rawNode.getChildrenFirst("actions"), this);
       logReturnVoid();
     }
@@ -173,11 +173,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       innerLogger = logger.log("children");
       //Serialize children
       innerLogger.log("world_metadata");
-      rawNode.setChildren("world_metadata", Optional.ofNullable(worldMetadata).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata::serializeIntoRawNode).toList());
+      rawNode.setChildren("world_metadata", worldMetadata.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata::serializeIntoRawNode).toList());
       innerLogger.log("rule_group");
       rawNode.setChildren("rule_group", ruleGroup.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup::serializeIntoRawNode).toList());
       innerLogger.log("data");
-      rawNode.setChildren("data", Optional.ofNullable(data).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data::serializeIntoRawNode).toList());
+      rawNode.setChildren("data", data.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data::serializeIntoRawNode).toList());
       innerLogger.log("actions");
       rawNode.setChildren("actions", actions.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions::serializeIntoRawNode).toList());
       return rawNode;
@@ -189,17 +189,30 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         var updatedRawNode = serializeIntoRawNode();
         updatedRawNode.populateNode(document, element);
     }
-    public ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata getWorldMetadata()
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata> getWorldMetadata()
     {
       return this.worldMetadata;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata getWorldMetadataOrDefault()
+    {
+      return this.worldMetadata.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata();
+        instance.parentNode(this);
+        this.worldMetadata = Optional.of(instance);
+        return this.worldMetadata.get();
+      });
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata> streamWorldMetadataOrDefault()
+    {
+      return java.util.stream.Stream.of(getWorldMetadataOrDefault());
+    }
     public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata> streamWorldMetadata()
     {
-      return Optional.ofNullable(worldMetadata).stream();
+      return worldMetadata.stream();
     }
     public WorldStep setWorldMetadata(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata value)
     {
-      this.worldMetadata = value;
+      this.worldMetadata = Optional.ofNullable(value);
       value.parentNode(this);
       triggerOnChange();
       return this;
@@ -233,17 +246,30 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       triggerOnChange();
       return this;
     }
-    public ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data getData()
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data> getData()
     {
       return this.data;
     }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data getDataOrDefault()
+    {
+      return this.data.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data();
+        instance.parentNode(this);
+        this.data = Optional.of(instance);
+        return this.data.get();
+      });
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data> streamDataOrDefault()
+    {
+      return java.util.stream.Stream.of(getDataOrDefault());
+    }
     public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data> streamData()
     {
-      return Optional.ofNullable(data).stream();
+      return data.stream();
     }
     public WorldStep setData(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data value)
     {
-      this.data = value;
+      this.data = Optional.ofNullable(value);
       value.parentNode(this);
       triggerOnChange();
       return this;
@@ -402,7 +428,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                 "isNullable": false
               }
             },
-            "isNullable": false
+            "isNullable": true
           },
           "rule_group": {
             "metaType": "object",
@@ -1112,7 +1138,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                 "isNullable": true
               }
             },
-            "isNullable": false
+            "isNullable": true
           },
           "data": {
             "metaType": "object",
@@ -1429,7 +1455,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                 "isNullable": true
               }
             },
-            "isNullable": false
+            "isNullable": true
           },
           "actions": {
             "metaType": "object",
@@ -1943,7 +1969,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                   "isNullable": false
                 }
               },
-              "isNullable": false
+              "isNullable": true
             },
             "rule_group": {
               "metaType": "object",
@@ -2653,7 +2679,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                   "isNullable": true
                 }
               },
-              "isNullable": false
+              "isNullable": true
             },
             "data": {
               "metaType": "object",
@@ -2970,7 +2996,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                   "isNullable": true
                 }
               },
-              "isNullable": false
+              "isNullable": true
             },
             "actions": {
               "metaType": "object",

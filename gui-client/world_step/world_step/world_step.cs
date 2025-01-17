@@ -13,9 +13,9 @@ namespace XSD {
     //Attributes
 
     //Children elements
-    public XSD.Nworld_step.world_metadata world_metadata = new XSD.Nworld_step.world_metadata();
-    public List<XSD.Nworld_step.rule_group> rule_group = new List<XSD.Nworld_step.rule_group>();
-    public XSD.Nworld_step.data data = new XSD.Nworld_step.data();
+    public XSD.Nworld_step.world_metadata? world_metadata = null;
+    public List<XSD.Nworld_step.rule_group>? rule_group = new List<XSD.Nworld_step.rule_group>();
+    public XSD.Nworld_step.data? data = null;
     public XSD.Nworld_step.actions? actions = null;
     public world_step()
     {
@@ -69,7 +69,7 @@ namespace XSD {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public XSD.Nworld_step.world_metadata Get_world_metadata()
+    public XSD.Nworld_step.world_metadata? Get_world_metadata()
     {
       return this.world_metadata;
     }
@@ -80,11 +80,11 @@ namespace XSD {
       }
       return this.world_metadata;
     }
-    public void Set_world_metadata(XSD.Nworld_step.world_metadata value)
+    public void Set_world_metadata(XSD.Nworld_step.world_metadata? value)
     {
       this.world_metadata = value;
     }
-    public List<XSD.Nworld_step.rule_group> Get_rule_group()
+    public List<XSD.Nworld_step.rule_group>? Get_rule_group()
     {
       return this.rule_group;
     }
@@ -95,11 +95,11 @@ namespace XSD {
       }
       return this.rule_group;
     }
-    public void Set_rule_group(List<XSD.Nworld_step.rule_group> value)
+    public void Set_rule_group(List<XSD.Nworld_step.rule_group>? value)
     {
       this.rule_group = value;
     }
-    public XSD.Nworld_step.data Get_data()
+    public XSD.Nworld_step.data? Get_data()
     {
       return this.data;
     }
@@ -110,7 +110,7 @@ namespace XSD {
       }
       return this.data;
     }
-    public void Set_data(XSD.Nworld_step.data value)
+    public void Set_data(XSD.Nworld_step.data? value)
     {
       this.data = value;
     }
