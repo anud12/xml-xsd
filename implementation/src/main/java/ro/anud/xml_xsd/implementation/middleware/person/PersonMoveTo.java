@@ -11,6 +11,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGrap
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.Person.Person;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.Links;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.People.People;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.Mutation;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
@@ -24,15 +25,15 @@ public class PersonMoveTo {
     public static void apply(WorldStepInstance worldStepInstance) {
         var logger = logEnter();
 
-        worldStepInstance.getOutInstance().getWorldStep()
-            .streamActions()
+        worldStepInstance.getOutInstance().streamWorldStep()
+            .flatMap(WorldStep::streamActions)
             .flatMap(Actions::streamPerson_moveTo)
             .toList()
             .forEach(Person_moveTo::removeFromParent);
 
 
-        worldStepInstance.getWorldStep()
-            .streamActions()
+        worldStepInstance.streamWorldStep()
+            .flatMap(WorldStep::streamActions)
             .flatMap(Actions::streamPerson_moveTo)
             .toList()
             .forEach(personMoveTo -> {
@@ -45,8 +46,8 @@ public class PersonMoveTo {
             });
 
         worldStepInstance.getOutInstance()
-            .getWorldStep()
-            .streamActions()
+            .streamWorldStep()
+            .flatMap(WorldStep::streamActions)
             .flatMap(Actions::streamPerson_moveTo)
             .toList()
             .forEach(personMoveTo -> {
@@ -90,8 +91,8 @@ public class PersonMoveTo {
             })));
         }
 
-        var originNodeOptional = worldStepInstance.getWorldStep()
-            .streamData()
+        var originNodeOptional = worldStepInstance.streamWorldStep()
+            .flatMap(WorldStep::streamData)
             .flatMap(Data::streamLocation)
             .flatMap(Location::streamLocationGraph)
             .flatMap(LocationGraph::streamNode)
@@ -136,17 +137,20 @@ public class PersonMoveTo {
     }
 
     private static Person_moveTo getPersonMoveTo(final WorldStepInstance outInstance, final String personIdRef) {
-        var moveToOptional = outInstance.getWorldStep()
-            .streamActions()
+        var moveToOptional = outInstance.streamWorldStep()
+            .flatMap(WorldStep::streamActions)
             .flatMap(Actions::streamPerson_moveTo)
             .filter(personMoveToElement -> personMoveToElement.getPersonIdRef().equals(personIdRef))
             .findFirst();
         return moveToOptional.orElseGet(() -> {
-            var actionElement = outInstance.getWorldStep()
-                .getActionsOrDefault();
             var personMoveToElement = new Person_moveTo()
                 .setPersonIdRef(personIdRef);
-            actionElement.addPerson_moveTo(personMoveToElement);
+
+            outInstance.getWorldStep()
+                .ifPresent(worldStep -> worldStep
+                    .getActionsOrDefault()
+                    .addPerson_moveTo(personMoveToElement)
+                );
             return personMoveToElement;
         });
     }
@@ -176,8 +180,8 @@ public class PersonMoveTo {
             return logger.logReturn(Optional.empty());
         }
 
-        var originNode = worldStepInstance.getWorldStep()
-            .streamData()
+        var originNode = worldStepInstance.streamWorldStep()
+            .flatMap(WorldStep::streamData)
             .flatMap(Data::streamLocation)
             .flatMap(Location::streamLocationGraph)
             .flatMap(LocationGraph::streamNode)
@@ -218,8 +222,8 @@ public class PersonMoveTo {
         if (progressValue == 0) {
             logger.log("reach destination");
             worldStepInstance.locationGraph.removePerson(personIdRef);
-            worldStepInstance.getWorldStep()
-                .streamData()
+            worldStepInstance.streamWorldStep()
+                .flatMap(WorldStep::streamData)
                 .flatMap(Data::streamLocation)
                 .flatMap(Location::streamLocationGraph)
                 .flatMap(LocationGraph::streamNode)
@@ -297,8 +301,8 @@ public class PersonMoveTo {
                         node.removeFromParent();
                     });
 
-                outWorldStepInstance.getWorldStep()
-                    .streamData()
+                outWorldStepInstance.streamWorldStep()
+                    .flatMap(WorldStep::streamData)
                     .flatMap(Data::streamLocation)
                     .flatMap(Location::streamLocationGraph)
                     .flatMap(LocationGraph::streamNode)
@@ -359,8 +363,8 @@ public class PersonMoveTo {
             destinationNode.stream().map(Node::getNodeIdRef).toList()
         );
         logger.logTodo("repository, get node from person id ref");
-        var personNodeResult = worldStepInstance.getWorldStep()
-            .streamData()
+        var personNodeResult = worldStepInstance.streamWorldStep()
+            .flatMap(WorldStep::streamData)
             .flatMap(Data::streamLocation)
             .flatMap(Location::streamLocationGraph)
             .flatMap(LocationGraph::streamNode)
@@ -408,7 +412,11 @@ public class PersonMoveTo {
         Mutation<WorldStepInstance> mutationResult = Mutation.of(outWorldStepInstance -> {
             logger.log("mutation applyPathRecursiveFromLink: removing person from node", personIdRef);
             outWorldStepInstance.locationGraph.removePerson(personIdRef);
-            logger.log("mutation applyPathRecursiveFromLink: adding person to linkTo", linkTo.buildPath(), "with accumulatedProgress", totalProgress);
+            logger.log(
+                "mutation applyPathRecursiveFromLink: adding person to linkTo",
+                linkTo.buildPath(),
+                "with accumulatedProgress",
+                totalProgress);
             outWorldStepInstance.locationGraph.linkToRepository.getOrDefault(linkTo)
                 .getPeopleOrDefault().addPerson(new Person()
                     .setPersonIdRef(personIdRef)
@@ -470,8 +478,8 @@ public class PersonMoveTo {
 
         var personIdRef = personMoveTo.getPersonIdRef();
         logger.log("personIdRef", personIdRef);
-        var originNodeList = worldStepInstance.getWorldStep()
-            .streamData()
+        var originNodeList = worldStepInstance.streamWorldStep()
+            .flatMap(WorldStep::streamData)
             .flatMap(Data::streamLocation)
             .flatMap(Location::streamLocationGraph)
             .flatMap(LocationGraph::streamNode)
@@ -485,9 +493,8 @@ public class PersonMoveTo {
             originNodeResult = Optional.of(originNodeList.getFirst());
         }
         if (originNodeList.isEmpty()) {
-            originNodeResult = worldStepInstance
-                .getWorldStep()
-                .streamData()
+            originNodeResult = worldStepInstance.streamWorldStep()
+                .flatMap(WorldStep::streamData)
                 .flatMap(Data::streamLocation)
                 .flatMap(Location::streamLocationGraph)
                 .flatMap(LocationGraph::streamNode)
@@ -504,8 +511,8 @@ public class PersonMoveTo {
             return logger.logReturn(Optional.empty());
         }
         var originNode = originNodeResult.get();
-        var locationGraph = worldStepInstance.getWorldStep()
-            .streamData()
+        var locationGraph = worldStepInstance.streamWorldStep()
+            .flatMap(WorldStep::streamData)
             .flatMap(Data::streamLocation)
             .flatMap(Location::streamLocationGraph)
             .filter(locationGraphElement -> locationGraphElement
@@ -533,28 +540,29 @@ public class PersonMoveTo {
 
         return Optional.of(Mutation.of(outWorldStepInstance -> {
             logger.log("removing personMoveTo", personMoveTo.buildPath());
-            outWorldStepInstance.getWorldStep()
-                .streamActions()
+            outWorldStepInstance.streamWorldStep()
+                .flatMap(WorldStep::streamActions)
                 .flatMap(Actions::streamPerson_moveTo)
                 .filter(personMoveToElement -> personMoveToElement.getPersonIdRef().equals(personIdRef))
                 .toList()
                 .forEach(Person_moveTo::removeFromParent);
-            var actionElement = outWorldStepInstance.getWorldStep()
-                .getActionsOrDefault();
+
 
             var path = new Path();
 
             nodePath.getFirst().forEach(node -> path
                 .addNode(new Node()
-                .setNodeIdRef(node.getId())
-            ));
+                    .setNodeIdRef(node.getId())
+                ));
 
             var personMoveToElement = new Person_moveTo()
                 .setPersonIdRef(personIdRef)
                 .setPath(path);
-
-            actionElement.addPerson_moveTo(personMoveToElement);
-
+            outWorldStepInstance.getWorldStep()
+                .ifPresent(worldStep -> {
+                    var actionElement = worldStep.getActionsOrDefault();
+                    actionElement.addPerson_moveTo(personMoveToElement);
+                });
             return personMoveToElement;
         }));
     }

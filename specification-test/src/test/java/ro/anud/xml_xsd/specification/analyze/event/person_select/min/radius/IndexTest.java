@@ -28,7 +28,7 @@ create 2 people because `0` is within the radius
 - person_select
  */
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

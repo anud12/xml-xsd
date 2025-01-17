@@ -6,6 +6,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.LocationGraph;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 import java.util.stream.Stream;
@@ -17,8 +18,8 @@ public class SelectNodeGraph {
         WorldStepInstance worldStepInstance,
         Type_nodeGraph_selection typeNodeGraphSelection) {
         var logger = logEnter();
-        return logger.logReturn(worldStepInstance.getWorldStep()
-            .streamData()
+        return logger.logReturn(worldStepInstance.streamWorldStep()
+            .flatMap(WorldStep::streamData)
             .flatMap(Data::streamLocation)
             .flatMap(Location::streamLocationGraph)
             .filter(locationGraph -> filterLocationGraph(typeNodeGraphSelection, locationGraph))

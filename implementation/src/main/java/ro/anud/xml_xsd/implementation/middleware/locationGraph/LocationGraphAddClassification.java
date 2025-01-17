@@ -3,6 +3,7 @@ package ro.anud.xml_xsd.implementation.middleware.locationGraph;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_addClassification.LocationGraph_node_addClassification;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Classifications.Classification.Classification;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
@@ -10,7 +11,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 public class LocationGraphAddClassification {
     public static void locationGraphAddClassification(WorldStepInstance worldStepInstance) {
         var logger = logEnter();
-        worldStepInstance.getWorldStep().streamActions()
+        worldStepInstance.streamWorldStep()
+            .flatMap(WorldStep::streamActions)
             .flatMap(Actions::streamLocationGraph_node_addClassification)
             .forEach(locationGraphNodeAddClassification -> {
                 worldStepInstance.locationGraph.selectNodeGraph(locationGraphNodeAddClassification.getNodeGraphSelection())
@@ -34,8 +36,8 @@ public class LocationGraphAddClassification {
                     });
             });
 
-        worldStepInstance.getOutInstance().getWorldStep()
-            .streamActions()
+        worldStepInstance.getOutInstance().streamWorldStep()
+            .flatMap(WorldStep::streamActions)
             .flatMap(Actions::streamLocationGraph_node_addClassification)
             .toList()
             .forEach(LocationGraph_node_addClassification::removeFromParent);

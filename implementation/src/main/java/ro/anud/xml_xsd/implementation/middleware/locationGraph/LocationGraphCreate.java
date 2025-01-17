@@ -2,6 +2,7 @@ package ro.anud.xml_xsd.implementation.middleware.locationGraph;
 
 import ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_create.LocationGraph_create;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
@@ -11,7 +12,8 @@ public class LocationGraphCreate {
 
     public static void apply(final WorldStepInstance worldStepInstance) {
         var logger = logEnter();
-        var actionList = worldStepInstance.getWorldStep().streamActions()
+        var actionList = worldStepInstance.streamWorldStep()
+            .flatMap(WorldStep::streamActions)
             .flatMap(Actions::streamLocationGraph_create)
             .toList();
 
@@ -26,7 +28,8 @@ public class LocationGraphCreate {
             locationGraphResult.get().apply(worldStepInstance.getOutInstance());
         });
 
-        worldStepInstance.getOutInstance().getWorldStep().streamActions()
+        worldStepInstance.getOutInstance().streamWorldStep()
+            .flatMap(WorldStep::streamActions)
             .flatMap(Actions::streamLocationGraph_create)
             .toList()
             .forEach(LocationGraph_create::removeFromParent);

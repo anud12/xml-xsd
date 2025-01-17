@@ -28,7 +28,7 @@ and it should should remove the `person` with `person_id_ref` under the previous
 - person.teleport
  */
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

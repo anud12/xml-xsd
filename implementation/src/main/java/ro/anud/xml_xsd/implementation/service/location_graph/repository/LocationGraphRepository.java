@@ -5,6 +5,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.LocationGraph;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
+import ro.anud.xml_xsd.implementation.util.Subscription;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,29 +19,34 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 public class LocationGraphRepository {
     private Map<String, List<LocationGraph>> locationGraphById = new HashMap<>();
     private final WorldStepInstance worldStepInstance;
+    private Optional<Subscription> subscription = Optional.empty();
 
     public LocationGraphRepository(WorldStepInstance worldStepInstance) {
         var logger = logEnter();
         this.worldStepInstance = worldStepInstance;
-
-        worldStepInstance.getWorldStep().onChange(objects -> {
-            logger.logTodo("Streamline checking for Node.class");
-            if(objects.stream().map(Object::getClass).anyMatch(o -> o.equals(LocationGraph.class))) {
-                index(this.worldStepInstance);
-            }
-        });
-
-        index(worldStepInstance);
     }
 
-    public LocationGraphRepository index(final WorldStepInstance worldStepInstance) {
+    public LocationGraphRepository index() {
         var logger = logEnter("LocationGraphRepository indexing");
 
-        locationGraphById = worldStepInstance.getWorldStep().streamData()
+        subscription.ifPresent(Subscription::unsubscribe);
+        subscription = worldStepInstance.getWorldStep().map(worldStep -> worldStep.onChange(objects -> {
+            logger.logTodo("Streamline checking for Node.class");
+            if (objects.stream().map(Object::getClass).anyMatch(o -> o.equals(LocationGraph.class))) {
+                loadData();
+            }
+        }));
+        loadData();
+        return this;
+    }
+
+    private void loadData() {
+        var logger = logEnter("logData");
+        locationGraphById = worldStepInstance.streamWorldStep()
+            .flatMap(WorldStep::streamData)
             .flatMap(Data::streamLocation)
             .flatMap(Location::streamLocationGraph)
             .collect(Collectors.groupingBy(LocationGraph::getId));
-        return this;
     }
 
     public Optional<LocationGraph> getLocationGraphById(String id) {
@@ -57,9 +63,12 @@ public class LocationGraphRepository {
         return locationGraphOptional.orElseGet(() -> {
             logger.log("creating new");
             var newLocationGraph = LocationGraph.fromRawNode(locationGraph.serializeIntoRawNode());
-            worldStepInstance.getWorldStep().getData()
+            worldStepInstance.getWorldStep()
+                .flatMap(WorldStep::getData)
+                .ifPresent(data -> data
                 .getLocationOrDefault()
-                .addLocationGraph(newLocationGraph);
+                .addLocationGraph(newLocationGraph)
+            );
             return newLocationGraph;
         });
 

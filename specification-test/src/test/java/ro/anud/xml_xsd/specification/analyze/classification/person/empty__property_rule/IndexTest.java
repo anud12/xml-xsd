@@ -24,7 +24,7 @@ import java.util.Collection;
 - property
  */
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

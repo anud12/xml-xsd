@@ -8,6 +8,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromP
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.OnPerson;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.Selection.FromPersonSameLocationGraphNode.FromPersonSameLocationGraphNode;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.Selection.Selection;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.Mutation;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
@@ -23,8 +24,8 @@ public class FromPersonAction {
         var ruleRepository = worldStepInstance.ruleRepository;
         var personRepository = worldStepInstance.person.repository;
 
-        var fromPersonStream = worldStepInstance.getWorldStep()
-            .streamActions()
+        var fromPersonStream = worldStepInstance.streamWorldStep()
+            .flatMap(WorldStep::streamActions)
             .flatMap(Actions::streamFromPerson)
             .toList();
         if (fromPersonStream.isEmpty()) {
@@ -34,8 +35,8 @@ public class FromPersonAction {
 
 
         worldStepInstance.getOutInstance()
-            .getWorldStep()
-            .streamActions()
+            .streamWorldStep()
+            .flatMap(WorldStep::streamActions)
             .flatMap(Actions::streamFromPerson)
             .toList()
             .forEach(FromPerson::removeFromParent);

@@ -2,8 +2,11 @@ package ro.anud.xml_xsd.implementation.service;
 
 import lombok.Setter;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.Counter.Counter;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.ElapsedTime.ElapsedTime;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.RandomizationTable.Entry.Entry;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.RandomizationTable.RandomizationTable;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.model.interfaces.IType_mathOperations.IType_mathOperations;
 import ro.anud.xml_xsd.implementation.repository.RuleRepository;
@@ -31,27 +34,36 @@ public class WorldStepInstance {
 
     public InstanceTypeEnum instance;
     private WorldStepInstance outInstance = this;
-    private WorldStep worldStep;
-    public final RuleRepository ruleRepository;
-    public final PersonInstance person;
-    public final PropertyInstance property;
-    public final LocationGraphInstance locationGraph;
-
-    public NameInstance name;
+    private Optional<WorldStep> worldStep = Optional.empty();
+    public final RuleRepository ruleRepository = new RuleRepository(this);
+    public final PersonInstance person = new PersonInstance(this);
+    public final PropertyInstance property = new PropertyInstance(this);
+    public final LocationGraphInstance locationGraph = new LocationGraphInstance(this);
+    public final NameInstance name = new NameInstance(this);
 
     private int counter = 0;
 
-    public WorldStepInstance(WorldStep worldStep) {
-        this.worldStep = worldStep;
-        ruleRepository = new RuleRepository(this);
-        person = new PersonInstance(this);
-        property = new PropertyInstance(this);
-        locationGraph = new LocationGraphInstance(this);
-        name = new NameInstance(this);
+    public WorldStepInstance index() {
+        ruleRepository.index();
+        person.index();
+        property.index();
+        locationGraph.index();
+        name.index();
+        return this;
     }
 
-    public WorldStep getWorldStep() {
+    public Optional<WorldStep> getWorldStep() {
         return worldStep;
+    }
+
+    public WorldStepInstance setWorldStep(WorldStep worldStep) {
+        this.worldStep = Optional.ofNullable(worldStep);
+        index();
+        return this;
+    }
+
+    public Stream<WorldStep> streamWorldStep() {
+        return worldStep.stream();
     }
 
     public WorldStepInstance getOutInstance() {
@@ -83,13 +95,16 @@ public class WorldStepInstance {
 
     public WorldStepInstance offsetRandomizationTable() {
         var logger = logEnter();
-        var randomizationTable = worldStep.getWorldMetadata().getRandomizationTable()
-            .getEntry();
-        if (randomizationTable.isEmpty()) {
+        var randomizationTableOptional = worldStep
+            .flatMap(WorldStep::getWorldMetadata)
+            .map(WorldMetadata::getRandomizationTable)
+            .map(RandomizationTable::getEntry);
+        if (randomizationTableOptional.isEmpty()) {
             logger.log("empty randomizationTable");
             return this;
         }
-        if(randomizationTable.size() == 1) {
+        var randomizationTable = randomizationTableOptional.get();
+        if (randomizationTable.size() == 1) {
             logger.log("ignoring offset for single entry");
             return this;
         }
@@ -102,7 +117,10 @@ public class WorldStepInstance {
 
     public float random() {
         var logger = logEnter();
-        var entryList = worldStep.getWorldMetadata().streamRandomizationTable()
+        var entryList = worldStep
+            .flatMap(WorldStep::getWorldMetadata)
+            .map(WorldMetadata::getRandomizationTable)
+            .stream()
             .flatMap(RandomizationTable::streamEntry)
             .map(Entry::getValue)
             .toList();
@@ -114,7 +132,7 @@ public class WorldStepInstance {
         var index = counter % entryList.size();
         var value = entryList.get(index);
         var result = value / (float) (max);
-        counter +=1;
+        counter += 1;
         return logReturn(result, "max", max, "value", value, "index", index);
     }
 
@@ -135,7 +153,11 @@ public class WorldStepInstance {
 
     public String getNextId() {
         var logger = logEnter();
-        var time = worldStep.getWorldMetadata().getElapsedTime().getValue();
+        var time = worldStep
+            .flatMap(WorldStep::getWorldMetadata)
+            .map(WorldMetadata::getElapsedTime)
+            .map(ElapsedTime::getValue)
+            .orElse(0);
         logger.log("time:", time);
         var counter = counterNext();
         logger.log("counter", counter);
@@ -144,9 +166,15 @@ public class WorldStepInstance {
 
     public int counterNext() {
         var logger = logEnter();
-        var counter = worldStep.getWorldMetadata().getCounter().getValue();
+        var counter = worldStep
+            .flatMap(WorldStep::getWorldMetadata)
+            .map(WorldMetadata::getCounter)
+            .map(Counter::getValue)
+            .orElse(0);
         logger.log("counter", counter);
-        worldStep.getWorldMetadata().getCounter().setValue(counter + 1);
+        worldStep
+            .flatMap(WorldStep::getWorldMetadata)
+            .ifPresent(outCounter -> outCounter.getCounter().setValue(counter + 1));
         return logger.logReturn(counter);
     }
 

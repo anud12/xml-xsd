@@ -37,7 +37,7 @@ ignoring the link between `node_id` to `node_id_4`
 - find_path_towards
  */
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

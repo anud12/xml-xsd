@@ -37,7 +37,7 @@ because `0.8 = (progressValue(5) - total_progress (1)) / (progressValue(5))` whe
 - person_progress_property
  */
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

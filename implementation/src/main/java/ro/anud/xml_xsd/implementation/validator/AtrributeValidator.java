@@ -4,6 +4,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.validator.attributeValidator.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 
@@ -22,14 +23,15 @@ public class AtrributeValidator {
         new LocationGraphIdRefValidator()
     );
 
-    public List<AttributeValidator.InvalidAttribute> validate(WorldStep worldStep) {
+    public List<AttributeValidator.InvalidAttribute> validate(Optional<WorldStep> worldStep) {
         var logger = logEnter("validate");
-        return attributeValidatorList.stream()
-            .flatMap(attributeValidator -> {
-                logger.log("validating using", attributeValidator.getClass().getSimpleName());
-                return attributeValidator.validate(worldStep).stream();
-            })
-            .toList();
+        return worldStep.map(step -> attributeValidatorList.stream()
+                .flatMap(attributeValidator -> {
+                    logger.log("validating using", attributeValidator.getClass().getSimpleName());
+                    return attributeValidator.validate(step).stream();
+                })
+                .toList())
+            .orElseGet(List::of);
 
     }
 }

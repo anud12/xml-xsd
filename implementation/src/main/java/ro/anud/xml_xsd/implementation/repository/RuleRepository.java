@@ -7,6 +7,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRu
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.Entry;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.PropertyInstance;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
@@ -24,17 +25,26 @@ public class RuleRepository {
     private final HashMap<String, Entry> propertyRuleHashMap = new HashMap<>();
     private final HashMap<String, ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.Entry.Entry> classificationRulesNoPropertiesMap = new HashMap<>();
     private final HashMap<String, ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.Entry.Entry> classificationRules = new HashMap<>();
-    public final NodeRuleRepository nodeRule = new NodeRuleRepository();
-    public LinkGroupRuleRepository linkGroupRule = new LinkGroupRuleRepository();
+    private final WorldStepInstance worldStepInstance;
+    public final NodeRuleRepository nodeRule;
+    public final LinkGroupRuleRepository linkGroupRule;
     private PropertyInstance propertyInstance;
+
 
     public RuleRepository(WorldStepInstance worldStepInstance) {
         logEnter();
         this.propertyInstance = new PropertyInstance(worldStepInstance);
-        var worldStep = worldStepInstance.getWorldStep();
-        var ruleGroups = worldStep.getRuleGroup();
+        this.worldStepInstance = worldStepInstance;
+        this.linkGroupRule = new LinkGroupRuleRepository(worldStepInstance);
+        this.nodeRule = new NodeRuleRepository(worldStepInstance);
+    }
+    public RuleRepository index() {
+        var ruleGroups = worldStepInstance.streamWorldStep()
+            .flatMap(WorldStep::streamRuleGroup)
+            .toList();
 
-        var actionRule = ruleGroups.stream()
+        var actionRule = ruleGroups
+            .stream()
             .map(RuleGroup::getActionRule)
             .flatMap(Optional::stream)
             .toList();
@@ -63,7 +73,8 @@ public class RuleRepository {
                 classificationRules.put(entry.getId(), entry);
             });
         nodeRule.index(ruleGroups);
-        linkGroupRule.index(ruleGroups);
+        linkGroupRule.index();
+        return this;
     }
 
     public Optional<FromPerson> getPersonById(String id) {

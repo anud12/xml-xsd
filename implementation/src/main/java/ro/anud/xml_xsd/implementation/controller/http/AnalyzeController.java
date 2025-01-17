@@ -16,6 +16,7 @@ import ro.anud.xml_xsd.implementation.middleware.locationGraph.LocationGraphCrea
 import ro.anud.xml_xsd.implementation.middleware.locationGraph.LocationGraphCreateAdjacent;
 import ro.anud.xml_xsd.implementation.middleware.person.PersonMoveTo;
 import ro.anud.xml_xsd.implementation.middleware.person.PersonTeleportTo;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.InstanceTypeEnum;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
@@ -34,6 +35,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
@@ -48,7 +50,7 @@ public class AnalyzeController {
         @RequestBody String request,
         @PathVariable String nameRule) throws ParserConfigurationException, IOException, SAXException {
         var logger = logEnter();
-        var worldStepInstance = buildInstance(request);
+        var worldStepInstance = buildWorldStepInstance(request);
         var result = worldStepInstance.name.calculateNameFromRefString(nameRule);
         logger.log("result", result);
         return ResponseEntity.of(result);
@@ -58,7 +60,7 @@ public class AnalyzeController {
     public ResponseEntity<String> execute(@RequestBody String request) {
         var logger = logEnter("");
         try {
-            var worldStepInstance = buildInstance(request);
+            var worldStepInstance = buildWorldStepInstance(request);
             logger.log("validating");
             var validationResult = new AtrributeValidator()
                 .validate(worldStepInstance.getWorldStep());
@@ -84,7 +86,7 @@ public class AnalyzeController {
             LocationGraphAddClassification.locationGraphAddClassification(worldStepInstance);
             PersonAssignClassification.apply(worldStepInstance);
 
-            return ResponseEntity.ok(serializeWorldStepInstance(worldStepInstance.getOutInstance()));
+            return ResponseEntity.ok(serializeWorldStepInstance(worldStepInstance.getOutInstance()).orElse(""));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -93,32 +95,61 @@ public class AnalyzeController {
         //        return ResponseEntity.ok(request);
     }
 
-    private WorldStepInstance buildInstance(String string) throws ParserConfigurationException, IOException, SAXException {
+    public static WorldStep buildWorldStep(String string) throws SAXException {
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document document = builder.parse(new InputSource(new StringReader(string)));
+            var rawNode = RawNode.fromNode(document.getDocumentElement());
+            return WorldStep.fromRawNode(rawNode);
+        } catch (ParserConfigurationException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static WorldStepInstance buildWorldStepInstance(String string) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document document = builder.parse(new InputSource(new StringReader(string)));
         var rawNode = RawNode.fromNode(document.getDocumentElement());
 
-        var worldStepInstance = new WorldStepInstance(WorldStep.fromRawNode(rawNode));
+        var worldStepInstance = new WorldStepInstance().setWorldStep(WorldStep.fromRawNode(rawNode));
         worldStepInstance.instance = InstanceTypeEnum.FIRST;
-        var outWorldStepInstance = new WorldStepInstance(WorldStep.fromRawNode(rawNode));
+        var outWorldStepInstance = new WorldStepInstance().setWorldStep(WorldStep.fromRawNode(rawNode));
         outWorldStepInstance.instance = InstanceTypeEnum.SECOND;
         worldStepInstance.setOutInstance(outWorldStepInstance);
         outWorldStepInstance.setOutInstance(worldStepInstance);
         return worldStepInstance;
     }
 
-    private String serializeWorldStepInstance(WorldStepInstance worldStepInstance) throws ParserConfigurationException, TransformerException {
-        worldStepInstance.getWorldStep().getWorldMetadata()
-            .setCounter(worldStepInstance.getOutInstance().getWorldStep().getWorldMetadata().getCounter());
-        var outputDocument = worldStepInstance.offsetRandomizationTable().getWorldStep()
-            .serializeIntoRawNode()
-            .toDocument("world_step");
+    public static Optional<String> serializeWorldStepInstance(WorldStepInstance worldStepInstance) throws TransformerException {
+        worldStepInstance.getWorldStep()
+            .flatMap(WorldStep::getWorldMetadata)
+            .ifPresent(worldMetadata -> worldStepInstance
+                .getOutInstance()
+                .getWorldStep()
+                .flatMap(WorldStep::getWorldMetadata)
+                .map(WorldMetadata::getCounter)
+                .ifPresent(worldMetadata::setCounter)
+            );
+        var outputDocument = worldStepInstance.offsetRandomizationTable()
+            .getWorldStep()
+            .map(worldStep -> {
+                try {
+                    return worldStep.serializeIntoRawNode().toDocument("world_step");
+                } catch (ParserConfigurationException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
+        if(outputDocument.isEmpty()) {
+            return Optional.empty();
+        }
 
         TransformerFactory tf = TransformerFactory.newInstance();
         Transformer transformer = tf.newTransformer();
         StringWriter writer = new StringWriter();
-        transformer.transform(new DOMSource(outputDocument), new StreamResult(writer));
-        return writer.getBuffer().toString();
+        transformer.transform(new DOMSource(outputDocument.get()), new StreamResult(writer));
+        return Optional.of(writer.getBuffer().toString());
     }
 }

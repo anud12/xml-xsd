@@ -10,6 +10,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 
 public class PropertyInstance {
 
+    public PropertyInstance index() {
+        return this;
+    }
+
     public interface PropertyInstanceGetter {
         Optional<Integer> getProperty(String propertyRef);
     }

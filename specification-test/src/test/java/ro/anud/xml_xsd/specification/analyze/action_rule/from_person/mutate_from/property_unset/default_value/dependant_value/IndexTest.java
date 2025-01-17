@@ -27,7 +27,7 @@ import java.util.Collection;
   - property_mutation
   - person_default
  */
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory

@@ -8,6 +8,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -29,7 +30,9 @@ public class WebSocketHandler extends TextWebSocketHandler {
     }
 
     private final HashMap<String, MessageHandler> handlerHashMap = new HashMap<>();
-    private final HashMap<String, Client> clientMap = new HashMap();
+    private final HashMap<String, Client> clientMap = new HashMap<>();
+    private final WorldStepInstance worldStepInstance = new WorldStepInstance();
+    private final Object syncronizer = new Object();
 
     public WebSocketHandler(List<Factory> factoryList) {
         factoryList.forEach(factory -> factory.instantiate(this));
@@ -38,7 +41,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(final WebSocketSession session) throws Exception {
         super.afterConnectionEstablished(session);
-        clientMap.put(session.getId(), new Client(this, session));
+        clientMap.put(session.getId(), new Client(worldStepInstance, this, session));
     }
 
     @Override
@@ -47,12 +50,20 @@ public class WebSocketHandler extends TextWebSocketHandler {
         clientMap.remove(session.getId());
     }
 
-
-    public void broadCastMessage(final WebSocketMessage<?> message) throws IOException {
-        for (Map.Entry<String, Client> entry : clientMap.entrySet()) {;
-            entry.getValue().send(message);
+    public void sendMessage(WebSocketSession webSocketSession, final WebSocketMessage<?> message) throws IOException {
+        synchronized (syncronizer) {
+            webSocketSession.sendMessage(message);
         }
     }
+    public void broadCastMessage(final WebSocketMessage<?> message) throws IOException {
+        synchronized (syncronizer) {
+            for (Map.Entry<String, Client> entry : clientMap.entrySet()) {;
+                entry.getValue().send(message);
+            }
+        }
+
+    }
+
 
 
     @Override

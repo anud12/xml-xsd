@@ -3,7 +3,9 @@ package ro.anud.xml_xsd.implementation.repository;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
+import ro.anud.xml_xsd.implementation.util.Subscription;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,19 +20,21 @@ public class PersonRepository {
     private final HashMap<String, Person> personById = new HashMap<>();
     private final List<Person> personList = new ArrayList<>();
     private final WorldStepInstance worldStepInstance;
+    private Optional<Subscription> subscription = Optional.empty();
     public PersonRepository(WorldStepInstance worldStepInstance) {
         var logger = logEnter();
         this.worldStepInstance = worldStepInstance;
-        init(worldStepInstance);
-
     }
 
-    private void init(WorldStepInstance worldStepInstance) {
+    public PersonRepository index() {
         var logger = logEnter();
-        Data data = worldStepInstance.getWorldStep()
-            .getData();
-        loadData(data.streamPeople());
-        worldStepInstance.getWorldStep().onChange(classes -> {
+        var data = worldStepInstance.streamWorldStep()
+            .flatMap(WorldStep::streamData)
+            .flatMap(Data::streamPeople);
+        loadData(data);
+
+        subscription.ifPresent(Subscription::unsubscribe);
+        subscription = worldStepInstance.getWorldStep().map(worldStep -> worldStep.onChange(classes -> {
             classes.stream()
                 .filter(o -> o.getClass().equals(People.class))
                 .findAny()
@@ -40,7 +44,8 @@ public class PersonRepository {
                         loadData(Stream.of(people));
                     }
                 });
-        });
+        }));
+        return this;
     }
 
     private void loadData(Stream<People> people) {
@@ -74,7 +79,9 @@ public class PersonRepository {
         return personOptional.orElseGet(() -> {
             logger.log("creating new person");
             var newPerson = Person.fromRawNode(person.serializeIntoRawNode());
-            worldStepInstance.getWorldStep().getData().getPeopleOrDefault().addPerson(newPerson);
+            worldStepInstance.getWorldStep()
+                .flatMap(WorldStep::getData)
+                .ifPresent(data -> data.getPeopleOrDefault().addPerson(newPerson));
             return newPerson;
         });
     }

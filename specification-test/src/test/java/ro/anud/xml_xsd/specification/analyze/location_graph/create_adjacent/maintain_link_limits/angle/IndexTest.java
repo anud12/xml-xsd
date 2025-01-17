@@ -32,7 +32,7 @@ from
 - location_graph.node.create_adjacent
  */
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 public class IndexTest {
 
     @TestFactory
