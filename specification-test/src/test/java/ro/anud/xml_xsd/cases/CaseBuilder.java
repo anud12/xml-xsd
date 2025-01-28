@@ -8,135 +8,115 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-public sealed class CaseBuilder permits CaseBuilder.Middle
-{
+public abstract sealed class CaseBuilder<CaseLambdaReturnType> permits CaseBuilder.Unit, CaseBuilder.Value {
 
-    public static Start group(String name) {
-        return new Start(name);
+    public static Unit group(String groupName) {
+        var currentCase = new Value.StepGroup(groupName, new ArrayList<>());
+        return new Unit(currentCase);
     }
 
-    protected final Group currentCase;
-
-    protected CaseBuilder(final Group currentCase) {this.currentCase = currentCase;}
-
-
-    public Group getCurrentCase() {
-        return currentCase;
+    public static Unit list() {
+        var currentCase = new Value.StepCollection(new ArrayList<>());
+        return new Unit(currentCase);
     }
 
-    public <U> Middle<U> and(String name, final Start.Supplier<U> function) {
-        currentCase.caseStepList()
-            .add(new Step<>(
+    protected final Value.CaseStepContainer currentContainer;
+
+    protected CaseBuilder(final Value.CaseStepContainer currentContainer) {this.currentContainer = currentContainer;}
+
+    public <U> Value<U> and(String name, final Value.Supplier<U> function) {
+        currentContainer.caseStepList()
+            .add(new Value.Step<>(
                 name,
                 (object) -> Optional.ofNullable(function.call())
             ));
-        return new Middle<>(
-            currentCase
+        return new Value<>(
+            currentContainer
         );
     }
 
-    public CaseBuilder and(final String name, final Start.Runnable consumer) {
-        currentCase.caseStepList().add(new Step<>(
+
+    public Unit and(final String name, final Value.Runnable consumer) {
+        currentContainer.caseStepList().add(new Value.Step<>(
             name,
             object -> {
                 consumer.call();
                 return Optional.ofNullable(object);
             }
         ));
-        return new CaseBuilder(currentCase);
+        return new Unit(currentContainer);
     }
 
 
-    public CaseBuilder and(final CaseBuilder caseBuilder) {
-        var childrenCaseGroup = switch (caseBuilder) {
-            case Middle<?> object -> object.getCurrentCase();
-            case CaseBuilder object -> object.getCurrentCase();
-        };
-        this.currentCase.caseStepList().add(childrenCaseGroup);
-        return new CaseBuilder(currentCase);
+    public <T> Value<T> and(final Value<T> value) {
+        this.currentContainer.caseStepList().add(value.currentContainer);
+        return new Value<>(currentContainer);
+    }
+
+    public Unit and(final Unit caseBuilder) {
+        this.currentContainer.caseStepList().add(caseBuilder.currentContainer);
+        return new Unit(currentContainer);
+    }
+    public CaseBuilder<Unit> and(final CaseBuilder<Unit> caseBuilder) {
+        this.currentContainer.caseStepList().add(caseBuilder.currentContainer);
+        return new Unit(currentContainer);
     }
 
     public Stream<DynamicNode> build() {
         var reference = new AtomicReference<>(Optional.empty());
-        return Stream.of(currentCase.run(reference));
+        return currentContainer.run(reference);
     }
 
+    public abstract CaseLambdaReturnType and(java.util.function.Consumer<CaseLambdaReturnType> lambda);
 
-    public static final class Start {
-        private final String groupName;
+    public static final class Unit extends CaseBuilder<Unit> {
 
-        public Start(String groupName) {this.groupName = groupName;}
-
-        public interface Supplier<T> {
-            T call() throws Exception;
-        }
-        public interface Function<T, U> {
-            U call(T t) throws Exception;
-        }
-        public interface Consumer<T> {
-            void call(T t) throws Exception;
+        public Unit(final Value.CaseStepContainer currentContainer) {
+            super(currentContainer);
         }
 
-        public interface Runnable {
-            void call() throws Exception;
+        @Override
+        public Unit and(final Consumer<Unit> lambda) {
+            try {
+                lambda.accept(this);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            return this;
         }
-
-        public  CaseBuilder start(final CaseBuilder run) {
-            var currentCase = new Group(groupName, new ArrayList<>());
-            currentCase.caseStepList().add(run.getCurrentCase());
-            return new CaseBuilder(currentCase);
-        }
-
-        public <T> Middle<T> start(final String name, final Supplier<T> consumer) {
-
-            var currentCase = new Group(groupName, new ArrayList<>());
-            currentCase.caseStepList().add(new Step<>(
-                name, object -> Optional.ofNullable(consumer.call())
-            ));
-
-            ArrayList<RunnableCase> caseList = new ArrayList<>();
-            caseList.add(currentCase);
-            //noinspection unchecked
-            return new Middle<>(currentCase);
-        }
-
-        public CaseBuilder start(final String name, final Runnable consumer) {
-
-            var currentCase = new Group(groupName, new ArrayList<>());
-
-            currentCase.caseStepList().add(new Step<>(
-                name, object -> {
-                consumer.call();
-                return Optional.empty();
-            }));
-            ArrayList<RunnableCase> caseList = new ArrayList<>();
-            caseList.add(currentCase);
-            //noinspection unchecked
-            return new CaseBuilder(currentCase);
-        }
-
 
     }
 
-    public static final class Middle<T> extends CaseBuilder {
+    public static final class Value<T> extends CaseBuilder<Value<T>> {
 
-        public Middle(final Group currentCase) {
+        public Value(final CaseStepContainer currentCase) {
             super(currentCase);
         }
 
-        public <Return> Middle<Return> and(final String endTest, final Start.Function<T, Return> lambda) {
-            currentCase.caseStepList().add(new Step<>(
+        @Override
+        public Value<T> and(final java.util.function.Consumer<Value<T>> lambda) {
+            try {
+                lambda.accept(this);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            return this;
+        }
+
+        public <Return> Value<Return> and(final String endTest, final Function<T, Return> lambda) {
+            currentContainer.caseStepList().add(new Step<>(
                 endTest,
                 arg -> Optional.of(lambda.call((T) arg))
             ));
-            return new Middle<>(currentCase);
+            return new Value<>(currentContainer);
         }
 
 
-        public CaseBuilder and(final String name, final Start.Consumer<T> consumer) {
-            currentCase.caseStepList().add(new Step<>(
+        public Unit and(final String name, final Consumer<T> consumer) {
+            currentContainer.caseStepList().add(new Step<>(
                 name,
                 object -> {
                     //noinspection unchecked
@@ -144,124 +124,80 @@ public sealed class CaseBuilder permits CaseBuilder.Middle
                     return Optional.ofNullable(object);
                 }
             ));
-            return new CaseBuilder(currentCase);
+            return new Unit(currentContainer);
         }
 
-    }
+        public interface Runnable {
+            void call() throws Exception;
+        }
 
-//    public static final class End extends CaseBuilder implements Resettable, Buildable {
-//
-//        private final Group currentCase;
-//
-//        public RunnableCase getCurrentCase() {
-//            return currentCase;
-//        }
-//
-//
-//        public End(
-//            final Group currentCase
-//        ) {
-//            this.currentCase = currentCase;
-//        }
-//
-//        public <T> Middle<T> and(String name, Start.Supplier<T> supplier) {
-//            currentCase.caseStepList()
-//                .add(
-//                    new Step<>(
-//                        name,
-//                        object -> java.util.Optional.ofNullable(supplier.call())
-//                    )
-//                );
-//            return new Middle<>(currentCase);
-//        }
-//
-//        public Continue and(String name, Start.Runnable lambda) {
-//            currentCase.caseStepList()
-//                .add(new Step<>(
-//                    name,
-//                    object -> {
-//                        lambda.call();
-//                        return java.util.Optional.ofNullable(object);
-//                    }));
-//            return new Continue(currentCase);
-//        }
-//        @Override
-//        public End and(final CaseBuilder caseBuilder) {
-//            var childrenCaseGroup = switch (caseBuilder) {
-//                case Middle<?> object -> object.getCurrentCase();
-//                case End object -> object.getCurrentCase();
-//            };
-//            this.currentCase.caseStepList().add(childrenCaseGroup);
-//            return new End(
-//                this.currentCase
-//            );
-//        }
-//
-//
-//        public Stream<DynamicNode> build() {
-//            var reference = new AtomicReference<>(Optional.empty());
-//            return Stream.of(currentCase.run(reference));
-//        }
-//    }
+        public interface Consumer<T> {
+            void call(T t) throws Exception;
+        }
 
-//    public static final class Continue extends CaseBuilder implements Buildable {
-//
-//    }
-    public record Group(String name, List<RunnableCase> caseStepList) implements RunnableCase {
+        public interface Function<T, U> {
+            U call(T t) throws Exception;
+        }
 
-        @Override
-        public DynamicNode run(final AtomicReference<Optional<Object>> ignored) {
-            AtomicReference<Optional<Object>> atomicReference = new AtomicReference<>(Optional.empty());
-            return DynamicContainer.dynamicContainer(
-                name, () -> caseStepList
+        public interface Supplier<T> {
+            T call() throws Exception;
+        }
+
+        public interface RunnableCase {
+
+            Stream<DynamicNode> run(AtomicReference<Optional<Object>> reference);
+        }
+
+        public interface CaseStepContainer extends RunnableCase {
+            List<RunnableCase> caseStepList();
+        }
+
+        public record StepCollection(List<RunnableCase> caseStepList) implements CaseStepContainer {
+
+            @Override
+            public Stream<DynamicNode> run(final AtomicReference<Optional<Object>> ignored) {
+                AtomicReference<Optional<Object>> atomicReference = new AtomicReference<>(Optional.empty());
+                return caseStepList
                     .stream()
-                    .map(objectObjectCaseStep -> objectObjectCaseStep.run(atomicReference))
-                    .toList()
-                    .iterator());
-        }
-    }
-
-    public interface Chainable<U> {
-        <Return> Middle<Return> and(final String endTest, final Start.Function<U, Return> lambda);
-        CaseBuilder and(final String name, final Start.Consumer<U> consumer);
-        CaseBuilder and(final CaseBuilder caseBuilder);
-    }
-
-    public interface Resettable {
-        CaseBuilder and(String name, Start.Runnable lambda);
-        <T> Middle<T> and(String name, Start.Supplier<T> supplier);
-        Resettable and(final CaseBuilder caseBuilder);
-    }
-
-    public interface RunnableCase {
-
-        DynamicNode run(AtomicReference<Optional<Object>> reference);
-    }
-    public interface Buildable {
-        public Stream<DynamicNode> build();
-    }
-
-    public record Step<T, U>(String name, Function<T, U> function) implements RunnableCase {
-
-
-        @Override
-        public DynamicTest run(AtomicReference<Optional<Object>> reference) {
-            return DynamicTest.dynamicTest(
-                name, () -> reference.getAndUpdate(o -> {
-                    try {
-                        //noinspection unchecked
-                        var result = function.call((T) o.orElse(new Object()));
-
-                        //noinspection unchecked
-                        return (Optional<Object>) result;
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }));
+                    .flatMap(objectObjectCaseStep -> objectObjectCaseStep.run(ignored));
+            }
         }
 
-        interface Function<T, U> {
-            Optional<U> call(T object) throws Exception;
+        public record StepGroup(String name, List<RunnableCase> caseStepList) implements CaseStepContainer {
+
+            @Override
+            public Stream<DynamicNode> run(final AtomicReference<Optional<Object>> ignored) {
+                return Stream.of(DynamicContainer.dynamicContainer(
+                    name, () -> caseStepList
+                        .stream()
+                        .flatMap(objectObjectCaseStep -> objectObjectCaseStep.run(ignored))
+                        .toList()
+                        .iterator())
+                );
+            }
+        }
+
+        public record Step<T, U>(String name, Function<T, U> function) implements RunnableCase {
+            @Override
+            public Stream<DynamicNode> run(AtomicReference<Optional<Object>> reference) {
+                return Stream.of(DynamicTest.dynamicTest(
+                    name, () -> reference.getAndUpdate(o -> {
+                        try {
+                            //noinspection unchecked
+                            var result = function.call((T) o.orElse(new Object()));
+
+                            //noinspection unchecked
+                            return (Optional<Object>) result;
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }))
+                );
+            }
+
+            interface Function<T, U> {
+                Optional<U> call(T object) throws Exception;
+            }
         }
     }
 
