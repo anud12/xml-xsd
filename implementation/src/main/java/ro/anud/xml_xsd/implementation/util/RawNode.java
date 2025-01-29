@@ -13,7 +13,12 @@ import org.w3c.dom.Node;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.InvalidClassException;
+import java.io.StringWriter;
 import java.util.*;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.*;
@@ -191,10 +196,30 @@ public final class RawNode {
         return this;
     }
 
-    public Document toDocument(String rootElementName) throws ParserConfigurationException {
+    public String toDocumentString() {
+        try {
+            var outputDocument = toDocument(tag);
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer transformer = tf.newTransformer();
+            StringWriter writer = new StringWriter();
+            transformer.transform(new DOMSource(outputDocument), new StreamResult(writer));
+            return writer.getBuffer().toString()
+                .replace("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>","");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public Document toDocument(String rootElementName) {
         logEnter(rootElementName);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
+        DocumentBuilder builder = null;
+        try {
+            builder = factory.newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+            throw new RuntimeException(e);
+        }
         Document document = builder.newDocument();
         Element element = document.createElement(rootElementName);
         this.populateNode(document, element);

@@ -35,13 +35,13 @@ public class PersonRepository {
 
         subscription.ifPresent(Subscription::unsubscribe);
         subscription = worldStepInstance.getWorldStep().map(worldStep -> worldStep.onChange(classes -> {
-            classes.stream()
-                .filter(o -> o.getClass().equals(People.class))
-                .findAny()
-                .ifPresent(o -> {
+            classes.forEach(o -> {
                     if (o instanceof People people) {
                         logger.log("worldStep onChange triggered is instance of", People.class);
                         loadData(Stream.of(people));
+                    }
+                    if(o instanceof Person person) {
+                        worldStepInstance.sendLinkNode(person);
                     }
                 });
         }));

@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Type_linkGroup implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/type__link_group";
-
     public static Type_linkGroup fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Type_linkGroup();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> Type_linkGroup.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/type__link_group";
     }
 
     //Attributes
@@ -137,6 +139,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing type__link_group");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger.log("id");
@@ -156,6 +159,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("type__link_group");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
       innerLogger.log("id");

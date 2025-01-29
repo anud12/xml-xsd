@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class LinkGroupRuleList implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/world_step/rule_group/link_group_rule_list";
-
     public static LinkGroupRuleList fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new LinkGroupRuleList();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> LinkGroupRuleList.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/world_step/rule_group/link_group_rule_list";
     }
 
     //Attributes
@@ -138,6 +140,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing link_group_rule_list");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger = logger.log("children");
@@ -149,6 +152,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("link_group_rule_list");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
 

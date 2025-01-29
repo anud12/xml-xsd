@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Type_action implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/type__action";
-
     public static Type_action fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Type_action();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> Type_action.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/type__action";
     }
 
     //Attributes
@@ -137,6 +139,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing type__action");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger = logger.log("children");
@@ -149,6 +152,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("type__action");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
 

@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class FromPersonSameLocationGraphNode implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/world_step/rule_group/action_rule/from_person/on_person/selection/from_person_same_location_graph_node";
-
     public static FromPersonSameLocationGraphNode fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new FromPersonSameLocationGraphNode();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> FromPersonSameLocationGraphNode.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/world_step/rule_group/action_rule/from_person/on_person/selection/from_person_same_location_graph_node";
     }
 
     //Attributes
@@ -132,6 +134,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing from_person_same_location_graph_node");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger.log("value");
@@ -144,6 +147,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("from_person_same_location_graph_node");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
       innerLogger.log("value");

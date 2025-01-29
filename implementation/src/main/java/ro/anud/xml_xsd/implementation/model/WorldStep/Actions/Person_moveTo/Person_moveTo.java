@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Person_moveTo implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/world_step/actions/person.move_to";
-
     public static Person_moveTo fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Person_moveTo();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> Person_moveTo.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/world_step/actions/person.move_to";
     }
 
     //Attributes
@@ -148,6 +150,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing person.move_to");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger.log("person_id_ref");
@@ -163,6 +166,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("person.move_to");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
       innerLogger.log("person_id_ref");
@@ -202,8 +206,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.findPathTowards.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection();
-        instance.parentNode(this);
         this.findPathTowards = Optional.of(instance);
+        instance.parentNode(this);
         return this.findPathTowards.get();
       });
     }
@@ -231,8 +235,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.path.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Path.Path();
-        instance.parentNode(this);
         this.path = Optional.of(instance);
+        instance.parentNode(this);
         return this.path.get();
       });
     }

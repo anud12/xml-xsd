@@ -1,0 +1,5 @@
+/world_step/data/people/person
+<person id="0.0"><properties><property property_rule_ref="property" value="1"/></properties></person>
+---
+/world_step/data/people/person
+<person id="0.0"><properties><property property_rule_ref="property" value="1"/></properties><classifications/></person>

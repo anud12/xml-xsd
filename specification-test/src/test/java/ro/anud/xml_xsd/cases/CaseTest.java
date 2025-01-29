@@ -127,19 +127,49 @@ class CaseTest {
         return CaseBuilder.group("groupName")
             .and("middleReturn", () -> {})
             .and(value -> value.and(
-                "assert", () -> {
+                "assert in lambda", () -> {
                     Assertions.assertThat(true).isEqualTo(true);
                 }))
             .build();
     }
+
+    @TestFactory
+    public Stream<DynamicNode> andWithLambdaThatReturnsForUnit() {
+        return CaseBuilder.group("groupName")
+            .and("middleReturn", () -> {})
+            .and(value -> value.and(
+                "lambda return", () -> 2))
+            .and(
+                "assert", integer -> {
+                    Assertions.assertThat(integer).isEqualTo(2);
+                })
+            .build();
+    }
+
     @TestFactory
     public Stream<DynamicNode> andWithLambdaForValue() {
         return CaseBuilder.group("groupName")
             .and("middleReturn", () -> 1)
-            .and(value -> value.and(
-                "assert", integer -> {
+            .and((CaseBuilder.ValueAndLambda<Integer, CaseBuilder>) value -> value.and(
+                "assert in lambda", integer -> {
                     Assertions.assertThat(integer).isEqualTo(1);
                 }))
+            .build();
+    }
+
+    @TestFactory
+    public Stream<DynamicNode> andWithLambdaThatReturnsForValue() {
+        return CaseBuilder.group("groupName")
+            .and("middleReturn", () -> 1)
+            .and((CaseBuilder.ValueAndLambda<Integer, CaseBuilder.Value<Integer>>) value -> value.and(
+                "assert in lambda", integer -> {
+                    Assertions.assertThat(integer).isEqualTo(1);
+                    return 2;
+                }))
+            .and(
+                "assert", integer -> {
+                    Assertions.assertThat(integer).isEqualTo(2);
+                })
             .build();
     }
 

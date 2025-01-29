@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Node implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/world_step/actions/person.move_to/path/node";
-
     public static Node fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Node();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> Node.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/world_step/actions/person.move_to/path/node";
     }
 
     //Attributes
@@ -132,6 +134,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing node");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger.log("node_id_ref");
@@ -144,6 +147,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("node");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
       innerLogger.log("node_id_ref");

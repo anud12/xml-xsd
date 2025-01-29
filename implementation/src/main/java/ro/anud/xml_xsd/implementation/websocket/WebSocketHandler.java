@@ -1,5 +1,7 @@
 package ro.anud.xml_xsd.implementation.websocket;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -15,7 +17,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
+
 @Component()
+@Setter
+@Getter
 public class WebSocketHandler extends TextWebSocketHandler {
 
     private static Logger logger = LoggerFactory.getLogger(WebSocketHandler.class);
@@ -31,7 +37,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
     private final HashMap<String, MessageHandler> handlerHashMap = new HashMap<>();
     private final HashMap<String, Client> clientMap = new HashMap<>();
-    private final WorldStepInstance worldStepInstance = new WorldStepInstance();
+    private WorldStepInstance worldStepInstance = new WorldStepInstance();
     private final Object syncronizer = new Object();
 
     public WebSocketHandler(List<Factory> factoryList) {
@@ -41,7 +47,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(final WebSocketSession session) throws Exception {
         super.afterConnectionEstablished(session);
-        clientMap.put(session.getId(), new Client(worldStepInstance, this, session));
+        clientMap.put(session.getId(), new Client(this, session));
     }
 
     @Override
@@ -52,26 +58,28 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
     public void sendMessage(WebSocketSession webSocketSession, final WebSocketMessage<?> message) throws IOException {
         synchronized (syncronizer) {
-            webSocketSession.sendMessage(message);
+            if(webSocketSession.isOpen()) {
+                webSocketSession.sendMessage(message);
+            }
         }
     }
     public void broadCastMessage(final WebSocketMessage<?> message) throws IOException {
         synchronized (syncronizer) {
-            for (Map.Entry<String, Client> entry : clientMap.entrySet()) {;
+            for (Map.Entry<String, Client> entry : clientMap.entrySet()) {
                 entry.getValue().send(message);
             }
         }
 
     }
 
-
-
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+        var logger = logEnter("handleTextMessage", message.getPayload());
         String payload = message.getPayload();
         var handledMessageCount = handlerHashMap.entrySet()
             .stream()
             .filter((entry) -> {
+
                 var key = entry.getKey() + "\n";
                 if (payload.startsWith(key)) {
                     try {
@@ -85,6 +93,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
             })
             .count();
         if (handledMessageCount <= 0) {
+            logger.log("send not handled");
             session.sendMessage(new TextMessage("not handled"));
         }
     }

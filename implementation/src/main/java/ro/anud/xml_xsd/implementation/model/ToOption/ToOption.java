@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class ToOption implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/to_option";
-
     public static ToOption fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new ToOption();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> ToOption.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/to_option";
     }
 
     //Attributes
@@ -145,6 +147,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing to_option");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger.log("node_rule_ref");
@@ -167,6 +170,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("to_option");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
       innerLogger.log("node_rule_ref");
@@ -242,8 +246,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.distanceToProgressMultiplier.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
-        instance.parentNode(this);
         this.distanceToProgressMultiplier = Optional.of(instance);
+        instance.parentNode(this);
         return this.distanceToProgressMultiplier.get();
       });
     }
@@ -271,8 +275,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.personProgressProperty.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
-        instance.parentNode(this);
         this.personProgressProperty = Optional.of(instance);
+        instance.parentNode(this);
         return this.personProgressProperty.get();
       });
     }

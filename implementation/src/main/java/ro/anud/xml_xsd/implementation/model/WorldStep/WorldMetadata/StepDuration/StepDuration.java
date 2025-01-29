@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class StepDuration implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/world_step/world_metadata/stepDuration";
-
     public static StepDuration fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new StepDuration();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> StepDuration.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/world_step/world_metadata/stepDuration";
     }
 
     //Attributes
@@ -132,6 +134,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing stepDuration");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger.log("value");
@@ -144,6 +147,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("stepDuration");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
       innerLogger.log("value");

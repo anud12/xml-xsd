@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class RuleGroup implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/world_step/rule_group";
-
     public static RuleGroup fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new RuleGroup();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> RuleGroup.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/world_step/rule_group";
     }
 
     //Attributes
@@ -195,6 +197,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing rule_group");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger = logger.log("children");
@@ -213,6 +216,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("rule_group");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
 
@@ -253,8 +257,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.propertyRule.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule();
-        instance.parentNode(this);
         this.propertyRule = Optional.of(instance);
+        instance.parentNode(this);
         return this.propertyRule.get();
       });
     }
@@ -282,8 +286,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.classificationRule.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.ClassificationRule();
-        instance.parentNode(this);
         this.classificationRule = Optional.of(instance);
+        instance.parentNode(this);
         return this.classificationRule.get();
       });
     }
@@ -311,8 +315,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.nameRule.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.NameRule();
-        instance.parentNode(this);
         this.nameRule = Optional.of(instance);
+        instance.parentNode(this);
         return this.nameRule.get();
       });
     }
@@ -340,8 +344,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.actionRule.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.ActionRule();
-        instance.parentNode(this);
         this.actionRule = Optional.of(instance);
+        instance.parentNode(this);
         return this.actionRule.get();
       });
     }
@@ -369,8 +373,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.eventsRule.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.EventsRule();
-        instance.parentNode(this);
         this.eventsRule = Optional.of(instance);
+        instance.parentNode(this);
         return this.eventsRule.get();
       });
     }
@@ -398,8 +402,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.linkGroupRuleList.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LinkGroupRuleList.LinkGroupRuleList();
-        instance.parentNode(this);
         this.linkGroupRuleList = Optional.of(instance);
+        instance.parentNode(this);
         return this.linkGroupRuleList.get();
       });
     }
@@ -427,8 +431,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.locationGraphRule.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.LocationGraphRule();
-        instance.parentNode(this);
         this.locationGraphRule = Optional.of(instance);
+        instance.parentNode(this);
         return this.locationGraphRule.get();
       });
     }
@@ -456,8 +460,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.locationClassificationRule.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationClassificationRule.LocationClassificationRule();
-        instance.parentNode(this);
         this.locationClassificationRule = Optional.of(instance);
+        instance.parentNode(this);
         return this.locationClassificationRule.get();
       });
     }

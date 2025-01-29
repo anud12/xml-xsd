@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Property implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/property";
-
     public static Property fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Property();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> Property.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/property";
     }
 
     //Attributes
@@ -139,6 +141,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing property");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger.log("property_rule_ref");
@@ -155,6 +158,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("property");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
       innerLogger.log("property_rule_ref");
@@ -194,8 +198,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.min.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
-        instance.parentNode(this);
         this.min = Optional.of(instance);
+        instance.parentNode(this);
         return this.min.get();
       });
     }
@@ -223,8 +227,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.max.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
-        instance.parentNode(this);
         this.max = Optional.of(instance);
+        instance.parentNode(this);
         return this.max.get();
       });
     }

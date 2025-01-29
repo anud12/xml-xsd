@@ -8,10 +8,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-public abstract sealed class CaseBuilder<CaseLambdaReturnType> permits CaseBuilder.Unit, CaseBuilder.Value {
+public abstract sealed class CaseBuilder permits CaseBuilder.Unit, CaseBuilder.Value {
+
+    private sealed interface AbstractConsumer permits AndLambda, ValueAndLambda {
+    }
+
+    public non-sealed interface AndLambda<T extends CaseBuilder> extends AbstractConsumer {
+        T accept(CaseBuilder caseBuilder) throws Exception;
+    }
+
+    public non-sealed interface ValueAndLambda<U, T> extends AbstractConsumer {
+        T accept(CaseBuilder.Value<U> caseBuilder) throws Exception;
+    }
 
     public static Unit group(String groupName) {
         var currentCase = new Value.StepGroup(groupName, new ArrayList<>());
@@ -60,7 +70,8 @@ public abstract sealed class CaseBuilder<CaseLambdaReturnType> permits CaseBuild
         this.currentContainer.caseStepList().add(caseBuilder.currentContainer);
         return new Unit(currentContainer);
     }
-    public CaseBuilder<Unit> and(final CaseBuilder<Unit> caseBuilder) {
+
+    public CaseBuilder and(final CaseBuilder caseBuilder) {
         this.currentContainer.caseStepList().add(caseBuilder.currentContainer);
         return new Unit(currentContainer);
     }
@@ -70,40 +81,25 @@ public abstract sealed class CaseBuilder<CaseLambdaReturnType> permits CaseBuild
         return currentContainer.run(reference);
     }
 
-    public abstract CaseLambdaReturnType and(java.util.function.Consumer<CaseLambdaReturnType> lambda);
+    public <T extends CaseBuilder> T and(AndLambda<T> lambda) {
+        try {
+            return lambda.accept(this);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-    public static final class Unit extends CaseBuilder<Unit> {
+    public static final class Unit extends CaseBuilder {
 
         public Unit(final Value.CaseStepContainer currentContainer) {
             super(currentContainer);
         }
-
-        @Override
-        public Unit and(final Consumer<Unit> lambda) {
-            try {
-                lambda.accept(this);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            return this;
-        }
-
     }
 
-    public static final class Value<T> extends CaseBuilder<Value<T>> {
+    public static final class Value<T> extends CaseBuilder {
 
         public Value(final CaseStepContainer currentCase) {
             super(currentCase);
-        }
-
-        @Override
-        public Value<T> and(final java.util.function.Consumer<Value<T>> lambda) {
-            try {
-                lambda.accept(this);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            return this;
         }
 
         public <Return> Value<Return> and(final String endTest, final Function<T, Return> lambda) {
@@ -125,6 +121,14 @@ public abstract sealed class CaseBuilder<CaseLambdaReturnType> permits CaseBuild
                 }
             ));
             return new Unit(currentContainer);
+        }
+
+        public <U> U and(final ValueAndLambda<T, U> lambda) {
+            try {
+                return lambda.accept(this);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
 
         public interface Runnable {

@@ -5,7 +5,6 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classif
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.Entry.Entry;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
-import ro.anud.xml_xsd.implementation.util.RawNode;
 
 import java.util.function.BiConsumer;
 import java.util.stream.Stream;

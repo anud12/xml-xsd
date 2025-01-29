@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class OneOf implements  ro.anud.xml_xsd.implementation.model.interfaces.IType_nameToken.IType_nameToken<OneOf>,  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/name_token/one_of";
-
     public static OneOf fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new OneOf();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> OneOf.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/name_token/one_of";
     }
 
     //Attributes
@@ -136,6 +138,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing one_of");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
 
@@ -152,6 +155,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("one_of");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
 

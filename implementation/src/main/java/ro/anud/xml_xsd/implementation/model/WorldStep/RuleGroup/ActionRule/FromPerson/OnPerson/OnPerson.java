@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class OnPerson implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/world_step/rule_group/action_rule/from_person/on_person";
-
     public static OnPerson fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new OnPerson();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> OnPerson.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/world_step/rule_group/action_rule/from_person/on_person";
     }
 
     //Attributes
@@ -146,6 +148,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing on_person");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger = logger.log("children");
@@ -158,6 +161,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("on_person");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
 
@@ -184,8 +188,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.selection.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.Selection.Selection();
-        instance.parentNode(this);
         this.selection = Optional.of(instance);
+        instance.parentNode(this);
         return this.selection.get();
       });
     }
@@ -213,8 +217,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.mutations.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.Mutations.Mutations();
-        instance.parentNode(this);
         this.mutations = Optional.of(instance);
+        instance.parentNode(this);
         return this.mutations.get();
       });
     }

@@ -17,6 +17,7 @@ public class AtrributeValidator {
         new LocationClassificationRuleRefValidator(),
         new LinkGroupRuleRefValidator(),
         new PersonRefValidator(),
+        new PersonIdRefValidator(),
         new NameRuleRefValidator(),
         new NodeRuleRefValidator(),
         new NodeIdRefValidator(),

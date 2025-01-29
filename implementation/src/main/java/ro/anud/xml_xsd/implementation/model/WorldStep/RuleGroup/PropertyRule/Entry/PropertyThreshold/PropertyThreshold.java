@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class PropertyThreshold implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/world_step/rule_group/property_rule/entry/property-threshold";
-
     public static PropertyThreshold fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new PropertyThreshold();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> PropertyThreshold.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/world_step/rule_group/property_rule/entry/property-threshold";
     }
 
     //Attributes
@@ -136,6 +138,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing property-threshold");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger.log("name");
@@ -152,6 +155,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("property-threshold");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
       innerLogger.log("name");

@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class WorldStep implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/world_step";
-
     public static WorldStep fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new WorldStep();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> WorldStep.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/world_step";
     }
 
     //Attributes
@@ -153,6 +155,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing world_step");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger = logger.log("children");
@@ -167,6 +170,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("world_step");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
 
@@ -197,8 +201,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.worldMetadata.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata();
-        instance.parentNode(this);
         this.worldMetadata = Optional.of(instance);
+        instance.parentNode(this);
         return this.worldMetadata.get();
       });
     }
@@ -254,8 +258,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.data.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data();
-        instance.parentNode(this);
         this.data = Optional.of(instance);
+        instance.parentNode(this);
         return this.data.get();
       });
     }
@@ -283,8 +287,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.actions.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions();
-        instance.parentNode(this);
         this.actions = Optional.of(instance);
+        instance.parentNode(this);
         return this.actions.get();
       });
     }

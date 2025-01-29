@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class FromPerson implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/world_step/rule_group/action_rule/from_person";
-
     public static FromPerson fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new FromPerson();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> FromPerson.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/world_step/rule_group/action_rule/from_person";
     }
 
     //Attributes
@@ -156,6 +158,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing from_person");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger.log("id");
@@ -172,6 +175,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("from_person");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
       innerLogger.log("id");
@@ -213,8 +217,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.selection.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection();
-        instance.parentNode(this);
         this.selection = Optional.of(instance);
+        instance.parentNode(this);
         return this.selection.get();
       });
     }
@@ -242,8 +246,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.mutations.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.Mutations.Mutations();
-        instance.parentNode(this);
         this.mutations = Optional.of(instance);
+        instance.parentNode(this);
         return this.mutations.get();
       });
     }
@@ -271,8 +275,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.onPerson.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.OnPerson();
-        instance.parentNode(this);
         this.onPerson = Optional.of(instance);
+        instance.parentNode(this);
         return this.onPerson.get();
       });
     }

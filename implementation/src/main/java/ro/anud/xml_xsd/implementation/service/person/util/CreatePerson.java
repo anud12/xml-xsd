@@ -28,7 +28,11 @@ public class CreatePerson {
         typePersonSelection.streamClassification().forEach(classification -> {
             applyClassification(worldStepInstance, classification, person);
         });
-        return Mutation.of(outInstance -> person);
+        return Mutation.of(outInstance -> {
+
+            return outInstance.person.repository.getOrCreate(person);
+
+        });
     }
 
     private static void applyProperty(

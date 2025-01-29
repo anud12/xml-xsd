@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Node implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/world_step/data/location/location_graph/node";
-
     public static Node fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Node();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> Node.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/world_step/data/location/location_graph/node";
     }
 
     //Attributes
@@ -174,6 +176,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing node");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger.log("node_rule_ref");
@@ -193,6 +196,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("node");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
       innerLogger.log("node_rule_ref");
@@ -250,8 +254,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.name.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Name.Name();
-        instance.parentNode(this);
         this.name = Optional.of(instance);
+        instance.parentNode(this);
         return this.name.get();
       });
     }
@@ -279,8 +283,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.position.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Position.Position();
-        instance.parentNode(this);
         this.position = Optional.of(instance);
+        instance.parentNode(this);
         return this.position.get();
       });
     }
@@ -308,8 +312,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.classifications.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Classifications.Classifications();
-        instance.parentNode(this);
         this.classifications = Optional.of(instance);
+        instance.parentNode(this);
         return this.classifications.get();
       });
     }
@@ -337,8 +341,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.links.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.Links();
-        instance.parentNode(this);
         this.links = Optional.of(instance);
+        instance.parentNode(this);
         return this.links.get();
       });
     }
@@ -366,8 +370,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.people.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.People.People();
-        instance.parentNode(this);
         this.people = Optional.of(instance);
+        instance.parentNode(this);
         return this.people.get();
       });
     }

@@ -55,8 +55,6 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     public class ${normalizeNameClass(dependantType.name)} implements ${extensionNames.length > 0 && ` ${extensionNames.map(e => e + `<${normalizeNameClass(dependantType.name)}>`).join(", ")}, `} ro.anud.xml_xsd.implementation.util.LinkedNode {
           
-      public static final String TYPE_ID = "${dependantTypeBuildXpath(dependantType)}";
-          
       public static ${normalizeNameClass(dependantType.name)} fromRawNode(RawNode rawNode) {
         logEnter();
         var instance = new ${normalizeNameClass(dependantType.name)}();
@@ -82,6 +80,10 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
             .map(o -> ${normalizeNameClass(dependantType.name)}.fromRawNode(o, parent))
             .collect(Collectors.toList());
         return logReturn(returnList);
+      }
+      
+      public String classTypeId() {
+        return "${dependantTypeBuildXpath(dependantType)}";
       }
       
       //Attributes
@@ -184,6 +186,7 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
         var logger = logEnter();
         this.rawNode = rawNode;
         // Godot.GD.Print("Deserializing ${dependantType.name}");
+        
         var innerLogger = logger.log("attributes");
         //Deserialize attributes
         ${dependantTypeToAttributeDeserializationBody(dependantType)}
@@ -210,6 +213,7 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
       public RawNode serializeIntoRawNode() 
       {
         var logger = logEnter();
+        rawNode.setTag("${dependantType.name}");
         var innerLogger = logger.log("attributes");
         //Serialize attributes
         ${dependantTypeToAttributeSerializationBody(dependantType)}

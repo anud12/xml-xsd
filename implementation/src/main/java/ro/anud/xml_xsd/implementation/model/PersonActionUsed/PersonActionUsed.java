@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class PersonActionUsed implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/person_action_used";
-
     public static PersonActionUsed fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new PersonActionUsed();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> PersonActionUsed.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/person_action_used";
     }
 
     //Attributes
@@ -123,6 +125,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing person_action_used");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger.log("action_rule_ref");
@@ -135,6 +138,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("person_action_used");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
       innerLogger.log("action_rule_ref");

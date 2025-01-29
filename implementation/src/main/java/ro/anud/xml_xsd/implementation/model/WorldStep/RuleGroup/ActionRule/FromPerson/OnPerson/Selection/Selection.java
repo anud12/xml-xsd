@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Selection implements  ro.anud.xml_xsd.implementation.model.interfaces.IType_personSelection.IType_personSelection<Selection>,  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/world_step/rule_group/action_rule/from_person/on_person/selection";
-
     public static Selection fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Selection();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> Selection.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/world_step/rule_group/action_rule/from_person/on_person/selection";
     }
 
     //Attributes
@@ -152,6 +154,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing selection");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
 
@@ -176,6 +179,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("selection");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
 
@@ -215,8 +219,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.fromPersonSameLocationGraphNode.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.OnPerson.Selection.FromPersonSameLocationGraphNode.FromPersonSameLocationGraphNode();
-        instance.parentNode(this);
         this.fromPersonSameLocationGraphNode = Optional.of(instance);
+        instance.parentNode(this);
         return this.fromPersonSameLocationGraphNode.get();
       });
     }
@@ -244,8 +248,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.radius.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
-        instance.parentNode(this);
         this.radius = Optional.of(instance);
+        instance.parentNode(this);
         return this.radius.get();
       });
     }
@@ -273,8 +277,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.min.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
-        instance.parentNode(this);
         this.min = Optional.of(instance);
+        instance.parentNode(this);
         return this.min.get();
       });
     }
@@ -302,8 +306,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.max.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
-        instance.parentNode(this);
         this.max = Optional.of(instance);
+        instance.parentNode(this);
         return this.max.get();
       });
     }

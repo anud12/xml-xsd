@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class _ref implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/type__name_token/name_token/ref";
-
     public static _ref fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new _ref();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> _ref.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/type__name_token/name_token/ref";
     }
 
     //Attributes
@@ -132,6 +134,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing ref");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger.log("name_rule_ref");
@@ -144,6 +147,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("ref");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
       innerLogger.log("name_rule_ref");

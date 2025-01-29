@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class MoveTowards implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/world_step/actions/by/move_towards";
-
     public static MoveTowards fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new MoveTowards();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> MoveTowards.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/world_step/actions/by/move_towards";
     }
 
     //Attributes
@@ -136,6 +138,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing move_towards");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger.log("layer");
@@ -152,6 +155,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("move_towards");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
       innerLogger.log("layer");

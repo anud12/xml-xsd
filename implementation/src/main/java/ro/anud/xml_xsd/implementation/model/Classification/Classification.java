@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Classification implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/classification";
-
     public static Classification fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Classification();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> Classification.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/classification";
     }
 
     //Attributes
@@ -123,6 +125,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing classification");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger.log("classification_rule_ref");
@@ -135,6 +138,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("classification");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
       innerLogger.log("classification_rule_ref");

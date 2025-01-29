@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Or implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/type__node_graph__selection/in__location_graph/has__location_graph_id/or";
-
     public static Or fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Or();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> Or.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/type__node_graph__selection/in__location_graph/has__location_graph_id/or";
     }
 
     //Attributes
@@ -132,6 +134,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing or");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger.log("location_graph_id_ref");
@@ -144,6 +147,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("or");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
       innerLogger.log("location_graph_id_ref");

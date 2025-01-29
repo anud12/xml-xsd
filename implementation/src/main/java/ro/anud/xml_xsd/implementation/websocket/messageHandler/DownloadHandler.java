@@ -1,7 +1,10 @@
 package ro.anud.xml_xsd.implementation.websocket.messageHandler;
 
 import org.springframework.stereotype.Component;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.util.LocalLogger;
+import ro.anud.xml_xsd.implementation.util.RawNode;
+import ro.anud.xml_xsd.implementation.websocket.Client;
 import ro.anud.xml_xsd.implementation.websocket.WebSocketHandler;
 
 import javax.xml.transform.TransformerException;
@@ -15,13 +18,11 @@ public record DownloadHandler() implements WebSocketHandler.Factory {
         webSocketHandler.add(
             "download", (client, string) -> {
                 var logger = LocalLogger.logEnter("download");
-                try {
-                    serializeWorldStepInstance(client.worldStepInstance())
-                        .ifPresent(client::sendOk);
-                } catch (TransformerException e) {
-                    client.broadcastNOk(e.toString());
-                    throw new RuntimeException(e);
-                }
+                webSocketHandler.getWorldStepInstance().getWorldStep().map(WorldStep::serializeIntoRawNode)
+                        .map(RawNode::toDocumentString)
+                            .ifPresent(string1 -> client.send(Client.ReturnCode.Download, string1));
+                //                    serializeWorldStepInstance(client.worldStepInstance())
+                //                        .ifPresent(string1 -> client.send(Client.ReturnCode.Download, string1));
                 logger.logReturnVoid();
             });
     }

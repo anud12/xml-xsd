@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class In_locationGraph implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/in__location_graph";
-
     public static In_locationGraph fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new In_locationGraph();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> In_locationGraph.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/in__location_graph";
     }
 
     //Attributes
@@ -129,6 +131,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing in__location_graph");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger = logger.log("children");
@@ -140,6 +143,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("in__location_graph");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
 
@@ -164,8 +168,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.has_locationGraphId.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.In_locationGraph.Has_locationGraphId.Has_locationGraphId();
-        instance.parentNode(this);
         this.has_locationGraphId = Optional.of(instance);
+        instance.parentNode(this);
         return this.has_locationGraphId.get();
       });
     }

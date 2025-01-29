@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Type_nodeGraph_selection implements  ro.anud.xml_xsd.implementation.model.interfaces.IType_nodeGraph_selection.IType_nodeGraph_selection<Type_nodeGraph_selection>,  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/type__node_graph__selection";
-
     public static Type_nodeGraph_selection fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Type_nodeGraph_selection();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> Type_nodeGraph_selection.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/type__node_graph__selection";
     }
 
     //Attributes
@@ -137,6 +139,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing type__node_graph__selection");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger = logger.log("children");
@@ -149,6 +152,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("type__node_graph__selection");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
 
@@ -175,8 +179,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.in_locationGraph.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.In_locationGraph.In_locationGraph();
-        instance.parentNode(this);
         this.in_locationGraph = Optional.of(instance);
+        instance.parentNode(this);
         return this.in_locationGraph.get();
       });
     }
@@ -204,8 +208,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.has_nodeGraphId.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Has_nodeGraphId.Has_nodeGraphId();
-        instance.parentNode(this);
         this.has_nodeGraphId = Optional.of(instance);
+        instance.parentNode(this);
         return this.has_nodeGraphId.get();
       });
     }

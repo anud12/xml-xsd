@@ -134,13 +134,7 @@ public class AnalyzeController {
             );
         var outputDocument = worldStepInstance.offsetRandomizationTable()
             .getWorldStep()
-            .map(worldStep -> {
-                try {
-                    return worldStep.serializeIntoRawNode().toDocument("world_step");
-                } catch (ParserConfigurationException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+            .map(worldStep -> worldStep.serializeIntoRawNode().toDocument("world_step"));
 
         if(outputDocument.isEmpty()) {
             return Optional.empty();

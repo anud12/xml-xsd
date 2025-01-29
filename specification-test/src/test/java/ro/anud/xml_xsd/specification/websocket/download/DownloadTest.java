@@ -4,7 +4,8 @@ import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
-import ro.anud.xml_xsd.specification.WebSocketTestBase;
+import ro.anud.xml_xsd.specification.WebSocketTestClient;
+import ro.anud.xml_xsd.websocket.WebSocketTestBase;
 
 import java.util.Collection;
 
@@ -28,7 +29,7 @@ public class DownloadTest {
 
     @TestFactory
     public Collection<DynamicTest> testWebSocketEndpoint() throws Exception {
-        return WebSocketTestBase.runTestRelativeToClass(getClass(), WebSocketTestBase.Command.Download);
+        return WebSocketTestBase.runTestRelativeToClass(getClass(), WebSocketTestClient.Command.Download);
 
     }
 }

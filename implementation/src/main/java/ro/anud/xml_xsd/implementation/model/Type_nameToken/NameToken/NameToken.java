@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class NameToken implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/type__name_token/name_token";
-
     public static NameToken fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new NameToken();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> NameToken.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/type__name_token/name_token";
     }
 
     //Attributes
@@ -148,6 +150,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing name_token");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger.log("prefix");
@@ -162,6 +165,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("name_token");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
       innerLogger.log("prefix");
@@ -201,8 +205,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this._ref.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken._ref._ref();
-        instance.parentNode(this);
         this._ref = Optional.of(instance);
+        instance.parentNode(this);
         return this._ref.get();
       });
     }
@@ -230,8 +234,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.oneOf.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.OneOf.OneOf();
-        instance.parentNode(this);
         this.oneOf = Optional.of(instance);
+        instance.parentNode(this);
         return this.oneOf.get();
       });
     }

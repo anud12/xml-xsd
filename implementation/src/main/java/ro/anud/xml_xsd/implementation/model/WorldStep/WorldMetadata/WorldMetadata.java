@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class WorldMetadata implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/world_step/world_metadata";
-
     public static WorldMetadata fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new WorldMetadata();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> WorldMetadata.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/world_step/world_metadata";
     }
 
     //Attributes
@@ -178,6 +180,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing world_metadata");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger = logger.log("children");
@@ -194,6 +197,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("world_metadata");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
 
@@ -228,8 +232,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.previousWorldStep.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.PreviousWorldStep.PreviousWorldStep();
-        instance.parentNode(this);
         this.previousWorldStep = Optional.of(instance);
+        instance.parentNode(this);
         return this.previousWorldStep.get();
       });
     }
@@ -257,8 +261,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.nextWorldStep.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.NextWorldStep.NextWorldStep();
-        instance.parentNode(this);
         this.nextWorldStep = Optional.of(instance);
+        instance.parentNode(this);
         return this.nextWorldStep.get();
       });
     }

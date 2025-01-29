@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class NecessaryNode implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/world_step/rule_group/location_graph_rule/setup/necessary_node";
-
     public static NecessaryNode fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new NecessaryNode();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> NecessaryNode.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/world_step/rule_group/location_graph_rule/setup/necessary_node";
     }
 
     //Attributes
@@ -144,6 +146,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing necessary_node");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger.log("node_rule_ref");
@@ -161,6 +164,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("necessary_node");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
       innerLogger.log("node_rule_ref");

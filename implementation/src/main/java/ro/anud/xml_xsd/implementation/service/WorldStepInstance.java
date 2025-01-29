@@ -1,6 +1,7 @@
 package ro.anud.xml_xsd.implementation.service;
 
 import lombok.Setter;
+import org.springframework.web.socket.TextMessage;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.Counter.Counter;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.ElapsedTime.ElapsedTime;
@@ -14,14 +15,16 @@ import ro.anud.xml_xsd.implementation.service.location_graph.LocationGraphInstan
 import ro.anud.xml_xsd.implementation.service.name.NameInstance;
 import ro.anud.xml_xsd.implementation.service.person.PersonInstance;
 import ro.anud.xml_xsd.implementation.service.util.ComputeOperation;
+import ro.anud.xml_xsd.implementation.util.LinkedNode;
+import ro.anud.xml_xsd.implementation.websocket.WebSocketHandler;
 
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.*;
 
 @Setter
 public class WorldStepInstance {
@@ -35,6 +38,7 @@ public class WorldStepInstance {
     public InstanceTypeEnum instance;
     private WorldStepInstance outInstance = this;
     private Optional<WorldStep> worldStep = Optional.empty();
+    private Optional<WebSocketHandler> webSocketHandler = Optional.empty();
     public final RuleRepository ruleRepository = new RuleRepository(this);
     public final PersonInstance person = new PersonInstance(this);
     public final PropertyInstance property = new PropertyInstance(this);
@@ -60,6 +64,31 @@ public class WorldStepInstance {
         this.worldStep = Optional.ofNullable(worldStep);
         index();
         return this;
+    }
+
+    public WorldStepInstance setWebSocketHandler(WebSocketHandler webSocketHandler) {
+        this.webSocketHandler = Optional.ofNullable(webSocketHandler);
+
+        return this;
+    }
+
+    public void sendLinkNode(final LinkedNode linkedNode) {
+        var logger = logEnter("sendLinkNode");
+        if(webSocketHandler.isEmpty()){
+            logger.log("webSocketHandler is empty");
+            return;
+        }
+        webSocketHandler.ifPresent(webSocketHandler1 -> {
+            try {
+                logger.log("sending message", linkedNode.serializeIntoRawNode().toDocumentString());
+                webSocketHandler1.broadCastMessage(new TextMessage("update\n"
+                    + linkedNode.classTypeId()
+                    + "\n" + linkedNode.serializeIntoRawNode().toDocumentString()
+                ));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public Stream<WorldStep> streamWorldStep() {

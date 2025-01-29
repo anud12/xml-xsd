@@ -61,8 +61,8 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
               {
                 return this.${normalizeNameField(key)}.orElseGet(() -> {
                   var instance = new ${baseTypeString}();
-                  instance.parentNode(this);
                   this.${normalizeNameField(key)} = Optional.of(instance);
+                  instance.parentNode(this);
                   return this.${normalizeNameField(key)}.get();
                 });
               }

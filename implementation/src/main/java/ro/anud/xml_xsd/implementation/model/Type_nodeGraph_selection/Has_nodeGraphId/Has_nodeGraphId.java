@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Has_nodeGraphId implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/type__node_graph__selection/has__node_graph_id";
-
     public static Has_nodeGraphId fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Has_nodeGraphId();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> Has_nodeGraphId.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/type__node_graph__selection/has__node_graph_id";
     }
 
     //Attributes
@@ -140,6 +142,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing has__node_graph_id");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger.log("node_graph_id_ref");
@@ -153,6 +156,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("has__node_graph_id");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
       innerLogger.log("node_graph_id_ref");

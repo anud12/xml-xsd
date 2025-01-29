@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class LinkTo implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/world_step/actions/person.teleport/link_to";
-
     public static LinkTo fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new LinkTo();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> LinkTo.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/world_step/actions/person.teleport/link_to";
     }
 
     //Attributes
@@ -140,6 +142,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing link_to");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger.log("accumulated_progress");
@@ -154,6 +157,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("link_to");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
       innerLogger.log("accumulated_progress");

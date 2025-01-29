@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Person implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/on/person";
-
     public static Person fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Person();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> Person.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/on/person";
     }
 
     //Attributes
@@ -146,6 +148,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing person");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger = logger.log("children");
@@ -160,6 +163,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("person");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
 
@@ -186,8 +190,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.select.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection();
-        instance.parentNode(this);
         this.select = Optional.of(instance);
+        instance.parentNode(this);
         return this.select.get();
       });
     }
@@ -215,8 +219,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.propertyMutation.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.Type_propertyMutation.Type_propertyMutation();
-        instance.parentNode(this);
         this.propertyMutation = Optional.of(instance);
+        instance.parentNode(this);
         return this.propertyMutation.get();
       });
     }

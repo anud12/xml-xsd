@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class PropertyMutation implements  ro.anud.xml_xsd.implementation.model.interfaces.IType_mathOperations.IType_mathOperations<PropertyMutation>,  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/world_step/rule_group/events_rule/entry/then/property_mutation";
-
     public static PropertyMutation fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new PropertyMutation();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> PropertyMutation.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/world_step/rule_group/events_rule/entry/then/property_mutation";
     }
 
     //Attributes
@@ -137,6 +139,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing property_mutation");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger.log("property_rule_ref");
@@ -155,6 +158,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("property_mutation");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
       innerLogger.log("property_rule_ref");

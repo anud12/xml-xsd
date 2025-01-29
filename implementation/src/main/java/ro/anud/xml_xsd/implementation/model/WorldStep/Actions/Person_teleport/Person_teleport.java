@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Person_teleport implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/world_step/actions/person.teleport";
-
     public static Person_teleport fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Person_teleport();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> Person_teleport.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/world_step/actions/person.teleport";
     }
 
     //Attributes
@@ -148,6 +150,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing person.teleport");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger.log("person_id_ref");
@@ -162,6 +165,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("person.teleport");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
       innerLogger.log("person_id_ref");
@@ -201,8 +205,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.locationGraph.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LocationGraph.LocationGraph();
-        instance.parentNode(this);
         this.locationGraph = Optional.of(instance);
+        instance.parentNode(this);
         return this.locationGraph.get();
       });
     }
@@ -230,8 +234,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.linkTo.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo();
-        instance.parentNode(this);
         this.linkTo = Optional.of(instance);
+        instance.parentNode(this);
         return this.linkTo.get();
       });
     }

@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Person implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/world_step/data/people/person";
-
     public static Person fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Person();
@@ -49,6 +47,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           .map(o -> Person.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
+    }
+
+    public String classTypeId() {
+      return "/world_step/data/people/person";
     }
 
     //Attributes
@@ -158,6 +160,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       var logger = logEnter();
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing person");
+
       var innerLogger = logger.log("attributes");
       //Deserialize attributes
       innerLogger.log("id");
@@ -175,6 +178,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
+      rawNode.setTag("person");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
       innerLogger.log("id");
@@ -228,8 +232,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.properties.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties();
-        instance.parentNode(this);
         this.properties = Optional.of(instance);
+        instance.parentNode(this);
         return this.properties.get();
       });
     }
@@ -285,8 +289,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.classifications.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications();
-        instance.parentNode(this);
         this.classifications = Optional.of(instance);
+        instance.parentNode(this);
         return this.classifications.get();
       });
     }

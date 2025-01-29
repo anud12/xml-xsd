@@ -12,6 +12,7 @@ public class LocalLogger {
     static Logger logger = LoggerFactory.getLogger(RawNode.class);
 
     private static boolean SKIP_STACK = false;
+    private static boolean SKIP_PRINT = false;
 
     public static class LogClass {
         static String PARENT_DELIMITER = "|>";
@@ -26,6 +27,9 @@ public class LocalLogger {
         }
 
         public LogClass log(Object... args) {
+            if(SKIP_PRINT) {
+                return new LogClass();
+            }
             var prefix = " [ log  ]";
             if(SKIP_STACK) {
                 print(getStringBuilder(prefix, args , List.of()));
@@ -59,6 +63,9 @@ public class LocalLogger {
         }
 
         public LogClass logTodo(Object... args) {
+            if(SKIP_PRINT) {
+                return new LogClass();
+            }
             var prefix = " [ TODO ]";
             if(SKIP_STACK) {
                 print(getStringBuilder(prefix, args , List.of()));
@@ -77,6 +84,9 @@ public class LocalLogger {
         }
 
         public LogClass logEnter(Object... args) {
+            if(SKIP_PRINT) {
+                return new LogClass();
+            }
             var prefix = " [enter ]";
             if(SKIP_STACK) {
                 print(getStringBuilder(prefix, args , List.of()));
@@ -94,6 +104,9 @@ public class LocalLogger {
         }
 
         public <T> T logReturn(T returnValue, Object... args) {
+            if(SKIP_PRINT) {
+                return returnValue;
+            }
             var prefix = " [return]";
             if(SKIP_STACK) {
                 print(getStringBuilder(prefix, args , List.of()));
@@ -116,6 +129,9 @@ public class LocalLogger {
         }
 
         public void logReturnVoid(Object... args) {
+            if(SKIP_PRINT) {
+                return;
+            }
             var prefix = " [return]";
             if(SKIP_STACK) {
                 print(getStringBuilder(prefix, args , List.of()));
