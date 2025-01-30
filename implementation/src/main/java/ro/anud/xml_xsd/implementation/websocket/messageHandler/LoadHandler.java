@@ -1,7 +1,5 @@
 package ro.anud.xml_xsd.implementation.websocket.messageHandler;
 
-import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.xml.sax.SAXException;
 import ro.anud.xml_xsd.implementation.WorldStepRunner;
@@ -42,6 +40,7 @@ public record LoadHandler(WorldStepRunner worldStepRunner) implements WebSocketH
                     }
 
                     webSocketHandler.getWorldStepInstance().setWorldStep(worldStep);
+                    webSocketHandler.getWorldStepInstance().getOutInstance().setWorldStep(buildWorldStep(string));
 
                     client.send(Client.ReturnCode.Load);
                 } catch (SAXException e) {

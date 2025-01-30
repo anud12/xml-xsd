@@ -7,10 +7,6 @@ import ro.anud.xml_xsd.implementation.util.RawNode;
 import ro.anud.xml_xsd.implementation.websocket.Client;
 import ro.anud.xml_xsd.implementation.websocket.WebSocketHandler;
 
-import javax.xml.transform.TransformerException;
-
-import static ro.anud.xml_xsd.implementation.controller.http.AnalyzeController.serializeWorldStepInstance;
-
 @Component
 public record DownloadHandler() implements WebSocketHandler.Factory {
     @Override
@@ -21,8 +17,6 @@ public record DownloadHandler() implements WebSocketHandler.Factory {
                 webSocketHandler.getWorldStepInstance().getWorldStep().map(WorldStep::serializeIntoRawNode)
                         .map(RawNode::toDocumentString)
                             .ifPresent(string1 -> client.send(Client.ReturnCode.Download, string1));
-                //                    serializeWorldStepInstance(client.worldStepInstance())
-                //                        .ifPresent(string1 -> client.send(Client.ReturnCode.Download, string1));
                 logger.logReturnVoid();
             });
     }

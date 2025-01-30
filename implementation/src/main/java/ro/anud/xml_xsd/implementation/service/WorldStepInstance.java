@@ -2,6 +2,8 @@ package ro.anud.xml_xsd.implementation.service;
 
 import lombok.Setter;
 import org.springframework.web.socket.TextMessage;
+import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.LocationGraph;
+import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.Counter.Counter;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.ElapsedTime.ElapsedTime;
@@ -63,6 +65,7 @@ public class WorldStepInstance {
     public WorldStepInstance setWorldStep(WorldStep worldStep) {
         this.worldStep = Optional.ofNullable(worldStep);
         index();
+        addUpdateHandlers();
         return this;
     }
 
@@ -74,7 +77,7 @@ public class WorldStepInstance {
 
     public void sendLinkNode(final LinkedNode linkedNode) {
         var logger = logEnter("sendLinkNode");
-        if(webSocketHandler.isEmpty()){
+        if (webSocketHandler.isEmpty()) {
             logger.log("webSocketHandler is empty");
             return;
         }
@@ -120,6 +123,26 @@ public class WorldStepInstance {
             return Optional.empty();
         }
         return logger.logReturn(ComputeOperation.computeOperation(this, typeMathOperations.get(), person));
+    }
+
+    private void addUpdateHandlers() {
+        this.worldStep.ifPresent(worldStep1 -> worldStep1.onChange(objects -> {
+                for (Object o : objects) {
+                    if (o instanceof Person object) {
+                        sendLinkNode(object);
+                        return;
+                    }
+                    if(o instanceof Node object) {
+                        sendLinkNode(object);
+                        return;
+                    }
+                    if(o instanceof LocationGraph object) {
+                        sendLinkNode(object);
+                        return;
+                    }
+                }
+            }
+        ));
     }
 
     public WorldStepInstance offsetRandomizationTable() {

@@ -1,0 +1,32 @@
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <location_graph_rule id="location_graph_rule">
+      <setup>
+        <starting_node node_rule_ref="node_rule"/>
+        <necessary_node node_rule_ref="node_rule" min="2"/>
+      </setup>
+      <node_rule id="node_rule">
+        <link_group_list>
+          <link_group id="link_group" angle="0">
+            <to_option node_rule_ref="node_rule" distance="0" adjacent_depth_limit="0"/>
+          </link_group>
+        </link_group_list>
+      </node_rule>
+    </location_graph_rule>
+  </rule_group>
+  <data>
+  </data>
+  <actions>
+    <location_graph.create location_graph_rule_ref="location_graph_rule"/>
+  </actions>
+</world_step>

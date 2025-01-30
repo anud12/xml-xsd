@@ -1,7 +1,7 @@
 package ro.anud.xml_xsd.implementation.util;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 public interface LinkedNode {
 
@@ -18,7 +18,7 @@ public interface LinkedNode {
 
     RawNode rawNode();
 
-    void childChanged(Set<Object> clazzSet);
+    void childChanged(List<Object> clazzSet);
 
     int buildIndexForChild(Object object);
 

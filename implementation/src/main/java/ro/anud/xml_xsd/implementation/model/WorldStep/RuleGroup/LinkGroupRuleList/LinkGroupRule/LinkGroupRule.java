@@ -95,20 +95,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     @Builder.Default
-    private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
+    private List<Consumer<List<Object>>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
       return "link_group_rule";
     }
 
-    public void childChanged(Set<Object> set) {
-      set.add(this);
-      onChangeList.forEach(consumer -> consumer.accept(set));
-      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(set));
+    public void childChanged(List<Object> list) {
+      list.addLast(this);
+      onChangeList.forEach(consumer -> consumer.accept(list));
+      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(list));
     }
 
     private void triggerOnChange() {
-      childChanged(new HashSet<>());
+      childChanged(new ArrayList<>());
     }
 
     public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -136,7 +136,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<Set<Object>> onChange) {
+    public Subscription onChange(Consumer<List<Object>> onChange) {
       logEnter();
       onChangeList.add(onChange);
       return logReturn(() -> onChangeList.remove(onChange));

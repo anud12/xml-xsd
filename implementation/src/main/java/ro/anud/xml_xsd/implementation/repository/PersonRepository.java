@@ -40,9 +40,6 @@ public class PersonRepository {
                         logger.log("worldStep onChange triggered is instance of", People.class);
                         loadData(Stream.of(people));
                     }
-                    if(o instanceof Person person) {
-                        worldStepInstance.sendLinkNode(person);
-                    }
                 });
         }));
         return this;

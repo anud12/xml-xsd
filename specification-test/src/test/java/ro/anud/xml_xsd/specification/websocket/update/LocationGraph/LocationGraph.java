@@ -1,4 +1,4 @@
-package ro.anud.xml_xsd.specification.websocket.update.person;
+package ro.anud.xml_xsd.specification.websocket.update.LocationGraph;
 
 import org.junit.jupiter.api.DynamicNode;
 import org.junit.jupiter.api.TestFactory;
@@ -29,7 +29,7 @@ send xml with updated person
   websocket, download
  */
 @Execution(ExecutionMode.SAME_THREAD)
-public class DownloadTest {
+public class LocationGraph {
 
     @TestFactory
     public Stream<DynamicNode> testWebSocketEndpoint() {
