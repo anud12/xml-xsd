@@ -12,6 +12,7 @@ using XSD.Nworld_step.Nactions;
 using XSD.Nworld_step.Ndata.Nlocation;
 using XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph;
 using Node = Godot.Node;
+using util.dataStore;
 
 public class LoadWorldStep
 {
@@ -104,7 +105,7 @@ public class LoadWorldStep
 			newPosition += locationGraphNodeComponent.getOffset();
 			locationGraphNodeComponent.SetPosition(newPosition);
 
-			locationGraphNodeComponent.initialize(node, worldStep);
+			locationGraphNodeComponent.initialize(node);
 			locationGraphNodeComponent.setOnCreateAdjacentButtonPressed(node => addAdjacent(locationGraph, node));
 			return new Node[] { locationGraphNodeComponent };
 		})) ?? Array.Empty<Node>().AsEnumerable();

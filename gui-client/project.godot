@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Gui-client"
-run/main_scene="res://scenes/Main.tscn"
+run/main_scene="res://scenes/MainScene.tscn"
 config/features=PackedStringArray("4.2", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 

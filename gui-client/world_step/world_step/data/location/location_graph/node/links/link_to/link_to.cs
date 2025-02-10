@@ -9,14 +9,30 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks {
   public class link_to  {
+
+    public static string ClassTypeId = "/world_step/data/location/location_graph/node/links/link_to";
+    public static string TagName = "link_to";
+
+    public string Tag = "link_to";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String node_id_ref;
+    public System.String _node_id_ref;
     public System.Int32 total_progress;
+    public System.Int32 _total_progress;
 
     //Children elements
-    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people? people = null;
-    public type__math_operations? person_progress_property = null;
+    private XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people? _people = null;
+    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people? people {
+      get { return _people; }
+      set { _people = value; }
+    }
+
+    private type__math_operations? _person_progress_property = null;
+    public type__math_operations? person_progress_property {
+      get { return _person_progress_property; }
+      set { _person_progress_property = value; }
+    }
     public link_to()
     {
     }
@@ -49,8 +65,8 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks {
       }
 
       //Deserialize children
-      this.people = rawNode.InitializeWithRawNode("people", this.people);
-      this.person_progress_property = rawNode.InitializeWithRawNode("person_progress_property", this.person_progress_property);
+      this._people = rawNode.InitializeWithRawNode("people", this._people);
+      this._person_progress_property = rawNode.InitializeWithRawNode("person_progress_property", this._person_progress_property);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -99,18 +115,22 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks {
     }
     public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people? Get_people()
     {
-      return this.people;
+      return this._people;
     }
     public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people GetOrInsertDefault_people()
     {
-      if(this.people == null) {
-        this.people = new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people();
+      if(this._people == null) {
+
+        // true2
+        this._people = new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people();
       }
-      return this.people;
+      #pragma warning disable CS8603 // Possible null reference return.
+      return this.Get_people();
+      #pragma warning restore CS8603 // Possible null reference return.
     }
     public void Set_people(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people? value)
     {
-      this.people = value;
+        this._people = value;
     }
     public type__math_operations? Get_person_progress_property()
     {
@@ -119,6 +139,26 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks {
     public void Set_person_progress_property(type__math_operations? value)
     {
       this.person_progress_property = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people.TagName))
+      {
+        this.people ??= new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people();
+        xpath = xpath.Substring(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people.TagName.Length + 3);
+        this.people.SetXPath(xpath, rawNode);
+        return;
+      }
+      if(xpath.StartsWith(type__math_operations.TagName))
+      {
+        this.person_progress_property ??= new type__math_operations();
+        xpath = xpath.Substring(type__math_operations.TagName.Length + 3);
+        this.person_progress_property.SetXPath(xpath, rawNode);
+        return;
+      }
+
+      Deserialize(rawNode);
     }
   }
 }

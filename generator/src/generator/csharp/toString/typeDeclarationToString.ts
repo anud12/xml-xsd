@@ -15,6 +15,8 @@ import {DirectoryMetadata} from "../../../memory_fs/directoryMetadata";
 import {dependantTypeGetFullQualifiedName} from "./dependantTypeGetFullQualifiedName";
 import {getDependantTypeNamespace} from "./getDependantTypeNamespace";
 import {getDependantTypeChildNamespace} from "./getDependantTypeChildNamespace";
+import {dependantTypeBuildXpath} from "./dependantType/dependantTypeBuildXpath";
+import {dependantTypeToSetXPath} from "./dependantTypeToSetXPath";
 
 
 type ClassTemplateParts = {
@@ -39,6 +41,11 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
 
   const templateString = template()`
     public class ${normalizeName(dependantType.name)} ${extensionNames.length > 0 && `: ${extensionNames.join(", ")}`} {
+      
+      public static string ClassTypeId = "${dependantTypeBuildXpath(dependantType)}";
+      public static string TagName = "${dependantType.name}";
+      
+      public string Tag = "${dependantType.name}";
       public RawNode rawNode = new RawNode();
       //Attributes
       ${dependantTypeToAttributeDeclaration(dependantType)}
@@ -133,7 +140,16 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
       ${extensions.map(extension => dependantTypeToAttributeGetterSetter(extension)).join("\n")}
       ${dependantTypeToChildrenGetterSetter(dependantType)?.templateString}
       ${extensions.map(extension => dependantTypeToChildrenGetterSetter(extension)?.templateString).join("\n")}
+      
+      
+      public void SetXPath(string xpath, RawNode rawNode) 
+      {
+        ${dependantTypeToSetXPath(dependantType)?.templateString}
+        
+        Deserialize(rawNode);
+      }
     }
+    
   `
 
 

@@ -16,6 +16,11 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {
   public class person_default : Itype__math_operations {
+
+    public static string ClassTypeId = "/world_step/rule_group/property_rule/entry/person_default";
+    public static string TagName = "person_default";
+
+    public string Tag = "person_default";
     public RawNode rawNode = new RawNode();
     //Attributes
 
@@ -73,6 +78,13 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {
         // Godot.GD.Print("Serializing person_default");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
+    }
+
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+
+      Deserialize(rawNode);
     }
   }
 }

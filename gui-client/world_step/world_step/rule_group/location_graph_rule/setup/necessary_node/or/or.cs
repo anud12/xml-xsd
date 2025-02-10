@@ -9,9 +9,15 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node {
   public class or  {
+
+    public static string ClassTypeId = "/world_step/rule_group/location_graph_rule/setup/necessary_node/or";
+    public static string TagName = "or";
+
+    public string Tag = "or";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String node_rule_ref;
+    public System.String _node_rule_ref;
 
     //Children elements
     public or()
@@ -68,6 +74,12 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_nod
     public void Set_node_rule_ref(System.String value)
     {
       this.node_rule_ref = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+
+      Deserialize(rawNode);
     }
   }
 }

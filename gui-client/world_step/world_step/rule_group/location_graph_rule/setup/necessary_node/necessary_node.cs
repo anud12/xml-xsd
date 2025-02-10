@@ -9,14 +9,32 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup {
   public class necessary_node  {
+
+    public static string ClassTypeId = "/world_step/rule_group/location_graph_rule/setup/necessary_node";
+    public static string TagName = "necessary_node";
+
+    public string Tag = "necessary_node";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String node_rule_ref;
+    public System.String _node_rule_ref;
     public System.Int32 min;
+    public System.Int32 _min;
     public System.Int32? max;
+    public System.Int32? _max;
 
     //Children elements
-    public List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or>? or = new List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or>();
+
+    private Dictionary<int, XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or> _or = new Dictionary<int, XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or>();
+    public List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or> or {
+      get { return _or.Values.ToList(); }
+      set
+      {
+        _or = value
+          .Select((value, index) => new { index, value })
+          .ToDictionary(item => item.index, item => item.value);
+      }
+    }
     public necessary_node()
     {
     }
@@ -54,7 +72,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup {
       }
 
       //Deserialize children
-      this.or = rawNode.InitializeWithRawNode("or", this.or);
+      this._or = rawNode.InitializeWithRawNode("or", this._or);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -74,7 +92,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup {
       }
 
       //Serialize children
-      rawNode.children["or"] = or.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["or"] = _or?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();
       return rawNode;
     }
 
@@ -110,18 +128,43 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup {
     }
     public List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or>? Get_or()
     {
-      return this.or;
+      return this._or?.Values.ToList();
     }
     public List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or> GetOrInsertDefault_or()
     {
-      if(this.or == null) {
-        this.or = new List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or>();
+      if(this._or == null) {
+
+        // false2
+        this._or = new Dictionary<int, XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or>();
       }
-      return this.or;
+      #pragma warning disable CS8603 // Possible null reference return.
+      return this.Get_or();
+      #pragma warning restore CS8603 // Possible null reference return.
     }
     public void Set_or(List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or>? value)
     {
-      this.or = value;
+      this._or = value.Select((x, i) => new { Index = i, Value = x }).ToDictionary(x => x.Index, x => x.Value);
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or.TagName + "["))
+      {
+        var startIndex = (XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or.TagName + "[").Length;
+        var indexString = xpath.Substring(startIndex, startIndex + 1);
+        xpath = xpath.Substring(startIndex + 2);
+        if(this._or.ContainsKey(indexString.ToInt()))
+        {
+          this._or[indexString.ToInt()].SetXPath(xpath, rawNode);
+        }
+        var newEntry = new XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or();
+        newEntry.SetXPath(xpath, rawNode);
+        this._or.Add(indexString.ToInt(), newEntry);
+
+        return;
+      }
+
+      Deserialize(rawNode);
     }
   }
 }

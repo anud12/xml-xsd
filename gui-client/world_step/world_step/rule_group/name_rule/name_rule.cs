@@ -9,11 +9,26 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group {
   public class name_rule  {
+
+    public static string ClassTypeId = "/world_step/rule_group/name_rule";
+    public static string TagName = "name_rule";
+
+    public string Tag = "name_rule";
     public RawNode rawNode = new RawNode();
     //Attributes
 
     //Children elements
-    public List<XSD.Nworld_step.Nrule_group.Nname_rule.entry>? entry = new List<XSD.Nworld_step.Nrule_group.Nname_rule.entry>();
+
+    private Dictionary<int, XSD.Nworld_step.Nrule_group.Nname_rule.entry> _entry = new Dictionary<int, XSD.Nworld_step.Nrule_group.Nname_rule.entry>();
+    public List<XSD.Nworld_step.Nrule_group.Nname_rule.entry> entry {
+      get { return _entry.Values.ToList(); }
+      set
+      {
+        _entry = value
+          .Select((value, index) => new { index, value })
+          .ToDictionary(item => item.index, item => item.value);
+      }
+    }
     public name_rule()
     {
     }
@@ -36,7 +51,7 @@ namespace XSD.Nworld_step.Nrule_group {
       //Deserialize arguments
 
       //Deserialize children
-      this.entry = rawNode.InitializeWithRawNode("entry", this.entry);
+      this._entry = rawNode.InitializeWithRawNode("entry", this._entry);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -44,7 +59,7 @@ namespace XSD.Nworld_step.Nrule_group {
       //Serialize arguments
 
       //Serialize children
-      rawNode.children["entry"] = entry.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["entry"] = _entry?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();
       return rawNode;
     }
 
@@ -61,6 +76,27 @@ namespace XSD.Nworld_step.Nrule_group {
     public void Set_entry(List<XSD.Nworld_step.Nrule_group.Nname_rule.entry>? value)
     {
       this.entry = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nname_rule.entry.TagName + "["))
+      {
+        var startIndex = (XSD.Nworld_step.Nrule_group.Nname_rule.entry.TagName + "[").Length;
+        var indexString = xpath.Substring(startIndex, startIndex + 1);
+        xpath = xpath.Substring(startIndex + 2);
+        if(this._entry.ContainsKey(indexString.ToInt()))
+        {
+          this._entry[indexString.ToInt()].SetXPath(xpath, rawNode);
+        }
+        var newEntry = new XSD.Nworld_step.Nrule_group.Nname_rule.entry();
+        newEntry.SetXPath(xpath, rawNode);
+        this._entry.Add(indexString.ToInt(), newEntry);
+
+        return;
+      }
+
+      Deserialize(rawNode);
     }
   }
 }

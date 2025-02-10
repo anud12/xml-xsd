@@ -9,9 +9,15 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Nworld_metadata.Nrandomization_table {
   public class entry  {
+
+    public static string ClassTypeId = "/world_step/world_metadata/randomization_table/entry";
+    public static string TagName = "entry";
+
+    public string Tag = "entry";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.Int32 value;
+    public System.Int32 _value;
 
     //Children elements
     public entry()
@@ -68,6 +74,12 @@ namespace XSD.Nworld_step.Nworld_metadata.Nrandomization_table {
     public void Set_value(System.Int32 value)
     {
       this.value = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+
+      Deserialize(rawNode);
     }
   }
 }

@@ -9,13 +9,28 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions {
   public class by  {
+
+    public static string ClassTypeId = "/world_step/actions/by";
+    public static string TagName = "by";
+
+    public string Tag = "by";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String person_ref;
+    public System.String _person_ref;
 
     //Children elements
-    public XSD.Nworld_step.Nactions.Nby._do _do = new XSD.Nworld_step.Nactions.Nby._do();
-    public XSD.Nworld_step.Nactions.Nby.move_towards? move_towards = null;
+    private XSD.Nworld_step.Nactions.Nby._do __do = new XSD.Nworld_step.Nactions.Nby._do();
+    public XSD.Nworld_step.Nactions.Nby._do _do {
+      get { return __do; }
+      set { __do = value; }
+    }
+
+    private XSD.Nworld_step.Nactions.Nby.move_towards? _move_towards = null;
+    public XSD.Nworld_step.Nactions.Nby.move_towards? move_towards {
+      get { return _move_towards; }
+      set { _move_towards = value; }
+    }
     public by()
     {
     }
@@ -43,8 +58,8 @@ namespace XSD.Nworld_step.Nactions {
       }
 
       //Deserialize children
-      this._do = rawNode.InitializeWithRawNode("do", this._do);
-      this.move_towards = rawNode.InitializeWithRawNode("move_towards", this.move_towards);
+      this.__do = rawNode.InitializeWithRawNode("do", this.__do);
+      this._move_towards = rawNode.InitializeWithRawNode("move_towards", this._move_towards);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -81,33 +96,60 @@ namespace XSD.Nworld_step.Nactions {
     }
     public XSD.Nworld_step.Nactions.Nby._do Get__do()
     {
-      return this._do;
+      return this.__do;
     }
     public XSD.Nworld_step.Nactions.Nby._do GetOrInsertDefault__do()
     {
-      if(this._do == null) {
-        this._do = new XSD.Nworld_step.Nactions.Nby._do();
+      if(this.__do == null) {
+
+        // true2
+        this.__do = new XSD.Nworld_step.Nactions.Nby._do();
       }
-      return this._do;
+      #pragma warning disable CS8603 // Possible null reference return.
+      return this.Get__do();
+      #pragma warning restore CS8603 // Possible null reference return.
     }
     public void Set__do(XSD.Nworld_step.Nactions.Nby._do value)
     {
-      this._do = value;
+        this.__do = value;
     }
     public XSD.Nworld_step.Nactions.Nby.move_towards? Get_move_towards()
     {
-      return this.move_towards;
+      return this._move_towards;
     }
     public XSD.Nworld_step.Nactions.Nby.move_towards GetOrInsertDefault_move_towards()
     {
-      if(this.move_towards == null) {
-        this.move_towards = new XSD.Nworld_step.Nactions.Nby.move_towards();
+      if(this._move_towards == null) {
+
+        // true2
+        this._move_towards = new XSD.Nworld_step.Nactions.Nby.move_towards();
       }
-      return this.move_towards;
+      #pragma warning disable CS8603 // Possible null reference return.
+      return this.Get_move_towards();
+      #pragma warning restore CS8603 // Possible null reference return.
     }
     public void Set_move_towards(XSD.Nworld_step.Nactions.Nby.move_towards? value)
     {
-      this.move_towards = value;
+        this._move_towards = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith(XSD.Nworld_step.Nactions.Nby._do.TagName))
+      {
+        xpath = xpath.Substring(XSD.Nworld_step.Nactions.Nby._do.TagName.Length + 3);
+        this._do.SetXPath(xpath, rawNode);
+        return;
+      }
+      if(xpath.StartsWith(XSD.Nworld_step.Nactions.Nby.move_towards.TagName))
+      {
+        this.move_towards ??= new XSD.Nworld_step.Nactions.Nby.move_towards();
+        xpath = xpath.Substring(XSD.Nworld_step.Nactions.Nby.move_towards.TagName.Length + 3);
+        this.move_towards.SetXPath(xpath, rawNode);
+        return;
+      }
+
+      Deserialize(rawNode);
     }
   }
 }

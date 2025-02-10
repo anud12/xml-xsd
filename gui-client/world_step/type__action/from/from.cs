@@ -9,11 +9,20 @@ namespace XSD {
 }
 namespace XSD.Ntype__action {
   public class from  {
+
+    public static string ClassTypeId = "/type__action/from";
+    public static string TagName = "from";
+
+    public string Tag = "from";
     public RawNode rawNode = new RawNode();
     //Attributes
 
     //Children elements
-    public XSD.Ntype__action.Nfrom.person? person = null;
+    private XSD.Ntype__action.Nfrom.person? _person = null;
+    public XSD.Ntype__action.Nfrom.person? person {
+      get { return _person; }
+      set { _person = value; }
+    }
     public from()
     {
     }
@@ -36,7 +45,7 @@ namespace XSD.Ntype__action {
       //Deserialize arguments
 
       //Deserialize children
-      this.person = rawNode.InitializeWithRawNode("person", this.person);
+      this._person = rawNode.InitializeWithRawNode("person", this._person);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -58,18 +67,35 @@ namespace XSD.Ntype__action {
     }
     public XSD.Ntype__action.Nfrom.person? Get_person()
     {
-      return this.person;
+      return this._person;
     }
     public XSD.Ntype__action.Nfrom.person GetOrInsertDefault_person()
     {
-      if(this.person == null) {
-        this.person = new XSD.Ntype__action.Nfrom.person();
+      if(this._person == null) {
+
+        // true2
+        this._person = new XSD.Ntype__action.Nfrom.person();
       }
-      return this.person;
+      #pragma warning disable CS8603 // Possible null reference return.
+      return this.Get_person();
+      #pragma warning restore CS8603 // Possible null reference return.
     }
     public void Set_person(XSD.Ntype__action.Nfrom.person? value)
     {
-      this.person = value;
+        this._person = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith(XSD.Ntype__action.Nfrom.person.TagName))
+      {
+        this.person ??= new XSD.Ntype__action.Nfrom.person();
+        xpath = xpath.Substring(XSD.Ntype__action.Nfrom.person.TagName.Length + 3);
+        this.person.SetXPath(xpath, rawNode);
+        return;
+      }
+
+      Deserialize(rawNode);
     }
   }
 }

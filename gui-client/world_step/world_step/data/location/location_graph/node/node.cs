@@ -9,17 +9,48 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph {
   public class node  {
+
+    public static string ClassTypeId = "/world_step/data/location/location_graph/node";
+    public static string TagName = "node";
+
+    public string Tag = "node";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String node_rule_ref;
+    public System.String _node_rule_ref;
     public System.String id;
+    public System.String _id;
 
     //Children elements
-    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.name? name = null;
-    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.position? position = null;
-    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.classifications? classifications = null;
-    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.links? links = null;
-    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.people? people = null;
+    private XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.name? _name = null;
+    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.name? name {
+      get { return _name; }
+      set { _name = value; }
+    }
+
+    private XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.position? _position = null;
+    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.position? position {
+      get { return _position; }
+      set { _position = value; }
+    }
+
+    private XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.classifications? _classifications = null;
+    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.classifications? classifications {
+      get { return _classifications; }
+      set { _classifications = value; }
+    }
+
+    private XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.links? _links = null;
+    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.links? links {
+      get { return _links; }
+      set { _links = value; }
+    }
+
+    private XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.people? _people = null;
+    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.people? people {
+      get { return _people; }
+      set { _people = value; }
+    }
     public node()
     {
     }
@@ -52,11 +83,11 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph {
       }
 
       //Deserialize children
-      this.name = rawNode.InitializeWithRawNode("name", this.name);
-      this.position = rawNode.InitializeWithRawNode("position", this.position);
-      this.classifications = rawNode.InitializeWithRawNode("classifications", this.classifications);
-      this.links = rawNode.InitializeWithRawNode("links", this.links);
-      this.people = rawNode.InitializeWithRawNode("people", this.people);
+      this._name = rawNode.InitializeWithRawNode("name", this._name);
+      this._position = rawNode.InitializeWithRawNode("position", this._position);
+      this._classifications = rawNode.InitializeWithRawNode("classifications", this._classifications);
+      this._links = rawNode.InitializeWithRawNode("links", this._links);
+      this._people = rawNode.InitializeWithRawNode("people", this._people);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -114,78 +145,139 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph {
     }
     public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.name? Get_name()
     {
-      return this.name;
+      return this._name;
     }
     public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.name GetOrInsertDefault_name()
     {
-      if(this.name == null) {
-        this.name = new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.name();
+      if(this._name == null) {
+
+        // true2
+        this._name = new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.name();
       }
-      return this.name;
+      #pragma warning disable CS8603 // Possible null reference return.
+      return this.Get_name();
+      #pragma warning restore CS8603 // Possible null reference return.
     }
     public void Set_name(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.name? value)
     {
-      this.name = value;
+        this._name = value;
     }
     public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.position? Get_position()
     {
-      return this.position;
+      return this._position;
     }
     public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.position GetOrInsertDefault_position()
     {
-      if(this.position == null) {
-        this.position = new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.position();
+      if(this._position == null) {
+
+        // true2
+        this._position = new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.position();
       }
-      return this.position;
+      #pragma warning disable CS8603 // Possible null reference return.
+      return this.Get_position();
+      #pragma warning restore CS8603 // Possible null reference return.
     }
     public void Set_position(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.position? value)
     {
-      this.position = value;
+        this._position = value;
     }
     public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.classifications? Get_classifications()
     {
-      return this.classifications;
+      return this._classifications;
     }
     public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.classifications GetOrInsertDefault_classifications()
     {
-      if(this.classifications == null) {
-        this.classifications = new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.classifications();
+      if(this._classifications == null) {
+
+        // true2
+        this._classifications = new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.classifications();
       }
-      return this.classifications;
+      #pragma warning disable CS8603 // Possible null reference return.
+      return this.Get_classifications();
+      #pragma warning restore CS8603 // Possible null reference return.
     }
     public void Set_classifications(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.classifications? value)
     {
-      this.classifications = value;
+        this._classifications = value;
     }
     public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.links? Get_links()
     {
-      return this.links;
+      return this._links;
     }
     public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.links GetOrInsertDefault_links()
     {
-      if(this.links == null) {
-        this.links = new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.links();
+      if(this._links == null) {
+
+        // true2
+        this._links = new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.links();
       }
-      return this.links;
+      #pragma warning disable CS8603 // Possible null reference return.
+      return this.Get_links();
+      #pragma warning restore CS8603 // Possible null reference return.
     }
     public void Set_links(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.links? value)
     {
-      this.links = value;
+        this._links = value;
     }
     public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.people? Get_people()
     {
-      return this.people;
+      return this._people;
     }
     public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.people GetOrInsertDefault_people()
     {
-      if(this.people == null) {
-        this.people = new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.people();
+      if(this._people == null) {
+
+        // true2
+        this._people = new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.people();
       }
-      return this.people;
+      #pragma warning disable CS8603 // Possible null reference return.
+      return this.Get_people();
+      #pragma warning restore CS8603 // Possible null reference return.
     }
     public void Set_people(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.people? value)
     {
-      this.people = value;
+        this._people = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.name.TagName))
+      {
+        this.name ??= new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.name();
+        xpath = xpath.Substring(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.name.TagName.Length + 3);
+        this.name.SetXPath(xpath, rawNode);
+        return;
+      }
+      if(xpath.StartsWith(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.position.TagName))
+      {
+        this.position ??= new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.position();
+        xpath = xpath.Substring(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.position.TagName.Length + 3);
+        this.position.SetXPath(xpath, rawNode);
+        return;
+      }
+      if(xpath.StartsWith(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.classifications.TagName))
+      {
+        this.classifications ??= new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.classifications();
+        xpath = xpath.Substring(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.classifications.TagName.Length + 3);
+        this.classifications.SetXPath(xpath, rawNode);
+        return;
+      }
+      if(xpath.StartsWith(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.links.TagName))
+      {
+        this.links ??= new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.links();
+        xpath = xpath.Substring(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.links.TagName.Length + 3);
+        this.links.SetXPath(xpath, rawNode);
+        return;
+      }
+      if(xpath.StartsWith(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.people.TagName))
+      {
+        this.people ??= new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.people();
+        xpath = xpath.Substring(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.people.TagName.Length + 3);
+        this.people.SetXPath(xpath, rawNode);
+        return;
+      }
+
+      Deserialize(rawNode);
     }
   }
 }

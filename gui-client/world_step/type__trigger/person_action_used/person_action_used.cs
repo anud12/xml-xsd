@@ -9,9 +9,15 @@ namespace XSD {
 }
 namespace XSD.Ntype__trigger {
   public class person_action_used  {
+
+    public static string ClassTypeId = "/type__trigger/person_action_used";
+    public static string TagName = "person_action_used";
+
+    public string Tag = "person_action_used";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String action_rule_ref;
+    public System.String _action_rule_ref;
 
     //Children elements
     public person_action_used()
@@ -68,6 +74,12 @@ namespace XSD.Ntype__trigger {
     public void Set_action_rule_ref(System.String value)
     {
       this.action_rule_ref = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+
+      Deserialize(rawNode);
     }
   }
 }

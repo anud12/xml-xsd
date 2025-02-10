@@ -42,7 +42,7 @@ public record LoadHandler(WorldStepRunner worldStepRunner) implements WebSocketH
                     webSocketHandler.getWorldStepInstance().setWorldStep(worldStep);
                     webSocketHandler.getWorldStepInstance().getOutInstance().setWorldStep(buildWorldStep(string));
 
-                    client.send(Client.ReturnCode.Load);
+                    client.broadcast(Client.ReturnCode.Load);
                 } catch (SAXException e) {
                     client.broadcastNOk(e.toString());
                 }

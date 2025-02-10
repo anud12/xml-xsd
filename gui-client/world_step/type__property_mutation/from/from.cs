@@ -9,12 +9,22 @@ namespace XSD {
 }
 namespace XSD.Ntype__property_mutation {
   public class from  {
+
+    public static string ClassTypeId = "/type__property_mutation/from";
+    public static string TagName = "from";
+
+    public string Tag = "from";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String participant;
+    public System.String _participant;
 
     //Children elements
-    public type__math_operations operation = new type__math_operations();
+    private type__math_operations _operation = new type__math_operations();
+    public type__math_operations operation {
+      get { return _operation; }
+      set { _operation = value; }
+    }
     public from()
     {
     }
@@ -42,7 +52,7 @@ namespace XSD.Ntype__property_mutation {
       }
 
       //Deserialize children
-      this.operation = rawNode.InitializeWithRawNode("operation", this.operation);
+      this._operation = rawNode.InitializeWithRawNode("operation", this._operation);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -81,6 +91,18 @@ namespace XSD.Ntype__property_mutation {
     public void Set_operation(type__math_operations value)
     {
       this.operation = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith(type__math_operations.TagName))
+      {
+        xpath = xpath.Substring(type__math_operations.TagName.Length + 3);
+        this.operation.SetXPath(xpath, rawNode);
+        return;
+      }
+
+      Deserialize(rawNode);
     }
   }
 }

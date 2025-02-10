@@ -1,4 +1,4 @@
-using dataStore;
+using util.dataStore;
 using Godot;
 using System;
 using System.Collections;
@@ -14,7 +14,8 @@ public partial class PersonComponent : Control
 {
 	// Called when the node enters the scene tree for the first time.
 	public static PackedScene PackedScene = GD.Load<PackedScene>("res://components/PersonComponent.tscn");
-	private DataStore<world_step> worldStep = StoreWorld_Step.instance;	private DataStore<person> person = new DataStore<person>();
+	private DataStore<world_step> worldStep = StoreWorld_Step.instance;
+	private DataStore<person> person = new DataStore<person>();
 
 	private List<Action> unsubscribeList = new List<Action>();
 	public void initializeFromId(string? personId)
@@ -25,7 +26,7 @@ public partial class PersonComponent : Control
 		{
 			return;
 		}
-		var person = worldStep.data.people?.person?.First(person => person.id == personId);
+		var person = worldStep.data.people?.person?.FirstOrDefault(person => person.id == personId);
 		this.person.data = person;
 
 	}
@@ -99,13 +100,13 @@ public partial class PersonComponent : Control
 				actionsContainer.GetChildren().ToList().ForEach(child => actionsContainer.RemoveChild(child));
 
 
-				if (mainPersonId == person.data.id)
+				if (mainPersonId == person?.data?.id)
 				{
 					return;
 				}
 
 				//if there are actions add them into container
-				worldStep.rule_group.ForEach(ruleGroup =>
+				worldStep?.rule_group?.ForEach(ruleGroup =>
 				{
 					ruleGroup?.action_rule?.from_person?.ForEach(fromPersonElement => {
 						if(fromPersonElement.on_person == null) {

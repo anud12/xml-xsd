@@ -9,6 +9,11 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Npeople.Nperson {
   public class relations  {
+
+    public static string ClassTypeId = "/world_step/data/people/person/relations";
+    public static string TagName = "relations";
+
+    public string Tag = "relations";
     public RawNode rawNode = new RawNode();
     //Attributes
     /* ignored attribute key={key} of type=System.Object*/
@@ -53,5 +58,11 @@ namespace XSD.Nworld_step.Ndata.Npeople.Nperson {
         updatedRawNode.Serialize(element);
     }
     /* ignored attribute key={key} of type=System.Object*/
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+
+      Deserialize(rawNode);
+    }
   }
 }

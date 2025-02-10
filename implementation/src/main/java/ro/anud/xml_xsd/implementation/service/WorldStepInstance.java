@@ -85,7 +85,7 @@ public class WorldStepInstance {
             try {
                 logger.log("sending message", linkedNode.serializeIntoRawNode().toDocumentString());
                 webSocketHandler1.broadCastMessage(new TextMessage("update\n"
-                    + linkedNode.classTypeId()
+                    + linkedNode.buildPath()
                     + "\n" + linkedNode.serializeIntoRawNode().toDocumentString()
                 ));
             } catch (IOException e) {

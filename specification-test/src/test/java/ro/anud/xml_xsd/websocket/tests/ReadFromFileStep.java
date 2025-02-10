@@ -1,6 +1,6 @@
 package ro.anud.xml_xsd.websocket.tests;
 
-import ro.anud.xml_xsd.cases.CaseBuilder;
+import ro.anud.xml_xsd.strategy.TestStrategy;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,8 +11,8 @@ public record ReadFromFileStep() {
     public record FileResult<T>(T parent, String fileString) {}
 
 
-    public static CaseBuilder.AndLambda<CaseBuilder.Value<String>> run(final Class<?> runningClass, String fileName) {
-        return caseBuilder -> caseBuilder.and(CaseBuilder
+    public static TestStrategy.AndLambda<TestStrategy.Value<String>> run(final Class<?> runningClass, String fileName) {
+        return caseBuilder -> caseBuilder.and(TestStrategy
             .group(ReadFromFileStep.class.getSimpleName())
             .and(
                 "read from File", () -> {
@@ -25,7 +25,7 @@ public record ReadFromFileStep() {
                 }));
     }
 
-    public static <T> CaseBuilder.ValueAndLambda<T, CaseBuilder.Value<FileResult<T>>> wrap(
+    public static <T> TestStrategy.ValueAndLambda<T, TestStrategy.Value<FileResult<T>>> wrap(
         final Class<?> runningClass,
         String fileName) {
         return caseBuilder -> caseBuilder.and(

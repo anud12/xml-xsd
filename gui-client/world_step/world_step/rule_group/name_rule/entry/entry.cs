@@ -20,16 +20,32 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nname_rule {
   public class entry : Itype__name_token {
+
+    public static string ClassTypeId = "/world_step/rule_group/name_rule/entry";
+    public static string TagName = "entry";
+
+    public string Tag = "entry";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String id;
+    public System.String _id;
 
     //Attributes of type__name_token
 
     //Children elements
 
     //Children of type__name_token
-    public List<XSD.Ntype__name_token.name_token> name_token = new List<XSD.Ntype__name_token.name_token>();
+
+    private Dictionary<int, XSD.Ntype__name_token.name_token> _name_token = new Dictionary<int, XSD.Ntype__name_token.name_token>();
+    public List<XSD.Ntype__name_token.name_token> name_token {
+      get { return _name_token.Values.ToList(); }
+      set
+      {
+        _name_token = value
+          .Select((value, index) => new { index, value })
+          .ToDictionary(item => item.index, item => item.value);
+      }
+    }
     public entry()
     {
     }
@@ -61,7 +77,7 @@ namespace XSD.Nworld_step.Nrule_group.Nname_rule {
       //Deserialize children
 
       // Deserialize children of type__name_token
-  this.name_token = rawNode.InitializeWithRawNode("name_token", this.name_token);
+  this._name_token = rawNode.InitializeWithRawNode("name_token", this._name_token);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -78,7 +94,7 @@ namespace XSD.Nworld_step.Nrule_group.Nname_rule {
       //Serialize children
 
       // Serialize children of type__name_token
-  rawNode.children["name_token"] = name_token.Select(x => x.SerializeIntoRawNode()).ToList();
+  rawNode.children["name_token"] = _name_token?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();
       return rawNode;
     }
 
@@ -103,6 +119,13 @@ namespace XSD.Nworld_step.Nrule_group.Nname_rule {
     public void Set_name_token(List<XSD.Ntype__name_token.name_token> value)
     {
       this.name_token = value;
+    }
+
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+
+      Deserialize(rawNode);
     }
   }
 }

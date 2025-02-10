@@ -21,6 +21,7 @@ export const dependantTypeToAttributeDeclaration = (dependantType: DependantType
 
         return template()`
                 public ${typeString} ${normalizeName(key)};
+                public ${typeString} _${normalizeName(key)};
                 `
       }
 
@@ -30,6 +31,7 @@ export const dependantTypeToAttributeDeclaration = (dependantType: DependantType
 
       return template()`
               public ${typeString} ${normalizeName(key)};
+              public ${typeString} _${normalizeName(key)};
               `
     }
 

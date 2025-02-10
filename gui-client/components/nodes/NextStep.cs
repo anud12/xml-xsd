@@ -1,6 +1,6 @@
 using System;
 using System.Threading;
-using dataStore;
+using util.dataStore;
 using Godot;
 
 [GlobalClass]

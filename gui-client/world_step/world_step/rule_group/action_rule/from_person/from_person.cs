@@ -9,14 +9,34 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Naction_rule {
   public class from_person  {
+
+    public static string ClassTypeId = "/world_step/rule_group/action_rule/from_person";
+    public static string TagName = "from_person";
+
+    public string Tag = "from_person";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String id;
+    public System.String _id;
 
     //Children elements
-    public type__person_selection? selection = null;
-    public XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.mutations? mutations = null;
-    public XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.on_person? on_person = null;
+    private type__person_selection? _selection = null;
+    public type__person_selection? selection {
+      get { return _selection; }
+      set { _selection = value; }
+    }
+
+    private XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.mutations? _mutations = null;
+    public XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.mutations? mutations {
+      get { return _mutations; }
+      set { _mutations = value; }
+    }
+
+    private XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.on_person? _on_person = null;
+    public XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.on_person? on_person {
+      get { return _on_person; }
+      set { _on_person = value; }
+    }
     public from_person()
     {
     }
@@ -44,9 +64,9 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule {
       }
 
       //Deserialize children
-      this.selection = rawNode.InitializeWithRawNode("selection", this.selection);
-      this.mutations = rawNode.InitializeWithRawNode("mutations", this.mutations);
-      this.on_person = rawNode.InitializeWithRawNode("on_person", this.on_person);
+      this._selection = rawNode.InitializeWithRawNode("selection", this._selection);
+      this._mutations = rawNode.InitializeWithRawNode("mutations", this._mutations);
+      this._on_person = rawNode.InitializeWithRawNode("on_person", this._on_person);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -94,33 +114,68 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule {
     }
     public XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.mutations? Get_mutations()
     {
-      return this.mutations;
+      return this._mutations;
     }
     public XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.mutations GetOrInsertDefault_mutations()
     {
-      if(this.mutations == null) {
-        this.mutations = new XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.mutations();
+      if(this._mutations == null) {
+
+        // true2
+        this._mutations = new XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.mutations();
       }
-      return this.mutations;
+      #pragma warning disable CS8603 // Possible null reference return.
+      return this.Get_mutations();
+      #pragma warning restore CS8603 // Possible null reference return.
     }
     public void Set_mutations(XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.mutations? value)
     {
-      this.mutations = value;
+        this._mutations = value;
     }
     public XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.on_person? Get_on_person()
     {
-      return this.on_person;
+      return this._on_person;
     }
     public XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.on_person GetOrInsertDefault_on_person()
     {
-      if(this.on_person == null) {
-        this.on_person = new XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.on_person();
+      if(this._on_person == null) {
+
+        // true2
+        this._on_person = new XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.on_person();
       }
-      return this.on_person;
+      #pragma warning disable CS8603 // Possible null reference return.
+      return this.Get_on_person();
+      #pragma warning restore CS8603 // Possible null reference return.
     }
     public void Set_on_person(XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.on_person? value)
     {
-      this.on_person = value;
+        this._on_person = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith(type__person_selection.TagName))
+      {
+        this.selection ??= new type__person_selection();
+        xpath = xpath.Substring(type__person_selection.TagName.Length + 3);
+        this.selection.SetXPath(xpath, rawNode);
+        return;
+      }
+      if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.mutations.TagName))
+      {
+        this.mutations ??= new XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.mutations();
+        xpath = xpath.Substring(XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.mutations.TagName.Length + 3);
+        this.mutations.SetXPath(xpath, rawNode);
+        return;
+      }
+      if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.on_person.TagName))
+      {
+        this.on_person ??= new XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.on_person();
+        xpath = xpath.Substring(XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.on_person.TagName.Length + 3);
+        this.on_person.SetXPath(xpath, rawNode);
+        return;
+      }
+
+      Deserialize(rawNode);
     }
   }
 }

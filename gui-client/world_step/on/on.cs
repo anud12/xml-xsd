@@ -9,11 +9,20 @@ namespace XSD {
 }
 namespace XSD {
   public class on  {
+
+    public static string ClassTypeId = "/on";
+    public static string TagName = "on";
+
+    public string Tag = "on";
     public RawNode rawNode = new RawNode();
     //Attributes
 
     //Children elements
-    public XSD.Non.person? person = null;
+    private XSD.Non.person? _person = null;
+    public XSD.Non.person? person {
+      get { return _person; }
+      set { _person = value; }
+    }
     public on()
     {
     }
@@ -36,7 +45,7 @@ namespace XSD {
       //Deserialize arguments
 
       //Deserialize children
-      this.person = rawNode.InitializeWithRawNode("person", this.person);
+      this._person = rawNode.InitializeWithRawNode("person", this._person);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -58,18 +67,35 @@ namespace XSD {
     }
     public XSD.Non.person? Get_person()
     {
-      return this.person;
+      return this._person;
     }
     public XSD.Non.person GetOrInsertDefault_person()
     {
-      if(this.person == null) {
-        this.person = new XSD.Non.person();
+      if(this._person == null) {
+
+        // true2
+        this._person = new XSD.Non.person();
       }
-      return this.person;
+      #pragma warning disable CS8603 // Possible null reference return.
+      return this.Get_person();
+      #pragma warning restore CS8603 // Possible null reference return.
     }
     public void Set_person(XSD.Non.person? value)
     {
-      this.person = value;
+        this._person = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith(XSD.Non.person.TagName))
+      {
+        this.person ??= new XSD.Non.person();
+        xpath = xpath.Substring(XSD.Non.person.TagName.Length + 3);
+        this.person.SetXPath(xpath, rawNode);
+        return;
+      }
+
+      Deserialize(rawNode);
     }
   }
 }

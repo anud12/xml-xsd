@@ -1,6 +1,6 @@
 package ro.anud.xml_xsd.websocket.tests;
 
-import ro.anud.xml_xsd.cases.CaseBuilder;
+import ro.anud.xml_xsd.strategy.TestStrategy;
 import ro.anud.xml_xsd.specification.WebSocketTestClient;
 
 import java.util.concurrent.atomic.AtomicReference;
@@ -9,8 +9,8 @@ public class StartStop {
     private final AtomicReference<WebSocketTestClient> atomicReference = new AtomicReference<>();
 
 
-    public CaseBuilder send() {
-        return CaseBuilder.group(this.getClass().getSimpleName())
+    public TestStrategy send() {
+        return TestStrategy.group(this.getClass().getSimpleName())
             .and(
                 "connect clients", () -> {
                     String uri = "ws://localhost:" + 8080 + "/ws";
@@ -26,8 +26,8 @@ public class StartStop {
                 });
     }
 
-    public CaseBuilder waitUntilFinished() {
-        return CaseBuilder.group(this.getClass().getSimpleName())
+    public TestStrategy waitUntilFinished() {
+        return TestStrategy.group(this.getClass().getSimpleName())
             .and(
                 "reading response", () -> {
                     while (true) {

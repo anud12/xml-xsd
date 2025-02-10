@@ -1,16 +1,16 @@
 package ro.anud.xml_xsd.websocket.tests;
 
 import org.assertj.core.api.Assertions;
-import ro.anud.xml_xsd.cases.CaseBuilder;
+import ro.anud.xml_xsd.strategy.TestStrategy;
 import ro.anud.xml_xsd.specification.WebSocketTestClient;
 
 public class LoadStep {
 
-    public static CaseBuilder.AndLambda<CaseBuilder.Unit> runValidated(
+    public static TestStrategy.AndLambda<TestStrategy.Unit> runValidated(
         final Class<?> runningClass,
         String fileName) {
 
-        return caseBuilder -> caseBuilder.and(CaseBuilder.group(LoadStep.class.getSimpleName())
+        return caseBuilder -> caseBuilder.and(TestStrategy.group(LoadStep.class.getSimpleName())
             .and(ReadFromFileStep.run(runningClass, fileName))
             .and(
                 "connecting", (fileString) -> {
@@ -43,11 +43,11 @@ public class LoadStep {
 
     }
 
-    public static CaseBuilder.AndLambda<CaseBuilder.Value<String>> run(
+    public static TestStrategy.AndLambda<TestStrategy.Value<String>> run(
         final Class<?> runningClass,
         String fileName) {
 
-        return caseBuilder -> caseBuilder.and(CaseBuilder.group(LoadStep.class.getSimpleName())
+        return caseBuilder -> caseBuilder.and(TestStrategy.group(LoadStep.class.getSimpleName())
             .and(ReadFromFileStep.run(runningClass, fileName))
             .and(
                 "connecting", (fileString) -> {

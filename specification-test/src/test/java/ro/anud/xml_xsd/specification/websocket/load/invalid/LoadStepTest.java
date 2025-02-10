@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DynamicNode;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
-import ro.anud.xml_xsd.cases.CaseBuilder;
+import ro.anud.xml_xsd.strategy.TestStrategy;
 import ro.anud.xml_xsd.websocket.tests.LoadStep;
 import ro.anud.xml_xsd.websocket.tests.ReadFromFileStep;
 
@@ -31,7 +31,7 @@ public class LoadStepTest {
     @TestFactory
     public Stream<DynamicNode> testWebSocketEndpoint() throws Exception {
 
-        return CaseBuilder.list()
+        return TestStrategy.list()
             .and(LoadStep.run(this.getClass(), "1_send.xml"))
             .and(ReadFromFileStep.wrap(this.getClass(),"2_main_expected.txt"))
             .and(

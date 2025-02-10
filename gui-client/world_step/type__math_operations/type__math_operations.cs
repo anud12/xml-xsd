@@ -9,6 +9,11 @@ namespace XSD {
 }
 namespace XSD {
   public class type__math_operations  {
+
+    public static string ClassTypeId = "/type__math_operations";
+    public static string TagName = "type__math_operations";
+
+    public string Tag = "type__math_operations";
     public RawNode rawNode = new RawNode();
     //Attributes
 
@@ -50,6 +55,12 @@ namespace XSD {
         // Godot.GD.Print("Serializing type__math_operations");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+
+      Deserialize(rawNode);
     }
   }
 }

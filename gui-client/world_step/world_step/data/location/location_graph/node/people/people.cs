@@ -9,11 +9,26 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode {
   public class people  {
+
+    public static string ClassTypeId = "/world_step/data/location/location_graph/node/people";
+    public static string TagName = "people";
+
+    public string Tag = "people";
     public RawNode rawNode = new RawNode();
     //Attributes
 
     //Children elements
-    public List<XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Npeople.person>? person = new List<XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Npeople.person>();
+
+    private Dictionary<int, XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Npeople.person> _person = new Dictionary<int, XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Npeople.person>();
+    public List<XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Npeople.person> person {
+      get { return _person.Values.ToList(); }
+      set
+      {
+        _person = value
+          .Select((value, index) => new { index, value })
+          .ToDictionary(item => item.index, item => item.value);
+      }
+    }
     public people()
     {
     }
@@ -36,7 +51,7 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode {
       //Deserialize arguments
 
       //Deserialize children
-      this.person = rawNode.InitializeWithRawNode("person", this.person);
+      this._person = rawNode.InitializeWithRawNode("person", this._person);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -44,7 +59,7 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode {
       //Serialize arguments
 
       //Serialize children
-      rawNode.children["person"] = person.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["person"] = _person?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();
       return rawNode;
     }
 
@@ -56,18 +71,43 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode {
     }
     public List<XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Npeople.person>? Get_person()
     {
-      return this.person;
+      return this._person?.Values.ToList();
     }
     public List<XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Npeople.person> GetOrInsertDefault_person()
     {
-      if(this.person == null) {
-        this.person = new List<XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Npeople.person>();
+      if(this._person == null) {
+
+        // false2
+        this._person = new Dictionary<int, XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Npeople.person>();
       }
-      return this.person;
+      #pragma warning disable CS8603 // Possible null reference return.
+      return this.Get_person();
+      #pragma warning restore CS8603 // Possible null reference return.
     }
     public void Set_person(List<XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Npeople.person>? value)
     {
-      this.person = value;
+      this._person = value.Select((x, i) => new { Index = i, Value = x }).ToDictionary(x => x.Index, x => x.Value);
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Npeople.person.TagName + "["))
+      {
+        var startIndex = (XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Npeople.person.TagName + "[").Length;
+        var indexString = xpath.Substring(startIndex, startIndex + 1);
+        xpath = xpath.Substring(startIndex + 2);
+        if(this._person.ContainsKey(indexString.ToInt()))
+        {
+          this._person[indexString.ToInt()].SetXPath(xpath, rawNode);
+        }
+        var newEntry = new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Npeople.person();
+        newEntry.SetXPath(xpath, rawNode);
+        this._person.Add(indexString.ToInt(), newEntry);
+
+        return;
+      }
+
+      Deserialize(rawNode);
     }
   }
 }

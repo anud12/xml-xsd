@@ -9,9 +9,15 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Nworld_metadata {
   public class next_world_step  {
+
+    public static string ClassTypeId = "/world_step/world_metadata/next_world_step";
+    public static string TagName = "next_world_step";
+
+    public string Tag = "next_world_step";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String? value;
+    public System.String? _value;
 
     //Children elements
     public next_world_step()
@@ -68,6 +74,12 @@ namespace XSD.Nworld_step.Nworld_metadata {
     public void Set_value(System.String? value)
     {
       this.value = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+
+      Deserialize(rawNode);
     }
   }
 }

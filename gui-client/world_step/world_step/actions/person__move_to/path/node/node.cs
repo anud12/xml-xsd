@@ -9,9 +9,15 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions.Nperson__move_to.Npath {
   public class node  {
+
+    public static string ClassTypeId = "/world_step/actions/person.move_to/path/node";
+    public static string TagName = "node";
+
+    public string Tag = "node";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String node_id_ref;
+    public System.String _node_id_ref;
 
     //Children elements
     public node()
@@ -68,6 +74,12 @@ namespace XSD.Nworld_step.Nactions.Nperson__move_to.Npath {
     public void Set_node_id_ref(System.String value)
     {
       this.node_id_ref = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+
+      Deserialize(rawNode);
     }
   }
 }

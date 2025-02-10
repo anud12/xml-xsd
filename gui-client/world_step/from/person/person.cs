@@ -9,12 +9,26 @@ namespace XSD {
 }
 namespace XSD.Nfrom {
   public class person  {
+
+    public static string ClassTypeId = "/from/person";
+    public static string TagName = "person";
+
+    public string Tag = "person";
     public RawNode rawNode = new RawNode();
     //Attributes
 
     //Children elements
-    public type__person_selection? select = null;
-    public type__property_mutation? property_mutation = null;
+    private type__person_selection? _select = null;
+    public type__person_selection? select {
+      get { return _select; }
+      set { _select = value; }
+    }
+
+    private type__property_mutation? _property_mutation = null;
+    public type__property_mutation? property_mutation {
+      get { return _property_mutation; }
+      set { _property_mutation = value; }
+    }
     public person()
     {
     }
@@ -37,8 +51,8 @@ namespace XSD.Nfrom {
       //Deserialize arguments
 
       //Deserialize children
-      this.select = rawNode.InitializeWithRawNode("select", this.select);
-      this.property_mutation = rawNode.InitializeWithRawNode("property_mutation", this.property_mutation);
+      this._select = rawNode.InitializeWithRawNode("select", this._select);
+      this._property_mutation = rawNode.InitializeWithRawNode("property_mutation", this._property_mutation);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -76,6 +90,26 @@ namespace XSD.Nfrom {
     public void Set_property_mutation(type__property_mutation? value)
     {
       this.property_mutation = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith(type__person_selection.TagName))
+      {
+        this.select ??= new type__person_selection();
+        xpath = xpath.Substring(type__person_selection.TagName.Length + 3);
+        this.select.SetXPath(xpath, rawNode);
+        return;
+      }
+      if(xpath.StartsWith(type__property_mutation.TagName))
+      {
+        this.property_mutation ??= new type__property_mutation();
+        xpath = xpath.Substring(type__property_mutation.TagName.Length + 3);
+        this.property_mutation.SetXPath(xpath, rawNode);
+        return;
+      }
+
+      Deserialize(rawNode);
     }
   }
 }

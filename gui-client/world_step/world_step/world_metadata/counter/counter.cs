@@ -9,9 +9,15 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Nworld_metadata {
   public class counter  {
+
+    public static string ClassTypeId = "/world_step/world_metadata/counter";
+    public static string TagName = "counter";
+
+    public string Tag = "counter";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.Int32 value;
+    public System.Int32 _value;
 
     //Children elements
     public counter()
@@ -68,6 +74,12 @@ namespace XSD.Nworld_step.Nworld_metadata {
     public void Set_value(System.Int32 value)
     {
       this.value = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+
+      Deserialize(rawNode);
     }
   }
 }

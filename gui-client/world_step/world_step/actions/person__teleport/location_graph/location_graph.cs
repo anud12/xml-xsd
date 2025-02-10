@@ -9,10 +9,17 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions.Nperson__teleport {
   public class location_graph  {
+
+    public static string ClassTypeId = "/world_step/actions/person.teleport/location_graph";
+    public static string TagName = "location_graph";
+
+    public string Tag = "location_graph";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String location_graph_id_ref;
+    public System.String _location_graph_id_ref;
     public System.String node_id_ref;
+    public System.String _node_id_ref;
 
     //Children elements
     public location_graph()
@@ -86,6 +93,12 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
     public void Set_node_id_ref(System.String value)
     {
       this.node_id_ref = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+
+      Deserialize(rawNode);
     }
   }
 }

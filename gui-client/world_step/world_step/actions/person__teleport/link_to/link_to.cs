@@ -9,12 +9,22 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions.Nperson__teleport {
   public class link_to  {
+
+    public static string ClassTypeId = "/world_step/actions/person.teleport/link_to";
+    public static string TagName = "link_to";
+
+    public string Tag = "link_to";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.Int32 accumulated_progress;
+    public System.Int32 _accumulated_progress;
 
     //Children elements
-    public type__link_to__selection selection = new type__link_to__selection();
+    private type__link_to__selection _selection = new type__link_to__selection();
+    public type__link_to__selection selection {
+      get { return _selection; }
+      set { _selection = value; }
+    }
     public link_to()
     {
     }
@@ -42,7 +52,7 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
       }
 
       //Deserialize children
-      this.selection = rawNode.InitializeWithRawNode("selection", this.selection);
+      this._selection = rawNode.InitializeWithRawNode("selection", this._selection);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -81,6 +91,18 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
     public void Set_selection(type__link_to__selection value)
     {
       this.selection = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith(type__link_to__selection.TagName))
+      {
+        xpath = xpath.Substring(type__link_to__selection.TagName.Length + 3);
+        this.selection.SetXPath(xpath, rawNode);
+        return;
+      }
+
+      Deserialize(rawNode);
     }
   }
 }

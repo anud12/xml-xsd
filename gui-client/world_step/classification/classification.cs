@@ -9,9 +9,15 @@ namespace XSD {
 }
 namespace XSD {
   public class classification  {
+
+    public static string ClassTypeId = "/classification";
+    public static string TagName = "classification";
+
+    public string Tag = "classification";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String classification_rule_ref;
+    public System.String _classification_rule_ref;
 
     //Children elements
     public classification()
@@ -68,6 +74,12 @@ namespace XSD {
     public void Set_classification_rule_ref(System.String value)
     {
       this.classification_rule_ref = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+
+      Deserialize(rawNode);
     }
   }
 }

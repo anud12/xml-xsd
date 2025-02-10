@@ -9,12 +9,31 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry {
   public class then  {
+
+    public static string ClassTypeId = "/world_step/rule_group/events_rule/entry/then";
+    public static string TagName = "then";
+
+    public string Tag = "then";
     public RawNode rawNode = new RawNode();
     //Attributes
 
     //Children elements
-    public List<XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person>? select_person = new List<XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person>();
-    public XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.property_mutation? property_mutation = null;
+
+    private Dictionary<int, XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person> _select_person = new Dictionary<int, XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person>();
+    public List<XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person> select_person {
+      get { return _select_person.Values.ToList(); }
+      set
+      {
+        _select_person = value
+          .Select((value, index) => new { index, value })
+          .ToDictionary(item => item.index, item => item.value);
+      }
+    }
+    private XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.property_mutation? _property_mutation = null;
+    public XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.property_mutation? property_mutation {
+      get { return _property_mutation; }
+      set { _property_mutation = value; }
+    }
     public then()
     {
     }
@@ -37,8 +56,8 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry {
       //Deserialize arguments
 
       //Deserialize children
-      this.select_person = rawNode.InitializeWithRawNode("select_person", this.select_person);
-      this.property_mutation = rawNode.InitializeWithRawNode("property_mutation", this.property_mutation);
+      this._select_person = rawNode.InitializeWithRawNode("select_person", this._select_person);
+      this._property_mutation = rawNode.InitializeWithRawNode("property_mutation", this._property_mutation);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -46,7 +65,7 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry {
       //Serialize arguments
 
       //Serialize children
-      rawNode.children["select_person"] = select_person.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["select_person"] = _select_person?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();
       if(property_mutation != null) {
         rawNode.children["property_mutation"] = new List<RawNode> { property_mutation.SerializeIntoRawNode() };
       }
@@ -74,6 +93,34 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry {
     public void Set_property_mutation(XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.property_mutation? value)
     {
       this.property_mutation = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person.TagName + "["))
+      {
+        var startIndex = (XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person.TagName + "[").Length;
+        var indexString = xpath.Substring(startIndex, startIndex + 1);
+        xpath = xpath.Substring(startIndex + 2);
+        if(this._select_person.ContainsKey(indexString.ToInt()))
+        {
+          this._select_person[indexString.ToInt()].SetXPath(xpath, rawNode);
+        }
+        var newEntry = new XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person();
+        newEntry.SetXPath(xpath, rawNode);
+        this._select_person.Add(indexString.ToInt(), newEntry);
+
+        return;
+      }
+      if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.property_mutation.TagName))
+      {
+        this.property_mutation ??= new XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.property_mutation();
+        xpath = xpath.Substring(XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.property_mutation.TagName.Length + 3);
+        this.property_mutation.SetXPath(xpath, rawNode);
+        return;
+      }
+
+      Deserialize(rawNode);
     }
   }
 }

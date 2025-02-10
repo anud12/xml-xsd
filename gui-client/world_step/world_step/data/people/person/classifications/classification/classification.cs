@@ -9,9 +9,15 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Npeople.Nperson.Nclassifications {
   public class classification  {
+
+    public static string ClassTypeId = "/world_step/data/people/person/classifications/classification";
+    public static string TagName = "classification";
+
+    public string Tag = "classification";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String classification_rule_ref;
+    public System.String _classification_rule_ref;
 
     //Children elements
     public classification()
@@ -68,6 +74,12 @@ namespace XSD.Nworld_step.Ndata.Npeople.Nperson.Nclassifications {
     public void Set_classification_rule_ref(System.String value)
     {
       this.classification_rule_ref = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+
+      Deserialize(rawNode);
     }
   }
 }

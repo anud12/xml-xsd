@@ -9,13 +9,24 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions {
   public class from_person  {
+
+    public static string ClassTypeId = "/world_step/actions/from_person";
+    public static string TagName = "from_person";
+
+    public string Tag = "from_person";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String person_id_ref;
+    public System.String _person_id_ref;
     public System.String from_person_rule_ref;
+    public System.String _from_person_rule_ref;
 
     //Children elements
-    public XSD.Nworld_step.Nactions.Nfrom_person.on_person on_person = new XSD.Nworld_step.Nactions.Nfrom_person.on_person();
+    private XSD.Nworld_step.Nactions.Nfrom_person.on_person _on_person = new XSD.Nworld_step.Nactions.Nfrom_person.on_person();
+    public XSD.Nworld_step.Nactions.Nfrom_person.on_person on_person {
+      get { return _on_person; }
+      set { _on_person = value; }
+    }
     public from_person()
     {
     }
@@ -48,7 +59,7 @@ namespace XSD.Nworld_step.Nactions {
       }
 
       //Deserialize children
-      this.on_person = rawNode.InitializeWithRawNode("on_person", this.on_person);
+      this._on_person = rawNode.InitializeWithRawNode("on_person", this._on_person);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -94,18 +105,34 @@ namespace XSD.Nworld_step.Nactions {
     }
     public XSD.Nworld_step.Nactions.Nfrom_person.on_person Get_on_person()
     {
-      return this.on_person;
+      return this._on_person;
     }
     public XSD.Nworld_step.Nactions.Nfrom_person.on_person GetOrInsertDefault_on_person()
     {
-      if(this.on_person == null) {
-        this.on_person = new XSD.Nworld_step.Nactions.Nfrom_person.on_person();
+      if(this._on_person == null) {
+
+        // true2
+        this._on_person = new XSD.Nworld_step.Nactions.Nfrom_person.on_person();
       }
-      return this.on_person;
+      #pragma warning disable CS8603 // Possible null reference return.
+      return this.Get_on_person();
+      #pragma warning restore CS8603 // Possible null reference return.
     }
     public void Set_on_person(XSD.Nworld_step.Nactions.Nfrom_person.on_person value)
     {
-      this.on_person = value;
+        this._on_person = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith(XSD.Nworld_step.Nactions.Nfrom_person.on_person.TagName))
+      {
+        xpath = xpath.Substring(XSD.Nworld_step.Nactions.Nfrom_person.on_person.TagName.Length + 3);
+        this.on_person.SetXPath(xpath, rawNode);
+        return;
+      }
+
+      Deserialize(rawNode);
     }
   }
 }

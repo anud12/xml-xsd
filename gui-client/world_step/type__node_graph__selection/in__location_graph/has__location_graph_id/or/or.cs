@@ -9,9 +9,15 @@ namespace XSD {
 }
 namespace XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id {
   public class or  {
+
+    public static string ClassTypeId = "/type__node_graph__selection/in__location_graph/has__location_graph_id/or";
+    public static string TagName = "or";
+
+    public string Tag = "or";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String? location_graph_id_ref;
+    public System.String? _location_graph_id_ref;
 
     //Children elements
     public or()
@@ -68,6 +74,12 @@ namespace XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_gr
     public void Set_location_graph_id_ref(System.String? value)
     {
       this.location_graph_id_ref = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+
+      Deserialize(rawNode);
     }
   }
 }

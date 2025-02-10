@@ -1,7 +1,7 @@
 package ro.anud.xml_xsd.websocket.tests;
 
 import org.assertj.core.api.Assertions;
-import ro.anud.xml_xsd.cases.CaseBuilder;
+import ro.anud.xml_xsd.strategy.TestStrategy;
 import ro.anud.xml_xsd.specification.WebSocketTestClient;
 
 import java.nio.file.Files;
@@ -9,9 +9,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Download {
-    public static CaseBuilder run(final Class<?> runningClass, String fileName) {
+    public static TestStrategy run(final Class<?> runningClass, String fileName) {
 
-        return CaseBuilder.group(Download.class.getSimpleName())
+        return TestStrategy.group(Download.class.getSimpleName())
             .and(
                 "connecting and downloading", () -> {
                     String uri = "ws://localhost:" + 8080 + "/ws";

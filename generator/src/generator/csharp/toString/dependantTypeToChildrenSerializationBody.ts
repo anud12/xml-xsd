@@ -20,7 +20,7 @@ export const dependantTypeToChildrenSerializationBody = (dependantType: Dependan
         `;
 
       }
-      return template()`rawNode.children["${key}"] = ${normalizeName(key)}.Select(x => x.SerializeIntoRawNode()).ToList();`;
+      return template()`rawNode.children["${key}"] = _${normalizeName(key)}?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();`;
     }
   }).filter(e => e).join("\n")
 

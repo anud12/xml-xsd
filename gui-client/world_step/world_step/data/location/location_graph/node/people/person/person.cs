@@ -9,9 +9,15 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Npeople {
   public class person  {
+
+    public static string ClassTypeId = "/world_step/data/location/location_graph/node/people/person";
+    public static string TagName = "person";
+
+    public string Tag = "person";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String person_id_ref;
+    public System.String _person_id_ref;
 
     //Children elements
     public person()
@@ -68,6 +74,12 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Npeople {
     public void Set_person_id_ref(System.String value)
     {
       this.person_id_ref = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+
+      Deserialize(rawNode);
     }
   }
 }

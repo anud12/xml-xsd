@@ -9,9 +9,15 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.Nselection {
   public class from_person_same_location_graph_node  {
+
+    public static string ClassTypeId = "/world_step/rule_group/action_rule/from_person/on_person/selection/from_person_same_location_graph_node";
+    public static string TagName = "from_person_same_location_graph_node";
+
+    public string Tag = "from_person_same_location_graph_node";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String value;
+    public System.String _value;
 
     //Children elements
     public from_person_same_location_graph_node()
@@ -68,6 +74,12 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.Nsele
     public void Set_value(System.String value)
     {
       this.value = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+
+      Deserialize(rawNode);
     }
   }
 }

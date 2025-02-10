@@ -1,7 +1,7 @@
 package ro.anud.xml_xsd.websocket.tests;
 
 import org.assertj.core.api.Assertions;
-import ro.anud.xml_xsd.cases.CaseBuilder;
+import ro.anud.xml_xsd.strategy.TestStrategy;
 import ro.anud.xml_xsd.specification.WebSocketTestClient;
 
 import java.nio.file.Files;
@@ -9,13 +9,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Send {
-    public static CaseBuilder run(
+    public static TestStrategy run(
         final Class<?> runningClass,
         WebSocketTestClient.Command command,
         String sendFileName,
         String expectedFileName,
         String expectedOtherFileName) {
-        return CaseBuilder.group("Send")
+        return TestStrategy.group("Send")
             .and(
                 "connect clients", () -> {
                     String uri = "ws://localhost:" + 8080 + "/ws";

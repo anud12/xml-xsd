@@ -1,7 +1,7 @@
 package ro.anud.xml_xsd.websocket.tests;
 
 import org.assertj.core.api.Assertions;
-import ro.anud.xml_xsd.cases.CaseBuilder;
+import ro.anud.xml_xsd.strategy.TestStrategy;
 import ro.anud.xml_xsd.specification.WebSocketTestClient;
 
 import java.nio.file.Files;
@@ -14,8 +14,8 @@ public class ReadUpdates {
     private final AtomicReference<WebSocketTestClient> mainClient = new AtomicReference<>();
     private final AtomicReference<WebSocketTestClient> otherClient = new AtomicReference<>();
 
-    public CaseBuilder connect() {
-        return CaseBuilder.group(this.getClass().getSimpleName())
+    public TestStrategy connect() {
+        return TestStrategy.group(this.getClass().getSimpleName())
             .and(
                 "connect main client", () -> {
                     String uri = "ws://localhost:" + 8080 + "/ws";
@@ -34,11 +34,11 @@ public class ReadUpdates {
                 });
     }
 
-    public CaseBuilder assertResponse(
+    public TestStrategy assertResponse(
         final Class<?> runningClass,
         final String mainExpected,
         final String otherExpected) {
-        return CaseBuilder.group(this.getClass().getSimpleName())
+        return TestStrategy.group(this.getClass().getSimpleName())
             .and(
                 "assert receivedMessage", () -> {
                     String relativePath = Paths.get(runningClass.getResource("").toURI()).toString();

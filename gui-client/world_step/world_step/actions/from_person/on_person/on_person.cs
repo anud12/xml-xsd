@@ -9,9 +9,15 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions.Nfrom_person {
   public class on_person  {
+
+    public static string ClassTypeId = "/world_step/actions/from_person/on_person";
+    public static string TagName = "on_person";
+
+    public string Tag = "on_person";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String person_id_ref;
+    public System.String _person_id_ref;
 
     //Children elements
     public on_person()
@@ -68,6 +74,12 @@ namespace XSD.Nworld_step.Nactions.Nfrom_person {
     public void Set_person_id_ref(System.String value)
     {
       this.person_id_ref = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+
+      Deserialize(rawNode);
     }
   }
 }

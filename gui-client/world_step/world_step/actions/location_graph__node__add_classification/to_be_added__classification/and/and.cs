@@ -9,9 +9,15 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions.Nlocation_graph__node__add_classification.Nto_be_added__classification {
   public class and  {
+
+    public static string ClassTypeId = "/world_step/actions/location_graph.node.add_classification/to_be_added__classification/and";
+    public static string TagName = "and";
+
+    public string Tag = "and";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String location_classification_rule_ref;
+    public System.String _location_classification_rule_ref;
 
     //Children elements
     public and()
@@ -68,6 +74,12 @@ namespace XSD.Nworld_step.Nactions.Nlocation_graph__node__add_classification.Nto
     public void Set_location_classification_rule_ref(System.String value)
     {
       this.location_classification_rule_ref = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+
+      Deserialize(rawNode);
     }
   }
 }

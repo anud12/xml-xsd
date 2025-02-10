@@ -9,9 +9,15 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nlocation_classification_rule {
   public class entry  {
+
+    public static string ClassTypeId = "/world_step/rule_group/location_classification_rule/entry";
+    public static string TagName = "entry";
+
+    public string Tag = "entry";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String id;
+    public System.String _id;
 
     //Children elements
     public entry()
@@ -68,6 +74,12 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_classification_rule {
     public void Set_id(System.String value)
     {
       this.id = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+
+      Deserialize(rawNode);
     }
   }
 }

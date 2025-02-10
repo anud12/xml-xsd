@@ -12,6 +12,8 @@ using XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph;
 using XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks;
 using link_to = XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.link_to;
 using location_graph = XSD.Nworld_step.Ndata.Nlocation.location_graph;
+using util.dataStore;
+using util.repository;
 
 public partial class LocationGraphScene : Control
 {
@@ -78,60 +80,72 @@ public partial class LocationGraphScene : Control
 	{
 		Dictionary<string, Control> nodeById = new Dictionary<string, Control>();
 		Dictionary<Vector2, Control> node2DVector2D = new Dictionary<Vector2, Control>();
+
+		var locagionGraph = Repository<Object>.LocationGraph.Get(this.locationGraphId);;
+
+		// var nodeList = CreateComponents(worldStep, locagionGraph, nodeById, node2DVector2D);
+
 		var nodeList = worldStep.data.location?.location_graph.Where(location_graph => location_graph.id == this.locationGraphId).SelectMany(location_graph =>
-		{
-			return location_graph.node.SelectMany(node =>
-					{
-						var position = node.position;
-						var packedScene = LocationGraphNodeComponent.PackedScene.Instantiate();
-						var locationGraphNodeComponent = packedScene.GetNode<LocationGraphNodeComponent>("./");
-						nodeById[node.id] = locationGraphNodeComponent;
-						//set position of the node based on the offest returned by getOffset
-						locationGraphNodeComponent.initialize(node, worldStep);
-						locationGraphNodeComponent.setOnCreateAdjacentButtonPressed(node => addAdjacent(location_graph, node, worldStep));
-						locationGraphNodeComponent.setOnTeleportToButtonPressed(node => TeleportTo(location_graph, node, worldStep));
-						locationGraphNodeComponent.setOnPathToButtonPressed(node => PathTo(location_graph, node, worldStep));
-
-						var newPosition = new Vector2((float)position.x * NODE_SIZE, (float)position.y * NODE_SIZE);
-						newPosition += locationGraphNodeComponent.getOffset();
-						if (node2DVector2D.ContainsKey(newPosition))
-						{
-							var node2D = node2DVector2D[newPosition];
-							node2D.AddChild(locationGraphNodeComponent);
-							var childrenSize = node2D.GetChildren().Count;
-
-							var tableScale = 1 + (int)Math.Sqrt(childrenSize - 1);
-
-							//iterate over children of node2d with index
-
-							for (int i = 0; i < childrenSize; i++)
-							{
-								var child = node2D.GetChild(i);
-								if (child is LocationGraphNodeComponent)
-								{
-									var chilLocationGraphNodeComponent = (LocationGraphNodeComponent)child;
-									chilLocationGraphNodeComponent.Scale = new Vector2(1f / tableScale, 1f / tableScale);
-									chilLocationGraphNodeComponent.Position = new Vector2(NODE_SIZE / tableScale * (i % tableScale), NODE_SIZE / tableScale * (i / tableScale));
-								}
-							}
-
-							return new Node[] { };
-						}
-						else
-						{
-							var node2D = new Container();
-							node2D.Size = new Vector2(NODE_SIZE, NODE_SIZE);
-							node2D.Position = newPosition;
-							node2D.AddChild(locationGraphNodeComponent);
-							node2DVector2D[newPosition] = node2D;
-							return new Node[] { node2D };
-						}
-					});
-		});
+        {
+            return CreateComponents(worldStep, location_graph, nodeById, node2DVector2D);
+        });
 		return (nodeById, nodeList);
 	}
 
-	private void addAdjacent(location_graph locationGraph, node node, world_step worldStep)
+    private IEnumerable<Node> CreateComponents(world_step worldStep, location_graph location_graph, Dictionary<string, Control> nodeById, Dictionary<Vector2, Control> node2DVector2D)
+    {
+        return location_graph.node.Select(node => node.id).SelectMany(nodeId =>
+        {
+
+			var node = Repository<Object>.Node.Get(nodeId); ;
+			var position = node.position;
+            var packedScene = LocationGraphNodeComponent.PackedScene.Instantiate();
+            var locationGraphNodeComponent = packedScene.GetNode<LocationGraphNodeComponent>("./");
+            nodeById[node.id] = locationGraphNodeComponent;
+            //set position of the node based on the offest returned by getOffset
+            locationGraphNodeComponent.initialize(node);
+            locationGraphNodeComponent.setOnCreateAdjacentButtonPressed(node => addAdjacent(location_graph, node, worldStep));
+            locationGraphNodeComponent.setOnTeleportToButtonPressed(node => TeleportTo(location_graph, node, worldStep));
+            locationGraphNodeComponent.setOnPathToButtonPressed(node => PathTo(location_graph, node, worldStep));
+
+            var newPosition = new Vector2((float)position.x * NODE_SIZE, (float)position.y * NODE_SIZE);
+            newPosition += locationGraphNodeComponent.getOffset();
+            if (node2DVector2D.ContainsKey(newPosition))
+            {
+                var node2D = node2DVector2D[newPosition];
+                node2D.AddChild(locationGraphNodeComponent);
+                var childrenSize = node2D.GetChildren().Count;
+
+                var tableScale = 1 + (int)Math.Sqrt(childrenSize - 1);
+
+                //iterate over children of node2d with index
+
+                for (int i = 0; i < childrenSize; i++)
+                {
+                    var child = node2D.GetChild(i);
+                    if (child is LocationGraphNodeComponent)
+                    {
+                        var chilLocationGraphNodeComponent = (LocationGraphNodeComponent)child;
+                        chilLocationGraphNodeComponent.Scale = new Vector2(1f / tableScale, 1f / tableScale);
+                        chilLocationGraphNodeComponent.Position = new Vector2(NODE_SIZE / tableScale * (i % tableScale), NODE_SIZE / tableScale * (i / tableScale));
+                    }
+                }
+
+                return new Node[] { };
+            }
+            else
+            {
+                var node2D = new Container();
+                node2D.Size = new Vector2(NODE_SIZE, NODE_SIZE);
+                node2D.Position = newPosition;
+                node2D.AddChild(locationGraphNodeComponent);
+                node2DVector2D[newPosition] = node2D;
+                return new Node[] { node2D };
+            }
+        });
+    }
+
+    private void addAdjacent(location_graph locationGraph, node node, world_step worldStep)
 	{
 		GD.Print("Adding adjacent to " + node.id);
 

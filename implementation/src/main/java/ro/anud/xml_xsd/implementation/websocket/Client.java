@@ -3,7 +3,6 @@ package ro.anud.xml_xsd.implementation.websocket;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
-import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 import java.io.IOException;
 
@@ -11,9 +10,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 
 public record Client(WebSocketHandler handler, WebSocketSession webSocketSession) {
 
+
+
     public enum ReturnCode {
         Ok("Ok\n"),
-        Download("Download\n"),
+        Download("download\n"),
         StartStop("startStop\n"),
         Load("load\n");
 
@@ -31,7 +32,14 @@ public record Client(WebSocketHandler handler, WebSocketSession webSocketSession
     public void broadcast(WebSocketMessage<?> message) throws IOException {
         handler.broadCastMessage(message);
     }
+    public void broadcast(final ReturnCode returnCode) {
+        try {
+            handler.broadCastMessage(new TextMessage(returnCode.value));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
+    }
     public void sendOk(String message) {
         try {
             handler.sendMessage(webSocketSession, new TextMessage("Ok\n" + message));

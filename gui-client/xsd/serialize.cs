@@ -14,19 +14,19 @@ namespace XSD {
 		public Dictionary<string, string?> attributes = new Dictionary<string, string?>();
 		public Dictionary<string, List<RawNode>> children = new Dictionary<string, List<RawNode>>();
 		
-		public List<T> InitializeWithRawNode<T>(string key, List<T> defaultValue) {
+		public Dictionary<int, T> InitializeWithRawNode<T>(string key, List<T> defaultValue) {
 			//get type of elements in the list
 			var type = typeof(T);
 
 			var childRawNode = this.children.ContainsKey(key) ? this.children[key] : null;
 			if(childRawNode == null) {
-				return defaultValue;
+				return defaultValue.Select((o, i) => new { o, i }).ToDictionary(o => o.i, o => o.o);
 			}
 			return childRawNode.Select(o => {
 				//create new instante calling the contructor with the rawNode as first argument
 				var newInstance = (T)Activator.CreateInstance(type, new object[] { o })!;
 				return newInstance;
-			}).ToList();
+			}).Select((o, i) => new { o, i }).ToDictionary(o => o.i, o => o.o);
 
 		}
 

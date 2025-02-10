@@ -9,13 +9,24 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
   public class existing_person  {
+
+    public static string ClassTypeId = "/world_step/rule_group/location_graph_rule/node_rule/existing_person";
+    public static string TagName = "existing_person";
+
+    public string Tag = "existing_person";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.Int32 min;
+    public System.Int32 _min;
     public System.Int32? max;
+    public System.Int32? _max;
 
     //Children elements
-    public type__person_selection person_selection = new type__person_selection();
+    private type__person_selection _person_selection = new type__person_selection();
+    public type__person_selection person_selection {
+      get { return _person_selection; }
+      set { _person_selection = value; }
+    }
     public existing_person()
     {
     }
@@ -48,7 +59,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
       }
 
       //Deserialize children
-      this.person_selection = rawNode.InitializeWithRawNode("person_selection", this.person_selection);
+      this._person_selection = rawNode.InitializeWithRawNode("person_selection", this._person_selection);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -99,6 +110,18 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
     public void Set_person_selection(type__person_selection value)
     {
       this.person_selection = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith(type__person_selection.TagName))
+      {
+        xpath = xpath.Substring(type__person_selection.TagName.Length + 3);
+        this.person_selection.SetXPath(xpath, rawNode);
+        return;
+      }
+
+      Deserialize(rawNode);
     }
   }
 }

@@ -9,13 +9,28 @@ namespace XSD {
 }
 namespace XSD.Ntype__name_token {
   public class name_token  {
+
+    public static string ClassTypeId = "/type__name_token/name_token";
+    public static string TagName = "name_token";
+
+    public string Tag = "name_token";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String prefix;
+    public System.String _prefix;
 
     //Children elements
-    public XSD.Ntype__name_token.Nname_token._ref? _ref = null;
-    public XSD.Ntype__name_token.Nname_token.one_of? one_of = null;
+    private XSD.Ntype__name_token.Nname_token._ref? __ref = null;
+    public XSD.Ntype__name_token.Nname_token._ref? _ref {
+      get { return __ref; }
+      set { __ref = value; }
+    }
+
+    private XSD.Ntype__name_token.Nname_token.one_of? _one_of = null;
+    public XSD.Ntype__name_token.Nname_token.one_of? one_of {
+      get { return _one_of; }
+      set { _one_of = value; }
+    }
     public name_token()
     {
     }
@@ -43,8 +58,8 @@ namespace XSD.Ntype__name_token {
       }
 
       //Deserialize children
-      this._ref = rawNode.InitializeWithRawNode("ref", this._ref);
-      this.one_of = rawNode.InitializeWithRawNode("one_of", this.one_of);
+      this.__ref = rawNode.InitializeWithRawNode("ref", this.__ref);
+      this._one_of = rawNode.InitializeWithRawNode("one_of", this._one_of);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -81,18 +96,22 @@ namespace XSD.Ntype__name_token {
     }
     public XSD.Ntype__name_token.Nname_token._ref? Get__ref()
     {
-      return this._ref;
+      return this.__ref;
     }
     public XSD.Ntype__name_token.Nname_token._ref GetOrInsertDefault__ref()
     {
-      if(this._ref == null) {
-        this._ref = new XSD.Ntype__name_token.Nname_token._ref();
+      if(this.__ref == null) {
+
+        // true2
+        this.__ref = new XSD.Ntype__name_token.Nname_token._ref();
       }
-      return this._ref;
+      #pragma warning disable CS8603 // Possible null reference return.
+      return this.Get__ref();
+      #pragma warning restore CS8603 // Possible null reference return.
     }
     public void Set__ref(XSD.Ntype__name_token.Nname_token._ref? value)
     {
-      this._ref = value;
+        this.__ref = value;
     }
     public XSD.Ntype__name_token.Nname_token.one_of? Get_one_of()
     {
@@ -101,6 +120,26 @@ namespace XSD.Ntype__name_token {
     public void Set_one_of(XSD.Ntype__name_token.Nname_token.one_of? value)
     {
       this.one_of = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith(XSD.Ntype__name_token.Nname_token._ref.TagName))
+      {
+        this._ref ??= new XSD.Ntype__name_token.Nname_token._ref();
+        xpath = xpath.Substring(XSD.Ntype__name_token.Nname_token._ref.TagName.Length + 3);
+        this._ref.SetXPath(xpath, rawNode);
+        return;
+      }
+      if(xpath.StartsWith(XSD.Ntype__name_token.Nname_token.one_of.TagName))
+      {
+        this.one_of ??= new XSD.Ntype__name_token.Nname_token.one_of();
+        xpath = xpath.Substring(XSD.Ntype__name_token.Nname_token.one_of.TagName.Length + 3);
+        this.one_of.SetXPath(xpath, rawNode);
+        return;
+      }
+
+      Deserialize(rawNode);
     }
   }
 }

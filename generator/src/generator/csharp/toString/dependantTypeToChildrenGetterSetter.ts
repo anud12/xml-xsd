@@ -45,18 +45,37 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
         return template()`
               public ${fullPathNullableTypeString} Get_${normalizeName(key)}()
               {
-                return this.${normalizeName(key)};
+                ${!value.isSingle && template()`
+                  return this._${normalizeName(key)}?.Values.ToList();
+                `} 
+                ${value.isSingle && template()`
+                  return this._${normalizeName(key)};
+                `}
               }
               public ${fullPathTypeString} GetOrInsertDefault_${normalizeName(key)}()
               {
-                if(this.${normalizeName(key)} == null) {
-                  this.${normalizeName(key)} = new ${fullPathTypeString}();
+                if(this._${normalizeName(key)} == null) {
+                
+                  // ${value.isSingle + "2"}
+                  ${!value.isSingle && template()`
+                    this._${normalizeName(key)} = new Dictionary<int, ${getDependantTypeChildNamespace(dependantType)}.${type}>();
+                  `} 
+                  ${value.isSingle && template()`
+                    this._${normalizeName(key)} = new ${fullPathTypeString}();
+                  `}
                 }
-                return this.${normalizeName(key)};
+                #pragma warning disable CS8603 // Possible null reference return.
+                return this.Get_${normalizeName(key)}();
+                #pragma warning restore CS8603 // Possible null reference return.
               }
               public void Set_${normalizeName(key)}(${fullPathNullableTypeString} value)
               {
-                this.${normalizeName(key)} = value;
+                ${!value.isSingle && template()`
+                    this._${normalizeName(key)} = value.Select((x, i) => new { Index = i, Value = x }).ToDictionary(x => x.Index, x => x.Value);
+                  `} 
+                  ${value.isSingle && template()`
+                    this._${normalizeName(key)} = value;
+                  `}
               }
               `
       }

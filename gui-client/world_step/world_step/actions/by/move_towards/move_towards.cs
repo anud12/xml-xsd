@@ -9,11 +9,19 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions.Nby {
   public class move_towards  {
+
+    public static string ClassTypeId = "/world_step/actions/by/move_towards";
+    public static string TagName = "move_towards";
+
+    public string Tag = "move_towards";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String? layer;
+    public System.String? _layer;
     public System.Int32 x;
+    public System.Int32 _x;
     public System.Int32 y;
+    public System.Int32 _y;
 
     //Children elements
     public move_towards()
@@ -104,6 +112,12 @@ namespace XSD.Nworld_step.Nactions.Nby {
     public void Set_y(System.Int32 value)
     {
       this.y = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+
+      Deserialize(rawNode);
     }
   }
 }

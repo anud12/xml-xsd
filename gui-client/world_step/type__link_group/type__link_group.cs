@@ -9,15 +9,34 @@ namespace XSD {
 }
 namespace XSD {
   public class type__link_group  {
+
+    public static string ClassTypeId = "/type__link_group";
+    public static string TagName = "type__link_group";
+
+    public string Tag = "type__link_group";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String id;
+    public System.String _id;
     public System.Int32 angle;
+    public System.Int32 _angle;
     public System.Int32? angleMax;
+    public System.Int32? _angleMax;
     public System.Int32? limit;
+    public System.Int32? _limit;
 
     //Children elements
-    public List<XSD.Ntype__link_group.to_option>? to_option = new List<XSD.Ntype__link_group.to_option>();
+
+    private Dictionary<int, XSD.Ntype__link_group.to_option> _to_option = new Dictionary<int, XSD.Ntype__link_group.to_option>();
+    public List<XSD.Ntype__link_group.to_option> to_option {
+      get { return _to_option.Values.ToList(); }
+      set
+      {
+        _to_option = value
+          .Select((value, index) => new { index, value })
+          .ToDictionary(item => item.index, item => item.value);
+      }
+    }
     public type__link_group()
     {
     }
@@ -60,7 +79,7 @@ namespace XSD {
       }
 
       //Deserialize children
-      this.to_option = rawNode.InitializeWithRawNode("to_option", this.to_option);
+      this._to_option = rawNode.InitializeWithRawNode("to_option", this._to_option);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -84,7 +103,7 @@ namespace XSD {
       }
 
       //Serialize children
-      rawNode.children["to_option"] = to_option.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["to_option"] = _to_option?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();
       return rawNode;
     }
 
@@ -128,18 +147,43 @@ namespace XSD {
     }
     public List<XSD.Ntype__link_group.to_option>? Get_to_option()
     {
-      return this.to_option;
+      return this._to_option?.Values.ToList();
     }
     public List<XSD.Ntype__link_group.to_option> GetOrInsertDefault_to_option()
     {
-      if(this.to_option == null) {
-        this.to_option = new List<XSD.Ntype__link_group.to_option>();
+      if(this._to_option == null) {
+
+        // false2
+        this._to_option = new Dictionary<int, XSD.Ntype__link_group.to_option>();
       }
-      return this.to_option;
+      #pragma warning disable CS8603 // Possible null reference return.
+      return this.Get_to_option();
+      #pragma warning restore CS8603 // Possible null reference return.
     }
     public void Set_to_option(List<XSD.Ntype__link_group.to_option>? value)
     {
-      this.to_option = value;
+      this._to_option = value.Select((x, i) => new { Index = i, Value = x }).ToDictionary(x => x.Index, x => x.Value);
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith(XSD.Ntype__link_group.to_option.TagName + "["))
+      {
+        var startIndex = (XSD.Ntype__link_group.to_option.TagName + "[").Length;
+        var indexString = xpath.Substring(startIndex, startIndex + 1);
+        xpath = xpath.Substring(startIndex + 2);
+        if(this._to_option.ContainsKey(indexString.ToInt()))
+        {
+          this._to_option[indexString.ToInt()].SetXPath(xpath, rawNode);
+        }
+        var newEntry = new XSD.Ntype__link_group.to_option();
+        newEntry.SetXPath(xpath, rawNode);
+        this._to_option.Add(indexString.ToInt(), newEntry);
+
+        return;
+      }
+
+      Deserialize(rawNode);
     }
   }
 }

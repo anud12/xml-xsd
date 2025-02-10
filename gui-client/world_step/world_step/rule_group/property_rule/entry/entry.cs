@@ -9,15 +9,41 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nproperty_rule {
   public class entry  {
+
+    public static string ClassTypeId = "/world_step/rule_group/property_rule/entry";
+    public static string TagName = "entry";
+
+    public string Tag = "entry";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String id;
+    public System.String _id;
     public System.String units;
+    public System.String _units;
 
     //Children elements
-    public XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.person_default? person_default = null;
-    public XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.item_default? item_default = null;
-    public List<XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold>? property_threshold = new List<XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold>();
+    private XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.person_default? _person_default = null;
+    public XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.person_default? person_default {
+      get { return _person_default; }
+      set { _person_default = value; }
+    }
+
+    private XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.item_default? _item_default = null;
+    public XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.item_default? item_default {
+      get { return _item_default; }
+      set { _item_default = value; }
+    }
+
+    private Dictionary<int, XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold> _property_threshold = new Dictionary<int, XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold>();
+    public List<XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold> property_threshold {
+      get { return _property_threshold.Values.ToList(); }
+      set
+      {
+        _property_threshold = value
+          .Select((value, index) => new { index, value })
+          .ToDictionary(item => item.index, item => item.value);
+      }
+    }
     public entry()
     {
     }
@@ -50,9 +76,9 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule {
       }
 
       //Deserialize children
-      this.person_default = rawNode.InitializeWithRawNode("person_default", this.person_default);
-      this.item_default = rawNode.InitializeWithRawNode("item_default", this.item_default);
-      this.property_threshold = rawNode.InitializeWithRawNode("property-threshold", this.property_threshold);
+      this._person_default = rawNode.InitializeWithRawNode("person_default", this._person_default);
+      this._item_default = rawNode.InitializeWithRawNode("item_default", this._item_default);
+      this._property_threshold = rawNode.InitializeWithRawNode("property-threshold", this._property_threshold);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -74,7 +100,7 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule {
       if(item_default != null) {
         rawNode.children["item_default"] = new List<RawNode> { item_default.SerializeIntoRawNode() };
       }
-      rawNode.children["property-threshold"] = property_threshold.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["property-threshold"] = _property_threshold?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();
       return rawNode;
     }
 
@@ -118,18 +144,57 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule {
     }
     public List<XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold>? Get_property_threshold()
     {
-      return this.property_threshold;
+      return this._property_threshold?.Values.ToList();
     }
     public List<XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold> GetOrInsertDefault_property_threshold()
     {
-      if(this.property_threshold == null) {
-        this.property_threshold = new List<XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold>();
+      if(this._property_threshold == null) {
+
+        // false2
+        this._property_threshold = new Dictionary<int, XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold>();
       }
-      return this.property_threshold;
+      #pragma warning disable CS8603 // Possible null reference return.
+      return this.Get_property_threshold();
+      #pragma warning restore CS8603 // Possible null reference return.
     }
     public void Set_property_threshold(List<XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold>? value)
     {
-      this.property_threshold = value;
+      this._property_threshold = value.Select((x, i) => new { Index = i, Value = x }).ToDictionary(x => x.Index, x => x.Value);
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.person_default.TagName))
+      {
+        this.person_default ??= new XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.person_default();
+        xpath = xpath.Substring(XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.person_default.TagName.Length + 3);
+        this.person_default.SetXPath(xpath, rawNode);
+        return;
+      }
+      if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.item_default.TagName))
+      {
+        this.item_default ??= new XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.item_default();
+        xpath = xpath.Substring(XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.item_default.TagName.Length + 3);
+        this.item_default.SetXPath(xpath, rawNode);
+        return;
+      }
+      if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold.TagName + "["))
+      {
+        var startIndex = (XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold.TagName + "[").Length;
+        var indexString = xpath.Substring(startIndex, startIndex + 1);
+        xpath = xpath.Substring(startIndex + 2);
+        if(this._property_threshold.ContainsKey(indexString.ToInt()))
+        {
+          this._property_threshold[indexString.ToInt()].SetXPath(xpath, rawNode);
+        }
+        var newEntry = new XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold();
+        newEntry.SetXPath(xpath, rawNode);
+        this._property_threshold.Add(indexString.ToInt(), newEntry);
+
+        return;
+      }
+
+      Deserialize(rawNode);
     }
   }
 }

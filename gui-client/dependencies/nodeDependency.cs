@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Threading;
-using dataStore;
+using util.dataStore;
 using Godot;
 
 namespace Dependencies

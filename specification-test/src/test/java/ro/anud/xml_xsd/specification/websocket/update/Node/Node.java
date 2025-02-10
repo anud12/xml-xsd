@@ -4,7 +4,7 @@ import org.junit.jupiter.api.DynamicNode;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
-import ro.anud.xml_xsd.cases.CaseBuilder;
+import ro.anud.xml_xsd.strategy.TestStrategy;
 import ro.anud.xml_xsd.websocket.tests.Download;
 import ro.anud.xml_xsd.websocket.tests.LoadStep;
 import ro.anud.xml_xsd.websocket.tests.ReadUpdates;
@@ -35,7 +35,7 @@ public class Node {
     public Stream<DynamicNode> testWebSocketEndpoint() {
         var readUpdates = new ReadUpdates();
         var startStop = new StartStop();
-        return CaseBuilder.group("run")
+        return TestStrategy.group("run")
             .and(LoadStep.runValidated(this.getClass(),"1_load.xml"))
             .and(readUpdates.connect())
             .and(startStop.send())

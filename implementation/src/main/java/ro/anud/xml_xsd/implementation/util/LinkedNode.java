@@ -24,10 +24,11 @@ public interface LinkedNode {
 
     default String buildPath() {
         var index = parentNode().map(linkedNode -> linkedNode.buildIndexForChild(this)).orElse(0);
+        var path = "/" + nodeName() + "[" + index + "]";
 
-        return parentNode().flatMap(LinkedNode::parentNode)
+        return parentNode()
             .map(LinkedNode::buildPath)
-            .map(string -> string + "/" + nodeName() + "[" + index + "]")
-            .orElse("/");
+            .map(string -> string + path)
+            .orElse(path);
     }
 }

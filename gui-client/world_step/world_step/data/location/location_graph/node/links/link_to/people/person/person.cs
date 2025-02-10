@@ -9,10 +9,17 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.Npeople {
   public class person  {
+
+    public static string ClassTypeId = "/world_step/data/location/location_graph/node/links/link_to/people/person";
+    public static string TagName = "person";
+
+    public string Tag = "person";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String person_id_ref;
+    public System.String _person_id_ref;
     public System.Int32 accumulated_progress;
+    public System.Int32 _accumulated_progress;
 
     //Children elements
     public person()
@@ -86,6 +93,12 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.
     public void Set_accumulated_progress(System.Int32 value)
     {
       this.accumulated_progress = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+
+      Deserialize(rawNode);
     }
   }
 }

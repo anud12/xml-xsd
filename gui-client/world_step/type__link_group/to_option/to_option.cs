@@ -9,16 +9,34 @@ namespace XSD {
 }
 namespace XSD.Ntype__link_group {
   public class to_option  {
+
+    public static string ClassTypeId = "/type__link_group/to_option";
+    public static string TagName = "to_option";
+
+    public string Tag = "to_option";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String node_rule_ref;
+    public System.String _node_rule_ref;
     public System.Int32 distance;
+    public System.Int32 _distance;
     public System.Int32? maxDistance;
+    public System.Int32? _maxDistance;
     public System.Int32 adjacent_depth_limit;
+    public System.Int32 _adjacent_depth_limit;
 
     //Children elements
-    public type__math_operations? distance_to_progress_multiplier = null;
-    public type__math_operations? person_progress_property = null;
+    private type__math_operations? _distance_to_progress_multiplier = null;
+    public type__math_operations? distance_to_progress_multiplier {
+      get { return _distance_to_progress_multiplier; }
+      set { _distance_to_progress_multiplier = value; }
+    }
+
+    private type__math_operations? _person_progress_property = null;
+    public type__math_operations? person_progress_property {
+      get { return _person_progress_property; }
+      set { _person_progress_property = value; }
+    }
     public to_option()
     {
     }
@@ -61,8 +79,8 @@ namespace XSD.Ntype__link_group {
       }
 
       //Deserialize children
-      this.distance_to_progress_multiplier = rawNode.InitializeWithRawNode("distance_to_progress_multiplier", this.distance_to_progress_multiplier);
-      this.person_progress_property = rawNode.InitializeWithRawNode("person_progress_property", this.person_progress_property);
+      this._distance_to_progress_multiplier = rawNode.InitializeWithRawNode("distance_to_progress_multiplier", this._distance_to_progress_multiplier);
+      this._person_progress_property = rawNode.InitializeWithRawNode("person_progress_property", this._person_progress_property);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -148,6 +166,26 @@ namespace XSD.Ntype__link_group {
     public void Set_person_progress_property(type__math_operations? value)
     {
       this.person_progress_property = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith(type__math_operations.TagName))
+      {
+        this.distance_to_progress_multiplier ??= new type__math_operations();
+        xpath = xpath.Substring(type__math_operations.TagName.Length + 3);
+        this.distance_to_progress_multiplier.SetXPath(xpath, rawNode);
+        return;
+      }
+      if(xpath.StartsWith(type__math_operations.TagName))
+      {
+        this.person_progress_property ??= new type__math_operations();
+        xpath = xpath.Substring(type__math_operations.TagName.Length + 3);
+        this.person_progress_property.SetXPath(xpath, rawNode);
+        return;
+      }
+
+      Deserialize(rawNode);
     }
   }
 }

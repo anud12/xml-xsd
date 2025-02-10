@@ -9,10 +9,17 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode {
   public class position  {
+
+    public static string ClassTypeId = "/world_step/data/location/location_graph/node/position";
+    public static string TagName = "position";
+
+    public string Tag = "position";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.Int32 x;
+    public System.Int32 _x;
     public System.Int32 y;
+    public System.Int32 _y;
 
     //Children elements
     public position()
@@ -86,6 +93,12 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode {
     public void Set_y(System.Int32 value)
     {
       this.y = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+
+      Deserialize(rawNode);
     }
   }
 }

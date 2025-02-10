@@ -9,9 +9,15 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph {
   public class rule  {
+
+    public static string ClassTypeId = "/world_step/data/location/location_graph/rule";
+    public static string TagName = "rule";
+
+    public string Tag = "rule";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String location_graph_rule_ref;
+    public System.String _location_graph_rule_ref;
 
     //Children elements
     public rule()
@@ -68,6 +74,12 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph {
     public void Set_location_graph_rule_ref(System.String value)
     {
       this.location_graph_rule_ref = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+
+      Deserialize(rawNode);
     }
   }
 }

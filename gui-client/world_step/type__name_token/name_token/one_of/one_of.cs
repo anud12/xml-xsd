@@ -9,6 +9,11 @@ namespace XSD {
 }
 namespace XSD.Ntype__name_token.Nname_token {
   public class one_of : Itype__name_token {
+
+    public static string ClassTypeId = "/type__name_token/name_token/one_of";
+    public static string TagName = "one_of";
+
+    public string Tag = "one_of";
     public RawNode rawNode = new RawNode();
     //Attributes
 
@@ -17,7 +22,17 @@ namespace XSD.Ntype__name_token.Nname_token {
     //Children elements
 
     //Children of type__name_token
-    public List<XSD.Ntype__name_token.name_token> name_token = new List<XSD.Ntype__name_token.name_token>();
+
+    private Dictionary<int, XSD.Ntype__name_token.name_token> _name_token = new Dictionary<int, XSD.Ntype__name_token.name_token>();
+    public List<XSD.Ntype__name_token.name_token> name_token {
+      get { return _name_token.Values.ToList(); }
+      set
+      {
+        _name_token = value
+          .Select((value, index) => new { index, value })
+          .ToDictionary(item => item.index, item => item.value);
+      }
+    }
     public one_of()
     {
     }
@@ -44,7 +59,7 @@ namespace XSD.Ntype__name_token.Nname_token {
       //Deserialize children
 
       // Deserialize children of type__name_token
-  this.name_token = rawNode.InitializeWithRawNode("name_token", this.name_token);
+  this._name_token = rawNode.InitializeWithRawNode("name_token", this._name_token);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -57,7 +72,7 @@ namespace XSD.Ntype__name_token.Nname_token {
       //Serialize children
 
       // Serialize children of type__name_token
-  rawNode.children["name_token"] = name_token.Select(x => x.SerializeIntoRawNode()).ToList();
+  rawNode.children["name_token"] = _name_token?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();
       return rawNode;
     }
 
@@ -74,6 +89,13 @@ namespace XSD.Ntype__name_token.Nname_token {
     public void Set_name_token(List<XSD.Ntype__name_token.name_token> value)
     {
       this.name_token = value;
+    }
+
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+
+      Deserialize(rawNode);
     }
   }
 }

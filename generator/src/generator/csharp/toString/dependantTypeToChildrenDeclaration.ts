@@ -18,69 +18,59 @@ export const dependantTypeToChildrenDeclaration = (dependantType: DependantType)
     return [[key, value] as [string, Type]]
   })
     .map(([key, value]) => {
-      let type = getTypeName(value, key, dependantType);
-      type = normalizeName(type);
+      let typeName = getTypeName(value, key, dependantType);
+      let normalizedType = normalizeName(typeName);
 
-      const fullPathTypeString = value.isSingle
-        ? `${getDependantTypeChildNamespace(dependantType)}.${type}`
-        : `List<${getDependantTypeChildNamespace(dependantType)}.${type}>`;
-      const nullableFullPathString = value.isNullable
-        ? `${fullPathTypeString}?`
-        : fullPathTypeString;
-
-      const typeString = value.isSingle
-        ? `${type}`
-        : `List<${type}>`;
-      const nullableTypeString = value.isNullable
-        ? `${typeString}?`
-        : typeString;
-
-      const fullPathTypeInitialization = value.isSingle
-        ? value.isNullable
-          ? `null`
-          : `new ${getDependantTypeChildNamespace(dependantType)}.${type}()`
-        : `new List<${getDependantTypeChildNamespace(dependantType)}.${type}>()`;
-
-      const typeInitialization = value.isSingle
-        ? value.isNullable
-          ? `null`
-          : `new ${type}()`
-        : `new List<${type}>()`;
+      let type = `${getDependantTypeChildNamespace(dependantType)}.${normalizedType}`;
 
       if (value.metaType === "object") {
         dependantTypeList.push({
           type: "element",
           value: value,
-          name: type,
+          name: typeName,
           parentType: dependantType,
         })
-        return template()`
-              public ${nullableFullPathString} ${normalizeName(key)} = ${fullPathTypeInitialization};
-              `
       }
       if (value.metaType === "union" || value.metaType === "composition") {
         dependantTypeList.push({
           type: value.metaType,
           value: value,
-          name: type,
+          name: typeName,
           parentType: dependantType,
         })
-        return template()`
-              public ${nullableFullPathString} ${normalizeName(key)} = ${fullPathTypeInitialization};
-              `
       }
       if (value.metaType === "reference") {
         dependantTypeList.push({
           type: "reference",
           value: value,
-          name: type,
+          name: typeName,
           parentType: dependantType,
         })
-        return template()`
-              public ${nullableTypeString} ${normalizeName(key)} = ${typeInitialization};
-              `
+        type = normalizedType;
       }
-      return template()`/* ignored children key:${key} of type:${type}*/`
+
+      return template()`
+        ${value.isSingle && template()`
+          private ${type}${value.isNullable && `?`} _${normalizeName(key)} = ${value.isNullable? `null`: `new ${type}()`};
+          public ${type}${value.isNullable && `?`} ${normalizeName(key)} {
+            get { return _${normalizeName(key)}; }
+            set { _${normalizeName(key)} = value; }
+          }
+        `}
+        ${!value.isSingle && template()`
+          private Dictionary<int, ${type}> _${normalizeName(key)} = new Dictionary<int, ${type}>();
+          public List<${type}> ${normalizeName(key)} {
+            get { return _${normalizeName(key)}.Values.ToList(); }
+            set 
+            { 
+              _${normalizeName(key)} = value
+                .Select((value, index) => new { index, value })
+                .ToDictionary(item => item.index, item => item.value);
+            }
+          }
+        `}
+      `
+      return template()`/* ignored children key:${key} of type:${typeName}*/`
     }).filter(e => e).join("\n");
 
   return {

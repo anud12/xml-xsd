@@ -9,12 +9,26 @@ namespace XSD {
 }
 namespace XSD {
   public class type__action  {
+
+    public static string ClassTypeId = "/type__action";
+    public static string TagName = "type__action";
+
+    public string Tag = "type__action";
     public RawNode rawNode = new RawNode();
     //Attributes
 
     //Children elements
-    public XSD.Ntype__action.from from = new XSD.Ntype__action.from();
-    public XSD.Ntype__action.on on = new XSD.Ntype__action.on();
+    private XSD.Ntype__action.from _from = new XSD.Ntype__action.from();
+    public XSD.Ntype__action.from from {
+      get { return _from; }
+      set { _from = value; }
+    }
+
+    private XSD.Ntype__action.on _on = new XSD.Ntype__action.on();
+    public XSD.Ntype__action.on on {
+      get { return _on; }
+      set { _on = value; }
+    }
     public type__action()
     {
     }
@@ -37,8 +51,8 @@ namespace XSD {
       //Deserialize arguments
 
       //Deserialize children
-      this.from = rawNode.InitializeWithRawNode("from", this.from);
-      this.on = rawNode.InitializeWithRawNode("on", this.on);
+      this._from = rawNode.InitializeWithRawNode("from", this._from);
+      this._on = rawNode.InitializeWithRawNode("on", this._on);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -63,33 +77,59 @@ namespace XSD {
     }
     public XSD.Ntype__action.from Get_from()
     {
-      return this.from;
+      return this._from;
     }
     public XSD.Ntype__action.from GetOrInsertDefault_from()
     {
-      if(this.from == null) {
-        this.from = new XSD.Ntype__action.from();
+      if(this._from == null) {
+
+        // true2
+        this._from = new XSD.Ntype__action.from();
       }
-      return this.from;
+      #pragma warning disable CS8603 // Possible null reference return.
+      return this.Get_from();
+      #pragma warning restore CS8603 // Possible null reference return.
     }
     public void Set_from(XSD.Ntype__action.from value)
     {
-      this.from = value;
+        this._from = value;
     }
     public XSD.Ntype__action.on Get_on()
     {
-      return this.on;
+      return this._on;
     }
     public XSD.Ntype__action.on GetOrInsertDefault_on()
     {
-      if(this.on == null) {
-        this.on = new XSD.Ntype__action.on();
+      if(this._on == null) {
+
+        // true2
+        this._on = new XSD.Ntype__action.on();
       }
-      return this.on;
+      #pragma warning disable CS8603 // Possible null reference return.
+      return this.Get_on();
+      #pragma warning restore CS8603 // Possible null reference return.
     }
     public void Set_on(XSD.Ntype__action.on value)
     {
-      this.on = value;
+        this._on = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith(XSD.Ntype__action.from.TagName))
+      {
+        xpath = xpath.Substring(XSD.Ntype__action.from.TagName.Length + 3);
+        this.from.SetXPath(xpath, rawNode);
+        return;
+      }
+      if(xpath.StartsWith(XSD.Ntype__action.on.TagName))
+      {
+        xpath = xpath.Substring(XSD.Ntype__action.on.TagName.Length + 3);
+        this.on.SetXPath(xpath, rawNode);
+        return;
+      }
+
+      Deserialize(rawNode);
     }
   }
 }

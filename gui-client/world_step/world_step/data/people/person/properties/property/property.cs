@@ -9,10 +9,17 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Npeople.Nperson.Nproperties {
   public class property  {
+
+    public static string ClassTypeId = "/world_step/data/people/person/properties/property";
+    public static string TagName = "property";
+
+    public string Tag = "property";
     public RawNode rawNode = new RawNode();
     //Attributes
     public System.String property_rule_ref;
+    public System.String _property_rule_ref;
     public System.Int32 value;
+    public System.Int32 _value;
 
     //Children elements
     public property()
@@ -86,6 +93,12 @@ namespace XSD.Nworld_step.Ndata.Npeople.Nperson.Nproperties {
     public void Set_value(System.Int32 value)
     {
       this.value = value;
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+
+      Deserialize(rawNode);
     }
   }
 }

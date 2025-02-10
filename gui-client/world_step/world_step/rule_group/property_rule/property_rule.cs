@@ -9,11 +9,26 @@ namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group {
   public class property_rule  {
+
+    public static string ClassTypeId = "/world_step/rule_group/property_rule";
+    public static string TagName = "property_rule";
+
+    public string Tag = "property_rule";
     public RawNode rawNode = new RawNode();
     //Attributes
 
     //Children elements
-    public List<XSD.Nworld_step.Nrule_group.Nproperty_rule.entry>? entry = new List<XSD.Nworld_step.Nrule_group.Nproperty_rule.entry>();
+
+    private Dictionary<int, XSD.Nworld_step.Nrule_group.Nproperty_rule.entry> _entry = new Dictionary<int, XSD.Nworld_step.Nrule_group.Nproperty_rule.entry>();
+    public List<XSD.Nworld_step.Nrule_group.Nproperty_rule.entry> entry {
+      get { return _entry.Values.ToList(); }
+      set
+      {
+        _entry = value
+          .Select((value, index) => new { index, value })
+          .ToDictionary(item => item.index, item => item.value);
+      }
+    }
     public property_rule()
     {
     }
@@ -36,7 +51,7 @@ namespace XSD.Nworld_step.Nrule_group {
       //Deserialize arguments
 
       //Deserialize children
-      this.entry = rawNode.InitializeWithRawNode("entry", this.entry);
+      this._entry = rawNode.InitializeWithRawNode("entry", this._entry);
     }
 
     public RawNode SerializeIntoRawNode()
@@ -44,7 +59,7 @@ namespace XSD.Nworld_step.Nrule_group {
       //Serialize arguments
 
       //Serialize children
-      rawNode.children["entry"] = entry.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["entry"] = _entry?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();
       return rawNode;
     }
 
@@ -56,18 +71,43 @@ namespace XSD.Nworld_step.Nrule_group {
     }
     public List<XSD.Nworld_step.Nrule_group.Nproperty_rule.entry>? Get_entry()
     {
-      return this.entry;
+      return this._entry?.Values.ToList();
     }
     public List<XSD.Nworld_step.Nrule_group.Nproperty_rule.entry> GetOrInsertDefault_entry()
     {
-      if(this.entry == null) {
-        this.entry = new List<XSD.Nworld_step.Nrule_group.Nproperty_rule.entry>();
+      if(this._entry == null) {
+
+        // false2
+        this._entry = new Dictionary<int, XSD.Nworld_step.Nrule_group.Nproperty_rule.entry>();
       }
-      return this.entry;
+      #pragma warning disable CS8603 // Possible null reference return.
+      return this.Get_entry();
+      #pragma warning restore CS8603 // Possible null reference return.
     }
     public void Set_entry(List<XSD.Nworld_step.Nrule_group.Nproperty_rule.entry>? value)
     {
-      this.entry = value;
+      this._entry = value.Select((x, i) => new { Index = i, Value = x }).ToDictionary(x => x.Index, x => x.Value);
+    }
+
+    public void SetXPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nproperty_rule.entry.TagName + "["))
+      {
+        var startIndex = (XSD.Nworld_step.Nrule_group.Nproperty_rule.entry.TagName + "[").Length;
+        var indexString = xpath.Substring(startIndex, startIndex + 1);
+        xpath = xpath.Substring(startIndex + 2);
+        if(this._entry.ContainsKey(indexString.ToInt()))
+        {
+          this._entry[indexString.ToInt()].SetXPath(xpath, rawNode);
+        }
+        var newEntry = new XSD.Nworld_step.Nrule_group.Nproperty_rule.entry();
+        newEntry.SetXPath(xpath, rawNode);
+        this._entry.Add(indexString.ToInt(), newEntry);
+
+        return;
+      }
+
+      Deserialize(rawNode);
     }
   }
 }
