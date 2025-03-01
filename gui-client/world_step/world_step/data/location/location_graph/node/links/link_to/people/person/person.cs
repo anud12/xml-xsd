@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,18 +10,23 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.
 namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.Npeople {
-  public class person  {
+  public class person : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/world_step/data/location/location_graph/node/links/link_to/people/person";
     public static string TagName = "person";
 
-    public string Tag = "person";
+    public string NodeName {get =>"person";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<person>> _callbackList = new();
+
     //Attributes
-    public System.String person_id_ref;
-    public System.String _person_id_ref;
-    public System.Int32 accumulated_progress;
-    public System.Int32 _accumulated_progress;
+    private System.String _person_id_ref;
+    public System.String person_id_ref { get => _person_id_ref; set => _person_id_ref = value; }
+    private System.Int32 _accumulated_progress;
+    public System.Int32 accumulated_progress { get => _accumulated_progress; set => _accumulated_progress = value; }
 
     //Children elements
     public person()
@@ -35,6 +42,12 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
+    }
+
+    public Action OnChange(Action<person> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -54,6 +67,7 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.
       }
 
       //Deserialize children
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -85,6 +99,7 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.
     public void Set_person_id_ref(System.String value)
     {
       this.person_id_ref = value;
+      this.OnChange();
     }
     public System.Int32 Get_accumulated_progress()
     {
@@ -93,12 +108,36 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.
     public void Set_accumulated_progress(System.Int32 value)
     {
       this.accumulated_progress = value;
+      this.OnChange();
     }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      return null;
     }
   }
 }

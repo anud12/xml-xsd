@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,16 +10,21 @@ namespace XSD.Nworld_step.Nworld_metadata.Ncounter {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nworld_metadata {
-  public class counter  {
+  public class counter : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/world_step/world_metadata/counter";
     public static string TagName = "counter";
 
-    public string Tag = "counter";
+    public string NodeName {get =>"counter";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<counter>> _callbackList = new();
+
     //Attributes
-    public System.Int32 value;
-    public System.Int32 _value;
+    private System.Int32 _value;
+    public System.Int32 value { get => _value; set => _value = value; }
 
     //Children elements
     public counter()
@@ -35,6 +42,12 @@ namespace XSD.Nworld_step.Nworld_metadata {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<counter> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -47,6 +60,7 @@ namespace XSD.Nworld_step.Nworld_metadata {
       }
 
       //Deserialize children
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -74,12 +88,36 @@ namespace XSD.Nworld_step.Nworld_metadata {
     public void Set_value(System.Int32 value)
     {
       this.value = value;
+      this.OnChange();
     }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      return null;
     }
   }
 }

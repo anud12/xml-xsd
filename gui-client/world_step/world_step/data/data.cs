@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,26 +10,59 @@ namespace XSD.Nworld_step.Ndata {}
 namespace XSD {
 }
 namespace XSD.Nworld_step {
-  public class data  {
+  public class data : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/world_step/data";
     public static string TagName = "data";
 
-    public string Tag = "data";
+    public string NodeName {get =>"data";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<data>> _callbackList = new();
+
     //Attributes
 
     //Children elements
     private XSD.Nworld_step.Ndata.people? _people = null;
-    public XSD.Nworld_step.Ndata.people? people {
-      get { return _people; }
-      set { _people = value; }
+    public XSD.Nworld_step.Ndata.people people
+    {
+      get
+      {
+        if(_people == null)
+        {
+          _people = new();
+          _people.ParentNode = this;
+          OnChange();
+        }
+        return _people;
+      }
+      set
+      {
+        _people = value;
+        _people.ParentNode = this;
+      }
     }
 
     private XSD.Nworld_step.Ndata.location? _location = null;
-    public XSD.Nworld_step.Ndata.location? location {
-      get { return _location; }
-      set { _location = value; }
+    public XSD.Nworld_step.Ndata.location location
+    {
+      get
+      {
+        if(_location == null)
+        {
+          _location = new();
+          _location.ParentNode = this;
+          OnChange();
+        }
+        return _location;
+      }
+      set
+      {
+        _location = value;
+        _location.ParentNode = this;
+      }
     }
     public data()
     {
@@ -44,6 +79,12 @@ namespace XSD.Nworld_step {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<data> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -51,8 +92,10 @@ namespace XSD.Nworld_step {
       //Deserialize arguments
 
       //Deserialize children
-      this._people = rawNode.InitializeWithRawNode("people", this._people);
-      this._location = rawNode.InitializeWithRawNode("location", this._location);
+      people = rawNode.InitializeWithRawNode("people", people);
+
+      location = rawNode.InitializeWithRawNode("location", location);
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -75,63 +118,54 @@ namespace XSD.Nworld_step {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public XSD.Nworld_step.Ndata.people? Get_people()
-    {
-      return this._people;
-    }
-    public XSD.Nworld_step.Ndata.people GetOrInsertDefault_people()
-    {
-      if(this._people == null) {
-
-        // true2
-        this._people = new XSD.Nworld_step.Ndata.people();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_people();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_people(XSD.Nworld_step.Ndata.people? value)
-    {
-        this._people = value;
-    }
-    public XSD.Nworld_step.Ndata.location? Get_location()
-    {
-      return this._location;
-    }
-    public XSD.Nworld_step.Ndata.location GetOrInsertDefault_location()
-    {
-      if(this._location == null) {
-
-        // true2
-        this._location = new XSD.Nworld_step.Ndata.location();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_location();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_location(XSD.Nworld_step.Ndata.location? value)
-    {
-        this._location = value;
-    }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(XSD.Nworld_step.Ndata.people.TagName))
       {
         this.people ??= new XSD.Nworld_step.Ndata.people();
-        xpath = xpath.Substring(XSD.Nworld_step.Ndata.people.TagName.Length + 3);
-        this.people.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(XSD.Nworld_step.Ndata.people.TagName.Length + 3);
+        this.people.SetXPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Ndata.location.TagName))
       {
         this.location ??= new XSD.Nworld_step.Ndata.location();
-        xpath = xpath.Substring(XSD.Nworld_step.Ndata.location.TagName.Length + 3);
-        this.location.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(XSD.Nworld_step.Ndata.location.TagName.Length + 3);
+        this.location.SetXPath(childXPath, rawNode);
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Ndata.people casted_people) {
+        return 0;
+      }
+      if(linkedNode is XSD.Nworld_step.Ndata.location casted_location) {
+        return 0;
+      }
+      return null;
     }
   }
 }

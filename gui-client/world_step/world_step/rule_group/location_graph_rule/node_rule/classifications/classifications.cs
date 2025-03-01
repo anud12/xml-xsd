@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,25 +10,35 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nclassific
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
-  public class classifications  {
+  public class classifications : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/world_step/rule_group/location_graph_rule/node_rule/classifications";
     public static string TagName = "classifications";
 
-    public string Tag = "classifications";
+    public string NodeName {get =>"classifications";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<classifications>> _callbackList = new();
+
     //Attributes
 
     //Children elements
 
-    private Dictionary<int, XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nclassifications.classification> _classification = new Dictionary<int, XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nclassifications.classification>();
-    public List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nclassifications.classification> classification {
-      get { return _classification.Values.ToList(); }
+    private LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nclassifications.classification> _classification = new();
+    public LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nclassifications.classification> classification
+    {
+      get => _classification;
       set
       {
-        _classification = value
-          .Select((value, index) => new { index, value })
-          .ToDictionary(item => item.index, item => item.value);
+        _classification = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _classification.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
       }
     }
     public classifications()
@@ -44,6 +56,12 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<classifications> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -51,7 +69,13 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
       //Deserialize arguments
 
       //Deserialize children
-      this._classification = rawNode.InitializeWithRawNode("classification", this._classification);
+      classification = rawNode.InitializeWithRawNode("classification", classification);
+      classification.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -59,7 +83,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
       //Serialize arguments
 
       //Serialize children
-      rawNode.children["classification"] = _classification?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();
+      rawNode.children["classification"] = classification.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 
@@ -69,45 +93,54 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nclassifications.classification>? Get_classification()
-    {
-      return this._classification?.Values.ToList();
-    }
-    public List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nclassifications.classification> GetOrInsertDefault_classification()
-    {
-      if(this._classification == null) {
-
-        // false2
-        this._classification = new Dictionary<int, XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nclassifications.classification>();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_classification();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_classification(List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nclassifications.classification>? value)
-    {
-      this._classification = value.Select((x, i) => new { Index = i, Value = x }).ToDictionary(x => x.Index, x => x.Value);
-    }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nclassifications.classification.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nclassifications.classification.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, startIndex + 1);
-        xpath = xpath.Substring(startIndex + 2);
-        if(this._classification.ContainsKey(indexString.ToInt()))
+        var indexString = xpath.Substring(startIndex, 1);
+        var childXPath = xpath.Substring(startIndex + 2);
+        var pathIndex = indexString.ToInt();
+        if(this.classification.ContainsKey(pathIndex))
         {
-          this._classification[indexString.ToInt()].SetXPath(xpath, rawNode);
+          this.classification[pathIndex].SetXPath(childXPath, rawNode);
+          return;
         }
         var newEntry = new XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nclassifications.classification();
-        newEntry.SetXPath(xpath, rawNode);
-        this._classification.Add(indexString.ToInt(), newEntry);
+        this.classification[pathIndex] = newEntry;
+        newEntry.SetXPath(childXPath, rawNode);
 
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nclassifications.classification casted_classification) {
+        return this._classification.KeyOf(casted_classification);
+      }
+      return null;
     }
   }
 }

@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,33 +10,43 @@ namespace XSD.Ntype__link_group {}
 namespace XSD {
 }
 namespace XSD {
-  public class type__link_group  {
+  public class type__link_group : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/type__link_group";
     public static string TagName = "type__link_group";
 
-    public string Tag = "type__link_group";
+    public string NodeName {get =>"type__link_group";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<type__link_group>> _callbackList = new();
+
     //Attributes
-    public System.String id;
-    public System.String _id;
-    public System.Int32 angle;
-    public System.Int32 _angle;
-    public System.Int32? angleMax;
-    public System.Int32? _angleMax;
-    public System.Int32? limit;
-    public System.Int32? _limit;
+    private System.String _id;
+    public System.String id { get => _id; set => _id = value; }
+    private System.Int32 _angle;
+    public System.Int32 angle { get => _angle; set => _angle = value; }
+    private System.Int32? _angleMax;
+    public System.Int32? angleMax { get => _angleMax; set => _angleMax = value; }
+    private System.Int32? _limit;
+    public System.Int32? limit { get => _limit; set => _limit = value; }
 
     //Children elements
 
-    private Dictionary<int, XSD.Ntype__link_group.to_option> _to_option = new Dictionary<int, XSD.Ntype__link_group.to_option>();
-    public List<XSD.Ntype__link_group.to_option> to_option {
-      get { return _to_option.Values.ToList(); }
+    private LinkedNodeCollection<XSD.Ntype__link_group.to_option> _to_option = new();
+    public LinkedNodeCollection<XSD.Ntype__link_group.to_option> to_option
+    {
+      get => _to_option;
       set
       {
-        _to_option = value
-          .Select((value, index) => new { index, value })
-          .ToDictionary(item => item.index, item => item.value);
+        _to_option = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _to_option.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
       }
     }
     public type__link_group()
@@ -50,6 +62,12 @@ namespace XSD {
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
+    }
+
+    public Action OnChange(Action<type__link_group> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -79,7 +97,13 @@ namespace XSD {
       }
 
       //Deserialize children
-      this._to_option = rawNode.InitializeWithRawNode("to_option", this._to_option);
+      to_option = rawNode.InitializeWithRawNode("to_option", to_option);
+      to_option.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -103,7 +127,7 @@ namespace XSD {
       }
 
       //Serialize children
-      rawNode.children["to_option"] = _to_option?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();
+      rawNode.children["to_option"] = to_option.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 
@@ -120,6 +144,7 @@ namespace XSD {
     public void Set_id(System.String value)
     {
       this.id = value;
+      this.OnChange();
     }
     public System.Int32 Get_angle()
     {
@@ -128,6 +153,7 @@ namespace XSD {
     public void Set_angle(System.Int32 value)
     {
       this.angle = value;
+      this.OnChange();
     }
     public System.Int32? Get_angleMax()
     {
@@ -136,6 +162,7 @@ namespace XSD {
     public void Set_angleMax(System.Int32? value)
     {
       this.angleMax = value;
+      this.OnChange();
     }
     public System.Int32? Get_limit()
     {
@@ -144,46 +171,56 @@ namespace XSD {
     public void Set_limit(System.Int32? value)
     {
       this.limit = value;
-    }
-    public List<XSD.Ntype__link_group.to_option>? Get_to_option()
-    {
-      return this._to_option?.Values.ToList();
-    }
-    public List<XSD.Ntype__link_group.to_option> GetOrInsertDefault_to_option()
-    {
-      if(this._to_option == null) {
-
-        // false2
-        this._to_option = new Dictionary<int, XSD.Ntype__link_group.to_option>();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_to_option();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_to_option(List<XSD.Ntype__link_group.to_option>? value)
-    {
-      this._to_option = value.Select((x, i) => new { Index = i, Value = x }).ToDictionary(x => x.Index, x => x.Value);
+      this.OnChange();
     }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(XSD.Ntype__link_group.to_option.TagName + "["))
       {
         var startIndex = (XSD.Ntype__link_group.to_option.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, startIndex + 1);
-        xpath = xpath.Substring(startIndex + 2);
-        if(this._to_option.ContainsKey(indexString.ToInt()))
+        var indexString = xpath.Substring(startIndex, 1);
+        var childXPath = xpath.Substring(startIndex + 2);
+        var pathIndex = indexString.ToInt();
+        if(this.to_option.ContainsKey(pathIndex))
         {
-          this._to_option[indexString.ToInt()].SetXPath(xpath, rawNode);
+          this.to_option[pathIndex].SetXPath(childXPath, rawNode);
+          return;
         }
         var newEntry = new XSD.Ntype__link_group.to_option();
-        newEntry.SetXPath(xpath, rawNode);
-        this._to_option.Add(indexString.ToInt(), newEntry);
+        this.to_option[pathIndex] = newEntry;
+        newEntry.SetXPath(childXPath, rawNode);
 
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Ntype__link_group.to_option casted_to_option) {
+        return this._to_option.KeyOf(casted_to_option);
+      }
+      return null;
     }
   }
 }

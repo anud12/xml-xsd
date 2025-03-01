@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,25 +10,35 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode {
-  public class links  {
+  public class links : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/world_step/data/location/location_graph/node/links";
     public static string TagName = "links";
 
-    public string Tag = "links";
+    public string NodeName {get =>"links";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<links>> _callbackList = new();
+
     //Attributes
 
     //Children elements
 
-    private Dictionary<int, XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.link_to> _link_to = new Dictionary<int, XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.link_to>();
-    public List<XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.link_to> link_to {
-      get { return _link_to.Values.ToList(); }
+    private LinkedNodeCollection<XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.link_to> _link_to = new();
+    public LinkedNodeCollection<XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.link_to> link_to
+    {
+      get => _link_to;
       set
       {
-        _link_to = value
-          .Select((value, index) => new { index, value })
-          .ToDictionary(item => item.index, item => item.value);
+        _link_to = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _link_to.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
       }
     }
     public links()
@@ -44,6 +56,12 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<links> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -51,7 +69,13 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode {
       //Deserialize arguments
 
       //Deserialize children
-      this._link_to = rawNode.InitializeWithRawNode("link_to", this._link_to);
+      link_to = rawNode.InitializeWithRawNode("link_to", link_to);
+      link_to.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -59,7 +83,7 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode {
       //Serialize arguments
 
       //Serialize children
-      rawNode.children["link_to"] = _link_to?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();
+      rawNode.children["link_to"] = link_to.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 
@@ -69,45 +93,54 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public List<XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.link_to>? Get_link_to()
-    {
-      return this._link_to?.Values.ToList();
-    }
-    public List<XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.link_to> GetOrInsertDefault_link_to()
-    {
-      if(this._link_to == null) {
-
-        // false2
-        this._link_to = new Dictionary<int, XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.link_to>();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_link_to();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_link_to(List<XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.link_to>? value)
-    {
-      this._link_to = value.Select((x, i) => new { Index = i, Value = x }).ToDictionary(x => x.Index, x => x.Value);
-    }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.link_to.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.link_to.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, startIndex + 1);
-        xpath = xpath.Substring(startIndex + 2);
-        if(this._link_to.ContainsKey(indexString.ToInt()))
+        var indexString = xpath.Substring(startIndex, 1);
+        var childXPath = xpath.Substring(startIndex + 2);
+        var pathIndex = indexString.ToInt();
+        if(this.link_to.ContainsKey(pathIndex))
         {
-          this._link_to[indexString.ToInt()].SetXPath(xpath, rawNode);
+          this.link_to[pathIndex].SetXPath(childXPath, rawNode);
+          return;
         }
         var newEntry = new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.link_to();
-        newEntry.SetXPath(xpath, rawNode);
-        this._link_to.Add(indexString.ToInt(), newEntry);
+        this.link_to[pathIndex] = newEntry;
+        newEntry.SetXPath(childXPath, rawNode);
 
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.link_to casted_link_to) {
+        return this._link_to.KeyOf(casted_link_to);
+      }
+      return null;
     }
   }
 }

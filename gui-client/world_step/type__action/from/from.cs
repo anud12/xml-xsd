@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,20 +10,39 @@ namespace XSD.Ntype__action.Nfrom {}
 namespace XSD {
 }
 namespace XSD.Ntype__action {
-  public class from  {
+  public class from : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/type__action/from";
     public static string TagName = "from";
 
-    public string Tag = "from";
+    public string NodeName {get =>"from";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<from>> _callbackList = new();
+
     //Attributes
 
     //Children elements
     private XSD.Ntype__action.Nfrom.person? _person = null;
-    public XSD.Ntype__action.Nfrom.person? person {
-      get { return _person; }
-      set { _person = value; }
+    public XSD.Ntype__action.Nfrom.person person
+    {
+      get
+      {
+        if(_person == null)
+        {
+          _person = new();
+          _person.ParentNode = this;
+          OnChange();
+        }
+        return _person;
+      }
+      set
+      {
+        _person = value;
+        _person.ParentNode = this;
+      }
     }
     public from()
     {
@@ -38,6 +59,12 @@ namespace XSD.Ntype__action {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<from> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -45,7 +72,8 @@ namespace XSD.Ntype__action {
       //Deserialize arguments
 
       //Deserialize children
-      this._person = rawNode.InitializeWithRawNode("person", this._person);
+      person = rawNode.InitializeWithRawNode("person", person);
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -65,37 +93,44 @@ namespace XSD.Ntype__action {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public XSD.Ntype__action.Nfrom.person? Get_person()
-    {
-      return this._person;
-    }
-    public XSD.Ntype__action.Nfrom.person GetOrInsertDefault_person()
-    {
-      if(this._person == null) {
-
-        // true2
-        this._person = new XSD.Ntype__action.Nfrom.person();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_person();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_person(XSD.Ntype__action.Nfrom.person? value)
-    {
-        this._person = value;
-    }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(XSD.Ntype__action.Nfrom.person.TagName))
       {
         this.person ??= new XSD.Ntype__action.Nfrom.person();
-        xpath = xpath.Substring(XSD.Ntype__action.Nfrom.person.TagName.Length + 3);
-        this.person.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(XSD.Ntype__action.Nfrom.person.TagName.Length + 3);
+        this.person.SetXPath(childXPath, rawNode);
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Ntype__action.Nfrom.person casted_person) {
+        return 0;
+      }
+      return null;
     }
   }
 }

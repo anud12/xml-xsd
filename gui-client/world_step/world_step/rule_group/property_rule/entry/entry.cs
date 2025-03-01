@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,40 +10,78 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nproperty_rule {
-  public class entry  {
+  public class entry : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/world_step/rule_group/property_rule/entry";
     public static string TagName = "entry";
 
-    public string Tag = "entry";
+    public string NodeName {get =>"entry";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<entry>> _callbackList = new();
+
     //Attributes
-    public System.String id;
-    public System.String _id;
-    public System.String units;
-    public System.String _units;
+    private System.String _id;
+    public System.String id { get => _id; set => _id = value; }
+    private System.String _units;
+    public System.String units { get => _units; set => _units = value; }
 
     //Children elements
     private XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.person_default? _person_default = null;
-    public XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.person_default? person_default {
-      get { return _person_default; }
-      set { _person_default = value; }
+    public XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.person_default person_default
+    {
+      get
+      {
+        if(_person_default == null)
+        {
+          _person_default = new();
+          _person_default.ParentNode = this;
+          OnChange();
+        }
+        return _person_default;
+      }
+      set
+      {
+        _person_default = value;
+        _person_default.ParentNode = this;
+      }
     }
 
     private XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.item_default? _item_default = null;
-    public XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.item_default? item_default {
-      get { return _item_default; }
-      set { _item_default = value; }
-    }
-
-    private Dictionary<int, XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold> _property_threshold = new Dictionary<int, XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold>();
-    public List<XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold> property_threshold {
-      get { return _property_threshold.Values.ToList(); }
+    public XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.item_default item_default
+    {
+      get
+      {
+        if(_item_default == null)
+        {
+          _item_default = new();
+          _item_default.ParentNode = this;
+          OnChange();
+        }
+        return _item_default;
+      }
       set
       {
-        _property_threshold = value
-          .Select((value, index) => new { index, value })
-          .ToDictionary(item => item.index, item => item.value);
+        _item_default = value;
+        _item_default.ParentNode = this;
+      }
+    }
+
+    private LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold> _property_threshold = new();
+    public LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold> property_threshold
+    {
+      get => _property_threshold;
+      set
+      {
+        _property_threshold = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _property_threshold.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
       }
     }
     public entry()
@@ -57,6 +97,12 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule {
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
+    }
+
+    public Action OnChange(Action<entry> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -76,9 +122,17 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule {
       }
 
       //Deserialize children
-      this._person_default = rawNode.InitializeWithRawNode("person_default", this._person_default);
-      this._item_default = rawNode.InitializeWithRawNode("item_default", this._item_default);
-      this._property_threshold = rawNode.InitializeWithRawNode("property-threshold", this._property_threshold);
+      person_default = rawNode.InitializeWithRawNode("person_default", person_default);
+
+      item_default = rawNode.InitializeWithRawNode("item_default", item_default);
+
+      property_threshold = rawNode.InitializeWithRawNode("property-threshold", property_threshold);
+      property_threshold.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -100,7 +154,7 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule {
       if(item_default != null) {
         rawNode.children["item_default"] = new List<RawNode> { item_default.SerializeIntoRawNode() };
       }
-      rawNode.children["property-threshold"] = _property_threshold?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();
+      rawNode.children["property-threshold"] = property_threshold.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 
@@ -117,6 +171,7 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule {
     public void Set_id(System.String value)
     {
       this.id = value;
+      this.OnChange();
     }
     public System.String Get_units()
     {
@@ -125,76 +180,77 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule {
     public void Set_units(System.String value)
     {
       this.units = value;
+      this.OnChange();
     }
-    public XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.person_default? Get_person_default()
-    {
-      return this.person_default;
-    }
-    public void Set_person_default(XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.person_default? value)
-    {
-      this.person_default = value;
-    }
-    public XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.item_default? Get_item_default()
-    {
-      return this.item_default;
-    }
-    public void Set_item_default(XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.item_default? value)
-    {
-      this.item_default = value;
-    }
-    public List<XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold>? Get_property_threshold()
-    {
-      return this._property_threshold?.Values.ToList();
-    }
-    public List<XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold> GetOrInsertDefault_property_threshold()
-    {
-      if(this._property_threshold == null) {
 
-        // false2
-        this._property_threshold = new Dictionary<int, XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold>();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_property_threshold();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_property_threshold(List<XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold>? value)
-    {
-      this._property_threshold = value.Select((x, i) => new { Index = i, Value = x }).ToDictionary(x => x.Index, x => x.Value);
-    }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.person_default.TagName))
       {
         this.person_default ??= new XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.person_default();
-        xpath = xpath.Substring(XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.person_default.TagName.Length + 3);
-        this.person_default.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.person_default.TagName.Length + 3);
+        this.person_default.SetXPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.item_default.TagName))
       {
         this.item_default ??= new XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.item_default();
-        xpath = xpath.Substring(XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.item_default.TagName.Length + 3);
-        this.item_default.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.item_default.TagName.Length + 3);
+        this.item_default.SetXPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, startIndex + 1);
-        xpath = xpath.Substring(startIndex + 2);
-        if(this._property_threshold.ContainsKey(indexString.ToInt()))
+        var indexString = xpath.Substring(startIndex, 1);
+        var childXPath = xpath.Substring(startIndex + 2);
+        var pathIndex = indexString.ToInt();
+        if(this.property_threshold.ContainsKey(pathIndex))
         {
-          this._property_threshold[indexString.ToInt()].SetXPath(xpath, rawNode);
+          this.property_threshold[pathIndex].SetXPath(childXPath, rawNode);
+          return;
         }
         var newEntry = new XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold();
-        newEntry.SetXPath(xpath, rawNode);
-        this._property_threshold.Add(indexString.ToInt(), newEntry);
+        this.property_threshold[pathIndex] = newEntry;
+        newEntry.SetXPath(childXPath, rawNode);
 
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.person_default casted_person_default) {
+        return 0;
+      }
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.item_default casted_item_default) {
+        return 0;
+      }
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold casted_property_threshold) {
+        return this._property_threshold.KeyOf(casted_property_threshold);
+      }
+      return null;
     }
   }
 }

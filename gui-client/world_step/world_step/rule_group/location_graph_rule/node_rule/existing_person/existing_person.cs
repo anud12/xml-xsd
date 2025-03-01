@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,24 +10,43 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nexisting_
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
-  public class existing_person  {
+  public class existing_person : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/world_step/rule_group/location_graph_rule/node_rule/existing_person";
     public static string TagName = "existing_person";
 
-    public string Tag = "existing_person";
+    public string NodeName {get =>"existing_person";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<existing_person>> _callbackList = new();
+
     //Attributes
-    public System.Int32 min;
-    public System.Int32 _min;
-    public System.Int32? max;
-    public System.Int32? _max;
+    private System.Int32 _min;
+    public System.Int32 min { get => _min; set => _min = value; }
+    private System.Int32? _max;
+    public System.Int32? max { get => _max; set => _max = value; }
 
     //Children elements
     private type__person_selection _person_selection = new type__person_selection();
-    public type__person_selection person_selection {
-      get { return _person_selection; }
-      set { _person_selection = value; }
+    public type__person_selection person_selection
+    {
+      get
+      {
+        if(_person_selection == null)
+        {
+          _person_selection = new();
+          _person_selection.ParentNode = this;
+          OnChange();
+        }
+        return _person_selection;
+      }
+      set
+      {
+        _person_selection = value;
+        _person_selection.ParentNode = this;
+      }
     }
     public existing_person()
     {
@@ -40,6 +61,12 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
+    }
+
+    public Action OnChange(Action<existing_person> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -59,7 +86,8 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
       }
 
       //Deserialize children
-      this._person_selection = rawNode.InitializeWithRawNode("person_selection", this._person_selection);
+      person_selection = rawNode.InitializeWithRawNode("person_selection", person_selection);
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -94,6 +122,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
     public void Set_min(System.Int32 value)
     {
       this.min = value;
+      this.OnChange();
     }
     public System.Int32? Get_max()
     {
@@ -102,26 +131,45 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
     public void Set_max(System.Int32? value)
     {
       this.max = value;
-    }
-    public type__person_selection Get_person_selection()
-    {
-      return this.person_selection;
-    }
-    public void Set_person_selection(type__person_selection value)
-    {
-      this.person_selection = value;
+      this.OnChange();
     }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(type__person_selection.TagName))
       {
-        xpath = xpath.Substring(type__person_selection.TagName.Length + 3);
-        this.person_selection.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(type__person_selection.TagName.Length + 3);
+        this.person_selection.SetXPath(childXPath, rawNode);
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is type__person_selection casted_person_selection) {
+        return 0;
+      }
+      return null;
     }
   }
 }

@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,20 +10,25 @@ namespace XSD.Nworld_step.Nactions.Nperson__on_person__property_mutation {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions {
-  public class person__on_person__property_mutation  {
+  public class person__on_person__property_mutation : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/world_step/actions/person.on_person.property_mutation";
     public static string TagName = "person.on_person.property_mutation";
 
-    public string Tag = "person.on_person.property_mutation";
+    public string NodeName {get =>"person.on_person.property_mutation";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<person__on_person__property_mutation>> _callbackList = new();
+
     //Attributes
-    public System.String person_id_ref;
-    public System.String _person_id_ref;
-    public System.String target_person_id_ref;
-    public System.String _target_person_id_ref;
-    public System.String action_property_mutation_rule_ref;
-    public System.String _action_property_mutation_rule_ref;
+    private System.String _person_id_ref;
+    public System.String person_id_ref { get => _person_id_ref; set => _person_id_ref = value; }
+    private System.String _target_person_id_ref;
+    public System.String target_person_id_ref { get => _target_person_id_ref; set => _target_person_id_ref = value; }
+    private System.String _action_property_mutation_rule_ref;
+    public System.String action_property_mutation_rule_ref { get => _action_property_mutation_rule_ref; set => _action_property_mutation_rule_ref = value; }
 
     //Children elements
     public person__on_person__property_mutation()
@@ -37,6 +44,12 @@ namespace XSD.Nworld_step.Nactions {
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
+    }
+
+    public Action OnChange(Action<person__on_person__property_mutation> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -61,6 +74,7 @@ namespace XSD.Nworld_step.Nactions {
       }
 
       //Deserialize children
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -96,6 +110,7 @@ namespace XSD.Nworld_step.Nactions {
     public void Set_person_id_ref(System.String value)
     {
       this.person_id_ref = value;
+      this.OnChange();
     }
     public System.String Get_target_person_id_ref()
     {
@@ -104,6 +119,7 @@ namespace XSD.Nworld_step.Nactions {
     public void Set_target_person_id_ref(System.String value)
     {
       this.target_person_id_ref = value;
+      this.OnChange();
     }
     public System.String Get_action_property_mutation_rule_ref()
     {
@@ -112,12 +128,36 @@ namespace XSD.Nworld_step.Nactions {
     public void Set_action_property_mutation_rule_ref(System.String value)
     {
       this.action_property_mutation_rule_ref = value;
+      this.OnChange();
     }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      return null;
     }
   }
 }

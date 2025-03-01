@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,13 +10,18 @@ namespace XSD.Ntype__math_operations {}
 namespace XSD {
 }
 namespace XSD {
-  public class type__math_operations  {
+  public class type__math_operations : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/type__math_operations";
     public static string TagName = "type__math_operations";
 
-    public string Tag = "type__math_operations";
+    public string NodeName {get =>"type__math_operations";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<type__math_operations>> _callbackList = new();
+
     //Attributes
 
     //Children elements
@@ -33,6 +40,12 @@ namespace XSD {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<type__math_operations> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -40,6 +53,7 @@ namespace XSD {
       //Deserialize arguments
 
       //Deserialize children
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -59,8 +73,31 @@ namespace XSD {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      return null;
     }
   }
 }

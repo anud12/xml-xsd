@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,25 +10,35 @@ namespace XSD.Ntype__name_token {}
 namespace XSD {
 }
 namespace XSD {
-  public class type__name_token  {
+  public class type__name_token : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/type__name_token";
     public static string TagName = "type__name_token";
 
-    public string Tag = "type__name_token";
+    public string NodeName {get =>"type__name_token";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<type__name_token>> _callbackList = new();
+
     //Attributes
 
     //Children elements
 
-    private Dictionary<int, XSD.Ntype__name_token.name_token> _name_token = new Dictionary<int, XSD.Ntype__name_token.name_token>();
-    public List<XSD.Ntype__name_token.name_token> name_token {
-      get { return _name_token.Values.ToList(); }
+    private LinkedNodeCollection<XSD.Ntype__name_token.name_token> _name_token = new();
+    public LinkedNodeCollection<XSD.Ntype__name_token.name_token> name_token
+    {
+      get => _name_token;
       set
       {
-        _name_token = value
-          .Select((value, index) => new { index, value })
-          .ToDictionary(item => item.index, item => item.value);
+        _name_token = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _name_token.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
       }
     }
     public type__name_token()
@@ -44,6 +56,12 @@ namespace XSD {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<type__name_token> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -51,7 +69,13 @@ namespace XSD {
       //Deserialize arguments
 
       //Deserialize children
-      this._name_token = rawNode.InitializeWithRawNode("name_token", this._name_token);
+      name_token = rawNode.InitializeWithRawNode("name_token", name_token);
+      name_token.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -59,7 +83,7 @@ namespace XSD {
       //Serialize arguments
 
       //Serialize children
-      rawNode.children["name_token"] = _name_token?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();
+      rawNode.children["name_token"] = name_token.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 
@@ -69,34 +93,54 @@ namespace XSD {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public List<XSD.Ntype__name_token.name_token> Get_name_token()
-    {
-      return this.name_token;
-    }
-    public void Set_name_token(List<XSD.Ntype__name_token.name_token> value)
-    {
-      this.name_token = value;
-    }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(XSD.Ntype__name_token.name_token.TagName + "["))
       {
         var startIndex = (XSD.Ntype__name_token.name_token.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, startIndex + 1);
-        xpath = xpath.Substring(startIndex + 2);
-        if(this._name_token.ContainsKey(indexString.ToInt()))
+        var indexString = xpath.Substring(startIndex, 1);
+        var childXPath = xpath.Substring(startIndex + 2);
+        var pathIndex = indexString.ToInt();
+        if(this.name_token.ContainsKey(pathIndex))
         {
-          this._name_token[indexString.ToInt()].SetXPath(xpath, rawNode);
+          this.name_token[pathIndex].SetXPath(childXPath, rawNode);
+          return;
         }
         var newEntry = new XSD.Ntype__name_token.name_token();
-        newEntry.SetXPath(xpath, rawNode);
-        this._name_token.Add(indexString.ToInt(), newEntry);
+        this.name_token[pathIndex] = newEntry;
+        newEntry.SetXPath(childXPath, rawNode);
 
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Ntype__name_token.name_token casted_name_token) {
+        return this._name_token.KeyOf(casted_name_token);
+      }
+      return null;
     }
   }
 }

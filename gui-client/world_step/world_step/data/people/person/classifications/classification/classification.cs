@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,16 +10,21 @@ namespace XSD.Nworld_step.Ndata.Npeople.Nperson.Nclassifications.Nclassification
 namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Npeople.Nperson.Nclassifications {
-  public class classification  {
+  public class classification : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/world_step/data/people/person/classifications/classification";
     public static string TagName = "classification";
 
-    public string Tag = "classification";
+    public string NodeName {get =>"classification";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<classification>> _callbackList = new();
+
     //Attributes
-    public System.String classification_rule_ref;
-    public System.String _classification_rule_ref;
+    private System.String _classification_rule_ref;
+    public System.String classification_rule_ref { get => _classification_rule_ref; set => _classification_rule_ref = value; }
 
     //Children elements
     public classification()
@@ -35,6 +42,12 @@ namespace XSD.Nworld_step.Ndata.Npeople.Nperson.Nclassifications {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<classification> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -47,6 +60,7 @@ namespace XSD.Nworld_step.Ndata.Npeople.Nperson.Nclassifications {
       }
 
       //Deserialize children
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -74,12 +88,36 @@ namespace XSD.Nworld_step.Ndata.Npeople.Nperson.Nclassifications {
     public void Set_classification_rule_ref(System.String value)
     {
       this.classification_rule_ref = value;
+      this.OnChange();
     }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      return null;
     }
   }
 }

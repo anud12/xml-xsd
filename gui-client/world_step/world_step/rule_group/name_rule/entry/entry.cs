@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -9,26 +11,31 @@ namespace XSD {
   public interface Itype__name_token {
 
     //Children elements
-    public List<XSD.Ntype__name_token.name_token> Get_name_token();
-    public void Set_name_token(List<XSD.Ntype__name_token.name_token> value);
+    public LinkedNodeCollection<XSD.Ntype__name_token.name_token> name_token { get; set; }
     public void Deserialize (RawNode rawNode);
 
     public RawNode SerializeIntoRawNode();
 
     public void Serialize(XmlElement element);
+
   }
 }
 namespace XSD.Nworld_step.Nrule_group.Nname_rule {
-  public class entry : Itype__name_token {
+  public class entry : XSD.ILinkedNode , Itype__name_token {
 
     public static string ClassTypeId = "/world_step/rule_group/name_rule/entry";
     public static string TagName = "entry";
 
-    public string Tag = "entry";
+    public string NodeName {get =>"entry";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<entry>> _callbackList = new();
+
     //Attributes
-    public System.String id;
-    public System.String _id;
+    private System.String _id;
+    public System.String id { get => _id; set => _id = value; }
 
     //Attributes of type__name_token
 
@@ -36,14 +43,19 @@ namespace XSD.Nworld_step.Nrule_group.Nname_rule {
 
     //Children of type__name_token
 
-    private Dictionary<int, XSD.Ntype__name_token.name_token> _name_token = new Dictionary<int, XSD.Ntype__name_token.name_token>();
-    public List<XSD.Ntype__name_token.name_token> name_token {
-      get { return _name_token.Values.ToList(); }
+    private LinkedNodeCollection<XSD.Ntype__name_token.name_token> _name_token = new();
+    public LinkedNodeCollection<XSD.Ntype__name_token.name_token> name_token
+    {
+      get => _name_token;
       set
       {
-        _name_token = value
-          .Select((value, index) => new { index, value })
-          .ToDictionary(item => item.index, item => item.value);
+        _name_token = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _name_token.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
       }
     }
     public entry()
@@ -61,6 +73,12 @@ namespace XSD.Nworld_step.Nrule_group.Nname_rule {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<entry> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -74,10 +92,17 @@ namespace XSD.Nworld_step.Nrule_group.Nname_rule {
 
       // Deserialize arguments of type__name_token
 
+
       //Deserialize children
 
       // Deserialize children of type__name_token
-  this._name_token = rawNode.InitializeWithRawNode("name_token", this._name_token);
+  name_token = rawNode.InitializeWithRawNode("name_token", name_token);
+  name_token.OnAdd = (value) =>
+    {
+      value.ParentNode = this;
+      OnChange();
+    };
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -94,7 +119,7 @@ namespace XSD.Nworld_step.Nrule_group.Nname_rule {
       //Serialize children
 
       // Serialize children of type__name_token
-  rawNode.children["name_token"] = _name_token?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();
+  rawNode.children["name_token"] = name_token.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 
@@ -111,21 +136,37 @@ namespace XSD.Nworld_step.Nrule_group.Nname_rule {
     public void Set_id(System.String value)
     {
       this.id = value;
-    }
-    public List<XSD.Ntype__name_token.name_token> Get_name_token()
-    {
-      return this.name_token;
-    }
-    public void Set_name_token(List<XSD.Ntype__name_token.name_token> value)
-    {
-      this.name_token = value;
+      this.OnChange();
     }
 
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      return null;
     }
   }
 }

@@ -10,6 +10,8 @@ import ro.anud.xml_xsd.implementation.middleware.locationGraph.LocationGraphCrea
 import ro.anud.xml_xsd.implementation.middleware.locationGraph.LocationGraphCreateAdjacent;
 import ro.anud.xml_xsd.implementation.middleware.person.PersonMoveTo;
 import ro.anud.xml_xsd.implementation.middleware.person.PersonTeleportTo;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 import ro.anud.xml_xsd.implementation.websocket.WebSocketHandler;
 
@@ -43,7 +45,7 @@ public class WorldStepRunner {
     public WorldStepRunner start(WorldStepInstance worldStepInstance, WebSocketHandler webSocketHandler) {
 
         var innerWorldStepInstance = new AtomicReference<>(worldStepInstance);
-        long intervalUs = 10_000_000;
+        long intervalUs = 100_000_000;
         isRunning = true;
         CompletableFuture<Object> firstRun = new CompletableFuture<>();
         finishedThread = new CompletableFuture<>();
@@ -68,6 +70,7 @@ public class WorldStepRunner {
                 long sleepTime = intervalUs - elapsedTime;
                 System.out.println("------------------------------------------");
                 System.out.println("Task Finished in : " + String.format("%,d",elapsedTime) + "us");
+                System.out.println("Sleeping         : " + String.format("%,d",sleepTime) + "us");
                 System.out.println("------------------------------------------");
 
                 if (sleepTime > 0) {

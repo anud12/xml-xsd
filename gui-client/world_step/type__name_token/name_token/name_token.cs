@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,28 +10,61 @@ namespace XSD.Ntype__name_token.Nname_token {}
 namespace XSD {
 }
 namespace XSD.Ntype__name_token {
-  public class name_token  {
+  public class name_token : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/type__name_token/name_token";
     public static string TagName = "name_token";
 
-    public string Tag = "name_token";
+    public string NodeName {get =>"name_token";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<name_token>> _callbackList = new();
+
     //Attributes
-    public System.String prefix;
-    public System.String _prefix;
+    private System.String _prefix;
+    public System.String prefix { get => _prefix; set => _prefix = value; }
 
     //Children elements
     private XSD.Ntype__name_token.Nname_token._ref? __ref = null;
-    public XSD.Ntype__name_token.Nname_token._ref? _ref {
-      get { return __ref; }
-      set { __ref = value; }
+    public XSD.Ntype__name_token.Nname_token._ref _ref
+    {
+      get
+      {
+        if(__ref == null)
+        {
+          __ref = new();
+          __ref.ParentNode = this;
+          OnChange();
+        }
+        return __ref;
+      }
+      set
+      {
+        __ref = value;
+        __ref.ParentNode = this;
+      }
     }
 
     private XSD.Ntype__name_token.Nname_token.one_of? _one_of = null;
-    public XSD.Ntype__name_token.Nname_token.one_of? one_of {
-      get { return _one_of; }
-      set { _one_of = value; }
+    public XSD.Ntype__name_token.Nname_token.one_of one_of
+    {
+      get
+      {
+        if(_one_of == null)
+        {
+          _one_of = new();
+          _one_of.ParentNode = this;
+          OnChange();
+        }
+        return _one_of;
+      }
+      set
+      {
+        _one_of = value;
+        _one_of.ParentNode = this;
+      }
     }
     public name_token()
     {
@@ -46,6 +81,12 @@ namespace XSD.Ntype__name_token {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<name_token> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -58,8 +99,10 @@ namespace XSD.Ntype__name_token {
       }
 
       //Deserialize children
-      this.__ref = rawNode.InitializeWithRawNode("ref", this.__ref);
-      this._one_of = rawNode.InitializeWithRawNode("one_of", this._one_of);
+      _ref = rawNode.InitializeWithRawNode("ref", _ref);
+
+      one_of = rawNode.InitializeWithRawNode("one_of", one_of);
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -93,53 +136,56 @@ namespace XSD.Ntype__name_token {
     public void Set_prefix(System.String value)
     {
       this.prefix = value;
-    }
-    public XSD.Ntype__name_token.Nname_token._ref? Get__ref()
-    {
-      return this.__ref;
-    }
-    public XSD.Ntype__name_token.Nname_token._ref GetOrInsertDefault__ref()
-    {
-      if(this.__ref == null) {
-
-        // true2
-        this.__ref = new XSD.Ntype__name_token.Nname_token._ref();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get__ref();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set__ref(XSD.Ntype__name_token.Nname_token._ref? value)
-    {
-        this.__ref = value;
-    }
-    public XSD.Ntype__name_token.Nname_token.one_of? Get_one_of()
-    {
-      return this.one_of;
-    }
-    public void Set_one_of(XSD.Ntype__name_token.Nname_token.one_of? value)
-    {
-      this.one_of = value;
+      this.OnChange();
     }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(XSD.Ntype__name_token.Nname_token._ref.TagName))
       {
         this._ref ??= new XSD.Ntype__name_token.Nname_token._ref();
-        xpath = xpath.Substring(XSD.Ntype__name_token.Nname_token._ref.TagName.Length + 3);
-        this._ref.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(XSD.Ntype__name_token.Nname_token._ref.TagName.Length + 3);
+        this._ref.SetXPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Ntype__name_token.Nname_token.one_of.TagName))
       {
         this.one_of ??= new XSD.Ntype__name_token.Nname_token.one_of();
-        xpath = xpath.Substring(XSD.Ntype__name_token.Nname_token.one_of.TagName.Length + 3);
-        this.one_of.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(XSD.Ntype__name_token.Nname_token.one_of.TagName.Length + 3);
+        this.one_of.SetXPath(childXPath, rawNode);
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Ntype__name_token.Nname_token._ref casted__ref) {
+        return 0;
+      }
+      if(linkedNode is XSD.Ntype__name_token.Nname_token.one_of casted_one_of) {
+        return 0;
+      }
+      return null;
     }
   }
 }

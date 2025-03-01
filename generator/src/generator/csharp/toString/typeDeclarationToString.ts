@@ -17,6 +17,7 @@ import {getDependantTypeNamespace} from "./getDependantTypeNamespace";
 import {getDependantTypeChildNamespace} from "./getDependantTypeChildNamespace";
 import {dependantTypeBuildXpath} from "./dependantType/dependantTypeBuildXpath";
 import {dependantTypeToSetXPath} from "./dependantTypeToSetXPath";
+import {dependantTypeBuildIndexForChild} from "./dependantType/dependantTypeBuildIndexForChild";
 
 
 type ClassTemplateParts = {
@@ -40,13 +41,18 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
   const extensionNames = extensions.map(e => `I${e.name}`)
 
   const templateString = template()`
-    public class ${normalizeName(dependantType.name)} ${extensionNames.length > 0 && `: ${extensionNames.join(", ")}`} {
+    public class ${normalizeName(dependantType.name)} : XSD.ILinkedNode ${extensionNames.length > 0 && `, ${extensionNames.join(", ")}`} {
       
       public static string ClassTypeId = "${dependantTypeBuildXpath(dependantType)}";
       public static string TagName = "${dependantType.name}";
       
-      public string Tag = "${dependantType.name}";
+      public string NodeName {get =>"${dependantType.name}";}
       public RawNode rawNode = new RawNode();
+      
+      private ILinkedNode? _parentNode; 
+      public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+      private List<Action<${normalizeName(dependantType.name)}>> _callbackList = new();
+      
       //Attributes
       ${dependantTypeToAttributeDeclaration(dependantType)}
       
@@ -81,6 +87,12 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
         Deserialize(rawNode);
       }
       
+      public Action OnChange(Action<${normalizeName(dependantType.name)}> callback)
+      {
+        _callbackList.Add(callback);
+        return () => _callbackList.Remove(callback);
+      }
+      
       public void Deserialize (RawNode rawNode) 
       {
         this.rawNode = rawNode;
@@ -104,6 +116,7 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
                ${dependantTypeToChildrenDeserializationBody(extension)}
               `
   })}
+        OnChange();
       }
       
       public RawNode SerializeIntoRawNode() 
@@ -144,9 +157,33 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
       
       public void SetXPath(string xpath, RawNode rawNode) 
       {
+        if(xpath.StartsWith("/")) 
+        {
+          xpath = xpath.Substring(1);
+        }
         ${dependantTypeToSetXPath(dependantType)?.templateString}
         
         Deserialize(rawNode);
+      }
+      
+      public void ChildChanged(List<ILinkedNode> linkedNodes) 
+      {
+        if(_parentNode == null)
+          return;
+        linkedNodes.Add(this);
+        _callbackList.ForEach(action => action(this));
+        _parentNode.ChildChanged(linkedNodes);
+      }
+      
+      private void OnChange() 
+      {
+        ChildChanged(new());
+      }
+      
+      public int? BuildIndexForChild(ILinkedNode linkedNode) 
+      {
+        ${dependantTypeBuildIndexForChild(dependantType)}
+        return null;
       }
     }
     
@@ -186,16 +223,16 @@ function typeDeclarationElementToInterfaceString(directoryMetadata: DirectoryMet
           ? `${primitives.string}?`
           : primitives.string;
         return template()`
-                    public ${typeString} Get_${normalizeName(key)}();
-                    public void Set_${normalizeName(key)}(${typeString} value);`
+                    public ${typeString} ${normalizeName(key)} { get; set; }
+                    `
       }
 
       const typeString = value.isNullable
         ? `${type}?`
         : type;
       return template()`
-                  public ${typeString} Get_${normalizeName(key)}();
-                  public void Set_${normalizeName(key)}(${typeString} value);`
+                  public ${typeString} ${normalizeName(key)} { get; set; }
+                  `
     }
 
     return template()`/* ignored attribute key={key} of type=${type}*/`
@@ -213,14 +250,14 @@ function typeDeclarationElementToInterfaceString(directoryMetadata: DirectoryMet
 
       let typeString = value.isSingle
         ? `${type}`
-        : `List<${type}>`
+        : `LinkedNodeCollection<${type}>`
       typeString = value.isNullable
         ? `${typeString}?`
         : typeString
 
       const fullPathTypeString = value.isSingle
         ? `${getDependantTypeChildNamespace(dependantType)}.${type}`
-        : `List<${getDependantTypeChildNamespace(dependantType)}.${type}>`;
+        : `LinkedNodeCollection<${getDependantTypeChildNamespace(dependantType)}.${type}>`;
       
       if (value.metaType === "object") {
         dependantTypeList.push({
@@ -229,8 +266,7 @@ function typeDeclarationElementToInterfaceString(directoryMetadata: DirectoryMet
           name: type,
         })
         return template()`
-          public ${fullPathTypeString} Get_${normalizeName(key)}();
-          public void Set_${normalizeName(key)}(${fullPathTypeString} value);
+          public ${fullPathTypeString} ${normalizeName(key)} { get; set; }
           `
       }
       if (value.metaType === "union" || value.metaType === "composition") {
@@ -240,8 +276,7 @@ function typeDeclarationElementToInterfaceString(directoryMetadata: DirectoryMet
           name: type,
         })
         return template()`
-        public ${fullPathTypeString} Get_${normalizeName(key)}();
-        public void Set_${normalizeName(key)}(${fullPathTypeString} value);
+         public ${fullPathTypeString} ${normalizeName(key)} { get; set; }
         `
       }
       if (value.metaType === "reference") {
@@ -251,8 +286,7 @@ function typeDeclarationElementToInterfaceString(directoryMetadata: DirectoryMet
           name: type,
         })
         return template()`
-        public ${typeString} Get_${normalizeName(key)}();
-        public void Set_${normalizeName(key)}(${typeString} value);
+         public ${typeString} ${normalizeName(key)} { get; set; }
         `
       }
       return template()`/* ignored children key:${key} of type:${type}*/`
@@ -263,6 +297,7 @@ function typeDeclarationElementToInterfaceString(directoryMetadata: DirectoryMet
       public RawNode SerializeIntoRawNode();
 
       public void Serialize(XmlElement element);
+      
     }
   `
 
@@ -297,11 +332,14 @@ export function typeDeclarationElementToString(directoryMetadata: DirectoryMetad
   })
 
   const templateString = template()`
+      using System;
+      using System.Collections.Immutable;
       using System.Collections.Generic;
       using System.Xml;
       using System.Linq;
       using Godot;
       using XSD;
+      
       
       namespace ${getDependantTypeChildNamespace(dependantType)} {}
       namespace XSD {

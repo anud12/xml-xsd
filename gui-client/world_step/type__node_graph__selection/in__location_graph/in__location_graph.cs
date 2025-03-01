@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,20 +10,39 @@ namespace XSD.Ntype__node_graph__selection.Nin__location_graph {}
 namespace XSD {
 }
 namespace XSD.Ntype__node_graph__selection {
-  public class in__location_graph  {
+  public class in__location_graph : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/type__node_graph__selection/in__location_graph";
     public static string TagName = "in__location_graph";
 
-    public string Tag = "in__location_graph";
+    public string NodeName {get =>"in__location_graph";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<in__location_graph>> _callbackList = new();
+
     //Attributes
 
     //Children elements
     private XSD.Ntype__node_graph__selection.Nin__location_graph.has__location_graph_id? _has__location_graph_id = null;
-    public XSD.Ntype__node_graph__selection.Nin__location_graph.has__location_graph_id? has__location_graph_id {
-      get { return _has__location_graph_id; }
-      set { _has__location_graph_id = value; }
+    public XSD.Ntype__node_graph__selection.Nin__location_graph.has__location_graph_id has__location_graph_id
+    {
+      get
+      {
+        if(_has__location_graph_id == null)
+        {
+          _has__location_graph_id = new();
+          _has__location_graph_id.ParentNode = this;
+          OnChange();
+        }
+        return _has__location_graph_id;
+      }
+      set
+      {
+        _has__location_graph_id = value;
+        _has__location_graph_id.ParentNode = this;
+      }
     }
     public in__location_graph()
     {
@@ -38,6 +59,12 @@ namespace XSD.Ntype__node_graph__selection {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<in__location_graph> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -45,7 +72,8 @@ namespace XSD.Ntype__node_graph__selection {
       //Deserialize arguments
 
       //Deserialize children
-      this._has__location_graph_id = rawNode.InitializeWithRawNode("has__location_graph_id", this._has__location_graph_id);
+      has__location_graph_id = rawNode.InitializeWithRawNode("has__location_graph_id", has__location_graph_id);
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -65,37 +93,44 @@ namespace XSD.Ntype__node_graph__selection {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public XSD.Ntype__node_graph__selection.Nin__location_graph.has__location_graph_id? Get_has__location_graph_id()
-    {
-      return this._has__location_graph_id;
-    }
-    public XSD.Ntype__node_graph__selection.Nin__location_graph.has__location_graph_id GetOrInsertDefault_has__location_graph_id()
-    {
-      if(this._has__location_graph_id == null) {
-
-        // true2
-        this._has__location_graph_id = new XSD.Ntype__node_graph__selection.Nin__location_graph.has__location_graph_id();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_has__location_graph_id();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_has__location_graph_id(XSD.Ntype__node_graph__selection.Nin__location_graph.has__location_graph_id? value)
-    {
-        this._has__location_graph_id = value;
-    }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(XSD.Ntype__node_graph__selection.Nin__location_graph.has__location_graph_id.TagName))
       {
         this.has__location_graph_id ??= new XSD.Ntype__node_graph__selection.Nin__location_graph.has__location_graph_id();
-        xpath = xpath.Substring(XSD.Ntype__node_graph__selection.Nin__location_graph.has__location_graph_id.TagName.Length + 3);
-        this.has__location_graph_id.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(XSD.Ntype__node_graph__selection.Nin__location_graph.has__location_graph_id.TagName.Length + 3);
+        this.has__location_graph_id.SetXPath(childXPath, rawNode);
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Ntype__node_graph__selection.Nin__location_graph.has__location_graph_id casted_has__location_graph_id) {
+        return 0;
+      }
+      return null;
     }
   }
 }

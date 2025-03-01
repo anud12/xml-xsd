@@ -46,12 +46,14 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(final WebSocketSession session) throws Exception {
+        var logger = logEnter("afterConnectionEstablished", session.getId());
         super.afterConnectionEstablished(session);
         clientMap.put(session.getId(), new Client(this, session));
     }
 
     @Override
     public void afterConnectionClosed(final WebSocketSession session, final CloseStatus status) throws Exception {
+        var logger = logEnter("afterConnectionClosed", session.getId());
         super.afterConnectionClosed(session, status);
         clientMap.remove(session.getId());
     }

@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,32 +10,56 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group {
-  public class location_graph_rule  {
+  public class location_graph_rule : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/world_step/rule_group/location_graph_rule";
     public static string TagName = "location_graph_rule";
 
-    public string Tag = "location_graph_rule";
+    public string NodeName {get =>"location_graph_rule";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<location_graph_rule>> _callbackList = new();
+
     //Attributes
-    public System.String id;
-    public System.String _id;
+    private System.String _id;
+    public System.String id { get => _id; set => _id = value; }
 
     //Children elements
     private XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.setup _setup = new XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.setup();
-    public XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.setup setup {
-      get { return _setup; }
-      set { _setup = value; }
-    }
-
-    private Dictionary<int, XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.node_rule> _node_rule = new Dictionary<int, XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.node_rule>();
-    public List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.node_rule> node_rule {
-      get { return _node_rule.Values.ToList(); }
+    public XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.setup setup
+    {
+      get
+      {
+        if(_setup == null)
+        {
+          _setup = new();
+          _setup.ParentNode = this;
+          OnChange();
+        }
+        return _setup;
+      }
       set
       {
-        _node_rule = value
-          .Select((value, index) => new { index, value })
-          .ToDictionary(item => item.index, item => item.value);
+        _setup = value;
+        _setup.ParentNode = this;
+      }
+    }
+
+    private LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.node_rule> _node_rule = new();
+    public LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.node_rule> node_rule
+    {
+      get => _node_rule;
+      set
+      {
+        _node_rule = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _node_rule.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
       }
     }
     public location_graph_rule()
@@ -51,6 +77,12 @@ namespace XSD.Nworld_step.Nrule_group {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<location_graph_rule> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -63,8 +95,15 @@ namespace XSD.Nworld_step.Nrule_group {
       }
 
       //Deserialize children
-      this._setup = rawNode.InitializeWithRawNode("setup", this._setup);
-      this._node_rule = rawNode.InitializeWithRawNode("node_rule", this._node_rule);
+      setup = rawNode.InitializeWithRawNode("setup", setup);
+
+      node_rule = rawNode.InitializeWithRawNode("node_rule", node_rule);
+      node_rule.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -79,7 +118,7 @@ namespace XSD.Nworld_step.Nrule_group {
       if(setup != null) {
         rawNode.children["setup"] = new List<RawNode> { setup.SerializeIntoRawNode() };
       }
-      rawNode.children["node_rule"] = _node_rule?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();
+      rawNode.children["node_rule"] = node_rule.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 
@@ -96,71 +135,66 @@ namespace XSD.Nworld_step.Nrule_group {
     public void Set_id(System.String value)
     {
       this.id = value;
+      this.OnChange();
     }
-    public XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.setup Get_setup()
-    {
-      return this._setup;
-    }
-    public XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.setup GetOrInsertDefault_setup()
-    {
-      if(this._setup == null) {
 
-        // true2
-        this._setup = new XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.setup();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_setup();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_setup(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.setup value)
-    {
-        this._setup = value;
-    }
-    public List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.node_rule>? Get_node_rule()
-    {
-      return this._node_rule?.Values.ToList();
-    }
-    public List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.node_rule> GetOrInsertDefault_node_rule()
-    {
-      if(this._node_rule == null) {
-
-        // false2
-        this._node_rule = new Dictionary<int, XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.node_rule>();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_node_rule();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_node_rule(List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.node_rule>? value)
-    {
-      this._node_rule = value.Select((x, i) => new { Index = i, Value = x }).ToDictionary(x => x.Index, x => x.Value);
-    }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.setup.TagName))
       {
-        xpath = xpath.Substring(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.setup.TagName.Length + 3);
-        this.setup.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.setup.TagName.Length + 3);
+        this.setup.SetXPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.node_rule.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.node_rule.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, startIndex + 1);
-        xpath = xpath.Substring(startIndex + 2);
-        if(this._node_rule.ContainsKey(indexString.ToInt()))
+        var indexString = xpath.Substring(startIndex, 1);
+        var childXPath = xpath.Substring(startIndex + 2);
+        var pathIndex = indexString.ToInt();
+        if(this.node_rule.ContainsKey(pathIndex))
         {
-          this._node_rule[indexString.ToInt()].SetXPath(xpath, rawNode);
+          this.node_rule[pathIndex].SetXPath(childXPath, rawNode);
+          return;
         }
         var newEntry = new XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.node_rule();
-        newEntry.SetXPath(xpath, rawNode);
-        this._node_rule.Add(indexString.ToInt(), newEntry);
+        this.node_rule[pathIndex] = newEntry;
+        newEntry.SetXPath(childXPath, rawNode);
 
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.setup casted_setup) {
+        return 0;
+      }
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.node_rule casted_node_rule) {
+        return this._node_rule.KeyOf(casted_node_rule);
+      }
+      return null;
     }
   }
 }

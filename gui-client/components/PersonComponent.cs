@@ -159,7 +159,7 @@ public partial class PersonComponent : Control
 			return;
 		}
 
-		worldStep.GetOrInsertDefault_actions().GetOrInsertDefault_from_person().Add(new from_person
+		worldStep.actions.from_person.Add(new from_person
 		{
 			person_id_ref = mainPersonId,
 			from_person_rule_ref = actionId,
@@ -168,12 +168,6 @@ public partial class PersonComponent : Control
 				person_id_ref = targetPersonId,
 			}
 		});
-		// worldStep.GetOrInsertDefault_actions().person__on_person__property_mutation.Add(new world_step__actions__person__on_person__property_mutation
-		// {
-		// 	action_property_mutation_rule_ref = actionId,
-		// 	person_id_ref = mainPersonId,
-		// 	target_person_id_ref = targetPersonId,
-		// });
 		LoadWorldStep.executeNextStep();
 	}
 

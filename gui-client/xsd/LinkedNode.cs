@@ -1,19 +1,29 @@
-namespace XSD {
-    abstract class LinkedNode {
-        protected abstract string nodeName();
-        protected abstract LinkedNode? parentNode();
+using System.Collections.Generic;
 
-        public abstract int? BuildIndexForChild(LinkedNode linkedNode);
+namespace XSD {
+    public interface ILinkedNode
+    {
+        public ILinkedNode? ParentNode { get; set; }
         
+        public string NodeName { get;}
+        public int? BuildIndexForChild(ILinkedNode linkedNode);
+        
+        void ChildChanged(List<ILinkedNode> linkedNodes);
+
+        public RawNode SerializeIntoRawNode();
+
+        public void SetXPath(string xpath, RawNode rawNode);
+
         public string BuildPath()
         {
-            var index = parentNode()?.BuildIndexForChild(this) ?? 0;
-            var path = "/" + nodeName() + "[" + index + "]";
-            if (parentNode() != null)
+            var index = ParentNode?.BuildIndexForChild(this) ?? 0;
+            var path = "/" + NodeName + "[" + index + "]";
+            if (ParentNode == null)
             {
-                return parentNode()?.BuildPath() + path;
+                return path;
             }
-            return path;
+            return ParentNode.BuildPath() + path;
         }
+
     }
 }

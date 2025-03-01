@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,38 +10,53 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nevents_rule {
-  public class entry  {
+  public class entry : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/world_step/rule_group/events_rule/entry";
     public static string TagName = "entry";
 
-    public string Tag = "entry";
+    public string NodeName {get =>"entry";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<entry>> _callbackList = new();
+
     //Attributes
-    public System.String id;
-    public System.String _id;
+    private System.String _id;
+    public System.String id { get => _id; set => _id = value; }
 
     //Children elements
 
-    private Dictionary<int, type__trigger> _when = new Dictionary<int, type__trigger>();
-    public List<type__trigger> when {
-      get { return _when.Values.ToList(); }
+    private LinkedNodeCollection<type__trigger> _when = new();
+    public LinkedNodeCollection<type__trigger> when
+    {
+      get => _when;
       set
       {
-        _when = value
-          .Select((value, index) => new { index, value })
-          .ToDictionary(item => item.index, item => item.value);
+        _when = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _when.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
       }
     }
 
-    private Dictionary<int, XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.then> _then = new Dictionary<int, XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.then>();
-    public List<XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.then> then {
-      get { return _then.Values.ToList(); }
+    private LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.then> _then = new();
+    public LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.then> then
+    {
+      get => _then;
       set
       {
-        _then = value
-          .Select((value, index) => new { index, value })
-          .ToDictionary(item => item.index, item => item.value);
+        _then = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _then.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
       }
     }
     public entry()
@@ -57,6 +74,12 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<entry> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -69,8 +92,19 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule {
       }
 
       //Deserialize children
-      this._when = rawNode.InitializeWithRawNode("when", this._when);
-      this._then = rawNode.InitializeWithRawNode("then", this._then);
+      when = rawNode.InitializeWithRawNode("when", when);
+      when.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
+      then = rawNode.InitializeWithRawNode("then", then);
+      then.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -82,8 +116,8 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule {
       }
 
       //Serialize children
-      rawNode.children["when"] = _when?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();
-      rawNode.children["then"] = _then?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();
+      rawNode.children["when"] = when.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["then"] = then.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 
@@ -100,69 +134,76 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule {
     public void Set_id(System.String value)
     {
       this.id = value;
-    }
-    public List<type__trigger> Get_when()
-    {
-      return this.when;
-    }
-    public void Set_when(List<type__trigger> value)
-    {
-      this.when = value;
-    }
-    public List<XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.then> Get_then()
-    {
-      return this._then?.Values.ToList();
-    }
-    public List<XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.then> GetOrInsertDefault_then()
-    {
-      if(this._then == null) {
-
-        // false2
-        this._then = new Dictionary<int, XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.then>();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_then();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_then(List<XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.then> value)
-    {
-      this._then = value.Select((x, i) => new { Index = i, Value = x }).ToDictionary(x => x.Index, x => x.Value);
+      this.OnChange();
     }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(type__trigger.TagName + "["))
       {
         var startIndex = (type__trigger.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, startIndex + 1);
-        xpath = xpath.Substring(startIndex + 2);
-        if(this._when.ContainsKey(indexString.ToInt()))
+        var indexString = xpath.Substring(startIndex, 1);
+        var childXPath = xpath.Substring(startIndex + 2);
+        var pathIndex = indexString.ToInt();
+        if(this.when.ContainsKey(pathIndex))
         {
-          this._when[indexString.ToInt()].SetXPath(xpath, rawNode);
+          this.when[pathIndex].SetXPath(childXPath, rawNode);
+          return;
         }
         var newEntry = new type__trigger();
-        newEntry.SetXPath(xpath, rawNode);
-        this._when.Add(indexString.ToInt(), newEntry);
+        this.when[pathIndex] = newEntry;
+        newEntry.SetXPath(childXPath, rawNode);
 
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.then.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.then.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, startIndex + 1);
-        xpath = xpath.Substring(startIndex + 2);
-        if(this._then.ContainsKey(indexString.ToInt()))
+        var indexString = xpath.Substring(startIndex, 1);
+        var childXPath = xpath.Substring(startIndex + 2);
+        var pathIndex = indexString.ToInt();
+        if(this.then.ContainsKey(pathIndex))
         {
-          this._then[indexString.ToInt()].SetXPath(xpath, rawNode);
+          this.then[pathIndex].SetXPath(childXPath, rawNode);
+          return;
         }
         var newEntry = new XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.then();
-        newEntry.SetXPath(xpath, rawNode);
-        this._then.Add(indexString.ToInt(), newEntry);
+        this.then[pathIndex] = newEntry;
+        newEntry.SetXPath(childXPath, rawNode);
 
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is type__trigger casted_when) {
+        return this._when.KeyOf(casted_when);
+      }
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.then casted_then) {
+        return this._then.KeyOf(casted_then);
+      }
+      return null;
     }
   }
 }

@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,28 +10,61 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions {
-  public class person__teleport  {
+  public class person__teleport : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/world_step/actions/person.teleport";
     public static string TagName = "person.teleport";
 
-    public string Tag = "person.teleport";
+    public string NodeName {get =>"person.teleport";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<person__teleport>> _callbackList = new();
+
     //Attributes
-    public System.String person_id_ref;
-    public System.String _person_id_ref;
+    private System.String _person_id_ref;
+    public System.String person_id_ref { get => _person_id_ref; set => _person_id_ref = value; }
 
     //Children elements
     private XSD.Nworld_step.Nactions.Nperson__teleport.location_graph? _location_graph = null;
-    public XSD.Nworld_step.Nactions.Nperson__teleport.location_graph? location_graph {
-      get { return _location_graph; }
-      set { _location_graph = value; }
+    public XSD.Nworld_step.Nactions.Nperson__teleport.location_graph location_graph
+    {
+      get
+      {
+        if(_location_graph == null)
+        {
+          _location_graph = new();
+          _location_graph.ParentNode = this;
+          OnChange();
+        }
+        return _location_graph;
+      }
+      set
+      {
+        _location_graph = value;
+        _location_graph.ParentNode = this;
+      }
     }
 
     private XSD.Nworld_step.Nactions.Nperson__teleport.link_to? _link_to = null;
-    public XSD.Nworld_step.Nactions.Nperson__teleport.link_to? link_to {
-      get { return _link_to; }
-      set { _link_to = value; }
+    public XSD.Nworld_step.Nactions.Nperson__teleport.link_to link_to
+    {
+      get
+      {
+        if(_link_to == null)
+        {
+          _link_to = new();
+          _link_to.ParentNode = this;
+          OnChange();
+        }
+        return _link_to;
+      }
+      set
+      {
+        _link_to = value;
+        _link_to.ParentNode = this;
+      }
     }
     public person__teleport()
     {
@@ -46,6 +81,12 @@ namespace XSD.Nworld_step.Nactions {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<person__teleport> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -58,8 +99,10 @@ namespace XSD.Nworld_step.Nactions {
       }
 
       //Deserialize children
-      this._location_graph = rawNode.InitializeWithRawNode("location_graph", this._location_graph);
-      this._link_to = rawNode.InitializeWithRawNode("link_to", this._link_to);
+      location_graph = rawNode.InitializeWithRawNode("location_graph", location_graph);
+
+      link_to = rawNode.InitializeWithRawNode("link_to", link_to);
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -93,64 +136,56 @@ namespace XSD.Nworld_step.Nactions {
     public void Set_person_id_ref(System.String value)
     {
       this.person_id_ref = value;
-    }
-    public XSD.Nworld_step.Nactions.Nperson__teleport.location_graph? Get_location_graph()
-    {
-      return this._location_graph;
-    }
-    public XSD.Nworld_step.Nactions.Nperson__teleport.location_graph GetOrInsertDefault_location_graph()
-    {
-      if(this._location_graph == null) {
-
-        // true2
-        this._location_graph = new XSD.Nworld_step.Nactions.Nperson__teleport.location_graph();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_location_graph();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_location_graph(XSD.Nworld_step.Nactions.Nperson__teleport.location_graph? value)
-    {
-        this._location_graph = value;
-    }
-    public XSD.Nworld_step.Nactions.Nperson__teleport.link_to? Get_link_to()
-    {
-      return this._link_to;
-    }
-    public XSD.Nworld_step.Nactions.Nperson__teleport.link_to GetOrInsertDefault_link_to()
-    {
-      if(this._link_to == null) {
-
-        // true2
-        this._link_to = new XSD.Nworld_step.Nactions.Nperson__teleport.link_to();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_link_to();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_link_to(XSD.Nworld_step.Nactions.Nperson__teleport.link_to? value)
-    {
-        this._link_to = value;
+      this.OnChange();
     }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(XSD.Nworld_step.Nactions.Nperson__teleport.location_graph.TagName))
       {
         this.location_graph ??= new XSD.Nworld_step.Nactions.Nperson__teleport.location_graph();
-        xpath = xpath.Substring(XSD.Nworld_step.Nactions.Nperson__teleport.location_graph.TagName.Length + 3);
-        this.location_graph.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(XSD.Nworld_step.Nactions.Nperson__teleport.location_graph.TagName.Length + 3);
+        this.location_graph.SetXPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nactions.Nperson__teleport.link_to.TagName))
       {
         this.link_to ??= new XSD.Nworld_step.Nactions.Nperson__teleport.link_to();
-        xpath = xpath.Substring(XSD.Nworld_step.Nactions.Nperson__teleport.link_to.TagName.Length + 3);
-        this.link_to.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(XSD.Nworld_step.Nactions.Nperson__teleport.link_to.TagName.Length + 3);
+        this.link_to.SetXPath(childXPath, rawNode);
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Nactions.Nperson__teleport.location_graph casted_location_graph) {
+        return 0;
+      }
+      if(linkedNode is XSD.Nworld_step.Nactions.Nperson__teleport.link_to casted_link_to) {
+        return 0;
+      }
+      return null;
     }
   }
 }

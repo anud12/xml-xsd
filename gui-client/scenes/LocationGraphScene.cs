@@ -13,7 +13,6 @@ using XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks;
 using link_to = XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.link_to;
 using location_graph = XSD.Nworld_step.Ndata.Nlocation.location_graph;
 using util.dataStore;
-using util.repository;
 
 public partial class LocationGraphScene : Control
 {
@@ -81,7 +80,6 @@ public partial class LocationGraphScene : Control
 		Dictionary<string, Control> nodeById = new Dictionary<string, Control>();
 		Dictionary<Vector2, Control> node2DVector2D = new Dictionary<Vector2, Control>();
 
-		var locagionGraph = Repository<Object>.LocationGraph.Get(this.locationGraphId);;
 
 		// var nodeList = CreateComponents(worldStep, locagionGraph, nodeById, node2DVector2D);
 
@@ -94,10 +92,8 @@ public partial class LocationGraphScene : Control
 
     private IEnumerable<Node> CreateComponents(world_step worldStep, location_graph location_graph, Dictionary<string, Control> nodeById, Dictionary<Vector2, Control> node2DVector2D)
     {
-        return location_graph.node.Select(node => node.id).SelectMany(nodeId =>
+        return location_graph.node.SelectMany(node =>
         {
-
-			var node = Repository<Object>.Node.Get(nodeId); ;
 			var position = node.position;
             var packedScene = LocationGraphNodeComponent.PackedScene.Instantiate();
             var locationGraphNodeComponent = packedScene.GetNode<LocationGraphNodeComponent>("./");
@@ -154,7 +150,7 @@ public partial class LocationGraphScene : Control
 			location_graph_id_ref = locationGraph.id,
 			node_id_ref = node.id,
 		};
-		worldStep.GetOrInsertDefault_actions().GetOrInsertDefault_location_graph__node__create_adjacent().Add(createAdjacent);
+		worldStep.actions.location_graph__node__create_adjacent.Add(createAdjacent);
 		LoadWorldStep.executeNextStep();
 	}
 
@@ -172,7 +168,7 @@ public partial class LocationGraphScene : Control
 			}
 		};
 
-		worldStep.GetOrInsertDefault_actions().person__teleport = teleport;
+		worldStep.actions.person__teleport = teleport;
 		LoadWorldStep.executeNextStep();
 	}
 	private void PathTo(location_graph locationGraph, node node, world_step worldStep)
@@ -191,15 +187,14 @@ public partial class LocationGraphScene : Control
 				node_graph_id_ref = node.id
 			}
 		};
-
-		worldStep.GetOrInsertDefault_actions().GetOrInsertDefault_person__move_to().Add(action);
+		worldStep.actions.person__move_to.Add(action);
 		LoadWorldStep.executeNextStep();
 	}
 	private IEnumerable<Node> loadLinks(world_step worldStep, Dictionary<string, Control> nodesById)
 	{
 		var personContainerNode = GetNode<Node>("%PersonContainer");
-		IEnumerable<Node> nodeList = (worldStep.data.location?.location_graph ?? new List<location_graph>())
-		.Where(location_graph => location_graph.id == this.locationGraphId)
+		IEnumerable<Node> nodeList = worldStep.data.location.location_graph
+		.Where(location_graph => location_graph.id == locationGraphId)
 		.SelectMany(location_graph => location_graph.node)
 		.SelectMany(startNodeElement => startNodeElement.links.link_to.SelectMany(linkTo =>
 			{
@@ -239,7 +234,7 @@ public partial class LocationGraphScene : Control
 				return returnList;
 			})
 		);
-		return nodeList;
+		return nodeList ?? new List<Node>();
 	}
 
 	private void addSteps(Line2D line2D,  link_to linkTo)

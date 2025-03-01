@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,26 +10,59 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person {
-  public class on_person  {
+  public class on_person : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/world_step/rule_group/action_rule/from_person/on_person";
     public static string TagName = "on_person";
 
-    public string Tag = "on_person";
+    public string NodeName {get =>"on_person";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<on_person>> _callbackList = new();
+
     //Attributes
 
     //Children elements
     private XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.selection? _selection = null;
-    public XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.selection? selection {
-      get { return _selection; }
-      set { _selection = value; }
+    public XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.selection selection
+    {
+      get
+      {
+        if(_selection == null)
+        {
+          _selection = new();
+          _selection.ParentNode = this;
+          OnChange();
+        }
+        return _selection;
+      }
+      set
+      {
+        _selection = value;
+        _selection.ParentNode = this;
+      }
     }
 
     private XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.mutations? _mutations = null;
-    public XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.mutations? mutations {
-      get { return _mutations; }
-      set { _mutations = value; }
+    public XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.mutations mutations
+    {
+      get
+      {
+        if(_mutations == null)
+        {
+          _mutations = new();
+          _mutations.ParentNode = this;
+          OnChange();
+        }
+        return _mutations;
+      }
+      set
+      {
+        _mutations = value;
+        _mutations.ParentNode = this;
+      }
     }
     public on_person()
     {
@@ -44,6 +79,12 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<on_person> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -51,8 +92,10 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person {
       //Deserialize arguments
 
       //Deserialize children
-      this._selection = rawNode.InitializeWithRawNode("selection", this._selection);
-      this._mutations = rawNode.InitializeWithRawNode("mutations", this._mutations);
+      selection = rawNode.InitializeWithRawNode("selection", selection);
+
+      mutations = rawNode.InitializeWithRawNode("mutations", mutations);
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -75,52 +118,54 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.selection? Get_selection()
-    {
-      return this.selection;
-    }
-    public void Set_selection(XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.selection? value)
-    {
-      this.selection = value;
-    }
-    public XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.mutations? Get_mutations()
-    {
-      return this._mutations;
-    }
-    public XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.mutations GetOrInsertDefault_mutations()
-    {
-      if(this._mutations == null) {
-
-        // true2
-        this._mutations = new XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.mutations();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_mutations();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_mutations(XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.mutations? value)
-    {
-        this._mutations = value;
-    }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.selection.TagName))
       {
         this.selection ??= new XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.selection();
-        xpath = xpath.Substring(XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.selection.TagName.Length + 3);
-        this.selection.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.selection.TagName.Length + 3);
+        this.selection.SetXPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.mutations.TagName))
       {
         this.mutations ??= new XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.mutations();
-        xpath = xpath.Substring(XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.mutations.TagName.Length + 3);
-        this.mutations.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.mutations.TagName.Length + 3);
+        this.mutations.SetXPath(childXPath, rawNode);
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.selection casted_selection) {
+        return 0;
+      }
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.mutations casted_mutations) {
+        return 0;
+      }
+      return null;
     }
   }
 }

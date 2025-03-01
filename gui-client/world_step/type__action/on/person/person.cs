@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,26 +10,59 @@ namespace XSD.Ntype__action.Non.Nperson {}
 namespace XSD {
 }
 namespace XSD.Ntype__action.Non {
-  public class person  {
+  public class person : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/type__action/on/person";
     public static string TagName = "person";
 
-    public string Tag = "person";
+    public string NodeName {get =>"person";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<person>> _callbackList = new();
+
     //Attributes
 
     //Children elements
     private type__person_selection? _select = null;
-    public type__person_selection? select {
-      get { return _select; }
-      set { _select = value; }
+    public type__person_selection select
+    {
+      get
+      {
+        if(_select == null)
+        {
+          _select = new();
+          _select.ParentNode = this;
+          OnChange();
+        }
+        return _select;
+      }
+      set
+      {
+        _select = value;
+        _select.ParentNode = this;
+      }
     }
 
     private type__property_mutation? _property_mutation = null;
-    public type__property_mutation? property_mutation {
-      get { return _property_mutation; }
-      set { _property_mutation = value; }
+    public type__property_mutation property_mutation
+    {
+      get
+      {
+        if(_property_mutation == null)
+        {
+          _property_mutation = new();
+          _property_mutation.ParentNode = this;
+          OnChange();
+        }
+        return _property_mutation;
+      }
+      set
+      {
+        _property_mutation = value;
+        _property_mutation.ParentNode = this;
+      }
     }
     public person()
     {
@@ -44,6 +79,12 @@ namespace XSD.Ntype__action.Non {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<person> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -51,8 +92,10 @@ namespace XSD.Ntype__action.Non {
       //Deserialize arguments
 
       //Deserialize children
-      this._select = rawNode.InitializeWithRawNode("select", this._select);
-      this._property_mutation = rawNode.InitializeWithRawNode("property_mutation", this._property_mutation);
+      select = rawNode.InitializeWithRawNode("select", select);
+
+      property_mutation = rawNode.InitializeWithRawNode("property_mutation", property_mutation);
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -75,41 +118,54 @@ namespace XSD.Ntype__action.Non {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public type__person_selection? Get_select()
-    {
-      return this.select;
-    }
-    public void Set_select(type__person_selection? value)
-    {
-      this.select = value;
-    }
-    public type__property_mutation? Get_property_mutation()
-    {
-      return this.property_mutation;
-    }
-    public void Set_property_mutation(type__property_mutation? value)
-    {
-      this.property_mutation = value;
-    }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(type__person_selection.TagName))
       {
         this.select ??= new type__person_selection();
-        xpath = xpath.Substring(type__person_selection.TagName.Length + 3);
-        this.select.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(type__person_selection.TagName.Length + 3);
+        this.select.SetXPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(type__property_mutation.TagName))
       {
         this.property_mutation ??= new type__property_mutation();
-        xpath = xpath.Substring(type__property_mutation.TagName.Length + 3);
-        this.property_mutation.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(type__property_mutation.TagName.Length + 3);
+        this.property_mutation.SetXPath(childXPath, rawNode);
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is type__person_selection casted_select) {
+        return 0;
+      }
+      if(linkedNode is type__property_mutation casted_property_mutation) {
+        return 0;
+      }
+      return null;
     }
   }
 }

@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,22 +10,41 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport.Nlink_to {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions.Nperson__teleport {
-  public class link_to  {
+  public class link_to : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/world_step/actions/person.teleport/link_to";
     public static string TagName = "link_to";
 
-    public string Tag = "link_to";
+    public string NodeName {get =>"link_to";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<link_to>> _callbackList = new();
+
     //Attributes
-    public System.Int32 accumulated_progress;
-    public System.Int32 _accumulated_progress;
+    private System.Int32 _accumulated_progress;
+    public System.Int32 accumulated_progress { get => _accumulated_progress; set => _accumulated_progress = value; }
 
     //Children elements
     private type__link_to__selection _selection = new type__link_to__selection();
-    public type__link_to__selection selection {
-      get { return _selection; }
-      set { _selection = value; }
+    public type__link_to__selection selection
+    {
+      get
+      {
+        if(_selection == null)
+        {
+          _selection = new();
+          _selection.ParentNode = this;
+          OnChange();
+        }
+        return _selection;
+      }
+      set
+      {
+        _selection = value;
+        _selection.ParentNode = this;
+      }
     }
     public link_to()
     {
@@ -40,6 +61,12 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<link_to> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -52,7 +79,8 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
       }
 
       //Deserialize children
-      this._selection = rawNode.InitializeWithRawNode("selection", this._selection);
+      selection = rawNode.InitializeWithRawNode("selection", selection);
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -83,26 +111,45 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
     public void Set_accumulated_progress(System.Int32 value)
     {
       this.accumulated_progress = value;
-    }
-    public type__link_to__selection Get_selection()
-    {
-      return this.selection;
-    }
-    public void Set_selection(type__link_to__selection value)
-    {
-      this.selection = value;
+      this.OnChange();
     }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(type__link_to__selection.TagName))
       {
-        xpath = xpath.Substring(type__link_to__selection.TagName.Length + 3);
-        this.selection.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(type__link_to__selection.TagName.Length + 3);
+        this.selection.SetXPath(childXPath, rawNode);
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is type__link_to__selection casted_selection) {
+        return 0;
+      }
+      return null;
     }
   }
 }

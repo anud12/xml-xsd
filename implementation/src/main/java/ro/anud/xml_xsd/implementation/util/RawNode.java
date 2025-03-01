@@ -94,7 +94,7 @@ public final class RawNode {
         if (Strings.isBlank(value)) {
             return logReturn(Optional.empty());
         }
-        return logReturn(Optional.of(Integer.parseInt(value)));
+        return logReturn(Optional.of(Integer.parseInt(value.trim())));
     }
 
     public Optional<String> getAttribute(String key) {

@@ -36,8 +36,8 @@ export const dependantTypeToSetXPath = (dependantType: DependantType): { dependa
           if(xpath.StartsWith(${type}.TagName))
           {
             ${value.isNullable && `this.${normalizeName(key)} ??= new ${type}();`}
-            xpath = xpath.Substring(${type}.TagName.Length + 3);
-            this.${normalizeName(key)}.SetXPath(xpath, rawNode);
+            var childXPath = xpath.Substring(${type}.TagName.Length + 3);
+            this.${normalizeName(key)}.SetXPath(childXPath, rawNode);
             return;
           }
         `
@@ -47,15 +47,17 @@ export const dependantTypeToSetXPath = (dependantType: DependantType): { dependa
           if(xpath.StartsWith(${type}.TagName + "["))
           {
             var startIndex = (${type}.TagName + "[").Length;
-            var indexString = xpath.Substring(startIndex, startIndex + 1);
-            xpath = xpath.Substring(startIndex + 2);
-            if(this._${normalizeName(key)}.ContainsKey(indexString.ToInt())) 
+            var indexString = xpath.Substring(startIndex, 1);
+            var childXPath = xpath.Substring(startIndex + 2);
+            var pathIndex = indexString.ToInt();
+            if(this.${normalizeName(key)}.ContainsKey(pathIndex)) 
             {
-              this._${normalizeName(key)}[indexString.ToInt()].SetXPath(xpath, rawNode);
+              this.${normalizeName(key)}[pathIndex].SetXPath(childXPath, rawNode);
+              return;
             }
             var newEntry = new ${type}();
-            newEntry.SetXPath(xpath, rawNode);
-            this._${normalizeName(key)}.Add(indexString.ToInt(), newEntry);
+            this.${normalizeName(key)}[pathIndex] = newEntry;
+            newEntry.SetXPath(childXPath, rawNode);
             
             return;
           }

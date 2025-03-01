@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,36 +10,51 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_grou
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
-  public class link_group_list  {
+  public class link_group_list : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/world_step/rule_group/location_graph_rule/node_rule/link_group_list";
     public static string TagName = "link_group_list";
 
-    public string Tag = "link_group_list";
+    public string NodeName {get =>"link_group_list";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<link_group_list>> _callbackList = new();
+
     //Attributes
 
     //Children elements
 
-    private Dictionary<int, XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.reference> _reference = new Dictionary<int, XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.reference>();
-    public List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.reference> reference {
-      get { return _reference.Values.ToList(); }
+    private LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.reference> _reference = new();
+    public LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.reference> reference
+    {
+      get => _reference;
       set
       {
-        _reference = value
-          .Select((value, index) => new { index, value })
-          .ToDictionary(item => item.index, item => item.value);
+        _reference = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _reference.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
       }
     }
 
-    private Dictionary<int, XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.link_group> _link_group = new Dictionary<int, XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.link_group>();
-    public List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.link_group> link_group {
-      get { return _link_group.Values.ToList(); }
+    private LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.link_group> _link_group = new();
+    public LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.link_group> link_group
+    {
+      get => _link_group;
       set
       {
-        _link_group = value
-          .Select((value, index) => new { index, value })
-          .ToDictionary(item => item.index, item => item.value);
+        _link_group = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _link_group.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
       }
     }
     public link_group_list()
@@ -55,6 +72,12 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<link_group_list> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -62,8 +85,19 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
       //Deserialize arguments
 
       //Deserialize children
-      this._reference = rawNode.InitializeWithRawNode("reference", this._reference);
-      this._link_group = rawNode.InitializeWithRawNode("link_group", this._link_group);
+      reference = rawNode.InitializeWithRawNode("reference", reference);
+      reference.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
+      link_group = rawNode.InitializeWithRawNode("link_group", link_group);
+      link_group.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -71,8 +105,8 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
       //Serialize arguments
 
       //Serialize children
-      rawNode.children["reference"] = _reference?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();
-      rawNode.children["link_group"] = _link_group?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();
+      rawNode.children["reference"] = reference.Select(x => x.SerializeIntoRawNode()).ToList();
+      rawNode.children["link_group"] = link_group.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 
@@ -82,68 +116,74 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.reference>? Get_reference()
-    {
-      return this._reference?.Values.ToList();
-    }
-    public List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.reference> GetOrInsertDefault_reference()
-    {
-      if(this._reference == null) {
-
-        // false2
-        this._reference = new Dictionary<int, XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.reference>();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_reference();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_reference(List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.reference>? value)
-    {
-      this._reference = value.Select((x, i) => new { Index = i, Value = x }).ToDictionary(x => x.Index, x => x.Value);
-    }
-    public List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.link_group>? Get_link_group()
-    {
-      return this.link_group;
-    }
-    public void Set_link_group(List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.link_group>? value)
-    {
-      this.link_group = value;
-    }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.reference.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.reference.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, startIndex + 1);
-        xpath = xpath.Substring(startIndex + 2);
-        if(this._reference.ContainsKey(indexString.ToInt()))
+        var indexString = xpath.Substring(startIndex, 1);
+        var childXPath = xpath.Substring(startIndex + 2);
+        var pathIndex = indexString.ToInt();
+        if(this.reference.ContainsKey(pathIndex))
         {
-          this._reference[indexString.ToInt()].SetXPath(xpath, rawNode);
+          this.reference[pathIndex].SetXPath(childXPath, rawNode);
+          return;
         }
         var newEntry = new XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.reference();
-        newEntry.SetXPath(xpath, rawNode);
-        this._reference.Add(indexString.ToInt(), newEntry);
+        this.reference[pathIndex] = newEntry;
+        newEntry.SetXPath(childXPath, rawNode);
 
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.link_group.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.link_group.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, startIndex + 1);
-        xpath = xpath.Substring(startIndex + 2);
-        if(this._link_group.ContainsKey(indexString.ToInt()))
+        var indexString = xpath.Substring(startIndex, 1);
+        var childXPath = xpath.Substring(startIndex + 2);
+        var pathIndex = indexString.ToInt();
+        if(this.link_group.ContainsKey(pathIndex))
         {
-          this._link_group[indexString.ToInt()].SetXPath(xpath, rawNode);
+          this.link_group[pathIndex].SetXPath(childXPath, rawNode);
+          return;
         }
         var newEntry = new XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.link_group();
-        newEntry.SetXPath(xpath, rawNode);
-        this._link_group.Add(indexString.ToInt(), newEntry);
+        this.link_group[pathIndex] = newEntry;
+        newEntry.SetXPath(childXPath, rawNode);
 
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.reference casted_reference) {
+        return this._reference.KeyOf(casted_reference);
+      }
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.link_group casted_link_group) {
+        return this._link_group.KeyOf(casted_link_group);
+      }
+      return null;
     }
   }
 }

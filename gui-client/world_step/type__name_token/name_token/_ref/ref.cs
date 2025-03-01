@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,16 +10,21 @@ namespace XSD.Ntype__name_token.Nname_token.N_ref {}
 namespace XSD {
 }
 namespace XSD.Ntype__name_token.Nname_token {
-  public class _ref  {
+  public class _ref : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/type__name_token/name_token/ref";
     public static string TagName = "ref";
 
-    public string Tag = "ref";
+    public string NodeName {get =>"ref";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<_ref>> _callbackList = new();
+
     //Attributes
-    public System.String name_rule_ref;
-    public System.String _name_rule_ref;
+    private System.String _name_rule_ref;
+    public System.String name_rule_ref { get => _name_rule_ref; set => _name_rule_ref = value; }
 
     //Children elements
     public _ref()
@@ -35,6 +42,12 @@ namespace XSD.Ntype__name_token.Nname_token {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<_ref> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -47,6 +60,7 @@ namespace XSD.Ntype__name_token.Nname_token {
       }
 
       //Deserialize children
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -74,12 +88,36 @@ namespace XSD.Ntype__name_token.Nname_token {
     public void Set_name_rule_ref(System.String value)
     {
       this.name_rule_ref = value;
+      this.OnChange();
     }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      return null;
     }
   }
 }

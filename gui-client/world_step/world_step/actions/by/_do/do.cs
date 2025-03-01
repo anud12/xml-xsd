@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,20 +10,25 @@ namespace XSD.Nworld_step.Nactions.Nby.N_do {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions.Nby {
-  public class _do  {
+  public class _do : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/world_step/actions/by/do";
     public static string TagName = "do";
 
-    public string Tag = "do";
+    public string NodeName {get =>"do";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<_do>> _callbackList = new();
+
     //Attributes
-    public System.String? action_rule_ref;
-    public System.String? _action_rule_ref;
-    public System.String? action_ref;
-    public System.String? _action_ref;
-    public System.String person_ref;
-    public System.String _person_ref;
+    private System.String? _action_rule_ref;
+    public System.String? action_rule_ref { get => _action_rule_ref; set => _action_rule_ref = value; }
+    private System.String? _action_ref;
+    public System.String? action_ref { get => _action_ref; set => _action_ref = value; }
+    private System.String _person_ref;
+    public System.String person_ref { get => _person_ref; set => _person_ref = value; }
 
     //Children elements
     public _do()
@@ -37,6 +44,12 @@ namespace XSD.Nworld_step.Nactions.Nby {
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
+    }
+
+    public Action OnChange(Action<_do> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -61,6 +74,7 @@ namespace XSD.Nworld_step.Nactions.Nby {
       }
 
       //Deserialize children
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -96,6 +110,7 @@ namespace XSD.Nworld_step.Nactions.Nby {
     public void Set_action_rule_ref(System.String? value)
     {
       this.action_rule_ref = value;
+      this.OnChange();
     }
     public System.String? Get_action_ref()
     {
@@ -104,6 +119,7 @@ namespace XSD.Nworld_step.Nactions.Nby {
     public void Set_action_ref(System.String? value)
     {
       this.action_ref = value;
+      this.OnChange();
     }
     public System.String Get_person_ref()
     {
@@ -112,12 +128,36 @@ namespace XSD.Nworld_step.Nactions.Nby {
     public void Set_person_ref(System.String value)
     {
       this.person_ref = value;
+      this.OnChange();
     }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      return null;
     }
   }
 }

@@ -21,7 +21,7 @@
       <entry value="254" />
       <entry value="140" />
       <entry value="16" />
-      <entry value="66 " />
+      <entry value="66" />
       <entry value="74" />
       <entry value="21" />
       <entry value="211" />
@@ -91,7 +91,7 @@
       <entry value="122" />
       <entry value="175" />
       <entry value="249" />
-      <entry value="0 " />
+      <entry value="0" />
       <entry value="175" />
       <entry value="143" />
       <entry value="70" />
@@ -553,7 +553,7 @@
   </rule_group>
   <data>
     <people>
-      <person id="0" name="BillyWithVeryLongName">
+      <person id="0" name="BillyWithVeryLongNameChanged">
         <properties>
           <property property_rule_ref="health" value="10" />
         </properties>

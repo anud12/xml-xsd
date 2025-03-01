@@ -20,8 +20,8 @@ export const dependantTypeToAttributeDeclaration = (dependantType: DependantType
           : primitives.string;
 
         return template()`
-                public ${typeString} ${normalizeName(key)};
-                public ${typeString} _${normalizeName(key)};
+                private ${typeString} _${normalizeName(key)};
+                public ${typeString} ${normalizeName(key)} { get => _${normalizeName(key)}; set => _${normalizeName(key)} = value; }
                 `
       }
 
@@ -30,8 +30,8 @@ export const dependantTypeToAttributeDeclaration = (dependantType: DependantType
         : type;
 
       return template()`
-              public ${typeString} ${normalizeName(key)};
-              public ${typeString} _${normalizeName(key)};
+              private ${typeString} _${normalizeName(key)};
+              public ${typeString} ${normalizeName(key)} { get => _${normalizeName(key)}; set => _${normalizeName(key)} = value; }
               `
     }
 

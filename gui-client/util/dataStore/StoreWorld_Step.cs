@@ -5,6 +5,6 @@ namespace util.dataStore
 {
     public class StoreWorld_Step
     {
-        public static DataStore<world_step> instance = new DataStore<world_step>();
+        public static DataStore<world_step> instance = new();
     }
 }

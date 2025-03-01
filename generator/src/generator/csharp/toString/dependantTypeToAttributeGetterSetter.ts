@@ -27,6 +27,7 @@ export const dependantTypeToAttributeGetterSetter = (dependantType: DependantTyp
                 public void Set_${normalizeName(key)}(${typeString} value)
                 {
                   this.${normalizeName(key)} = value;
+                  this.OnChange();
                 }
                 `
       }
@@ -43,6 +44,7 @@ export const dependantTypeToAttributeGetterSetter = (dependantType: DependantTyp
               public void Set_${normalizeName(key)}(${typeString} value)
               {
                 this.${normalizeName(key)} = value;
+                this.OnChange();
               }
               `
     }

@@ -52,22 +52,42 @@ export const dependantTypeToChildrenDeclaration = (dependantType: DependantType)
       return template()`
         ${value.isSingle && template()`
           private ${type}${value.isNullable && `?`} _${normalizeName(key)} = ${value.isNullable? `null`: `new ${type}()`};
-          public ${type}${value.isNullable && `?`} ${normalizeName(key)} {
-            get { return _${normalizeName(key)}; }
-            set { _${normalizeName(key)} = value; }
+          public ${type} ${normalizeName(key)}  
+          { 
+            get
+            {
+              if(_${normalizeName(key)} == null) 
+              {
+                _${normalizeName(key)} = new();
+                _${normalizeName(key)}.ParentNode = this;
+                OnChange();
+              }
+              return _${normalizeName(key)};
+            }
+            set
+            {
+              _${normalizeName(key)} = value;
+              _${normalizeName(key)}.ParentNode = this;
+            }
           }
         `}
         ${!value.isSingle && template()`
-          private Dictionary<int, ${type}> _${normalizeName(key)} = new Dictionary<int, ${type}>();
-          public List<${type}> ${normalizeName(key)} {
-            get { return _${normalizeName(key)}.Values.ToList(); }
-            set 
-            { 
-              _${normalizeName(key)} = value
-                .Select((value, index) => new { index, value })
-                .ToDictionary(item => item.index, item => item.value);
-            }
+          private LinkedNodeCollection<${type}> _${normalizeName(key)} = new();
+          public LinkedNodeCollection<${type}> ${normalizeName(key)} 
+          { 
+            get => _${normalizeName(key)}; 
+            set
+            {
+              _${normalizeName(key)} = value;
+              value.ForEach(linkedNode => linkedNode.ParentNode = this);
+              _${normalizeName(key)}.OnAdd = (value) =>
+              {
+                value.ParentNode = this;
+                OnChange();
+              };
+            } 
           }
+          
         `}
       `
       return template()`/* ignored children key:${key} of type:${typeName}*/`

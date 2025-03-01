@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,16 +10,21 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_classification_rule.Nentry {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nlocation_classification_rule {
-  public class entry  {
+  public class entry : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/world_step/rule_group/location_classification_rule/entry";
     public static string TagName = "entry";
 
-    public string Tag = "entry";
+    public string NodeName {get =>"entry";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<entry>> _callbackList = new();
+
     //Attributes
-    public System.String id;
-    public System.String _id;
+    private System.String _id;
+    public System.String id { get => _id; set => _id = value; }
 
     //Children elements
     public entry()
@@ -35,6 +42,12 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_classification_rule {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<entry> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -47,6 +60,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_classification_rule {
       }
 
       //Deserialize children
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -74,12 +88,36 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_classification_rule {
     public void Set_id(System.String value)
     {
       this.id = value;
+      this.OnChange();
     }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      return null;
     }
   }
 }

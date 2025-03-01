@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,22 +10,41 @@ namespace XSD.Nworld_step.Nactions.Nlocation_graph__node__add_classification.Nto
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions.Nlocation_graph__node__add_classification {
-  public class to_be_added__classification  {
+  public class to_be_added__classification : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/world_step/actions/location_graph.node.add_classification/to_be_added__classification";
     public static string TagName = "to_be_added__classification";
 
-    public string Tag = "to_be_added__classification";
+    public string NodeName {get =>"to_be_added__classification";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<to_be_added__classification>> _callbackList = new();
+
     //Attributes
-    public System.String location_classification_rule_ref;
-    public System.String _location_classification_rule_ref;
+    private System.String _location_classification_rule_ref;
+    public System.String location_classification_rule_ref { get => _location_classification_rule_ref; set => _location_classification_rule_ref = value; }
 
     //Children elements
     private XSD.Nworld_step.Nactions.Nlocation_graph__node__add_classification.Nto_be_added__classification.and? _and = null;
-    public XSD.Nworld_step.Nactions.Nlocation_graph__node__add_classification.Nto_be_added__classification.and? and {
-      get { return _and; }
-      set { _and = value; }
+    public XSD.Nworld_step.Nactions.Nlocation_graph__node__add_classification.Nto_be_added__classification.and and
+    {
+      get
+      {
+        if(_and == null)
+        {
+          _and = new();
+          _and.ParentNode = this;
+          OnChange();
+        }
+        return _and;
+      }
+      set
+      {
+        _and = value;
+        _and.ParentNode = this;
+      }
     }
     public to_be_added__classification()
     {
@@ -40,6 +61,12 @@ namespace XSD.Nworld_step.Nactions.Nlocation_graph__node__add_classification {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<to_be_added__classification> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -52,7 +79,8 @@ namespace XSD.Nworld_step.Nactions.Nlocation_graph__node__add_classification {
       }
 
       //Deserialize children
-      this._and = rawNode.InitializeWithRawNode("and", this._and);
+      and = rawNode.InitializeWithRawNode("and", and);
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -83,38 +111,46 @@ namespace XSD.Nworld_step.Nactions.Nlocation_graph__node__add_classification {
     public void Set_location_classification_rule_ref(System.String value)
     {
       this.location_classification_rule_ref = value;
-    }
-    public XSD.Nworld_step.Nactions.Nlocation_graph__node__add_classification.Nto_be_added__classification.and? Get_and()
-    {
-      return this._and;
-    }
-    public XSD.Nworld_step.Nactions.Nlocation_graph__node__add_classification.Nto_be_added__classification.and GetOrInsertDefault_and()
-    {
-      if(this._and == null) {
-
-        // true2
-        this._and = new XSD.Nworld_step.Nactions.Nlocation_graph__node__add_classification.Nto_be_added__classification.and();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_and();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_and(XSD.Nworld_step.Nactions.Nlocation_graph__node__add_classification.Nto_be_added__classification.and? value)
-    {
-        this._and = value;
+      this.OnChange();
     }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(XSD.Nworld_step.Nactions.Nlocation_graph__node__add_classification.Nto_be_added__classification.and.TagName))
       {
         this.and ??= new XSD.Nworld_step.Nactions.Nlocation_graph__node__add_classification.Nto_be_added__classification.and();
-        xpath = xpath.Substring(XSD.Nworld_step.Nactions.Nlocation_graph__node__add_classification.Nto_be_added__classification.and.TagName.Length + 3);
-        this.and.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(XSD.Nworld_step.Nactions.Nlocation_graph__node__add_classification.Nto_be_added__classification.and.TagName.Length + 3);
+        this.and.SetXPath(childXPath, rawNode);
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Nactions.Nlocation_graph__node__add_classification.Nto_be_added__classification.and casted_and) {
+        return 0;
+      }
+      return null;
     }
   }
 }

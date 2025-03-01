@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -9,28 +11,32 @@ namespace XSD {
   public interface Itype__action {
 
     //Children elements
-    public XSD.Ntype__action.from Get_from();
-    public void Set_from(XSD.Ntype__action.from value);
-    public XSD.Ntype__action.on Get_on();
-    public void Set_on(XSD.Ntype__action.on value);
+    public XSD.Ntype__action.from from { get; set; }
+    public XSD.Ntype__action.on on { get; set; }
     public void Deserialize (RawNode rawNode);
 
     public RawNode SerializeIntoRawNode();
 
     public void Serialize(XmlElement element);
+
   }
 }
 namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nglobal {
-  public class entry : Itype__action {
+  public class entry : XSD.ILinkedNode , Itype__action {
 
     public static string ClassTypeId = "/world_step/rule_group/action_rule/global/entry";
     public static string TagName = "entry";
 
-    public string Tag = "entry";
+    public string NodeName {get =>"entry";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<entry>> _callbackList = new();
+
     //Attributes
-    public System.String id;
-    public System.String _id;
+    private System.String _id;
+    public System.String id { get => _id; set => _id = value; }
 
     //Attributes of type__action
 
@@ -38,15 +44,43 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nglobal {
 
     //Children of type__action
     private XSD.Ntype__action.from _from = new XSD.Ntype__action.from();
-    public XSD.Ntype__action.from from {
-      get { return _from; }
-      set { _from = value; }
+    public XSD.Ntype__action.from from
+    {
+      get
+      {
+        if(_from == null)
+        {
+          _from = new();
+          _from.ParentNode = this;
+          OnChange();
+        }
+        return _from;
+      }
+      set
+      {
+        _from = value;
+        _from.ParentNode = this;
+      }
     }
 
     private XSD.Ntype__action.on _on = new XSD.Ntype__action.on();
-    public XSD.Ntype__action.on on {
-      get { return _on; }
-      set { _on = value; }
+    public XSD.Ntype__action.on on
+    {
+      get
+      {
+        if(_on == null)
+        {
+          _on = new();
+          _on.ParentNode = this;
+          OnChange();
+        }
+        return _on;
+      }
+      set
+      {
+        _on = value;
+        _on.ParentNode = this;
+      }
     }
     public entry()
     {
@@ -63,6 +97,12 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nglobal {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<entry> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -76,11 +116,14 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nglobal {
 
       // Deserialize arguments of type__action
 
+
       //Deserialize children
 
       // Deserialize children of type__action
-  this._from = rawNode.InitializeWithRawNode("from", this._from);
-  this._on = rawNode.InitializeWithRawNode("on", this._on);
+  from = rawNode.InitializeWithRawNode("from", from);
+
+  on = rawNode.InitializeWithRawNode("on", on);
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -119,51 +162,37 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nglobal {
     public void Set_id(System.String value)
     {
       this.id = value;
-    }
-    public XSD.Ntype__action.from Get_from()
-    {
-      return this._from;
-    }
-    public XSD.Ntype__action.from GetOrInsertDefault_from()
-    {
-      if(this._from == null) {
-
-        // true2
-        this._from = new XSD.Ntype__action.from();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_from();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_from(XSD.Ntype__action.from value)
-    {
-        this._from = value;
-    }
-    public XSD.Ntype__action.on Get_on()
-    {
-      return this._on;
-    }
-    public XSD.Ntype__action.on GetOrInsertDefault_on()
-    {
-      if(this._on == null) {
-
-        // true2
-        this._on = new XSD.Ntype__action.on();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_on();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_on(XSD.Ntype__action.on value)
-    {
-        this._on = value;
+      this.OnChange();
     }
 
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      return null;
     }
   }
 }

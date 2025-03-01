@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,16 +10,21 @@ namespace XSD.Ntype__node_graph__selection.Nhas__node_graph_id.Nor {}
 namespace XSD {
 }
 namespace XSD.Ntype__node_graph__selection.Nhas__node_graph_id {
-  public class or  {
+  public class or : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/type__node_graph__selection/has__node_graph_id/or";
     public static string TagName = "or";
 
-    public string Tag = "or";
+    public string NodeName {get =>"or";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<or>> _callbackList = new();
+
     //Attributes
-    public System.String? node_graph_id_ref;
-    public System.String? _node_graph_id_ref;
+    private System.String? _node_graph_id_ref;
+    public System.String? node_graph_id_ref { get => _node_graph_id_ref; set => _node_graph_id_ref = value; }
 
     //Children elements
     public or()
@@ -35,6 +42,12 @@ namespace XSD.Ntype__node_graph__selection.Nhas__node_graph_id {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<or> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -47,6 +60,7 @@ namespace XSD.Ntype__node_graph__selection.Nhas__node_graph_id {
       }
 
       //Deserialize children
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -74,12 +88,36 @@ namespace XSD.Ntype__node_graph__selection.Nhas__node_graph_id {
     public void Set_node_graph_id_ref(System.String? value)
     {
       this.node_graph_id_ref = value;
+      this.OnChange();
     }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      return null;
     }
   }
 }

@@ -11,16 +11,14 @@ public partial class PersonSelect : OptionButton
 {
     // Called when the node enters the scene tree for the first time.
 
-    private DataStore<world_step> _worldStepDataStore = StoreWorld_Step.instance;
-
-    
+    private readonly DataStore<world_step> _worldStepDataStore = StoreWorld_Step.instance;
     private person? _person;
-    public DataStore<person> value = new DataStore<person>();
+    public readonly DataStore<person> Value = new DataStore<person>();
 
     public PersonSelect()
     {
         Connect("item_selected", new Godot.Callable(this, nameof(OnItemSelected)));
-        value.OnSet((person, unsubscribe) =>
+        Value.OnSet((person, unsubscribe) =>
         {
             if(IsInstanceValid(this) == false)
             {
@@ -55,7 +53,7 @@ public partial class PersonSelect : OptionButton
     private person? SelectById(string? id) {
         if (id == null)
         {
-            value.data = null;
+            Value.data = null;
             Select(0);
             return null;
         }
@@ -72,15 +70,14 @@ public partial class PersonSelect : OptionButton
     }
     public void SetById(string? id) {
         var person = SelectById(id);
-        value.data = person;
+        Value.data = person;
         _person = person;
     }
-
     public void OnItemSelected(int index)
     {
         if (index == 0)
         {
-            value.data = null;
+            Value.data = null;
             return;
         }
         var worldStep = _worldStepDataStore.data;
@@ -90,6 +87,12 @@ public partial class PersonSelect : OptionButton
         }
         var person = worldStep.data.people?.person?.ElementAt(index - 1);
         _person = person;
-        value.data = person;
+        Value.data = person;
+    }
+
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+        
     }
 }

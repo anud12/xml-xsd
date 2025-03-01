@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,25 +10,35 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group {
-  public class classification_rule  {
+  public class classification_rule : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/world_step/rule_group/classification_rule";
     public static string TagName = "classification_rule";
 
-    public string Tag = "classification_rule";
+    public string NodeName {get =>"classification_rule";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<classification_rule>> _callbackList = new();
+
     //Attributes
 
     //Children elements
 
-    private Dictionary<int, XSD.Nworld_step.Nrule_group.Nclassification_rule.entry> _entry = new Dictionary<int, XSD.Nworld_step.Nrule_group.Nclassification_rule.entry>();
-    public List<XSD.Nworld_step.Nrule_group.Nclassification_rule.entry> entry {
-      get { return _entry.Values.ToList(); }
+    private LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nclassification_rule.entry> _entry = new();
+    public LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nclassification_rule.entry> entry
+    {
+      get => _entry;
       set
       {
-        _entry = value
-          .Select((value, index) => new { index, value })
-          .ToDictionary(item => item.index, item => item.value);
+        _entry = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _entry.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
       }
     }
     public classification_rule()
@@ -44,6 +56,12 @@ namespace XSD.Nworld_step.Nrule_group {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<classification_rule> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -51,7 +69,13 @@ namespace XSD.Nworld_step.Nrule_group {
       //Deserialize arguments
 
       //Deserialize children
-      this._entry = rawNode.InitializeWithRawNode("entry", this._entry);
+      entry = rawNode.InitializeWithRawNode("entry", entry);
+      entry.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -59,7 +83,7 @@ namespace XSD.Nworld_step.Nrule_group {
       //Serialize arguments
 
       //Serialize children
-      rawNode.children["entry"] = _entry?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();
+      rawNode.children["entry"] = entry.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 
@@ -69,45 +93,54 @@ namespace XSD.Nworld_step.Nrule_group {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public List<XSD.Nworld_step.Nrule_group.Nclassification_rule.entry>? Get_entry()
-    {
-      return this._entry?.Values.ToList();
-    }
-    public List<XSD.Nworld_step.Nrule_group.Nclassification_rule.entry> GetOrInsertDefault_entry()
-    {
-      if(this._entry == null) {
-
-        // false2
-        this._entry = new Dictionary<int, XSD.Nworld_step.Nrule_group.Nclassification_rule.entry>();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_entry();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_entry(List<XSD.Nworld_step.Nrule_group.Nclassification_rule.entry>? value)
-    {
-      this._entry = value.Select((x, i) => new { Index = i, Value = x }).ToDictionary(x => x.Index, x => x.Value);
-    }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nclassification_rule.entry.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Nrule_group.Nclassification_rule.entry.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, startIndex + 1);
-        xpath = xpath.Substring(startIndex + 2);
-        if(this._entry.ContainsKey(indexString.ToInt()))
+        var indexString = xpath.Substring(startIndex, 1);
+        var childXPath = xpath.Substring(startIndex + 2);
+        var pathIndex = indexString.ToInt();
+        if(this.entry.ContainsKey(pathIndex))
         {
-          this._entry[indexString.ToInt()].SetXPath(xpath, rawNode);
+          this.entry[pathIndex].SetXPath(childXPath, rawNode);
+          return;
         }
         var newEntry = new XSD.Nworld_step.Nrule_group.Nclassification_rule.entry();
-        newEntry.SetXPath(xpath, rawNode);
-        this._entry.Add(indexString.ToInt(), newEntry);
+        this.entry[pathIndex] = newEntry;
+        newEntry.SetXPath(childXPath, rawNode);
 
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nclassification_rule.entry casted_entry) {
+        return this._entry.KeyOf(casted_entry);
+      }
+      return null;
     }
   }
 }

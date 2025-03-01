@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,28 +10,61 @@ namespace XSD.Nworld_step.Nactions.Nperson__move_to {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions {
-  public class person__move_to  {
+  public class person__move_to : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/world_step/actions/person.move_to";
     public static string TagName = "person.move_to";
 
-    public string Tag = "person.move_to";
+    public string NodeName {get =>"person.move_to";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<person__move_to>> _callbackList = new();
+
     //Attributes
-    public System.String person_id_ref;
-    public System.String _person_id_ref;
+    private System.String _person_id_ref;
+    public System.String person_id_ref { get => _person_id_ref; set => _person_id_ref = value; }
 
     //Children elements
     private type__node_graph__selection? _find_path_towards = null;
-    public type__node_graph__selection? find_path_towards {
-      get { return _find_path_towards; }
-      set { _find_path_towards = value; }
+    public type__node_graph__selection find_path_towards
+    {
+      get
+      {
+        if(_find_path_towards == null)
+        {
+          _find_path_towards = new();
+          _find_path_towards.ParentNode = this;
+          OnChange();
+        }
+        return _find_path_towards;
+      }
+      set
+      {
+        _find_path_towards = value;
+        _find_path_towards.ParentNode = this;
+      }
     }
 
     private XSD.Nworld_step.Nactions.Nperson__move_to.path? _path = null;
-    public XSD.Nworld_step.Nactions.Nperson__move_to.path? path {
-      get { return _path; }
-      set { _path = value; }
+    public XSD.Nworld_step.Nactions.Nperson__move_to.path path
+    {
+      get
+      {
+        if(_path == null)
+        {
+          _path = new();
+          _path.ParentNode = this;
+          OnChange();
+        }
+        return _path;
+      }
+      set
+      {
+        _path = value;
+        _path.ParentNode = this;
+      }
     }
     public person__move_to()
     {
@@ -46,6 +81,12 @@ namespace XSD.Nworld_step.Nactions {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<person__move_to> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -58,8 +99,10 @@ namespace XSD.Nworld_step.Nactions {
       }
 
       //Deserialize children
-      this._find_path_towards = rawNode.InitializeWithRawNode("find_path_towards", this._find_path_towards);
-      this._path = rawNode.InitializeWithRawNode("path", this._path);
+      find_path_towards = rawNode.InitializeWithRawNode("find_path_towards", find_path_towards);
+
+      path = rawNode.InitializeWithRawNode("path", path);
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -93,53 +136,56 @@ namespace XSD.Nworld_step.Nactions {
     public void Set_person_id_ref(System.String value)
     {
       this.person_id_ref = value;
-    }
-    public type__node_graph__selection? Get_find_path_towards()
-    {
-      return this.find_path_towards;
-    }
-    public void Set_find_path_towards(type__node_graph__selection? value)
-    {
-      this.find_path_towards = value;
-    }
-    public XSD.Nworld_step.Nactions.Nperson__move_to.path? Get_path()
-    {
-      return this._path;
-    }
-    public XSD.Nworld_step.Nactions.Nperson__move_to.path GetOrInsertDefault_path()
-    {
-      if(this._path == null) {
-
-        // true2
-        this._path = new XSD.Nworld_step.Nactions.Nperson__move_to.path();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_path();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_path(XSD.Nworld_step.Nactions.Nperson__move_to.path? value)
-    {
-        this._path = value;
+      this.OnChange();
     }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(type__node_graph__selection.TagName))
       {
         this.find_path_towards ??= new type__node_graph__selection();
-        xpath = xpath.Substring(type__node_graph__selection.TagName.Length + 3);
-        this.find_path_towards.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(type__node_graph__selection.TagName.Length + 3);
+        this.find_path_towards.SetXPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nactions.Nperson__move_to.path.TagName))
       {
         this.path ??= new XSD.Nworld_step.Nactions.Nperson__move_to.path();
-        xpath = xpath.Substring(XSD.Nworld_step.Nactions.Nperson__move_to.path.TagName.Length + 3);
-        this.path.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(XSD.Nworld_step.Nactions.Nperson__move_to.path.TagName.Length + 3);
+        this.path.SetXPath(childXPath, rawNode);
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is type__node_graph__selection casted_find_path_towards) {
+        return 0;
+      }
+      if(linkedNode is XSD.Nworld_step.Nactions.Nperson__move_to.path casted_path) {
+        return 0;
+      }
+      return null;
     }
   }
 }

@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,24 +10,43 @@ namespace XSD.Nworld_step.Nactions.Nfrom_person {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions {
-  public class from_person  {
+  public class from_person : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/world_step/actions/from_person";
     public static string TagName = "from_person";
 
-    public string Tag = "from_person";
+    public string NodeName {get =>"from_person";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<from_person>> _callbackList = new();
+
     //Attributes
-    public System.String person_id_ref;
-    public System.String _person_id_ref;
-    public System.String from_person_rule_ref;
-    public System.String _from_person_rule_ref;
+    private System.String _person_id_ref;
+    public System.String person_id_ref { get => _person_id_ref; set => _person_id_ref = value; }
+    private System.String _from_person_rule_ref;
+    public System.String from_person_rule_ref { get => _from_person_rule_ref; set => _from_person_rule_ref = value; }
 
     //Children elements
     private XSD.Nworld_step.Nactions.Nfrom_person.on_person _on_person = new XSD.Nworld_step.Nactions.Nfrom_person.on_person();
-    public XSD.Nworld_step.Nactions.Nfrom_person.on_person on_person {
-      get { return _on_person; }
-      set { _on_person = value; }
+    public XSD.Nworld_step.Nactions.Nfrom_person.on_person on_person
+    {
+      get
+      {
+        if(_on_person == null)
+        {
+          _on_person = new();
+          _on_person.ParentNode = this;
+          OnChange();
+        }
+        return _on_person;
+      }
+      set
+      {
+        _on_person = value;
+        _on_person.ParentNode = this;
+      }
     }
     public from_person()
     {
@@ -40,6 +61,12 @@ namespace XSD.Nworld_step.Nactions {
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
+    }
+
+    public Action OnChange(Action<from_person> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -59,7 +86,8 @@ namespace XSD.Nworld_step.Nactions {
       }
 
       //Deserialize children
-      this._on_person = rawNode.InitializeWithRawNode("on_person", this._on_person);
+      on_person = rawNode.InitializeWithRawNode("on_person", on_person);
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -94,6 +122,7 @@ namespace XSD.Nworld_step.Nactions {
     public void Set_person_id_ref(System.String value)
     {
       this.person_id_ref = value;
+      this.OnChange();
     }
     public System.String Get_from_person_rule_ref()
     {
@@ -102,37 +131,45 @@ namespace XSD.Nworld_step.Nactions {
     public void Set_from_person_rule_ref(System.String value)
     {
       this.from_person_rule_ref = value;
-    }
-    public XSD.Nworld_step.Nactions.Nfrom_person.on_person Get_on_person()
-    {
-      return this._on_person;
-    }
-    public XSD.Nworld_step.Nactions.Nfrom_person.on_person GetOrInsertDefault_on_person()
-    {
-      if(this._on_person == null) {
-
-        // true2
-        this._on_person = new XSD.Nworld_step.Nactions.Nfrom_person.on_person();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_on_person();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_on_person(XSD.Nworld_step.Nactions.Nfrom_person.on_person value)
-    {
-        this._on_person = value;
+      this.OnChange();
     }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(XSD.Nworld_step.Nactions.Nfrom_person.on_person.TagName))
       {
-        xpath = xpath.Substring(XSD.Nworld_step.Nactions.Nfrom_person.on_person.TagName.Length + 3);
-        this.on_person.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(XSD.Nworld_step.Nactions.Nfrom_person.on_person.TagName.Length + 3);
+        this.on_person.SetXPath(childXPath, rawNode);
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Nactions.Nfrom_person.on_person casted_on_person) {
+        return 0;
+      }
+      return null;
     }
   }
 }

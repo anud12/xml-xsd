@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,27 +10,37 @@ namespace XSD.Ntype__property_mutation {}
 namespace XSD {
 }
 namespace XSD {
-  public class type__property_mutation  {
+  public class type__property_mutation : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/type__property_mutation";
     public static string TagName = "type__property_mutation";
 
-    public string Tag = "type__property_mutation";
+    public string NodeName {get =>"type__property_mutation";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<type__property_mutation>> _callbackList = new();
+
     //Attributes
-    public System.String property_rule_ref;
-    public System.String _property_rule_ref;
+    private System.String _property_rule_ref;
+    public System.String property_rule_ref { get => _property_rule_ref; set => _property_rule_ref = value; }
 
     //Children elements
 
-    private Dictionary<int, XSD.Ntype__property_mutation.from> _from = new Dictionary<int, XSD.Ntype__property_mutation.from>();
-    public List<XSD.Ntype__property_mutation.from> from {
-      get { return _from.Values.ToList(); }
+    private LinkedNodeCollection<XSD.Ntype__property_mutation.from> _from = new();
+    public LinkedNodeCollection<XSD.Ntype__property_mutation.from> from
+    {
+      get => _from;
       set
       {
-        _from = value
-          .Select((value, index) => new { index, value })
-          .ToDictionary(item => item.index, item => item.value);
+        _from = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _from.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
       }
     }
     public type__property_mutation()
@@ -46,6 +58,12 @@ namespace XSD {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<type__property_mutation> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -58,7 +76,13 @@ namespace XSD {
       }
 
       //Deserialize children
-      this._from = rawNode.InitializeWithRawNode("from", this._from);
+      from = rawNode.InitializeWithRawNode("from", from);
+      from.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -70,7 +94,7 @@ namespace XSD {
       }
 
       //Serialize children
-      rawNode.children["from"] = _from?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();
+      rawNode.children["from"] = from.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 
@@ -87,46 +111,56 @@ namespace XSD {
     public void Set_property_rule_ref(System.String value)
     {
       this.property_rule_ref = value;
-    }
-    public List<XSD.Ntype__property_mutation.from> Get_from()
-    {
-      return this._from?.Values.ToList();
-    }
-    public List<XSD.Ntype__property_mutation.from> GetOrInsertDefault_from()
-    {
-      if(this._from == null) {
-
-        // false2
-        this._from = new Dictionary<int, XSD.Ntype__property_mutation.from>();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_from();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_from(List<XSD.Ntype__property_mutation.from> value)
-    {
-      this._from = value.Select((x, i) => new { Index = i, Value = x }).ToDictionary(x => x.Index, x => x.Value);
+      this.OnChange();
     }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(XSD.Ntype__property_mutation.from.TagName + "["))
       {
         var startIndex = (XSD.Ntype__property_mutation.from.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, startIndex + 1);
-        xpath = xpath.Substring(startIndex + 2);
-        if(this._from.ContainsKey(indexString.ToInt()))
+        var indexString = xpath.Substring(startIndex, 1);
+        var childXPath = xpath.Substring(startIndex + 2);
+        var pathIndex = indexString.ToInt();
+        if(this.from.ContainsKey(pathIndex))
         {
-          this._from[indexString.ToInt()].SetXPath(xpath, rawNode);
+          this.from[pathIndex].SetXPath(childXPath, rawNode);
+          return;
         }
         var newEntry = new XSD.Ntype__property_mutation.from();
-        newEntry.SetXPath(xpath, rawNode);
-        this._from.Add(indexString.ToInt(), newEntry);
+        this.from[pathIndex] = newEntry;
+        newEntry.SetXPath(childXPath, rawNode);
 
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Ntype__property_mutation.from casted_from) {
+        return this._from.KeyOf(casted_from);
+      }
+      return null;
     }
   }
 }

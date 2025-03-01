@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,27 +10,37 @@ namespace XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_gr
 namespace XSD {
 }
 namespace XSD.Ntype__node_graph__selection.Nin__location_graph {
-  public class has__location_graph_id  {
+  public class has__location_graph_id : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/type__node_graph__selection/in__location_graph/has__location_graph_id";
     public static string TagName = "has__location_graph_id";
 
-    public string Tag = "has__location_graph_id";
+    public string NodeName {get =>"has__location_graph_id";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<has__location_graph_id>> _callbackList = new();
+
     //Attributes
-    public System.String location_graph_id_ref;
-    public System.String _location_graph_id_ref;
+    private System.String _location_graph_id_ref;
+    public System.String location_graph_id_ref { get => _location_graph_id_ref; set => _location_graph_id_ref = value; }
 
     //Children elements
 
-    private Dictionary<int, XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or> _or = new Dictionary<int, XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or>();
-    public List<XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or> or {
-      get { return _or.Values.ToList(); }
+    private LinkedNodeCollection<XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or> _or = new();
+    public LinkedNodeCollection<XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or> or
+    {
+      get => _or;
       set
       {
-        _or = value
-          .Select((value, index) => new { index, value })
-          .ToDictionary(item => item.index, item => item.value);
+        _or = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _or.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
       }
     }
     public has__location_graph_id()
@@ -46,6 +58,12 @@ namespace XSD.Ntype__node_graph__selection.Nin__location_graph {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<has__location_graph_id> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -58,7 +76,13 @@ namespace XSD.Ntype__node_graph__selection.Nin__location_graph {
       }
 
       //Deserialize children
-      this._or = rawNode.InitializeWithRawNode("or", this._or);
+      or = rawNode.InitializeWithRawNode("or", or);
+      or.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -70,7 +94,7 @@ namespace XSD.Ntype__node_graph__selection.Nin__location_graph {
       }
 
       //Serialize children
-      rawNode.children["or"] = _or?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();
+      rawNode.children["or"] = or.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 
@@ -87,46 +111,56 @@ namespace XSD.Ntype__node_graph__selection.Nin__location_graph {
     public void Set_location_graph_id_ref(System.String value)
     {
       this.location_graph_id_ref = value;
-    }
-    public List<XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or>? Get_or()
-    {
-      return this._or?.Values.ToList();
-    }
-    public List<XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or> GetOrInsertDefault_or()
-    {
-      if(this._or == null) {
-
-        // false2
-        this._or = new Dictionary<int, XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or>();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_or();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_or(List<XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or>? value)
-    {
-      this._or = value.Select((x, i) => new { Index = i, Value = x }).ToDictionary(x => x.Index, x => x.Value);
+      this.OnChange();
     }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or.TagName + "["))
       {
         var startIndex = (XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, startIndex + 1);
-        xpath = xpath.Substring(startIndex + 2);
-        if(this._or.ContainsKey(indexString.ToInt()))
+        var indexString = xpath.Substring(startIndex, 1);
+        var childXPath = xpath.Substring(startIndex + 2);
+        var pathIndex = indexString.ToInt();
+        if(this.or.ContainsKey(pathIndex))
         {
-          this._or[indexString.ToInt()].SetXPath(xpath, rawNode);
+          this.or[pathIndex].SetXPath(childXPath, rawNode);
+          return;
         }
         var newEntry = new XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or();
-        newEntry.SetXPath(xpath, rawNode);
-        this._or.Add(indexString.ToInt(), newEntry);
+        this.or[pathIndex] = newEntry;
+        newEntry.SetXPath(childXPath, rawNode);
 
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or casted_or) {
+        return this._or.KeyOf(casted_or);
+      }
+      return null;
     }
   }
 }

@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,34 +10,67 @@ namespace XSD.Nto_option {}
 namespace XSD {
 }
 namespace XSD {
-  public class to_option  {
+  public class to_option : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/to_option";
     public static string TagName = "to_option";
 
-    public string Tag = "to_option";
+    public string NodeName {get =>"to_option";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<to_option>> _callbackList = new();
+
     //Attributes
-    public System.String node_rule_ref;
-    public System.String _node_rule_ref;
-    public System.Int32 distance;
-    public System.Int32 _distance;
-    public System.Int32? maxDistance;
-    public System.Int32? _maxDistance;
-    public System.Int32 adjacent_depth_limit;
-    public System.Int32 _adjacent_depth_limit;
+    private System.String _node_rule_ref;
+    public System.String node_rule_ref { get => _node_rule_ref; set => _node_rule_ref = value; }
+    private System.Int32 _distance;
+    public System.Int32 distance { get => _distance; set => _distance = value; }
+    private System.Int32? _maxDistance;
+    public System.Int32? maxDistance { get => _maxDistance; set => _maxDistance = value; }
+    private System.Int32 _adjacent_depth_limit;
+    public System.Int32 adjacent_depth_limit { get => _adjacent_depth_limit; set => _adjacent_depth_limit = value; }
 
     //Children elements
     private type__math_operations? _distance_to_progress_multiplier = null;
-    public type__math_operations? distance_to_progress_multiplier {
-      get { return _distance_to_progress_multiplier; }
-      set { _distance_to_progress_multiplier = value; }
+    public type__math_operations distance_to_progress_multiplier
+    {
+      get
+      {
+        if(_distance_to_progress_multiplier == null)
+        {
+          _distance_to_progress_multiplier = new();
+          _distance_to_progress_multiplier.ParentNode = this;
+          OnChange();
+        }
+        return _distance_to_progress_multiplier;
+      }
+      set
+      {
+        _distance_to_progress_multiplier = value;
+        _distance_to_progress_multiplier.ParentNode = this;
+      }
     }
 
     private type__math_operations? _person_progress_property = null;
-    public type__math_operations? person_progress_property {
-      get { return _person_progress_property; }
-      set { _person_progress_property = value; }
+    public type__math_operations person_progress_property
+    {
+      get
+      {
+        if(_person_progress_property == null)
+        {
+          _person_progress_property = new();
+          _person_progress_property.ParentNode = this;
+          OnChange();
+        }
+        return _person_progress_property;
+      }
+      set
+      {
+        _person_progress_property = value;
+        _person_progress_property.ParentNode = this;
+      }
     }
     public to_option()
     {
@@ -50,6 +85,12 @@ namespace XSD {
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
+    }
+
+    public Action OnChange(Action<to_option> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -79,8 +120,10 @@ namespace XSD {
       }
 
       //Deserialize children
-      this._distance_to_progress_multiplier = rawNode.InitializeWithRawNode("distance_to_progress_multiplier", this._distance_to_progress_multiplier);
-      this._person_progress_property = rawNode.InitializeWithRawNode("person_progress_property", this._person_progress_property);
+      distance_to_progress_multiplier = rawNode.InitializeWithRawNode("distance_to_progress_multiplier", distance_to_progress_multiplier);
+
+      person_progress_property = rawNode.InitializeWithRawNode("person_progress_property", person_progress_property);
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -126,6 +169,7 @@ namespace XSD {
     public void Set_node_rule_ref(System.String value)
     {
       this.node_rule_ref = value;
+      this.OnChange();
     }
     public System.Int32 Get_distance()
     {
@@ -134,6 +178,7 @@ namespace XSD {
     public void Set_distance(System.Int32 value)
     {
       this.distance = value;
+      this.OnChange();
     }
     public System.Int32? Get_maxDistance()
     {
@@ -142,6 +187,7 @@ namespace XSD {
     public void Set_maxDistance(System.Int32? value)
     {
       this.maxDistance = value;
+      this.OnChange();
     }
     public System.Int32 Get_adjacent_depth_limit()
     {
@@ -150,42 +196,56 @@ namespace XSD {
     public void Set_adjacent_depth_limit(System.Int32 value)
     {
       this.adjacent_depth_limit = value;
-    }
-    public type__math_operations? Get_distance_to_progress_multiplier()
-    {
-      return this.distance_to_progress_multiplier;
-    }
-    public void Set_distance_to_progress_multiplier(type__math_operations? value)
-    {
-      this.distance_to_progress_multiplier = value;
-    }
-    public type__math_operations? Get_person_progress_property()
-    {
-      return this.person_progress_property;
-    }
-    public void Set_person_progress_property(type__math_operations? value)
-    {
-      this.person_progress_property = value;
+      this.OnChange();
     }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(type__math_operations.TagName))
       {
         this.distance_to_progress_multiplier ??= new type__math_operations();
-        xpath = xpath.Substring(type__math_operations.TagName.Length + 3);
-        this.distance_to_progress_multiplier.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(type__math_operations.TagName.Length + 3);
+        this.distance_to_progress_multiplier.SetXPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(type__math_operations.TagName))
       {
         this.person_progress_property ??= new type__math_operations();
-        xpath = xpath.Substring(type__math_operations.TagName.Length + 3);
-        this.person_progress_property.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(type__math_operations.TagName.Length + 3);
+        this.person_progress_property.SetXPath(childXPath, rawNode);
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is type__math_operations casted_distance_to_progress_multiplier) {
+        return 0;
+      }
+      if(linkedNode is type__math_operations casted_person_progress_property) {
+        return 0;
+      }
+      return null;
     }
   }
 }

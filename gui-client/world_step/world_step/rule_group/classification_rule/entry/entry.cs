@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,27 +10,37 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nclassification_rule {
-  public class entry  {
+  public class entry : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/world_step/rule_group/classification_rule/entry";
     public static string TagName = "entry";
 
-    public string Tag = "entry";
+    public string NodeName {get =>"entry";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<entry>> _callbackList = new();
+
     //Attributes
-    public System.String id;
-    public System.String _id;
+    private System.String _id;
+    public System.String id { get => _id; set => _id = value; }
 
     //Children elements
 
-    private Dictionary<int, XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property> _property = new Dictionary<int, XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property>();
-    public List<XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property> property {
-      get { return _property.Values.ToList(); }
+    private LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property> _property = new();
+    public LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property> property
+    {
+      get => _property;
       set
       {
-        _property = value
-          .Select((value, index) => new { index, value })
-          .ToDictionary(item => item.index, item => item.value);
+        _property = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _property.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
       }
     }
     public entry()
@@ -46,6 +58,12 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<entry> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -58,7 +76,13 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule {
       }
 
       //Deserialize children
-      this._property = rawNode.InitializeWithRawNode("property", this._property);
+      property = rawNode.InitializeWithRawNode("property", property);
+      property.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -70,7 +94,7 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule {
       }
 
       //Serialize children
-      rawNode.children["property"] = _property?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();
+      rawNode.children["property"] = property.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 
@@ -87,46 +111,56 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule {
     public void Set_id(System.String value)
     {
       this.id = value;
-    }
-    public List<XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property>? Get_property()
-    {
-      return this._property?.Values.ToList();
-    }
-    public List<XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property> GetOrInsertDefault_property()
-    {
-      if(this._property == null) {
-
-        // false2
-        this._property = new Dictionary<int, XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property>();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_property();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_property(List<XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property>? value)
-    {
-      this._property = value.Select((x, i) => new { Index = i, Value = x }).ToDictionary(x => x.Index, x => x.Value);
+      this.OnChange();
     }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, startIndex + 1);
-        xpath = xpath.Substring(startIndex + 2);
-        if(this._property.ContainsKey(indexString.ToInt()))
+        var indexString = xpath.Substring(startIndex, 1);
+        var childXPath = xpath.Substring(startIndex + 2);
+        var pathIndex = indexString.ToInt();
+        if(this.property.ContainsKey(pathIndex))
         {
-          this._property[indexString.ToInt()].SetXPath(xpath, rawNode);
+          this.property[pathIndex].SetXPath(childXPath, rawNode);
+          return;
         }
         var newEntry = new XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property();
-        newEntry.SetXPath(xpath, rawNode);
-        this._property.Add(indexString.ToInt(), newEntry);
+        this.property[pathIndex] = newEntry;
+        newEntry.SetXPath(childXPath, rawNode);
 
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property casted_property) {
+        return this._property.KeyOf(casted_property);
+      }
+      return null;
     }
   }
 }

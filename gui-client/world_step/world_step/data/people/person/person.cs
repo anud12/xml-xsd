@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,40 +10,78 @@ namespace XSD.Nworld_step.Ndata.Npeople.Nperson {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Npeople {
-  public class person  {
+  public class person : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/world_step/data/people/person";
     public static string TagName = "person";
 
-    public string Tag = "person";
+    public string NodeName {get =>"person";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<person>> _callbackList = new();
+
     //Attributes
-    public System.String id;
-    public System.String _id;
-    public System.String? name;
-    public System.String? _name;
+    private System.String _id;
+    public System.String id { get => _id; set => _id = value; }
+    private System.String? _name;
+    public System.String? name { get => _name; set => _name = value; }
 
     //Children elements
     private XSD.Nworld_step.Ndata.Npeople.Nperson.properties? _properties = null;
-    public XSD.Nworld_step.Ndata.Npeople.Nperson.properties? properties {
-      get { return _properties; }
-      set { _properties = value; }
-    }
-
-    private Dictionary<int, XSD.Nworld_step.Ndata.Npeople.Nperson.relations> _relations = new Dictionary<int, XSD.Nworld_step.Ndata.Npeople.Nperson.relations>();
-    public List<XSD.Nworld_step.Ndata.Npeople.Nperson.relations> relations {
-      get { return _relations.Values.ToList(); }
+    public XSD.Nworld_step.Ndata.Npeople.Nperson.properties properties
+    {
+      get
+      {
+        if(_properties == null)
+        {
+          _properties = new();
+          _properties.ParentNode = this;
+          OnChange();
+        }
+        return _properties;
+      }
       set
       {
-        _relations = value
-          .Select((value, index) => new { index, value })
-          .ToDictionary(item => item.index, item => item.value);
+        _properties = value;
+        _properties.ParentNode = this;
+      }
+    }
+
+    private LinkedNodeCollection<XSD.Nworld_step.Ndata.Npeople.Nperson.relations> _relations = new();
+    public LinkedNodeCollection<XSD.Nworld_step.Ndata.Npeople.Nperson.relations> relations
+    {
+      get => _relations;
+      set
+      {
+        _relations = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _relations.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
       }
     }
     private XSD.Nworld_step.Ndata.Npeople.Nperson.classifications? _classifications = null;
-    public XSD.Nworld_step.Ndata.Npeople.Nperson.classifications? classifications {
-      get { return _classifications; }
-      set { _classifications = value; }
+    public XSD.Nworld_step.Ndata.Npeople.Nperson.classifications classifications
+    {
+      get
+      {
+        if(_classifications == null)
+        {
+          _classifications = new();
+          _classifications.ParentNode = this;
+          OnChange();
+        }
+        return _classifications;
+      }
+      set
+      {
+        _classifications = value;
+        _classifications.ParentNode = this;
+      }
     }
     public person()
     {
@@ -56,6 +96,12 @@ namespace XSD.Nworld_step.Ndata.Npeople {
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
+    }
+
+    public Action OnChange(Action<person> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -75,9 +121,16 @@ namespace XSD.Nworld_step.Ndata.Npeople {
       }
 
       //Deserialize children
-      this._properties = rawNode.InitializeWithRawNode("properties", this._properties);
-      this._relations = rawNode.InitializeWithRawNode("relations", this._relations);
-      this._classifications = rawNode.InitializeWithRawNode("classifications", this._classifications);
+      properties = rawNode.InitializeWithRawNode("properties", properties);
+
+      relations = rawNode.InitializeWithRawNode("relations", relations);
+      relations.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          OnChange();
+        };
+      classifications = rawNode.InitializeWithRawNode("classifications", classifications);
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -96,7 +149,7 @@ namespace XSD.Nworld_step.Ndata.Npeople {
       if(properties != null) {
         rawNode.children["properties"] = new List<RawNode> { properties.SerializeIntoRawNode() };
       }
-      rawNode.children["relations"] = _relations?.Select(x => x.Value.SerializeIntoRawNode())?.ToList();
+      rawNode.children["relations"] = relations.Select(x => x.SerializeIntoRawNode()).ToList();
       if(classifications != null) {
         rawNode.children["classifications"] = new List<RawNode> { classifications.SerializeIntoRawNode() };
       }
@@ -116,6 +169,7 @@ namespace XSD.Nworld_step.Ndata.Npeople {
     public void Set_id(System.String value)
     {
       this.id = value;
+      this.OnChange();
     }
     public System.String? Get_name()
     {
@@ -124,98 +178,77 @@ namespace XSD.Nworld_step.Ndata.Npeople {
     public void Set_name(System.String? value)
     {
       this.name = value;
+      this.OnChange();
     }
-    public XSD.Nworld_step.Ndata.Npeople.Nperson.properties? Get_properties()
-    {
-      return this._properties;
-    }
-    public XSD.Nworld_step.Ndata.Npeople.Nperson.properties GetOrInsertDefault_properties()
-    {
-      if(this._properties == null) {
 
-        // true2
-        this._properties = new XSD.Nworld_step.Ndata.Npeople.Nperson.properties();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_properties();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_properties(XSD.Nworld_step.Ndata.Npeople.Nperson.properties? value)
-    {
-        this._properties = value;
-    }
-    public List<XSD.Nworld_step.Ndata.Npeople.Nperson.relations>? Get_relations()
-    {
-      return this._relations?.Values.ToList();
-    }
-    public List<XSD.Nworld_step.Ndata.Npeople.Nperson.relations> GetOrInsertDefault_relations()
-    {
-      if(this._relations == null) {
-
-        // false2
-        this._relations = new Dictionary<int, XSD.Nworld_step.Ndata.Npeople.Nperson.relations>();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_relations();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_relations(List<XSD.Nworld_step.Ndata.Npeople.Nperson.relations>? value)
-    {
-      this._relations = value.Select((x, i) => new { Index = i, Value = x }).ToDictionary(x => x.Index, x => x.Value);
-    }
-    public XSD.Nworld_step.Ndata.Npeople.Nperson.classifications? Get_classifications()
-    {
-      return this._classifications;
-    }
-    public XSD.Nworld_step.Ndata.Npeople.Nperson.classifications GetOrInsertDefault_classifications()
-    {
-      if(this._classifications == null) {
-
-        // true2
-        this._classifications = new XSD.Nworld_step.Ndata.Npeople.Nperson.classifications();
-      }
-      #pragma warning disable CS8603 // Possible null reference return.
-      return this.Get_classifications();
-      #pragma warning restore CS8603 // Possible null reference return.
-    }
-    public void Set_classifications(XSD.Nworld_step.Ndata.Npeople.Nperson.classifications? value)
-    {
-        this._classifications = value;
-    }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(XSD.Nworld_step.Ndata.Npeople.Nperson.properties.TagName))
       {
         this.properties ??= new XSD.Nworld_step.Ndata.Npeople.Nperson.properties();
-        xpath = xpath.Substring(XSD.Nworld_step.Ndata.Npeople.Nperson.properties.TagName.Length + 3);
-        this.properties.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(XSD.Nworld_step.Ndata.Npeople.Nperson.properties.TagName.Length + 3);
+        this.properties.SetXPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Ndata.Npeople.Nperson.relations.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Ndata.Npeople.Nperson.relations.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, startIndex + 1);
-        xpath = xpath.Substring(startIndex + 2);
-        if(this._relations.ContainsKey(indexString.ToInt()))
+        var indexString = xpath.Substring(startIndex, 1);
+        var childXPath = xpath.Substring(startIndex + 2);
+        var pathIndex = indexString.ToInt();
+        if(this.relations.ContainsKey(pathIndex))
         {
-          this._relations[indexString.ToInt()].SetXPath(xpath, rawNode);
+          this.relations[pathIndex].SetXPath(childXPath, rawNode);
+          return;
         }
         var newEntry = new XSD.Nworld_step.Ndata.Npeople.Nperson.relations();
-        newEntry.SetXPath(xpath, rawNode);
-        this._relations.Add(indexString.ToInt(), newEntry);
+        this.relations[pathIndex] = newEntry;
+        newEntry.SetXPath(childXPath, rawNode);
 
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Ndata.Npeople.Nperson.classifications.TagName))
       {
         this.classifications ??= new XSD.Nworld_step.Ndata.Npeople.Nperson.classifications();
-        xpath = xpath.Substring(XSD.Nworld_step.Ndata.Npeople.Nperson.classifications.TagName.Length + 3);
-        this.classifications.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(XSD.Nworld_step.Ndata.Npeople.Nperson.classifications.TagName.Length + 3);
+        this.classifications.SetXPath(childXPath, rawNode);
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Ndata.Npeople.Nperson.properties casted_properties) {
+        return 0;
+      }
+      if(linkedNode is XSD.Nworld_step.Ndata.Npeople.Nperson.relations casted_relations) {
+        return this._relations.KeyOf(casted_relations);
+      }
+      if(linkedNode is XSD.Nworld_step.Ndata.Npeople.Nperson.classifications casted_classifications) {
+        return 0;
+      }
+      return null;
     }
   }
 }

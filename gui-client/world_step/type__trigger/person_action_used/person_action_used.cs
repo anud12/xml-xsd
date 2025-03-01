@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,16 +10,21 @@ namespace XSD.Ntype__trigger.Nperson_action_used {}
 namespace XSD {
 }
 namespace XSD.Ntype__trigger {
-  public class person_action_used  {
+  public class person_action_used : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/type__trigger/person_action_used";
     public static string TagName = "person_action_used";
 
-    public string Tag = "person_action_used";
+    public string NodeName {get =>"person_action_used";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<person_action_used>> _callbackList = new();
+
     //Attributes
-    public System.String action_rule_ref;
-    public System.String _action_rule_ref;
+    private System.String _action_rule_ref;
+    public System.String action_rule_ref { get => _action_rule_ref; set => _action_rule_ref = value; }
 
     //Children elements
     public person_action_used()
@@ -35,6 +42,12 @@ namespace XSD.Ntype__trigger {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<person_action_used> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -47,6 +60,7 @@ namespace XSD.Ntype__trigger {
       }
 
       //Deserialize children
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -74,12 +88,36 @@ namespace XSD.Ntype__trigger {
     public void Set_action_rule_ref(System.String value)
     {
       this.action_rule_ref = value;
+      this.OnChange();
     }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      return null;
     }
   }
 }

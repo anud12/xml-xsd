@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -8,26 +10,59 @@ namespace XSD.Nworld_step.Nactions.Nperson__create {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions {
-  public class person__create  {
+  public class person__create : XSD.ILinkedNode  {
 
     public static string ClassTypeId = "/world_step/actions/person.create";
     public static string TagName = "person.create";
 
-    public string Tag = "person.create";
+    public string NodeName {get =>"person.create";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<person__create>> _callbackList = new();
+
     //Attributes
 
     //Children elements
     private type__node_graph__selection _node_graph__selection = new type__node_graph__selection();
-    public type__node_graph__selection node_graph__selection {
-      get { return _node_graph__selection; }
-      set { _node_graph__selection = value; }
+    public type__node_graph__selection node_graph__selection
+    {
+      get
+      {
+        if(_node_graph__selection == null)
+        {
+          _node_graph__selection = new();
+          _node_graph__selection.ParentNode = this;
+          OnChange();
+        }
+        return _node_graph__selection;
+      }
+      set
+      {
+        _node_graph__selection = value;
+        _node_graph__selection.ParentNode = this;
+      }
     }
 
     private type__person_selection _person__selection = new type__person_selection();
-    public type__person_selection person__selection {
-      get { return _person__selection; }
-      set { _person__selection = value; }
+    public type__person_selection person__selection
+    {
+      get
+      {
+        if(_person__selection == null)
+        {
+          _person__selection = new();
+          _person__selection.ParentNode = this;
+          OnChange();
+        }
+        return _person__selection;
+      }
+      set
+      {
+        _person__selection = value;
+        _person__selection.ParentNode = this;
+      }
     }
     public person__create()
     {
@@ -44,6 +79,12 @@ namespace XSD.Nworld_step.Nactions {
       Deserialize(rawNode);
     }
 
+    public Action OnChange(Action<person__create> callback)
+    {
+      _callbackList.Add(callback);
+      return () => _callbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -51,8 +92,10 @@ namespace XSD.Nworld_step.Nactions {
       //Deserialize arguments
 
       //Deserialize children
-      this._node_graph__selection = rawNode.InitializeWithRawNode("node_graph__selection", this._node_graph__selection);
-      this._person__selection = rawNode.InitializeWithRawNode("person__selection", this._person__selection);
+      node_graph__selection = rawNode.InitializeWithRawNode("node_graph__selection", node_graph__selection);
+
+      person__selection = rawNode.InitializeWithRawNode("person__selection", person__selection);
+      OnChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -75,39 +118,52 @@ namespace XSD.Nworld_step.Nactions {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public type__node_graph__selection Get_node_graph__selection()
-    {
-      return this.node_graph__selection;
-    }
-    public void Set_node_graph__selection(type__node_graph__selection value)
-    {
-      this.node_graph__selection = value;
-    }
-    public type__person_selection Get_person__selection()
-    {
-      return this.person__selection;
-    }
-    public void Set_person__selection(type__person_selection value)
-    {
-      this.person__selection = value;
-    }
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
+      if(xpath.StartsWith("/"))
+      {
+        xpath = xpath.Substring(1);
+      }
       if(xpath.StartsWith(type__node_graph__selection.TagName))
       {
-        xpath = xpath.Substring(type__node_graph__selection.TagName.Length + 3);
-        this.node_graph__selection.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(type__node_graph__selection.TagName.Length + 3);
+        this.node_graph__selection.SetXPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(type__person_selection.TagName))
       {
-        xpath = xpath.Substring(type__person_selection.TagName.Length + 3);
-        this.person__selection.SetXPath(xpath, rawNode);
+        var childXPath = xpath.Substring(type__person_selection.TagName.Length + 3);
+        this.person__selection.SetXPath(childXPath, rawNode);
         return;
       }
 
       Deserialize(rawNode);
+    }
+
+    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _callbackList.ForEach(action => action(this));
+      _parentNode.ChildChanged(linkedNodes);
+    }
+
+    private void OnChange()
+    {
+      ChildChanged(new());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is type__node_graph__selection casted_node_graph__selection) {
+        return 0;
+      }
+      if(linkedNode is type__person_selection casted_person__selection) {
+        return 0;
+      }
+      return null;
     }
   }
 }

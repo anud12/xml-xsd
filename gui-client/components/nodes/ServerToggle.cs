@@ -4,33 +4,24 @@ using Godot;
 
 [Tool]
 [GlobalClass]
-public partial class ServerToggle: Button {
+public partial class ServerToggle : Button
+{
+    private Window _window = new Window();
 
-    [Export]
-    public string StartText = "Start Server";
-    [Export]
-    public string StopText = "Stop Server";
+    public override void _Ready()
+    {
 
-    public ServerToggle() {
+        _window.MinSize = new(300, 200);
+        _window.Mode = Window.ModeEnum.Windowed;
         
-        Pressed += () => {
-            if(NodeDependency.isRunning.data == false)
-            {
-                NodeDependency.Start();
-            }
-            else
-            {
-                NodeDependency.Close();
-            }
-        };
-        NodeDependency.isRunning.OnSet((isRunning, unsubscribe) =>
-        {
-            if(IsInstanceValid(this) == false)
-            {
-                unsubscribe();
-                return;
-            }
-            CallDeferred(Button.MethodName.SetText, isRunning ? StopText : StartText);
-        });
+        var parentWindow = GetWindow();
+        var centerPosition = (parentWindow.Position) + (parentWindow.Size / 2) - (_window.Size / 2);
+        _window.Position = centerPosition;
+        
+        var node = ServerControls.PackedScene.Instantiate();
+        _window.AddChild(node);
+        _window.CloseRequested += () => { RemoveChild(_window); };
+
+        Pressed += () => { AddChild(_window); };
     }
 }

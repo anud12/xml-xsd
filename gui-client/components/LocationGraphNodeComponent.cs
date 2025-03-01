@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Immutable;
 using System.Drawing;
 using System.Linq;
 using XSD;
@@ -15,7 +16,6 @@ public partial class LocationGraphNodeComponent : BoxContainer
 	{
 		this.node = node;
 		var personContainer = GetNode<Control>("%PersonContainer");
-
 		node.people?.person.ForEach(person =>
 		{
 			var packedScene = PersonComponent.PackedScene.Instantiate();

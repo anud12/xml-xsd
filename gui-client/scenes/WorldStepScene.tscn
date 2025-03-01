@@ -1,13 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://cfcl0ch64pt2k"]
+[gd_scene load_steps=8 format=3 uid="uid://cfcl0ch64pt2k"]
 
 [ext_resource type="Script" path="res://scenes/WorldStepScene.cs" id="1_nceax"]
 [ext_resource type="Theme" uid="uid://dskjtmlounwht" path="res://mainTheme.tres" id="1_thifx"]
 [ext_resource type="Script" path="res://components/nodes/MainPersonSelect.cs" id="3_7q138"]
 [ext_resource type="Script" path="res://components/nodes/ServerToggle.cs" id="3_djd6i"]
 [ext_resource type="Script" path="res://components/nodes/DataStoreDispatcher.cs" id="3_e37i8"]
-[ext_resource type="Script" path="res://components/nodes/NextStep.cs" id="4_6rmou"]
 [ext_resource type="Script" path="res://components/nodes/ButtonWithDropdownNode.cs" id="4_703po"]
-[ext_resource type="Script" path="res://components/nodes/TestButton.cs" id="6_2r7uo"]
+[ext_resource type="Script" path="res://components/nodes/ViewState.cs" id="8_3uxpp"]
 
 [node name="Control" type="Panel"]
 anchors_preset = 15
@@ -46,26 +45,15 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MenuButton" type="Button" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer/HBoxContainer"]
-unique_name_in_owner = true
+[node name="Server" type="Button" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "Menu
-"
-
-[node name="ServerToggle" type="Button" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "Start Server"
+text = "Server"
 script = ExtResource("3_djd6i")
 
-[node name="Button" type="Button" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer/HBoxContainer"]
+[node name="ViewState" type="Button" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "Next Step"
-script = ExtResource("4_6rmou")
-
-[node name="TestButton" type="Button" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "Test Button"
-script = ExtResource("6_2r7uo")
+text = "View state"
+script = ExtResource("8_3uxpp")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer"]
 layout_mode = 2
