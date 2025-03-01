@@ -22,6 +22,10 @@ public partial class ServerToggle : Button
         _window.AddChild(node);
         _window.CloseRequested += () => { RemoveChild(_window); };
 
-        Pressed += () => { AddChild(_window); };
+        Pressed += () =>
+        {
+            _window.GrabFocus();
+            AddChild(_window);
+        };
     }
 }

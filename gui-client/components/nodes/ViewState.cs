@@ -45,6 +45,7 @@ public partial class ViewState: Button
         Text = "View state";
         Pressed += () =>
         {
+            _window.GrabFocus();
             _window.MoveToCenter();
             AddChild(_window);
         };
