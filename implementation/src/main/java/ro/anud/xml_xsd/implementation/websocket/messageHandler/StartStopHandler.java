@@ -14,13 +14,14 @@ public record StartStopHandler(WorldStepRunner worldStepRunner) implements WebSo
     @Override
     public void instantiate(final WebSocketHandler webSocketHandler) {
         webSocketHandler.add(
-            "start", (client, string) -> {
+            "startStop", (client, string) -> {
                 var logger = LocalLogger.logEnter("startStop");
 
                 var worldStepInstance = webSocketHandler.getWorldStepInstance();
                 worldStepInstance.getOutInstance().setWebSocketHandler(webSocketHandler);
                 worldStepRunner.stop()
-                    .start(worldStepInstance, webSocketHandler);
+                    .start(worldStepInstance, webSocketHandler)
+                    .stop();
                 worldStepInstance.getOutInstance().setWebSocketHandler(null);
                 webSocketHandler.setWorldStepInstance(worldStepInstance.getOutInstance());
 

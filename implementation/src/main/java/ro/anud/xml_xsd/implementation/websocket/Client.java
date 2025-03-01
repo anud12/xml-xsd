@@ -16,6 +16,7 @@ public record Client(WebSocketHandler handler, WebSocketSession webSocketSession
         Ok("Ok\n"),
         Download("download\n"),
         StartStop("startStop\n"),
+        Start("start\n"),
         Load("load\n");
 
         private final String value;

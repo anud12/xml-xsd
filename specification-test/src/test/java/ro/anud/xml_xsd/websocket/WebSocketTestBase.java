@@ -59,7 +59,7 @@ public class WebSocketTestBase {
                     mainExpected = Optional.of(new String(Files.readAllBytes(Path.of(
                             relativePath,
                             "/3_main_expected.txt"))
-                        ).replaceFirst("\r\n", "\n")
+                        ).replaceAll("\r\n", "\n")
                     );
                 } catch (IOException ignored) {}
 
@@ -67,7 +67,7 @@ public class WebSocketTestBase {
                     otherExpected = Optional.of(new String(Files.readAllBytes(Path.of(
                             relativePath,
                             "/3_other_expected.txt"))
-                        ).replaceFirst("\r\n", "\n")
+                        ).replaceAll("\r\n", "\n")
                     );
                 } catch (IOException ignored) {}
 
@@ -77,7 +77,7 @@ public class WebSocketTestBase {
                     sendText = Optional.of(new String(Files.readAllBytes(Path.of(
                         relativePath,
                         "/2_send.txt"))
-                    ).replaceFirst("\r\n", "\n"));
+                    ).replaceAll("\r\n", "\n"));
                 } catch (Exception ignored) {
 
                 }
@@ -85,7 +85,7 @@ public class WebSocketTestBase {
                     sendText = Optional.of(new String(Files.readAllBytes(Path.of(
                         relativePath,
                         "/2_send.xml"))
-                    ).replaceFirst("\r\n", "\n"));
+                    ).replaceAll("\r\n", "\n"));
                 } catch (Exception ignored) {
                 }
                 sendText.ifPresent(object -> {
@@ -98,6 +98,7 @@ public class WebSocketTestBase {
                 final Optional<String> finalMainExpected = mainExpected;
                 sendText.ifPresent(object -> {
                     finalMainExpected.ifPresent(string -> {
+
                         assertEquals(string, mainClient.getLastReceivedMessage());
                     });
                 });
