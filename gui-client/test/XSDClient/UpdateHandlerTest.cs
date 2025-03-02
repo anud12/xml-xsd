@@ -12,7 +12,7 @@ public class UpdateHandlerTest
     {
         var message = new XSDWebSocketClient.Message(XSDWebSocketClient.ReceivedMessageType.update,
             """
-             /world_step[0]/data[0]/people[0]/person[0]
+             .world_step[0].data[0].people[0].person[0]
              <person id="0" name="BillyWithVeryLongName"><properties><property property_rule_ref="health" value="10"/></properties><classifications><classification classification_rule_ref="alive"/></classifications></person>
              """);
 

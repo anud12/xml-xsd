@@ -24,7 +24,7 @@ public interface LinkedNode {
 
     default String buildPath() {
         var index = parentNode().map(linkedNode -> linkedNode.buildIndexForChild(this)).orElse(0);
-        var path = "/" + nodeName() + "[" + index + "]";
+        var path = "." + nodeName() + "[" + index + "]";
 
         return parentNode()
             .map(LinkedNode::buildPath)

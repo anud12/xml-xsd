@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {
   public class item_default : XSD.ILinkedNode , Itype__math_operations {
 
-    public static string ClassTypeId = "/world_step/rule_group/property_rule/entry/item_default";
+    public static string ClassTypeId = ".world_step.rule_group.property_rule.entry.item_default";
     public static string TagName = "item_default";
 
     public string NodeName {get =>"item_default";}
@@ -91,7 +91,7 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

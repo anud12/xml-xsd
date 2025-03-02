@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {
   public class property_threshold : XSD.ILinkedNode  {
 
-    public static string ClassTypeId = "/world_step/rule_group/property_rule/entry/property-threshold";
+    public static string ClassTypeId = ".world_step.rule_group.property_rule.entry.property-threshold";
     public static string TagName = "property-threshold";
 
     public string NodeName {get =>"property-threshold";}
@@ -133,7 +133,7 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

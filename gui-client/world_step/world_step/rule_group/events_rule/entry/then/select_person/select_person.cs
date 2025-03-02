@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen {
   public class select_person : XSD.ILinkedNode , Itype__person_selection {
 
-    public static string ClassTypeId = "/world_step/rule_group/events_rule/entry/then/select_person";
+    public static string ClassTypeId = ".world_step.rule_group.events_rule.entry.then.select_person";
     public static string TagName = "select_person";
 
     public string NodeName {get =>"select_person";}
@@ -210,7 +210,7 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

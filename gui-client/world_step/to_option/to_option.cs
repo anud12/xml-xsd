@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD {
   public class to_option : XSD.ILinkedNode  {
 
-    public static string ClassTypeId = "/to_option";
+    public static string ClassTypeId = ".to_option";
     public static string TagName = "to_option";
 
     public string NodeName {get =>"to_option";}
@@ -201,7 +201,7 @@ namespace XSD {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

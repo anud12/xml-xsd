@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD.Nworld_step.Nrule_group.Naction_rule {
   public class global : XSD.ILinkedNode  {
 
-    public static string ClassTypeId = "/world_step/rule_group/action_rule/global";
+    public static string ClassTypeId = ".world_step.rule_group.action_rule.global";
     public static string TagName = "global";
 
     public string NodeName {get =>"global";}
@@ -96,7 +96,7 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

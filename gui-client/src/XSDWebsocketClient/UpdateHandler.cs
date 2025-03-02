@@ -20,7 +20,7 @@ public class UpdateHandler
         xmlDocument.LoadXml(xmlString);
         var rawNode = new RawNode();
         rawNode.Deserialize(xmlDocument);
-        var childXpath = xPath.Replace("/world_step[0]", "");
+        var childXpath = xPath.Replace(".world_step[0]", "");
         var firstChildRawNode = rawNode.children.First().Value.First();
         if (firstChildRawNode == null)
         {

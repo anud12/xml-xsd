@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD.Nworld_step.Nactions {
   public class person__move_to : XSD.ILinkedNode  {
 
-    public static string ClassTypeId = "/world_step/actions/person.move_to";
+    public static string ClassTypeId = ".world_step.actions.person.move_to";
     public static string TagName = "person.move_to";
 
     public string NodeName {get =>"person.move_to";}
@@ -141,7 +141,7 @@ namespace XSD.Nworld_step.Nactions {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

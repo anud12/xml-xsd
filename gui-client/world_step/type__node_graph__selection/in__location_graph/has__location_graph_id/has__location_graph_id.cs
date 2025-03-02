@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD.Ntype__node_graph__selection.Nin__location_graph {
   public class has__location_graph_id : XSD.ILinkedNode  {
 
-    public static string ClassTypeId = "/type__node_graph__selection/in__location_graph/has__location_graph_id";
+    public static string ClassTypeId = ".type__node_graph__selection.in__location_graph.has__location_graph_id";
     public static string TagName = "has__location_graph_id";
 
     public string NodeName {get =>"has__location_graph_id";}
@@ -116,7 +116,7 @@ namespace XSD.Ntype__node_graph__selection.Nin__location_graph {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

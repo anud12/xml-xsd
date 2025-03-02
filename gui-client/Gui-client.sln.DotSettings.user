@@ -20,9 +20,7 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=1BF89E9E_002DFCC2_002D4803_002DA73B_002D3AD36783E4D8/@EntryIndexedValue">1BF89E9E-FCC2-4803-A73B-3AD36783E4D8</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestTemplateMapping/=xUnit/@EntryIndexedValue">33ff99d8-b1ad-4ed5-a4fd-376b97c2c841</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=cbc5cad9_002Dd71d_002D4ae0_002D8fad_002D18954000cbc2/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Root" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;VsTest::1BF89E9E-FCC2-4803-A73B-3AD36783E4D8::net7.0::executor://gdunit4.testadapter/#UpdateHandlerTest.updateHandler&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+  &lt;ProjectFolder&gt;1BF89E9E-FCC2-4803-A73B-3AD36783E4D8/d:test&lt;/ProjectFolder&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	
 	

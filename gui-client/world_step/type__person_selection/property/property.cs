@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD.Ntype__person_selection {
   public class property : XSD.ILinkedNode  {
 
-    public static string ClassTypeId = "/type__person_selection/property";
+    public static string ClassTypeId = ".type__person_selection.property";
     public static string TagName = "property";
 
     public string NodeName {get =>"property";}
@@ -141,7 +141,7 @@ namespace XSD.Ntype__person_selection {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

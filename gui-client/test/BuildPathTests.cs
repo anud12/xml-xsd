@@ -20,7 +20,7 @@ public class BuildPathTests
         
         
         //assert initial state
-        Assertions.AssertString(((ILinkedNode)worldStep).BuildPath()).IsEqual("/world_step[0]");
+        Assertions.AssertString(((ILinkedNode)worldStep).BuildPath()).IsEqual(".world_step[0]");
     }
     
     
@@ -41,7 +41,7 @@ public class BuildPathTests
         
         
         //assert initial state
-        Assertions.AssertString(((ILinkedNode)worldStep.world_metadata.counter).BuildPath()).IsEqual("/world_step[0]/world_metadata[0]/counter[0]");
+        Assertions.AssertString(((ILinkedNode)worldStep.world_metadata.counter).BuildPath()).IsEqual(".world_step[0].world_metadata[0].counter[0]");
     }
     
     [TestCase]
@@ -70,6 +70,6 @@ public class BuildPathTests
         
         
         //assert initial state
-        Assertions.AssertString(((ILinkedNode)worldStep.rule_group[2].property_rule.entry[1]).BuildPath()).IsEqual("/world_step[0]/rule_group[2]/property_rule[0]/entry[1]");
+        Assertions.AssertString(((ILinkedNode)worldStep.rule_group[2].property_rule.entry[1]).BuildPath()).IsEqual(".world_step[0].rule_group[2].property_rule[0].entry[1]");
     }
 }

@@ -17,7 +17,7 @@ namespace XSD {
         public string BuildPath()
         {
             var index = ParentNode?.BuildIndexForChild(this) ?? 0;
-            var path = "/" + NodeName + "[" + index + "]";
+            var path = "." + NodeName + "[" + index + "]";
             if (ParentNode == null)
             {
                 return path;

@@ -6,6 +6,6 @@ export const dependantTypeBuildXpath = (dependantType: DependantType): string | 
   }
   const name = dependantType.name;
 
-  return dependantTypeBuildXpath(dependantType.parentType) + "/" + name;
+  return dependantTypeBuildXpath(dependantType.parentType) + "." + name;
 
 }

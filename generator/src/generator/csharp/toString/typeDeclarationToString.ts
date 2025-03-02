@@ -157,7 +157,7 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
       
       public void SetXPath(string xpath, RawNode rawNode) 
       {
-        if(xpath.StartsWith("/")) 
+        if(xpath.StartsWith(".")) 
         {
           xpath = xpath.Substring(1);
         }

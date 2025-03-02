@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD.Non {
   public class person : XSD.ILinkedNode  {
 
-    public static string ClassTypeId = "/on/person";
+    public static string ClassTypeId = ".on.person";
     public static string TagName = "person";
 
     public string NodeName {get =>"person";}
@@ -121,7 +121,7 @@ namespace XSD.Non {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD.Nworld_step.Nworld_metadata {
   public class elapsed_time : XSD.ILinkedNode  {
 
-    public static string ClassTypeId = "/world_step/world_metadata/elapsed_time";
+    public static string ClassTypeId = ".world_step.world_metadata.elapsed_time";
     public static string TagName = "elapsed_time";
 
     public string NodeName {get =>"elapsed_time";}
@@ -93,7 +93,7 @@ namespace XSD.Nworld_step.Nworld_metadata {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

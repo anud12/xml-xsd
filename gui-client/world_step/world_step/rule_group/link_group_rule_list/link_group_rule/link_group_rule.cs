@@ -28,7 +28,7 @@ namespace XSD {
 namespace XSD.Nworld_step.Nrule_group.Nlink_group_rule_list {
   public class link_group_rule : XSD.ILinkedNode , Itype__link_group {
 
-    public static string ClassTypeId = "/world_step/rule_group/link_group_rule_list/link_group_rule";
+    public static string ClassTypeId = ".world_step.rule_group.link_group_rule_list.link_group_rule";
     public static string TagName = "link_group_rule";
 
     public string NodeName {get =>"link_group_rule";}
@@ -204,7 +204,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlink_group_rule_list {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

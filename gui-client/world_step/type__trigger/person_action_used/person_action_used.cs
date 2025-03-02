@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD.Ntype__trigger {
   public class person_action_used : XSD.ILinkedNode  {
 
-    public static string ClassTypeId = "/type__trigger/person_action_used";
+    public static string ClassTypeId = ".type__trigger.person_action_used";
     public static string TagName = "person_action_used";
 
     public string NodeName {get =>"person_action_used";}
@@ -93,7 +93,7 @@ namespace XSD.Ntype__trigger {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

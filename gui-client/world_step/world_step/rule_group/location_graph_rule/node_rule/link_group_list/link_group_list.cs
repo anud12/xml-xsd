@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
   public class link_group_list : XSD.ILinkedNode  {
 
-    public static string ClassTypeId = "/world_step/rule_group/location_graph_rule/node_rule/link_group_list";
+    public static string ClassTypeId = ".world_step.rule_group.location_graph_rule.node_rule.link_group_list";
     public static string TagName = "link_group_list";
 
     public string NodeName {get =>"link_group_list";}
@@ -119,7 +119,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

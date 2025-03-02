@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD.Nworld_step.Nactions {
   public class person__on_person__property_mutation : XSD.ILinkedNode  {
 
-    public static string ClassTypeId = "/world_step/actions/person.on_person.property_mutation";
+    public static string ClassTypeId = ".world_step.actions.person.on_person.property_mutation";
     public static string TagName = "person.on_person.property_mutation";
 
     public string NodeName {get =>"person.on_person.property_mutation";}
@@ -133,7 +133,7 @@ namespace XSD.Nworld_step.Nactions {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD {
   public class type__math_operations : XSD.ILinkedNode  {
 
-    public static string ClassTypeId = "/type__math_operations";
+    public static string ClassTypeId = ".type__math_operations";
     public static string TagName = "type__math_operations";
 
     public string NodeName {get =>"type__math_operations";}
@@ -73,7 +73,7 @@ namespace XSD {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

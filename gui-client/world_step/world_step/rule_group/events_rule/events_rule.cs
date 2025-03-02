@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD.Nworld_step.Nrule_group {
   public class events_rule : XSD.ILinkedNode  {
 
-    public static string ClassTypeId = "/world_step/rule_group/events_rule";
+    public static string ClassTypeId = ".world_step.rule_group.events_rule";
     public static string TagName = "events_rule";
 
     public string NodeName {get =>"events_rule";}
@@ -96,7 +96,7 @@ namespace XSD.Nworld_step.Nrule_group {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

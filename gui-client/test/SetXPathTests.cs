@@ -86,7 +86,7 @@ public class SetXPathTests
         };
 
         //update inital value with given instance at specific xpath
-        worldStep.SetXPath("rule_group[0]/property_rule[0]/entry[3]", entry.SerializeIntoRawNode());
+        worldStep.SetXPath("rule_group[0].property_rule[0].entry[3]", entry.SerializeIntoRawNode());
 
         //assert expected state
         Assertions.AssertInt(worldStep.rule_group[0].property_rule.entry.Count).IsEqual(2);

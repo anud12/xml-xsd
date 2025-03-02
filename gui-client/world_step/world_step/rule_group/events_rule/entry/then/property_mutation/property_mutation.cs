@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen {
   public class property_mutation : XSD.ILinkedNode , Itype__math_operations {
 
-    public static string ClassTypeId = "/world_step/rule_group/events_rule/entry/then/property_mutation";
+    public static string ClassTypeId = ".world_step.rule_group.events_rule.entry.then.property_mutation";
     public static string TagName = "property_mutation";
 
     public string NodeName {get =>"property_mutation";}
@@ -111,7 +111,7 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

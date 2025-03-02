@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph {
   public class node : XSD.ILinkedNode  {
 
-    public static string ClassTypeId = "/world_step/data/location/location_graph/node";
+    public static string ClassTypeId = ".world_step.data.location.location_graph.node";
     public static string TagName = "node";
 
     public string NodeName {get =>"node";}
@@ -236,7 +236,7 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

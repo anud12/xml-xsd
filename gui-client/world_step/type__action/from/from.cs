@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD.Ntype__action {
   public class from : XSD.ILinkedNode  {
 
-    public static string ClassTypeId = "/type__action/from";
+    public static string ClassTypeId = ".type__action.from";
     public static string TagName = "from";
 
     public string NodeName {get =>"from";}
@@ -96,7 +96,7 @@ namespace XSD.Ntype__action {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

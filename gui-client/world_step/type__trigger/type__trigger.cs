@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD {
   public class type__trigger : XSD.ILinkedNode  {
 
-    public static string ClassTypeId = "/type__trigger";
+    public static string ClassTypeId = ".type__trigger";
     public static string TagName = "type__trigger";
 
     public string NodeName {get =>"type__trigger";}
@@ -96,7 +96,7 @@ namespace XSD {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

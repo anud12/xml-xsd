@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD.Nworld_step.Ndata.Npeople.Nperson {
   public class properties : XSD.ILinkedNode  {
 
-    public static string ClassTypeId = "/world_step/data/people/person/properties";
+    public static string ClassTypeId = ".world_step.data.people.person.properties";
     public static string TagName = "properties";
 
     public string NodeName {get =>"properties";}
@@ -96,7 +96,7 @@ namespace XSD.Nworld_step.Ndata.Npeople.Nperson {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD {
   public class type__link_group : XSD.ILinkedNode  {
 
-    public static string ClassTypeId = "/type__link_group";
+    public static string ClassTypeId = ".type__link_group";
     public static string TagName = "type__link_group";
 
     public string NodeName {get =>"type__link_group";}
@@ -176,7 +176,7 @@ namespace XSD {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

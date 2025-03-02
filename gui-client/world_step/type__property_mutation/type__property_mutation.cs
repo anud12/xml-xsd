@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD {
   public class type__property_mutation : XSD.ILinkedNode  {
 
-    public static string ClassTypeId = "/type__property_mutation";
+    public static string ClassTypeId = ".type__property_mutation";
     public static string TagName = "type__property_mutation";
 
     public string NodeName {get =>"type__property_mutation";}
@@ -116,7 +116,7 @@ namespace XSD {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

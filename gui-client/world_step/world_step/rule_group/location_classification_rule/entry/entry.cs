@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD.Nworld_step.Nrule_group.Nlocation_classification_rule {
   public class entry : XSD.ILinkedNode  {
 
-    public static string ClassTypeId = "/world_step/rule_group/location_classification_rule/entry";
+    public static string ClassTypeId = ".world_step.rule_group.location_classification_rule.entry";
     public static string TagName = "entry";
 
     public string NodeName {get =>"entry";}
@@ -93,7 +93,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_classification_rule {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

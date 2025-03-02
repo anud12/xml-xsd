@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD.Nworld_step.Nactions.Nlocation_graph__node__add_classification {
   public class to_be_added__classification : XSD.ILinkedNode  {
 
-    public static string ClassTypeId = "/world_step/actions/location_graph.node.add_classification/to_be_added__classification";
+    public static string ClassTypeId = ".world_step.actions.location_graph.node.add_classification.to_be_added__classification";
     public static string TagName = "to_be_added__classification";
 
     public string NodeName {get =>"to_be_added__classification";}
@@ -116,7 +116,7 @@ namespace XSD.Nworld_step.Nactions.Nlocation_graph__node__add_classification {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

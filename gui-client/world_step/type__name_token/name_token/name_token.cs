@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD.Ntype__name_token {
   public class name_token : XSD.ILinkedNode  {
 
-    public static string ClassTypeId = "/type__name_token/name_token";
+    public static string ClassTypeId = ".type__name_token.name_token";
     public static string TagName = "name_token";
 
     public string NodeName {get =>"name_token";}
@@ -141,7 +141,7 @@ namespace XSD.Ntype__name_token {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }

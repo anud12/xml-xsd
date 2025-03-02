@@ -12,7 +12,7 @@ namespace XSD {
 namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person {
   public class mutations : XSD.ILinkedNode  {
 
-    public static string ClassTypeId = "/world_step/rule_group/action_rule/from_person/on_person/mutations";
+    public static string ClassTypeId = ".world_step.rule_group.action_rule.from_person.on_person.mutations";
     public static string TagName = "mutations";
 
     public string NodeName {get =>"mutations";}
@@ -96,7 +96,7 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person {
 
     public void SetXPath(string xpath, RawNode rawNode)
     {
-      if(xpath.StartsWith("/"))
+      if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
       }
