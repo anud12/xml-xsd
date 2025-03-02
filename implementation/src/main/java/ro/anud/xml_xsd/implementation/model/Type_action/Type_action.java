@@ -22,6 +22,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Type_action implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static String nodeName = "type__action";
     public static Type_action fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Type_action();
@@ -50,7 +51,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public String classTypeId() {
-      return "/type__action";
+      return ".type__action";
     }
 
     //Attributes
@@ -203,7 +204,27 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return this;
     }
 
+    public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_action.From.From.nodeName))
+        {
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_action.From.From.nodeName.length() + 3);
+          return this.from.deserializeAtPath(childXPath, rawNode);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_action.On.On.nodeName))
+        {
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_action.On.On.nodeName.length() + 3);
+          return this.on.deserializeAtPath(childXPath, rawNode);
+        }
+
+        deserialize(rawNode);
+        return this;
+    }
   }
+
 
   /*
     dependant type:

@@ -27,6 +27,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.*;
+import static ro.anud.xml_xsd.implementation.websocket.Client.ReturnCode.Update;
 
 @Setter
 public class WorldStepInstance {
@@ -84,7 +85,8 @@ public class WorldStepInstance {
         webSocketHandler.ifPresent(webSocketHandler1 -> {
             try {
                 logger.log("sending message", linkedNode.serializeIntoRawNode().toDocumentString());
-                webSocketHandler1.broadCastMessage(new TextMessage("update\n"
+                webSocketHandler1.broadCastMessage(new TextMessage(
+                    Update.value
                     + linkedNode.buildPath()
                     + "\n" + linkedNode.serializeIntoRawNode().toDocumentString()
                 ));

@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -219,7 +220,7 @@ namespace XSD.Nworld_step {
         updatedRawNode.Serialize(element);
     }
 
-    public void SetXPath(string xpath, RawNode rawNode)
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
       if(xpath.StartsWith("."))
       {
@@ -229,38 +230,38 @@ namespace XSD.Nworld_step {
       {
         this.previous_world_step ??= new XSD.Nworld_step.Nworld_metadata.previous_world_step();
         var childXPath = xpath.Substring(XSD.Nworld_step.Nworld_metadata.previous_world_step.TagName.Length + 3);
-        this.previous_world_step.SetXPath(childXPath, rawNode);
+        this.previous_world_step.DeserializeAtPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nworld_metadata.next_world_step.TagName))
       {
         this.next_world_step ??= new XSD.Nworld_step.Nworld_metadata.next_world_step();
         var childXPath = xpath.Substring(XSD.Nworld_step.Nworld_metadata.next_world_step.TagName.Length + 3);
-        this.next_world_step.SetXPath(childXPath, rawNode);
+        this.next_world_step.DeserializeAtPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nworld_metadata.elapsed_time.TagName))
       {
         var childXPath = xpath.Substring(XSD.Nworld_step.Nworld_metadata.elapsed_time.TagName.Length + 3);
-        this.elapsed_time.SetXPath(childXPath, rawNode);
+        this.elapsed_time.DeserializeAtPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nworld_metadata.stepDuration.TagName))
       {
         var childXPath = xpath.Substring(XSD.Nworld_step.Nworld_metadata.stepDuration.TagName.Length + 3);
-        this.stepDuration.SetXPath(childXPath, rawNode);
+        this.stepDuration.DeserializeAtPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nworld_metadata.counter.TagName))
       {
         var childXPath = xpath.Substring(XSD.Nworld_step.Nworld_metadata.counter.TagName.Length + 3);
-        this.counter.SetXPath(childXPath, rawNode);
+        this.counter.DeserializeAtPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nworld_metadata.randomization_table.TagName))
       {
         var childXPath = xpath.Substring(XSD.Nworld_step.Nworld_metadata.randomization_table.TagName.Length + 3);
-        this.randomization_table.SetXPath(childXPath, rawNode);
+        this.randomization_table.DeserializeAtPath(childXPath, rawNode);
         return;
       }
 

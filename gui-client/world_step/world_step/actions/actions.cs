@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -280,7 +281,7 @@ namespace XSD.Nworld_step {
     }
 
 
-    public void SetXPath(string xpath, RawNode rawNode)
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
       if(xpath.StartsWith("."))
       {
@@ -289,68 +290,76 @@ namespace XSD.Nworld_step {
       if(xpath.StartsWith(XSD.Nworld_step.Nactions.by.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Nactions.by.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, 1);
-        var childXPath = xpath.Substring(startIndex + 2);
+        var startTokens = xpath.Split(XSD.Nworld_step.Nactions.by.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Nactions.by.TagName + "[" + indexString + "]", "");
         var pathIndex = indexString.ToInt();
         if(this.by.ContainsKey(pathIndex))
         {
-          this.by[pathIndex].SetXPath(childXPath, rawNode);
+          this.by[pathIndex].DeserializeAtPath(childXPath, rawNode);
           return;
         }
         var newEntry = new XSD.Nworld_step.Nactions.by();
         this.by[pathIndex] = newEntry;
-        newEntry.SetXPath(childXPath, rawNode);
+        newEntry.DeserializeAtPath(childXPath, rawNode);
 
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nactions.location_graph__create.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Nactions.location_graph__create.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, 1);
-        var childXPath = xpath.Substring(startIndex + 2);
+        var startTokens = xpath.Split(XSD.Nworld_step.Nactions.location_graph__create.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Nactions.location_graph__create.TagName + "[" + indexString + "]", "");
         var pathIndex = indexString.ToInt();
         if(this.location_graph__create.ContainsKey(pathIndex))
         {
-          this.location_graph__create[pathIndex].SetXPath(childXPath, rawNode);
+          this.location_graph__create[pathIndex].DeserializeAtPath(childXPath, rawNode);
           return;
         }
         var newEntry = new XSD.Nworld_step.Nactions.location_graph__create();
         this.location_graph__create[pathIndex] = newEntry;
-        newEntry.SetXPath(childXPath, rawNode);
+        newEntry.DeserializeAtPath(childXPath, rawNode);
 
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nactions.location_graph__node__create_adjacent.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Nactions.location_graph__node__create_adjacent.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, 1);
-        var childXPath = xpath.Substring(startIndex + 2);
+        var startTokens = xpath.Split(XSD.Nworld_step.Nactions.location_graph__node__create_adjacent.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Nactions.location_graph__node__create_adjacent.TagName + "[" + indexString + "]", "");
         var pathIndex = indexString.ToInt();
         if(this.location_graph__node__create_adjacent.ContainsKey(pathIndex))
         {
-          this.location_graph__node__create_adjacent[pathIndex].SetXPath(childXPath, rawNode);
+          this.location_graph__node__create_adjacent[pathIndex].DeserializeAtPath(childXPath, rawNode);
           return;
         }
         var newEntry = new XSD.Nworld_step.Nactions.location_graph__node__create_adjacent();
         this.location_graph__node__create_adjacent[pathIndex] = newEntry;
-        newEntry.SetXPath(childXPath, rawNode);
+        newEntry.DeserializeAtPath(childXPath, rawNode);
 
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nactions.location_graph__node__add_classification.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Nactions.location_graph__node__add_classification.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, 1);
-        var childXPath = xpath.Substring(startIndex + 2);
+        var startTokens = xpath.Split(XSD.Nworld_step.Nactions.location_graph__node__add_classification.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Nactions.location_graph__node__add_classification.TagName + "[" + indexString + "]", "");
         var pathIndex = indexString.ToInt();
         if(this.location_graph__node__add_classification.ContainsKey(pathIndex))
         {
-          this.location_graph__node__add_classification[pathIndex].SetXPath(childXPath, rawNode);
+          this.location_graph__node__add_classification[pathIndex].DeserializeAtPath(childXPath, rawNode);
           return;
         }
         var newEntry = new XSD.Nworld_step.Nactions.location_graph__node__add_classification();
         this.location_graph__node__add_classification[pathIndex] = newEntry;
-        newEntry.SetXPath(childXPath, rawNode);
+        newEntry.DeserializeAtPath(childXPath, rawNode);
 
         return;
       }
@@ -358,74 +367,82 @@ namespace XSD.Nworld_step {
       {
         this.person__teleport ??= new XSD.Nworld_step.Nactions.person__teleport();
         var childXPath = xpath.Substring(XSD.Nworld_step.Nactions.person__teleport.TagName.Length + 3);
-        this.person__teleport.SetXPath(childXPath, rawNode);
+        this.person__teleport.DeserializeAtPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nactions.person__on_person__property_mutation.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Nactions.person__on_person__property_mutation.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, 1);
-        var childXPath = xpath.Substring(startIndex + 2);
+        var startTokens = xpath.Split(XSD.Nworld_step.Nactions.person__on_person__property_mutation.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Nactions.person__on_person__property_mutation.TagName + "[" + indexString + "]", "");
         var pathIndex = indexString.ToInt();
         if(this.person__on_person__property_mutation.ContainsKey(pathIndex))
         {
-          this.person__on_person__property_mutation[pathIndex].SetXPath(childXPath, rawNode);
+          this.person__on_person__property_mutation[pathIndex].DeserializeAtPath(childXPath, rawNode);
           return;
         }
         var newEntry = new XSD.Nworld_step.Nactions.person__on_person__property_mutation();
         this.person__on_person__property_mutation[pathIndex] = newEntry;
-        newEntry.SetXPath(childXPath, rawNode);
+        newEntry.DeserializeAtPath(childXPath, rawNode);
 
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nactions.person__create.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Nactions.person__create.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, 1);
-        var childXPath = xpath.Substring(startIndex + 2);
+        var startTokens = xpath.Split(XSD.Nworld_step.Nactions.person__create.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Nactions.person__create.TagName + "[" + indexString + "]", "");
         var pathIndex = indexString.ToInt();
         if(this.person__create.ContainsKey(pathIndex))
         {
-          this.person__create[pathIndex].SetXPath(childXPath, rawNode);
+          this.person__create[pathIndex].DeserializeAtPath(childXPath, rawNode);
           return;
         }
         var newEntry = new XSD.Nworld_step.Nactions.person__create();
         this.person__create[pathIndex] = newEntry;
-        newEntry.SetXPath(childXPath, rawNode);
+        newEntry.DeserializeAtPath(childXPath, rawNode);
 
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nactions.person__move_to.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Nactions.person__move_to.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, 1);
-        var childXPath = xpath.Substring(startIndex + 2);
+        var startTokens = xpath.Split(XSD.Nworld_step.Nactions.person__move_to.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Nactions.person__move_to.TagName + "[" + indexString + "]", "");
         var pathIndex = indexString.ToInt();
         if(this.person__move_to.ContainsKey(pathIndex))
         {
-          this.person__move_to[pathIndex].SetXPath(childXPath, rawNode);
+          this.person__move_to[pathIndex].DeserializeAtPath(childXPath, rawNode);
           return;
         }
         var newEntry = new XSD.Nworld_step.Nactions.person__move_to();
         this.person__move_to[pathIndex] = newEntry;
-        newEntry.SetXPath(childXPath, rawNode);
+        newEntry.DeserializeAtPath(childXPath, rawNode);
 
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nactions.from_person.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Nactions.from_person.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, 1);
-        var childXPath = xpath.Substring(startIndex + 2);
+        var startTokens = xpath.Split(XSD.Nworld_step.Nactions.from_person.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Nactions.from_person.TagName + "[" + indexString + "]", "");
         var pathIndex = indexString.ToInt();
         if(this.from_person.ContainsKey(pathIndex))
         {
-          this.from_person[pathIndex].SetXPath(childXPath, rawNode);
+          this.from_person[pathIndex].DeserializeAtPath(childXPath, rawNode);
           return;
         }
         var newEntry = new XSD.Nworld_step.Nactions.from_person();
         this.from_person[pathIndex] = newEntry;
-        newEntry.SetXPath(childXPath, rawNode);
+        newEntry.DeserializeAtPath(childXPath, rawNode);
 
         return;
       }

@@ -22,6 +22,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class OnPerson implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static String nodeName = "on_person";
     public static OnPerson fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new OnPerson();
@@ -50,7 +51,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public String classTypeId() {
-      return "/world_step/actions/from_person/on_person";
+      return ".world_step.actions.from_person.on_person";
     }
 
     //Attributes
@@ -176,7 +177,17 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return this;
     }
 
+    public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+
+        deserialize(rawNode);
+        return this;
+    }
   }
+
 
   /*
     dependant type:

@@ -4,7 +4,9 @@ import jakarta.websocket.*;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -16,13 +18,7 @@ public class WebSocketTestClient {
     public record ResponseMessage(Response response, String body) {
         static ResponseMessage fromFullString(String message) {
             var split = message.split("\n");
-            var response = switch (split[0]) {
-                case "ok" -> Response.Ok;
-                case "update" -> Response.Update;
-                case "startStop" -> Response.StartStop;
-                case "load" -> Response.Load;
-                default -> Response.Other;
-            };
+            var response = Response.fromString(split[0]);
             return new ResponseMessage(response, message.replaceFirst(response.command, ""));
         }
     }
@@ -32,9 +28,16 @@ public class WebSocketTestClient {
         Update("update\n"),
         Other(""),
         StartStop("startStop\n"),
-        Load("load\n");
+        Load("load\n"),
+        Put("put\n");
 
         public final String command;
+        public static Response fromString(String string) {
+            return Arrays.stream(Response.values())
+                .filter(response -> response.command.equals(string + "\n"))
+                .findFirst()
+                .orElse(Other);
+        }
 
         Response(final String command) {this.command = command;}
     }
@@ -43,7 +46,11 @@ public class WebSocketTestClient {
         Echo("echo\n"),
         Load("load\n"),
         Download("download\n"),
-        StartStop("startStop\n");
+        StartStop("startStop\n"),
+        Update("update\n"),
+        Start("start\n"),
+        Stop("stop\n"),
+        Put("put\n");
         public final String value;
 
         Command(final String value) {

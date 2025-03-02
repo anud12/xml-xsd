@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -134,7 +135,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
       this.OnChange();
     }
 
-    public void SetXPath(string xpath, RawNode rawNode)
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
       if(xpath.StartsWith("."))
       {
@@ -143,7 +144,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
       if(xpath.StartsWith(type__person_selection.TagName))
       {
         var childXPath = xpath.Substring(type__person_selection.TagName.Length + 3);
-        this.person_selection.SetXPath(childXPath, rawNode);
+        this.person_selection.DeserializeAtPath(childXPath, rawNode);
         return;
       }
 

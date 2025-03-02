@@ -22,6 +22,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Type_nameToken implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static String nodeName = "type__name_token";
     public static Type_nameToken fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Type_nameToken();
@@ -50,7 +51,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public String classTypeId() {
-      return "/type__name_token";
+      return ".type__name_token";
     }
 
     //Attributes
@@ -189,7 +190,33 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return this;
     }
 
+    public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.NameToken.nodeName + "["))
+        {
+          var startTokens = xpath.split(ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.NameToken.nodeName + "\\[");
+          var endToken = startTokens[1].split("]");
+          var indexString = endToken[0];
+          var childXPath = xpath.replace(ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.NameToken.nodeName + "[" + indexString + "]", "");
+          if(!"new".equals(indexString)) {
+            var pathIndex = Integer.parseInt(indexString);
+            if(this.nameToken.size() > pathIndex) {
+              return this.nameToken.get(pathIndex).deserializeAtPath(childXPath,rawNode);
+            }
+          }
+          var newEntry = new ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.NameToken();
+          this.addNameToken(newEntry);
+          return newEntry.deserializeAtPath(childXPath, rawNode);
+        }
+
+        deserialize(rawNode);
+        return this;
+    }
   }
+
 
   /*
     dependant type:

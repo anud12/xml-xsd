@@ -22,6 +22,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class FromPersonSameLocationGraphNode implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static String nodeName = "from_person_same_location_graph_node";
     public static FromPersonSameLocationGraphNode fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new FromPersonSameLocationGraphNode();
@@ -50,7 +51,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public String classTypeId() {
-      return "/world_step/rule_group/action_rule/from_person/on_person/selection/from_person_same_location_graph_node";
+      return ".world_step.rule_group.action_rule.from_person.on_person.selection.from_person_same_location_graph_node";
     }
 
     //Attributes
@@ -176,7 +177,17 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return this;
     }
 
+    public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+
+        deserialize(rawNode);
+        return this;
+    }
   }
+
 
   /*
     dependant type:

@@ -22,6 +22,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class PersonActionUsed implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static String nodeName = "person_action_used";
     public static PersonActionUsed fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new PersonActionUsed();
@@ -50,7 +51,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public String classTypeId() {
-      return "/type__trigger/person_action_used";
+      return ".type__trigger.person_action_used";
     }
 
     //Attributes
@@ -176,7 +177,17 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return this;
     }
 
+    public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+
+        deserialize(rawNode);
+        return this;
+    }
   }
+
 
   /*
     dependant type:

@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -114,7 +115,7 @@ namespace XSD.Ntype__node_graph__selection {
       this.OnChange();
     }
 
-    public void SetXPath(string xpath, RawNode rawNode)
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
       if(xpath.StartsWith("."))
       {
@@ -123,17 +124,19 @@ namespace XSD.Ntype__node_graph__selection {
       if(xpath.StartsWith(XSD.Ntype__node_graph__selection.Nhas__node_graph_id.or.TagName + "["))
       {
         var startIndex = (XSD.Ntype__node_graph__selection.Nhas__node_graph_id.or.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, 1);
-        var childXPath = xpath.Substring(startIndex + 2);
+        var startTokens = xpath.Split(XSD.Ntype__node_graph__selection.Nhas__node_graph_id.or.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Ntype__node_graph__selection.Nhas__node_graph_id.or.TagName + "[" + indexString + "]", "");
         var pathIndex = indexString.ToInt();
         if(this.or.ContainsKey(pathIndex))
         {
-          this.or[pathIndex].SetXPath(childXPath, rawNode);
+          this.or[pathIndex].DeserializeAtPath(childXPath, rawNode);
           return;
         }
         var newEntry = new XSD.Ntype__node_graph__selection.Nhas__node_graph_id.or();
         this.or[pathIndex] = newEntry;
-        newEntry.SetXPath(childXPath, rawNode);
+        newEntry.DeserializeAtPath(childXPath, rawNode);
 
         return;
       }

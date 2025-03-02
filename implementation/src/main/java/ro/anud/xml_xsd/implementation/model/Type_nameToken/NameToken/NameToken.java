@@ -22,6 +22,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class NameToken implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static String nodeName = "name_token";
     public static NameToken fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new NameToken();
@@ -50,7 +51,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public String classTypeId() {
-      return "/type__name_token/name_token";
+      return ".type__name_token.name_token";
     }
 
     //Attributes
@@ -255,7 +256,33 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return this;
     }
 
+    public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken._ref._ref.nodeName))
+        {
+          if(this._ref.isEmpty()) {
+            this._ref = Optional.of(new ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken._ref._ref());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken._ref._ref.nodeName.length() + 3);
+          return this._ref.get().deserializeAtPath(childXPath, rawNode);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.OneOf.OneOf.nodeName))
+        {
+          if(this.oneOf.isEmpty()) {
+            this.oneOf = Optional.of(new ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.OneOf.OneOf());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.OneOf.OneOf.nodeName.length() + 3);
+          return this.oneOf.get().deserializeAtPath(childXPath, rawNode);
+        }
+
+        deserialize(rawNode);
+        return this;
+    }
   }
+
 
   /*
     dependant type:

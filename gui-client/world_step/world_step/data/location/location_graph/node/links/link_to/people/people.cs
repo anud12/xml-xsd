@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -94,7 +95,7 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to 
         updatedRawNode.Serialize(element);
     }
 
-    public void SetXPath(string xpath, RawNode rawNode)
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
       if(xpath.StartsWith("."))
       {
@@ -103,17 +104,19 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to 
       if(xpath.StartsWith(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.Npeople.person.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.Npeople.person.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, 1);
-        var childXPath = xpath.Substring(startIndex + 2);
+        var startTokens = xpath.Split(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.Npeople.person.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.Npeople.person.TagName + "[" + indexString + "]", "");
         var pathIndex = indexString.ToInt();
         if(this.person.ContainsKey(pathIndex))
         {
-          this.person[pathIndex].SetXPath(childXPath, rawNode);
+          this.person[pathIndex].DeserializeAtPath(childXPath, rawNode);
           return;
         }
         var newEntry = new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.Npeople.person();
         this.person[pathIndex] = newEntry;
-        newEntry.SetXPath(childXPath, rawNode);
+        newEntry.DeserializeAtPath(childXPath, rawNode);
 
         return;
       }

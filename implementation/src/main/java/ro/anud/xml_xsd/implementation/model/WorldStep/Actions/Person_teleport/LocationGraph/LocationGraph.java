@@ -22,6 +22,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class LocationGraph implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static String nodeName = "location_graph";
     public static LocationGraph fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new LocationGraph();
@@ -50,7 +51,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public String classTypeId() {
-      return "/world_step/actions/person.teleport/location_graph";
+      return ".world_step.actions.person.teleport.location_graph";
     }
 
     //Attributes
@@ -192,7 +193,17 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return this;
     }
 
+    public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+
+        deserialize(rawNode);
+        return this;
+    }
   }
+
 
   /*
     dependant type:

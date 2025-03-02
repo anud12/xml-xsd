@@ -5,7 +5,7 @@ import {getTypeName, primitives} from "./geTypeName";
 import {Type} from "../../../type";
 import {getDependantTypeChildNamespace} from "./getDependantTypeChildNamespace";
 
-export const dependantTypeToSetXPath = (dependantType: DependantType): { dependantTypes:DependantType[], templateString: string } | undefined => {
+export const dependantTypeToDeserializeAtPath = (dependantType: DependantType): { dependantTypes:DependantType[], templateString: string } | undefined => {
 
   const dependantTypeList: DependantType[] = [];
 
@@ -37,7 +37,7 @@ export const dependantTypeToSetXPath = (dependantType: DependantType): { dependa
           {
             ${value.isNullable && `this.${normalizeName(key)} ??= new ${type}();`}
             var childXPath = xpath.Substring(${type}.TagName.Length + 3);
-            this.${normalizeName(key)}.SetXPath(childXPath, rawNode);
+            this.${normalizeName(key)}.DeserializeAtPath(childXPath, rawNode);
             return;
           }
         `
@@ -47,17 +47,19 @@ export const dependantTypeToSetXPath = (dependantType: DependantType): { dependa
           if(xpath.StartsWith(${type}.TagName + "["))
           {
             var startIndex = (${type}.TagName + "[").Length;
-            var indexString = xpath.Substring(startIndex, 1);
-            var childXPath = xpath.Substring(startIndex + 2);
+            var startTokens = xpath.Split(${type}.TagName + "[");
+            var endToken = startTokens[1].Split("]");
+            var indexString = endToken[0];
+            var childXPath = xpath.ReplaceFirst(${type}.TagName + "[" + indexString + "]", "");
             var pathIndex = indexString.ToInt();
             if(this.${normalizeName(key)}.ContainsKey(pathIndex)) 
             {
-              this.${normalizeName(key)}[pathIndex].SetXPath(childXPath, rawNode);
+              this.${normalizeName(key)}[pathIndex].DeserializeAtPath(childXPath, rawNode);
               return;
             }
             var newEntry = new ${type}();
             this.${normalizeName(key)}[pathIndex] = newEntry;
-            newEntry.SetXPath(childXPath, rawNode);
+            newEntry.DeserializeAtPath(childXPath, rawNode);
             
             return;
           }

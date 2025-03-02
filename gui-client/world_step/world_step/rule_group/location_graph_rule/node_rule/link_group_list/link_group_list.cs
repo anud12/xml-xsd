@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -117,7 +118,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
         updatedRawNode.Serialize(element);
     }
 
-    public void SetXPath(string xpath, RawNode rawNode)
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
       if(xpath.StartsWith("."))
       {
@@ -126,34 +127,38 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.reference.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.reference.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, 1);
-        var childXPath = xpath.Substring(startIndex + 2);
+        var startTokens = xpath.Split(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.reference.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.reference.TagName + "[" + indexString + "]", "");
         var pathIndex = indexString.ToInt();
         if(this.reference.ContainsKey(pathIndex))
         {
-          this.reference[pathIndex].SetXPath(childXPath, rawNode);
+          this.reference[pathIndex].DeserializeAtPath(childXPath, rawNode);
           return;
         }
         var newEntry = new XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.reference();
         this.reference[pathIndex] = newEntry;
-        newEntry.SetXPath(childXPath, rawNode);
+        newEntry.DeserializeAtPath(childXPath, rawNode);
 
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.link_group.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.link_group.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, 1);
-        var childXPath = xpath.Substring(startIndex + 2);
+        var startTokens = xpath.Split(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.link_group.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.link_group.TagName + "[" + indexString + "]", "");
         var pathIndex = indexString.ToInt();
         if(this.link_group.ContainsKey(pathIndex))
         {
-          this.link_group[pathIndex].SetXPath(childXPath, rawNode);
+          this.link_group[pathIndex].DeserializeAtPath(childXPath, rawNode);
           return;
         }
         var newEntry = new XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.link_group();
         this.link_group[pathIndex] = newEntry;
-        newEntry.SetXPath(childXPath, rawNode);
+        newEntry.DeserializeAtPath(childXPath, rawNode);
 
         return;
       }

@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -167,7 +168,7 @@ namespace XSD {
     }
 
 
-    public void SetXPath(string xpath, RawNode rawNode)
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
       if(xpath.StartsWith("."))
       {
@@ -177,23 +178,25 @@ namespace XSD {
       {
         this.world_metadata ??= new XSD.Nworld_step.world_metadata();
         var childXPath = xpath.Substring(XSD.Nworld_step.world_metadata.TagName.Length + 3);
-        this.world_metadata.SetXPath(childXPath, rawNode);
+        this.world_metadata.DeserializeAtPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.rule_group.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.rule_group.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, 1);
-        var childXPath = xpath.Substring(startIndex + 2);
+        var startTokens = xpath.Split(XSD.Nworld_step.rule_group.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.rule_group.TagName + "[" + indexString + "]", "");
         var pathIndex = indexString.ToInt();
         if(this.rule_group.ContainsKey(pathIndex))
         {
-          this.rule_group[pathIndex].SetXPath(childXPath, rawNode);
+          this.rule_group[pathIndex].DeserializeAtPath(childXPath, rawNode);
           return;
         }
         var newEntry = new XSD.Nworld_step.rule_group();
         this.rule_group[pathIndex] = newEntry;
-        newEntry.SetXPath(childXPath, rawNode);
+        newEntry.DeserializeAtPath(childXPath, rawNode);
 
         return;
       }
@@ -201,14 +204,14 @@ namespace XSD {
       {
         this.data ??= new XSD.Nworld_step.data();
         var childXPath = xpath.Substring(XSD.Nworld_step.data.TagName.Length + 3);
-        this.data.SetXPath(childXPath, rawNode);
+        this.data.DeserializeAtPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.actions.TagName))
       {
         this.actions ??= new XSD.Nworld_step.actions();
         var childXPath = xpath.Substring(XSD.Nworld_step.actions.TagName.Length + 3);
-        this.actions.SetXPath(childXPath, rawNode);
+        this.actions.DeserializeAtPath(childXPath, rawNode);
         return;
       }
 

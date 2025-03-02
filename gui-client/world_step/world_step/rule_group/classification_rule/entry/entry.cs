@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -114,7 +115,7 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule {
       this.OnChange();
     }
 
-    public void SetXPath(string xpath, RawNode rawNode)
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
       if(xpath.StartsWith("."))
       {
@@ -123,17 +124,19 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule {
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, 1);
-        var childXPath = xpath.Substring(startIndex + 2);
+        var startTokens = xpath.Split(XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property.TagName + "[" + indexString + "]", "");
         var pathIndex = indexString.ToInt();
         if(this.property.ContainsKey(pathIndex))
         {
-          this.property[pathIndex].SetXPath(childXPath, rawNode);
+          this.property[pathIndex].DeserializeAtPath(childXPath, rawNode);
           return;
         }
         var newEntry = new XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property();
         this.property[pathIndex] = newEntry;
-        newEntry.SetXPath(childXPath, rawNode);
+        newEntry.DeserializeAtPath(childXPath, rawNode);
 
         return;
       }

@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -94,7 +95,7 @@ namespace XSD.Nworld_step.Ndata {
         updatedRawNode.Serialize(element);
     }
 
-    public void SetXPath(string xpath, RawNode rawNode)
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
       if(xpath.StartsWith("."))
       {
@@ -103,17 +104,19 @@ namespace XSD.Nworld_step.Ndata {
       if(xpath.StartsWith(XSD.Nworld_step.Ndata.Nlocation.location_graph.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Ndata.Nlocation.location_graph.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, 1);
-        var childXPath = xpath.Substring(startIndex + 2);
+        var startTokens = xpath.Split(XSD.Nworld_step.Ndata.Nlocation.location_graph.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Ndata.Nlocation.location_graph.TagName + "[" + indexString + "]", "");
         var pathIndex = indexString.ToInt();
         if(this.location_graph.ContainsKey(pathIndex))
         {
-          this.location_graph[pathIndex].SetXPath(childXPath, rawNode);
+          this.location_graph[pathIndex].DeserializeAtPath(childXPath, rawNode);
           return;
         }
         var newEntry = new XSD.Nworld_step.Ndata.Nlocation.location_graph();
         this.location_graph[pathIndex] = newEntry;
-        newEntry.SetXPath(childXPath, rawNode);
+        newEntry.DeserializeAtPath(childXPath, rawNode);
 
         return;
       }

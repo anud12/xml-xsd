@@ -22,6 +22,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Entry implements  ro.anud.xml_xsd.implementation.model.interfaces.IType_nameToken.IType_nameToken<Entry>,  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static String nodeName = "entry";
     public static Entry fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Entry();
@@ -50,7 +51,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public String classTypeId() {
-      return "/world_step/rule_group/name_rule/entry";
+      return ".world_step.rule_group.name_rule.entry";
     }
 
     //Attributes
@@ -223,6 +224,16 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return this;
     }
 
+
+    public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+
+        deserialize(rawNode);
+        return this;
+    }
   }
 
 

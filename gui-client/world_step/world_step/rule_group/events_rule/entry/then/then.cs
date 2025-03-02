@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -117,7 +118,7 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry {
         updatedRawNode.Serialize(element);
     }
 
-    public void SetXPath(string xpath, RawNode rawNode)
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
       if(xpath.StartsWith("."))
       {
@@ -126,17 +127,19 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry {
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, 1);
-        var childXPath = xpath.Substring(startIndex + 2);
+        var startTokens = xpath.Split(XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person.TagName + "[" + indexString + "]", "");
         var pathIndex = indexString.ToInt();
         if(this.select_person.ContainsKey(pathIndex))
         {
-          this.select_person[pathIndex].SetXPath(childXPath, rawNode);
+          this.select_person[pathIndex].DeserializeAtPath(childXPath, rawNode);
           return;
         }
         var newEntry = new XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person();
         this.select_person[pathIndex] = newEntry;
-        newEntry.SetXPath(childXPath, rawNode);
+        newEntry.DeserializeAtPath(childXPath, rawNode);
 
         return;
       }
@@ -144,7 +147,7 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry {
       {
         this.property_mutation ??= new XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.property_mutation();
         var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.property_mutation.TagName.Length + 3);
-        this.property_mutation.SetXPath(childXPath, rawNode);
+        this.property_mutation.DeserializeAtPath(childXPath, rawNode);
         return;
       }
 

@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -116,7 +117,7 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry {
     }
     /* ignored attribute key={key} of type=is*/
 
-    public void SetXPath(string xpath, RawNode rawNode)
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
       if(xpath.StartsWith("."))
       {
@@ -125,7 +126,7 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry {
       if(xpath.StartsWith(type__math_operations.TagName))
       {
         var childXPath = xpath.Substring(type__math_operations.TagName.Length + 3);
-        this.operation.SetXPath(childXPath, rawNode);
+        this.operation.DeserializeAtPath(childXPath, rawNode);
         return;
       }
 

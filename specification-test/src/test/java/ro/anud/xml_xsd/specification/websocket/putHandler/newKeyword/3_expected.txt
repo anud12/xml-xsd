@@ -1,0 +1,2 @@
+.world_step[0].rule_group[0].property_rule[0].entry[2]
+<entry id="property_changed" units=""/>

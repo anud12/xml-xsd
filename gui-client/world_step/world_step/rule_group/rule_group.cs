@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -271,7 +272,7 @@ namespace XSD.Nworld_step {
     }
     /* ignored attribute key={key} of type=System.Object*/
 
-    public void SetXPath(string xpath, RawNode rawNode)
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
       if(xpath.StartsWith("."))
       {
@@ -281,56 +282,56 @@ namespace XSD.Nworld_step {
       {
         this.property_rule ??= new XSD.Nworld_step.Nrule_group.property_rule();
         var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.property_rule.TagName.Length + 3);
-        this.property_rule.SetXPath(childXPath, rawNode);
+        this.property_rule.DeserializeAtPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.classification_rule.TagName))
       {
         this.classification_rule ??= new XSD.Nworld_step.Nrule_group.classification_rule();
         var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.classification_rule.TagName.Length + 3);
-        this.classification_rule.SetXPath(childXPath, rawNode);
+        this.classification_rule.DeserializeAtPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.name_rule.TagName))
       {
         this.name_rule ??= new XSD.Nworld_step.Nrule_group.name_rule();
         var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.name_rule.TagName.Length + 3);
-        this.name_rule.SetXPath(childXPath, rawNode);
+        this.name_rule.DeserializeAtPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.action_rule.TagName))
       {
         this.action_rule ??= new XSD.Nworld_step.Nrule_group.action_rule();
         var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.action_rule.TagName.Length + 3);
-        this.action_rule.SetXPath(childXPath, rawNode);
+        this.action_rule.DeserializeAtPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.events_rule.TagName))
       {
         this.events_rule ??= new XSD.Nworld_step.Nrule_group.events_rule();
         var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.events_rule.TagName.Length + 3);
-        this.events_rule.SetXPath(childXPath, rawNode);
+        this.events_rule.DeserializeAtPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.link_group_rule_list.TagName))
       {
         this.link_group_rule_list ??= new XSD.Nworld_step.Nrule_group.link_group_rule_list();
         var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.link_group_rule_list.TagName.Length + 3);
-        this.link_group_rule_list.SetXPath(childXPath, rawNode);
+        this.link_group_rule_list.DeserializeAtPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.location_graph_rule.TagName))
       {
         this.location_graph_rule ??= new XSD.Nworld_step.Nrule_group.location_graph_rule();
         var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.location_graph_rule.TagName.Length + 3);
-        this.location_graph_rule.SetXPath(childXPath, rawNode);
+        this.location_graph_rule.DeserializeAtPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.location_classification_rule.TagName))
       {
         this.location_classification_rule ??= new XSD.Nworld_step.Nrule_group.location_classification_rule();
         var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.location_classification_rule.TagName.Length + 3);
-        this.location_classification_rule.SetXPath(childXPath, rawNode);
+        this.location_classification_rule.DeserializeAtPath(childXPath, rawNode);
         return;
       }
 

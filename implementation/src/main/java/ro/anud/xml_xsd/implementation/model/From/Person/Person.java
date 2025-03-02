@@ -22,6 +22,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Person implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static String nodeName = "person";
     public static Person fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Person();
@@ -50,7 +51,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public String classTypeId() {
-      return "/from/person";
+      return ".from.person";
     }
 
     //Attributes
@@ -240,7 +241,33 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return this;
     }
 
+    public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection.nodeName))
+        {
+          if(this.select.isEmpty()) {
+            this.select = Optional.of(new ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection.nodeName.length() + 3);
+          return this.select.get().deserializeAtPath(childXPath, rawNode);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_propertyMutation.Type_propertyMutation.nodeName))
+        {
+          if(this.propertyMutation.isEmpty()) {
+            this.propertyMutation = Optional.of(new ro.anud.xml_xsd.implementation.model.Type_propertyMutation.Type_propertyMutation());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_propertyMutation.Type_propertyMutation.nodeName.length() + 3);
+          return this.propertyMutation.get().deserializeAtPath(childXPath, rawNode);
+        }
+
+        deserialize(rawNode);
+        return this;
+    }
   }
+
 
   /*
     dependant type:

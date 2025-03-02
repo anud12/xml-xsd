@@ -22,6 +22,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class From implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static String nodeName = "from";
     public static From fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new From();
@@ -50,7 +51,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public String classTypeId() {
-      return "/from";
+      return ".from";
     }
 
     //Attributes
@@ -189,7 +190,25 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return this;
     }
 
+    public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.From.Person.Person.nodeName))
+        {
+          if(this.person.isEmpty()) {
+            this.person = Optional.of(new ro.anud.xml_xsd.implementation.model.From.Person.Person());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.From.Person.Person.nodeName.length() + 3);
+          return this.person.get().deserializeAtPath(childXPath, rawNode);
+        }
+
+        deserialize(rawNode);
+        return this;
+    }
   }
+
 
   /*
     dependant type:

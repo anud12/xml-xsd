@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -119,7 +120,7 @@ namespace XSD.Nworld_step.Nactions {
         updatedRawNode.Serialize(element);
     }
 
-    public void SetXPath(string xpath, RawNode rawNode)
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
       if(xpath.StartsWith("."))
       {
@@ -128,13 +129,13 @@ namespace XSD.Nworld_step.Nactions {
       if(xpath.StartsWith(type__node_graph__selection.TagName))
       {
         var childXPath = xpath.Substring(type__node_graph__selection.TagName.Length + 3);
-        this.node_graph__selection.SetXPath(childXPath, rawNode);
+        this.node_graph__selection.DeserializeAtPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(type__person_selection.TagName))
       {
         var childXPath = xpath.Substring(type__person_selection.TagName.Length + 3);
-        this.person__selection.SetXPath(childXPath, rawNode);
+        this.person__selection.DeserializeAtPath(childXPath, rawNode);
         return;
       }
 

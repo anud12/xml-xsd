@@ -12,7 +12,7 @@ namespace XSD {
 
         public RawNode SerializeIntoRawNode();
 
-        public void SetXPath(string xpath, RawNode rawNode);
+        public void DeserializeAtPath(string xpath, RawNode rawNode);
 
         public string BuildPath()
         {

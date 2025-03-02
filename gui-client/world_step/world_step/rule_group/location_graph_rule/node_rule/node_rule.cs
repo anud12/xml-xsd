@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -189,7 +190,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
       this.OnChange();
     }
 
-    public void SetXPath(string xpath, RawNode rawNode)
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
       if(xpath.StartsWith("."))
       {
@@ -199,28 +200,28 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
       {
         this.name ??= new XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.name();
         var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.name.TagName.Length + 3);
-        this.name.SetXPath(childXPath, rawNode);
+        this.name.DeserializeAtPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.classifications.TagName))
       {
         this.classifications ??= new XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.classifications();
         var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.classifications.TagName.Length + 3);
-        this.classifications.SetXPath(childXPath, rawNode);
+        this.classifications.DeserializeAtPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.link_group_list.TagName))
       {
         this.link_group_list ??= new XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.link_group_list();
         var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.link_group_list.TagName.Length + 3);
-        this.link_group_list.SetXPath(childXPath, rawNode);
+        this.link_group_list.DeserializeAtPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.existing_person.TagName))
       {
         this.existing_person ??= new XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.existing_person();
         var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.existing_person.TagName.Length + 3);
-        this.existing_person.SetXPath(childXPath, rawNode);
+        this.existing_person.DeserializeAtPath(childXPath, rawNode);
         return;
       }
 

@@ -22,6 +22,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class LinkGroup implements  ro.anud.xml_xsd.implementation.model.interfaces.IType_linkGroup.IType_linkGroup<LinkGroup>,  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static String nodeName = "link_group";
     public static LinkGroup fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new LinkGroup();
@@ -50,7 +51,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public String classTypeId() {
-      return "/world_step/rule_group/location_graph_rule/node_rule/link_group_list/link_group";
+      return ".world_step.rule_group.location_graph_rule.node_rule.link_group_list.link_group";
     }
 
     //Attributes
@@ -268,7 +269,17 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return this;
     }
 
+    public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+
+        deserialize(rawNode);
+        return this;
+    }
   }
+
 
   /*
     dependant type:

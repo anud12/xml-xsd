@@ -19,6 +19,7 @@ import {interfaceTypeDeclarationToString} from "./interfaceTypeDeclarationToStri
 import {dependantTypeToRemoveChild} from "./depedantType/dependantTypeToRemoveChild";
 import {dependantTypeToBuildIndexForChild} from "./depedantType/dependantTypeToBuildIndexForChild";
 import {dependantTypeBuildXpath} from "./depedantType/dependantTypeBuildXpath";
+import {dependantTypeToDeserializeAtPath} from "./depedantType/dependantTypeToDeserializeAtPath";
 
 
 type ClassTemplateParts = {
@@ -54,7 +55,8 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
     @AllArgsConstructor
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     public class ${normalizeNameClass(dependantType.name)} implements ${extensionNames.length > 0 && ` ${extensionNames.map(e => e + `<${normalizeNameClass(dependantType.name)}>`).join(", ")}, `} ro.anud.xml_xsd.implementation.util.LinkedNode {
-          
+      
+      public static String nodeName = "${dependantType.name}";
       public static ${normalizeNameClass(dependantType.name)} fromRawNode(RawNode rawNode) {
         logEnter();
         var instance = new ${normalizeNameClass(dependantType.name)}();
@@ -250,6 +252,17 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
       ${dependantTypeToChildrenGetterSetter(dependantType)?.templateString}
       ${extensions.map(extension => dependantTypeToChildrenGetterSetter(extension, dependantType)?.templateString).join("\n")}
       
+      
+      public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
+         if(xpath.startsWith(".")) 
+          {
+            xpath = xpath.substring(1);
+          }
+          ${dependantTypeToDeserializeAtPath(dependantType)?.templateString}
+          
+          deserialize(rawNode);
+          return this;
+      }
     }
     
     

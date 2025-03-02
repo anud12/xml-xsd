@@ -22,6 +22,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Type_mathOperations implements  ro.anud.xml_xsd.implementation.model.interfaces.IType_mathOperations.IType_mathOperations<Type_mathOperations>,  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
+    public static String nodeName = "type__math_operations";
     public static Type_mathOperations fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = new Type_mathOperations();
@@ -50,7 +51,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public String classTypeId() {
-      return "/type__math_operations";
+      return ".type__math_operations";
     }
 
     //Attributes
@@ -150,7 +151,17 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         updatedRawNode.populateNode(document, element);
     }
 
+    public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+
+        deserialize(rawNode);
+        return this;
+    }
   }
+
 
   /*
     dependant type:

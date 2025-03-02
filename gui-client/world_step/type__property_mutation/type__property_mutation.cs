@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -114,7 +115,7 @@ namespace XSD {
       this.OnChange();
     }
 
-    public void SetXPath(string xpath, RawNode rawNode)
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
       if(xpath.StartsWith("."))
       {
@@ -123,17 +124,19 @@ namespace XSD {
       if(xpath.StartsWith(XSD.Ntype__property_mutation.from.TagName + "["))
       {
         var startIndex = (XSD.Ntype__property_mutation.from.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, 1);
-        var childXPath = xpath.Substring(startIndex + 2);
+        var startTokens = xpath.Split(XSD.Ntype__property_mutation.from.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Ntype__property_mutation.from.TagName + "[" + indexString + "]", "");
         var pathIndex = indexString.ToInt();
         if(this.from.ContainsKey(pathIndex))
         {
-          this.from[pathIndex].SetXPath(childXPath, rawNode);
+          this.from[pathIndex].DeserializeAtPath(childXPath, rawNode);
           return;
         }
         var newEntry = new XSD.Ntype__property_mutation.from();
         this.from[pathIndex] = newEntry;
-        newEntry.SetXPath(childXPath, rawNode);
+        newEntry.DeserializeAtPath(childXPath, rawNode);
 
         return;
       }

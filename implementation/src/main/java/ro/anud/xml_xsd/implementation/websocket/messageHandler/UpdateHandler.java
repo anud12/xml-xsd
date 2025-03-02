@@ -1,17 +1,17 @@
 package ro.anud.xml_xsd.implementation.websocket.messageHandler;
 
 import org.springframework.stereotype.Component;
-import org.xml.sax.SAXException;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
 import ro.anud.xml_xsd.implementation.WorldStepRunner;
 import ro.anud.xml_xsd.implementation.util.LocalLogger;
-import ro.anud.xml_xsd.implementation.validator.AtrributeValidator;
+import ro.anud.xml_xsd.implementation.util.RawNode;
 import ro.anud.xml_xsd.implementation.websocket.Client;
 import ro.anud.xml_xsd.implementation.websocket.WebSocketHandler;
 
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import static ro.anud.xml_xsd.implementation.controller.http.AnalyzeController.buildWorldStep;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.StringReader;
 
 @Component
 public record UpdateHandler(WorldStepRunner worldStepRunner) implements WebSocketHandler.Factory {
@@ -19,31 +19,28 @@ public record UpdateHandler(WorldStepRunner worldStepRunner) implements WebSocke
     @Override
     public void instantiate(final WebSocketHandler webSocketHandler) {
         webSocketHandler.add(
-            "update", (client, string) -> {
-                var logger = LocalLogger.logEnter("update");
+            "put", (client, string) -> {
+                var logger = LocalLogger.logEnter("put");
                 worldStepRunner.stop();
+
+                var token = string.split("\n");
+                var path = token[0];
+                var subPath = path.replace("world_step[0].","");
+                var xmlString = token[1];
+
+
                 try {
-                    var worldStep = buildWorldStep(string);
-
-                    logger.log("validating");
-                    var validationResult = new AtrributeValidator()
-                        .validate(Optional.ofNullable(worldStep));
-                    if (!validationResult.isEmpty()) {
-                        logger.log("validation failed");
-                        client.send(Client.ReturnCode.Load, validationResult.stream()
-                            .map(invalidAttribute -> {
-                                var allowedValues = String.join(", ", invalidAttribute.allowedValues());
-                                return "ValidationError: " + invalidAttribute.value() + " at " + invalidAttribute.path() + " not in [" + allowedValues + "]";
-                            })
-                            .collect(Collectors.joining("\n")));
-                        return;
-                    }
-
-                    webSocketHandler.getWorldStepInstance().setWorldStep(worldStep);
-                    webSocketHandler.getWorldStepInstance().getOutInstance().setWorldStep(buildWorldStep(string));
-
-                    client.broadcast(Client.ReturnCode.Load);
-                } catch (SAXException e) {
+                    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                    DocumentBuilder builder = factory.newDocumentBuilder();
+                    Document document = builder.parse(new InputSource(new StringReader(xmlString)));
+                    var rawNode = RawNode.fromNode(document.getDocumentElement());
+                    var instance = webSocketHandler.getWorldStepInstance().getOutInstance();
+                    instance.getWorldStep().ifPresent(worldStep -> {
+                        var deserializedNode = worldStep.deserializeAtPath(subPath, rawNode);
+                        instance.sendLinkNode(deserializedNode);
+                    });
+                    client.send(Client.ReturnCode.Put);
+                } catch (Exception e) {
                     client.broadcastNOk(e.toString());
                 }
                 logger.logReturnVoid();

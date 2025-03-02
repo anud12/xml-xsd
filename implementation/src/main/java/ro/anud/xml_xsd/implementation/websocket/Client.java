@@ -17,9 +17,12 @@ public record Client(WebSocketHandler handler, WebSocketSession webSocketSession
         Download("download\n"),
         StartStop("startStop\n"),
         Start("start\n"),
-        Load("load\n");
+        Load("load\n"),
+        Update("update\n"),
+        Stop("stop\n"),
+        Put("put\n");
 
-        private final String value;
+        public final String value;
 
         ReturnCode(final String value) {
             this.value = value;

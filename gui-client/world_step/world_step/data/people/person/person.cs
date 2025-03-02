@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -182,7 +183,7 @@ namespace XSD.Nworld_step.Ndata.Npeople {
     }
 
 
-    public void SetXPath(string xpath, RawNode rawNode)
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
       if(xpath.StartsWith("."))
       {
@@ -192,23 +193,25 @@ namespace XSD.Nworld_step.Ndata.Npeople {
       {
         this.properties ??= new XSD.Nworld_step.Ndata.Npeople.Nperson.properties();
         var childXPath = xpath.Substring(XSD.Nworld_step.Ndata.Npeople.Nperson.properties.TagName.Length + 3);
-        this.properties.SetXPath(childXPath, rawNode);
+        this.properties.DeserializeAtPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Ndata.Npeople.Nperson.relations.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Ndata.Npeople.Nperson.relations.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, 1);
-        var childXPath = xpath.Substring(startIndex + 2);
+        var startTokens = xpath.Split(XSD.Nworld_step.Ndata.Npeople.Nperson.relations.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Ndata.Npeople.Nperson.relations.TagName + "[" + indexString + "]", "");
         var pathIndex = indexString.ToInt();
         if(this.relations.ContainsKey(pathIndex))
         {
-          this.relations[pathIndex].SetXPath(childXPath, rawNode);
+          this.relations[pathIndex].DeserializeAtPath(childXPath, rawNode);
           return;
         }
         var newEntry = new XSD.Nworld_step.Ndata.Npeople.Nperson.relations();
         this.relations[pathIndex] = newEntry;
-        newEntry.SetXPath(childXPath, rawNode);
+        newEntry.DeserializeAtPath(childXPath, rawNode);
 
         return;
       }
@@ -216,7 +219,7 @@ namespace XSD.Nworld_step.Ndata.Npeople {
       {
         this.classifications ??= new XSD.Nworld_step.Ndata.Npeople.Nperson.classifications();
         var childXPath = xpath.Substring(XSD.Nworld_step.Ndata.Npeople.Nperson.classifications.TagName.Length + 3);
-        this.classifications.SetXPath(childXPath, rawNode);
+        this.classifications.DeserializeAtPath(childXPath, rawNode);
         return;
       }
 

@@ -16,7 +16,7 @@ import {dependantTypeGetFullQualifiedName} from "./dependantTypeGetFullQualified
 import {getDependantTypeNamespace} from "./getDependantTypeNamespace";
 import {getDependantTypeChildNamespace} from "./getDependantTypeChildNamespace";
 import {dependantTypeBuildXpath} from "./dependantType/dependantTypeBuildXpath";
-import {dependantTypeToSetXPath} from "./dependantTypeToSetXPath";
+import {dependantTypeToDeserializeAtPath} from "./dependantTypeToDeserializeAtPath";
 import {dependantTypeBuildIndexForChild} from "./dependantType/dependantTypeBuildIndexForChild";
 
 
@@ -155,13 +155,13 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
       ${extensions.map(extension => dependantTypeToChildrenGetterSetter(extension)?.templateString).join("\n")}
       
       
-      public void SetXPath(string xpath, RawNode rawNode) 
+      public void DeserializeAtPath(string xpath, RawNode rawNode) 
       {
         if(xpath.StartsWith(".")) 
         {
           xpath = xpath.Substring(1);
         }
-        ${dependantTypeToSetXPath(dependantType)?.templateString}
+        ${dependantTypeToDeserializeAtPath(dependantType)?.templateString}
         
         Deserialize(rawNode);
       }
@@ -337,6 +337,7 @@ export function typeDeclarationElementToString(directoryMetadata: DirectoryMetad
       using System.Collections.Generic;
       using System.Xml;
       using System.Linq;
+      using Guiclient.util;
       using Godot;
       using XSD;
       

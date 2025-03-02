@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -137,7 +138,7 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule {
       this.OnChange();
     }
 
-    public void SetXPath(string xpath, RawNode rawNode)
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
       if(xpath.StartsWith("."))
       {
@@ -146,34 +147,38 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule {
       if(xpath.StartsWith(type__trigger.TagName + "["))
       {
         var startIndex = (type__trigger.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, 1);
-        var childXPath = xpath.Substring(startIndex + 2);
+        var startTokens = xpath.Split(type__trigger.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(type__trigger.TagName + "[" + indexString + "]", "");
         var pathIndex = indexString.ToInt();
         if(this.when.ContainsKey(pathIndex))
         {
-          this.when[pathIndex].SetXPath(childXPath, rawNode);
+          this.when[pathIndex].DeserializeAtPath(childXPath, rawNode);
           return;
         }
         var newEntry = new type__trigger();
         this.when[pathIndex] = newEntry;
-        newEntry.SetXPath(childXPath, rawNode);
+        newEntry.DeserializeAtPath(childXPath, rawNode);
 
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.then.TagName + "["))
       {
         var startIndex = (XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.then.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, 1);
-        var childXPath = xpath.Substring(startIndex + 2);
+        var startTokens = xpath.Split(XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.then.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.then.TagName + "[" + indexString + "]", "");
         var pathIndex = indexString.ToInt();
         if(this.then.ContainsKey(pathIndex))
         {
-          this.then[pathIndex].SetXPath(childXPath, rawNode);
+          this.then[pathIndex].DeserializeAtPath(childXPath, rawNode);
           return;
         }
         var newEntry = new XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.then();
         this.then[pathIndex] = newEntry;
-        newEntry.SetXPath(childXPath, rawNode);
+        newEntry.DeserializeAtPath(childXPath, rawNode);
 
         return;
       }

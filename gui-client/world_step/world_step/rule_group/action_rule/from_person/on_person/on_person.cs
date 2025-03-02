@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -119,7 +120,7 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person {
         updatedRawNode.Serialize(element);
     }
 
-    public void SetXPath(string xpath, RawNode rawNode)
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
       if(xpath.StartsWith("."))
       {
@@ -129,14 +130,14 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person {
       {
         this.selection ??= new XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.selection();
         var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.selection.TagName.Length + 3);
-        this.selection.SetXPath(childXPath, rawNode);
+        this.selection.DeserializeAtPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.mutations.TagName))
       {
         this.mutations ??= new XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.mutations();
         var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.mutations.TagName.Length + 3);
-        this.mutations.SetXPath(childXPath, rawNode);
+        this.mutations.DeserializeAtPath(childXPath, rawNode);
         return;
       }
 

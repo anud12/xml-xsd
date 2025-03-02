@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -94,7 +95,7 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person {
         updatedRawNode.Serialize(element);
     }
 
-    public void SetXPath(string xpath, RawNode rawNode)
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
       if(xpath.StartsWith("."))
       {
@@ -103,17 +104,19 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person {
       if(xpath.StartsWith(type__property_mutation.TagName + "["))
       {
         var startIndex = (type__property_mutation.TagName + "[").Length;
-        var indexString = xpath.Substring(startIndex, 1);
-        var childXPath = xpath.Substring(startIndex + 2);
+        var startTokens = xpath.Split(type__property_mutation.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(type__property_mutation.TagName + "[" + indexString + "]", "");
         var pathIndex = indexString.ToInt();
         if(this.property_mutation.ContainsKey(pathIndex))
         {
-          this.property_mutation[pathIndex].SetXPath(childXPath, rawNode);
+          this.property_mutation[pathIndex].DeserializeAtPath(childXPath, rawNode);
           return;
         }
         var newEntry = new type__property_mutation();
         this.property_mutation[pathIndex] = newEntry;
-        newEntry.SetXPath(childXPath, rawNode);
+        newEntry.DeserializeAtPath(childXPath, rawNode);
 
         return;
       }

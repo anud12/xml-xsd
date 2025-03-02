@@ -22,8 +22,6 @@ public record StartHandler(WorldStepRunner worldStepRunner) implements WebSocket
                 worldStepInstance.getOutInstance().setWebSocketHandler(webSocketHandler);
                 worldStepRunner.stop()
                     .start(worldStepInstance, webSocketHandler);
-                worldStepInstance.getOutInstance().setWebSocketHandler(null);
-                webSocketHandler.setWorldStepInstance(worldStepInstance.getOutInstance());
 
                 client.send(Start);
                 logger.logReturnVoid();

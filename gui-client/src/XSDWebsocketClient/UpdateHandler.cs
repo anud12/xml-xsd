@@ -26,6 +26,6 @@ public class UpdateHandler
         {
             return;
         }
-        worldStep.data?.SetXPath(childXpath, firstChildRawNode);
+        worldStep.data?.DeserializeAtPath(childXpath, firstChildRawNode);
     }
 }
