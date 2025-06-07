@@ -22,6 +22,7 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen {
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
     private List<Action<select_person>> _callbackList = new();
+    private List<Action<List<ILinkedNode>>> _bubbleCallbackList = new();
 
     //Attributes
     /* ignored attribute key={key} of type=origin*/
@@ -143,6 +144,12 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen {
       return () => _callbackList.Remove(callback);
     }
 
+    public Action OnChangeBubble(Action<List<ILinkedNode>> callback)
+    {
+      _bubbleCallbackList.Add(callback);
+      return () => _bubbleCallbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -225,6 +232,7 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen {
         return;
       linkedNodes.Add(this);
       _callbackList.ForEach(action => action(this));
+      _bubbleCallbackList.ForEach(action => action(linkedNodes));
       _parentNode.ChildChanged(linkedNodes);
     }
 

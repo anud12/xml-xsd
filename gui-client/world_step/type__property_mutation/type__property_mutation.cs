@@ -22,6 +22,7 @@ namespace XSD {
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
     private List<Action<type__property_mutation>> _callbackList = new();
+    private List<Action<List<ILinkedNode>>> _bubbleCallbackList = new();
 
     //Attributes
     private System.String _property_rule_ref;
@@ -63,6 +64,12 @@ namespace XSD {
     {
       _callbackList.Add(callback);
       return () => _callbackList.Remove(callback);
+    }
+
+    public Action OnChangeBubble(Action<List<ILinkedNode>> callback)
+    {
+      _bubbleCallbackList.Add(callback);
+      return () => _bubbleCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -150,6 +157,7 @@ namespace XSD {
         return;
       linkedNodes.Add(this);
       _callbackList.ForEach(action => action(this));
+      _bubbleCallbackList.ForEach(action => action(linkedNodes));
       _parentNode.ChildChanged(linkedNodes);
     }
 

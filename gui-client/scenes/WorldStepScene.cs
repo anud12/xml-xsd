@@ -15,7 +15,6 @@ public partial class WorldStepScene : Control
 	{
 		addLocationGraph();
 		addMainPersonData();
-		initializeMenuButton();
 	}
 
 	private void addMainPersonData()
@@ -57,16 +56,6 @@ public partial class WorldStepScene : Control
 		unsubscribeList.Clear();
 	}
 
-	private void initializeMenuButton()
-	{
-
-		var menuButton = GetNode<Button>("%MenuButton");
-		menuButton.Pressed += () =>
-		{
-			ClearSubscriptions();
-			GetTree().ChangeSceneToPacked(MainScene.PackedScene);
-		};
-	}
 
 
 	private void addLocationGraph()

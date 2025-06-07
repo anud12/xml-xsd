@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cfcl0ch64pt2k"]
+[gd_scene load_steps=9 format=3 uid="uid://cfcl0ch64pt2k"]
 
 [ext_resource type="Script" path="res://scenes/WorldStepScene.cs" id="1_nceax"]
 [ext_resource type="Theme" uid="uid://dskjtmlounwht" path="res://mainTheme.tres" id="1_thifx"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://components/nodes/ServerToggle.cs" id="3_djd6i"]
 [ext_resource type="Script" path="res://components/nodes/DataStoreDispatcher.cs" id="3_e37i8"]
 [ext_resource type="Script" path="res://components/nodes/ButtonWithDropdownNode.cs" id="4_703po"]
+[ext_resource type="Script" path="res://components/nodes/LinkedNodeViewer.cs" id="6_qslo5"]
 [ext_resource type="Script" path="res://components/nodes/ViewState.cs" id="8_3uxpp"]
 
 [node name="Control" type="Panel"]
@@ -45,15 +46,22 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Server" type="Button" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer/HBoxContainer"]
+[node name="Server" type="Button" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer/HBoxContainer" node_paths=PackedStringArray("_window")]
 layout_mode = 2
 text = "Server"
 script = ExtResource("3_djd6i")
+_window = NodePath("")
 
-[node name="ViewState" type="Button" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer/HBoxContainer"]
+[node name="ViewState" type="Button" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer/HBoxContainer" node_paths=PackedStringArray("_window")]
 layout_mode = 2
 text = "View state"
 script = ExtResource("8_3uxpp")
+_window = NodePath("")
+
+[node name="Button" type="Button" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "LinkedNodeViewer"
+script = ExtResource("6_qslo5")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer"]
 layout_mode = 2
@@ -65,6 +73,10 @@ text = "Main Person
 
 [node name="MainPersonSelect" type="OptionButton" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer/HBoxContainer2"]
 layout_mode = 2
+item_count = 1
+selected = 0
+popup/item_0/text = "Select Person"
+popup/item_0/id = 0
 script = ExtResource("3_7q138")
 
 [node name="PanelContainer2" type="PanelContainer" parent="BoxContainer2/BoxContainer2"]
@@ -93,13 +105,15 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="RootLocationGraph" type="BoxContainer" parent="BoxContainer2/BoxContainer2/PanelContainer2/HBoxContainer/ScrollContainer/HBoxContainer"]
+[node name="RootLocationGraph" type="BoxContainer" parent="BoxContainer2/BoxContainer2/PanelContainer2/HBoxContainer/ScrollContainer/HBoxContainer" node_paths=PackedStringArray("_button", "_optionButton")]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 0
 script = ExtResource("4_703po")
 options = [null]
-PlaceholderText = "Select Graph"
+_button = NodePath("@Button@17615")
+_optionButton = NodePath("@MenuButton@17616")
+_options = [null]
 
 [node name="BoxContainer" type="BoxContainer" parent="BoxContainer2"]
 layout_mode = 2

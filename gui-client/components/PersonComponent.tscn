@@ -53,6 +53,13 @@ theme_override_font_sizes/font_size = 57
 text = "person_name 
 "
 
+[node name="ViewDefinitionButton" type="Button" parent="MarginContainer/BoxContainer/BoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+text = "View 
+Definition"
+
 [node name="HBoxContainer" type="BoxContainer" parent="MarginContainer/BoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3

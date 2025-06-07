@@ -5,6 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using Guiclient.components.nodes;
+using Guiclient.util;
 using XSD;
 using XSD.Nworld_step.Nactions;
 using XSD.Nworld_step.Nactions.Nfrom_person;
@@ -31,6 +33,7 @@ public partial class PersonComponent : Control
 
 	}
 
+	
 	public override void _Ready()
 	{
 		//Set NameLabel node value to person id attribute value
@@ -55,11 +58,18 @@ public partial class PersonComponent : Control
 			addProperties();
 			addPersonToPersonActions();
 		}
+		
 		catch (Exception e)
 		{
 			GD.PrintErr("Error: " + e.Message);
 		}
 
+		var viewNodeButton = GetNode<Button>("MarginContainer/BoxContainer/BoxContainer/ViewDefinitionButton");
+		viewNodeButton.CreateWindow(() =>
+		{
+			GD.Print($"Clicked {person.data?.id}");
+			return new LinkedNodeGraph(person.data);
+		});
 	}
 
 	public void ClearSubscriptions()

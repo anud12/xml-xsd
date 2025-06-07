@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace XSD {
@@ -13,6 +14,8 @@ namespace XSD {
         public RawNode SerializeIntoRawNode();
 
         public void DeserializeAtPath(string xpath, RawNode rawNode);
+
+        public Action OnChangeBubble(Action<List<ILinkedNode>> callback);
 
         public string BuildPath()
         {

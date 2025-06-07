@@ -22,6 +22,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
     private List<Action<existing_person>> _callbackList = new();
+    private List<Action<List<ILinkedNode>>> _bubbleCallbackList = new();
 
     //Attributes
     private System.Int32 _min;
@@ -68,6 +69,12 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
     {
       _callbackList.Add(callback);
       return () => _callbackList.Remove(callback);
+    }
+
+    public Action OnChangeBubble(Action<List<ILinkedNode>> callback)
+    {
+      _bubbleCallbackList.Add(callback);
+      return () => _bubbleCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -157,6 +164,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
         return;
       linkedNodes.Add(this);
       _callbackList.ForEach(action => action(this));
+      _bubbleCallbackList.ForEach(action => action(linkedNodes));
       _parentNode.ChildChanged(linkedNodes);
     }
 

@@ -1,6 +1,7 @@
 using System;
 using Dependencies;
 using Godot;
+using Guiclient.util;
 
 [Tool]
 [GlobalClass]
@@ -10,22 +11,25 @@ public partial class ServerToggle : Button
 
     public override void _Ready()
     {
-
-        _window.MinSize = new(300, 200);
-        _window.Mode = Window.ModeEnum.Windowed;
-        
-        var parentWindow = GetWindow();
-        var centerPosition = (parentWindow.Position) + (parentWindow.Size / 2) - (_window.Size / 2);
-        _window.Position = centerPosition;
-        
+        // _window.MinSize = new(300, 200);
+        // _window.Mode = Window.ModeEnum.Windowed;
+        //
+        // var parentWindow = GetWindow();
+        // var centerPosition = (parentWindow.Position) + (parentWindow.Size / 2) - (_window.Size / 2);
+        // _window.Position = centerPosition;
+        //
+        // var node = ServerControls.PackedScene.Instantiate();
+        // _window.AddChild(node);
+        // _window.CloseRequested += () => { RemoveChild(_window); };
+        //
+        // Pressed += () =>
+        // {
+        //     _window.GrabFocus();
+        //     AddChild(_window);
+        // };
         var node = ServerControls.PackedScene.Instantiate();
-        _window.AddChild(node);
-        _window.CloseRequested += () => { RemoveChild(_window); };
-
-        Pressed += () =>
-        {
-            _window.GrabFocus();
-            AddChild(_window);
-        };
+        var control = new Control();
+        control.AddChild(node);
+        this.CreateWindow(control);
     }
 }
