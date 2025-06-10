@@ -94,19 +94,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return "existing_person";
     }
 
-    public void childChanged(List<Object> list) {
+    public void notifyChange(List<Object> list) {
       list.addLast(this);
       onChangeList.forEach(consumer -> consumer.accept(list));
-      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(list));
-    }
-
-    private void triggerOnChange() {
-      childChanged(new ArrayList<>());
+      parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
     }
 
     public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
       this.parentNode = Optional.of(linkedNode);
-      triggerOnChange();
+      notifyChange();
     }
 
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule> parentAsNodeRule() {
@@ -191,7 +187,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public ExistingPerson setMin(Integer value)
     {
       this.min = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Optional<Integer> getMax()
@@ -201,7 +197,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public ExistingPerson setMax(Optional<Integer> value)
     {
       this.max = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection getPersonSelection()
@@ -216,7 +212,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.personSelection = value;
       value.parentNode(this);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
 

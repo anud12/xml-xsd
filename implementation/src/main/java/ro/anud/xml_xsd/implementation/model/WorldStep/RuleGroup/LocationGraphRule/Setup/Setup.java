@@ -92,19 +92,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return "setup";
     }
 
-    public void childChanged(List<Object> list) {
+    public void notifyChange(List<Object> list) {
       list.addLast(this);
       onChangeList.forEach(consumer -> consumer.accept(list));
-      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(list));
-    }
-
-    private void triggerOnChange() {
-      childChanged(new ArrayList<>());
+      parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
     }
 
     public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
       this.parentNode = Optional.of(linkedNode);
-      triggerOnChange();
+      notifyChange();
     }
 
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.LocationGraphRule> parentAsLocationGraphRule() {
@@ -193,7 +189,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.startingNode = value;
       value.parentNode(this);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
 
@@ -209,20 +205,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.necessaryNode.add(value);
       value.parentNode(this);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Setup addAllNecessaryNode(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.NecessaryNode.NecessaryNode> value)
     {
       this.necessaryNode.addAll(value);
       value.forEach(e -> e.parentNode(this));
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Setup removeNecessaryNode(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.NecessaryNode.NecessaryNode value)
     {
       this.necessaryNode.remove(value);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
 

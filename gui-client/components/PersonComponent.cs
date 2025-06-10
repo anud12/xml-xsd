@@ -1,12 +1,9 @@
-using util.dataStore;
-using Godot;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
+using Godot;
 using Guiclient.components.nodes;
-using Guiclient.util;
+using util.dataStore;
 using XSD;
 using XSD.Nworld_step.Nactions;
 using XSD.Nworld_step.Nactions.Nfrom_person;
@@ -17,9 +14,9 @@ public partial class PersonComponent : Control
 	// Called when the node enters the scene tree for the first time.
 	public static PackedScene PackedScene = GD.Load<PackedScene>("res://components/PersonComponent.tscn");
 	private DataStore<world_step> worldStep = StoreWorld_Step.instance;
-	private DataStore<person> person = new DataStore<person>();
+	private DataStore<person> person = new();
 
-	private List<Action> unsubscribeList = new List<Action>();
+	private List<Action> unsubscribeList = new();
 	public void initializeFromId(string? personId)
 	{
 
@@ -39,7 +36,6 @@ public partial class PersonComponent : Control
 		//Set NameLabel node value to person id attribute value
 		try
 		{
-			var nameLabel = GetNode<Label>("%NameLabel");
 			var unsubscribe = person.OnSet((person, unsubscribe) =>
 			{
 				if (IsInstanceValid(this) == false)
@@ -51,25 +47,53 @@ public partial class PersonComponent : Control
 				{
 					return;
 				}
-				nameLabel.Text = person.name;
+				GetNode<NodeExplorerButton>("%NodeExplorerButton").LinkedNodeOrCollection = person;
+				Redraw(person);
+				unsubscribeList.Add(person.OnChange((_) =>
+				{
+					GD.Print("ChangeBubble");
+					Redraw(person);
+				}));
+				unsubscribeList.Add(person.OnChange((_) =>
+				{
+					GD.Print("Change");
+					Redraw(person);
+				}));
 			});
 			unsubscribeList.Add(unsubscribe);
-			addClassifications();
-			addProperties();
-			addPersonToPersonActions();
+			worldStep.OnSet((step, action) =>
+			{
+				if (IsInstanceValid(this) == false)
+				{
+					unsubscribe();
+					return;
+				}
+				if (person == null)
+				{
+					return;
+				}
+				Redraw(person.data);
+			});
+			StoreSession.mainPersonId.OnSet((mainPersonId, action) =>
+			{
+				if (IsInstanceValid(this) == false)
+				{
+					unsubscribe();
+					return;
+				}
+
+				if (mainPersonId == null)
+				{
+					return;
+				}
+
+			});
 		}
-		
 		catch (Exception e)
 		{
 			GD.PrintErr("Error: " + e.Message);
 		}
-
-		var viewNodeButton = GetNode<Button>("MarginContainer/BoxContainer/BoxContainer/ViewDefinitionButton");
-		viewNodeButton.CreateWindow(() =>
-		{
-			GD.Print($"Clicked {person.data?.id}");
-			return new LinkedNodeGraph(person.data);
-		});
+		Redraw(person.data);
 	}
 
 	public void ClearSubscriptions()
@@ -78,83 +102,71 @@ public partial class PersonComponent : Control
 		unsubscribeList.Clear();
 	}
 
-	private void addPersonToPersonActions()
+	private void Redraw(person? person)
 	{
-		StoreSession.mainPersonId.OnSet((mainPersonId, unsubscribe) =>
+		var nameLabel = GetNode<Label>("%NameLabel");
+		nameLabel.Text = person?.name ?? "Null";
+		AddClassifications(person);
+		AddProperties(person);
+		AddPersonToPersonActions(person);
+	}
+
+	private void AddPersonToPersonActions(person? person)
+	{
+		var mainPersonId = StoreSession.mainPersonId.data;
+		var worldStep = this.worldStep.data;
+			
+		//Clear actionsContainer
+		var actionsContainer = GetNode<Control>("%ActionsContainer");
+		actionsContainer.GetChildren().ToList().ForEach(child => actionsContainer.RemoveChild(child));
+
+
+		if (mainPersonId == person?.id)
 		{
-			if (IsInstanceValid(this) == false)
+			return;
+		}
+
+		//if there are actions add them into container
+		worldStep?.rule_group?.ForEach(ruleGroup =>
+		{
+			ruleGroup?.action_rule?.from_person?.ForEach(fromPersonElement =>
 			{
-				unsubscribe();
-				return;
-			}
-
-			if (mainPersonId == null)
-			{
-				return;
-			}
-
-
-			worldStep.OnSet((worldStep, unsubscribe) =>
-			{
-				if (IsInstanceValid(this) == false)
-				{
-					unsubscribe();
-					return;
-				}
-				if (worldStep == null)
-				{
-					return;
-				}
-				//Clear actionsContainer
-				var actionsContainer = GetNode<Control>("%ActionsContainer");
-				actionsContainer.GetChildren().ToList().ForEach(child => actionsContainer.RemoveChild(child));
-
-
-				if (mainPersonId == person?.data?.id)
+				if (fromPersonElement.on_person == null)
 				{
 					return;
 				}
 
-				//if there are actions add them into container
-				worldStep?.rule_group?.ForEach(ruleGroup =>
+				//add buttons per entry
+				var button = new Button();
+				button.Text = fromPersonElement.id;
+				button.Pressed += () =>
 				{
-					ruleGroup?.action_rule?.from_person?.ForEach(fromPersonElement => {
-						if(fromPersonElement.on_person == null) {
-							return;
-						}
+					var mainPersonId = StoreSession.mainPersonId.data;
+					ProcessPersonToPersonAction(person.id, fromPersonElement.id);
+				};
+				actionsContainer.AddChild(button);
+			});
+			ruleGroup?.action_rule?.global?.entry?.ForEach(entry =>
+			{
+				if (entry.from.person == null)
+				{
+					return;
+				}
 
-						//add buttons per entry
-						var button = new Button();
-						button.Text = fromPersonElement.id;
-						button.Pressed += () =>
-					{
-						var mainPersonId = StoreSession.mainPersonId.data;
-						ProcessPersonToPersonAction(person.data.id, fromPersonElement.id);
-					};
-						actionsContainer.AddChild(button);
-					});
-					ruleGroup?.action_rule?.global?.entry?.ForEach(entry =>
-					{
-						if (entry.from.person == null)
-						{
-							return;
-						}
-						if (entry.on.person == null)
-						{
-							return;
-						}
-						//add buttons per entry
-						var button = new Button();
-						button.Text = entry.id;
-						button.Pressed += () =>
-					{
-						var mainPersonId = StoreSession.mainPersonId.data;
-						ProcessPersonToPersonAction(person.data.id, entry.id);
-					};
-						actionsContainer.AddChild(button);
+				if (entry.on.person == null)
+				{
+					return;
+				}
 
-					});
-				});
+				//add buttons per entry
+				var button = new Button();
+				button.Text = entry.id;
+				button.Pressed += () =>
+				{
+					var mainPersonId = StoreSession.mainPersonId.data;
+					ProcessPersonToPersonAction(person.id, entry.id);
+				};
+				actionsContainer.AddChild(button);
 			});
 		});
 
@@ -181,59 +193,33 @@ public partial class PersonComponent : Control
 		LoadWorldStep.executeNextStep();
 	}
 
-	private void addClassifications()
+	private void AddClassifications(person? person)
 	{
-		person.OnSet((person, unsubscribe) =>
+		//Clear classificationContainer
+		var classificationContainer = GetNode<Control>("%ClassificationContainer");
+		classificationContainer.GetChildren().ToList().ForEach(child => classificationContainer.RemoveChild(child));
+		person?.classifications.classification.ForEach(classification =>
 		{
-			if (IsInstanceValid(this) == false)
-			{
-				unsubscribe();
-				return;
-			}
-			if (person == null)
-			{
-				return;
-			}
-			//Clear classificationContainer
-			var classificationContainer = GetNode<Control>("%ClassificationContainer");
-			classificationContainer.GetChildren().ToList().ForEach(child => classificationContainer.RemoveChild(child));
-			person.classifications.classification.ForEach(classification =>
-			{
-				classificationContainer.AddChild(new Label() { Text = classification.classification_rule_ref });
-			});
+			classificationContainer.AddChild(new Label() { Text = classification.classification_rule_ref });
 		});
 	}
 
-	private void addProperties()
+	private void AddProperties(person? person)
 	{
-		var unsubscribe = person.OnSet((person, unsubscribe) =>
+		var propertiesContainer = GetNode<Control>("%PropertiesContainer");
+		propertiesContainer.GetChildren().ToList().ForEach(child => propertiesContainer.RemoveChild(child));
+		//if there are properties add them into container
+		person?.properties.property.ForEach(property =>
 		{
-			if (IsInstanceValid(this) == false)
-			{
-				unsubscribe();
-				return;
-			}
-			if (person == null)
-			{
-				return;
-			}
-			//Clear propertiesContainer
-			var propertiesContainer = GetNode<Control>("%PropertiesContainer");
-			propertiesContainer.GetChildren().ToList().ForEach(child => propertiesContainer.RemoveChild(child));
-			//if there are properties add them into container
-			person.properties.property.ForEach(property =>
-				{
-					//create hbox container
-					var hboxContainer = new HBoxContainer();
-					propertiesContainer.AddChild(hboxContainer);
-					//ref
-					hboxContainer.AddChild(new Label() { Text = property.property_rule_ref });
-					//value
-					hboxContainer.AddChild(new Label() { Text = (string)property.rawNode.attributes["value"] });
-				});
+			//create hbox container
+			var hboxContainer = new HBoxContainer();
+			propertiesContainer.AddChild(hboxContainer);
+			//ref
+			hboxContainer.AddChild(new Label() { Text = property.property_rule_ref });
+			//value
+			hboxContainer.AddChild(new Label() { Text = property.value.ToString() });
+			
 		});
-		unsubscribeList.Add(unsubscribe);
-
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

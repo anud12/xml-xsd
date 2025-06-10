@@ -94,19 +94,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return "do";
     }
 
-    public void childChanged(List<Object> list) {
+    public void notifyChange(List<Object> list) {
       list.addLast(this);
       onChangeList.forEach(consumer -> consumer.accept(list));
-      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(list));
-    }
-
-    private void triggerOnChange() {
-      childChanged(new ArrayList<>());
+      parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
     }
 
     public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
       this.parentNode = Optional.of(linkedNode);
-      triggerOnChange();
+      notifyChange();
     }
 
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.By> parentAsBy() {
@@ -185,7 +181,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public DoElement setActionRuleRef(Optional<String> value)
     {
       this.actionRuleRef = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Optional<String> getActionRef()
@@ -195,7 +191,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public DoElement setActionRef(Optional<String> value)
     {
       this.actionRef = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public String getPersonRef()
@@ -205,7 +201,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public DoElement setPersonRef(String value)
     {
       this.personRef = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
 

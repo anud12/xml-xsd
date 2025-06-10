@@ -21,8 +21,8 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<person>> _callbackList = new();
-    private List<Action<List<ILinkedNode>>> _bubbleCallbackList = new();
+    private List<Action<person>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
     private System.String _person_id_ref;
@@ -46,16 +46,43 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.
       Deserialize(rawNode);
     }
 
-    public Action OnChange(Action<person> callback)
+    public void SetAttribute(string name, string? value)
     {
-      _callbackList.Add(callback);
-      return () => _callbackList.Remove(callback);
+      if(name == "person_id_ref")
+      {
+        Set_person_id_ref(value);
+      }
+      if(name == "accumulated_progress")
+      {
+        Set_accumulated_progress(value?.ToInt() ?? 0);
+      }
     }
 
-    public Action OnChangeBubble(Action<List<ILinkedNode>> callback)
+    public void SetChild(dynamic linkedNode)
     {
-      _bubbleCallbackList.Add(callback);
-      return () => _bubbleCallbackList.Remove(callback);
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+    }
+
+    public Action OnSelfChange(Action<person> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -75,7 +102,7 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.
       }
 
       //Deserialize children
-      OnChange();
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -107,7 +134,7 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.
     public void Set_person_id_ref(System.String value)
     {
       this.person_id_ref = value;
-      this.OnChange();
+      this.NotifyChange();
     }
     public System.Int32 Get_accumulated_progress()
     {
@@ -116,8 +143,9 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.
     public void Set_accumulated_progress(System.Int32 value)
     {
       this.accumulated_progress = value;
-      this.OnChange();
+      this.NotifyChange();
     }
+
 
     public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
@@ -129,19 +157,19 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.
       Deserialize(rawNode);
     }
 
-    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
       if(_parentNode == null)
         return;
       linkedNodes.Add(this);
-      _callbackList.ForEach(action => action(this));
-      _bubbleCallbackList.ForEach(action => action(linkedNodes));
-      _parentNode.ChildChanged(linkedNodes);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
 
-    private void OnChange()
+    public void NotifyChange()
     {
-      ChildChanged(new());
+      NotifyChange(new ());
     }
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)

@@ -90,19 +90,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return "classifications";
     }
 
-    public void childChanged(List<Object> list) {
+    public void notifyChange(List<Object> list) {
       list.addLast(this);
       onChangeList.forEach(consumer -> consumer.accept(list));
-      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(list));
-    }
-
-    private void triggerOnChange() {
-      childChanged(new ArrayList<>());
+      parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
     }
 
     public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
       this.parentNode = Optional.of(linkedNode);
-      triggerOnChange();
+      notifyChange();
     }
 
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node> parentAsNode() {
@@ -182,20 +178,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.classification.add(value);
       value.parentNode(this);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Classifications addAllClassification(List<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Classifications.Classification.Classification> value)
     {
       this.classification.addAll(value);
       value.forEach(e -> e.parentNode(this));
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Classifications removeClassification(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Classifications.Classification.Classification value)
     {
       this.classification.remove(value);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
 

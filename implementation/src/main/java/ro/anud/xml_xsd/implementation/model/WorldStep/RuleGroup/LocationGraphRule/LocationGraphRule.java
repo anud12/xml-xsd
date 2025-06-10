@@ -94,19 +94,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return "location_graph_rule";
     }
 
-    public void childChanged(List<Object> list) {
+    public void notifyChange(List<Object> list) {
       list.addLast(this);
       onChangeList.forEach(consumer -> consumer.accept(list));
-      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(list));
-    }
-
-    private void triggerOnChange() {
-      childChanged(new ArrayList<>());
+      parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
     }
 
     public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
       this.parentNode = Optional.of(linkedNode);
-      triggerOnChange();
+      notifyChange();
     }
 
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup> parentAsRuleGroup() {
@@ -195,7 +191,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public LocationGraphRule setId(String value)
     {
       this.id = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.Setup getSetup()
@@ -210,7 +206,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.setup = value;
       value.parentNode(this);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
 
@@ -226,20 +222,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.nodeRule.add(value);
       value.parentNode(this);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public LocationGraphRule addAllNodeRule(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule> value)
     {
       this.nodeRule.addAll(value);
       value.forEach(e -> e.parentNode(this));
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public LocationGraphRule removeNodeRule(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule value)
     {
       this.nodeRule.remove(value);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
 

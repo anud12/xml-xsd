@@ -98,19 +98,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return "person";
     }
 
-    public void childChanged(List<Object> list) {
+    public void notifyChange(List<Object> list) {
       list.addLast(this);
       onChangeList.forEach(consumer -> consumer.accept(list));
-      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(list));
-    }
-
-    private void triggerOnChange() {
-      childChanged(new ArrayList<>());
+      parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
     }
 
     public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
       this.parentNode = Optional.of(linkedNode);
-      triggerOnChange();
+      notifyChange();
     }
 
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People> parentAsPeople() {
@@ -212,7 +208,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public Person setId(String value)
     {
       this.id = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Optional<String> getName()
@@ -222,7 +218,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public Person setName(Optional<String> value)
     {
       this.name = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties> getProperties()
@@ -250,7 +246,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.properties = Optional.ofNullable(value);
       value.parentNode(this);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
 
@@ -266,20 +262,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.relations.add(value);
       value.parentNode(this);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Person addAllRelations(List<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Relations.Relations> value)
     {
       this.relations.addAll(value);
       value.forEach(e -> e.parentNode(this));
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Person removeRelations(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Relations.Relations value)
     {
       this.relations.remove(value);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications> getClassifications()
@@ -307,7 +303,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.classifications = Optional.ofNullable(value);
       value.parentNode(this);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
 

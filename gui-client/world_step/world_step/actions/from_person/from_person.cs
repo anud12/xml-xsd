@@ -21,8 +21,8 @@ namespace XSD.Nworld_step.Nactions {
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<from_person>> _callbackList = new();
-    private List<Action<List<ILinkedNode>>> _bubbleCallbackList = new();
+    private List<Action<from_person>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
     private System.String _person_id_ref;
@@ -40,7 +40,7 @@ namespace XSD.Nworld_step.Nactions {
         {
           _on_person = new();
           _on_person.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _on_person;
       }
@@ -65,16 +65,53 @@ namespace XSD.Nworld_step.Nactions {
       Deserialize(rawNode);
     }
 
-    public Action OnChange(Action<from_person> callback)
+    public void SetAttribute(string name, string? value)
     {
-      _callbackList.Add(callback);
-      return () => _callbackList.Remove(callback);
+      if(name == "person_id_ref")
+      {
+        Set_person_id_ref(value);
+      }
+      if(name == "from_person_rule_ref")
+      {
+        Set_from_person_rule_ref(value);
+      }
     }
 
-    public Action OnChangeBubble(Action<List<ILinkedNode>> callback)
+    public void SetChild(dynamic linkedNode)
     {
-      _bubbleCallbackList.Add(callback);
-      return () => _bubbleCallbackList.Remove(callback);
+      if(linkedNode is XSD.Nworld_step.Nactions.Nfrom_person.on_person on_person)
+      {
+        this.on_person = on_person;
+      }
+
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Nactions.Nfrom_person.on_person)
+      {
+        this.on_person = new();
+      }
+
+    }
+
+    public Action OnSelfChange(Action<from_person> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -95,7 +132,7 @@ namespace XSD.Nworld_step.Nactions {
 
       //Deserialize children
       on_person = rawNode.InitializeWithRawNode("on_person", on_person);
-      OnChange();
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -130,7 +167,7 @@ namespace XSD.Nworld_step.Nactions {
     public void Set_person_id_ref(System.String value)
     {
       this.person_id_ref = value;
-      this.OnChange();
+      this.NotifyChange();
     }
     public System.String Get_from_person_rule_ref()
     {
@@ -139,8 +176,9 @@ namespace XSD.Nworld_step.Nactions {
     public void Set_from_person_rule_ref(System.String value)
     {
       this.from_person_rule_ref = value;
-      this.OnChange();
+      this.NotifyChange();
     }
+
 
     public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
@@ -158,19 +196,19 @@ namespace XSD.Nworld_step.Nactions {
       Deserialize(rawNode);
     }
 
-    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
       if(_parentNode == null)
         return;
       linkedNodes.Add(this);
-      _callbackList.ForEach(action => action(this));
-      _bubbleCallbackList.ForEach(action => action(linkedNodes));
-      _parentNode.ChildChanged(linkedNodes);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
 
-    private void OnChange()
+    public void NotifyChange()
     {
-      ChildChanged(new());
+      NotifyChange(new ());
     }
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)

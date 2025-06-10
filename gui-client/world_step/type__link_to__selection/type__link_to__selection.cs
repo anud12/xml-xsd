@@ -21,8 +21,8 @@ namespace XSD {
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<type__link_to__selection>> _callbackList = new();
-    private List<Action<List<ILinkedNode>>> _bubbleCallbackList = new();
+    private List<Action<type__link_to__selection>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
 
@@ -36,7 +36,7 @@ namespace XSD {
         {
           _origin__node_graph__selection = new();
           _origin__node_graph__selection.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _origin__node_graph__selection;
       }
@@ -56,7 +56,7 @@ namespace XSD {
         {
           _destination__node_graph__selection = new();
           _destination__node_graph__selection.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _destination__node_graph__selection;
       }
@@ -81,16 +81,55 @@ namespace XSD {
       Deserialize(rawNode);
     }
 
-    public Action OnChange(Action<type__link_to__selection> callback)
+    public void SetAttribute(string name, string? value)
     {
-      _callbackList.Add(callback);
-      return () => _callbackList.Remove(callback);
     }
 
-    public Action OnChangeBubble(Action<List<ILinkedNode>> callback)
+    public void SetChild(dynamic linkedNode)
     {
-      _bubbleCallbackList.Add(callback);
-      return () => _bubbleCallbackList.Remove(callback);
+      if(linkedNode is type__node_graph__selection origin__node_graph__selection)
+      {
+        this.origin__node_graph__selection = origin__node_graph__selection;
+      }
+
+      if(linkedNode is type__node_graph__selection destination__node_graph__selection)
+      {
+        this.destination__node_graph__selection = destination__node_graph__selection;
+      }
+
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is type__node_graph__selection)
+      {
+        this.origin__node_graph__selection = null;
+      }
+
+      if(linkedNode is type__node_graph__selection)
+      {
+        this.destination__node_graph__selection = null;
+      }
+
+    }
+
+    public Action OnSelfChange(Action<type__link_to__selection> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -103,7 +142,7 @@ namespace XSD {
       origin__node_graph__selection = rawNode.InitializeWithRawNode("origin__node_graph__selection", origin__node_graph__selection);
 
       destination__node_graph__selection = rawNode.InitializeWithRawNode("destination__node_graph__selection", destination__node_graph__selection);
-      OnChange();
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -126,6 +165,7 @@ namespace XSD {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
+
 
     public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
@@ -151,19 +191,19 @@ namespace XSD {
       Deserialize(rawNode);
     }
 
-    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
       if(_parentNode == null)
         return;
       linkedNodes.Add(this);
-      _callbackList.ForEach(action => action(this));
-      _bubbleCallbackList.ForEach(action => action(linkedNodes));
-      _parentNode.ChildChanged(linkedNodes);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
 
-    private void OnChange()
+    public void NotifyChange()
     {
-      ChildChanged(new());
+      NotifyChange(new ());
     }
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)

@@ -21,8 +21,8 @@ namespace XSD {
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<world_step>> _callbackList = new();
-    private List<Action<List<ILinkedNode>>> _bubbleCallbackList = new();
+    private List<Action<world_step>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
 
@@ -36,7 +36,7 @@ namespace XSD {
         {
           _world_metadata = new();
           _world_metadata.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _world_metadata;
       }
@@ -58,7 +58,7 @@ namespace XSD {
         _rule_group.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
       }
     }
@@ -71,7 +71,7 @@ namespace XSD {
         {
           _data = new();
           _data.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _data;
       }
@@ -91,7 +91,7 @@ namespace XSD {
         {
           _actions = new();
           _actions.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _actions;
       }
@@ -116,16 +116,76 @@ namespace XSD {
       Deserialize(rawNode);
     }
 
-    public Action OnChange(Action<world_step> callback)
+    public void SetAttribute(string name, string? value)
     {
-      _callbackList.Add(callback);
-      return () => _callbackList.Remove(callback);
     }
 
-    public Action OnChangeBubble(Action<List<ILinkedNode>> callback)
+    public void SetChild(dynamic linkedNode)
     {
-      _bubbleCallbackList.Add(callback);
-      return () => _bubbleCallbackList.Remove(callback);
+      if(linkedNode is XSD.Nworld_step.world_metadata world_metadata)
+      {
+        this.world_metadata = world_metadata;
+      }
+
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.rule_group> rule_group)
+      {
+        this.rule_group = rule_group;
+      }
+      if(linkedNode is XSD.Nworld_step.data data)
+      {
+        this.data = data;
+      }
+
+      if(linkedNode is XSD.Nworld_step.actions actions)
+      {
+        this.actions = actions;
+      }
+
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.world_metadata)
+      {
+        this.world_metadata = null;
+      }
+
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.rule_group>)
+      {
+        this.rule_group = null;
+      }
+      if(linkedNode is XSD.Nworld_step.data)
+      {
+        this.data = null;
+      }
+
+      if(linkedNode is XSD.Nworld_step.actions)
+      {
+        this.actions = null;
+      }
+
+    }
+
+
+    public Action OnSelfChange(Action<world_step> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -141,12 +201,12 @@ namespace XSD {
       rule_group.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
       data = rawNode.InitializeWithRawNode("data", data);
 
       actions = rawNode.InitializeWithRawNode("actions", actions);
-      OnChange();
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -225,19 +285,19 @@ namespace XSD {
       Deserialize(rawNode);
     }
 
-    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
       if(_parentNode == null)
         return;
       linkedNodes.Add(this);
-      _callbackList.ForEach(action => action(this));
-      _bubbleCallbackList.ForEach(action => action(linkedNodes));
-      _parentNode.ChildChanged(linkedNodes);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
 
-    private void OnChange()
+    public void NotifyChange()
     {
-      ChildChanged(new());
+      NotifyChange(new ());
     }
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)

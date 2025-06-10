@@ -100,19 +100,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return "to_option";
     }
 
-    public void childChanged(List<Object> list) {
+    public void notifyChange(List<Object> list) {
       list.addLast(this);
       onChangeList.forEach(consumer -> consumer.accept(list));
-      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(list));
-    }
-
-    private void triggerOnChange() {
-      childChanged(new ArrayList<>());
+      parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
     }
 
     public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
       this.parentNode = Optional.of(linkedNode);
-      triggerOnChange();
+      notifyChange();
     }
 
     public void removeChild(Object object) {
@@ -206,7 +202,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public ToOption setNodeRuleRef(String value)
     {
       this.nodeRuleRef = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Integer getDistance()
@@ -216,7 +212,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public ToOption setDistance(Integer value)
     {
       this.distance = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Optional<Integer> getMaxDistance()
@@ -226,7 +222,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public ToOption setMaxDistance(Optional<Integer> value)
     {
       this.maxDistance = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Integer getAdjacentDepthLimit()
@@ -236,7 +232,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public ToOption setAdjacentDepthLimit(Integer value)
     {
       this.adjacentDepthLimit = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Optional<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> getDistanceToProgressMultiplier()
@@ -264,7 +260,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.distanceToProgressMultiplier = Optional.ofNullable(value);
       value.parentNode(this);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
 
@@ -293,7 +289,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.personProgressProperty = Optional.ofNullable(value);
       value.parentNode(this);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
 

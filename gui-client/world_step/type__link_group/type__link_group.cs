@@ -21,8 +21,8 @@ namespace XSD {
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<type__link_group>> _callbackList = new();
-    private List<Action<List<ILinkedNode>>> _bubbleCallbackList = new();
+    private List<Action<type__link_group>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
     private System.String _id;
@@ -47,7 +47,7 @@ namespace XSD {
         _to_option.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
       }
     }
@@ -66,16 +66,61 @@ namespace XSD {
       Deserialize(rawNode);
     }
 
-    public Action OnChange(Action<type__link_group> callback)
+    public void SetAttribute(string name, string? value)
     {
-      _callbackList.Add(callback);
-      return () => _callbackList.Remove(callback);
+      if(name == "id")
+      {
+        Set_id(value);
+      }
+      if(name == "angle")
+      {
+        Set_angle(value?.ToInt() ?? 0);
+      }
+      if(name == "angleMax")
+      {
+        Set_angleMax(value?.ToInt() ?? 0);
+      }
+      if(name == "limit")
+      {
+        Set_limit(value?.ToInt() ?? 0);
+      }
     }
 
-    public Action OnChangeBubble(Action<List<ILinkedNode>> callback)
+    public void SetChild(dynamic linkedNode)
     {
-      _bubbleCallbackList.Add(callback);
-      return () => _bubbleCallbackList.Remove(callback);
+
+      if(linkedNode is LinkedNodeCollection<XSD.Ntype__link_group.to_option> to_option)
+      {
+        this.to_option = to_option;
+      }
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+
+      if(linkedNode is LinkedNodeCollection<XSD.Ntype__link_group.to_option>)
+      {
+        this.to_option = null;
+      }
+    }
+
+    public Action OnSelfChange(Action<type__link_group> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -109,9 +154,9 @@ namespace XSD {
       to_option.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
-      OnChange();
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -152,7 +197,7 @@ namespace XSD {
     public void Set_id(System.String value)
     {
       this.id = value;
-      this.OnChange();
+      this.NotifyChange();
     }
     public System.Int32 Get_angle()
     {
@@ -161,7 +206,7 @@ namespace XSD {
     public void Set_angle(System.Int32 value)
     {
       this.angle = value;
-      this.OnChange();
+      this.NotifyChange();
     }
     public System.Int32? Get_angleMax()
     {
@@ -170,7 +215,7 @@ namespace XSD {
     public void Set_angleMax(System.Int32? value)
     {
       this.angleMax = value;
-      this.OnChange();
+      this.NotifyChange();
     }
     public System.Int32? Get_limit()
     {
@@ -179,8 +224,9 @@ namespace XSD {
     public void Set_limit(System.Int32? value)
     {
       this.limit = value;
-      this.OnChange();
+      this.NotifyChange();
     }
+
 
     public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
@@ -211,19 +257,19 @@ namespace XSD {
       Deserialize(rawNode);
     }
 
-    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
       if(_parentNode == null)
         return;
       linkedNodes.Add(this);
-      _callbackList.ForEach(action => action(this));
-      _bubbleCallbackList.ForEach(action => action(linkedNodes));
-      _parentNode.ChildChanged(linkedNodes);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
 
-    private void OnChange()
+    public void NotifyChange()
     {
-      ChildChanged(new());
+      NotifyChange(new ());
     }
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)

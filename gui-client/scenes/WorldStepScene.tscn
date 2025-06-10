@@ -46,17 +46,15 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Server" type="Button" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer/HBoxContainer" node_paths=PackedStringArray("_window")]
+[node name="Server" type="Button" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Server"
 script = ExtResource("3_djd6i")
-_window = NodePath("")
 
-[node name="ViewState" type="Button" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer/HBoxContainer" node_paths=PackedStringArray("_window")]
+[node name="ViewState" type="Button" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "View state"
 script = ExtResource("8_3uxpp")
-_window = NodePath("")
 
 [node name="Button" type="Button" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -105,15 +103,12 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="RootLocationGraph" type="BoxContainer" parent="BoxContainer2/BoxContainer2/PanelContainer2/HBoxContainer/ScrollContainer/HBoxContainer" node_paths=PackedStringArray("_button", "_optionButton")]
+[node name="RootLocationGraph" type="BoxContainer" parent="BoxContainer2/BoxContainer2/PanelContainer2/HBoxContainer/ScrollContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 0
 script = ExtResource("4_703po")
 options = [null]
-_button = NodePath("@Button@17615")
-_optionButton = NodePath("@MenuButton@17616")
-_options = [null]
 
 [node name="BoxContainer" type="BoxContainer" parent="BoxContainer2"]
 layout_mode = 2

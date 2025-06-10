@@ -21,8 +21,8 @@ namespace XSD.Nworld_step.Nworld_metadata {
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<stepDuration>> _callbackList = new();
-    private List<Action<List<ILinkedNode>>> _bubbleCallbackList = new();
+    private List<Action<stepDuration>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
     private System.Int32 _value;
@@ -44,16 +44,39 @@ namespace XSD.Nworld_step.Nworld_metadata {
       Deserialize(rawNode);
     }
 
-    public Action OnChange(Action<stepDuration> callback)
+    public void SetAttribute(string name, string? value)
     {
-      _callbackList.Add(callback);
-      return () => _callbackList.Remove(callback);
+      if(name == "value")
+      {
+        Set_value(value?.ToInt() ?? 0);
+      }
     }
 
-    public Action OnChangeBubble(Action<List<ILinkedNode>> callback)
+    public void SetChild(dynamic linkedNode)
     {
-      _bubbleCallbackList.Add(callback);
-      return () => _bubbleCallbackList.Remove(callback);
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+    }
+
+    public Action OnSelfChange(Action<stepDuration> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -68,7 +91,7 @@ namespace XSD.Nworld_step.Nworld_metadata {
       }
 
       //Deserialize children
-      OnChange();
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -96,8 +119,9 @@ namespace XSD.Nworld_step.Nworld_metadata {
     public void Set_value(System.Int32 value)
     {
       this.value = value;
-      this.OnChange();
+      this.NotifyChange();
     }
+
 
     public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
@@ -109,19 +133,19 @@ namespace XSD.Nworld_step.Nworld_metadata {
       Deserialize(rawNode);
     }
 
-    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
       if(_parentNode == null)
         return;
       linkedNodes.Add(this);
-      _callbackList.ForEach(action => action(this));
-      _bubbleCallbackList.ForEach(action => action(linkedNodes));
-      _parentNode.ChildChanged(linkedNodes);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
 
-    private void OnChange()
+    public void NotifyChange()
     {
-      ChildChanged(new());
+      NotifyChange(new ());
     }
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)

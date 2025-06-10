@@ -21,8 +21,8 @@ namespace XSD.Nworld_step {
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<actions>> _callbackList = new();
-    private List<Action<List<ILinkedNode>>> _bubbleCallbackList = new();
+    private List<Action<actions>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
 
@@ -39,7 +39,7 @@ namespace XSD.Nworld_step {
         _by.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
       }
     }
@@ -55,7 +55,7 @@ namespace XSD.Nworld_step {
         _location_graph__create.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
       }
     }
@@ -71,7 +71,7 @@ namespace XSD.Nworld_step {
         _location_graph__node__create_adjacent.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
       }
     }
@@ -87,7 +87,7 @@ namespace XSD.Nworld_step {
         _location_graph__node__add_classification.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
       }
     }
@@ -100,7 +100,7 @@ namespace XSD.Nworld_step {
         {
           _person__teleport = new();
           _person__teleport.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _person__teleport;
       }
@@ -122,7 +122,7 @@ namespace XSD.Nworld_step {
         _person__on_person__property_mutation.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
       }
     }
@@ -138,7 +138,7 @@ namespace XSD.Nworld_step {
         _person__create.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
       }
     }
@@ -154,7 +154,7 @@ namespace XSD.Nworld_step {
         _person__move_to.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
       }
     }
@@ -170,7 +170,7 @@ namespace XSD.Nworld_step {
         _from_person.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
       }
     }
@@ -189,16 +189,126 @@ namespace XSD.Nworld_step {
       Deserialize(rawNode);
     }
 
-    public Action OnChange(Action<actions> callback)
+    public void SetAttribute(string name, string? value)
     {
-      _callbackList.Add(callback);
-      return () => _callbackList.Remove(callback);
     }
 
-    public Action OnChangeBubble(Action<List<ILinkedNode>> callback)
+    public void SetChild(dynamic linkedNode)
     {
-      _bubbleCallbackList.Add(callback);
-      return () => _bubbleCallbackList.Remove(callback);
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.by> by)
+      {
+        this.by = by;
+      }
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.location_graph__create> location_graph__create)
+      {
+        this.location_graph__create = location_graph__create;
+      }
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.location_graph__node__create_adjacent> location_graph__node__create_adjacent)
+      {
+        this.location_graph__node__create_adjacent = location_graph__node__create_adjacent;
+      }
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.location_graph__node__add_classification> location_graph__node__add_classification)
+      {
+        this.location_graph__node__add_classification = location_graph__node__add_classification;
+      }
+      if(linkedNode is XSD.Nworld_step.Nactions.person__teleport person__teleport)
+      {
+        this.person__teleport = person__teleport;
+      }
+
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.person__on_person__property_mutation> person__on_person__property_mutation)
+      {
+        this.person__on_person__property_mutation = person__on_person__property_mutation;
+      }
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.person__create> person__create)
+      {
+        this.person__create = person__create;
+      }
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.person__move_to> person__move_to)
+      {
+        this.person__move_to = person__move_to;
+      }
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.from_person> from_person)
+      {
+        this.from_person = from_person;
+      }
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.by>)
+      {
+        this.by = null;
+      }
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.location_graph__create>)
+      {
+        this.location_graph__create = null;
+      }
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.location_graph__node__create_adjacent>)
+      {
+        this.location_graph__node__create_adjacent = null;
+      }
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.location_graph__node__add_classification>)
+      {
+        this.location_graph__node__add_classification = null;
+      }
+      if(linkedNode is XSD.Nworld_step.Nactions.person__teleport)
+      {
+        this.person__teleport = null;
+      }
+
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.person__on_person__property_mutation>)
+      {
+        this.person__on_person__property_mutation = null;
+      }
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.person__create>)
+      {
+        this.person__create = null;
+      }
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.person__move_to>)
+      {
+        this.person__move_to = null;
+      }
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.from_person>)
+      {
+        this.from_person = null;
+      }
+    }
+
+
+    public Action OnSelfChange(Action<actions> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -212,25 +322,25 @@ namespace XSD.Nworld_step {
       by.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
       location_graph__create = rawNode.InitializeWithRawNode("location_graph.create", location_graph__create);
       location_graph__create.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
       location_graph__node__create_adjacent = rawNode.InitializeWithRawNode("location_graph.node.create_adjacent", location_graph__node__create_adjacent);
       location_graph__node__create_adjacent.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
       location_graph__node__add_classification = rawNode.InitializeWithRawNode("location_graph.node.add_classification", location_graph__node__add_classification);
       location_graph__node__add_classification.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
       person__teleport = rawNode.InitializeWithRawNode("person.teleport", person__teleport);
 
@@ -238,27 +348,27 @@ namespace XSD.Nworld_step {
       person__on_person__property_mutation.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
       person__create = rawNode.InitializeWithRawNode("person.create", person__create);
       person__create.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
       person__move_to = rawNode.InitializeWithRawNode("person.move_to", person__move_to);
       person__move_to.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
       from_person = rawNode.InitializeWithRawNode("from_person", from_person);
       from_person.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
-      OnChange();
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -457,19 +567,19 @@ namespace XSD.Nworld_step {
       Deserialize(rawNode);
     }
 
-    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
       if(_parentNode == null)
         return;
       linkedNodes.Add(this);
-      _callbackList.ForEach(action => action(this));
-      _bubbleCallbackList.ForEach(action => action(linkedNodes));
-      _parentNode.ChildChanged(linkedNodes);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
 
-    private void OnChange()
+    public void NotifyChange()
     {
-      ChildChanged(new());
+      NotifyChange(new ());
     }
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)

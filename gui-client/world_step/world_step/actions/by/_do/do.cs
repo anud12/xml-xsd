@@ -21,8 +21,8 @@ namespace XSD.Nworld_step.Nactions.Nby {
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<_do>> _callbackList = new();
-    private List<Action<List<ILinkedNode>>> _bubbleCallbackList = new();
+    private List<Action<_do>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
     private System.String? _action_rule_ref;
@@ -48,16 +48,47 @@ namespace XSD.Nworld_step.Nactions.Nby {
       Deserialize(rawNode);
     }
 
-    public Action OnChange(Action<_do> callback)
+    public void SetAttribute(string name, string? value)
     {
-      _callbackList.Add(callback);
-      return () => _callbackList.Remove(callback);
+      if(name == "action_rule_ref")
+      {
+        Set_action_rule_ref(value);
+      }
+      if(name == "action_ref")
+      {
+        Set_action_ref(value);
+      }
+      if(name == "person_ref")
+      {
+        Set_person_ref(value);
+      }
     }
 
-    public Action OnChangeBubble(Action<List<ILinkedNode>> callback)
+    public void SetChild(dynamic linkedNode)
     {
-      _bubbleCallbackList.Add(callback);
-      return () => _bubbleCallbackList.Remove(callback);
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+    }
+
+    public Action OnSelfChange(Action<_do> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -82,7 +113,7 @@ namespace XSD.Nworld_step.Nactions.Nby {
       }
 
       //Deserialize children
-      OnChange();
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -118,7 +149,7 @@ namespace XSD.Nworld_step.Nactions.Nby {
     public void Set_action_rule_ref(System.String? value)
     {
       this.action_rule_ref = value;
-      this.OnChange();
+      this.NotifyChange();
     }
     public System.String? Get_action_ref()
     {
@@ -127,7 +158,7 @@ namespace XSD.Nworld_step.Nactions.Nby {
     public void Set_action_ref(System.String? value)
     {
       this.action_ref = value;
-      this.OnChange();
+      this.NotifyChange();
     }
     public System.String Get_person_ref()
     {
@@ -136,8 +167,9 @@ namespace XSD.Nworld_step.Nactions.Nby {
     public void Set_person_ref(System.String value)
     {
       this.person_ref = value;
-      this.OnChange();
+      this.NotifyChange();
     }
+
 
     public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
@@ -149,19 +181,19 @@ namespace XSD.Nworld_step.Nactions.Nby {
       Deserialize(rawNode);
     }
 
-    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
       if(_parentNode == null)
         return;
       linkedNodes.Add(this);
-      _callbackList.ForEach(action => action(this));
-      _bubbleCallbackList.ForEach(action => action(linkedNodes));
-      _parentNode.ChildChanged(linkedNodes);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
 
-    private void OnChange()
+    public void NotifyChange()
     {
-      ChildChanged(new());
+      NotifyChange(new ());
     }
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)

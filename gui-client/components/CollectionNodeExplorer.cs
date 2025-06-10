@@ -64,14 +64,13 @@ public partial class CollectionNodeExplorer : PanelContainer
 		ILinkedNodeCollection? collection = (ILinkedNodeCollection?)this.PropertyInfo.GetValue(_linkedNode);
 		if (collection == null)
 		{
-			dynamic newInstance = Activator.CreateInstance(this.PropertyInfo.PropertyType);
-			this.PropertyInfo.SetValue(newInstance, _linkedNode);
-			collection = newInstance;
-			_linkedNode.ChildChanged(new ());
+			collection = (ILinkedNodeCollection?)Activator.CreateInstance(this.PropertyInfo.PropertyType);
+			
 		}
 		ILinkedNode node = Activator.CreateInstance(collection.GetType().GetGenericArguments()[0]) as ILinkedNode;
 		node.ParentNode = _linkedNode;
 		collection.AddILinkedNode(node);
+		_linkedNode.SetChild(collection);
 		AddInstance(node);
 	}
 	

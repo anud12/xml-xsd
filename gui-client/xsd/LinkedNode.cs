@@ -9,13 +9,19 @@ namespace XSD {
         public string NodeName { get;}
         public int? BuildIndexForChild(ILinkedNode linkedNode);
         
-        void ChildChanged(List<ILinkedNode> linkedNodes);
+        void NotifyChange(List<ILinkedNode> linkedNodes);
 
         public RawNode SerializeIntoRawNode();
+        
+        public void SetAttribute(string name, string? value);
+        
+        public void SetChild(dynamic linkedNode);
+        public void ClearChild(dynamic linkedNode);
 
         public void DeserializeAtPath(string xpath, RawNode rawNode);
 
-        public Action OnChangeBubble(Action<List<ILinkedNode>> callback);
+        public Action OnChange(Action<List<ILinkedNode>> callback);
+        public Action OnSelfChangeNode(Action<ILinkedNode> callback);
 
         public string BuildPath()
         {

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c68ihd125qc6n"]
+[gd_scene load_steps=9 format=3 uid="uid://c68ihd125qc6n"]
 
 [ext_resource type="Script" path="res://components/LocationGraphNodeComponent.cs" id="1_86syn"]
 [ext_resource type="Theme" uid="uid://dskjtmlounwht" path="res://mainTheme.tres" id="1_fk35y"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://MapCamera2D.gd" id="3_wr7c1"]
 [ext_resource type="Texture2D" uid="uid://ca5sf0mkx3eyg" path="res://paper-sheet-white-lined-paper-wallpaper-5bb67c5d7301bf49e5e40b49fd5cec70.jpg" id="4_4s42u"]
 [ext_resource type="Script" path="res://components/nodes/ScaleContainer.cs" id="4_iod45"]
+[ext_resource type="Script" path="res://components/nodes/NodeExplorerButton.cs" id="5_e4oe0"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s6yoa"]
 texture = ExtResource("3_sv6ag")
@@ -92,6 +93,16 @@ layout_mode = 2
 text = "Type Value
 "
 vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/ScaleContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="NodeExplorerButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/ScaleContainer2/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Explore"
+script = ExtResource("5_e4oe0")
 
 [node name="HSplitContainer" type="BoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2

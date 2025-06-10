@@ -27,7 +27,7 @@ export const dependantTypeToAttributeGetterSetter = (dependantType: DependantTyp
                 public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} set${normalizeNameClass(key)}(${typeString} value)
                 {
                   this.${normalizeNameField(key)} = value;
-                  triggerOnChange();
+                  notifyChange();
                   return this;
                 }
                 `
@@ -45,7 +45,7 @@ export const dependantTypeToAttributeGetterSetter = (dependantType: DependantTyp
               public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} set${normalizeNameClass(key)}(${typeString} value)
               {
                 this.${normalizeNameField(key)} = value;
-                triggerOnChange();
+                notifyChange();
                 return this;
               }
               `

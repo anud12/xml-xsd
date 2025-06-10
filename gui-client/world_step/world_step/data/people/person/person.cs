@@ -21,8 +21,8 @@ namespace XSD.Nworld_step.Ndata.Npeople {
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<person>> _callbackList = new();
-    private List<Action<List<ILinkedNode>>> _bubbleCallbackList = new();
+    private List<Action<person>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
     private System.String _id;
@@ -40,7 +40,7 @@ namespace XSD.Nworld_step.Ndata.Npeople {
         {
           _properties = new();
           _properties.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _properties;
       }
@@ -62,7 +62,7 @@ namespace XSD.Nworld_step.Ndata.Npeople {
         _relations.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
       }
     }
@@ -75,7 +75,7 @@ namespace XSD.Nworld_step.Ndata.Npeople {
         {
           _classifications = new();
           _classifications.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _classifications;
       }
@@ -100,16 +100,74 @@ namespace XSD.Nworld_step.Ndata.Npeople {
       Deserialize(rawNode);
     }
 
-    public Action OnChange(Action<person> callback)
+    public void SetAttribute(string name, string? value)
     {
-      _callbackList.Add(callback);
-      return () => _callbackList.Remove(callback);
+      if(name == "id")
+      {
+        Set_id(value);
+      }
+      if(name == "name")
+      {
+        Set_name(value);
+      }
     }
 
-    public Action OnChangeBubble(Action<List<ILinkedNode>> callback)
+    public void SetChild(dynamic linkedNode)
     {
-      _bubbleCallbackList.Add(callback);
-      return () => _bubbleCallbackList.Remove(callback);
+      if(linkedNode is XSD.Nworld_step.Ndata.Npeople.Nperson.properties properties)
+      {
+        this.properties = properties;
+      }
+
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Ndata.Npeople.Nperson.relations> relations)
+      {
+        this.relations = relations;
+      }
+      if(linkedNode is XSD.Nworld_step.Ndata.Npeople.Nperson.classifications classifications)
+      {
+        this.classifications = classifications;
+      }
+
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Ndata.Npeople.Nperson.properties)
+      {
+        this.properties = null;
+      }
+
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Ndata.Npeople.Nperson.relations>)
+      {
+        this.relations = null;
+      }
+      if(linkedNode is XSD.Nworld_step.Ndata.Npeople.Nperson.classifications)
+      {
+        this.classifications = null;
+      }
+
+    }
+
+
+    public Action OnSelfChange(Action<person> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -135,10 +193,10 @@ namespace XSD.Nworld_step.Ndata.Npeople {
       relations.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
       classifications = rawNode.InitializeWithRawNode("classifications", classifications);
-      OnChange();
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -177,7 +235,7 @@ namespace XSD.Nworld_step.Ndata.Npeople {
     public void Set_id(System.String value)
     {
       this.id = value;
-      this.OnChange();
+      this.NotifyChange();
     }
     public System.String? Get_name()
     {
@@ -186,7 +244,7 @@ namespace XSD.Nworld_step.Ndata.Npeople {
     public void Set_name(System.String? value)
     {
       this.name = value;
-      this.OnChange();
+      this.NotifyChange();
     }
 
 
@@ -233,19 +291,19 @@ namespace XSD.Nworld_step.Ndata.Npeople {
       Deserialize(rawNode);
     }
 
-    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
       if(_parentNode == null)
         return;
       linkedNodes.Add(this);
-      _callbackList.ForEach(action => action(this));
-      _bubbleCallbackList.ForEach(action => action(linkedNodes));
-      _parentNode.ChildChanged(linkedNodes);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
 
-    private void OnChange()
+    public void NotifyChange()
     {
-      ChildChanged(new());
+      NotifyChange(new ());
     }
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)

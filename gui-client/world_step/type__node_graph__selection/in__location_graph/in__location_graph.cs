@@ -21,8 +21,8 @@ namespace XSD.Ntype__node_graph__selection {
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<in__location_graph>> _callbackList = new();
-    private List<Action<List<ILinkedNode>>> _bubbleCallbackList = new();
+    private List<Action<in__location_graph>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
 
@@ -36,7 +36,7 @@ namespace XSD.Ntype__node_graph__selection {
         {
           _has__location_graph_id = new();
           _has__location_graph_id.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _has__location_graph_id;
       }
@@ -61,16 +61,45 @@ namespace XSD.Ntype__node_graph__selection {
       Deserialize(rawNode);
     }
 
-    public Action OnChange(Action<in__location_graph> callback)
+    public void SetAttribute(string name, string? value)
     {
-      _callbackList.Add(callback);
-      return () => _callbackList.Remove(callback);
     }
 
-    public Action OnChangeBubble(Action<List<ILinkedNode>> callback)
+    public void SetChild(dynamic linkedNode)
     {
-      _bubbleCallbackList.Add(callback);
-      return () => _bubbleCallbackList.Remove(callback);
+      if(linkedNode is XSD.Ntype__node_graph__selection.Nin__location_graph.has__location_graph_id has__location_graph_id)
+      {
+        this.has__location_graph_id = has__location_graph_id;
+      }
+
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is XSD.Ntype__node_graph__selection.Nin__location_graph.has__location_graph_id)
+      {
+        this.has__location_graph_id = null;
+      }
+
+    }
+
+    public Action OnSelfChange(Action<in__location_graph> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -81,7 +110,7 @@ namespace XSD.Ntype__node_graph__selection {
 
       //Deserialize children
       has__location_graph_id = rawNode.InitializeWithRawNode("has__location_graph_id", has__location_graph_id);
-      OnChange();
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -102,6 +131,7 @@ namespace XSD.Ntype__node_graph__selection {
         updatedRawNode.Serialize(element);
     }
 
+
     public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
       if(xpath.StartsWith("."))
@@ -119,19 +149,19 @@ namespace XSD.Ntype__node_graph__selection {
       Deserialize(rawNode);
     }
 
-    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
       if(_parentNode == null)
         return;
       linkedNodes.Add(this);
-      _callbackList.ForEach(action => action(this));
-      _bubbleCallbackList.ForEach(action => action(linkedNodes));
-      _parentNode.ChildChanged(linkedNodes);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
 
-    private void OnChange()
+    public void NotifyChange()
     {
-      ChildChanged(new());
+      NotifyChange(new ());
     }
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)

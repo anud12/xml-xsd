@@ -21,8 +21,8 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person {
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<mutations>> _callbackList = new();
-    private List<Action<List<ILinkedNode>>> _bubbleCallbackList = new();
+    private List<Action<mutations>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
 
@@ -39,7 +39,7 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person {
         _property_mutation.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
       }
     }
@@ -58,16 +58,45 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person {
       Deserialize(rawNode);
     }
 
-    public Action OnChange(Action<mutations> callback)
+    public void SetAttribute(string name, string? value)
     {
-      _callbackList.Add(callback);
-      return () => _callbackList.Remove(callback);
     }
 
-    public Action OnChangeBubble(Action<List<ILinkedNode>> callback)
+    public void SetChild(dynamic linkedNode)
     {
-      _bubbleCallbackList.Add(callback);
-      return () => _bubbleCallbackList.Remove(callback);
+
+      if(linkedNode is LinkedNodeCollection<type__property_mutation> property_mutation)
+      {
+        this.property_mutation = property_mutation;
+      }
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+
+      if(linkedNode is LinkedNodeCollection<type__property_mutation>)
+      {
+        this.property_mutation = null;
+      }
+    }
+
+    public Action OnSelfChange(Action<mutations> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -81,9 +110,9 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person {
       property_mutation.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
-      OnChange();
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -101,6 +130,7 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
+
 
     public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
@@ -131,19 +161,19 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person {
       Deserialize(rawNode);
     }
 
-    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
       if(_parentNode == null)
         return;
       linkedNodes.Add(this);
-      _callbackList.ForEach(action => action(this));
-      _bubbleCallbackList.ForEach(action => action(linkedNodes));
-      _parentNode.ChildChanged(linkedNodes);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
 
-    private void OnChange()
+    public void NotifyChange()
     {
-      ChildChanged(new());
+      NotifyChange(new ());
     }
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)

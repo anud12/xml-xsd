@@ -21,8 +21,8 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<link_to>> _callbackList = new();
-    private List<Action<List<ILinkedNode>>> _bubbleCallbackList = new();
+    private List<Action<link_to>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
     private System.Int32 _accumulated_progress;
@@ -38,7 +38,7 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
         {
           _selection = new();
           _selection.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _selection;
       }
@@ -63,16 +63,49 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
       Deserialize(rawNode);
     }
 
-    public Action OnChange(Action<link_to> callback)
+    public void SetAttribute(string name, string? value)
     {
-      _callbackList.Add(callback);
-      return () => _callbackList.Remove(callback);
+      if(name == "accumulated_progress")
+      {
+        Set_accumulated_progress(value?.ToInt() ?? 0);
+      }
     }
 
-    public Action OnChangeBubble(Action<List<ILinkedNode>> callback)
+    public void SetChild(dynamic linkedNode)
     {
-      _bubbleCallbackList.Add(callback);
-      return () => _bubbleCallbackList.Remove(callback);
+      if(linkedNode is type__link_to__selection selection)
+      {
+        this.selection = selection;
+      }
+
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is type__link_to__selection)
+      {
+        this.selection = new();
+      }
+
+    }
+
+    public Action OnSelfChange(Action<link_to> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -88,7 +121,7 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
 
       //Deserialize children
       selection = rawNode.InitializeWithRawNode("selection", selection);
-      OnChange();
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -119,8 +152,9 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
     public void Set_accumulated_progress(System.Int32 value)
     {
       this.accumulated_progress = value;
-      this.OnChange();
+      this.NotifyChange();
     }
+
 
     public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
@@ -138,19 +172,19 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
       Deserialize(rawNode);
     }
 
-    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
       if(_parentNode == null)
         return;
       linkedNodes.Add(this);
-      _callbackList.ForEach(action => action(this));
-      _bubbleCallbackList.ForEach(action => action(linkedNodes));
-      _parentNode.ChildChanged(linkedNodes);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
 
-    private void OnChange()
+    public void NotifyChange()
     {
-      ChildChanged(new());
+      NotifyChange(new ());
     }
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)

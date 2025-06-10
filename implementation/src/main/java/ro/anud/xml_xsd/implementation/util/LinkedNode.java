@@ -1,5 +1,6 @@
 package ro.anud.xml_xsd.implementation.util;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +19,10 @@ public interface LinkedNode {
 
     RawNode rawNode();
 
-    void childChanged(List<Object> clazzSet);
+    void notifyChange(List<Object> clazzSet);
+    default void notifyChange() {
+        notifyChange(new ArrayList<>());
+    }
 
     int buildIndexForChild(Object object);
 

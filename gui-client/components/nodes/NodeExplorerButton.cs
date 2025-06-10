@@ -45,7 +45,7 @@ public partial class NodeExplorerButton: Button
                     control.AddChild(nodeExplorer);
                     break;
             }
-            this.InstantCreateWindow(control);
+            this.SpawnWindow(control);
         };
     }
 }

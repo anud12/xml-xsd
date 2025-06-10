@@ -56,7 +56,7 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
         //       public void Set_${normalizeName(key)}(${fullPathNullableTypeString} value)
         //       {
         //         this.${normalizeName(key)} = value;
-        //         this.OnChange();
+        //         this.OnSelfChange();
         //       }
         //       `
         return "";
@@ -76,7 +76,7 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
         //       public void Set_${normalizeName(key)}(${fullPathNullableTypeString} value)
         //       {
         //         this.${normalizeName(key)} = value;
-        //         this.OnChange();
+        //         this.OnSelfChange();
         //       }
         //       `
         return "";
@@ -95,7 +95,7 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
         //       public void Set_${normalizeName(key)}(${nullableTypeString} value)
         //       {
         //         this.${normalizeName(key)} = value;
-        //         this.OnChange();
+        //         this.OnSelfChange();
         //       }
         //       `
         return "";

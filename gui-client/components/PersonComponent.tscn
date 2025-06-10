@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bkow6edqgi6le"]
+[gd_scene load_steps=6 format=3 uid="uid://bkow6edqgi6le"]
 
 [ext_resource type="Theme" uid="uid://dskjtmlounwht" path="res://mainTheme.tres" id="1_hgkv0"]
 [ext_resource type="Script" path="res://components/PersonComponent.cs" id="1_k120c"]
 [ext_resource type="Texture2D" uid="uid://l34087d3e68y" path="res://icon.svg" id="3_4fu6i"]
 [ext_resource type="Script" path="res://components/nodes/ScaleContainer.cs" id="3_evsr0"]
+[ext_resource type="Script" path="res://components/nodes/NodeExplorerButton.cs" id="5_258lq"]
 
 [node name="PanelContainer" type="PanelContainer"]
 offset_right = 582.0
@@ -53,12 +54,12 @@ theme_override_font_sizes/font_size = 57
 text = "person_name 
 "
 
-[node name="ViewDefinitionButton" type="Button" parent="MarginContainer/BoxContainer/BoxContainer"]
+[node name="NodeExplorerButton" type="Button" parent="MarginContainer/BoxContainer/BoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
-text = "View 
-Definition"
+text = "Explore"
+script = ExtResource("5_258lq")
 
 [node name="HBoxContainer" type="BoxContainer" parent="MarginContainer/BoxContainer"]
 layout_mode = 2

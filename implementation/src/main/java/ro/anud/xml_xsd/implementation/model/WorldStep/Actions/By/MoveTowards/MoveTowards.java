@@ -94,19 +94,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return "move_towards";
     }
 
-    public void childChanged(List<Object> list) {
+    public void notifyChange(List<Object> list) {
       list.addLast(this);
       onChangeList.forEach(consumer -> consumer.accept(list));
-      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(list));
-    }
-
-    private void triggerOnChange() {
-      childChanged(new ArrayList<>());
+      parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
     }
 
     public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
       this.parentNode = Optional.of(linkedNode);
-      triggerOnChange();
+      notifyChange();
     }
 
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.By> parentAsBy() {
@@ -185,7 +181,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public MoveTowards setLayer(Optional<String> value)
     {
       this.layer = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Integer getX()
@@ -195,7 +191,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public MoveTowards setX(Integer value)
     {
       this.x = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Integer getY()
@@ -205,7 +201,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public MoveTowards setY(Integer value)
     {
       this.y = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
 

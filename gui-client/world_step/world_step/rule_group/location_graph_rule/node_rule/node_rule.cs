@@ -21,8 +21,8 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<node_rule>> _callbackList = new();
-    private List<Action<List<ILinkedNode>>> _bubbleCallbackList = new();
+    private List<Action<node_rule>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
     private System.String _id;
@@ -38,7 +38,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
         {
           _name = new();
           _name.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _name;
       }
@@ -58,7 +58,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
         {
           _classifications = new();
           _classifications.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _classifications;
       }
@@ -78,7 +78,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
         {
           _link_group_list = new();
           _link_group_list.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _link_group_list;
       }
@@ -98,7 +98,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
         {
           _existing_person = new();
           _existing_person.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _existing_person;
       }
@@ -123,16 +123,79 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
       Deserialize(rawNode);
     }
 
-    public Action OnChange(Action<node_rule> callback)
+    public void SetAttribute(string name, string? value)
     {
-      _callbackList.Add(callback);
-      return () => _callbackList.Remove(callback);
+      if(name == "id")
+      {
+        Set_id(value);
+      }
     }
 
-    public Action OnChangeBubble(Action<List<ILinkedNode>> callback)
+    public void SetChild(dynamic linkedNode)
     {
-      _bubbleCallbackList.Add(callback);
-      return () => _bubbleCallbackList.Remove(callback);
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.name name)
+      {
+        this.name = name;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.classifications classifications)
+      {
+        this.classifications = classifications;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.link_group_list link_group_list)
+      {
+        this.link_group_list = link_group_list;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.existing_person existing_person)
+      {
+        this.existing_person = existing_person;
+      }
+
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.name)
+      {
+        this.name = null;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.classifications)
+      {
+        this.classifications = null;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.link_group_list)
+      {
+        this.link_group_list = null;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.existing_person)
+      {
+        this.existing_person = null;
+      }
+
+    }
+
+    public Action OnSelfChange(Action<node_rule> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -154,7 +217,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
       link_group_list = rawNode.InitializeWithRawNode("link_group_list", link_group_list);
 
       existing_person = rawNode.InitializeWithRawNode("existing_person", existing_person);
-      OnChange();
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -194,8 +257,9 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
     public void Set_id(System.String value)
     {
       this.id = value;
-      this.OnChange();
+      this.NotifyChange();
     }
+
 
     public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
@@ -235,19 +299,19 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
       Deserialize(rawNode);
     }
 
-    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
       if(_parentNode == null)
         return;
       linkedNodes.Add(this);
-      _callbackList.ForEach(action => action(this));
-      _bubbleCallbackList.ForEach(action => action(linkedNodes));
-      _parentNode.ChildChanged(linkedNodes);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
 
-    private void OnChange()
+    public void NotifyChange()
     {
-      ChildChanged(new());
+      NotifyChange(new ());
     }
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)

@@ -21,8 +21,8 @@ namespace XSD.Nworld_step {
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<world_metadata>> _callbackList = new();
-    private List<Action<List<ILinkedNode>>> _bubbleCallbackList = new();
+    private List<Action<world_metadata>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
 
@@ -36,7 +36,7 @@ namespace XSD.Nworld_step {
         {
           _previous_world_step = new();
           _previous_world_step.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _previous_world_step;
       }
@@ -56,7 +56,7 @@ namespace XSD.Nworld_step {
         {
           _next_world_step = new();
           _next_world_step.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _next_world_step;
       }
@@ -76,7 +76,7 @@ namespace XSD.Nworld_step {
         {
           _elapsed_time = new();
           _elapsed_time.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _elapsed_time;
       }
@@ -96,7 +96,7 @@ namespace XSD.Nworld_step {
         {
           _stepDuration = new();
           _stepDuration.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _stepDuration;
       }
@@ -116,7 +116,7 @@ namespace XSD.Nworld_step {
         {
           _counter = new();
           _counter.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _counter;
       }
@@ -136,7 +136,7 @@ namespace XSD.Nworld_step {
         {
           _randomization_table = new();
           _randomization_table.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _randomization_table;
       }
@@ -161,16 +161,95 @@ namespace XSD.Nworld_step {
       Deserialize(rawNode);
     }
 
-    public Action OnChange(Action<world_metadata> callback)
+    public void SetAttribute(string name, string? value)
     {
-      _callbackList.Add(callback);
-      return () => _callbackList.Remove(callback);
     }
 
-    public Action OnChangeBubble(Action<List<ILinkedNode>> callback)
+    public void SetChild(dynamic linkedNode)
     {
-      _bubbleCallbackList.Add(callback);
-      return () => _bubbleCallbackList.Remove(callback);
+      if(linkedNode is XSD.Nworld_step.Nworld_metadata.previous_world_step previous_world_step)
+      {
+        this.previous_world_step = previous_world_step;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nworld_metadata.next_world_step next_world_step)
+      {
+        this.next_world_step = next_world_step;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nworld_metadata.elapsed_time elapsed_time)
+      {
+        this.elapsed_time = elapsed_time;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nworld_metadata.stepDuration stepDuration)
+      {
+        this.stepDuration = stepDuration;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nworld_metadata.counter counter)
+      {
+        this.counter = counter;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nworld_metadata.randomization_table randomization_table)
+      {
+        this.randomization_table = randomization_table;
+      }
+
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Nworld_metadata.previous_world_step)
+      {
+        this.previous_world_step = null;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nworld_metadata.next_world_step)
+      {
+        this.next_world_step = null;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nworld_metadata.elapsed_time)
+      {
+        this.elapsed_time = new();
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nworld_metadata.stepDuration)
+      {
+        this.stepDuration = new();
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nworld_metadata.counter)
+      {
+        this.counter = new();
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nworld_metadata.randomization_table)
+      {
+        this.randomization_table = new();
+      }
+
+    }
+
+    public Action OnSelfChange(Action<world_metadata> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -191,7 +270,7 @@ namespace XSD.Nworld_step {
       counter = rawNode.InitializeWithRawNode("counter", counter);
 
       randomization_table = rawNode.InitializeWithRawNode("randomization_table", randomization_table);
-      OnChange();
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -226,6 +305,7 @@ namespace XSD.Nworld_step {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
+
 
     public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
@@ -275,19 +355,19 @@ namespace XSD.Nworld_step {
       Deserialize(rawNode);
     }
 
-    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
       if(_parentNode == null)
         return;
       linkedNodes.Add(this);
-      _callbackList.ForEach(action => action(this));
-      _bubbleCallbackList.ForEach(action => action(linkedNodes));
-      _parentNode.ChildChanged(linkedNodes);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
 
-    private void OnChange()
+    public void NotifyChange()
     {
-      ChildChanged(new());
+      NotifyChange(new ());
     }
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)

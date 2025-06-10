@@ -87,7 +87,8 @@ public partial class NodeExplorer : PanelContainer
             if (propertyInfo.PropertyType == typeof(string))
             {
                 var newValue = string.Empty;
-                propertyInfo.SetValue(_linkedNode, newValue);
+                // propertyInfo.SetValue(_linkedNode, newValue);
+                _linkedNode.SetAttribute(propertyInfo.Name, newValue);
                 Populate();
                 return;
             }
@@ -95,26 +96,38 @@ public partial class NodeExplorer : PanelContainer
             if (propertyInfo.PropertyType == typeof(int))
             {
                 int? newValue = null;
-                propertyInfo.SetValue(_linkedNode, newValue);
+                _linkedNode.SetAttribute(propertyInfo.Name, newValue.ToString());
                 Populate();
                 return;
             }
 
             var newProperty = Activator.CreateInstance(propertyInfo.PropertyType);
-            propertyInfo.SetValue(_linkedNode, newProperty);
+            _linkedNode.SetChild(newProperty);
             Populate();
         };
         return createNewButton;
     }
 
-    private Button ClearButton(PropertyInfo propertyInfo)
+    
+    private Button AttributeClearButton(PropertyInfo propertyInfo)
     {
         var createNewButton = new Button();
         createNewButton.Text = "Clear";
         createNewButton.Pressed += () =>
         {
-            propertyInfo.SetValue(_linkedNode, null);
-            _linkedNode.ChildChanged(new ());
+            _linkedNode.SetAttribute(propertyInfo.Name, null);
+            PopulateAttributes();
+        };
+        return createNewButton;
+    }
+    
+    private Button ChildClearButton(PropertyInfo propertyInfo)
+    {
+        var createNewButton = new Button();
+        createNewButton.Text = "Clear";
+        createNewButton.Pressed += () =>
+        {
+            _linkedNode.ClearChild(propertyInfo.GetValue(_linkedNode));
             PopulateAttributes();
         };
         return createNewButton;
@@ -235,7 +248,10 @@ public partial class NodeExplorer : PanelContainer
             valueInput.SizeFlagsVertical = SizeFlags.Fill;
             valueInput.Text = objectValue?.ToString() ?? "null";
             valueInput.TextChanged += (newValue) =>
-                propertyInfo.SetValue(_linkedNode, Convert.ChangeType(newValue, propertyInfo.PropertyType));
+            {
+                _linkedNode.SetAttribute(propertyInfo.Name, newValue);
+            };
+                
             _attributeContainer.AddChild(valueInput);
         }
         else
@@ -245,7 +261,7 @@ public partial class NodeExplorer : PanelContainer
             _attributeContainer.AddChild(valueLabel);
         }
 
-        _attributeContainer.AddChild(ClearButton(propertyInfo));
+        _attributeContainer.AddChild(AttributeClearButton(propertyInfo));
     }
 
     private void HandleIntProperty(PropertyInfo propertyInfo, object? objectValue)
@@ -260,7 +276,10 @@ public partial class NodeExplorer : PanelContainer
             valueInput.SizeFlagsVertical = SizeFlags.Fill;
             valueInput.Value = Convert.ToDouble(objectValue ?? 0);
             valueInput.ValueChanged += (newValue) =>
-                propertyInfo.SetValue(_linkedNode, Convert.ChangeType(newValue, propertyInfo.PropertyType));
+            {
+                GD.Print($"New value ${newValue}");
+                _linkedNode.SetAttribute(propertyInfo.Name, newValue.ToString());
+            };
             _attributeContainer.AddChild(valueInput);
         }
         else
@@ -270,7 +289,7 @@ public partial class NodeExplorer : PanelContainer
             _attributeContainer.AddChild(valueLabel);
         }
 
-        _attributeContainer.AddChild(ClearButton(propertyInfo));
+        _attributeContainer.AddChild(ChildClearButton(propertyInfo));
     }
 
     private void HandleLinkedNodeProperty(PropertyInfo propertyInfo, object? objectValue)

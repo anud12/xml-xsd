@@ -21,8 +21,8 @@ namespace XSD.Nworld_step.Nactions {
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<person__teleport>> _callbackList = new();
-    private List<Action<List<ILinkedNode>>> _bubbleCallbackList = new();
+    private List<Action<person__teleport>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
     private System.String _person_id_ref;
@@ -38,7 +38,7 @@ namespace XSD.Nworld_step.Nactions {
         {
           _location_graph = new();
           _location_graph.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _location_graph;
       }
@@ -58,7 +58,7 @@ namespace XSD.Nworld_step.Nactions {
         {
           _link_to = new();
           _link_to.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _link_to;
       }
@@ -83,16 +83,59 @@ namespace XSD.Nworld_step.Nactions {
       Deserialize(rawNode);
     }
 
-    public Action OnChange(Action<person__teleport> callback)
+    public void SetAttribute(string name, string? value)
     {
-      _callbackList.Add(callback);
-      return () => _callbackList.Remove(callback);
+      if(name == "person_id_ref")
+      {
+        Set_person_id_ref(value);
+      }
     }
 
-    public Action OnChangeBubble(Action<List<ILinkedNode>> callback)
+    public void SetChild(dynamic linkedNode)
     {
-      _bubbleCallbackList.Add(callback);
-      return () => _bubbleCallbackList.Remove(callback);
+      if(linkedNode is XSD.Nworld_step.Nactions.Nperson__teleport.location_graph location_graph)
+      {
+        this.location_graph = location_graph;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nactions.Nperson__teleport.link_to link_to)
+      {
+        this.link_to = link_to;
+      }
+
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Nactions.Nperson__teleport.location_graph)
+      {
+        this.location_graph = null;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nactions.Nperson__teleport.link_to)
+      {
+        this.link_to = null;
+      }
+
+    }
+
+    public Action OnSelfChange(Action<person__teleport> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -110,7 +153,7 @@ namespace XSD.Nworld_step.Nactions {
       location_graph = rawNode.InitializeWithRawNode("location_graph", location_graph);
 
       link_to = rawNode.InitializeWithRawNode("link_to", link_to);
-      OnChange();
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -144,8 +187,9 @@ namespace XSD.Nworld_step.Nactions {
     public void Set_person_id_ref(System.String value)
     {
       this.person_id_ref = value;
-      this.OnChange();
+      this.NotifyChange();
     }
+
 
     public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
@@ -171,19 +215,19 @@ namespace XSD.Nworld_step.Nactions {
       Deserialize(rawNode);
     }
 
-    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
       if(_parentNode == null)
         return;
       linkedNodes.Add(this);
-      _callbackList.ForEach(action => action(this));
-      _bubbleCallbackList.ForEach(action => action(linkedNodes));
-      _parentNode.ChildChanged(linkedNodes);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
 
-    private void OnChange()
+    public void NotifyChange()
     {
-      ChildChanged(new());
+      NotifyChange(new ());
     }
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)

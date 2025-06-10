@@ -21,8 +21,8 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<setup>> _callbackList = new();
-    private List<Action<List<ILinkedNode>>> _bubbleCallbackList = new();
+    private List<Action<setup>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
 
@@ -36,7 +36,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
         {
           _starting_node = new();
           _starting_node.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _starting_node;
       }
@@ -58,7 +58,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
         _necessary_node.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
       }
     }
@@ -77,16 +77,56 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
       Deserialize(rawNode);
     }
 
-    public Action OnChange(Action<setup> callback)
+    public void SetAttribute(string name, string? value)
     {
-      _callbackList.Add(callback);
-      return () => _callbackList.Remove(callback);
     }
 
-    public Action OnChangeBubble(Action<List<ILinkedNode>> callback)
+    public void SetChild(dynamic linkedNode)
     {
-      _bubbleCallbackList.Add(callback);
-      return () => _bubbleCallbackList.Remove(callback);
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.starting_node starting_node)
+      {
+        this.starting_node = starting_node;
+      }
+
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.necessary_node> necessary_node)
+      {
+        this.necessary_node = necessary_node;
+      }
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.starting_node)
+      {
+        this.starting_node = new();
+      }
+
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.necessary_node>)
+      {
+        this.necessary_node = null;
+      }
+    }
+
+
+    public Action OnSelfChange(Action<setup> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -102,9 +142,9 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
       necessary_node.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
-      OnChange();
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -162,19 +202,19 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
       Deserialize(rawNode);
     }
 
-    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
       if(_parentNode == null)
         return;
       linkedNodes.Add(this);
-      _callbackList.ForEach(action => action(this));
-      _bubbleCallbackList.ForEach(action => action(linkedNodes));
-      _parentNode.ChildChanged(linkedNodes);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
 
-    private void OnChange()
+    public void NotifyChange()
     {
-      ChildChanged(new());
+      NotifyChange(new ());
     }
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)

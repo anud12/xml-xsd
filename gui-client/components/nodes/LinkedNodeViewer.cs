@@ -16,7 +16,9 @@ public partial class LinkedNodeViewer: Button
     public override void _Ready()
     {
         base._Ready();
-        
-        this.CreateWindow(new LinkedNodeGraph(StoreWorld_Step.instance.data));
+        this.Pressed += () =>
+        {
+            this.SpawnWindow(new LinkedNodeGraph(StoreWorld_Step.instance.data));
+        };
     }
 }

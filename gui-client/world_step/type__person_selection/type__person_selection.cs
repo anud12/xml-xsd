@@ -21,8 +21,8 @@ namespace XSD {
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<type__person_selection>> _callbackList = new();
-    private List<Action<List<ILinkedNode>>> _bubbleCallbackList = new();
+    private List<Action<type__person_selection>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
 
@@ -36,7 +36,7 @@ namespace XSD {
         {
           _radius = new();
           _radius.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _radius;
       }
@@ -56,7 +56,7 @@ namespace XSD {
         {
           _min = new();
           _min.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _min;
       }
@@ -76,7 +76,7 @@ namespace XSD {
         {
           _max = new();
           _max.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _max;
       }
@@ -98,7 +98,7 @@ namespace XSD {
         _property.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
       }
     }
@@ -114,7 +114,7 @@ namespace XSD {
         _classification.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
       }
     }
@@ -133,16 +133,86 @@ namespace XSD {
       Deserialize(rawNode);
     }
 
-    public Action OnChange(Action<type__person_selection> callback)
+    public void SetAttribute(string name, string? value)
     {
-      _callbackList.Add(callback);
-      return () => _callbackList.Remove(callback);
     }
 
-    public Action OnChangeBubble(Action<List<ILinkedNode>> callback)
+    public void SetChild(dynamic linkedNode)
     {
-      _bubbleCallbackList.Add(callback);
-      return () => _bubbleCallbackList.Remove(callback);
+      if(linkedNode is type__math_operations radius)
+      {
+        this.radius = radius;
+      }
+
+      if(linkedNode is type__math_operations min)
+      {
+        this.min = min;
+      }
+
+      if(linkedNode is type__math_operations max)
+      {
+        this.max = max;
+      }
+
+
+      if(linkedNode is LinkedNodeCollection<XSD.Ntype__person_selection.property> property)
+      {
+        this.property = property;
+      }
+
+      if(linkedNode is LinkedNodeCollection<XSD.Ntype__person_selection.classification> classification)
+      {
+        this.classification = classification;
+      }
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is type__math_operations)
+      {
+        this.radius = null;
+      }
+
+      if(linkedNode is type__math_operations)
+      {
+        this.min = null;
+      }
+
+      if(linkedNode is type__math_operations)
+      {
+        this.max = null;
+      }
+
+
+      if(linkedNode is LinkedNodeCollection<XSD.Ntype__person_selection.property>)
+      {
+        this.property = null;
+      }
+
+      if(linkedNode is LinkedNodeCollection<XSD.Ntype__person_selection.classification>)
+      {
+        this.classification = null;
+      }
+    }
+
+
+    public Action OnSelfChange(Action<type__person_selection> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -162,15 +232,15 @@ namespace XSD {
       property.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
       classification = rawNode.InitializeWithRawNode("classification", classification);
       classification.OnAdd = (value) =>
         {
           value.ParentNode = this;
-          OnChange();
+          NotifyChange();
         };
-      OnChange();
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -269,19 +339,19 @@ namespace XSD {
       Deserialize(rawNode);
     }
 
-    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
       if(_parentNode == null)
         return;
       linkedNodes.Add(this);
-      _callbackList.ForEach(action => action(this));
-      _bubbleCallbackList.ForEach(action => action(linkedNodes));
-      _parentNode.ChildChanged(linkedNodes);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
 
-    private void OnChange()
+    public void NotifyChange()
     {
-      ChildChanged(new());
+      NotifyChange(new ());
     }
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)

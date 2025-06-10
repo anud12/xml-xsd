@@ -21,8 +21,8 @@ namespace XSD.Ntype__link_group {
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<to_option>> _callbackList = new();
-    private List<Action<List<ILinkedNode>>> _bubbleCallbackList = new();
+    private List<Action<to_option>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
     private System.String _node_rule_ref;
@@ -44,7 +44,7 @@ namespace XSD.Ntype__link_group {
         {
           _distance_to_progress_multiplier = new();
           _distance_to_progress_multiplier.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _distance_to_progress_multiplier;
       }
@@ -64,7 +64,7 @@ namespace XSD.Ntype__link_group {
         {
           _person_progress_property = new();
           _person_progress_property.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _person_progress_property;
       }
@@ -89,16 +89,71 @@ namespace XSD.Ntype__link_group {
       Deserialize(rawNode);
     }
 
-    public Action OnChange(Action<to_option> callback)
+    public void SetAttribute(string name, string? value)
     {
-      _callbackList.Add(callback);
-      return () => _callbackList.Remove(callback);
+      if(name == "node_rule_ref")
+      {
+        Set_node_rule_ref(value);
+      }
+      if(name == "distance")
+      {
+        Set_distance(value?.ToInt() ?? 0);
+      }
+      if(name == "maxDistance")
+      {
+        Set_maxDistance(value?.ToInt() ?? 0);
+      }
+      if(name == "adjacent_depth_limit")
+      {
+        Set_adjacent_depth_limit(value?.ToInt() ?? 0);
+      }
     }
 
-    public Action OnChangeBubble(Action<List<ILinkedNode>> callback)
+    public void SetChild(dynamic linkedNode)
     {
-      _bubbleCallbackList.Add(callback);
-      return () => _bubbleCallbackList.Remove(callback);
+      if(linkedNode is type__math_operations distance_to_progress_multiplier)
+      {
+        this.distance_to_progress_multiplier = distance_to_progress_multiplier;
+      }
+
+      if(linkedNode is type__math_operations person_progress_property)
+      {
+        this.person_progress_property = person_progress_property;
+      }
+
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is type__math_operations)
+      {
+        this.distance_to_progress_multiplier = null;
+      }
+
+      if(linkedNode is type__math_operations)
+      {
+        this.person_progress_property = null;
+      }
+
+    }
+
+    public Action OnSelfChange(Action<to_option> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -131,7 +186,7 @@ namespace XSD.Ntype__link_group {
       distance_to_progress_multiplier = rawNode.InitializeWithRawNode("distance_to_progress_multiplier", distance_to_progress_multiplier);
 
       person_progress_property = rawNode.InitializeWithRawNode("person_progress_property", person_progress_property);
-      OnChange();
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -177,7 +232,7 @@ namespace XSD.Ntype__link_group {
     public void Set_node_rule_ref(System.String value)
     {
       this.node_rule_ref = value;
-      this.OnChange();
+      this.NotifyChange();
     }
     public System.Int32 Get_distance()
     {
@@ -186,7 +241,7 @@ namespace XSD.Ntype__link_group {
     public void Set_distance(System.Int32 value)
     {
       this.distance = value;
-      this.OnChange();
+      this.NotifyChange();
     }
     public System.Int32? Get_maxDistance()
     {
@@ -195,7 +250,7 @@ namespace XSD.Ntype__link_group {
     public void Set_maxDistance(System.Int32? value)
     {
       this.maxDistance = value;
-      this.OnChange();
+      this.NotifyChange();
     }
     public System.Int32 Get_adjacent_depth_limit()
     {
@@ -204,8 +259,9 @@ namespace XSD.Ntype__link_group {
     public void Set_adjacent_depth_limit(System.Int32 value)
     {
       this.adjacent_depth_limit = value;
-      this.OnChange();
+      this.NotifyChange();
     }
+
 
     public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
@@ -231,19 +287,19 @@ namespace XSD.Ntype__link_group {
       Deserialize(rawNode);
     }
 
-    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
       if(_parentNode == null)
         return;
       linkedNodes.Add(this);
-      _callbackList.ForEach(action => action(this));
-      _bubbleCallbackList.ForEach(action => action(linkedNodes));
-      _parentNode.ChildChanged(linkedNodes);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
 
-    private void OnChange()
+    public void NotifyChange()
     {
-      ChildChanged(new());
+      NotifyChange(new ());
     }
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)

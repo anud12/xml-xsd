@@ -21,8 +21,8 @@ namespace XSD.Nworld_step.Nactions {
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<location_graph__node__add_classification>> _callbackList = new();
-    private List<Action<List<ILinkedNode>>> _bubbleCallbackList = new();
+    private List<Action<location_graph__node__add_classification>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
 
@@ -36,7 +36,7 @@ namespace XSD.Nworld_step.Nactions {
         {
           _node_graph_selection = new();
           _node_graph_selection.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _node_graph_selection;
       }
@@ -56,7 +56,7 @@ namespace XSD.Nworld_step.Nactions {
         {
           _to_be_added__classification = new();
           _to_be_added__classification.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _to_be_added__classification;
       }
@@ -81,16 +81,55 @@ namespace XSD.Nworld_step.Nactions {
       Deserialize(rawNode);
     }
 
-    public Action OnChange(Action<location_graph__node__add_classification> callback)
+    public void SetAttribute(string name, string? value)
     {
-      _callbackList.Add(callback);
-      return () => _callbackList.Remove(callback);
     }
 
-    public Action OnChangeBubble(Action<List<ILinkedNode>> callback)
+    public void SetChild(dynamic linkedNode)
     {
-      _bubbleCallbackList.Add(callback);
-      return () => _bubbleCallbackList.Remove(callback);
+      if(linkedNode is type__node_graph__selection node_graph_selection)
+      {
+        this.node_graph_selection = node_graph_selection;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nactions.Nlocation_graph__node__add_classification.to_be_added__classification to_be_added__classification)
+      {
+        this.to_be_added__classification = to_be_added__classification;
+      }
+
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is type__node_graph__selection)
+      {
+        this.node_graph_selection = new();
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nactions.Nlocation_graph__node__add_classification.to_be_added__classification)
+      {
+        this.to_be_added__classification = new();
+      }
+
+    }
+
+    public Action OnSelfChange(Action<location_graph__node__add_classification> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -103,7 +142,7 @@ namespace XSD.Nworld_step.Nactions {
       node_graph_selection = rawNode.InitializeWithRawNode("node_graph_selection", node_graph_selection);
 
       to_be_added__classification = rawNode.InitializeWithRawNode("to_be_added__classification", to_be_added__classification);
-      OnChange();
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -127,6 +166,7 @@ namespace XSD.Nworld_step.Nactions {
         updatedRawNode.Serialize(element);
     }
 
+
     public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
       if(xpath.StartsWith("."))
@@ -149,19 +189,19 @@ namespace XSD.Nworld_step.Nactions {
       Deserialize(rawNode);
     }
 
-    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
       if(_parentNode == null)
         return;
       linkedNodes.Add(this);
-      _callbackList.ForEach(action => action(this));
-      _bubbleCallbackList.ForEach(action => action(linkedNodes));
-      _parentNode.ChildChanged(linkedNodes);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
 
-    private void OnChange()
+    public void NotifyChange()
     {
-      ChildChanged(new());
+      NotifyChange(new ());
     }
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)

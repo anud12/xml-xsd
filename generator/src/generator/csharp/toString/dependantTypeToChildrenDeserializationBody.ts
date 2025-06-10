@@ -17,7 +17,7 @@ export const dependantTypeToChildrenDeserializationBody = (dependantType: Depend
             ${normalizeName(key)}.OnAdd = (value) =>
               {
                 value.ParentNode = this;
-                OnChange();
+                NotifyChange();
               };
         `}
       `;

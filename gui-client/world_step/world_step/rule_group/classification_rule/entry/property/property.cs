@@ -21,8 +21,8 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry {
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<property>> _callbackList = new();
-    private List<Action<List<ILinkedNode>>> _bubbleCallbackList = new();
+    private List<Action<property>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
     private System.String _property_rule_ref;
@@ -39,7 +39,7 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry {
         {
           _operation = new();
           _operation.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _operation;
       }
@@ -64,16 +64,50 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry {
       Deserialize(rawNode);
     }
 
-    public Action OnChange(Action<property> callback)
+    public void SetAttribute(string name, string? value)
     {
-      _callbackList.Add(callback);
-      return () => _callbackList.Remove(callback);
+      if(name == "property_rule_ref")
+      {
+        Set_property_rule_ref(value);
+      }
+      /* ignored attribute key={key} of type=is*/
     }
 
-    public Action OnChangeBubble(Action<List<ILinkedNode>> callback)
+    public void SetChild(dynamic linkedNode)
     {
-      _bubbleCallbackList.Add(callback);
-      return () => _bubbleCallbackList.Remove(callback);
+      if(linkedNode is type__math_operations operation)
+      {
+        this.operation = operation;
+      }
+
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is type__math_operations)
+      {
+        this.operation = new();
+      }
+
+    }
+
+    public Action OnSelfChange(Action<property> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -89,7 +123,7 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry {
 
       //Deserialize children
       operation = rawNode.InitializeWithRawNode("operation", operation);
-      OnChange();
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -120,9 +154,10 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry {
     public void Set_property_rule_ref(System.String value)
     {
       this.property_rule_ref = value;
-      this.OnChange();
+      this.NotifyChange();
     }
     /* ignored attribute key={key} of type=is*/
+
 
     public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
@@ -140,19 +175,19 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry {
       Deserialize(rawNode);
     }
 
-    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
       if(_parentNode == null)
         return;
       linkedNodes.Add(this);
-      _callbackList.ForEach(action => action(this));
-      _bubbleCallbackList.ForEach(action => action(linkedNodes));
-      _parentNode.ChildChanged(linkedNodes);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
 
-    private void OnChange()
+    public void NotifyChange()
     {
-      ChildChanged(new());
+      NotifyChange(new ());
     }
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)

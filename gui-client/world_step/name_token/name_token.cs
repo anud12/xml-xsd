@@ -21,8 +21,8 @@ namespace XSD {
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<name_token>> _callbackList = new();
-    private List<Action<List<ILinkedNode>>> _bubbleCallbackList = new();
+    private List<Action<name_token>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
     private System.String _prefix;
@@ -38,7 +38,7 @@ namespace XSD {
         {
           __ref = new();
           __ref.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return __ref;
       }
@@ -58,7 +58,7 @@ namespace XSD {
         {
           _one_of = new();
           _one_of.ParentNode = this;
-          OnChange();
+          NotifyChange();
         }
         return _one_of;
       }
@@ -83,16 +83,59 @@ namespace XSD {
       Deserialize(rawNode);
     }
 
-    public Action OnChange(Action<name_token> callback)
+    public void SetAttribute(string name, string? value)
     {
-      _callbackList.Add(callback);
-      return () => _callbackList.Remove(callback);
+      if(name == "prefix")
+      {
+        Set_prefix(value);
+      }
     }
 
-    public Action OnChangeBubble(Action<List<ILinkedNode>> callback)
+    public void SetChild(dynamic linkedNode)
     {
-      _bubbleCallbackList.Add(callback);
-      return () => _bubbleCallbackList.Remove(callback);
+      if(linkedNode is XSD.Nname_token._ref _ref)
+      {
+        this._ref = _ref;
+      }
+
+      if(linkedNode is XSD.Nname_token.one_of one_of)
+      {
+        this.one_of = one_of;
+      }
+
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is XSD.Nname_token._ref)
+      {
+        this._ref = null;
+      }
+
+      if(linkedNode is XSD.Nname_token.one_of)
+      {
+        this.one_of = null;
+      }
+
+    }
+
+    public Action OnSelfChange(Action<name_token> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -110,7 +153,7 @@ namespace XSD {
       _ref = rawNode.InitializeWithRawNode("ref", _ref);
 
       one_of = rawNode.InitializeWithRawNode("one_of", one_of);
-      OnChange();
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -144,8 +187,9 @@ namespace XSD {
     public void Set_prefix(System.String value)
     {
       this.prefix = value;
-      this.OnChange();
+      this.NotifyChange();
     }
+
 
     public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
@@ -171,19 +215,19 @@ namespace XSD {
       Deserialize(rawNode);
     }
 
-    public void ChildChanged(List<ILinkedNode> linkedNodes)
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
       if(_parentNode == null)
         return;
       linkedNodes.Add(this);
-      _callbackList.ForEach(action => action(this));
-      _bubbleCallbackList.ForEach(action => action(linkedNodes));
-      _parentNode.ChildChanged(linkedNodes);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
 
-    private void OnChange()
+    public void NotifyChange()
     {
-      ChildChanged(new());
+      NotifyChange(new ());
     }
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)

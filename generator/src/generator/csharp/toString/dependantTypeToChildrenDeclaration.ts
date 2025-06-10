@@ -60,7 +60,7 @@ export const dependantTypeToChildrenDeclaration = (dependantType: DependantType)
               {
                 _${normalizeName(key)} = new();
                 _${normalizeName(key)}.ParentNode = this;
-                OnChange();
+                NotifyChange();
               }
               return _${normalizeName(key)};
             }
@@ -83,7 +83,7 @@ export const dependantTypeToChildrenDeclaration = (dependantType: DependantType)
               _${normalizeName(key)}.OnAdd = (value) =>
               {
                 value.ParentNode = this;
-                OnChange();
+                NotifyChange();
               };
             } 
           }

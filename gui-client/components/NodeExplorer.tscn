@@ -49,7 +49,6 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Explore"
 script = ExtResource("2_qqiuk")
-Scene = null
 
 [node name="RefreshButton" type="Button" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true

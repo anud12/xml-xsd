@@ -102,19 +102,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return "link_group_rule";
     }
 
-    public void childChanged(List<Object> list) {
+    public void notifyChange(List<Object> list) {
       list.addLast(this);
       onChangeList.forEach(consumer -> consumer.accept(list));
-      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(list));
-    }
-
-    private void triggerOnChange() {
-      childChanged(new ArrayList<>());
+      parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
     }
 
     public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
       this.parentNode = Optional.of(linkedNode);
-      triggerOnChange();
+      notifyChange();
     }
 
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LinkGroupRuleList.LinkGroupRuleList> parentAsLinkGroupRuleList() {
@@ -207,7 +203,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public LinkGroupRule setId(String value)
     {
       this.id = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Integer getAngle()
@@ -217,7 +213,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public LinkGroupRule setAngle(Integer value)
     {
       this.angle = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Optional<Integer> getAngleMax()
@@ -227,7 +223,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public LinkGroupRule setAngleMax(Optional<Integer> value)
     {
       this.angleMax = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Optional<Integer> getLimit()
@@ -237,7 +233,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public LinkGroupRule setLimit(Optional<Integer> value)
     {
       this.limit = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public List<ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption> getToOption()
@@ -252,20 +248,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.toOption.add(value);
       value.parentNode(this);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public LinkGroupRule addAllToOption(List<ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption> value)
     {
       this.toOption.addAll(value);
       value.forEach(e -> e.parentNode(this));
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public LinkGroupRule removeToOption(ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption value)
     {
       this.toOption.remove(value);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
 

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Immutable;
 using System.Drawing;
 using System.Linq;
+using Guiclient.components.nodes;
 using XSD;
 using XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph;
 
@@ -67,6 +68,10 @@ public partial class LocationGraphNodeComponent : BoxContainer
 		//Set RuleValue node value to value of node node_rule_ref attribute
 		var ruleValue = GetNode<Label>("%RuleValue");
 		ruleValue.Text = node.node_rule_ref;
+		
+		
+		var nodeExplorerButton = GetNode<NodeExplorerButton>("%NodeExplorerButton");
+		nodeExplorerButton.LinkedNodeOrCollection = node;
 	}
 
 	// returns offest to align positions based on DataContainer size

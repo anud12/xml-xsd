@@ -27,9 +27,12 @@ public partial class ServerToggle : Button
         //     _window.GrabFocus();
         //     AddChild(_window);
         // };
-        var node = ServerControls.PackedScene.Instantiate();
-        var control = new Control();
-        control.AddChild(node);
-        this.CreateWindow(control);
+        this.Pressed += () =>
+        {
+            var node = ServerControls.PackedScene.Instantiate();
+            var control = new Control();
+            control.AddChild(node);
+            this.SpawnWindow(control);
+        };
     }
 }
