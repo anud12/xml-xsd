@@ -11,7 +11,7 @@ namespace XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_gr
 namespace XSD {
 }
 namespace XSD.Ntype__node_graph__selection.Nin__location_graph {
-  public class has__location_graph_id : XSD.ILinkedNode  {
+  public class has__location_graph_id : IEquatable<has__location_graph_id>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".type__node_graph__selection.in__location_graph.has__location_graph_id";
     public static string TagName = "has__location_graph_id";
@@ -129,9 +129,9 @@ namespace XSD.Ntype__node_graph__selection.Nin__location_graph {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.location_graph_id_ref != null)
+      if(this._location_graph_id_ref != null)
       {
-        rawNode.attributes["location_graph_id_ref"] = this.location_graph_id_ref.ToString();
+        rawNode.attributes["location_graph_id_ref"] = this._location_graph_id_ref.ToString();
       }
 
       //Serialize children
@@ -206,6 +206,29 @@ namespace XSD.Ntype__node_graph__selection.Nin__location_graph {
         return this._or.KeyOf(casted_or);
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or
+      || false;
+    }
+
+    public bool Equals(has__location_graph_id? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (has__location_graph_id)obj;
+        return Equals(location_graph_id_ref, other.location_graph_id_ref) && Equals(or, other.or);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, location_graph_id_ref);
+        acc = HashCode.Combine(acc, or);
+        return acc;
     }
   }
 }

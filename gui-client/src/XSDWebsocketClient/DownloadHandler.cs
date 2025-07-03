@@ -1,4 +1,6 @@
-﻿using System.Xml;
+﻿using System.Linq;
+using System.Xml;
+using Guiclient.util;
 using util.dataStore;
 using XSD;
 
@@ -14,7 +16,17 @@ public class DownloadHandler
         var xmlString = message.data;
         XmlDocument xmlDocument = new XmlDocument();
         xmlDocument.LoadXml(xmlString);
-        var instance = new world_step(xmlDocument.DocumentElement);
-        worldStep.QueueSet(instance);
+        var rawNode = new RawNode();
+        rawNode.Deserialize(xmlDocument);
+        var firstChildRawNode = rawNode.children.First().Value.First();
+        worldStep.QueueSet(step =>
+        {
+            if (step == null)
+            {
+                return new world_step(xmlDocument.DocumentElement);
+            }
+            step.DeserializeAtPath("./", firstChildRawNode);
+            return step;
+        });
     }
 }

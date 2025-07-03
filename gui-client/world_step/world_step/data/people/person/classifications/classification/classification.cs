@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Ndata.Npeople.Nperson.Nclassifications.Nclassification
 namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Npeople.Nperson.Nclassifications {
-  public class classification : XSD.ILinkedNode  {
+  public class classification : IEquatable<classification>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.data.people.person.classifications.classification";
     public static string TagName = "classification";
@@ -97,9 +97,9 @@ namespace XSD.Nworld_step.Ndata.Npeople.Nperson.Nclassifications {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.classification_rule_ref != null)
+      if(this._classification_rule_ref != null)
       {
-        rawNode.attributes["classification_rule_ref"] = this.classification_rule_ref.ToString();
+        rawNode.attributes["classification_rule_ref"] = this._classification_rule_ref.ToString();
       }
 
       //Serialize children
@@ -151,6 +151,27 @@ namespace XSD.Nworld_step.Ndata.Npeople.Nperson.Nclassifications {
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(classification? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (classification)obj;
+        return Equals(classification_rule_ref, other.classification_rule_ref);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, classification_rule_ref);
+        return acc;
     }
   }
 }

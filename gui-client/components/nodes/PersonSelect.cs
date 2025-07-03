@@ -2,6 +2,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using util.dataStore;
 using Godot;
+using Guiclient.util;
 using XSD;
 using XSD.Nworld_step.Ndata.Npeople;
 
@@ -13,21 +14,23 @@ public partial class PersonSelect : OptionButton
 
     private readonly DataStore<world_step> _worldStepDataStore = StoreWorld_Step.instance;
     private person? _person;
-    public readonly DataStore<person> Value = new DataStore<person>();
+    public readonly DataStore<person> Value = new();
 
     public PersonSelect()
     {
         Connect("item_selected", new Godot.Callable(this, nameof(OnItemSelected)));
-        Value.OnSet((person, unsubscribe) =>
+        Value.OnSet(this, (person, unsubscribe) =>
         {
+            Logger.Info($"Value.OnSet triggered with person: {person?.name}");
             if(IsInstanceValid(this) == false)
             {
                 return;
             }
             SetById(person?.id);
         });
-        _worldStepDataStore.OnSet((worldStep, unsubscribe) =>
+        _worldStepDataStore.OnSet(this, (worldStep, unsubscribe) =>
         {
+            Logger.Info($"_worldStepDataStore.OnSet triggered");
             if(IsInstanceValid(this) == false)
             {
                 return;
@@ -39,7 +42,7 @@ public partial class PersonSelect : OptionButton
             Clear();
             //Add placeholder
             AddItem("Select Person");
-            foreach (var person in worldStep.data.people?.person)
+            foreach (var person in worldStep.data?.people?.person ?? new ())
             {
                 AddItem(person.name);
             }
@@ -73,19 +76,24 @@ public partial class PersonSelect : OptionButton
         Value.data = person;
         _person = person;
     }
+    
     public void OnItemSelected(int index)
     {
+        Logger.Info($"OnItemSelected called with index: {index}");
         if (index == 0)
         {
+            Logger.Info("No person selected, setting Value.data to null.");
             Value.data = null;
             return;
         }
         var worldStep = _worldStepDataStore.data;
         if (worldStep == null)
         {
+            Logger.Warn("_worldStepDataStore.data is null in OnItemSelected.");
             return;
         }
         var person = worldStep.data.people?.person?.ElementAt(index - 1);
+        Logger.Info($"Person selected: {person?.name} (id: {person?.id})");
         _person = person;
         Value.data = person;
     }

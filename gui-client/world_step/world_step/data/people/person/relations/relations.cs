@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Ndata.Npeople.Nperson.Nrelations {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Npeople.Nperson {
-  public class relations : XSD.ILinkedNode  {
+  public class relations : IEquatable<relations>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.data.people.person.relations";
     public static string TagName = "relations";
@@ -130,6 +130,24 @@ namespace XSD.Nworld_step.Ndata.Npeople.Nperson {
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+        public bool Equals(relations? obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            var other = (relations)obj;
+            return object.Equals(this, other);
+        }
+
+    public int GetHashCode()
+    {
+        return base.GetHashCode();
     }
   }
 }

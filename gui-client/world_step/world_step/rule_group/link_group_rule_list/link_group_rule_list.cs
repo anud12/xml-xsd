@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlink_group_rule_list {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group {
-  public class link_group_rule_list : XSD.ILinkedNode  {
+  public class link_group_rule_list : IEquatable<link_group_rule_list>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group.link_group_rule_list";
     public static string TagName = "link_group_rule_list";
@@ -182,6 +182,28 @@ namespace XSD.Nworld_step.Nrule_group {
         return this._link_group_rule.KeyOf(casted_link_group_rule);
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nrule_group.Nlink_group_rule_list.link_group_rule
+      || false;
+    }
+
+    public bool Equals(link_group_rule_list? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (link_group_rule_list)obj;
+        return Equals(link_group_rule, other.link_group_rule);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, link_group_rule);
+        return acc;
     }
   }
 }

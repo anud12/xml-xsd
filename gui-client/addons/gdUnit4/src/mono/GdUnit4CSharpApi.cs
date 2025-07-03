@@ -5,6 +5,7 @@ using System.Linq;
 using Godot;
 using Godot.Collections;
 using GdUnit4;
+using Guiclient.util;
 
 
 // GdUnit4 GDScript - C# API wrapper
@@ -20,7 +21,7 @@ public partial class GdUnit4CSharpApi : Godot.GodotObject
 			apiType = GdUnit4NetVersion() < new Version(4, 2, 2) ?
 				assembly.GetType("GdUnit4.GdUnit4MonoAPI") :
 				assembly.GetType("GdUnit4.GdUnit4NetAPI");
-			Godot.GD.PrintS($"GdUnit4CSharpApi type:{apiType} loaded.");
+			Logger.Info($"GdUnit4CSharpApi type:{apiType} loaded.");
 		}
 		return apiType!;
 	}

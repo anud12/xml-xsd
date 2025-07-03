@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Ndata {}
 namespace XSD {
 }
 namespace XSD.Nworld_step {
-  public class data : XSD.ILinkedNode  {
+  public class data : IEquatable<data>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.data";
     public static string TagName = "data";
@@ -28,7 +28,7 @@ namespace XSD.Nworld_step {
 
     //Children elements
     private XSD.Nworld_step.Ndata.people? _people = null;
-    public XSD.Nworld_step.Ndata.people people
+    public XSD.Nworld_step.Ndata.people peopleOrCreate
     {
       get
       {
@@ -43,12 +43,31 @@ namespace XSD.Nworld_step {
       set
       {
         _people = value;
-        _people.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Ndata.people? people
+    {
+      get
+      {
+        return _people;
+      }
+      set
+      {
+        _people = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Nworld_step.Ndata.location? _location = null;
-    public XSD.Nworld_step.Ndata.location location
+    public XSD.Nworld_step.Ndata.location locationOrCreate
     {
       get
       {
@@ -63,7 +82,26 @@ namespace XSD.Nworld_step {
       set
       {
         _location = value;
-        _location.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Ndata.location? location
+    {
+      get
+      {
+        return _location;
+      }
+      set
+      {
+        _location = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public data()
@@ -215,6 +253,30 @@ namespace XSD.Nworld_step {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Ndata.people
+      || candidateChild is XSD.Nworld_step.Ndata.location
+      || false;
+    }
+
+    public bool Equals(data? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (data)obj;
+        return Equals(people, other.people) && Equals(location, other.location);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, people);
+        acc = HashCode.Combine(acc, location);
+        return acc;
     }
   }
 }

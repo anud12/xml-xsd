@@ -11,7 +11,7 @@ namespace XSD.Ntype__property_mutation {}
 namespace XSD {
 }
 namespace XSD {
-  public class type__property_mutation : XSD.ILinkedNode  {
+  public class type__property_mutation : IEquatable<type__property_mutation>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".type__property_mutation";
     public static string TagName = "type__property_mutation";
@@ -129,9 +129,9 @@ namespace XSD {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.property_rule_ref != null)
+      if(this._property_rule_ref != null)
       {
-        rawNode.attributes["property_rule_ref"] = this.property_rule_ref.ToString();
+        rawNode.attributes["property_rule_ref"] = this._property_rule_ref.ToString();
       }
 
       //Serialize children
@@ -206,6 +206,29 @@ namespace XSD {
         return this._from.KeyOf(casted_from);
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Ntype__property_mutation.from
+      || false;
+    }
+
+    public bool Equals(type__property_mutation? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (type__property_mutation)obj;
+        return Equals(property_rule_ref, other.property_rule_ref) && Equals(from, other.from);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, property_rule_ref);
+        acc = HashCode.Combine(acc, from);
+        return acc;
     }
   }
 }

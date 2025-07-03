@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.Nsele
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.Nselection {
-  public class from_person_same_location_graph_node : XSD.ILinkedNode  {
+  public class from_person_same_location_graph_node : IEquatable<from_person_same_location_graph_node>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group.action_rule.from_person.on_person.selection.from_person_same_location_graph_node";
     public static string TagName = "from_person_same_location_graph_node";
@@ -97,9 +97,9 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.Nsele
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.value != null)
+      if(this._value != null)
       {
-        rawNode.attributes["value"] = this.value.ToString();
+        rawNode.attributes["value"] = this._value.ToString();
       }
 
       //Serialize children
@@ -151,6 +151,27 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.Nsele
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(from_person_same_location_graph_node? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (from_person_same_location_graph_node)obj;
+        return Equals(value, other.value);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, value);
+        return acc;
     }
   }
 }

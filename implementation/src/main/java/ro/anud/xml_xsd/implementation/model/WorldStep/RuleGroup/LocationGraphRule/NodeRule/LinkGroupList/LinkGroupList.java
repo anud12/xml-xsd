@@ -23,17 +23,19 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   public class LinkGroupList implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static String nodeName = "link_group_list";
-    public static LinkGroupList fromRawNode(RawNode rawNode) {
+    public static LinkGroupList fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
       var instance = new LinkGroupList();
+      if(Objects.nonNull(parent)) {
+        instance.parentNode(parent);
+      }
       instance.rawNode(rawNode);
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
-    public static LinkGroupList fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static LinkGroupList fromRawNode(RawNode rawNode) {
       logEnter();
-      var instance = fromRawNode(rawNode);
-      instance.parentNode(parent);
+      var instance = fromRawNode(rawNode, null);
       return logReturn(instance);
     }
     public static Optional<LinkGroupList> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
@@ -93,7 +95,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void notifyChange(List<Object> list) {
+      var logger = logEnter();
       list.addLast(this);
+      logger.log("Notify change for", this.buildPath());
       onChangeList.forEach(consumer -> consumer.accept(list));
       parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
     }
@@ -115,9 +119,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public void removeChild(Object object) {
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.Reference.Reference) {
           this.reference.remove(object);
+          notifyChange();
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroup.LinkGroup) {
           this.linkGroup.remove(object);
+          notifyChange();
         }
     }
 
@@ -142,17 +148,21 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void deserialize (RawNode rawNode) {
-      var logger = logEnter();
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing link_group_list");
+      try {
+        var logger = logEnter();
+        this.rawNode = rawNode;
+        // Godot.GD.Print("Deserializing link_group_list");
 
-      var innerLogger = logger.log("attributes");
-      //Deserialize attributes
-      innerLogger = logger.log("children");
-      //Deserialize children
-      this.reference = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.Reference.Reference.fromRawNode(rawNode.getChildrenList("reference"), this);
-      this.linkGroup = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroup.LinkGroup.fromRawNode(rawNode.getChildrenList("link_group"), this);
-      logReturnVoid();
+        var innerLogger = logger.log("attributes");
+        //Deserialize attributes
+        innerLogger = logger.log("children");
+        //Deserialize children
+        this.reference = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.Reference.Reference.fromRawNode(rawNode.getChildrenList("reference"), this);
+        this.linkGroup = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroup.LinkGroup.fromRawNode(rawNode.getChildrenList("link_group"), this);
+        logReturnVoid();
+      } catch (Exception e) {
+        throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
+      }
     }
 
     public RawNode serializeIntoRawNode()
@@ -274,6 +284,38 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
         deserialize(rawNode);
         return this;
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getNodeAtPath(String xpath) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.Reference.Reference.nodeName + "["))
+        {
+          var startTokens = xpath.split(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.Reference.Reference.nodeName + "\\[");
+          var endToken = startTokens[1].split("]");
+          var indexString = endToken[0];
+          var childXPath = xpath.replace(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.Reference.Reference.nodeName + "[" + indexString + "]", "");
+          var pathIndex = Integer.parseInt(indexString);
+          if(this.reference.size() > pathIndex) {
+            return this.reference.get(pathIndex).getNodeAtPath(childXPath);
+          }
+          return Optional.empty();
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroup.LinkGroup.nodeName + "["))
+        {
+          var startTokens = xpath.split(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroup.LinkGroup.nodeName + "\\[");
+          var endToken = startTokens[1].split("]");
+          var indexString = endToken[0];
+          var childXPath = xpath.replace(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroup.LinkGroup.nodeName + "[" + indexString + "]", "");
+          var pathIndex = Integer.parseInt(indexString);
+          if(this.linkGroup.size() > pathIndex) {
+            return this.linkGroup.get(pathIndex).getNodeAtPath(childXPath);
+          }
+          return Optional.empty();
+        }
+        return Optional.of(this);
     }
   }
 

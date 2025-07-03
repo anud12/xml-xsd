@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group {
-  public class property_rule : XSD.ILinkedNode  {
+  public class property_rule : IEquatable<property_rule>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group.property_rule";
     public static string TagName = "property_rule";
@@ -182,6 +182,28 @@ namespace XSD.Nworld_step.Nrule_group {
         return this._entry.KeyOf(casted_entry);
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nrule_group.Nproperty_rule.entry
+      || false;
+    }
+
+    public bool Equals(property_rule? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (property_rule)obj;
+        return Equals(entry, other.entry);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, entry);
+        return acc;
     }
   }
 }

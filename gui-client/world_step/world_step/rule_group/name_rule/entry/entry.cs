@@ -22,7 +22,7 @@ namespace XSD {
   }
 }
 namespace XSD.Nworld_step.Nrule_group.Nname_rule {
-  public class entry : XSD.ILinkedNode , Itype__name_token {
+  public class entry : IEquatable<entry>, XSD.ILinkedNode , Itype__name_token {
 
     public static string ClassTypeId = ".world_step.rule_group.name_rule.entry";
     public static string TagName = "entry";
@@ -140,9 +140,9 @@ namespace XSD.Nworld_step.Nrule_group.Nname_rule {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.id != null)
+      if(this._id != null)
       {
-        rawNode.attributes["id"] = this.id.ToString();
+        rawNode.attributes["id"] = this._id.ToString();
       }
 
       // Serialize arguments of type__name_token
@@ -200,6 +200,27 @@ namespace XSD.Nworld_step.Nrule_group.Nname_rule {
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(entry? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (entry)obj;
+        return Equals(id, other.id);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, id);
+        return acc;
     }
   }
 }

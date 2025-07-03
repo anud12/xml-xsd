@@ -11,7 +11,7 @@ namespace XSD.Nfrom.Nperson {}
 namespace XSD {
 }
 namespace XSD.Nfrom {
-  public class person : XSD.ILinkedNode  {
+  public class person : IEquatable<person>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".from.person";
     public static string TagName = "person";
@@ -28,7 +28,7 @@ namespace XSD.Nfrom {
 
     //Children elements
     private type__person_selection? _select = null;
-    public type__person_selection select
+    public type__person_selection selectOrCreate
     {
       get
       {
@@ -43,12 +43,31 @@ namespace XSD.Nfrom {
       set
       {
         _select = value;
-        _select.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__person_selection? select
+    {
+      get
+      {
+        return _select;
+      }
+      set
+      {
+        _select = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private type__property_mutation? _property_mutation = null;
-    public type__property_mutation property_mutation
+    public type__property_mutation property_mutationOrCreate
     {
       get
       {
@@ -63,7 +82,26 @@ namespace XSD.Nfrom {
       set
       {
         _property_mutation = value;
-        _property_mutation.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__property_mutation? property_mutation
+    {
+      get
+      {
+        return _property_mutation;
+      }
+      set
+      {
+        _property_mutation = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public person()
@@ -215,6 +253,30 @@ namespace XSD.Nfrom {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is type__person_selection
+      || candidateChild is type__property_mutation
+      || false;
+    }
+
+    public bool Equals(person? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (person)obj;
+        return Equals(select, other.select) && Equals(property_mutation, other.property_mutation);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, select);
+        acc = HashCode.Combine(acc, property_mutation);
+        return acc;
     }
   }
 }

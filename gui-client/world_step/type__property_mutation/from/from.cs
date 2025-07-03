@@ -11,7 +11,7 @@ namespace XSD.Ntype__property_mutation.Nfrom {}
 namespace XSD {
 }
 namespace XSD.Ntype__property_mutation {
-  public class from : XSD.ILinkedNode  {
+  public class from : IEquatable<from>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".type__property_mutation.from";
     public static string TagName = "from";
@@ -30,7 +30,7 @@ namespace XSD.Ntype__property_mutation {
 
     //Children elements
     private type__math_operations _operation = new type__math_operations();
-    public type__math_operations operation
+    public type__math_operations operationOrCreate
     {
       get
       {
@@ -45,7 +45,26 @@ namespace XSD.Ntype__property_mutation {
       set
       {
         _operation = value;
-        _operation.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__math_operations operation
+    {
+      get
+      {
+        return _operation;
+      }
+      set
+      {
+        _operation = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public from()
@@ -127,9 +146,9 @@ namespace XSD.Ntype__property_mutation {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.participant != null)
+      if(this._participant != null)
       {
-        rawNode.attributes["participant"] = this.participant.ToString();
+        rawNode.attributes["participant"] = this._participant.ToString();
       }
 
       //Serialize children
@@ -193,6 +212,29 @@ namespace XSD.Ntype__property_mutation {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is type__math_operations
+      || false;
+    }
+
+    public bool Equals(from? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (from)obj;
+        return Equals(participant, other.participant) && Equals(operation, other.operation);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, participant);
+        acc = HashCode.Combine(acc, operation);
+        return acc;
     }
   }
 }

@@ -39,7 +39,7 @@ public partial class NodeExplorerButton: Button
             {
                 case Type t when typeof(ILinkedNode).IsAssignableFrom(t):
                     // Handle ILinkedNode logic here
-                    GD.Print("LinkedNode");
+                    Logger.Info("LinkedNode");
                     var nodeExplorer = NodeExplorer.PackedScene.Instantiate<NodeExplorer>();
                     nodeExplorer._linkedNode = _iLinkedNode;
                     control.AddChild(nodeExplorer);

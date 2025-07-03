@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group {}
 namespace XSD {
 }
 namespace XSD.Nworld_step {
-  public class rule_group : XSD.ILinkedNode  {
+  public class rule_group : IEquatable<rule_group>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group";
     public static string TagName = "rule_group";
@@ -29,7 +29,7 @@ namespace XSD.Nworld_step {
 
     //Children elements
     private XSD.Nworld_step.Nrule_group.property_rule? _property_rule = null;
-    public XSD.Nworld_step.Nrule_group.property_rule property_rule
+    public XSD.Nworld_step.Nrule_group.property_rule property_ruleOrCreate
     {
       get
       {
@@ -44,12 +44,31 @@ namespace XSD.Nworld_step {
       set
       {
         _property_rule = value;
-        _property_rule.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.property_rule? property_rule
+    {
+      get
+      {
+        return _property_rule;
+      }
+      set
+      {
+        _property_rule = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Nworld_step.Nrule_group.classification_rule? _classification_rule = null;
-    public XSD.Nworld_step.Nrule_group.classification_rule classification_rule
+    public XSD.Nworld_step.Nrule_group.classification_rule classification_ruleOrCreate
     {
       get
       {
@@ -64,12 +83,31 @@ namespace XSD.Nworld_step {
       set
       {
         _classification_rule = value;
-        _classification_rule.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.classification_rule? classification_rule
+    {
+      get
+      {
+        return _classification_rule;
+      }
+      set
+      {
+        _classification_rule = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Nworld_step.Nrule_group.name_rule? _name_rule = null;
-    public XSD.Nworld_step.Nrule_group.name_rule name_rule
+    public XSD.Nworld_step.Nrule_group.name_rule name_ruleOrCreate
     {
       get
       {
@@ -84,12 +122,31 @@ namespace XSD.Nworld_step {
       set
       {
         _name_rule = value;
-        _name_rule.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.name_rule? name_rule
+    {
+      get
+      {
+        return _name_rule;
+      }
+      set
+      {
+        _name_rule = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Nworld_step.Nrule_group.action_rule? _action_rule = null;
-    public XSD.Nworld_step.Nrule_group.action_rule action_rule
+    public XSD.Nworld_step.Nrule_group.action_rule action_ruleOrCreate
     {
       get
       {
@@ -104,12 +161,31 @@ namespace XSD.Nworld_step {
       set
       {
         _action_rule = value;
-        _action_rule.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.action_rule? action_rule
+    {
+      get
+      {
+        return _action_rule;
+      }
+      set
+      {
+        _action_rule = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Nworld_step.Nrule_group.events_rule? _events_rule = null;
-    public XSD.Nworld_step.Nrule_group.events_rule events_rule
+    public XSD.Nworld_step.Nrule_group.events_rule events_ruleOrCreate
     {
       get
       {
@@ -124,12 +200,31 @@ namespace XSD.Nworld_step {
       set
       {
         _events_rule = value;
-        _events_rule.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.events_rule? events_rule
+    {
+      get
+      {
+        return _events_rule;
+      }
+      set
+      {
+        _events_rule = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Nworld_step.Nrule_group.link_group_rule_list? _link_group_rule_list = null;
-    public XSD.Nworld_step.Nrule_group.link_group_rule_list link_group_rule_list
+    public XSD.Nworld_step.Nrule_group.link_group_rule_list link_group_rule_listOrCreate
     {
       get
       {
@@ -144,12 +239,31 @@ namespace XSD.Nworld_step {
       set
       {
         _link_group_rule_list = value;
-        _link_group_rule_list.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.link_group_rule_list? link_group_rule_list
+    {
+      get
+      {
+        return _link_group_rule_list;
+      }
+      set
+      {
+        _link_group_rule_list = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Nworld_step.Nrule_group.location_graph_rule? _location_graph_rule = null;
-    public XSD.Nworld_step.Nrule_group.location_graph_rule location_graph_rule
+    public XSD.Nworld_step.Nrule_group.location_graph_rule location_graph_ruleOrCreate
     {
       get
       {
@@ -164,12 +278,31 @@ namespace XSD.Nworld_step {
       set
       {
         _location_graph_rule = value;
-        _location_graph_rule.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.location_graph_rule? location_graph_rule
+    {
+      get
+      {
+        return _location_graph_rule;
+      }
+      set
+      {
+        _location_graph_rule = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Nworld_step.Nrule_group.location_classification_rule? _location_classification_rule = null;
-    public XSD.Nworld_step.Nrule_group.location_classification_rule location_classification_rule
+    public XSD.Nworld_step.Nrule_group.location_classification_rule location_classification_ruleOrCreate
     {
       get
       {
@@ -184,7 +317,26 @@ namespace XSD.Nworld_step {
       set
       {
         _location_classification_rule = value;
-        _location_classification_rule.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.location_classification_rule? location_classification_rule
+    {
+      get
+      {
+        return _location_classification_rule;
+      }
+      set
+      {
+        _location_classification_rule = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public rule_group()
@@ -488,6 +640,42 @@ namespace XSD.Nworld_step {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nrule_group.property_rule
+      || candidateChild is XSD.Nworld_step.Nrule_group.classification_rule
+      || candidateChild is XSD.Nworld_step.Nrule_group.name_rule
+      || candidateChild is XSD.Nworld_step.Nrule_group.action_rule
+      || candidateChild is XSD.Nworld_step.Nrule_group.events_rule
+      || candidateChild is XSD.Nworld_step.Nrule_group.link_group_rule_list
+      || candidateChild is XSD.Nworld_step.Nrule_group.location_graph_rule
+      || candidateChild is XSD.Nworld_step.Nrule_group.location_classification_rule
+      || false;
+    }
+
+    public bool Equals(rule_group? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (rule_group)obj;
+        return Equals(property_rule, other.property_rule) && Equals(classification_rule, other.classification_rule) && Equals(name_rule, other.name_rule) && Equals(action_rule, other.action_rule) && Equals(events_rule, other.events_rule) && Equals(link_group_rule_list, other.link_group_rule_list) && Equals(location_graph_rule, other.location_graph_rule) && Equals(location_classification_rule, other.location_classification_rule);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, property_rule);
+        acc = HashCode.Combine(acc, classification_rule);
+        acc = HashCode.Combine(acc, name_rule);
+        acc = HashCode.Combine(acc, action_rule);
+        acc = HashCode.Combine(acc, events_rule);
+        acc = HashCode.Combine(acc, link_group_rule_list);
+        acc = HashCode.Combine(acc, location_graph_rule);
+        acc = HashCode.Combine(acc, location_classification_rule);
+        return acc;
     }
   }
 }

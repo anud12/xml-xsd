@@ -38,6 +38,21 @@ public class WorldStepInstance {
         void apply(WorldStepInstance outInstance);
     }
 
+    public static WorldStepInstance createNewDoubleBuffered() {
+        var instance = new WorldStepInstance();
+        var outInstance = new WorldStepInstance();
+        instance.setOutInstance(outInstance);
+        outInstance.setOutInstance(instance);
+        return instance;
+    }
+
+    public static WorldStepInstance createNewDoubleBuffered(WorldStep worldStep) {
+        var instance = createNewDoubleBuffered();
+        instance.setWorldStep(worldStep);
+        instance.getOutInstance().setWorldStep(WorldStep.fromRawNode(worldStep.rawNode()));
+        return instance;
+    }
+
     public InstanceTypeEnum instance;
     private WorldStepInstance outInstance = this;
     private Optional<WorldStep> worldStep = Optional.empty();
@@ -49,6 +64,10 @@ public class WorldStepInstance {
     public final NameInstance name = new NameInstance(this);
 
     private int counter = 0;
+
+    public WorldStepInstance() {
+        System.out.print("");
+    }
 
     public WorldStepInstance index() {
         ruleRepository.index();
@@ -84,12 +103,11 @@ public class WorldStepInstance {
         }
         webSocketHandler.ifPresent(webSocketHandler1 -> {
             try {
-                logger.log("sending message", linkedNode.serializeIntoRawNode().toDocumentString());
-                webSocketHandler1.broadCastMessage(new TextMessage(
-                    Update.value
+                var payload = Update.value
                     + linkedNode.buildPath()
-                    + "\n" + linkedNode.serializeIntoRawNode().toDocumentString()
-                ));
+                    + "\n" + linkedNode.serializeIntoRawNode().toDocumentString();
+                logger.log("sending message", payload);
+                webSocketHandler1.broadCastMessage(new TextMessage(payload));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -129,22 +147,8 @@ public class WorldStepInstance {
 
     private void addUpdateHandlers() {
         this.worldStep.ifPresent(worldStep1 -> worldStep1.onChange(objects -> {
-                for (Object o : objects) {
-                    if (o instanceof Person object) {
-                        sendLinkNode(object);
-                        return;
-                    }
-                    if(o instanceof Node object) {
-                        sendLinkNode(object);
-                        return;
-                    }
-                    if(o instanceof LocationGraph object) {
-                        sendLinkNode(object);
-                        return;
-                    }
-                }
-            }
-        ));
+            sendLinkNode((LinkedNode) objects.getFirst());
+        }));
     }
 
     public WorldStepInstance offsetRandomizationTable() {

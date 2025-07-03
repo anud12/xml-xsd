@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nactions.Nperson__move_to.Npath.Nnode {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions.Nperson__move_to.Npath {
-  public class node : XSD.ILinkedNode  {
+  public class node : IEquatable<node>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.actions.person.move_to.path.node";
     public static string TagName = "node";
@@ -97,9 +97,9 @@ namespace XSD.Nworld_step.Nactions.Nperson__move_to.Npath {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.node_id_ref != null)
+      if(this._node_id_ref != null)
       {
-        rawNode.attributes["node_id_ref"] = this.node_id_ref.ToString();
+        rawNode.attributes["node_id_ref"] = this._node_id_ref.ToString();
       }
 
       //Serialize children
@@ -151,6 +151,27 @@ namespace XSD.Nworld_step.Nactions.Nperson__move_to.Npath {
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(node? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (node)obj;
+        return Equals(node_id_ref, other.node_id_ref);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, node_id_ref);
+        return acc;
     }
   }
 }

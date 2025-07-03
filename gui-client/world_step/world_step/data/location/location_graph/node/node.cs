@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph {
-  public class node : XSD.ILinkedNode  {
+  public class node : IEquatable<node>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.data.location.location_graph.node";
     public static string TagName = "node";
@@ -32,7 +32,7 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph {
 
     //Children elements
     private XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.name? _name = null;
-    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.name name
+    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.name nameOrCreate
     {
       get
       {
@@ -47,12 +47,31 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph {
       set
       {
         _name = value;
-        _name.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.name? name
+    {
+      get
+      {
+        return _name;
+      }
+      set
+      {
+        _name = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.position? _position = null;
-    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.position position
+    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.position positionOrCreate
     {
       get
       {
@@ -67,12 +86,31 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph {
       set
       {
         _position = value;
-        _position.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.position? position
+    {
+      get
+      {
+        return _position;
+      }
+      set
+      {
+        _position = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.classifications? _classifications = null;
-    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.classifications classifications
+    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.classifications classificationsOrCreate
     {
       get
       {
@@ -87,12 +125,31 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph {
       set
       {
         _classifications = value;
-        _classifications.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.classifications? classifications
+    {
+      get
+      {
+        return _classifications;
+      }
+      set
+      {
+        _classifications = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.links? _links = null;
-    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.links links
+    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.links linksOrCreate
     {
       get
       {
@@ -107,12 +164,31 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph {
       set
       {
         _links = value;
-        _links.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.links? links
+    {
+      get
+      {
+        return _links;
+      }
+      set
+      {
+        _links = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.people? _people = null;
-    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.people people
+    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.people peopleOrCreate
     {
       get
       {
@@ -127,7 +203,26 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph {
       set
       {
         _people = value;
-        _people.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.people? people
+    {
+      get
+      {
+        return _people;
+      }
+      set
+      {
+        _people = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public node()
@@ -266,13 +361,13 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.node_rule_ref != null)
+      if(this._node_rule_ref != null)
       {
-        rawNode.attributes["node_rule_ref"] = this.node_rule_ref.ToString();
+        rawNode.attributes["node_rule_ref"] = this._node_rule_ref.ToString();
       }
-      if(this.id != null)
+      if(this._id != null)
       {
-        rawNode.attributes["id"] = this.id.ToString();
+        rawNode.attributes["id"] = this._id.ToString();
       }
 
       //Serialize children
@@ -398,6 +493,38 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.name
+      || candidateChild is XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.position
+      || candidateChild is XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.classifications
+      || candidateChild is XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.links
+      || candidateChild is XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.people
+      || false;
+    }
+
+    public bool Equals(node? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (node)obj;
+        return Equals(node_rule_ref, other.node_rule_ref) && Equals(id, other.id) && Equals(name, other.name) && Equals(position, other.position) && Equals(classifications, other.classifications) && Equals(links, other.links) && Equals(people, other.people);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, node_rule_ref);
+        acc = HashCode.Combine(acc, id);
+        acc = HashCode.Combine(acc, name);
+        acc = HashCode.Combine(acc, position);
+        acc = HashCode.Combine(acc, classifications);
+        acc = HashCode.Combine(acc, links);
+        acc = HashCode.Combine(acc, people);
+        return acc;
     }
   }
 }

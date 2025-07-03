@@ -29,7 +29,9 @@ public class WebSocketTestClient {
         Other(""),
         StartStop("startStop\n"),
         Load("load\n"),
-        Put("put\n");
+        Put("put\n"),
+        Append("append\n"),
+        Append_nodeNotFound("append_nodeNotFound\n");
 
         public final String command;
         public static Response fromString(String string) {
@@ -50,7 +52,9 @@ public class WebSocketTestClient {
         Update("update\n"),
         Start("start\n"),
         Stop("stop\n"),
-        Put("put\n");
+        Put("put\n"),
+        Append("append\n"),
+        Append_nodeNotFound("append_nodeNotFound\n");
         public final String value;
 
         Command(final String value) {

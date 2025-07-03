@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nactions.Nby.Nmove_towards {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions.Nby {
-  public class move_towards : XSD.ILinkedNode  {
+  public class move_towards : IEquatable<move_towards>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.actions.by.move_towards";
     public static string TagName = "move_towards";
@@ -119,17 +119,17 @@ namespace XSD.Nworld_step.Nactions.Nby {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.layer != null)
+      if(this._layer != null)
       {
-        rawNode.attributes["layer"] = this.layer?.ToString();
+        rawNode.attributes["layer"] = this._layer?.ToString();
       }
-      if(this.x != null)
+      if(this._x != null)
       {
-        rawNode.attributes["x"] = this.x.ToString();
+        rawNode.attributes["x"] = this._x.ToString();
       }
-      if(this.y != null)
+      if(this._y != null)
       {
-        rawNode.attributes["y"] = this.y.ToString();
+        rawNode.attributes["y"] = this._y.ToString();
       }
 
       //Serialize children
@@ -199,6 +199,29 @@ namespace XSD.Nworld_step.Nactions.Nby {
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(move_towards? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (move_towards)obj;
+        return Equals(layer, other.layer) && Equals(x, other.x) && Equals(y, other.y);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, layer);
+        acc = HashCode.Combine(acc, x);
+        acc = HashCode.Combine(acc, y);
+        return acc;
     }
   }
 }

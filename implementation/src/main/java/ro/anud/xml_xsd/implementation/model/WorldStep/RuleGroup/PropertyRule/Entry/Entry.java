@@ -23,17 +23,19 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   public class Entry implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static String nodeName = "entry";
-    public static Entry fromRawNode(RawNode rawNode) {
+    public static Entry fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
       var instance = new Entry();
+      if(Objects.nonNull(parent)) {
+        instance.parentNode(parent);
+      }
       instance.rawNode(rawNode);
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
-    public static Entry fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static Entry fromRawNode(RawNode rawNode) {
       logEnter();
-      var instance = fromRawNode(rawNode);
-      instance.parentNode(parent);
+      var instance = fromRawNode(rawNode, null);
       return logReturn(instance);
     }
     public static Optional<Entry> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
@@ -99,7 +101,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void notifyChange(List<Object> list) {
+      var logger = logEnter();
       list.addLast(this);
+      logger.log("Notify change for", this.buildPath());
       onChangeList.forEach(consumer -> consumer.accept(list));
       parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
     }
@@ -121,12 +125,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public void removeChild(Object object) {
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PersonDefault.PersonDefault) {
           this.personDefault = Optional.empty();
+          notifyChange();
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.ItemDefault.ItemDefault) {
           this.itemDefault = Optional.empty();
+          notifyChange();
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PropertyThreshold.PropertyThreshold) {
           this.propertyThreshold.remove(object);
+          notifyChange();
         }
     }
 
@@ -154,22 +161,26 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void deserialize (RawNode rawNode) {
-      var logger = logEnter();
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing entry");
+      try {
+        var logger = logEnter();
+        this.rawNode = rawNode;
+        // Godot.GD.Print("Deserializing entry");
 
-      var innerLogger = logger.log("attributes");
-      //Deserialize attributes
-      innerLogger.log("id");
-      this.id = rawNode.getAttributeRequired("id");
-      innerLogger.log("units");
-      this.units = rawNode.getAttributeRequired("units");
-      innerLogger = logger.log("children");
-      //Deserialize children
-      this.personDefault = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PersonDefault.PersonDefault.fromRawNode(rawNode.getChildrenFirst("person_default"), this);
-      this.itemDefault = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.ItemDefault.ItemDefault.fromRawNode(rawNode.getChildrenFirst("item_default"), this);
-      this.propertyThreshold = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PropertyThreshold.PropertyThreshold.fromRawNode(rawNode.getChildrenList("property-threshold"), this);
-      logReturnVoid();
+        var innerLogger = logger.log("attributes");
+        //Deserialize attributes
+        innerLogger.log("id");
+        this.id = rawNode.getAttributeRequired("id");
+        innerLogger.log("units");
+        this.units = rawNode.getAttributeRequired("units");
+        innerLogger = logger.log("children");
+        //Deserialize children
+        this.personDefault = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PersonDefault.PersonDefault.fromRawNode(rawNode.getChildrenFirst("person_default"), this);
+        this.itemDefault = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.ItemDefault.ItemDefault.fromRawNode(rawNode.getChildrenFirst("item_default"), this);
+        this.propertyThreshold = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PropertyThreshold.PropertyThreshold.fromRawNode(rawNode.getChildrenList("property-threshold"), this);
+        logReturnVoid();
+      } catch (Exception e) {
+        throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
+      }
     }
 
     public RawNode serializeIntoRawNode()
@@ -348,6 +359,42 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
         deserialize(rawNode);
         return this;
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getNodeAtPath(String xpath) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PersonDefault.PersonDefault.nodeName))
+        {
+          if(this.personDefault.isEmpty()) {
+            this.personDefault = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PersonDefault.PersonDefault());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PersonDefault.PersonDefault.nodeName.length() + 3);
+          return this.personDefault.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.ItemDefault.ItemDefault.nodeName))
+        {
+          if(this.itemDefault.isEmpty()) {
+            this.itemDefault = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.ItemDefault.ItemDefault());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.ItemDefault.ItemDefault.nodeName.length() + 3);
+          return this.itemDefault.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PropertyThreshold.PropertyThreshold.nodeName + "["))
+        {
+          var startTokens = xpath.split(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PropertyThreshold.PropertyThreshold.nodeName + "\\[");
+          var endToken = startTokens[1].split("]");
+          var indexString = endToken[0];
+          var childXPath = xpath.replace(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PropertyThreshold.PropertyThreshold.nodeName + "[" + indexString + "]", "");
+          var pathIndex = Integer.parseInt(indexString);
+          if(this.propertyThreshold.size() > pathIndex) {
+            return this.propertyThreshold.get(pathIndex).getNodeAtPath(childXPath);
+          }
+          return Optional.empty();
+        }
+        return Optional.of(this);
     }
   }
 

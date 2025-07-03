@@ -52,7 +52,7 @@ export const dependantTypeToChildrenDeclaration = (dependantType: DependantType)
       return template()`
         ${value.isSingle && template()`
           private ${type}${value.isNullable && `?`} _${normalizeName(key)} = ${value.isNullable? `null`: `new ${type}()`};
-          public ${type} ${normalizeName(key)}  
+          public ${type} ${normalizeName(key)}OrCreate
           { 
             get
             {
@@ -67,7 +67,26 @@ export const dependantTypeToChildrenDeclaration = (dependantType: DependantType)
             set
             {
               _${normalizeName(key)} = value;
-              _${normalizeName(key)}.ParentNode = this;
+              if(value != null) 
+              {
+                value.ParentNode = this;
+              }
+              
+            }
+          }
+          public ${type}${value.isNullable && `?`} ${normalizeName(key)}  
+          { 
+            get
+            {
+              return _${normalizeName(key)};
+            }
+            set
+            {
+              _${normalizeName(key)} = value;
+              if(value != null) 
+              {
+                value.ParentNode = this;
+              }
             }
           }
         `}

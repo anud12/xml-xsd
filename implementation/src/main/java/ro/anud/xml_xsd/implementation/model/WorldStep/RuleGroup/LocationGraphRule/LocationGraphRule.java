@@ -23,17 +23,19 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   public class LocationGraphRule implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static String nodeName = "location_graph_rule";
-    public static LocationGraphRule fromRawNode(RawNode rawNode) {
+    public static LocationGraphRule fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
       var instance = new LocationGraphRule();
+      if(Objects.nonNull(parent)) {
+        instance.parentNode(parent);
+      }
       instance.rawNode(rawNode);
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
-    public static LocationGraphRule fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static LocationGraphRule fromRawNode(RawNode rawNode) {
       logEnter();
-      var instance = fromRawNode(rawNode);
-      instance.parentNode(parent);
+      var instance = fromRawNode(rawNode, null);
       return logReturn(instance);
     }
     public static Optional<LocationGraphRule> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
@@ -95,7 +97,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void notifyChange(List<Object> list) {
+      var logger = logEnter();
       list.addLast(this);
+      logger.log("Notify change for", this.buildPath());
       onChangeList.forEach(consumer -> consumer.accept(list));
       parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
     }
@@ -120,6 +124,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule) {
           this.nodeRule.remove(object);
+          notifyChange();
         }
     }
 
@@ -144,19 +149,23 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void deserialize (RawNode rawNode) {
-      var logger = logEnter();
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing location_graph_rule");
+      try {
+        var logger = logEnter();
+        this.rawNode = rawNode;
+        // Godot.GD.Print("Deserializing location_graph_rule");
 
-      var innerLogger = logger.log("attributes");
-      //Deserialize attributes
-      innerLogger.log("id");
-      this.id = rawNode.getAttributeRequired("id");
-      innerLogger = logger.log("children");
-      //Deserialize children
-      this.setup = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.Setup.fromRawNode(rawNode.getChildrenFirst("setup").get(), this);
-      this.nodeRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule.fromRawNode(rawNode.getChildrenList("node_rule"), this);
-      logReturnVoid();
+        var innerLogger = logger.log("attributes");
+        //Deserialize attributes
+        innerLogger.log("id");
+        this.id = rawNode.getAttributeRequired("id");
+        innerLogger = logger.log("children");
+        //Deserialize children
+        this.setup = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.Setup.fromRawNode(rawNode.getChildrenFirst("setup").get(), this);
+        this.nodeRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule.fromRawNode(rawNode.getChildrenList("node_rule"), this);
+        logReturnVoid();
+      } catch (Exception e) {
+        throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
+      }
     }
 
     public RawNode serializeIntoRawNode()
@@ -268,6 +277,31 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
         deserialize(rawNode);
         return this;
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getNodeAtPath(String xpath) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.Setup.nodeName))
+        {
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.Setup.nodeName.length() + 3);
+          return this.setup.getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule.nodeName + "["))
+        {
+          var startTokens = xpath.split(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule.nodeName + "\\[");
+          var endToken = startTokens[1].split("]");
+          var indexString = endToken[0];
+          var childXPath = xpath.replace(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule.nodeName + "[" + indexString + "]", "");
+          var pathIndex = Integer.parseInt(indexString);
+          if(this.nodeRule.size() > pathIndex) {
+            return this.nodeRule.get(pathIndex).getNodeAtPath(childXPath);
+          }
+          return Optional.empty();
+        }
+        return Optional.of(this);
     }
   }
 

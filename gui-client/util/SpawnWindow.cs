@@ -7,6 +7,7 @@ public static class ButtonCreateWindowExtension
 {
     public static void SpawnWindow(this Node control, Control child)
     {
+        Logger.Info($"Spawning new window control:{control.Name}, child: {child.Name}");
         Window _window = new Window();
         _window.MinSize = new(200, 200);
         _window.Mode = Window.ModeEnum.Windowed;

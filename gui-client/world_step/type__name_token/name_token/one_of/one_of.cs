@@ -11,7 +11,7 @@ namespace XSD.Ntype__name_token.Nname_token.None_of {}
 namespace XSD {
 }
 namespace XSD.Ntype__name_token.Nname_token {
-  public class one_of : XSD.ILinkedNode , Itype__name_token {
+  public class one_of : IEquatable<one_of>, XSD.ILinkedNode , Itype__name_token {
 
     public static string ClassTypeId = ".type__name_token.name_token.one_of";
     public static string TagName = "one_of";
@@ -165,6 +165,24 @@ namespace XSD.Ntype__name_token.Nname_token {
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+        public bool Equals(one_of? obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            var other = (one_of)obj;
+            return object.Equals(this, other);
+        }
+
+    public int GetHashCode()
+    {
+        return base.GetHashCode();
     }
   }
 }

@@ -11,7 +11,7 @@ namespace XSD.Ntype__node_graph__selection.Nin__location_graph {}
 namespace XSD {
 }
 namespace XSD.Ntype__node_graph__selection {
-  public class in__location_graph : XSD.ILinkedNode  {
+  public class in__location_graph : IEquatable<in__location_graph>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".type__node_graph__selection.in__location_graph";
     public static string TagName = "in__location_graph";
@@ -28,7 +28,7 @@ namespace XSD.Ntype__node_graph__selection {
 
     //Children elements
     private XSD.Ntype__node_graph__selection.Nin__location_graph.has__location_graph_id? _has__location_graph_id = null;
-    public XSD.Ntype__node_graph__selection.Nin__location_graph.has__location_graph_id has__location_graph_id
+    public XSD.Ntype__node_graph__selection.Nin__location_graph.has__location_graph_id has__location_graph_idOrCreate
     {
       get
       {
@@ -43,7 +43,26 @@ namespace XSD.Ntype__node_graph__selection {
       set
       {
         _has__location_graph_id = value;
-        _has__location_graph_id.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Ntype__node_graph__selection.Nin__location_graph.has__location_graph_id? has__location_graph_id
+    {
+      get
+      {
+        return _has__location_graph_id;
+      }
+      set
+      {
+        _has__location_graph_id = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public in__location_graph()
@@ -170,6 +189,28 @@ namespace XSD.Ntype__node_graph__selection {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Ntype__node_graph__selection.Nin__location_graph.has__location_graph_id
+      || false;
+    }
+
+    public bool Equals(in__location_graph? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (in__location_graph)obj;
+        return Equals(has__location_graph_id, other.has__location_graph_id);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, has__location_graph_id);
+        return acc;
     }
   }
 }

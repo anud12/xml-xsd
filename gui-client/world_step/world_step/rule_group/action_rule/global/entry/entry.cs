@@ -23,7 +23,7 @@ namespace XSD {
   }
 }
 namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nglobal {
-  public class entry : XSD.ILinkedNode , Itype__action {
+  public class entry : IEquatable<entry>, XSD.ILinkedNode , Itype__action {
 
     public static string ClassTypeId = ".world_step.rule_group.action_rule.global.entry";
     public static string TagName = "entry";
@@ -46,7 +46,7 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nglobal {
 
     //Children of type__action
     private XSD.Ntype__action.from _from = new XSD.Ntype__action.from();
-    public XSD.Ntype__action.from from
+    public XSD.Ntype__action.from fromOrCreate
     {
       get
       {
@@ -61,12 +61,31 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nglobal {
       set
       {
         _from = value;
-        _from.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Ntype__action.from from
+    {
+      get
+      {
+        return _from;
+      }
+      set
+      {
+        _from = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Ntype__action.on _on = new XSD.Ntype__action.on();
-    public XSD.Ntype__action.on on
+    public XSD.Ntype__action.on onOrCreate
     {
       get
       {
@@ -81,7 +100,26 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nglobal {
       set
       {
         _on = value;
-        _on.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Ntype__action.on on
+    {
+      get
+      {
+        return _on;
+      }
+      set
+      {
+        _on = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public entry()
@@ -161,9 +199,9 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nglobal {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.id != null)
+      if(this._id != null)
       {
-        rawNode.attributes["id"] = this.id.ToString();
+        rawNode.attributes["id"] = this._id.ToString();
       }
 
       // Serialize arguments of type__action
@@ -226,6 +264,27 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nglobal {
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(entry? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (entry)obj;
+        return Equals(id, other.id);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, id);
+        return acc;
     }
   }
 }

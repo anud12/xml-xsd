@@ -18,13 +18,17 @@ public partial class ViewState: Button
             var codeEdit = new CodeEdit();
             StoreWorld_Step.instance.data?.OnSelfChange(step =>
             {
-                GD.Print("ViewState callback called");
+                Logger.Info("ViewState callback called");
                 var code = step.SerializeIntoRawNode().SerializeToString("world_step");
                 codeEdit.Text = XElement.Parse(code).ToString();
             });
-            StoreWorld_Step.instance.OnSet((step, action) =>
+            StoreWorld_Step.instance.OnSet(this, (step, action) =>
             {
                 var code = step.SerializeIntoRawNode().SerializeToString("world_step");
+                if (codeEdit == null || !IsInstanceValid(codeEdit))
+                {
+                    return;
+                }
                 codeEdit.Text = XElement.Parse(code).ToString();
             });
             this.SpawnWindow(codeEdit);

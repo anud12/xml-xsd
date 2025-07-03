@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nposition {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode {
-  public class position : XSD.ILinkedNode  {
+  public class position : IEquatable<position>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.data.location.location_graph.node.position";
     public static string TagName = "position";
@@ -108,13 +108,13 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.x != null)
+      if(this._x != null)
       {
-        rawNode.attributes["x"] = this.x.ToString();
+        rawNode.attributes["x"] = this._x.ToString();
       }
-      if(this.y != null)
+      if(this._y != null)
       {
-        rawNode.attributes["y"] = this.y.ToString();
+        rawNode.attributes["y"] = this._y.ToString();
       }
 
       //Serialize children
@@ -175,6 +175,28 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode {
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(position? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (position)obj;
+        return Equals(x, other.x) && Equals(y, other.y);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, x);
+        acc = HashCode.Combine(acc, y);
+        return acc;
     }
   }
 }

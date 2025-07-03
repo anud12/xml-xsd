@@ -11,7 +11,7 @@ namespace XSD.Ntype__action {}
 namespace XSD {
 }
 namespace XSD {
-  public class type__action : XSD.ILinkedNode  {
+  public class type__action : IEquatable<type__action>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".type__action";
     public static string TagName = "type__action";
@@ -28,7 +28,7 @@ namespace XSD {
 
     //Children elements
     private XSD.Ntype__action.from _from = new XSD.Ntype__action.from();
-    public XSD.Ntype__action.from from
+    public XSD.Ntype__action.from fromOrCreate
     {
       get
       {
@@ -43,12 +43,31 @@ namespace XSD {
       set
       {
         _from = value;
-        _from.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Ntype__action.from from
+    {
+      get
+      {
+        return _from;
+      }
+      set
+      {
+        _from = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Ntype__action.on _on = new XSD.Ntype__action.on();
-    public XSD.Ntype__action.on on
+    public XSD.Ntype__action.on onOrCreate
     {
       get
       {
@@ -63,7 +82,26 @@ namespace XSD {
       set
       {
         _on = value;
-        _on.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Ntype__action.on on
+    {
+      get
+      {
+        return _on;
+      }
+      set
+      {
+        _on = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public type__action()
@@ -213,6 +251,30 @@ namespace XSD {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Ntype__action.from
+      || candidateChild is XSD.Ntype__action.on
+      || false;
+    }
+
+    public bool Equals(type__action? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (type__action)obj;
+        return Equals(from, other.from) && Equals(on, other.on);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, from);
+        acc = HashCode.Combine(acc, on);
+        return acc;
     }
   }
 }

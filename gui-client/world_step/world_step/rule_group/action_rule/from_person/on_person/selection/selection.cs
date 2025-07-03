@@ -26,7 +26,7 @@ namespace XSD {
   }
 }
 namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person {
-  public class selection : XSD.ILinkedNode , Itype__person_selection {
+  public class selection : IEquatable<selection>, XSD.ILinkedNode , Itype__person_selection {
 
     public static string ClassTypeId = ".world_step.rule_group.action_rule.from_person.on_person.selection";
     public static string TagName = "selection";
@@ -45,7 +45,7 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person {
 
     //Children elements
     private XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.Nselection.from_person_same_location_graph_node? _from_person_same_location_graph_node = null;
-    public XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.Nselection.from_person_same_location_graph_node from_person_same_location_graph_node
+    public XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.Nselection.from_person_same_location_graph_node from_person_same_location_graph_nodeOrCreate
     {
       get
       {
@@ -60,14 +60,33 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person {
       set
       {
         _from_person_same_location_graph_node = value;
-        _from_person_same_location_graph_node.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.Nselection.from_person_same_location_graph_node? from_person_same_location_graph_node
+    {
+      get
+      {
+        return _from_person_same_location_graph_node;
+      }
+      set
+      {
+        _from_person_same_location_graph_node = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
 
     //Children of type__person_selection
     private type__math_operations? _radius = null;
-    public type__math_operations radius
+    public type__math_operations radiusOrCreate
     {
       get
       {
@@ -82,12 +101,31 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person {
       set
       {
         _radius = value;
-        _radius.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__math_operations? radius
+    {
+      get
+      {
+        return _radius;
+      }
+      set
+      {
+        _radius = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private type__math_operations? _min = null;
-    public type__math_operations min
+    public type__math_operations minOrCreate
     {
       get
       {
@@ -102,12 +140,31 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person {
       set
       {
         _min = value;
-        _min.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__math_operations? min
+    {
+      get
+      {
+        return _min;
+      }
+      set
+      {
+        _min = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private type__math_operations? _max = null;
-    public type__math_operations max
+    public type__math_operations maxOrCreate
     {
       get
       {
@@ -122,7 +179,26 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person {
       set
       {
         _max = value;
-        _max.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__math_operations? max
+    {
+      get
+      {
+        return _max;
+      }
+      set
+      {
+        _max = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
@@ -322,6 +398,28 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.Nselection.from_person_same_location_graph_node
+      || false;
+    }
+
+    public bool Equals(selection? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (selection)obj;
+        return Equals(from_person_same_location_graph_node, other.from_person_same_location_graph_node);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, from_person_same_location_graph_node);
+        return acc;
     }
   }
 }

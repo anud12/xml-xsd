@@ -20,7 +20,8 @@ public record Client(WebSocketHandler handler, WebSocketSession webSocketSession
         Load("load\n"),
         Update("update\n"),
         Stop("stop\n"),
-        Put("put\n");
+        Put("put\n"),
+        ;
 
         public final String value;
 

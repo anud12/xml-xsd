@@ -11,7 +11,7 @@ namespace XSD.Ntype__link_group {}
 namespace XSD {
 }
 namespace XSD {
-  public class type__link_group : XSD.ILinkedNode  {
+  public class type__link_group : IEquatable<type__link_group>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".type__link_group";
     public static string TagName = "type__link_group";
@@ -162,21 +162,21 @@ namespace XSD {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.id != null)
+      if(this._id != null)
       {
-        rawNode.attributes["id"] = this.id.ToString();
+        rawNode.attributes["id"] = this._id.ToString();
       }
-      if(this.angle != null)
+      if(this._angle != null)
       {
-        rawNode.attributes["angle"] = this.angle.ToString();
+        rawNode.attributes["angle"] = this._angle.ToString();
       }
-      if(this.angleMax != null)
+      if(this._angleMax != null)
       {
-        rawNode.attributes["angleMax"] = this.angleMax?.ToString();
+        rawNode.attributes["angleMax"] = this._angleMax?.ToString();
       }
-      if(this.limit != null)
+      if(this._limit != null)
       {
-        rawNode.attributes["limit"] = this.limit?.ToString();
+        rawNode.attributes["limit"] = this._limit?.ToString();
       }
 
       //Serialize children
@@ -278,6 +278,32 @@ namespace XSD {
         return this._to_option.KeyOf(casted_to_option);
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Ntype__link_group.to_option
+      || false;
+    }
+
+    public bool Equals(type__link_group? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (type__link_group)obj;
+        return Equals(id, other.id) && Equals(angle, other.angle) && Equals(angleMax, other.angleMax) && Equals(limit, other.limit) && Equals(to_option, other.to_option);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, id);
+        acc = HashCode.Combine(acc, angle);
+        acc = HashCode.Combine(acc, angleMax);
+        acc = HashCode.Combine(acc, limit);
+        acc = HashCode.Combine(acc, to_option);
+        return acc;
     }
   }
 }

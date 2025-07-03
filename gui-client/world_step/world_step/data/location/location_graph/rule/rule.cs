@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nrule {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph {
-  public class rule : XSD.ILinkedNode  {
+  public class rule : IEquatable<rule>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.data.location.location_graph.rule";
     public static string TagName = "rule";
@@ -97,9 +97,9 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.location_graph_rule_ref != null)
+      if(this._location_graph_rule_ref != null)
       {
-        rawNode.attributes["location_graph_rule_ref"] = this.location_graph_rule_ref.ToString();
+        rawNode.attributes["location_graph_rule_ref"] = this._location_graph_rule_ref.ToString();
       }
 
       //Serialize children
@@ -151,6 +151,27 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph {
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(rule? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (rule)obj;
+        return Equals(location_graph_rule_ref, other.location_graph_rule_ref);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, location_graph_rule_ref);
+        return acc;
     }
   }
 }

@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.Nproperty_threshold 
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {
-  public class property_threshold : XSD.ILinkedNode  {
+  public class property_threshold : IEquatable<property_threshold>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group.property_rule.entry.property-threshold";
     public static string TagName = "property-threshold";
@@ -119,17 +119,17 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.name != null)
+      if(this._name != null)
       {
-        rawNode.attributes["name"] = this.name.ToString();
+        rawNode.attributes["name"] = this._name.ToString();
       }
-      if(this.min_value_inclusive != null)
+      if(this._min_value_inclusive != null)
       {
-        rawNode.attributes["min-value-inclusive"] = this.min_value_inclusive?.ToString();
+        rawNode.attributes["min-value-inclusive"] = this._min_value_inclusive?.ToString();
       }
-      if(this.max_value_inclusive != null)
+      if(this._max_value_inclusive != null)
       {
-        rawNode.attributes["max-value-inclusive"] = this.max_value_inclusive?.ToString();
+        rawNode.attributes["max-value-inclusive"] = this._max_value_inclusive?.ToString();
       }
 
       //Serialize children
@@ -199,6 +199,29 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(property_threshold? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (property_threshold)obj;
+        return Equals(name, other.name) && Equals(min_value_inclusive, other.min_value_inclusive) && Equals(max_value_inclusive, other.max_value_inclusive);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, name);
+        acc = HashCode.Combine(acc, min_value_inclusive);
+        acc = HashCode.Combine(acc, max_value_inclusive);
+        return acc;
     }
   }
 }

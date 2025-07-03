@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_classification_rule.Nentry {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nlocation_classification_rule {
-  public class entry : XSD.ILinkedNode  {
+  public class entry : IEquatable<entry>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group.location_classification_rule.entry";
     public static string TagName = "entry";
@@ -97,9 +97,9 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_classification_rule {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.id != null)
+      if(this._id != null)
       {
-        rawNode.attributes["id"] = this.id.ToString();
+        rawNode.attributes["id"] = this._id.ToString();
       }
 
       //Serialize children
@@ -151,6 +151,27 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_classification_rule {
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(entry? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (entry)obj;
+        return Equals(id, other.id);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, id);
+        return acc;
     }
   }
 }

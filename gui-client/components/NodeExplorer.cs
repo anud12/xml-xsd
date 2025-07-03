@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Godot;
 using Guiclient.components.nodes;
+using Guiclient.util;
 using XSD;
 
 public partial class NodeExplorer : PanelContainer
@@ -30,6 +31,7 @@ public partial class NodeExplorer : PanelContainer
         var _refreshButton = GetNode<Button>("%RefreshButton");
         _refreshButton.Pressed += () =>
         {
+            Logger.Info("Refresh clicked");
             Populate();
         };
         _attributeContainer = GetNode<GridContainer>("%AttributeContainer");
@@ -39,6 +41,7 @@ public partial class NodeExplorer : PanelContainer
         _childContainer.Visible = _expandButton.ButtonPressed;
         _expandButton.Toggled += (pressed) =>
         {
+            Logger.Info("Expand toggled");
             _attributeContainer.Visible = pressed;
             _childContainer.Visible = pressed;
         };
@@ -84,6 +87,7 @@ public partial class NodeExplorer : PanelContainer
         createNewButton.Text = "Add";
         createNewButton.Pressed += () =>
         {
+            Logger.Info("Add");
             if (propertyInfo.PropertyType == typeof(string))
             {
                 var newValue = string.Empty;
@@ -115,6 +119,7 @@ public partial class NodeExplorer : PanelContainer
         createNewButton.Text = "Clear";
         createNewButton.Pressed += () =>
         {
+            Logger.Info("Clear attribute");
             _linkedNode.SetAttribute(propertyInfo.Name, null);
             PopulateAttributes();
         };
@@ -127,6 +132,7 @@ public partial class NodeExplorer : PanelContainer
         createNewButton.Text = "Clear";
         createNewButton.Pressed += () =>
         {
+            Logger.Info("Clear child");
             _linkedNode.ClearChild(propertyInfo.GetValue(_linkedNode));
             PopulateAttributes();
         };
@@ -249,6 +255,7 @@ public partial class NodeExplorer : PanelContainer
             valueInput.Text = objectValue?.ToString() ?? "null";
             valueInput.TextChanged += (newValue) =>
             {
+                Logger.Info($"String property changed : {newValue}");
                 _linkedNode.SetAttribute(propertyInfo.Name, newValue);
             };
                 
@@ -277,7 +284,7 @@ public partial class NodeExplorer : PanelContainer
             valueInput.Value = Convert.ToDouble(objectValue ?? 0);
             valueInput.ValueChanged += (newValue) =>
             {
-                GD.Print($"New value ${newValue}");
+                Logger.Info($"Int property changed: {newValue}");
                 _linkedNode.SetAttribute(propertyInfo.Name, newValue.ToString());
             };
             _attributeContainer.AddChild(valueInput);

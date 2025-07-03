@@ -11,7 +11,7 @@ namespace XSD.Ntype__trigger {}
 namespace XSD {
 }
 namespace XSD {
-  public class type__trigger : XSD.ILinkedNode  {
+  public class type__trigger : IEquatable<type__trigger>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".type__trigger";
     public static string TagName = "type__trigger";
@@ -28,7 +28,7 @@ namespace XSD {
 
     //Children elements
     private XSD.Ntype__trigger.person_action_used _person_action_used = new XSD.Ntype__trigger.person_action_used();
-    public XSD.Ntype__trigger.person_action_used person_action_used
+    public XSD.Ntype__trigger.person_action_used person_action_usedOrCreate
     {
       get
       {
@@ -43,7 +43,26 @@ namespace XSD {
       set
       {
         _person_action_used = value;
-        _person_action_used.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Ntype__trigger.person_action_used person_action_used
+    {
+      get
+      {
+        return _person_action_used;
+      }
+      set
+      {
+        _person_action_used = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public type__trigger()
@@ -169,6 +188,28 @@ namespace XSD {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Ntype__trigger.person_action_used
+      || false;
+    }
+
+    public bool Equals(type__trigger? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (type__trigger)obj;
+        return Equals(person_action_used, other.person_action_used);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, person_action_used);
+        return acc;
     }
   }
 }

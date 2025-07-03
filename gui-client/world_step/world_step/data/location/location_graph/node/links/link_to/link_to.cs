@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to 
 namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks {
-  public class link_to : XSD.ILinkedNode  {
+  public class link_to : IEquatable<link_to>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.data.location.location_graph.node.links.link_to";
     public static string TagName = "link_to";
@@ -32,7 +32,7 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks {
 
     //Children elements
     private XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people? _people = null;
-    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people people
+    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people peopleOrCreate
     {
       get
       {
@@ -47,12 +47,31 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks {
       set
       {
         _people = value;
-        _people.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people? people
+    {
+      get
+      {
+        return _people;
+      }
+      set
+      {
+        _people = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private type__math_operations? _person_progress_property = null;
-    public type__math_operations person_progress_property
+    public type__math_operations person_progress_propertyOrCreate
     {
       get
       {
@@ -67,7 +86,26 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks {
       set
       {
         _person_progress_property = value;
-        _person_progress_property.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__math_operations? person_progress_property
+    {
+      get
+      {
+        return _person_progress_property;
+      }
+      set
+      {
+        _person_progress_property = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public link_to()
@@ -170,13 +208,13 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.node_id_ref != null)
+      if(this._node_id_ref != null)
       {
-        rawNode.attributes["node_id_ref"] = this.node_id_ref.ToString();
+        rawNode.attributes["node_id_ref"] = this._node_id_ref.ToString();
       }
-      if(this.total_progress != null)
+      if(this._total_progress != null)
       {
-        rawNode.attributes["total_progress"] = this.total_progress.ToString();
+        rawNode.attributes["total_progress"] = this._total_progress.ToString();
       }
 
       //Serialize children
@@ -263,6 +301,32 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people
+      || candidateChild is type__math_operations
+      || false;
+    }
+
+    public bool Equals(link_to? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (link_to)obj;
+        return Equals(node_id_ref, other.node_id_ref) && Equals(total_progress, other.total_progress) && Equals(people, other.people) && Equals(person_progress_property, other.person_progress_property);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, node_id_ref);
+        acc = HashCode.Combine(acc, total_progress);
+        acc = HashCode.Combine(acc, people);
+        acc = HashCode.Combine(acc, person_progress_property);
+        return acc;
     }
   }
 }

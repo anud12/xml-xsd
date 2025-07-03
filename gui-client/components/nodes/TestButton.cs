@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Godot;
+using Guiclient.util;
 using Guiclient.XSDWebsocketClient;
 
 [Tool]
@@ -17,7 +18,7 @@ public partial class TestButton : Button
 
     public void onPressed()
     {
-        GD.Print("Button pressed");
+        Logger.Info("Button pressed");
 
         var dd = new List<string>(); 
 

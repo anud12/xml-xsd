@@ -23,17 +23,19 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   public class RuleGroup implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static String nodeName = "rule_group";
-    public static RuleGroup fromRawNode(RawNode rawNode) {
+    public static RuleGroup fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
       var instance = new RuleGroup();
+      if(Objects.nonNull(parent)) {
+        instance.parentNode(parent);
+      }
       instance.rawNode(rawNode);
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
-    public static RuleGroup fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static RuleGroup fromRawNode(RawNode rawNode) {
       logEnter();
-      var instance = fromRawNode(rawNode);
-      instance.parentNode(parent);
+      var instance = fromRawNode(rawNode, null);
       return logReturn(instance);
     }
     public static Optional<RuleGroup> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
@@ -106,7 +108,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void notifyChange(List<Object> list) {
+      var logger = logEnter();
       list.addLast(this);
+      logger.log("Notify change for", this.buildPath());
       onChangeList.forEach(consumer -> consumer.accept(list));
       parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
     }
@@ -128,27 +132,35 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public void removeChild(Object object) {
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule) {
           this.propertyRule = Optional.empty();
+          notifyChange();
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.ClassificationRule) {
           this.classificationRule = Optional.empty();
+          notifyChange();
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.NameRule) {
           this.nameRule = Optional.empty();
+          notifyChange();
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.ActionRule) {
           this.actionRule = Optional.empty();
+          notifyChange();
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.EventsRule) {
           this.eventsRule = Optional.empty();
+          notifyChange();
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LinkGroupRuleList.LinkGroupRuleList) {
           this.linkGroupRuleList = Optional.empty();
+          notifyChange();
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.LocationGraphRule) {
           this.locationGraphRule = Optional.empty();
+          notifyChange();
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationClassificationRule.LocationClassificationRule) {
           this.locationClassificationRule = Optional.empty();
+          notifyChange();
         }
     }
 
@@ -191,23 +203,27 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void deserialize (RawNode rawNode) {
-      var logger = logEnter();
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing rule_group");
+      try {
+        var logger = logEnter();
+        this.rawNode = rawNode;
+        // Godot.GD.Print("Deserializing rule_group");
 
-      var innerLogger = logger.log("attributes");
-      //Deserialize attributes
-      innerLogger = logger.log("children");
-      //Deserialize children
-      this.propertyRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule.fromRawNode(rawNode.getChildrenFirst("property_rule"), this);
-      this.classificationRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.ClassificationRule.fromRawNode(rawNode.getChildrenFirst("classification_rule"), this);
-      this.nameRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.NameRule.fromRawNode(rawNode.getChildrenFirst("name_rule"), this);
-      this.actionRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.ActionRule.fromRawNode(rawNode.getChildrenFirst("action_rule"), this);
-      this.eventsRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.EventsRule.fromRawNode(rawNode.getChildrenFirst("events_rule"), this);
-      this.linkGroupRuleList = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LinkGroupRuleList.LinkGroupRuleList.fromRawNode(rawNode.getChildrenFirst("link_group_rule_list"), this);
-      this.locationGraphRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.LocationGraphRule.fromRawNode(rawNode.getChildrenFirst("location_graph_rule"), this);
-      this.locationClassificationRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationClassificationRule.LocationClassificationRule.fromRawNode(rawNode.getChildrenFirst("location_classification_rule"), this);
-      logReturnVoid();
+        var innerLogger = logger.log("attributes");
+        //Deserialize attributes
+        innerLogger = logger.log("children");
+        //Deserialize children
+        this.propertyRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule.fromRawNode(rawNode.getChildrenFirst("property_rule"), this);
+        this.classificationRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.ClassificationRule.fromRawNode(rawNode.getChildrenFirst("classification_rule"), this);
+        this.nameRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.NameRule.fromRawNode(rawNode.getChildrenFirst("name_rule"), this);
+        this.actionRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.ActionRule.fromRawNode(rawNode.getChildrenFirst("action_rule"), this);
+        this.eventsRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.EventsRule.fromRawNode(rawNode.getChildrenFirst("events_rule"), this);
+        this.linkGroupRuleList = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LinkGroupRuleList.LinkGroupRuleList.fromRawNode(rawNode.getChildrenFirst("link_group_rule_list"), this);
+        this.locationGraphRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.LocationGraphRule.fromRawNode(rawNode.getChildrenFirst("location_graph_rule"), this);
+        this.locationClassificationRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationClassificationRule.LocationClassificationRule.fromRawNode(rawNode.getChildrenFirst("location_classification_rule"), this);
+        logReturnVoid();
+      } catch (Exception e) {
+        throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
+      }
     }
 
     public RawNode serializeIntoRawNode()
@@ -550,6 +566,78 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
         deserialize(rawNode);
         return this;
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getNodeAtPath(String xpath) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule.nodeName))
+        {
+          if(this.propertyRule.isEmpty()) {
+            this.propertyRule = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule.nodeName.length() + 3);
+          return this.propertyRule.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.ClassificationRule.nodeName))
+        {
+          if(this.classificationRule.isEmpty()) {
+            this.classificationRule = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.ClassificationRule());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.ClassificationRule.nodeName.length() + 3);
+          return this.classificationRule.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.NameRule.nodeName))
+        {
+          if(this.nameRule.isEmpty()) {
+            this.nameRule = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.NameRule());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.NameRule.nodeName.length() + 3);
+          return this.nameRule.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.ActionRule.nodeName))
+        {
+          if(this.actionRule.isEmpty()) {
+            this.actionRule = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.ActionRule());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.ActionRule.nodeName.length() + 3);
+          return this.actionRule.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.EventsRule.nodeName))
+        {
+          if(this.eventsRule.isEmpty()) {
+            this.eventsRule = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.EventsRule());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.EventsRule.nodeName.length() + 3);
+          return this.eventsRule.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LinkGroupRuleList.LinkGroupRuleList.nodeName))
+        {
+          if(this.linkGroupRuleList.isEmpty()) {
+            this.linkGroupRuleList = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LinkGroupRuleList.LinkGroupRuleList());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LinkGroupRuleList.LinkGroupRuleList.nodeName.length() + 3);
+          return this.linkGroupRuleList.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.LocationGraphRule.nodeName))
+        {
+          if(this.locationGraphRule.isEmpty()) {
+            this.locationGraphRule = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.LocationGraphRule());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.LocationGraphRule.nodeName.length() + 3);
+          return this.locationGraphRule.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationClassificationRule.LocationClassificationRule.nodeName))
+        {
+          if(this.locationClassificationRule.isEmpty()) {
+            this.locationClassificationRule = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationClassificationRule.LocationClassificationRule());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationClassificationRule.LocationClassificationRule.nodeName.length() + 3);
+          return this.locationClassificationRule.get().getNodeAtPath(childXPath);
+        }
+        return Optional.of(this);
     }
   }
 

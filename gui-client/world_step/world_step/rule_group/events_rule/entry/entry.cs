@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nevents_rule {
-  public class entry : XSD.ILinkedNode  {
+  public class entry : IEquatable<entry>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group.events_rule.entry";
     public static string TagName = "entry";
@@ -161,9 +161,9 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.id != null)
+      if(this._id != null)
       {
-        rawNode.attributes["id"] = this.id.ToString();
+        rawNode.attributes["id"] = this._id.ToString();
       }
 
       //Serialize children
@@ -261,6 +261,31 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule {
         return this._then.KeyOf(casted_then);
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is type__trigger
+      || candidateChild is XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.then
+      || false;
+    }
+
+    public bool Equals(entry? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (entry)obj;
+        return Equals(id, other.id) && Equals(when, other.when) && Equals(then, other.then);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, id);
+        acc = HashCode.Combine(acc, when);
+        acc = HashCode.Combine(acc, then);
+        return acc;
     }
   }
 }

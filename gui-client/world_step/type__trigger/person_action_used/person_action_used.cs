@@ -11,7 +11,7 @@ namespace XSD.Ntype__trigger.Nperson_action_used {}
 namespace XSD {
 }
 namespace XSD.Ntype__trigger {
-  public class person_action_used : XSD.ILinkedNode  {
+  public class person_action_used : IEquatable<person_action_used>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".type__trigger.person_action_used";
     public static string TagName = "person_action_used";
@@ -97,9 +97,9 @@ namespace XSD.Ntype__trigger {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.action_rule_ref != null)
+      if(this._action_rule_ref != null)
       {
-        rawNode.attributes["action_rule_ref"] = this.action_rule_ref.ToString();
+        rawNode.attributes["action_rule_ref"] = this._action_rule_ref.ToString();
       }
 
       //Serialize children
@@ -151,6 +151,27 @@ namespace XSD.Ntype__trigger {
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(person_action_used? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (person_action_used)obj;
+        return Equals(action_rule_ref, other.action_rule_ref);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, action_rule_ref);
+        return acc;
     }
   }
 }

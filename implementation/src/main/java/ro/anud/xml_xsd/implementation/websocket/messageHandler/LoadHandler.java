@@ -3,6 +3,7 @@ package ro.anud.xml_xsd.implementation.websocket.messageHandler;
 import org.springframework.stereotype.Component;
 import org.xml.sax.SAXException;
 import ro.anud.xml_xsd.implementation.WorldStepRunner;
+import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 import ro.anud.xml_xsd.implementation.util.LocalLogger;
 import ro.anud.xml_xsd.implementation.validator.AtrributeValidator;
 import ro.anud.xml_xsd.implementation.websocket.Client;
@@ -38,9 +39,7 @@ public record LoadHandler(WorldStepRunner worldStepRunner) implements WebSocketH
                             .collect(Collectors.joining("\n")));
                         return;
                     }
-
-                    webSocketHandler.getWorldStepInstance().setWorldStep(worldStep);
-                    webSocketHandler.getWorldStepInstance().getOutInstance().setWorldStep(buildWorldStep(string));
+                    webSocketHandler.setWorldStepInstance(WorldStepInstance.createNewDoubleBuffered(worldStep));
 
                     client.broadcast(Client.ReturnCode.Load);
                 } catch (SAXException e) {

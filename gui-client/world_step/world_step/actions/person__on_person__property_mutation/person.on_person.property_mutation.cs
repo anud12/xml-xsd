@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nactions.Nperson__on_person__property_mutation {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions {
-  public class person__on_person__property_mutation : XSD.ILinkedNode  {
+  public class person__on_person__property_mutation : IEquatable<person__on_person__property_mutation>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.actions.person.on_person.property_mutation";
     public static string TagName = "person.on_person.property_mutation";
@@ -119,17 +119,17 @@ namespace XSD.Nworld_step.Nactions {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.person_id_ref != null)
+      if(this._person_id_ref != null)
       {
-        rawNode.attributes["person_id_ref"] = this.person_id_ref.ToString();
+        rawNode.attributes["person_id_ref"] = this._person_id_ref.ToString();
       }
-      if(this.target_person_id_ref != null)
+      if(this._target_person_id_ref != null)
       {
-        rawNode.attributes["target_person_id_ref"] = this.target_person_id_ref.ToString();
+        rawNode.attributes["target_person_id_ref"] = this._target_person_id_ref.ToString();
       }
-      if(this.action_property_mutation_rule_ref != null)
+      if(this._action_property_mutation_rule_ref != null)
       {
-        rawNode.attributes["action_property_mutation_rule_ref"] = this.action_property_mutation_rule_ref.ToString();
+        rawNode.attributes["action_property_mutation_rule_ref"] = this._action_property_mutation_rule_ref.ToString();
       }
 
       //Serialize children
@@ -199,6 +199,29 @@ namespace XSD.Nworld_step.Nactions {
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(person__on_person__property_mutation? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (person__on_person__property_mutation)obj;
+        return Equals(person_id_ref, other.person_id_ref) && Equals(target_person_id_ref, other.target_person_id_ref) && Equals(action_property_mutation_rule_ref, other.action_property_mutation_rule_ref);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, person_id_ref);
+        acc = HashCode.Combine(acc, target_person_id_ref);
+        acc = HashCode.Combine(acc, action_property_mutation_rule_ref);
+        return acc;
     }
   }
 }

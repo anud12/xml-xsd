@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode {
-  public class links : XSD.ILinkedNode  {
+  public class links : IEquatable<links>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.data.location.location_graph.node.links";
     public static string TagName = "links";
@@ -182,6 +182,28 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode {
         return this._link_to.KeyOf(casted_link_to);
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.link_to
+      || false;
+    }
+
+    public bool Equals(links? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (links)obj;
+        return Equals(link_to, other.link_to);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, link_to);
+        return acc;
     }
   }
 }

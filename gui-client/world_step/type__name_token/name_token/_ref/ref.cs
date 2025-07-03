@@ -11,7 +11,7 @@ namespace XSD.Ntype__name_token.Nname_token.N_ref {}
 namespace XSD {
 }
 namespace XSD.Ntype__name_token.Nname_token {
-  public class _ref : XSD.ILinkedNode  {
+  public class _ref : IEquatable<_ref>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".type__name_token.name_token.ref";
     public static string TagName = "ref";
@@ -97,9 +97,9 @@ namespace XSD.Ntype__name_token.Nname_token {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.name_rule_ref != null)
+      if(this._name_rule_ref != null)
       {
-        rawNode.attributes["name_rule_ref"] = this.name_rule_ref.ToString();
+        rawNode.attributes["name_rule_ref"] = this._name_rule_ref.ToString();
       }
 
       //Serialize children
@@ -151,6 +151,27 @@ namespace XSD.Ntype__name_token.Nname_token {
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(_ref? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (_ref)obj;
+        return Equals(name_rule_ref, other.name_rule_ref);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, name_rule_ref);
+        return acc;
     }
   }
 }

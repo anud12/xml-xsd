@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
 using Godot;
+using Guiclient.util;
 using Guiclient.XSDWebsocketClient;
+using Microsoft.CSharp.RuntimeBinder;
 using util.dataStore;
 using XSD;
 
@@ -34,7 +38,8 @@ public class XSDWebSocketClient
         download,
         startStop,
         start,
-        load
+        load,
+        put
     }
 
     private ClientWebSocket ws = new ClientWebSocket();
@@ -58,7 +63,7 @@ public class XSDWebSocketClient
         {
             try
             {
-                GD.Print("XSDWebSocketClient Thread started");
+                Logger.Info("XSDWebSocketClient Thread started");
                 var buffer = new byte[1024];
                 String messageString = "";
                 while (ws.State == WebSocketState.Open)
@@ -70,7 +75,7 @@ public class XSDWebSocketClient
                     {
                         var messageObject = MessageFromString(messageString);
                         _messageList.Add(messageObject);
-                        GD.Print("Message received: " + messageObject + " lenght " + messageString.Length);
+                        Logger.Info("Message received: " + messageObject + " lenght " + messageString.Length);
                         foreach (var handler in _messageHandlers)
                         {
                             try
@@ -79,7 +84,7 @@ public class XSDWebSocketClient
                             }
                             catch (Exception e)
                             {
-                                GD.PrintErr(e);
+                                Logger.Error(e);
                             }
                         }
                         buffer = new byte[1024];
@@ -87,12 +92,11 @@ public class XSDWebSocketClient
                     }
 
                 }
-                GD.Print("XSDWebSocketClient Returning");
+                Logger.Info("XSDWebSocketClient Returning");
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                GD.PrintErr(e);
+                Logger.Error(e);
             }
         });
         t.Start();
@@ -119,7 +123,7 @@ public class XSDWebSocketClient
 
     public void SendStartStop()
     {
-        GD.Print("Send StartTop");
+        Logger.Info("Send StartTop");
         Send(SendMessageType.startStop + "\n");
     }
 
@@ -135,7 +139,7 @@ public class XSDWebSocketClient
     
     public void SendDownload()
     {
-        GD.Print("Sending Download");
+        Logger.Info("Sending Download");
         // send message "download" to server
         var messageString = SendMessageType.download + "\n";
         var messageBytes = Encoding.UTF8.GetBytes(messageString);
@@ -161,5 +165,50 @@ public class XSDWebSocketClient
             ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);    
         }
         
+    }
+
+    public void SendNode(ILinkedNode parentNode, ILinkedNode node)
+    {
+        Logger.Info($"SendNode called with parentNode: {parentNode}, node: {node}");
+        if (!parentNode.IsValidChildType(node))
+        {
+            Logger.Error("Invalid child node type. The provided node is not a valid child of the parent node.");
+            throw new InvalidOperationException("The provided node is not a valid child of the parent node.");
+        }
+        
+        var buildPath = parentNode.BuildPath() + node.BuildPath().Replace("[0]", "[new]");
+        Logger.Info($"Sending update with buildPath: {buildPath}");
+        this.SendPut(buildPath, node);
+    }
+
+    private void SendPut(string buildPath, ILinkedNode node)
+    {
+        Logger.Info($"SendUpdate called with buildPath: {buildPath}, node: {node}");
+
+        var messageString = SendMessageType.put + "\n";
+        messageString += buildPath + "\n";
+        Logger.Info("Initialized messageString for update.");
+
+        var document = new XmlDocument();
+        XmlElement worldStepElement = document.CreateElement(node.NodeName);
+        document.AppendChild(worldStepElement);
+        Logger.Info("Created XmlDocument and world_step element.");
+
+        Logger.Info("Serializing world step.");
+        node.Serialize(worldStepElement);
+
+        Logger.Info("Serializing node into raw node.");
+        node.SerializeIntoRawNode();
+
+        var stringWriter = new StringWriter();
+        var xmlTextWriter = new XmlTextWriter(stringWriter);
+        document.WriteTo(xmlTextWriter);
+        xmlTextWriter.Flush();
+        var documentString = stringWriter.GetStringBuilder().ToString();
+        Logger.Info($"Serialized XML document: {documentString}");
+
+        messageString += documentString;
+        Logger.Info("Final messageString prepared, sending message.");
+        Send(messageString);
     }
 }

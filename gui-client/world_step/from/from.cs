@@ -11,7 +11,7 @@ namespace XSD.Nfrom {}
 namespace XSD {
 }
 namespace XSD {
-  public class from : XSD.ILinkedNode  {
+  public class from : IEquatable<from>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".from";
     public static string TagName = "from";
@@ -28,7 +28,7 @@ namespace XSD {
 
     //Children elements
     private XSD.Nfrom.person? _person = null;
-    public XSD.Nfrom.person person
+    public XSD.Nfrom.person personOrCreate
     {
       get
       {
@@ -43,7 +43,26 @@ namespace XSD {
       set
       {
         _person = value;
-        _person.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nfrom.person? person
+    {
+      get
+      {
+        return _person;
+      }
+      set
+      {
+        _person = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public from()
@@ -170,6 +189,28 @@ namespace XSD {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nfrom.person
+      || false;
+    }
+
+    public bool Equals(from? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (from)obj;
+        return Equals(person, other.person);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, person);
+        return acc;
     }
   }
 }

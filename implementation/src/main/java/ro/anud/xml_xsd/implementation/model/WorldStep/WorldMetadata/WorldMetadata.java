@@ -23,17 +23,19 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   public class WorldMetadata implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static String nodeName = "world_metadata";
-    public static WorldMetadata fromRawNode(RawNode rawNode) {
+    public static WorldMetadata fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
       var instance = new WorldMetadata();
+      if(Objects.nonNull(parent)) {
+        instance.parentNode(parent);
+      }
       instance.rawNode(rawNode);
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
-    public static WorldMetadata fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static WorldMetadata fromRawNode(RawNode rawNode) {
       logEnter();
-      var instance = fromRawNode(rawNode);
-      instance.parentNode(parent);
+      var instance = fromRawNode(rawNode, null);
       return logReturn(instance);
     }
     public static Optional<WorldMetadata> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
@@ -101,7 +103,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void notifyChange(List<Object> list) {
+      var logger = logEnter();
       list.addLast(this);
+      logger.log("Notify change for", this.buildPath());
       onChangeList.forEach(consumer -> consumer.accept(list));
       parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
     }
@@ -123,9 +127,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public void removeChild(Object object) {
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.PreviousWorldStep.PreviousWorldStep) {
           this.previousWorldStep = Optional.empty();
+          notifyChange();
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.NextWorldStep.NextWorldStep) {
           this.nextWorldStep = Optional.empty();
+          notifyChange();
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.ElapsedTime.ElapsedTime) {
           throw new RuntimeException("trying to delete elapsedTime which is required");
@@ -174,21 +180,25 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void deserialize (RawNode rawNode) {
-      var logger = logEnter();
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing world_metadata");
+      try {
+        var logger = logEnter();
+        this.rawNode = rawNode;
+        // Godot.GD.Print("Deserializing world_metadata");
 
-      var innerLogger = logger.log("attributes");
-      //Deserialize attributes
-      innerLogger = logger.log("children");
-      //Deserialize children
-      this.previousWorldStep = ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.PreviousWorldStep.PreviousWorldStep.fromRawNode(rawNode.getChildrenFirst("previous_world_step"), this);
-      this.nextWorldStep = ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.NextWorldStep.NextWorldStep.fromRawNode(rawNode.getChildrenFirst("next_world_step"), this);
-      this.elapsedTime = ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.ElapsedTime.ElapsedTime.fromRawNode(rawNode.getChildrenFirst("elapsed_time").get(), this);
-      this.stepDuration = ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.StepDuration.StepDuration.fromRawNode(rawNode.getChildrenFirst("stepDuration").get(), this);
-      this.counter = ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.Counter.Counter.fromRawNode(rawNode.getChildrenFirst("counter").get(), this);
-      this.randomizationTable = ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.RandomizationTable.RandomizationTable.fromRawNode(rawNode.getChildrenFirst("randomization_table").get(), this);
-      logReturnVoid();
+        var innerLogger = logger.log("attributes");
+        //Deserialize attributes
+        innerLogger = logger.log("children");
+        //Deserialize children
+        this.previousWorldStep = ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.PreviousWorldStep.PreviousWorldStep.fromRawNode(rawNode.getChildrenFirst("previous_world_step"), this);
+        this.nextWorldStep = ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.NextWorldStep.NextWorldStep.fromRawNode(rawNode.getChildrenFirst("next_world_step"), this);
+        this.elapsedTime = ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.ElapsedTime.ElapsedTime.fromRawNode(rawNode.getChildrenFirst("elapsed_time").get(), this);
+        this.stepDuration = ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.StepDuration.StepDuration.fromRawNode(rawNode.getChildrenFirst("stepDuration").get(), this);
+        this.counter = ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.Counter.Counter.fromRawNode(rawNode.getChildrenFirst("counter").get(), this);
+        this.randomizationTable = ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.RandomizationTable.RandomizationTable.fromRawNode(rawNode.getChildrenFirst("randomization_table").get(), this);
+        logReturnVoid();
+      } catch (Exception e) {
+        throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
+      }
     }
 
     public RawNode serializeIntoRawNode()
@@ -387,6 +397,50 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
         deserialize(rawNode);
         return this;
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getNodeAtPath(String xpath) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.PreviousWorldStep.PreviousWorldStep.nodeName))
+        {
+          if(this.previousWorldStep.isEmpty()) {
+            this.previousWorldStep = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.PreviousWorldStep.PreviousWorldStep());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.PreviousWorldStep.PreviousWorldStep.nodeName.length() + 3);
+          return this.previousWorldStep.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.NextWorldStep.NextWorldStep.nodeName))
+        {
+          if(this.nextWorldStep.isEmpty()) {
+            this.nextWorldStep = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.NextWorldStep.NextWorldStep());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.NextWorldStep.NextWorldStep.nodeName.length() + 3);
+          return this.nextWorldStep.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.ElapsedTime.ElapsedTime.nodeName))
+        {
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.ElapsedTime.ElapsedTime.nodeName.length() + 3);
+          return this.elapsedTime.getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.StepDuration.StepDuration.nodeName))
+        {
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.StepDuration.StepDuration.nodeName.length() + 3);
+          return this.stepDuration.getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.Counter.Counter.nodeName))
+        {
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.Counter.Counter.nodeName.length() + 3);
+          return this.counter.getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.RandomizationTable.RandomizationTable.nodeName))
+        {
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.RandomizationTable.RandomizationTable.nodeName.length() + 3);
+          return this.randomizationTable.getNodeAtPath(childXPath);
+        }
+        return Optional.of(this);
     }
   }
 

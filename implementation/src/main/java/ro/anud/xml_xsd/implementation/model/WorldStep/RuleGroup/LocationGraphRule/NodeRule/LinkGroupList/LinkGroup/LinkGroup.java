@@ -23,17 +23,19 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   public class LinkGroup implements  ro.anud.xml_xsd.implementation.model.interfaces.IType_linkGroup.IType_linkGroup<LinkGroup>,  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static String nodeName = "link_group";
-    public static LinkGroup fromRawNode(RawNode rawNode) {
+    public static LinkGroup fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
       var instance = new LinkGroup();
+      if(Objects.nonNull(parent)) {
+        instance.parentNode(parent);
+      }
       instance.rawNode(rawNode);
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
-    public static LinkGroup fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static LinkGroup fromRawNode(RawNode rawNode) {
       logEnter();
-      var instance = fromRawNode(rawNode);
-      instance.parentNode(parent);
+      var instance = fromRawNode(rawNode, null);
       return logReturn(instance);
     }
     public static Optional<LinkGroup> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
@@ -103,7 +105,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void notifyChange(List<Object> list) {
+      var logger = logEnter();
       list.addLast(this);
+      logger.log("Notify change for", this.buildPath());
       onChangeList.forEach(consumer -> consumer.accept(list));
       parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
     }
@@ -140,28 +144,32 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void deserialize (RawNode rawNode) {
-      var logger = logEnter();
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing link_group");
+      try {
+        var logger = logEnter();
+        this.rawNode = rawNode;
+        // Godot.GD.Print("Deserializing link_group");
 
-      var innerLogger = logger.log("attributes");
-      //Deserialize attributes
+        var innerLogger = logger.log("attributes");
+        //Deserialize attributes
 
-      // Deserialize arguments of type__link_group
-      innerLogger.log("id");
-      this.id = rawNode.getAttributeRequired("id");
-      innerLogger.log("angle");
-      this.angle = rawNode.getAttributeIntRequired("angle");
-      innerLogger.log("angleMax");
-      this.angleMax = rawNode.getAttributeInt("angleMax");
-      innerLogger.log("limit");
-      this.limit = rawNode.getAttributeInt("limit");
-      innerLogger = logger.log("children");
-      //Deserialize children
+        // Deserialize arguments of type__link_group
+        innerLogger.log("id");
+        this.id = rawNode.getAttributeRequired("id");
+        innerLogger.log("angle");
+        this.angle = rawNode.getAttributeIntRequired("angle");
+        innerLogger.log("angleMax");
+        this.angleMax = rawNode.getAttributeInt("angleMax");
+        innerLogger.log("limit");
+        this.limit = rawNode.getAttributeInt("limit");
+        innerLogger = logger.log("children");
+        //Deserialize children
 
-      // Deserialize children of type__link_group
-      this.toOption = ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption.fromRawNode(rawNode.getChildrenList("to_option"), this);
-      logReturnVoid();
+        // Deserialize children of type__link_group
+        this.toOption = ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption.fromRawNode(rawNode.getChildrenList("to_option"), this);
+        logReturnVoid();
+      } catch (Exception e) {
+        throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
+      }
     }
 
     public RawNode serializeIntoRawNode()
@@ -273,6 +281,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
         deserialize(rawNode);
         return this;
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getNodeAtPath(String xpath) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+        return Optional.of(this);
     }
   }
 

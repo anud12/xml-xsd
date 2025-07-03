@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
-  public class setup : XSD.ILinkedNode  {
+  public class setup : IEquatable<setup>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group.location_graph_rule.setup";
     public static string TagName = "setup";
@@ -28,7 +28,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
 
     //Children elements
     private XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.starting_node _starting_node = new XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.starting_node();
-    public XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.starting_node starting_node
+    public XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.starting_node starting_nodeOrCreate
     {
       get
       {
@@ -43,7 +43,26 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
       set
       {
         _starting_node = value;
-        _starting_node.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.starting_node starting_node
+    {
+      get
+      {
+        return _starting_node;
+      }
+      set
+      {
+        _starting_node = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
@@ -226,6 +245,30 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
         return this._necessary_node.KeyOf(casted_necessary_node);
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.starting_node
+      || candidateChild is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.necessary_node
+      || false;
+    }
+
+    public bool Equals(setup? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (setup)obj;
+        return Equals(starting_node, other.starting_node) && Equals(necessary_node, other.necessary_node);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, starting_node);
+        acc = HashCode.Combine(acc, necessary_node);
+        return acc;
     }
   }
 }

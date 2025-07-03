@@ -37,7 +37,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
     private final HashMap<String, MessageHandler> handlerHashMap = new HashMap<>();
     private final HashMap<String, Client> clientMap = new HashMap<>();
-    private WorldStepInstance worldStepInstance = new WorldStepInstance();
+    private WorldStepInstance worldStepInstance = WorldStepInstance.createNewDoubleBuffered();
     private final Object syncronizer = new Object();
 
     public WebSocketHandler(List<Factory> factoryList) {
@@ -81,7 +81,6 @@ public class WebSocketHandler extends TextWebSocketHandler {
         var handledMessageCount = handlerHashMap.entrySet()
             .stream()
             .filter((entry) -> {
-
                 var key = entry.getKey() + "\n";
                 if (payload.startsWith(key)) {
                     try {

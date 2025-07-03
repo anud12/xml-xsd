@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nactions.Nperson__move_to.Npath {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions.Nperson__move_to {
-  public class path : XSD.ILinkedNode  {
+  public class path : IEquatable<path>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.actions.person.move_to.path";
     public static string TagName = "path";
@@ -182,6 +182,28 @@ namespace XSD.Nworld_step.Nactions.Nperson__move_to {
         return this._node.KeyOf(casted_node);
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nactions.Nperson__move_to.Npath.node
+      || false;
+    }
+
+    public bool Equals(path? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (path)obj;
+        return Equals(node, other.node);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, node);
+        return acc;
     }
   }
 }

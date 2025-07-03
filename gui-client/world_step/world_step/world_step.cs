@@ -11,7 +11,7 @@ namespace XSD.Nworld_step {}
 namespace XSD {
 }
 namespace XSD {
-  public class world_step : XSD.ILinkedNode  {
+  public class world_step : IEquatable<world_step>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step";
     public static string TagName = "world_step";
@@ -28,7 +28,7 @@ namespace XSD {
 
     //Children elements
     private XSD.Nworld_step.world_metadata? _world_metadata = null;
-    public XSD.Nworld_step.world_metadata world_metadata
+    public XSD.Nworld_step.world_metadata world_metadataOrCreate
     {
       get
       {
@@ -43,7 +43,26 @@ namespace XSD {
       set
       {
         _world_metadata = value;
-        _world_metadata.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.world_metadata? world_metadata
+    {
+      get
+      {
+        return _world_metadata;
+      }
+      set
+      {
+        _world_metadata = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
@@ -63,7 +82,7 @@ namespace XSD {
       }
     }
     private XSD.Nworld_step.data? _data = null;
-    public XSD.Nworld_step.data data
+    public XSD.Nworld_step.data dataOrCreate
     {
       get
       {
@@ -78,12 +97,31 @@ namespace XSD {
       set
       {
         _data = value;
-        _data.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.data? data
+    {
+      get
+      {
+        return _data;
+      }
+      set
+      {
+        _data = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Nworld_step.actions? _actions = null;
-    public XSD.Nworld_step.actions actions
+    public XSD.Nworld_step.actions actionsOrCreate
     {
       get
       {
@@ -98,7 +136,26 @@ namespace XSD {
       set
       {
         _actions = value;
-        _actions.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.actions? actions
+    {
+      get
+      {
+        return _actions;
+      }
+      set
+      {
+        _actions = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public world_step()
@@ -315,6 +372,34 @@ namespace XSD {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.world_metadata
+      || candidateChild is XSD.Nworld_step.rule_group
+      || candidateChild is XSD.Nworld_step.data
+      || candidateChild is XSD.Nworld_step.actions
+      || false;
+    }
+
+    public bool Equals(world_step? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (world_step)obj;
+        return Equals(world_metadata, other.world_metadata) && Equals(rule_group, other.rule_group) && Equals(data, other.data) && Equals(actions, other.actions);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, world_metadata);
+        acc = HashCode.Combine(acc, rule_group);
+        acc = HashCode.Combine(acc, data);
+        acc = HashCode.Combine(acc, actions);
+        return acc;
     }
   }
 }

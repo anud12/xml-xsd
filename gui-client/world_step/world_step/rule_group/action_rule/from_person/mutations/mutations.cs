@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Nmutations {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person {
-  public class mutations : XSD.ILinkedNode  {
+  public class mutations : IEquatable<mutations>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group.action_rule.from_person.mutations";
     public static string TagName = "mutations";
@@ -182,6 +182,28 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person {
         return this._property_mutation.KeyOf(casted_property_mutation);
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is type__property_mutation
+      || false;
+    }
+
+    public bool Equals(mutations? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (mutations)obj;
+        return Equals(property_mutation, other.property_mutation);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, property_mutation);
+        return acc;
     }
   }
 }

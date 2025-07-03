@@ -11,7 +11,7 @@ namespace XSD.Ntype__action.Non {}
 namespace XSD {
 }
 namespace XSD.Ntype__action {
-  public class on : XSD.ILinkedNode  {
+  public class on : IEquatable<on>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".type__action.on";
     public static string TagName = "on";
@@ -28,7 +28,7 @@ namespace XSD.Ntype__action {
 
     //Children elements
     private XSD.Ntype__action.Non.person? _person = null;
-    public XSD.Ntype__action.Non.person person
+    public XSD.Ntype__action.Non.person personOrCreate
     {
       get
       {
@@ -43,7 +43,26 @@ namespace XSD.Ntype__action {
       set
       {
         _person = value;
-        _person.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Ntype__action.Non.person? person
+    {
+      get
+      {
+        return _person;
+      }
+      set
+      {
+        _person = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public on()
@@ -170,6 +189,28 @@ namespace XSD.Ntype__action {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Ntype__action.Non.person
+      || false;
+    }
+
+    public bool Equals(on? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (on)obj;
+        return Equals(person, other.person);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, person);
+        return acc;
     }
   }
 }

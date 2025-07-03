@@ -36,10 +36,10 @@ public partial class ServerControls : PanelContainer
 		};
 		GetNode<Button>("%LoadButton").Pressed += () =>
 		{
-			GD.Print("Load clicked");
+			Logger.Info("Load clicked");
 			LoadFileFromDisk.AsString(this).ContinueWith(task =>
 			{
-				GD.Print("file returned");
+				Logger.Info("file returned");
 				_client.data?.SendLoad(task.Result);
 			});
 		};

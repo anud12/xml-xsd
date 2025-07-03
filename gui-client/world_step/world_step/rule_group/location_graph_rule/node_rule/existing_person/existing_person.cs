@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nexisting_
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
-  public class existing_person : XSD.ILinkedNode  {
+  public class existing_person : IEquatable<existing_person>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group.location_graph_rule.node_rule.existing_person";
     public static string TagName = "existing_person";
@@ -32,7 +32,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
 
     //Children elements
     private type__person_selection _person_selection = new type__person_selection();
-    public type__person_selection person_selection
+    public type__person_selection person_selectionOrCreate
     {
       get
       {
@@ -47,7 +47,26 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
       set
       {
         _person_selection = value;
-        _person_selection.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__person_selection person_selection
+    {
+      get
+      {
+        return _person_selection;
+      }
+      set
+      {
+        _person_selection = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public existing_person()
@@ -138,13 +157,13 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.min != null)
+      if(this._min != null)
       {
-        rawNode.attributes["min"] = this.min.ToString();
+        rawNode.attributes["min"] = this._min.ToString();
       }
-      if(this.max != null)
+      if(this._max != null)
       {
-        rawNode.attributes["max"] = this.max?.ToString();
+        rawNode.attributes["max"] = this._max?.ToString();
       }
 
       //Serialize children
@@ -217,6 +236,30 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is type__person_selection
+      || false;
+    }
+
+    public bool Equals(existing_person? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (existing_person)obj;
+        return Equals(min, other.min) && Equals(max, other.max) && Equals(person_selection, other.person_selection);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, min);
+        acc = HashCode.Combine(acc, max);
+        acc = HashCode.Combine(acc, person_selection);
+        return acc;
     }
   }
 }

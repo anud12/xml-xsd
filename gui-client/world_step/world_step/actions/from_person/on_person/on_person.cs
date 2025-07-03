@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nactions.Nfrom_person.Non_person {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions.Nfrom_person {
-  public class on_person : XSD.ILinkedNode  {
+  public class on_person : IEquatable<on_person>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.actions.from_person.on_person";
     public static string TagName = "on_person";
@@ -97,9 +97,9 @@ namespace XSD.Nworld_step.Nactions.Nfrom_person {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.person_id_ref != null)
+      if(this._person_id_ref != null)
       {
-        rawNode.attributes["person_id_ref"] = this.person_id_ref.ToString();
+        rawNode.attributes["person_id_ref"] = this._person_id_ref.ToString();
       }
 
       //Serialize children
@@ -151,6 +151,27 @@ namespace XSD.Nworld_step.Nactions.Nfrom_person {
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(on_person? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (on_person)obj;
+        return Equals(person_id_ref, other.person_id_ref);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, person_id_ref);
+        return acc;
     }
   }
 }

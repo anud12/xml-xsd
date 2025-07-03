@@ -23,17 +23,19 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   public class Data implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static String nodeName = "data";
-    public static Data fromRawNode(RawNode rawNode) {
+    public static Data fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
       var instance = new Data();
+      if(Objects.nonNull(parent)) {
+        instance.parentNode(parent);
+      }
       instance.rawNode(rawNode);
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
-    public static Data fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static Data fromRawNode(RawNode rawNode) {
       logEnter();
-      var instance = fromRawNode(rawNode);
-      instance.parentNode(parent);
+      var instance = fromRawNode(rawNode, null);
       return logReturn(instance);
     }
     public static Optional<Data> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
@@ -93,7 +95,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void notifyChange(List<Object> list) {
+      var logger = logEnter();
       list.addLast(this);
+      logger.log("Notify change for", this.buildPath());
       onChangeList.forEach(consumer -> consumer.accept(list));
       parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
     }
@@ -115,9 +119,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public void removeChild(Object object) {
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People) {
           this.people = Optional.empty();
+          notifyChange();
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location) {
           this.location = Optional.empty();
+          notifyChange();
         }
     }
 
@@ -142,17 +148,21 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void deserialize (RawNode rawNode) {
-      var logger = logEnter();
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing data");
+      try {
+        var logger = logEnter();
+        this.rawNode = rawNode;
+        // Godot.GD.Print("Deserializing data");
 
-      var innerLogger = logger.log("attributes");
-      //Deserialize attributes
-      innerLogger = logger.log("children");
-      //Deserialize children
-      this.people = ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People.fromRawNode(rawNode.getChildrenFirst("people"), this);
-      this.location = ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location.fromRawNode(rawNode.getChildrenFirst("location"), this);
-      logReturnVoid();
+        var innerLogger = logger.log("attributes");
+        //Deserialize attributes
+        innerLogger = logger.log("children");
+        //Deserialize children
+        this.people = ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People.fromRawNode(rawNode.getChildrenFirst("people"), this);
+        this.location = ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location.fromRawNode(rawNode.getChildrenFirst("location"), this);
+        logReturnVoid();
+      } catch (Exception e) {
+        throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
+      }
     }
 
     public RawNode serializeIntoRawNode()
@@ -259,6 +269,30 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
         deserialize(rawNode);
         return this;
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getNodeAtPath(String xpath) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People.nodeName))
+        {
+          if(this.people.isEmpty()) {
+            this.people = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People.nodeName.length() + 3);
+          return this.people.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location.nodeName))
+        {
+          if(this.location.isEmpty()) {
+            this.location = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location.nodeName.length() + 3);
+          return this.location.get().getNodeAtPath(childXPath);
+        }
+        return Optional.of(this);
     }
   }
 

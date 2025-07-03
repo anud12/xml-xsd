@@ -21,6 +21,8 @@ import {dependantTypeBuildIndexForChild} from "./dependantType/dependantTypeBuil
 import {dependantTypeSetAttribute} from "./dependantType/dependatTypeSetAttribute";
 import {dependantTypeSetChild} from "./dependantType/dependatTypeSetChild";
 import {dependantTypeClearChild} from "./dependantType/dependatTypeClearChild";
+import {dependantTypeToIsValidChildType} from "./dependantTypeToIsValidChildType";
+import {dependantTypeToEqualsAndHashCodeFunctions} from "./dependantTypeToEqualsAndHashCode";
 
 
 type ClassTemplateParts = {
@@ -44,7 +46,7 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
   const extensionNames = extensions.map(e => `I${e.name}`)
 
   const templateString = template()`
-    public class ${normalizeName(dependantType.name)} : XSD.ILinkedNode ${extensionNames.length > 0 && `, ${extensionNames.join(", ")}`} {
+    public class ${normalizeName(dependantType.name)} : IEquatable<${normalizeName(dependantType.name)}>, XSD.ILinkedNode ${extensionNames.length > 0 && `, ${extensionNames.join(", ")}`} {
       
       public static string ClassTypeId = "${dependantTypeBuildXpath(dependantType)}";
       public static string TagName = "${dependantType.name}";
@@ -219,6 +221,12 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
         ${dependantTypeBuildIndexForChild(dependantType)}
         return null;
       }
+      
+      public bool IsValidChildType(ILinkedNode candidateChild) {
+        ${dependantTypeToIsValidChildType(dependantType)?.templateString}
+      }
+      
+      ${dependantTypeToEqualsAndHashCodeFunctions(dependantType)}
     }
     
   `

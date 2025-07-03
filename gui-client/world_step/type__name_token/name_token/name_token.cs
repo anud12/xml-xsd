@@ -11,7 +11,7 @@ namespace XSD.Ntype__name_token.Nname_token {}
 namespace XSD {
 }
 namespace XSD.Ntype__name_token {
-  public class name_token : XSD.ILinkedNode  {
+  public class name_token : IEquatable<name_token>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".type__name_token.name_token";
     public static string TagName = "name_token";
@@ -30,7 +30,7 @@ namespace XSD.Ntype__name_token {
 
     //Children elements
     private XSD.Ntype__name_token.Nname_token._ref? __ref = null;
-    public XSD.Ntype__name_token.Nname_token._ref _ref
+    public XSD.Ntype__name_token.Nname_token._ref _refOrCreate
     {
       get
       {
@@ -45,12 +45,31 @@ namespace XSD.Ntype__name_token {
       set
       {
         __ref = value;
-        __ref.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Ntype__name_token.Nname_token._ref? _ref
+    {
+      get
+      {
+        return __ref;
+      }
+      set
+      {
+        __ref = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Ntype__name_token.Nname_token.one_of? _one_of = null;
-    public XSD.Ntype__name_token.Nname_token.one_of one_of
+    public XSD.Ntype__name_token.Nname_token.one_of one_ofOrCreate
     {
       get
       {
@@ -65,7 +84,26 @@ namespace XSD.Ntype__name_token {
       set
       {
         _one_of = value;
-        _one_of.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Ntype__name_token.Nname_token.one_of? one_of
+    {
+      get
+      {
+        return _one_of;
+      }
+      set
+      {
+        _one_of = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public name_token()
@@ -159,9 +197,9 @@ namespace XSD.Ntype__name_token {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.prefix != null)
+      if(this._prefix != null)
       {
-        rawNode.attributes["prefix"] = this.prefix.ToString();
+        rawNode.attributes["prefix"] = this._prefix.ToString();
       }
 
       //Serialize children
@@ -239,6 +277,31 @@ namespace XSD.Ntype__name_token {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Ntype__name_token.Nname_token._ref
+      || candidateChild is XSD.Ntype__name_token.Nname_token.one_of
+      || false;
+    }
+
+    public bool Equals(name_token? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (name_token)obj;
+        return Equals(prefix, other.prefix) && Equals(_ref, other._ref) && Equals(one_of, other.one_of);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, prefix);
+        acc = HashCode.Combine(acc, _ref);
+        acc = HashCode.Combine(acc, one_of);
+        return acc;
     }
   }
 }

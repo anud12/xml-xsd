@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person {
-  public class on_person : XSD.ILinkedNode  {
+  public class on_person : IEquatable<on_person>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group.action_rule.from_person.on_person";
     public static string TagName = "on_person";
@@ -28,7 +28,7 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person {
 
     //Children elements
     private XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.selection? _selection = null;
-    public XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.selection selection
+    public XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.selection selectionOrCreate
     {
       get
       {
@@ -43,12 +43,31 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person {
       set
       {
         _selection = value;
-        _selection.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.selection? selection
+    {
+      get
+      {
+        return _selection;
+      }
+      set
+      {
+        _selection = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.mutations? _mutations = null;
-    public XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.mutations mutations
+    public XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.mutations mutationsOrCreate
     {
       get
       {
@@ -63,7 +82,26 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person {
       set
       {
         _mutations = value;
-        _mutations.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.mutations? mutations
+    {
+      get
+      {
+        return _mutations;
+      }
+      set
+      {
+        _mutations = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public on_person()
@@ -215,6 +253,30 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.selection
+      || candidateChild is XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.mutations
+      || false;
+    }
+
+    public bool Equals(on_person? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (on_person)obj;
+        return Equals(selection, other.selection) && Equals(mutations, other.mutations);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, selection);
+        acc = HashCode.Combine(acc, mutations);
+        return acc;
     }
   }
 }

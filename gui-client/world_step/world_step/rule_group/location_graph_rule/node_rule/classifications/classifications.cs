@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nclassific
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
-  public class classifications : XSD.ILinkedNode  {
+  public class classifications : IEquatable<classifications>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group.location_graph_rule.node_rule.classifications";
     public static string TagName = "classifications";
@@ -182,6 +182,28 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
         return this._classification.KeyOf(casted_classification);
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nclassifications.classification
+      || false;
+    }
+
+    public bool Equals(classifications? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (classifications)obj;
+        return Equals(classification, other.classification);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, classification);
+        return acc;
     }
   }
 }

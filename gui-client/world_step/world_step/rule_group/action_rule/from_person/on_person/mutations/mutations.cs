@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.Nmuta
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person {
-  public class mutations : XSD.ILinkedNode  {
+  public class mutations : IEquatable<mutations>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group.action_rule.from_person.on_person.mutations";
     public static string TagName = "mutations";
@@ -28,7 +28,7 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person {
 
     //Children elements
     private type__property_mutation? _property_mutation = null;
-    public type__property_mutation property_mutation
+    public type__property_mutation property_mutationOrCreate
     {
       get
       {
@@ -43,7 +43,26 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person {
       set
       {
         _property_mutation = value;
-        _property_mutation.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__property_mutation? property_mutation
+    {
+      get
+      {
+        return _property_mutation;
+      }
+      set
+      {
+        _property_mutation = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public mutations()
@@ -170,6 +189,28 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is type__property_mutation
+      || false;
+    }
+
+    public bool Equals(mutations? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (mutations)obj;
+        return Equals(property_mutation, other.property_mutation);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, property_mutation);
+        return acc;
     }
   }
 }

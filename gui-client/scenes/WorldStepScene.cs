@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Guiclient.util;
 using util.dataStore;
 
 public partial class WorldStepScene : Control
@@ -27,19 +28,19 @@ public partial class WorldStepScene : Control
 		mainPersonData.AnchorBottom = 1;
 		mainPersonData.AnchorTop = 1;
 		mainPersonContainer.AddChild(mainPersonData);
-		StoreWorld_Step.instance.OnSet((data, unsubscribe) =>
+		StoreWorld_Step.instance.OnSet(this, (data, unsubscribe) =>
 		{
 			if(IsInstanceValid(this) == false) {
 				unsubscribe();
 				return;
 			}
-			StoreSession.mainPersonId.OnSet((mainPersonId, unsubscribe) =>
+			StoreSession.mainPersonId.OnSet(this, (mainPersonId, unsubscribe) =>
 			{
 				if(IsInstanceValid(this) == false) {
 					unsubscribe();
 					return;
 				}
-				mainPersonData.initializeFromId(mainPersonId);
+				mainPersonData.InitializeFromId(mainPersonId);
 
 			});
 		});
@@ -60,7 +61,7 @@ public partial class WorldStepScene : Control
 
 	private void addLocationGraph()
 	{
-		StoreWorld_Step.instance.OnSet((worldStep, unsubscribe) =>
+		StoreWorld_Step.instance.OnSet(this, (worldStep, unsubscribe) =>
 		{
 			if(IsInstanceValid(this) == false) {
 				unsubscribe();
@@ -71,6 +72,8 @@ public partial class WorldStepScene : Control
 
 			//clear LocationGraphList
 			locationGraphList.GetChildren().ToList().ForEach(child => locationGraphList.RemoveChild(child));
+			
+			Logger.Info("Adding LocationGraphList buttons");
 			var rootLocationGraphNode = GetNode<ButtonWithDropdownNode>("%RootLocationGraph");
 			rootLocationGraphNode.options.Clear();
 			rootLocationGraphNode.OnClick(locationGraphId =>

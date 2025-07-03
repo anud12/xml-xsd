@@ -11,7 +11,7 @@ namespace XSD.Ntype__person_selection {}
 namespace XSD {
 }
 namespace XSD {
-  public class type__person_selection : XSD.ILinkedNode  {
+  public class type__person_selection : IEquatable<type__person_selection>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".type__person_selection";
     public static string TagName = "type__person_selection";
@@ -28,7 +28,7 @@ namespace XSD {
 
     //Children elements
     private type__math_operations? _radius = null;
-    public type__math_operations radius
+    public type__math_operations radiusOrCreate
     {
       get
       {
@@ -43,12 +43,31 @@ namespace XSD {
       set
       {
         _radius = value;
-        _radius.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__math_operations? radius
+    {
+      get
+      {
+        return _radius;
+      }
+      set
+      {
+        _radius = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private type__math_operations? _min = null;
-    public type__math_operations min
+    public type__math_operations minOrCreate
     {
       get
       {
@@ -63,12 +82,31 @@ namespace XSD {
       set
       {
         _min = value;
-        _min.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__math_operations? min
+    {
+      get
+      {
+        return _min;
+      }
+      set
+      {
+        _min = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private type__math_operations? _max = null;
-    public type__math_operations max
+    public type__math_operations maxOrCreate
     {
       get
       {
@@ -83,7 +121,26 @@ namespace XSD {
       set
       {
         _max = value;
-        _max.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__math_operations? max
+    {
+      get
+      {
+        return _max;
+      }
+      set
+      {
+        _max = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
@@ -372,6 +429,36 @@ namespace XSD {
         return this._classification.KeyOf(casted_classification);
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is type__math_operations
+      || candidateChild is type__math_operations
+      || candidateChild is type__math_operations
+      || candidateChild is XSD.Ntype__person_selection.property
+      || candidateChild is XSD.Ntype__person_selection.classification
+      || false;
+    }
+
+    public bool Equals(type__person_selection? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (type__person_selection)obj;
+        return Equals(radius, other.radius) && Equals(min, other.min) && Equals(max, other.max) && Equals(property, other.property) && Equals(classification, other.classification);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, radius);
+        acc = HashCode.Combine(acc, min);
+        acc = HashCode.Combine(acc, max);
+        acc = HashCode.Combine(acc, property);
+        acc = HashCode.Combine(acc, classification);
+        return acc;
     }
   }
 }

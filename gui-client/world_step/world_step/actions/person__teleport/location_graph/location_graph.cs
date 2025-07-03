@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport.Nlocation_graph {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions.Nperson__teleport {
-  public class location_graph : XSD.ILinkedNode  {
+  public class location_graph : IEquatable<location_graph>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.actions.person.teleport.location_graph";
     public static string TagName = "location_graph";
@@ -108,13 +108,13 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.location_graph_id_ref != null)
+      if(this._location_graph_id_ref != null)
       {
-        rawNode.attributes["location_graph_id_ref"] = this.location_graph_id_ref.ToString();
+        rawNode.attributes["location_graph_id_ref"] = this._location_graph_id_ref.ToString();
       }
-      if(this.node_id_ref != null)
+      if(this._node_id_ref != null)
       {
-        rawNode.attributes["node_id_ref"] = this.node_id_ref.ToString();
+        rawNode.attributes["node_id_ref"] = this._node_id_ref.ToString();
       }
 
       //Serialize children
@@ -175,6 +175,28 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(location_graph? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (location_graph)obj;
+        return Equals(location_graph_id_ref, other.location_graph_id_ref) && Equals(node_id_ref, other.node_id_ref);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, location_graph_id_ref);
+        acc = HashCode.Combine(acc, node_id_ref);
+        return acc;
     }
   }
 }

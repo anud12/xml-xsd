@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nworld_metadata.Ncounter {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nworld_metadata {
-  public class counter : XSD.ILinkedNode  {
+  public class counter : IEquatable<counter>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.world_metadata.counter";
     public static string TagName = "counter";
@@ -97,9 +97,9 @@ namespace XSD.Nworld_step.Nworld_metadata {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.value != null)
+      if(this._value != null)
       {
-        rawNode.attributes["value"] = this.value.ToString();
+        rawNode.attributes["value"] = this._value.ToString();
       }
 
       //Serialize children
@@ -151,6 +151,27 @@ namespace XSD.Nworld_step.Nworld_metadata {
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(counter? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (counter)obj;
+        return Equals(value, other.value);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, value);
+        return acc;
     }
   }
 }

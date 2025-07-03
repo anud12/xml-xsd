@@ -1,0 +1,44 @@
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property_ref" units="">
+        <person_default initial="1"/>
+      </entry>
+    </property_rule>
+    <location_graph_rule id="">
+      <setup>
+        <starting_node node_rule_ref="node_rule_ref"/>
+      </setup>
+      <node_rule id="node_rule_ref"/>
+    </location_graph_rule>
+  </rule_group>
+  <data>
+    <people/>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref=""/>
+        <node node_rule_ref="node_rule_ref" id="">
+        </node>
+      </location_graph>
+    </location>
+  </data>
+  <actions>
+    <person.create>
+      <node_graph__selection/>
+      <person__selection>
+        <property property_rule_ref="property_ref">
+        </property>
+      </person__selection>
+    </person.create>
+  </actions>
+</world_step>

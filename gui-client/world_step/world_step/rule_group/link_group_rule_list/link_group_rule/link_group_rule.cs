@@ -27,7 +27,7 @@ namespace XSD {
   }
 }
 namespace XSD.Nworld_step.Nrule_group.Nlink_group_rule_list {
-  public class link_group_rule : XSD.ILinkedNode , Itype__link_group {
+  public class link_group_rule : IEquatable<link_group_rule>, XSD.ILinkedNode , Itype__link_group {
 
     public static string ClassTypeId = ".world_step.rule_group.link_group_rule_list.link_group_rule";
     public static string TagName = "link_group_rule";
@@ -162,21 +162,21 @@ namespace XSD.Nworld_step.Nrule_group.Nlink_group_rule_list {
       //Serialize arguments
 
       // Serialize arguments of type__link_group
-  if(this.id != null)
+  if(this._id != null)
   {
-    rawNode.attributes["id"] = this.id.ToString();
+    rawNode.attributes["id"] = this._id.ToString();
   }
-  if(this.angle != null)
+  if(this._angle != null)
   {
-    rawNode.attributes["angle"] = this.angle.ToString();
+    rawNode.attributes["angle"] = this._angle.ToString();
   }
-  if(this.angleMax != null)
+  if(this._angleMax != null)
   {
-    rawNode.attributes["angleMax"] = this.angleMax?.ToString();
+    rawNode.attributes["angleMax"] = this._angleMax?.ToString();
   }
-  if(this.limit != null)
+  if(this._limit != null)
   {
-    rawNode.attributes["limit"] = this.limit?.ToString();
+    rawNode.attributes["limit"] = this._limit?.ToString();
   }
 
       //Serialize children
@@ -258,6 +258,24 @@ namespace XSD.Nworld_step.Nrule_group.Nlink_group_rule_list {
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+        public bool Equals(link_group_rule? obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            var other = (link_group_rule)obj;
+            return object.Equals(this, other);
+        }
+
+    public int GetHashCode()
+    {
+        return base.GetHashCode();
     }
   }
 }

@@ -103,6 +103,7 @@ layout_mode = 2
 size_flags_horizontal = 10
 text = "Explore"
 script = ExtResource("5_e4oe0")
+Scene = null
 
 [node name="HSplitContainer" type="BoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2

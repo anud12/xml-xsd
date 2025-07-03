@@ -11,7 +11,7 @@ namespace XSD.Ntype__node_graph__selection.Nhas__node_graph_id {}
 namespace XSD {
 }
 namespace XSD.Ntype__node_graph__selection {
-  public class has__node_graph_id : XSD.ILinkedNode  {
+  public class has__node_graph_id : IEquatable<has__node_graph_id>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".type__node_graph__selection.has__node_graph_id";
     public static string TagName = "has__node_graph_id";
@@ -129,9 +129,9 @@ namespace XSD.Ntype__node_graph__selection {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.node_graph_id_ref != null)
+      if(this._node_graph_id_ref != null)
       {
-        rawNode.attributes["node_graph_id_ref"] = this.node_graph_id_ref.ToString();
+        rawNode.attributes["node_graph_id_ref"] = this._node_graph_id_ref.ToString();
       }
 
       //Serialize children
@@ -206,6 +206,29 @@ namespace XSD.Ntype__node_graph__selection {
         return this._or.KeyOf(casted_or);
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Ntype__node_graph__selection.Nhas__node_graph_id.or
+      || false;
+    }
+
+    public bool Equals(has__node_graph_id? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (has__node_graph_id)obj;
+        return Equals(node_graph_id_ref, other.node_graph_id_ref) && Equals(or, other.or);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, node_graph_id_ref);
+        acc = HashCode.Combine(acc, or);
+        return acc;
     }
   }
 }

@@ -60,6 +60,7 @@ layout_mode = 2
 size_flags_horizontal = 10
 text = "Explore"
 script = ExtResource("5_258lq")
+Scene = null
 
 [node name="HBoxContainer" type="BoxContainer" parent="MarginContainer/BoxContainer"]
 layout_mode = 2
@@ -151,6 +152,41 @@ text = "property_name"
 [node name="Label2" type="Label" parent="MarginContainer/BoxContainer/HBoxContainer/PropertiesContainer/Container4"]
 layout_mode = 2
 text = "12"
+
+[node name="GlobalActionsContainer" type="FlowContainer" parent="MarginContainer/BoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 2
+
+[node name="Button" type="Button" parent="MarginContainer/BoxContainer/GlobalActionsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Do Action"
+
+[node name="Button2" type="Button" parent="MarginContainer/BoxContainer/GlobalActionsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Do Action"
+
+[node name="Button3" type="Button" parent="MarginContainer/BoxContainer/GlobalActionsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Do Action"
+
+[node name="Button4" type="Button" parent="MarginContainer/BoxContainer/GlobalActionsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Do Action"
+
+[node name="Button5" type="Button" parent="MarginContainer/BoxContainer/GlobalActionsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Do Action"
+
+[node name="Button6" type="Button" parent="MarginContainer/BoxContainer/GlobalActionsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Do Action"
 
 [node name="ActionsContainer" type="FlowContainer" parent="MarginContainer/BoxContainer"]
 unique_name_in_owner = true

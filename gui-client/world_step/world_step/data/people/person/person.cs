@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Ndata.Npeople.Nperson {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Npeople {
-  public class person : XSD.ILinkedNode  {
+  public class person : IEquatable<person>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.data.people.person";
     public static string TagName = "person";
@@ -32,7 +32,7 @@ namespace XSD.Nworld_step.Ndata.Npeople {
 
     //Children elements
     private XSD.Nworld_step.Ndata.Npeople.Nperson.properties? _properties = null;
-    public XSD.Nworld_step.Ndata.Npeople.Nperson.properties properties
+    public XSD.Nworld_step.Ndata.Npeople.Nperson.properties propertiesOrCreate
     {
       get
       {
@@ -47,7 +47,26 @@ namespace XSD.Nworld_step.Ndata.Npeople {
       set
       {
         _properties = value;
-        _properties.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Ndata.Npeople.Nperson.properties? properties
+    {
+      get
+      {
+        return _properties;
+      }
+      set
+      {
+        _properties = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
@@ -67,7 +86,7 @@ namespace XSD.Nworld_step.Ndata.Npeople {
       }
     }
     private XSD.Nworld_step.Ndata.Npeople.Nperson.classifications? _classifications = null;
-    public XSD.Nworld_step.Ndata.Npeople.Nperson.classifications classifications
+    public XSD.Nworld_step.Ndata.Npeople.Nperson.classifications classificationsOrCreate
     {
       get
       {
@@ -82,7 +101,26 @@ namespace XSD.Nworld_step.Ndata.Npeople {
       set
       {
         _classifications = value;
-        _classifications.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Ndata.Npeople.Nperson.classifications? classifications
+    {
+      get
+      {
+        return _classifications;
+      }
+      set
+      {
+        _classifications = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public person()
@@ -202,13 +240,13 @@ namespace XSD.Nworld_step.Ndata.Npeople {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.id != null)
+      if(this._id != null)
       {
-        rawNode.attributes["id"] = this.id.ToString();
+        rawNode.attributes["id"] = this._id.ToString();
       }
-      if(this.name != null)
+      if(this._name != null)
       {
-        rawNode.attributes["name"] = this.name?.ToString();
+        rawNode.attributes["name"] = this._name?.ToString();
       }
 
       //Serialize children
@@ -318,6 +356,34 @@ namespace XSD.Nworld_step.Ndata.Npeople {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Ndata.Npeople.Nperson.properties
+      || candidateChild is XSD.Nworld_step.Ndata.Npeople.Nperson.relations
+      || candidateChild is XSD.Nworld_step.Ndata.Npeople.Nperson.classifications
+      || false;
+    }
+
+    public bool Equals(person? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (person)obj;
+        return Equals(id, other.id) && Equals(name, other.name) && Equals(properties, other.properties) && Equals(relations, other.relations) && Equals(classifications, other.classifications);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, id);
+        acc = HashCode.Combine(acc, name);
+        acc = HashCode.Combine(acc, properties);
+        acc = HashCode.Combine(acc, relations);
+        acc = HashCode.Combine(acc, classifications);
+        return acc;
     }
   }
 }

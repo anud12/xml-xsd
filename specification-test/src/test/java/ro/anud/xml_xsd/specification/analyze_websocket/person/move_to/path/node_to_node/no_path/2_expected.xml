@@ -1,0 +1,64 @@
+<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+      <entry value="3"/>
+      <entry value="1"/>
+    </randomization_table>
+  </world_metadata>
+
+  <rule_group id="rule_group_id">
+    <location_graph_rule id="location_graph_rule_id">
+      <setup>
+        <starting_node node_rule_ref="node"/>
+      </setup>
+      <node_rule id="node">
+        <link_group_list>
+          <link_group id="all" angle="0">
+            <to_option node_rule_ref="node" adjacent_depth_limit="0" distance="0"/>
+          </link_group>
+        </link_group_list>
+      </node_rule>
+    </location_graph_rule>
+  </rule_group>
+  <data>
+    <people>
+      <person id="person_id">
+        <classifications/>
+      </person>
+    </people>
+    <location>
+      <location_graph id="location_graph_id">
+        <rule location_graph_rule_ref="location_graph_rule_id"/>
+        <node node_rule_ref="node" id="node_id">
+          <position x="0" y="0"/>
+          <links>
+            <link_to node_id_ref="node_id_2" total_progress="1">
+              <person_progress_property initial="3"/>
+            </link_to>
+          </links>
+          <people/>
+        </node>
+        <node node_rule_ref="node" id="node_id_2">
+          <position x="0" y="1"/>
+          <people>
+            <person person_id_ref="person_id"/>
+          </people>
+        </node>
+        <node node_rule_ref="node" id="node_id_destination">
+          <position x="0" y="1"/>
+        </node>
+      </location_graph>
+    </location>
+  </data>
+  <actions>
+    <person.move_to person_id_ref="person_id">
+      <path>
+        <node node_id_ref="node_id_destination"/>
+      </path>
+    </person.move_to>
+  </actions>
+</world_step>

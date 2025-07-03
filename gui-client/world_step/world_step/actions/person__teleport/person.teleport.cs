@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions {
-  public class person__teleport : XSD.ILinkedNode  {
+  public class person__teleport : IEquatable<person__teleport>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.actions.person.teleport";
     public static string TagName = "person.teleport";
@@ -30,7 +30,7 @@ namespace XSD.Nworld_step.Nactions {
 
     //Children elements
     private XSD.Nworld_step.Nactions.Nperson__teleport.location_graph? _location_graph = null;
-    public XSD.Nworld_step.Nactions.Nperson__teleport.location_graph location_graph
+    public XSD.Nworld_step.Nactions.Nperson__teleport.location_graph location_graphOrCreate
     {
       get
       {
@@ -45,12 +45,31 @@ namespace XSD.Nworld_step.Nactions {
       set
       {
         _location_graph = value;
-        _location_graph.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nactions.Nperson__teleport.location_graph? location_graph
+    {
+      get
+      {
+        return _location_graph;
+      }
+      set
+      {
+        _location_graph = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Nworld_step.Nactions.Nperson__teleport.link_to? _link_to = null;
-    public XSD.Nworld_step.Nactions.Nperson__teleport.link_to link_to
+    public XSD.Nworld_step.Nactions.Nperson__teleport.link_to link_toOrCreate
     {
       get
       {
@@ -65,7 +84,26 @@ namespace XSD.Nworld_step.Nactions {
       set
       {
         _link_to = value;
-        _link_to.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nactions.Nperson__teleport.link_to? link_to
+    {
+      get
+      {
+        return _link_to;
+      }
+      set
+      {
+        _link_to = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public person__teleport()
@@ -159,9 +197,9 @@ namespace XSD.Nworld_step.Nactions {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.person_id_ref != null)
+      if(this._person_id_ref != null)
       {
-        rawNode.attributes["person_id_ref"] = this.person_id_ref.ToString();
+        rawNode.attributes["person_id_ref"] = this._person_id_ref.ToString();
       }
 
       //Serialize children
@@ -239,6 +277,31 @@ namespace XSD.Nworld_step.Nactions {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nactions.Nperson__teleport.location_graph
+      || candidateChild is XSD.Nworld_step.Nactions.Nperson__teleport.link_to
+      || false;
+    }
+
+    public bool Equals(person__teleport? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (person__teleport)obj;
+        return Equals(person_id_ref, other.person_id_ref) && Equals(location_graph, other.location_graph) && Equals(link_to, other.link_to);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, person_id_ref);
+        acc = HashCode.Combine(acc, location_graph);
+        acc = HashCode.Combine(acc, link_to);
+        return acc;
     }
   }
 }

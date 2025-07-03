@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Xml;
+using Guiclient.util;
 using util.dataStore;
 using XSD;
 
@@ -11,6 +12,7 @@ public class UpdateHandler
     {
         if (message.type != XSDWebSocketClient.ReceivedMessageType.update)
         {
+            Logger.Info($"UpdateHandler: Ignoring message of type {message.type}");
             return;
         }
         var parts = message.data.Split("\n");
@@ -24,8 +26,14 @@ public class UpdateHandler
         var firstChildRawNode = rawNode.children.First().Value.First();
         if (firstChildRawNode == null)
         {
+            Logger.Error($"UpdateHandler: No child found at path {childXpath}");
             return;
         }
-        worldStep.data?.DeserializeAtPath(childXpath, firstChildRawNode);
+        worldStep.QueueSet((worldStep) =>
+        {
+            Logger.Info($"UpdateHandler: Deserializing at path {childXpath}");
+            worldStep.DeserializeAtPath(childXpath, firstChildRawNode);
+            return worldStep;
+        });
     }
 }

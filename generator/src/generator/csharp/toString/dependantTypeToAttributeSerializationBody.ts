@@ -12,9 +12,9 @@ export const dependantTypeToAttributeSerializationBody = (dependantType: Dependa
   return Object.entries(dependantType.value.attributes.value ?? []).map(([key, value]) => {
     if (value.metaType === "primitive") {
       return template()`
-                if(this.${normalizeName(key)} != null) 
+                if(this._${normalizeName(key)} != null) 
                 {
-                  rawNode.attributes["${key}"] = this.${normalizeName(key)}${value.isNullable && "?"}.ToString();
+                  rawNode.attributes["${key}"] = this._${normalizeName(key)}${value.isNullable && "?"}.ToString();
                 }
                 `;
     }

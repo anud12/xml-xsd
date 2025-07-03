@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Godot;
 
 namespace util.dataStore
 {
@@ -9,6 +10,7 @@ namespace util.dataStore
     public class DataStore<T>
     {
         private T? _data;
+        private List<Func<T?, T?>> _queueMutation =  new();
         public bool isSend { get; set; } = false;
 
         /// <summary>
@@ -36,11 +38,15 @@ namespace util.dataStore
         private void ExecuteCallbacks()
         {
             callbackList.ToList().ForEach(callback => {
-                // callback.Item1(_data, () => {
-                //     callbackList.Remove(callback);
-                // });
-                ExecutionContext.Run(callback.Item2, (object? state) => {
-                    callback.Item1(_data, () => {
+                ExecutionContext.Run(callback.Item2, (object? state) =>
+                {
+                    var newData = data;
+                    foreach (var func in _queueMutation)
+                    {
+                        newData = func(newData);
+                    }
+                    _queueMutation.Clear();
+                    callback.Item1(newData, () => {
                         callbackList.Remove(callback);
                     });
                 }, null);
@@ -71,6 +77,12 @@ namespace util.dataStore
             isSend = false;
         }
 
+        public void QueueSet(Func<T?, T?> data)
+        {
+            this._queueMutation.Add(data);
+            isSend = false;
+        }
+
         public void Dispatch()
         {
             if(isSend)
@@ -81,7 +93,7 @@ namespace util.dataStore
             this.ExecuteCallbacks();
         }
 
-        public Action OnSet(Action<T?, Action> callback)
+        public Action OnSetOld(Action<T?, Action> callback)
         {
             var context = ExecutionContext.Capture();
             var unsubscribe = () => {
@@ -89,6 +101,28 @@ namespace util.dataStore
             };
             callbackList.Add((callback, context));
             if(data != null)
+            {
+                callback(data, unsubscribe);
+            }
+            return () => callbackList.Remove((callback, context));
+        }
+
+        public Action OnSet(Node node, Action<T?, Action> callback)
+        {
+            var context = ExecutionContext.Capture();
+            var unsubscribe = () => {
+                callbackList.Remove((callback, context));
+            };
+            callbackList.Add(((arg1, action) =>
+            {
+                if (GodotObject.IsInstanceValid(node) == false)
+                {
+                    unsubscribe();
+                    return;
+                }
+                callback(arg1, action);
+            }, context));
+            if(data != null && GodotObject.IsInstanceValid(node) == true)
             {
                 callback(data, unsubscribe);
             }

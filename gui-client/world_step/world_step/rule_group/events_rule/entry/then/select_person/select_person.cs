@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.Nselect_person {
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen {
-  public class select_person : XSD.ILinkedNode , Itype__person_selection {
+  public class select_person : IEquatable<select_person>, XSD.ILinkedNode , Itype__person_selection {
 
     public static string ClassTypeId = ".world_step.rule_group.events_rule.entry.then.select_person";
     public static string TagName = "select_person";
@@ -33,7 +33,7 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen {
 
     //Children of type__person_selection
     private type__math_operations? _radius = null;
-    public type__math_operations radius
+    public type__math_operations radiusOrCreate
     {
       get
       {
@@ -48,12 +48,31 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen {
       set
       {
         _radius = value;
-        _radius.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__math_operations? radius
+    {
+      get
+      {
+        return _radius;
+      }
+      set
+      {
+        _radius = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private type__math_operations? _min = null;
-    public type__math_operations min
+    public type__math_operations minOrCreate
     {
       get
       {
@@ -68,12 +87,31 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen {
       set
       {
         _min = value;
-        _min.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__math_operations? min
+    {
+      get
+      {
+        return _min;
+      }
+      set
+      {
+        _min = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private type__math_operations? _max = null;
-    public type__math_operations max
+    public type__math_operations maxOrCreate
     {
       get
       {
@@ -88,7 +126,26 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen {
       set
       {
         _max = value;
-        _max.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__math_operations? max
+    {
+      get
+      {
+        return _max;
+      }
+      set
+      {
+        _max = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
@@ -265,6 +322,24 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen {
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+        public bool Equals(select_person? obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            var other = (select_person)obj;
+            return object.Equals(this, other);
+        }
+
+    public int GetHashCode()
+    {
+        return base.GetHashCode();
     }
   }
 }

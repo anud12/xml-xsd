@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.Nproperty_mutati
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen {
-  public class property_mutation : XSD.ILinkedNode , Itype__math_operations {
+  public class property_mutation : IEquatable<property_mutation>, XSD.ILinkedNode , Itype__math_operations {
 
     public static string ClassTypeId = ".world_step.rule_group.events_rule.entry.then.property_mutation";
     public static string TagName = "property_mutation";
@@ -109,9 +109,9 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.property_rule_ref != null)
+      if(this._property_rule_ref != null)
       {
-        rawNode.attributes["property_rule_ref"] = this.property_rule_ref.ToString();
+        rawNode.attributes["property_rule_ref"] = this._property_rule_ref.ToString();
       }
 
       // Serialize arguments of type__math_operations
@@ -169,6 +169,27 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen {
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(property_mutation? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (property_mutation)obj;
+        return Equals(property_rule_ref, other.property_rule_ref);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, property_rule_ref);
+        return acc;
     }
   }
 }

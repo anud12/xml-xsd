@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_grou
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
-  public class link_group_list : XSD.ILinkedNode  {
+  public class link_group_list : IEquatable<link_group_list>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group.location_graph_rule.node_rule.link_group_list";
     public static string TagName = "link_group_list";
@@ -237,6 +237,30 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
         return this._link_group.KeyOf(casted_link_group);
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.reference
+      || candidateChild is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list.link_group
+      || false;
+    }
+
+    public bool Equals(link_group_list? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (link_group_list)obj;
+        return Equals(reference, other.reference) && Equals(link_group, other.link_group);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, reference);
+        acc = HashCode.Combine(acc, link_group);
+        return acc;
     }
   }
 }

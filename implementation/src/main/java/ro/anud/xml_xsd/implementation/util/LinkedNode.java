@@ -24,7 +24,14 @@ public interface LinkedNode {
         notifyChange(new ArrayList<>());
     }
 
+    default void clearParentNode() {
+        //TODO: implement and call it on remove child
+    }
+
     int buildIndexForChild(Object object);
+
+
+    public LinkedNode deserializeAtPath(String xpath, RawNode rawNode);
 
     default String buildPath() {
         var index = parentNode().map(linkedNode -> linkedNode.buildIndexForChild(this)).orElse(0);

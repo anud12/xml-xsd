@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
-  public class node_rule : XSD.ILinkedNode  {
+  public class node_rule : IEquatable<node_rule>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group.location_graph_rule.node_rule";
     public static string TagName = "node_rule";
@@ -30,7 +30,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
 
     //Children elements
     private XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.name? _name = null;
-    public XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.name name
+    public XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.name nameOrCreate
     {
       get
       {
@@ -45,12 +45,31 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
       set
       {
         _name = value;
-        _name.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.name? name
+    {
+      get
+      {
+        return _name;
+      }
+      set
+      {
+        _name = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.classifications? _classifications = null;
-    public XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.classifications classifications
+    public XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.classifications classificationsOrCreate
     {
       get
       {
@@ -65,12 +84,31 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
       set
       {
         _classifications = value;
-        _classifications.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.classifications? classifications
+    {
+      get
+      {
+        return _classifications;
+      }
+      set
+      {
+        _classifications = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.link_group_list? _link_group_list = null;
-    public XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.link_group_list link_group_list
+    public XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.link_group_list link_group_listOrCreate
     {
       get
       {
@@ -85,12 +123,31 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
       set
       {
         _link_group_list = value;
-        _link_group_list.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.link_group_list? link_group_list
+    {
+      get
+      {
+        return _link_group_list;
+      }
+      set
+      {
+        _link_group_list = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.existing_person? _existing_person = null;
-    public XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.existing_person existing_person
+    public XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.existing_person existing_personOrCreate
     {
       get
       {
@@ -105,7 +162,26 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
       set
       {
         _existing_person = value;
-        _existing_person.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.existing_person? existing_person
+    {
+      get
+      {
+        return _existing_person;
+      }
+      set
+      {
+        _existing_person = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public node_rule()
@@ -223,9 +299,9 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.id != null)
+      if(this._id != null)
       {
-        rawNode.attributes["id"] = this.id.ToString();
+        rawNode.attributes["id"] = this._id.ToString();
       }
 
       //Serialize children
@@ -329,6 +405,35 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.name
+      || candidateChild is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.classifications
+      || candidateChild is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.link_group_list
+      || candidateChild is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.existing_person
+      || false;
+    }
+
+    public bool Equals(node_rule? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (node_rule)obj;
+        return Equals(id, other.id) && Equals(name, other.name) && Equals(classifications, other.classifications) && Equals(link_group_list, other.link_group_list) && Equals(existing_person, other.existing_person);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, id);
+        acc = HashCode.Combine(acc, name);
+        acc = HashCode.Combine(acc, classifications);
+        acc = HashCode.Combine(acc, link_group_list);
+        acc = HashCode.Combine(acc, existing_person);
+        return acc;
     }
   }
 }

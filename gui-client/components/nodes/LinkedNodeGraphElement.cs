@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Godot;
+using Guiclient.util;
 using XSD;
 
 namespace Guiclient.components.nodes;
@@ -49,7 +50,7 @@ public partial class LinkedNodeGraphElement<T>: GraphNode where T : ILinkedNode
         {
             
             this.SetSlotEnabledRight(index  , true);
-            GD.Print($@"index {index}");
+            Logger.Info($@"index {index}");
             if (typeof(ILinkedNode).IsAssignableFrom(fieldInfo.PropertyType))
             {
                 var value = fieldInfo.GetValue(_node);

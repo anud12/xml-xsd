@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group {
-  public class events_rule : XSD.ILinkedNode  {
+  public class events_rule : IEquatable<events_rule>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group.events_rule";
     public static string TagName = "events_rule";
@@ -182,6 +182,28 @@ namespace XSD.Nworld_step.Nrule_group {
         return this._entry.KeyOf(casted_entry);
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nrule_group.Nevents_rule.entry
+      || false;
+    }
+
+    public bool Equals(events_rule? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (events_rule)obj;
+        return Equals(entry, other.entry);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, entry);
+        return acc;
     }
   }
 }

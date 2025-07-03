@@ -10,23 +10,33 @@ import ro.anud.xml_xsd.implementation.middleware.locationGraph.LocationGraphCrea
 import ro.anud.xml_xsd.implementation.middleware.locationGraph.LocationGraphCreateAdjacent;
 import ro.anud.xml_xsd.implementation.middleware.person.PersonMoveTo;
 import ro.anud.xml_xsd.implementation.middleware.person.PersonTeleportTo;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.Counter.Counter;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.RandomizationTable.Entry.Entry;
+import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.RandomizationTable.RandomizationTable;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 import ro.anud.xml_xsd.implementation.websocket.WebSocketHandler;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
+
+import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 
 @Component
 public class WorldStepRunner {
 
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
     private volatile boolean isRunning = true;
-    private  CompletableFuture<Object> finishedThread = CompletableFuture.completedFuture(this);
+    private CompletableFuture<Object> finishedThread = CompletableFuture.completedFuture(this);
+    private List<Consumer<WorldStepInstance>> consumers = new ArrayList<>();
+    private static long intervalUs = 500_000_000;
 
     private void runStep(WorldStepInstance worldStepInstance) {
         FromPersonAction.apply(worldStepInstance);
@@ -39,13 +49,26 @@ public class WorldStepRunner {
         LocationGraphAddClassification.locationGraphAddClassification(worldStepInstance);
         PersonAssignClassification.apply(worldStepInstance);
 
-
+        var logger = logEnter("Applying counter synchronization to WorldStepInstance");
+        worldStepInstance.getOutInstance()
+            .getWorldStep()
+            .flatMap(WorldStep::getWorldMetadata)
+            .map(WorldMetadata::getCounter)
+            .ifPresent(counter -> {
+                var value = worldStepInstance.getWorldStep()
+                    .map(WorldStep::getWorldMetadataOrDefault)
+                    .map(WorldMetadata::getCounter)
+                    .map(Counter::getValue)
+                    .orElse(0);
+                counter.setValue(value);
+            });
+        worldStepInstance.getOutInstance().offsetRandomizationTable();
+        logger.logReturnVoid("Counter synchronization applied");
     }
 
     public WorldStepRunner start(WorldStepInstance worldStepInstance, WebSocketHandler webSocketHandler) {
 
         var innerWorldStepInstance = new AtomicReference<>(worldStepInstance);
-        long intervalUs = 100_000_000;
         isRunning = true;
         CompletableFuture<Object> firstRun = new CompletableFuture<>();
         finishedThread = new CompletableFuture<>();
@@ -54,9 +77,19 @@ public class WorldStepRunner {
             while (isRunning) {
                 long startTime = System.nanoTime();
                 System.out.println("------------------------------------------");
+
                 System.out.println("Running task");
+                System.out.println("Consumers list size: " + consumers.size());
                 try {
                     innerWorldStepInstance.getAndUpdate(worldStepInstance1 -> {
+                        consumers.forEach(worldStepConsumer -> {
+                            try {
+                                worldStepConsumer.accept(worldStepInstance1);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        });
+                        consumers.clear();
                         worldStepInstance1.setWebSocketHandler(webSocketHandler);
                         runStep(worldStepInstance1);
                         worldStepInstance1.setWebSocketHandler(null);
@@ -69,8 +102,8 @@ public class WorldStepRunner {
                 long elapsedTime = System.nanoTime() - startTime;
                 long sleepTime = intervalUs - elapsedTime;
                 System.out.println("------------------------------------------");
-                System.out.println("Task Finished in : " + String.format("%,d",elapsedTime) + "us");
-                System.out.println("Sleeping         : " + String.format("%,d",sleepTime) + "us");
+                System.out.println("Task Finished in : " + String.format("%,d", elapsedTime) + "us");
+                System.out.println("Sleeping         : " + String.format("%,d", sleepTime) + "us");
                 System.out.println("------------------------------------------");
 
                 if (sleepTime > 0) {
@@ -92,6 +125,7 @@ public class WorldStepRunner {
         }
         return this;
     }
+
     public WorldStepRunner stop() {
         isRunning = false;
         try {
@@ -104,4 +138,7 @@ public class WorldStepRunner {
         return this;
     }
 
+    public void queueMutation(final Consumer<WorldStepInstance> object) {
+        consumers.add(object);
+    }
 }

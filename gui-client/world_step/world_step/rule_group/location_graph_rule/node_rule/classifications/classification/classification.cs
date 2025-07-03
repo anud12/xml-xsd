@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nclassific
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nclassifications {
-  public class classification : XSD.ILinkedNode  {
+  public class classification : IEquatable<classification>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group.location_graph_rule.node_rule.classifications.classification";
     public static string TagName = "classification";
@@ -97,9 +97,9 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nclassific
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.location_classification_rule_ref != null)
+      if(this._location_classification_rule_ref != null)
       {
-        rawNode.attributes["location_classification_rule_ref"] = this.location_classification_rule_ref.ToString();
+        rawNode.attributes["location_classification_rule_ref"] = this._location_classification_rule_ref.ToString();
       }
 
       //Serialize children
@@ -151,6 +151,27 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nclassific
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(classification? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (classification)obj;
+        return Equals(location_classification_rule_ref, other.location_classification_rule_ref);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, location_classification_rule_ref);
+        return acc;
     }
   }
 }

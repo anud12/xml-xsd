@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Ndata.Npeople.Nperson.Nproperties {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Npeople.Nperson {
-  public class properties : XSD.ILinkedNode  {
+  public class properties : IEquatable<properties>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.data.people.person.properties";
     public static string TagName = "properties";
@@ -182,6 +182,28 @@ namespace XSD.Nworld_step.Ndata.Npeople.Nperson {
         return this._property.KeyOf(casted_property);
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Ndata.Npeople.Nperson.Nproperties.property
+      || false;
+    }
+
+    public bool Equals(properties? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (properties)obj;
+        return Equals(property, other.property);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, property);
+        return acc;
     }
   }
 }

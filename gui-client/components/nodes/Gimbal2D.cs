@@ -1,6 +1,7 @@
 
 using System;
 using Godot;
+using Guiclient.util;
 
 
 /* Class that applies a its rotation reversed to its children in a 2D space */
@@ -15,12 +16,12 @@ public partial class Gimbal2D : VBoxContainer
     {
         ChildOrderChanged += () =>
         {
-            GD.Print("ChildOrderChanged");
+            Logger.Info("ChildOrderChanged");
             QueueRedraw();
         };
         ItemRectChanged += () =>
         {
-            GD.Print("ItemRectChanged");
+            Logger.Info("ItemRectChanged");
             QueueRedraw();
         };
     }    
@@ -28,7 +29,7 @@ public partial class Gimbal2D : VBoxContainer
     public override void _EnterTree()
     {
         base._EnterTree();
-        GD.Print("Enter Tree");
+        Logger.Info("Enter Tree");
         QueueRedraw();
     }
 
@@ -50,9 +51,9 @@ public partial class Gimbal2D : VBoxContainer
 
     private void calculate()
     {
-        GD.Print("Calculate");
+        Logger.Info("Calculate");
         float currentRotation = Rotation;
-        GD.Print("children: " + GetChildren().Count);
+        Logger.Info("children: " + GetChildren().Count);
         foreach (Node child in GetChildren())
         {
             if (child is Control child2D)

@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nactions.Nby {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions {
-  public class by : XSD.ILinkedNode  {
+  public class by : IEquatable<by>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.actions.by";
     public static string TagName = "by";
@@ -30,7 +30,7 @@ namespace XSD.Nworld_step.Nactions {
 
     //Children elements
     private XSD.Nworld_step.Nactions.Nby._do __do = new XSD.Nworld_step.Nactions.Nby._do();
-    public XSD.Nworld_step.Nactions.Nby._do _do
+    public XSD.Nworld_step.Nactions.Nby._do _doOrCreate
     {
       get
       {
@@ -45,12 +45,31 @@ namespace XSD.Nworld_step.Nactions {
       set
       {
         __do = value;
-        __do.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nactions.Nby._do _do
+    {
+      get
+      {
+        return __do;
+      }
+      set
+      {
+        __do = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Nworld_step.Nactions.Nby.move_towards? _move_towards = null;
-    public XSD.Nworld_step.Nactions.Nby.move_towards move_towards
+    public XSD.Nworld_step.Nactions.Nby.move_towards move_towardsOrCreate
     {
       get
       {
@@ -65,7 +84,26 @@ namespace XSD.Nworld_step.Nactions {
       set
       {
         _move_towards = value;
-        _move_towards.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nactions.Nby.move_towards? move_towards
+    {
+      get
+      {
+        return _move_towards;
+      }
+      set
+      {
+        _move_towards = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public by()
@@ -159,9 +197,9 @@ namespace XSD.Nworld_step.Nactions {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.person_ref != null)
+      if(this._person_ref != null)
       {
-        rawNode.attributes["person_ref"] = this.person_ref.ToString();
+        rawNode.attributes["person_ref"] = this._person_ref.ToString();
       }
 
       //Serialize children
@@ -238,6 +276,31 @@ namespace XSD.Nworld_step.Nactions {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nactions.Nby._do
+      || candidateChild is XSD.Nworld_step.Nactions.Nby.move_towards
+      || false;
+    }
+
+    public bool Equals(by? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (by)obj;
+        return Equals(person_ref, other.person_ref) && Equals(_do, other._do) && Equals(move_towards, other.move_towards);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, person_ref);
+        acc = HashCode.Combine(acc, _do);
+        acc = HashCode.Combine(acc, move_towards);
+        return acc;
     }
   }
 }

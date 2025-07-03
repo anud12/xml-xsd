@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group {
-  public class action_rule : XSD.ILinkedNode  {
+  public class action_rule : IEquatable<action_rule>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group.action_rule";
     public static string TagName = "action_rule";
@@ -44,7 +44,7 @@ namespace XSD.Nworld_step.Nrule_group {
       }
     }
     private XSD.Nworld_step.Nrule_group.Naction_rule.global? _global = null;
-    public XSD.Nworld_step.Nrule_group.Naction_rule.global global
+    public XSD.Nworld_step.Nrule_group.Naction_rule.global globalOrCreate
     {
       get
       {
@@ -59,7 +59,26 @@ namespace XSD.Nworld_step.Nrule_group {
       set
       {
         _global = value;
-        _global.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.Naction_rule.global? global
+    {
+      get
+      {
+        return _global;
+      }
+      set
+      {
+        _global = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public action_rule()
@@ -225,6 +244,30 @@ namespace XSD.Nworld_step.Nrule_group {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nrule_group.Naction_rule.from_person
+      || candidateChild is XSD.Nworld_step.Nrule_group.Naction_rule.global
+      || false;
+    }
+
+    public bool Equals(action_rule? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (action_rule)obj;
+        return Equals(from_person, other.from_person) && Equals(global, other.global);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, from_person);
+        acc = HashCode.Combine(acc, global);
+        return acc;
     }
   }
 }

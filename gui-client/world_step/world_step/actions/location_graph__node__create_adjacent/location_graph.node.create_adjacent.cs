@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nactions.Nlocation_graph__node__create_adjacent {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions {
-  public class location_graph__node__create_adjacent : XSD.ILinkedNode  {
+  public class location_graph__node__create_adjacent : IEquatable<location_graph__node__create_adjacent>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.actions.location_graph.node.create_adjacent";
     public static string TagName = "location_graph.node.create_adjacent";
@@ -108,13 +108,13 @@ namespace XSD.Nworld_step.Nactions {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.location_graph_id_ref != null)
+      if(this._location_graph_id_ref != null)
       {
-        rawNode.attributes["location_graph_id_ref"] = this.location_graph_id_ref.ToString();
+        rawNode.attributes["location_graph_id_ref"] = this._location_graph_id_ref.ToString();
       }
-      if(this.node_id_ref != null)
+      if(this._node_id_ref != null)
       {
-        rawNode.attributes["node_id_ref"] = this.node_id_ref.ToString();
+        rawNode.attributes["node_id_ref"] = this._node_id_ref.ToString();
       }
 
       //Serialize children
@@ -175,6 +175,28 @@ namespace XSD.Nworld_step.Nactions {
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(location_graph__node__create_adjacent? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (location_graph__node__create_adjacent)obj;
+        return Equals(location_graph_id_ref, other.location_graph_id_ref) && Equals(node_id_ref, other.node_id_ref);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, location_graph_id_ref);
+        acc = HashCode.Combine(acc, node_id_ref);
+        return acc;
     }
   }
 }

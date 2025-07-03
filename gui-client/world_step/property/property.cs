@@ -11,7 +11,7 @@ namespace XSD.Nproperty {}
 namespace XSD {
 }
 namespace XSD {
-  public class property : XSD.ILinkedNode  {
+  public class property : IEquatable<property>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".property";
     public static string TagName = "property";
@@ -30,7 +30,7 @@ namespace XSD {
 
     //Children elements
     private type__math_operations? _min = null;
-    public type__math_operations min
+    public type__math_operations minOrCreate
     {
       get
       {
@@ -45,12 +45,31 @@ namespace XSD {
       set
       {
         _min = value;
-        _min.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__math_operations? min
+    {
+      get
+      {
+        return _min;
+      }
+      set
+      {
+        _min = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private type__math_operations? _max = null;
-    public type__math_operations max
+    public type__math_operations maxOrCreate
     {
       get
       {
@@ -65,7 +84,26 @@ namespace XSD {
       set
       {
         _max = value;
-        _max.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__math_operations? max
+    {
+      get
+      {
+        return _max;
+      }
+      set
+      {
+        _max = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public property()
@@ -159,9 +197,9 @@ namespace XSD {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.property_rule_ref != null)
+      if(this._property_rule_ref != null)
       {
-        rawNode.attributes["property_rule_ref"] = this.property_rule_ref.ToString();
+        rawNode.attributes["property_rule_ref"] = this._property_rule_ref.ToString();
       }
 
       //Serialize children
@@ -239,6 +277,31 @@ namespace XSD {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is type__math_operations
+      || candidateChild is type__math_operations
+      || false;
+    }
+
+    public bool Equals(property? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (property)obj;
+        return Equals(property_rule_ref, other.property_rule_ref) && Equals(min, other.min) && Equals(max, other.max);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, property_rule_ref);
+        acc = HashCode.Combine(acc, min);
+        acc = HashCode.Combine(acc, max);
+        return acc;
     }
   }
 }

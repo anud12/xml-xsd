@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_nod
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node {
-  public class or : XSD.ILinkedNode  {
+  public class or : IEquatable<or>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group.location_graph_rule.setup.necessary_node.or";
     public static string TagName = "or";
@@ -97,9 +97,9 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_nod
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.node_rule_ref != null)
+      if(this._node_rule_ref != null)
       {
-        rawNode.attributes["node_rule_ref"] = this.node_rule_ref.ToString();
+        rawNode.attributes["node_rule_ref"] = this._node_rule_ref.ToString();
       }
 
       //Serialize children
@@ -151,6 +151,27 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_nod
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(or? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (or)obj;
+        return Equals(node_rule_ref, other.node_rule_ref);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, node_rule_ref);
+        return acc;
     }
   }
 }

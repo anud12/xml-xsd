@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group {
-  public class location_graph_rule : XSD.ILinkedNode  {
+  public class location_graph_rule : IEquatable<location_graph_rule>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group.location_graph_rule";
     public static string TagName = "location_graph_rule";
@@ -30,7 +30,7 @@ namespace XSD.Nworld_step.Nrule_group {
 
     //Children elements
     private XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.setup _setup = new XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.setup();
-    public XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.setup setup
+    public XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.setup setupOrCreate
     {
       get
       {
@@ -45,7 +45,26 @@ namespace XSD.Nworld_step.Nrule_group {
       set
       {
         _setup = value;
-        _setup.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.setup setup
+    {
+      get
+      {
+        return _setup;
+      }
+      set
+      {
+        _setup = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
@@ -161,9 +180,9 @@ namespace XSD.Nworld_step.Nrule_group {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.id != null)
+      if(this._id != null)
       {
-        rawNode.attributes["id"] = this.id.ToString();
+        rawNode.attributes["id"] = this._id.ToString();
       }
 
       //Serialize children
@@ -250,6 +269,31 @@ namespace XSD.Nworld_step.Nrule_group {
         return this._node_rule.KeyOf(casted_node_rule);
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.setup
+      || candidateChild is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.node_rule
+      || false;
+    }
+
+    public bool Equals(location_graph_rule? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (location_graph_rule)obj;
+        return Equals(id, other.id) && Equals(setup, other.setup) && Equals(node_rule, other.node_rule);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, id);
+        acc = HashCode.Combine(acc, setup);
+        acc = HashCode.Combine(acc, node_rule);
+        return acc;
     }
   }
 }

@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.
 namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.Npeople {
-  public class person : XSD.ILinkedNode  {
+  public class person : IEquatable<person>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.data.location.location_graph.node.links.link_to.people.person";
     public static string TagName = "person";
@@ -108,13 +108,13 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.person_id_ref != null)
+      if(this._person_id_ref != null)
       {
-        rawNode.attributes["person_id_ref"] = this.person_id_ref.ToString();
+        rawNode.attributes["person_id_ref"] = this._person_id_ref.ToString();
       }
-      if(this.accumulated_progress != null)
+      if(this._accumulated_progress != null)
       {
-        rawNode.attributes["accumulated_progress"] = this.accumulated_progress.ToString();
+        rawNode.attributes["accumulated_progress"] = this._accumulated_progress.ToString();
       }
 
       //Serialize children
@@ -175,6 +175,28 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(person? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (person)obj;
+        return Equals(person_id_ref, other.person_id_ref) && Equals(accumulated_progress, other.accumulated_progress);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, person_id_ref);
+        acc = HashCode.Combine(acc, accumulated_progress);
+        return acc;
     }
   }
 }

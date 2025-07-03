@@ -5,6 +5,8 @@ using System;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
+using Guiclient.util;
+
 public partial class MainScene : Control
 {
     public static PackedScene PackedScene = GD.Load<PackedScene>("res://scenes/MainScene.tscn");
@@ -19,7 +21,7 @@ public partial class MainScene : Control
         load.Pressed += () =>
         {
             var path = GetNode<TextEdit>("%FilePathInput").Text;
-            GD.Print("Loading world step from " + path);
+            Logger.Info("Loading world step from " + path);
             StoreWorld_Step.instance.data = loadWorldStep.deserializeFromPath(path);
             GetTree().ChangeSceneToPacked(WorldStepScene.PackedScene);
         };

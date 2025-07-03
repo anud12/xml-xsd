@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nactions.Nperson__create {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions {
-  public class person__create : XSD.ILinkedNode  {
+  public class person__create : IEquatable<person__create>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.actions.person.create";
     public static string TagName = "person.create";
@@ -28,7 +28,7 @@ namespace XSD.Nworld_step.Nactions {
 
     //Children elements
     private type__node_graph__selection _node_graph__selection = new type__node_graph__selection();
-    public type__node_graph__selection node_graph__selection
+    public type__node_graph__selection node_graph__selectionOrCreate
     {
       get
       {
@@ -43,12 +43,31 @@ namespace XSD.Nworld_step.Nactions {
       set
       {
         _node_graph__selection = value;
-        _node_graph__selection.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__node_graph__selection node_graph__selection
+    {
+      get
+      {
+        return _node_graph__selection;
+      }
+      set
+      {
+        _node_graph__selection = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private type__person_selection _person__selection = new type__person_selection();
-    public type__person_selection person__selection
+    public type__person_selection person__selectionOrCreate
     {
       get
       {
@@ -63,7 +82,26 @@ namespace XSD.Nworld_step.Nactions {
       set
       {
         _person__selection = value;
-        _person__selection.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__person_selection person__selection
+    {
+      get
+      {
+        return _person__selection;
+      }
+      set
+      {
+        _person__selection = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public person__create()
@@ -213,6 +251,30 @@ namespace XSD.Nworld_step.Nactions {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is type__node_graph__selection
+      || candidateChild is type__person_selection
+      || false;
+    }
+
+    public bool Equals(person__create? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (person__create)obj;
+        return Equals(node_graph__selection, other.node_graph__selection) && Equals(person__selection, other.person__selection);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, node_graph__selection);
+        acc = HashCode.Combine(acc, person__selection);
+        return acc;
     }
   }
 }

@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nproperty_rule {
-  public class entry : XSD.ILinkedNode  {
+  public class entry : IEquatable<entry>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group.property_rule.entry";
     public static string TagName = "entry";
@@ -32,7 +32,7 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule {
 
     //Children elements
     private XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.person_default? _person_default = null;
-    public XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.person_default person_default
+    public XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.person_default person_defaultOrCreate
     {
       get
       {
@@ -47,12 +47,31 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule {
       set
       {
         _person_default = value;
-        _person_default.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.person_default? person_default
+    {
+      get
+      {
+        return _person_default;
+      }
+      set
+      {
+        _person_default = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.item_default? _item_default = null;
-    public XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.item_default item_default
+    public XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.item_default item_defaultOrCreate
     {
       get
       {
@@ -67,7 +86,26 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule {
       set
       {
         _item_default = value;
-        _item_default.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.item_default? item_default
+    {
+      get
+      {
+        return _item_default;
+      }
+      set
+      {
+        _item_default = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
@@ -204,13 +242,13 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.id != null)
+      if(this._id != null)
       {
-        rawNode.attributes["id"] = this.id.ToString();
+        rawNode.attributes["id"] = this._id.ToString();
       }
-      if(this.units != null)
+      if(this._units != null)
       {
-        rawNode.attributes["units"] = this.units.ToString();
+        rawNode.attributes["units"] = this._units.ToString();
       }
 
       //Serialize children
@@ -320,6 +358,34 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule {
         return this._property_threshold.KeyOf(casted_property_threshold);
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.person_default
+      || candidateChild is XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.item_default
+      || candidateChild is XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.property_threshold
+      || false;
+    }
+
+    public bool Equals(entry? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (entry)obj;
+        return Equals(id, other.id) && Equals(units, other.units) && Equals(person_default, other.person_default) && Equals(item_default, other.item_default) && Equals(property_threshold, other.property_threshold);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, id);
+        acc = HashCode.Combine(acc, units);
+        acc = HashCode.Combine(acc, person_default);
+        acc = HashCode.Combine(acc, item_default);
+        acc = HashCode.Combine(acc, property_threshold);
+        return acc;
     }
   }
 }

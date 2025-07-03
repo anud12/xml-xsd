@@ -11,7 +11,7 @@ namespace XSD.Ntype__link_group.Nto_option {}
 namespace XSD {
 }
 namespace XSD.Ntype__link_group {
-  public class to_option : XSD.ILinkedNode  {
+  public class to_option : IEquatable<to_option>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".type__link_group.to_option";
     public static string TagName = "to_option";
@@ -36,7 +36,7 @@ namespace XSD.Ntype__link_group {
 
     //Children elements
     private type__math_operations? _distance_to_progress_multiplier = null;
-    public type__math_operations distance_to_progress_multiplier
+    public type__math_operations distance_to_progress_multiplierOrCreate
     {
       get
       {
@@ -51,12 +51,31 @@ namespace XSD.Ntype__link_group {
       set
       {
         _distance_to_progress_multiplier = value;
-        _distance_to_progress_multiplier.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__math_operations? distance_to_progress_multiplier
+    {
+      get
+      {
+        return _distance_to_progress_multiplier;
+      }
+      set
+      {
+        _distance_to_progress_multiplier = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private type__math_operations? _person_progress_property = null;
-    public type__math_operations person_progress_property
+    public type__math_operations person_progress_propertyOrCreate
     {
       get
       {
@@ -71,7 +90,26 @@ namespace XSD.Ntype__link_group {
       set
       {
         _person_progress_property = value;
-        _person_progress_property.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__math_operations? person_progress_property
+    {
+      get
+      {
+        return _person_progress_property;
+      }
+      set
+      {
+        _person_progress_property = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public to_option()
@@ -192,21 +230,21 @@ namespace XSD.Ntype__link_group {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.node_rule_ref != null)
+      if(this._node_rule_ref != null)
       {
-        rawNode.attributes["node_rule_ref"] = this.node_rule_ref.ToString();
+        rawNode.attributes["node_rule_ref"] = this._node_rule_ref.ToString();
       }
-      if(this.distance != null)
+      if(this._distance != null)
       {
-        rawNode.attributes["distance"] = this.distance.ToString();
+        rawNode.attributes["distance"] = this._distance.ToString();
       }
-      if(this.maxDistance != null)
+      if(this._maxDistance != null)
       {
-        rawNode.attributes["maxDistance"] = this.maxDistance?.ToString();
+        rawNode.attributes["maxDistance"] = this._maxDistance?.ToString();
       }
-      if(this.adjacent_depth_limit != null)
+      if(this._adjacent_depth_limit != null)
       {
-        rawNode.attributes["adjacent_depth_limit"] = this.adjacent_depth_limit.ToString();
+        rawNode.attributes["adjacent_depth_limit"] = this._adjacent_depth_limit.ToString();
       }
 
       //Serialize children
@@ -311,6 +349,34 @@ namespace XSD.Ntype__link_group {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is type__math_operations
+      || candidateChild is type__math_operations
+      || false;
+    }
+
+    public bool Equals(to_option? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (to_option)obj;
+        return Equals(node_rule_ref, other.node_rule_ref) && Equals(distance, other.distance) && Equals(maxDistance, other.maxDistance) && Equals(adjacent_depth_limit, other.adjacent_depth_limit) && Equals(distance_to_progress_multiplier, other.distance_to_progress_multiplier) && Equals(person_progress_property, other.person_progress_property);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, node_rule_ref);
+        acc = HashCode.Combine(acc, distance);
+        acc = HashCode.Combine(acc, maxDistance);
+        acc = HashCode.Combine(acc, adjacent_depth_limit);
+        acc = HashCode.Combine(acc, distance_to_progress_multiplier);
+        acc = HashCode.Combine(acc, person_progress_property);
+        return acc;
     }
   }
 }

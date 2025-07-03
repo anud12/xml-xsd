@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.Nproperty {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry {
-  public class property : XSD.ILinkedNode  {
+  public class property : IEquatable<property>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group.classification_rule.entry.property";
     public static string TagName = "property";
@@ -31,7 +31,7 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry {
 
     //Children elements
     private type__math_operations _operation = new type__math_operations();
-    public type__math_operations operation
+    public type__math_operations operationOrCreate
     {
       get
       {
@@ -46,7 +46,26 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry {
       set
       {
         _operation = value;
-        _operation.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__math_operations operation
+    {
+      get
+      {
+        return _operation;
+      }
+      set
+      {
+        _operation = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public property()
@@ -129,9 +148,9 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.property_rule_ref != null)
+      if(this._property_rule_ref != null)
       {
-        rawNode.attributes["property_rule_ref"] = this.property_rule_ref.ToString();
+        rawNode.attributes["property_rule_ref"] = this._property_rule_ref.ToString();
       }
 
       //Serialize children
@@ -196,6 +215,29 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is type__math_operations
+      || false;
+    }
+
+    public bool Equals(property? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (property)obj;
+        return Equals(property_rule_ref, other.property_rule_ref) && Equals(operation, other.operation);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, property_rule_ref);
+        acc = HashCode.Combine(acc, operation);
+        return acc;
     }
   }
 }

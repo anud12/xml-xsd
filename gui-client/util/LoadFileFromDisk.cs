@@ -26,13 +26,13 @@ public class LoadFileFromDisk
         fileDialog.AddFilter("*.xml", "XML definition");
         fileDialog.FileSelected += givenPath =>
         {
-            GD.Print("FileSelected");
+            Logger.Info("FileSelected");
             path = givenPath;
         };
         var task = new TaskCompletionSource<string>();
         fileDialog.Confirmed += () =>
         {
-            GD.Print("Confirmed " + path);
+            Logger.Info("Confirmed " + path);
             
             if (path == null)
             {

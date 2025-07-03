@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nactions.Nfrom_person {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions {
-  public class from_person : XSD.ILinkedNode  {
+  public class from_person : IEquatable<from_person>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.actions.from_person";
     public static string TagName = "from_person";
@@ -32,7 +32,7 @@ namespace XSD.Nworld_step.Nactions {
 
     //Children elements
     private XSD.Nworld_step.Nactions.Nfrom_person.on_person _on_person = new XSD.Nworld_step.Nactions.Nfrom_person.on_person();
-    public XSD.Nworld_step.Nactions.Nfrom_person.on_person on_person
+    public XSD.Nworld_step.Nactions.Nfrom_person.on_person on_personOrCreate
     {
       get
       {
@@ -47,7 +47,26 @@ namespace XSD.Nworld_step.Nactions {
       set
       {
         _on_person = value;
-        _on_person.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nactions.Nfrom_person.on_person on_person
+    {
+      get
+      {
+        return _on_person;
+      }
+      set
+      {
+        _on_person = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public from_person()
@@ -138,13 +157,13 @@ namespace XSD.Nworld_step.Nactions {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.person_id_ref != null)
+      if(this._person_id_ref != null)
       {
-        rawNode.attributes["person_id_ref"] = this.person_id_ref.ToString();
+        rawNode.attributes["person_id_ref"] = this._person_id_ref.ToString();
       }
-      if(this.from_person_rule_ref != null)
+      if(this._from_person_rule_ref != null)
       {
-        rawNode.attributes["from_person_rule_ref"] = this.from_person_rule_ref.ToString();
+        rawNode.attributes["from_person_rule_ref"] = this._from_person_rule_ref.ToString();
       }
 
       //Serialize children
@@ -217,6 +236,30 @@ namespace XSD.Nworld_step.Nactions {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nactions.Nfrom_person.on_person
+      || false;
+    }
+
+    public bool Equals(from_person? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (from_person)obj;
+        return Equals(person_id_ref, other.person_id_ref) && Equals(from_person_rule_ref, other.from_person_rule_ref) && Equals(on_person, other.on_person);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, person_id_ref);
+        acc = HashCode.Combine(acc, from_person_rule_ref);
+        acc = HashCode.Combine(acc, on_person);
+        return acc;
     }
   }
 }

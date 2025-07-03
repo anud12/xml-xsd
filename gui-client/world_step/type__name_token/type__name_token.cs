@@ -11,7 +11,7 @@ namespace XSD.Ntype__name_token {}
 namespace XSD {
 }
 namespace XSD {
-  public class type__name_token : XSD.ILinkedNode  {
+  public class type__name_token : IEquatable<type__name_token>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".type__name_token";
     public static string TagName = "type__name_token";
@@ -182,6 +182,28 @@ namespace XSD {
         return this._name_token.KeyOf(casted_name_token);
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Ntype__name_token.name_token
+      || false;
+    }
+
+    public bool Equals(type__name_token? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (type__name_token)obj;
+        return Equals(name_token, other.name_token);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, name_token);
+        return acc;
     }
   }
 }

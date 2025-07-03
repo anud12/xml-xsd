@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nactions.Nby.N_do {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions.Nby {
-  public class _do : XSD.ILinkedNode  {
+  public class _do : IEquatable<_do>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.actions.by.do";
     public static string TagName = "do";
@@ -119,17 +119,17 @@ namespace XSD.Nworld_step.Nactions.Nby {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.action_rule_ref != null)
+      if(this._action_rule_ref != null)
       {
-        rawNode.attributes["action_rule_ref"] = this.action_rule_ref?.ToString();
+        rawNode.attributes["action_rule_ref"] = this._action_rule_ref?.ToString();
       }
-      if(this.action_ref != null)
+      if(this._action_ref != null)
       {
-        rawNode.attributes["action_ref"] = this.action_ref?.ToString();
+        rawNode.attributes["action_ref"] = this._action_ref?.ToString();
       }
-      if(this.person_ref != null)
+      if(this._person_ref != null)
       {
-        rawNode.attributes["person_ref"] = this.person_ref.ToString();
+        rawNode.attributes["person_ref"] = this._person_ref.ToString();
       }
 
       //Serialize children
@@ -199,6 +199,29 @@ namespace XSD.Nworld_step.Nactions.Nby {
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(_do? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (_do)obj;
+        return Equals(action_rule_ref, other.action_rule_ref) && Equals(action_ref, other.action_ref) && Equals(person_ref, other.person_ref);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, action_rule_ref);
+        acc = HashCode.Combine(acc, action_ref);
+        acc = HashCode.Combine(acc, person_ref);
+        return acc;
     }
   }
 }

@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nname {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode {
-  public class name : XSD.ILinkedNode  {
+  public class name : IEquatable<name>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.data.location.location_graph.node.name";
     public static string TagName = "name";
@@ -97,9 +97,9 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.value != null)
+      if(this._value != null)
       {
-        rawNode.attributes["value"] = this.value.ToString();
+        rawNode.attributes["value"] = this._value.ToString();
       }
 
       //Serialize children
@@ -151,6 +151,27 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode {
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(name? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (name)obj;
+        return Equals(value, other.value);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, value);
+        return acc;
     }
   }
 }

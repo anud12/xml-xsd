@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nworld_metadata {}
 namespace XSD {
 }
 namespace XSD.Nworld_step {
-  public class world_metadata : XSD.ILinkedNode  {
+  public class world_metadata : IEquatable<world_metadata>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.world_metadata";
     public static string TagName = "world_metadata";
@@ -28,7 +28,7 @@ namespace XSD.Nworld_step {
 
     //Children elements
     private XSD.Nworld_step.Nworld_metadata.previous_world_step? _previous_world_step = null;
-    public XSD.Nworld_step.Nworld_metadata.previous_world_step previous_world_step
+    public XSD.Nworld_step.Nworld_metadata.previous_world_step previous_world_stepOrCreate
     {
       get
       {
@@ -43,12 +43,31 @@ namespace XSD.Nworld_step {
       set
       {
         _previous_world_step = value;
-        _previous_world_step.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nworld_metadata.previous_world_step? previous_world_step
+    {
+      get
+      {
+        return _previous_world_step;
+      }
+      set
+      {
+        _previous_world_step = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Nworld_step.Nworld_metadata.next_world_step? _next_world_step = null;
-    public XSD.Nworld_step.Nworld_metadata.next_world_step next_world_step
+    public XSD.Nworld_step.Nworld_metadata.next_world_step next_world_stepOrCreate
     {
       get
       {
@@ -63,12 +82,31 @@ namespace XSD.Nworld_step {
       set
       {
         _next_world_step = value;
-        _next_world_step.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nworld_metadata.next_world_step? next_world_step
+    {
+      get
+      {
+        return _next_world_step;
+      }
+      set
+      {
+        _next_world_step = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Nworld_step.Nworld_metadata.elapsed_time _elapsed_time = new XSD.Nworld_step.Nworld_metadata.elapsed_time();
-    public XSD.Nworld_step.Nworld_metadata.elapsed_time elapsed_time
+    public XSD.Nworld_step.Nworld_metadata.elapsed_time elapsed_timeOrCreate
     {
       get
       {
@@ -83,12 +121,31 @@ namespace XSD.Nworld_step {
       set
       {
         _elapsed_time = value;
-        _elapsed_time.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nworld_metadata.elapsed_time elapsed_time
+    {
+      get
+      {
+        return _elapsed_time;
+      }
+      set
+      {
+        _elapsed_time = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Nworld_step.Nworld_metadata.stepDuration _stepDuration = new XSD.Nworld_step.Nworld_metadata.stepDuration();
-    public XSD.Nworld_step.Nworld_metadata.stepDuration stepDuration
+    public XSD.Nworld_step.Nworld_metadata.stepDuration stepDurationOrCreate
     {
       get
       {
@@ -103,12 +160,31 @@ namespace XSD.Nworld_step {
       set
       {
         _stepDuration = value;
-        _stepDuration.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nworld_metadata.stepDuration stepDuration
+    {
+      get
+      {
+        return _stepDuration;
+      }
+      set
+      {
+        _stepDuration = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Nworld_step.Nworld_metadata.counter _counter = new XSD.Nworld_step.Nworld_metadata.counter();
-    public XSD.Nworld_step.Nworld_metadata.counter counter
+    public XSD.Nworld_step.Nworld_metadata.counter counterOrCreate
     {
       get
       {
@@ -123,12 +199,31 @@ namespace XSD.Nworld_step {
       set
       {
         _counter = value;
-        _counter.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nworld_metadata.counter counter
+    {
+      get
+      {
+        return _counter;
+      }
+      set
+      {
+        _counter = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
     private XSD.Nworld_step.Nworld_metadata.randomization_table _randomization_table = new XSD.Nworld_step.Nworld_metadata.randomization_table();
-    public XSD.Nworld_step.Nworld_metadata.randomization_table randomization_table
+    public XSD.Nworld_step.Nworld_metadata.randomization_table randomization_tableOrCreate
     {
       get
       {
@@ -143,7 +238,26 @@ namespace XSD.Nworld_step {
       set
       {
         _randomization_table = value;
-        _randomization_table.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nworld_metadata.randomization_table randomization_table
+    {
+      get
+      {
+        return _randomization_table;
+      }
+      set
+      {
+        _randomization_table = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public world_metadata()
@@ -391,6 +505,38 @@ namespace XSD.Nworld_step {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nworld_metadata.previous_world_step
+      || candidateChild is XSD.Nworld_step.Nworld_metadata.next_world_step
+      || candidateChild is XSD.Nworld_step.Nworld_metadata.elapsed_time
+      || candidateChild is XSD.Nworld_step.Nworld_metadata.stepDuration
+      || candidateChild is XSD.Nworld_step.Nworld_metadata.counter
+      || candidateChild is XSD.Nworld_step.Nworld_metadata.randomization_table
+      || false;
+    }
+
+    public bool Equals(world_metadata? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (world_metadata)obj;
+        return Equals(previous_world_step, other.previous_world_step) && Equals(next_world_step, other.next_world_step) && Equals(elapsed_time, other.elapsed_time) && Equals(stepDuration, other.stepDuration) && Equals(counter, other.counter) && Equals(randomization_table, other.randomization_table);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, previous_world_step);
+        acc = HashCode.Combine(acc, next_world_step);
+        acc = HashCode.Combine(acc, elapsed_time);
+        acc = HashCode.Combine(acc, stepDuration);
+        acc = HashCode.Combine(acc, counter);
+        acc = HashCode.Combine(acc, randomization_table);
+        return acc;
     }
   }
 }

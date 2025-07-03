@@ -19,7 +19,7 @@ namespace XSD {
   }
 }
 namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {
-  public class person_default : XSD.ILinkedNode , Itype__math_operations {
+  public class person_default : IEquatable<person_default>, XSD.ILinkedNode , Itype__math_operations {
 
     public static string ClassTypeId = ".world_step.rule_group.property_rule.entry.person_default";
     public static string TagName = "person_default";
@@ -153,6 +153,24 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+        public bool Equals(person_default? obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            var other = (person_default)obj;
+            return object.Equals(this, other);
+        }
+
+    public int GetHashCode()
+    {
+        return base.GetHashCode();
     }
   }
 }

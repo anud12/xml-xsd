@@ -21,6 +21,7 @@ public record ReadFromFileStep() {
                         relativePath,
                         fileName))
                     );
+                    fileString = fileString.replace("\r\n", "\n");
                     return fileString;
                 }));
     }
@@ -35,6 +36,7 @@ public record ReadFromFileStep() {
                     relativePath,
                     fileName))
                 );
+                fileString = fileString.replace("\r\n", "\n");
                 return new FileResult<>(value, fileString);
             });
     }

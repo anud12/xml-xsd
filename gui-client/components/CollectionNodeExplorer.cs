@@ -3,6 +3,7 @@ using System.Collections;
 using System.Reflection;
 using Godot;
 using Guiclient.components.nodes;
+using Guiclient.util;
 using XSD;
 
 public partial class CollectionNodeExplorer : PanelContainer
@@ -35,7 +36,7 @@ public partial class CollectionNodeExplorer : PanelContainer
 		_nodeExplorerButton.Clicked += () =>
 		{
 			// Handle LinkedNodeCollection logic here
-			GD.Print("LinkedNodeCollection");
+			Logger.Info("LinkedNodeCollection");
 			var collectionNode = CollectionNodeExplorer.PackedScene.Instantiate<CollectionNodeExplorer>();
 			collectionNode._linkedNode = _linkedNode;
 			collectionNode.PropertyInfo = this.PropertyInfo;

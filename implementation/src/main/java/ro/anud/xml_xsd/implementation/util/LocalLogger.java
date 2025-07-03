@@ -38,9 +38,16 @@ public class LocalLogger {
             var stackTrace = Thread.currentThread().getStackTrace();
             var filterStacktrace = filterStacktrace(stackTrace);
 
-            var previousStackTrace = filterStacktrace.get(0);
-            var methodName = previousStackTrace.getMethodName();
-            var logLine = logLine(previousStackTrace);
+            var methodName = Optional.ofNullable(filterStacktrace)
+                .filter(stack -> !stack.isEmpty())
+                .map(stack -> stack.get(0).getMethodName())
+                .orElse("UNKNOWN_METHOD");
+
+            var logLine = Optional.ofNullable(filterStacktrace)
+                .filter(stack -> !stack.isEmpty())
+                .map(stack -> stack.get(0))
+                .map(LocalLogger::logLine)
+                .orElse(new StringBuilder(" ---  at UNKNOWN_LINE"));
 
             printWithStack(filterStacktrace, getStringBuilder(methodName + prefix, args , filterStacktrace));
 //            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + logLine);
@@ -74,9 +81,16 @@ public class LocalLogger {
             var stackTrace = Thread.currentThread().getStackTrace();
             var filterStacktrace = filterStacktrace(stackTrace);
 
-            var previousStackTrace = filterStacktrace.get(0);
-            var logLine = logLine(previousStackTrace);
-            var methodName = previousStackTrace.getMethodName();
+            var methodName = Optional.ofNullable(filterStacktrace)
+                .filter(stack -> !stack.isEmpty())
+                .map(stack -> stack.get(0).getMethodName())
+                .orElse("UNKNOWN_METHOD");
+
+            var logLine = Optional.ofNullable(filterStacktrace)
+                .filter(stack -> !stack.isEmpty())
+                .map(stack -> stack.get(0))
+                .map(LocalLogger::logLine)
+                .orElse(new StringBuilder(" ---  at UNKNOWN_LINE"));
 
             printWithStack(filterStacktrace, getStringBuilder(methodName + prefix, args , filterStacktrace));
 //            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + logLine);
@@ -95,8 +109,16 @@ public class LocalLogger {
             var stackTrace = Thread.currentThread().getStackTrace();
             var filterStacktrace = filterStacktrace(stackTrace);
 
-            var previousStackTrace = filterStacktrace.get(0);
-            var methodName = previousStackTrace.getMethodName();
+            var methodName = Optional.ofNullable(filterStacktrace)
+                .filter(stack -> !stack.isEmpty())
+                .map(stack -> stack.get(0).getMethodName())
+                .orElse("UNKNOWN_METHOD");
+
+            var logLine = Optional.ofNullable(filterStacktrace)
+                .filter(stack -> !stack.isEmpty())
+                .map(stack -> stack.get(0))
+                .map(LocalLogger::logLine)
+                .orElse(new StringBuilder(" ---  at UNKNOWN_LINE"));
 
             printWithStack(filterStacktrace, getStringBuilder(methodName + prefix, args , filterStacktrace));
 //            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + logLine);
@@ -115,9 +137,16 @@ public class LocalLogger {
             var stackTrace = Thread.currentThread().getStackTrace();
             var filterStacktrace = filterStacktrace(stackTrace);
 
-            var previousStackTrace = filterStacktrace.get(0);
-            var logLine = logLine(previousStackTrace);
-            var methodName = previousStackTrace.getMethodName();
+            var methodName = Optional.ofNullable(filterStacktrace)
+                .filter(stack -> !stack.isEmpty())
+                .map(stack -> stack.get(0).getMethodName())
+                .orElse("UNKNOWN_METHOD");
+
+            var logLine = Optional.ofNullable(filterStacktrace)
+                .filter(stack -> !stack.isEmpty())
+                .map(stack -> stack.get(0))
+                .map(LocalLogger::logLine)
+                .orElse(new StringBuilder(" ---  at UNKNOWN_LINE"));
             var line = getStringBuilder(methodName + prefix, args , filterStacktrace);
             var returnValueString = Optional.ofNullable(returnValue).map(Objects::toString).orElse("null");
             line.append("value: [" + returnValueString + "]");
@@ -140,8 +169,16 @@ public class LocalLogger {
             var stackTrace = Thread.currentThread().getStackTrace();
             var filterStacktrace = filterStacktrace(stackTrace);
 
-            var previousStackTrace = filterStacktrace.get(0);
-            var methodName = previousStackTrace.getMethodName();
+            var methodName = Optional.ofNullable(filterStacktrace)
+                .filter(stack -> !stack.isEmpty())
+                .map(stack -> stack.get(0).getMethodName())
+                .orElse("UNKNOWN_METHOD");
+
+            var logLine = Optional.ofNullable(filterStacktrace)
+                .filter(stack -> !stack.isEmpty())
+                .map(stack -> stack.get(0))
+                .map(LocalLogger::logLine)
+                .orElse(new StringBuilder(" ---  at UNKNOWN_LINE"));
 
             StringBuilder line = getStringBuilder(methodName +  prefix, args , filterStacktrace);
             line.append(ARG_SEPARATOR);
@@ -195,10 +232,16 @@ public class LocalLogger {
             line.insert(0, IDENT);
         }
 
-        var previousStackTrace = filterStacktrace.get(0);
-        var logLine = logLine(previousStackTrace);
-        line.append(logLine);
-        LoggerFactory.getLogger(previousStackTrace.getClassName()).info(line.toString());
+        Optional.ofNullable(filterStacktrace)
+            .filter(stack -> !stack.isEmpty())
+            .ifPresentOrElse(stack -> {
+                var previousStackTrace = stack.get(0);
+                var logLine = logLine(previousStackTrace);
+                line.append(logLine);
+                LoggerFactory.getLogger(previousStackTrace.getClassName()).info(line.toString());
+            }, () -> {
+                LoggerFactory.getLogger(LocalLogger.class).warn("filterStacktrace is empty, unable to log stack trace.");
+            });
 
     }
 

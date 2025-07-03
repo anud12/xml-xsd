@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Xml;
 
 namespace XSD {
     public interface ILinkedNode
@@ -12,6 +13,10 @@ namespace XSD {
         void NotifyChange(List<ILinkedNode> linkedNodes);
 
         public RawNode SerializeIntoRawNode();
+        
+        public bool IsValidChildType(ILinkedNode candidateChild);
+
+        public void Serialize(XmlElement element);
         
         public void SetAttribute(string name, string? value);
         

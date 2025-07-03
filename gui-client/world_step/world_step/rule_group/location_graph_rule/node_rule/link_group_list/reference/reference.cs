@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_grou
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_group_list {
-  public class reference : XSD.ILinkedNode  {
+  public class reference : IEquatable<reference>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group.location_graph_rule.node_rule.link_group_list.reference";
     public static string TagName = "reference";
@@ -97,9 +97,9 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_grou
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.link_group_rule_ref != null)
+      if(this._link_group_rule_ref != null)
       {
-        rawNode.attributes["link_group_rule_ref"] = this.link_group_rule_ref.ToString();
+        rawNode.attributes["link_group_rule_ref"] = this._link_group_rule_ref.ToString();
       }
 
       //Serialize children
@@ -151,6 +151,27 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nlink_grou
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(reference? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (reference)obj;
+        return Equals(link_group_rule_ref, other.link_group_rule_ref);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, link_group_rule_ref);
+        return acc;
     }
   }
 }

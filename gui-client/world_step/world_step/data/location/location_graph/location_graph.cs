@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Nlocation {
-  public class location_graph : XSD.ILinkedNode  {
+  public class location_graph : IEquatable<location_graph>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.data.location.location_graph";
     public static string TagName = "location_graph";
@@ -30,7 +30,7 @@ namespace XSD.Nworld_step.Ndata.Nlocation {
 
     //Children elements
     private XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.rule _rule = new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.rule();
-    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.rule rule
+    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.rule ruleOrCreate
     {
       get
       {
@@ -45,7 +45,26 @@ namespace XSD.Nworld_step.Ndata.Nlocation {
       set
       {
         _rule = value;
-        _rule.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.rule rule
+    {
+      get
+      {
+        return _rule;
+      }
+      set
+      {
+        _rule = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
@@ -161,9 +180,9 @@ namespace XSD.Nworld_step.Ndata.Nlocation {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.id != null)
+      if(this._id != null)
       {
-        rawNode.attributes["id"] = this.id.ToString();
+        rawNode.attributes["id"] = this._id.ToString();
       }
 
       //Serialize children
@@ -250,6 +269,31 @@ namespace XSD.Nworld_step.Ndata.Nlocation {
         return this._node.KeyOf(casted_node);
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.rule
+      || candidateChild is XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.node
+      || false;
+    }
+
+    public bool Equals(location_graph? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (location_graph)obj;
+        return Equals(id, other.id) && Equals(rule, other.rule) && Equals(node, other.node);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, id);
+        acc = HashCode.Combine(acc, rule);
+        acc = HashCode.Combine(acc, node);
+        return acc;
     }
   }
 }

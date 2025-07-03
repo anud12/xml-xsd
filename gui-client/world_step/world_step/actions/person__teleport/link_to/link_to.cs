@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport.Nlink_to {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions.Nperson__teleport {
-  public class link_to : XSD.ILinkedNode  {
+  public class link_to : IEquatable<link_to>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.actions.person.teleport.link_to";
     public static string TagName = "link_to";
@@ -30,7 +30,7 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
 
     //Children elements
     private type__link_to__selection _selection = new type__link_to__selection();
-    public type__link_to__selection selection
+    public type__link_to__selection selectionOrCreate
     {
       get
       {
@@ -45,7 +45,26 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
       set
       {
         _selection = value;
-        _selection.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__link_to__selection selection
+    {
+      get
+      {
+        return _selection;
+      }
+      set
+      {
+        _selection = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
     public link_to()
@@ -127,9 +146,9 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.accumulated_progress != null)
+      if(this._accumulated_progress != null)
       {
-        rawNode.attributes["accumulated_progress"] = this.accumulated_progress.ToString();
+        rawNode.attributes["accumulated_progress"] = this._accumulated_progress.ToString();
       }
 
       //Serialize children
@@ -193,6 +212,29 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
         return 0;
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is type__link_to__selection
+      || false;
+    }
+
+    public bool Equals(link_to? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (link_to)obj;
+        return Equals(accumulated_progress, other.accumulated_progress) && Equals(selection, other.selection);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, accumulated_progress);
+        acc = HashCode.Combine(acc, selection);
+        return acc;
     }
   }
 }

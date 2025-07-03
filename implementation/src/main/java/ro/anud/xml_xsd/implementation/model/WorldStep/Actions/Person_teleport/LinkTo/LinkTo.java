@@ -23,17 +23,19 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   public class LinkTo implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static String nodeName = "link_to";
-    public static LinkTo fromRawNode(RawNode rawNode) {
+    public static LinkTo fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
       var instance = new LinkTo();
+      if(Objects.nonNull(parent)) {
+        instance.parentNode(parent);
+      }
       instance.rawNode(rawNode);
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
-    public static LinkTo fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static LinkTo fromRawNode(RawNode rawNode) {
       logEnter();
-      var instance = fromRawNode(rawNode);
-      instance.parentNode(parent);
+      var instance = fromRawNode(rawNode, null);
       return logReturn(instance);
     }
     public static Optional<LinkTo> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
@@ -93,7 +95,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void notifyChange(List<Object> list) {
+      var logger = logEnter();
       list.addLast(this);
+      logger.log("Notify change for", this.buildPath());
       onChangeList.forEach(consumer -> consumer.accept(list));
       parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
     }
@@ -136,19 +140,23 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void deserialize (RawNode rawNode) {
-      var logger = logEnter();
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing link_to");
+      try {
+        var logger = logEnter();
+        this.rawNode = rawNode;
+        // Godot.GD.Print("Deserializing link_to");
 
-      var innerLogger = logger.log("attributes");
-      //Deserialize attributes
-      innerLogger.log("accumulated_progress");
-      this.accumulatedProgress = rawNode.getAttributeIntRequired("accumulated_progress");
-      innerLogger = logger.log("children");
-      //Deserialize children
-      innerLogger.log("selection");
-      this.selection = ro.anud.xml_xsd.implementation.model.Type_linkTo_selection.Type_linkTo_selection.fromRawNode(rawNode.getChildrenFirst("selection").get(), this);
-      logReturnVoid();
+        var innerLogger = logger.log("attributes");
+        //Deserialize attributes
+        innerLogger.log("accumulated_progress");
+        this.accumulatedProgress = rawNode.getAttributeIntRequired("accumulated_progress");
+        innerLogger = logger.log("children");
+        //Deserialize children
+        innerLogger.log("selection");
+        this.selection = ro.anud.xml_xsd.implementation.model.Type_linkTo_selection.Type_linkTo_selection.fromRawNode(rawNode.getChildrenFirst("selection").get(), this);
+        logReturnVoid();
+      } catch (Exception e) {
+        throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
+      }
     }
 
     public RawNode serializeIntoRawNode()
@@ -213,6 +221,19 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
         deserialize(rawNode);
         return this;
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getNodeAtPath(String xpath) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_linkTo_selection.Type_linkTo_selection.nodeName))
+        {
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_linkTo_selection.Type_linkTo_selection.nodeName.length() + 3);
+          return this.selection.getNodeAtPath(childXPath);
+        }
+        return Optional.of(this);
     }
   }
 

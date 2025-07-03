@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nworld_metadata.Nrandomization_table {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nworld_metadata {
-  public class randomization_table : XSD.ILinkedNode  {
+  public class randomization_table : IEquatable<randomization_table>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.world_metadata.randomization_table";
     public static string TagName = "randomization_table";
@@ -182,6 +182,28 @@ namespace XSD.Nworld_step.Nworld_metadata {
         return this._entry.KeyOf(casted_entry);
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nworld_metadata.Nrandomization_table.entry
+      || false;
+    }
+
+    public bool Equals(randomization_table? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (randomization_table)obj;
+        return Equals(entry, other.entry);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, entry);
+        return acc;
     }
   }
 }

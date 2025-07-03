@@ -1,0 +1,1 @@
+ValidationError: other at //rule_group[0]/location_graph_rule[0]/node_rule[0]/link_group_list[0]/link_group[0]/to_option[0]@node_rule_ref not in [node]

@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_nod
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup {
-  public class necessary_node : XSD.ILinkedNode  {
+  public class necessary_node : IEquatable<necessary_node>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group.location_graph_rule.setup.necessary_node";
     public static string TagName = "necessary_node";
@@ -151,17 +151,17 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.node_rule_ref != null)
+      if(this._node_rule_ref != null)
       {
-        rawNode.attributes["node_rule_ref"] = this.node_rule_ref.ToString();
+        rawNode.attributes["node_rule_ref"] = this._node_rule_ref.ToString();
       }
-      if(this.min != null)
+      if(this._min != null)
       {
-        rawNode.attributes["min"] = this.min.ToString();
+        rawNode.attributes["min"] = this._min.ToString();
       }
-      if(this.max != null)
+      if(this._max != null)
       {
-        rawNode.attributes["max"] = this.max?.ToString();
+        rawNode.attributes["max"] = this._max?.ToString();
       }
 
       //Serialize children
@@ -254,6 +254,31 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup {
         return this._or.KeyOf(casted_or);
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or
+      || false;
+    }
+
+    public bool Equals(necessary_node? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (necessary_node)obj;
+        return Equals(node_rule_ref, other.node_rule_ref) && Equals(min, other.min) && Equals(max, other.max) && Equals(or, other.or);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, node_rule_ref);
+        acc = HashCode.Combine(acc, min);
+        acc = HashCode.Combine(acc, max);
+        acc = HashCode.Combine(acc, or);
+        return acc;
     }
   }
 }

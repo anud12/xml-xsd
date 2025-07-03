@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nactions {}
 namespace XSD {
 }
 namespace XSD.Nworld_step {
-  public class actions : XSD.ILinkedNode  {
+  public class actions : IEquatable<actions>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.actions";
     public static string TagName = "actions";
@@ -92,7 +92,7 @@ namespace XSD.Nworld_step {
       }
     }
     private XSD.Nworld_step.Nactions.person__teleport? _person__teleport = null;
-    public XSD.Nworld_step.Nactions.person__teleport person__teleport
+    public XSD.Nworld_step.Nactions.person__teleport person__teleportOrCreate
     {
       get
       {
@@ -107,7 +107,26 @@ namespace XSD.Nworld_step {
       set
       {
         _person__teleport = value;
-        _person__teleport.ParentNode = this;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nactions.person__teleport? person__teleport
+    {
+      get
+      {
+        return _person__teleport;
+      }
+      set
+      {
+        _person__teleport = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
       }
     }
 
@@ -612,6 +631,44 @@ namespace XSD.Nworld_step {
         return this._from_person.KeyOf(casted_from_person);
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nactions.by
+      || candidateChild is XSD.Nworld_step.Nactions.location_graph__create
+      || candidateChild is XSD.Nworld_step.Nactions.location_graph__node__create_adjacent
+      || candidateChild is XSD.Nworld_step.Nactions.location_graph__node__add_classification
+      || candidateChild is XSD.Nworld_step.Nactions.person__teleport
+      || candidateChild is XSD.Nworld_step.Nactions.person__on_person__property_mutation
+      || candidateChild is XSD.Nworld_step.Nactions.person__create
+      || candidateChild is XSD.Nworld_step.Nactions.person__move_to
+      || candidateChild is XSD.Nworld_step.Nactions.from_person
+      || false;
+    }
+
+    public bool Equals(actions? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (actions)obj;
+        return Equals(by, other.by) && Equals(location_graph__create, other.location_graph__create) && Equals(location_graph__node__create_adjacent, other.location_graph__node__create_adjacent) && Equals(location_graph__node__add_classification, other.location_graph__node__add_classification) && Equals(person__teleport, other.person__teleport) && Equals(person__on_person__property_mutation, other.person__on_person__property_mutation) && Equals(person__create, other.person__create) && Equals(person__move_to, other.person__move_to) && Equals(from_person, other.from_person);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, by);
+        acc = HashCode.Combine(acc, location_graph__create);
+        acc = HashCode.Combine(acc, location_graph__node__create_adjacent);
+        acc = HashCode.Combine(acc, location_graph__node__add_classification);
+        acc = HashCode.Combine(acc, person__teleport);
+        acc = HashCode.Combine(acc, person__on_person__property_mutation);
+        acc = HashCode.Combine(acc, person__create);
+        acc = HashCode.Combine(acc, person__move_to);
+        acc = HashCode.Combine(acc, from_person);
+        return acc;
     }
   }
 }

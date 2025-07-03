@@ -23,17 +23,19 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   public class Person_teleport implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static String nodeName = "person.teleport";
-    public static Person_teleport fromRawNode(RawNode rawNode) {
+    public static Person_teleport fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
       var instance = new Person_teleport();
+      if(Objects.nonNull(parent)) {
+        instance.parentNode(parent);
+      }
       instance.rawNode(rawNode);
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
-    public static Person_teleport fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static Person_teleport fromRawNode(RawNode rawNode) {
       logEnter();
-      var instance = fromRawNode(rawNode);
-      instance.parentNode(parent);
+      var instance = fromRawNode(rawNode, null);
       return logReturn(instance);
     }
     public static Optional<Person_teleport> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
@@ -95,7 +97,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void notifyChange(List<Object> list) {
+      var logger = logEnter();
       list.addLast(this);
+      logger.log("Notify change for", this.buildPath());
       onChangeList.forEach(consumer -> consumer.accept(list));
       parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
     }
@@ -117,9 +121,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public void removeChild(Object object) {
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LocationGraph.LocationGraph) {
           this.locationGraph = Optional.empty();
+          notifyChange();
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo) {
           this.linkTo = Optional.empty();
+          notifyChange();
         }
     }
 
@@ -144,19 +150,23 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void deserialize (RawNode rawNode) {
-      var logger = logEnter();
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing person.teleport");
+      try {
+        var logger = logEnter();
+        this.rawNode = rawNode;
+        // Godot.GD.Print("Deserializing person.teleport");
 
-      var innerLogger = logger.log("attributes");
-      //Deserialize attributes
-      innerLogger.log("person_id_ref");
-      this.personIdRef = rawNode.getAttributeRequired("person_id_ref");
-      innerLogger = logger.log("children");
-      //Deserialize children
-      this.locationGraph = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LocationGraph.LocationGraph.fromRawNode(rawNode.getChildrenFirst("location_graph"), this);
-      this.linkTo = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo.fromRawNode(rawNode.getChildrenFirst("link_to"), this);
-      logReturnVoid();
+        var innerLogger = logger.log("attributes");
+        //Deserialize attributes
+        innerLogger.log("person_id_ref");
+        this.personIdRef = rawNode.getAttributeRequired("person_id_ref");
+        innerLogger = logger.log("children");
+        //Deserialize children
+        this.locationGraph = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LocationGraph.LocationGraph.fromRawNode(rawNode.getChildrenFirst("location_graph"), this);
+        this.linkTo = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo.fromRawNode(rawNode.getChildrenFirst("link_to"), this);
+        logReturnVoid();
+      } catch (Exception e) {
+        throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
+      }
     }
 
     public RawNode serializeIntoRawNode()
@@ -276,6 +286,30 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
         deserialize(rawNode);
         return this;
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getNodeAtPath(String xpath) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LocationGraph.LocationGraph.nodeName))
+        {
+          if(this.locationGraph.isEmpty()) {
+            this.locationGraph = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LocationGraph.LocationGraph());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LocationGraph.LocationGraph.nodeName.length() + 3);
+          return this.locationGraph.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo.nodeName))
+        {
+          if(this.linkTo.isEmpty()) {
+            this.linkTo = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.LinkTo.LinkTo.nodeName.length() + 3);
+          return this.linkTo.get().getNodeAtPath(childXPath);
+        }
+        return Optional.of(this);
     }
   }
 

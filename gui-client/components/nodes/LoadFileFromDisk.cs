@@ -1,5 +1,6 @@
 ﻿using System;
 using Godot;
+using Guiclient.util;
 
 namespace Guiclient.components.nodes;
 
@@ -38,9 +39,9 @@ public partial class LoadFileFromDisk : Button
         };
         fileDialog.Confirmed += () =>
         {
-            GD.Print("Loaded file:" + path);
+            Logger.Info("Loaded file:" + path);
             var file = FileAccess.GetFileAsString(path);
-            GD.Print(file);
+            Logger.Info(file);
             OnOpen?.Invoke(file);
         };
     }

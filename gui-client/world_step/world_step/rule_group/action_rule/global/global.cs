@@ -11,7 +11,7 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nglobal {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Naction_rule {
-  public class global : XSD.ILinkedNode  {
+  public class global : IEquatable<global>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group.action_rule.global";
     public static string TagName = "global";
@@ -182,6 +182,28 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule {
         return this._entry.KeyOf(casted_entry);
       }
       return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nrule_group.Naction_rule.Nglobal.entry
+      || false;
+    }
+
+    public bool Equals(global? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (global)obj;
+        return Equals(entry, other.entry);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, entry);
+        return acc;
     }
   }
 }
