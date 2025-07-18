@@ -17,6 +17,10 @@ export type type__group__operation__and = "add"
   | "divide_dice"
   | "modulo"
   | "modulo_dice"
+export type type__rectangle_side = "left"
+  | "right"
+  | "top"
+  | "bottom"
 export type type__property_mutation_on = JsonQueryType<{"on": type_person_select;}>
   & type__property_mutation
 export type type__property_mutation = JsonQueryType<{"property_rule_ref": string;}, {
@@ -85,6 +89,24 @@ export type type__link_group = JsonQueryType<{"id": string;  "angle": string;  "
   "to_option": JsonQueryType<{"node_rule_ref": string;  "distance": string;  "maxDistance": string;  "adjacent_depth_limit": string;}, {
     "distance_to_progress_multiplier": type__math_operations & JsonQueryType<{}, {}>;
     "person_progress_property": type__math_operations & JsonQueryType<{}, {}>;
+  }> & JsonQueryType<{}, {}>;
+}>
+export type type__region_rule = JsonQueryType<{}, {
+  "limit": JsonQueryType<{}, {
+    "width": type__math_operations & JsonQueryType<{}, {}>;
+    "height": type__math_operations & JsonQueryType<{}, {}>;
+  }> & JsonQueryType<{}, {}>;
+  "portal": JsonQueryType<{}, {
+    "from": JsonQueryType<{"side": type__rectangle_side;}, {
+      "position": type__math_operations & JsonQueryType<{}, {}>;
+      "width": type__math_operations & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
+    "to": JsonQueryType<{"side": type__rectangle_side;}, {
+      "region": JsonQueryType<{"region_rule_ref": string;  "side": type__rectangle_side;}, {
+        "position": type__math_operations & JsonQueryType<{}, {}>;
+        "width": type__math_operations & JsonQueryType<{}, {}>;
+      }> & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
 }>
 export type world_step = JsonQueryType<{}, {
@@ -180,6 +202,32 @@ export type world_step = JsonQueryType<{}, {
     "location_classification_rule": JsonQueryType<{}, {
       "entry": JsonQueryType<{"id": string;}> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
+    "node_rule": JsonQueryType<{"id": string;}, {
+      "area": JsonQueryType<{}, {
+        "height": type__math_operations & JsonQueryType<{}, {}>;
+        "width": type__math_operations & JsonQueryType<{}, {}>;
+      }> & JsonQueryType<{}, {}>;
+      "portals": JsonQueryType<{}, {
+        "portal": JsonQueryType<{"side": type__rectangle_side;}, {
+          "width": type__math_operations & JsonQueryType<{}, {}>;
+          "height": type__math_operations & JsonQueryType<{}, {}>;
+          "to": JsonQueryType<{"node_rule_ref": string;}, {
+            "side": type__rectangle_side & JsonQueryType<{}, {}>;
+            "width": type__math_operations & JsonQueryType<{}, {}>;
+            "height": type__math_operations & JsonQueryType<{}, {}>;
+          }> & JsonQueryType<{}, {}>;
+        }> & JsonQueryType<{}, {}>;
+      }> & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
+    "region_rule": JsonQueryType<{}, {
+      "entry": JsonQueryType<{"id": string;}>
+        & type__region_rule & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
+    "zone_rule": JsonQueryType<{}, {
+      "entry": JsonQueryType<{"id": string;}, {
+        "starting_region": JsonQueryType<{"region_rule_ref": string;}> & JsonQueryType<{}, {}>;
+      }> & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
   "data": JsonQueryType<{}, {
     "people": JsonQueryType<{}, {
@@ -212,6 +260,27 @@ export type world_step = JsonQueryType<{}, {
           }> & JsonQueryType<{}, {}>;
           "people": JsonQueryType<{}, {
             "person": JsonQueryType<{"person_id_ref": string;}> & JsonQueryType<{}, {}>;
+          }> & JsonQueryType<{}, {}>;
+        }> & JsonQueryType<{}, {}>;
+      }> & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
+    "zone_list": JsonQueryType<{}, {
+      "zone": JsonQueryType<{"id": string;}, {
+        "region": JsonQueryType<{"id": string;}, {
+          "rule": JsonQueryType<{"rule_id_ref": string;}> & JsonQueryType<{}, {}>;
+          "position": JsonQueryType<{"x": string;  "y": string;}> & JsonQueryType<{}, {}>;
+          "limit": JsonQueryType<{"width": string;  "height": string;}> & JsonQueryType<{}, {}>;
+          "portals": JsonQueryType<{}, {
+            "portal": JsonQueryType<{"id": string;}, {
+              "from": JsonQueryType<{"side": type__rectangle_side;  "start": string;  "end": string;}> & JsonQueryType<{}, {}>;
+              "to_rule": JsonQueryType<{}, {
+                "region": JsonQueryType<{"region_rule_ref": string;  "side": type__rectangle_side;}, {
+                  "start": type__math_operations & JsonQueryType<{}, {}>;
+                  "end": type__math_operations & JsonQueryType<{}, {}>;
+                }> & JsonQueryType<{}, {}>;
+              }> & JsonQueryType<{}, {}>;
+              "to": JsonQueryType<{"zone_ref": string;  "region_ref": string;  "side": type__rectangle_side;  "start": string;  "end": string;}> & JsonQueryType<{}, {}>;
+            }> & JsonQueryType<{}, {}>;
           }> & JsonQueryType<{}, {}>;
         }> & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
@@ -254,5 +323,7 @@ export type world_step = JsonQueryType<{}, {
     "from_person": JsonQueryType<{"person_id_ref": string;  "from_person_rule_ref": string;}, {
       "on_person": JsonQueryType<{"person_id_ref": string;}> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
+    "zone.create": JsonQueryType<{"zone_rule_ref": string;}> & JsonQueryType<{}, {}>;
+    "region.append": JsonQueryType<{"zone_id_ref": string;  "region_id_ref": string;  "portal_id_ref": string;}> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
 }>

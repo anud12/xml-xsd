@@ -1,7 +1,7 @@
 import {template} from "../../../template/template";
 import {Type} from "../../../type";
 import {DependantType, GetObjectBodyReturn} from "../typeToString";
-import {getTypeName, primitives} from "./geTypeName";
+import {getTypeName, primitives} from "./getTypeName";
 import {normalizeNameClass} from "./normalizeNameClass";
 import {dependantTypeToAttributeDeclaration} from "./depedantType/dependantTypeToAttributeDeclaration";
 import {dependantTypeToChildrenDeclaration} from "./depedantType/dependantTypeToChildrenDeclaration";

@@ -5,7 +5,8 @@ export const primitives = {
   int: "Integer",
   string: "String",
   boolean: "Boolean",
-  object: "Object"
+  object: "Object",
+  double: "Double"
 }
 
 export function getTypeName(type: Type, parentKey?: string, parent?: DependantType) {
@@ -15,8 +16,10 @@ export function getTypeName(type: Type, parentKey?: string, parent?: DependantTy
       switch (type.value) {
         case 'xs:int':
         case 'xs:integer':
-        case 'xs:decimal':
           return primitives.int
+        case 'xs:decimal':
+        case 'xs:double':
+          return primitives.double
         case 'xs:boolean':
           return primitives.boolean
         case 'xs:string':

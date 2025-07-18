@@ -1,6 +1,6 @@
 import {DependantType} from "../../typeToString";
 import {normalizeNameClass, normalizeNameField} from "../normalizeNameClass";
-import {getTypeName} from "../geTypeName";
+import {getTypeName} from "../getTypeName";
 import {Type} from "../../../../type";
 import {template} from "../../../../template/template";
 import {getDependantTypeChildPackage} from "./getDependantTypeChildPackage";

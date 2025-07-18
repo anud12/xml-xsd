@@ -1,6 +1,7 @@
 import {DependantType} from "../../typeToString";
 import {template} from "../../../../template/template";
 import {normalizeNameClass, normalizeNameField} from "../normalizeNameClass";
+import {getTypeName, primitives} from "../getTypeName";
 
 export const dependantTypeToAttributeDeserializationBody = (dependantType: DependantType): string | undefined => {
 
@@ -10,8 +11,9 @@ export const dependantTypeToAttributeDeserializationBody = (dependantType: Depen
 
 
   return Object.entries(dependantType.value.attributes.value ?? []).map(([key, value]) => {
+    let type = getTypeName(value, key, dependantType);
     if (value.metaType === "primitive") {
-      if (value.value === "xs:int") {
+      if ([primitives.int].includes(type)) {
         if(value.isNullable) {
           return template()`
                     innerLogger.log("${key}");
@@ -21,6 +23,18 @@ export const dependantTypeToAttributeDeserializationBody = (dependantType: Depen
         return template()`
                     innerLogger.log("${key}");
                     this.${normalizeNameField(key)} = rawNode.getAttributeIntRequired("${key}");
+                  `;
+      }
+      if ([primitives.double].includes(type)) {
+        if(value.isNullable) {
+          return template()`
+                    innerLogger.log("${key}");
+                    this.${normalizeNameField(key)} = rawNode.getAttributeDouble("${key}");
+                  `;
+        }
+        return template()`
+                    innerLogger.log("${key}");
+                    this.${normalizeNameField(key)} = rawNode.getAttributeDoubleRequired("${key}");
                   `;
       }
       if(value.isNullable) {

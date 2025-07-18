@@ -97,6 +97,15 @@ public final class RawNode {
         return logReturn(Optional.of(Integer.parseInt(value.trim())));
     }
 
+    public Optional<Double> getAttributeDouble(String key) {
+        logEnter("key:", key);
+        var value = this.attributeMap.get(key);
+        if (Strings.isBlank(value)) {
+            return logReturn(Optional.empty());
+        }
+        return logReturn(Optional.of(Double.parseDouble(value.trim())));
+    }
+
     public Optional<String> getAttribute(String key) {
         logEnter("key:", key);
         return Optional.ofNullable(this.attributeMap.get(key));
@@ -117,6 +126,12 @@ public final class RawNode {
     public int getAttributeIntRequired(String key) {
         logEnter("key:", key);
         return logReturn(getAttributeInt(key).get());
+    }
+
+
+    public double getAttributeDoubleRequired(String key) {
+        logEnter("key:", key);
+        return logReturn(getAttributeDouble(key).get());
     }
 
     public String getAttributeRequired(String key) {

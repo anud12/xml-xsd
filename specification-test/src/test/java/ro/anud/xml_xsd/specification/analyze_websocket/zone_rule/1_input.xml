@@ -1,0 +1,89 @@
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <property_rule>
+      <entry id="property" units="points"/>
+    </property_rule>
+    <action_rule>
+<!--      <person_to_person id="action_rule">-->
+<!--        <test>-->
+<!--          <value target="target">-->
+<!--            <operation initial="0">-->
+<!--              <and do="add" value="0"/>-->
+<!--            </operation>-->
+<!--          </value>-->
+<!--          <expected target="target">-->
+<!--            <operation initial="0">-->
+<!--              <and do="add" value="0"/>-->
+<!--            </operation>-->
+<!--          </expected>-->
+<!--        </test>-->
+<!--      </person_to_person>-->
+    </action_rule>
+    <events_rule>
+      <entry id="item_select">
+        <when>
+          <person_action_used action_rule_ref="action_rule"/>
+        </when>
+        <then>
+          <select_person origin="target">
+            <min initial="1"/>
+          </select_person>
+          <property_mutation property_rule_ref="property" initial="1"/>
+        </then>
+      </entry>
+    </events_rule>
+    <region_rule>
+      <entry id="demo">
+        <limit>
+          <width initial="10"></width>
+          <height initial="10"></height>
+        </limit>
+        <portal>
+          <from side="bottom">
+            <position initial=""></position>
+            <width initial=""></width>
+          </from>
+          <to>
+            <region region_rule_ref="demo"/>
+          </to>
+        </portal>
+      </entry>
+    </region_rule>
+    <zone_rule>
+
+    </zone_rule>
+  </rule_group>
+  <data>
+    <people>
+      <person id="1"/>
+    </people>
+    <zone id="dd" name="dd">
+      <region id="12" name="123">
+        <rule rule_id_ref="demo"/>
+        <position x="123" y="123"/>
+        <limit height="10" width="10"/>
+        <portals>
+          <portal id="">
+            <from side="bottom" position="2" width="10"/>
+            <to zone_ref="" region_ref="" side="bottom" position="2"/>
+          </portal>
+        </portals>
+      </region>
+    </zone>
+  </data>
+  <actions>
+    <by person_ref="1">
+      <do action_rule_ref="action_rule" person_ref="1" />
+    </by>
+  </actions>
+</world_step>

@@ -1,7 +1,7 @@
 import {DependantType, GetObjectBodyReturn} from "../typeToString";
 import {normalizeNameClass} from "./normalizeNameClass";
 import {template} from "../../../template/template";
-import {getTypeName, primitives} from "./geTypeName";
+import {getTypeName, primitives} from "./getTypeName";
 import {Type} from "../../../type";
 import {basePackage, getDependantTypePackage} from "./depedantType/getDependantTypePackage";
 import {DirectoryMetadata} from "../../../memory_fs/directoryMetadata";

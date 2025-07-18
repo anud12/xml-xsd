@@ -63,6 +63,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People> people = Optional.empty();
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location> location = Optional.empty();
+    @Builder.Default
+    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList> zoneList = Optional.empty();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -125,6 +127,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           this.location = Optional.empty();
           notifyChange();
         }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList) {
+          this.zoneList = Optional.empty();
+          notifyChange();
+        }
     }
 
     public int buildIndexForChild(Object object) {
@@ -132,6 +138,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           return 0;
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location) {
+          return 0;
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList) {
           return 0;
         }
         return 0;
@@ -159,6 +168,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         //Deserialize children
         this.people = ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People.fromRawNode(rawNode.getChildrenFirst("people"), this);
         this.location = ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location.fromRawNode(rawNode.getChildrenFirst("location"), this);
+        this.zoneList = ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList.fromRawNode(rawNode.getChildrenFirst("zone_list"), this);
         logReturnVoid();
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
@@ -178,6 +188,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       rawNode.setChildren("people", people.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People::serializeIntoRawNode).toList());
       innerLogger.log("location");
       rawNode.setChildren("location", location.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location::serializeIntoRawNode).toList());
+      innerLogger.log("zone_list");
+      rawNode.setChildren("zone_list", zoneList.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList::serializeIntoRawNode).toList());
       return rawNode;
     }
 
@@ -245,6 +257,35 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return this;
     }
 
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList> getZoneList()
+    {
+      return this.zoneList;
+    }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList getZoneListOrDefault()
+    {
+      return this.zoneList.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList();
+        this.zoneList = Optional.of(instance);
+        instance.parentNode(this);
+        return this.zoneList.get();
+      });
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList> streamZoneListOrDefault()
+    {
+      return java.util.stream.Stream.of(getZoneListOrDefault());
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList> streamZoneList()
+    {
+      return zoneList.stream();
+    }
+    public Data setZoneList(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList value)
+    {
+      this.zoneList = Optional.ofNullable(value);
+      value.parentNode(this);
+      notifyChange();
+      return this;
+    }
+
     public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
        if(xpath.startsWith("."))
         {
@@ -265,6 +306,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           }
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location.nodeName.length() + 3);
           return this.location.get().deserializeAtPath(childXPath, rawNode);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList.nodeName))
+        {
+          if(this.zoneList.isEmpty()) {
+            this.zoneList = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList.nodeName.length() + 3);
+          return this.zoneList.get().deserializeAtPath(childXPath, rawNode);
         }
 
         deserialize(rawNode);
@@ -291,6 +340,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           }
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location.nodeName.length() + 3);
           return this.location.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList.nodeName))
+        {
+          if(this.zoneList.isEmpty()) {
+            this.zoneList = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList.nodeName.length() + 3);
+          return this.zoneList.get().getNodeAtPath(childXPath);
         }
         return Optional.of(this);
     }
@@ -608,6 +665,236 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                       }
                     },
                     "isNullable": false
+                  }
+                },
+                "isNullable": true
+              }
+            },
+            "isNullable": true
+          },
+          "zone_list": {
+            "metaType": "object",
+            "isSingle": true,
+            "value": {
+              "zone": {
+                "metaType": "object",
+                "attributes": {
+                  "metaType": "object",
+                  "value": {
+                    "id": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": false
+                },
+                "isSingle": false,
+                "value": {
+                  "region": {
+                    "metaType": "object",
+                    "attributes": {
+                      "metaType": "object",
+                      "value": {
+                        "id": {
+                          "metaType": "primitive",
+                          "value": "xs:string",
+                          "isNullable": false
+                        }
+                      },
+                      "isNullable": false
+                    },
+                    "isSingle": false,
+                    "value": {
+                      "rule": {
+                        "metaType": "object",
+                        "value": {},
+                        "isSingle": true,
+                        "isNullable": false,
+                        "attributes": {
+                          "metaType": "object",
+                          "value": {
+                            "rule_id_ref": {
+                              "metaType": "primitive",
+                              "value": "xs:string",
+                              "isNullable": false
+                            }
+                          },
+                          "isNullable": false
+                        }
+                      },
+                      "position": {
+                        "metaType": "object",
+                        "value": {},
+                        "isSingle": true,
+                        "isNullable": false,
+                        "attributes": {
+                          "metaType": "object",
+                          "value": {
+                            "x": {
+                              "metaType": "primitive",
+                              "value": "xs:integer",
+                              "isNullable": false
+                            },
+                            "y": {
+                              "metaType": "primitive",
+                              "value": "xs:integer",
+                              "isNullable": false
+                            }
+                          }
+                        }
+                      },
+                      "limit": {
+                        "metaType": "object",
+                        "value": {},
+                        "isSingle": true,
+                        "isNullable": false,
+                        "attributes": {
+                          "metaType": "object",
+                          "value": {
+                            "width": {
+                              "metaType": "primitive",
+                              "value": "xs:integer",
+                              "isNullable": false
+                            },
+                            "height": {
+                              "metaType": "primitive",
+                              "value": "xs:integer",
+                              "isNullable": false
+                            }
+                          }
+                        }
+                      },
+                      "portals": {
+                        "metaType": "object",
+                        "isSingle": true,
+                        "value": {
+                          "portal": {
+                            "metaType": "object",
+                            "attributes": {
+                              "metaType": "object",
+                              "value": {
+                                "id": {
+                                  "metaType": "primitive",
+                                  "value": "xs:string",
+                                  "isNullable": false
+                                }
+                              },
+                              "isNullable": false
+                            },
+                            "isSingle": false,
+                            "value": {
+                              "from": {
+                                "metaType": "object",
+                                "value": {},
+                                "isSingle": true,
+                                "isNullable": false,
+                                "attributes": {
+                                  "metaType": "object",
+                                  "value": {
+                                    "side": {
+                                      "metaType": "primitive",
+                                      "value": "type__rectangle_side",
+                                      "isNullable": false
+                                    },
+                                    "start": {
+                                      "metaType": "primitive",
+                                      "value": "xs:integer",
+                                      "isNullable": false
+                                    },
+                                    "end": {
+                                      "metaType": "primitive",
+                                      "value": "xs:integer",
+                                      "isNullable": false
+                                    }
+                                  }
+                                }
+                              },
+                              "to_rule": {
+                                "metaType": "object",
+                                "isSingle": true,
+                                "value": {
+                                  "region": {
+                                    "metaType": "object",
+                                    "attributes": {
+                                      "metaType": "object",
+                                      "value": {
+                                        "region_rule_ref": {
+                                          "metaType": "primitive",
+                                          "value": "xs:string",
+                                          "isNullable": false
+                                        },
+                                        "side": {
+                                          "metaType": "primitive",
+                                          "value": "type__rectangle_side",
+                                          "isNullable": false
+                                        }
+                                      }
+                                    },
+                                    "isSingle": false,
+                                    "value": {
+                                      "start": {
+                                        "metaType": "reference",
+                                        "value": "type__math_operations",
+                                        "isSingle": true,
+                                        "isNullable": false
+                                      },
+                                      "end": {
+                                        "metaType": "reference",
+                                        "value": "type__math_operations",
+                                        "isSingle": true,
+                                        "isNullable": false
+                                      }
+                                    },
+                                    "isNullable": false
+                                  }
+                                },
+                                "isNullable": true
+                              },
+                              "to": {
+                                "metaType": "object",
+                                "value": {},
+                                "isSingle": true,
+                                "isNullable": true,
+                                "attributes": {
+                                  "metaType": "object",
+                                  "value": {
+                                    "zone_ref": {
+                                      "metaType": "primitive",
+                                      "value": "xs:string",
+                                      "isNullable": false
+                                    },
+                                    "region_ref": {
+                                      "metaType": "primitive",
+                                      "value": "xs:string",
+                                      "isNullable": false
+                                    },
+                                    "side": {
+                                      "metaType": "primitive",
+                                      "value": "type__rectangle_side",
+                                      "isNullable": false
+                                    },
+                                    "start": {
+                                      "metaType": "primitive",
+                                      "value": "xs:integer",
+                                      "isNullable": false
+                                    },
+                                    "end": {
+                                      "metaType": "primitive",
+                                      "value": "xs:integer",
+                                      "isNullable": true
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "isNullable": false
+                          }
+                        },
+                        "isNullable": true
+                      }
+                    },
+                    "isNullable": true
                   }
                 },
                 "isNullable": true

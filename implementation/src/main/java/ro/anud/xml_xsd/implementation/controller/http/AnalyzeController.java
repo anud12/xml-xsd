@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import ro.anud.xml_xsd.implementation.WorldStepRunner;
 import ro.anud.xml_xsd.implementation.middleware.EventsMetadata;
 import ro.anud.xml_xsd.implementation.middleware.PersonAssignClassification;
 import ro.anud.xml_xsd.implementation.middleware.action.FromPersonAction;
@@ -16,6 +17,7 @@ import ro.anud.xml_xsd.implementation.middleware.locationGraph.LocationGraphCrea
 import ro.anud.xml_xsd.implementation.middleware.locationGraph.LocationGraphCreateAdjacent;
 import ro.anud.xml_xsd.implementation.middleware.person.PersonMoveTo;
 import ro.anud.xml_xsd.implementation.middleware.person.PersonTeleportTo;
+import ro.anud.xml_xsd.implementation.middleware.zone.ZoneCreateAction;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.InstanceTypeEnum;
@@ -76,15 +78,7 @@ public class AnalyzeController {
             }
             logger.log("validating done");
 
-            FromPersonAction.apply(worldStepInstance);
-            PersonCreateAction.personCreateAction(worldStepInstance);
-            LocationGraphCreate.apply(worldStepInstance);
-            LocationGraphCreateAdjacent.apply(worldStepInstance);
-            PersonMoveTo.apply(worldStepInstance);
-            PersonTeleportTo.apply(worldStepInstance);
-            EventsMetadata.apply(worldStepInstance);
-            LocationGraphAddClassification.locationGraphAddClassification(worldStepInstance);
-            PersonAssignClassification.apply(worldStepInstance);
+            WorldStepRunner.runStep(worldStepInstance);
 
             return ResponseEntity.ok(serializeWorldStepInstance(worldStepInstance.getOutInstance()).orElse(""));
 

@@ -1243,6 +1243,193 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                   }
                 },
                 "isNullable": true
+              },
+              "node_rule": {
+                "metaType": "object",
+                "attributes": {
+                  "metaType": "object",
+                  "value": {
+                    "id": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": false
+                },
+                "isSingle": true,
+                "value": {
+                  "area": {
+                    "metaType": "object",
+                    "isSingle": true,
+                    "value": {
+                      "height": {
+                        "metaType": "reference",
+                        "value": "type__math_operations",
+                        "isSingle": true,
+                        "isNullable": false
+                      },
+                      "width": {
+                        "metaType": "reference",
+                        "value": "type__math_operations",
+                        "isSingle": true,
+                        "isNullable": false
+                      }
+                    },
+                    "isNullable": false
+                  },
+                  "portals": {
+                    "metaType": "object",
+                    "isSingle": true,
+                    "value": {
+                      "portal": {
+                        "metaType": "object",
+                        "attributes": {
+                          "metaType": "object",
+                          "value": {
+                            "side": {
+                              "metaType": "primitive",
+                              "value": "type__rectangle_side",
+                              "isNullable": false
+                            }
+                          },
+                          "isNullable": false
+                        },
+                        "isSingle": false,
+                        "value": {
+                          "width": {
+                            "metaType": "reference",
+                            "value": "type__math_operations",
+                            "isSingle": true,
+                            "isNullable": false
+                          },
+                          "height": {
+                            "metaType": "reference",
+                            "value": "type__math_operations",
+                            "isSingle": true,
+                            "isNullable": false
+                          },
+                          "to": {
+                            "metaType": "object",
+                            "attributes": {
+                              "metaType": "object",
+                              "value": {
+                                "node_rule_ref": {
+                                  "metaType": "primitive",
+                                  "value": "xs:string",
+                                  "isNullable": false
+                                }
+                              },
+                              "isNullable": false
+                            },
+                            "isSingle": true,
+                            "value": {
+                              "side": {
+                                "metaType": "reference",
+                                "value": "type__rectangle_side",
+                                "isSingle": true,
+                                "isNullable": false
+                              },
+                              "width": {
+                                "metaType": "reference",
+                                "value": "type__math_operations",
+                                "isSingle": true,
+                                "isNullable": false
+                              },
+                              "height": {
+                                "metaType": "reference",
+                                "value": "type__math_operations",
+                                "isSingle": true,
+                                "isNullable": false
+                              }
+                            },
+                            "isNullable": false
+                          }
+                        },
+                        "isNullable": true
+                      }
+                    },
+                    "isNullable": false
+                  }
+                },
+                "isNullable": true
+              },
+              "region_rule": {
+                "metaType": "object",
+                "isSingle": true,
+                "value": {
+                  "entry": {
+                    "metaType": "composition",
+                    "value": [
+                      {
+                        "metaType": "object",
+                        "value": {},
+                        "isSingle": true,
+                        "isNullable": false,
+                        "attributes": {
+                          "metaType": "object",
+                          "value": {
+                            "id": {
+                              "metaType": "primitive",
+                              "value": "xs:string",
+                              "isNullable": false
+                            }
+                          },
+                          "isNullable": false
+                        }
+                      },
+                      {
+                        "metaType": "primitive",
+                        "value": "type__region_rule"
+                      }
+                    ],
+                    "isSingle": false,
+                    "isNullable": true
+                  }
+                },
+                "isNullable": true
+              },
+              "zone_rule": {
+                "metaType": "object",
+                "isSingle": true,
+                "value": {
+                  "entry": {
+                    "metaType": "object",
+                    "attributes": {
+                      "metaType": "object",
+                      "value": {
+                        "id": {
+                          "metaType": "primitive",
+                          "value": "xs:string",
+                          "isNullable": false
+                        }
+                      },
+                      "isNullable": false
+                    },
+                    "isSingle": true,
+                    "value": {
+                      "starting_region": {
+                        "metaType": "object",
+                        "value": {},
+                        "isSingle": true,
+                        "isNullable": false,
+                        "attributes": {
+                          "metaType": "object",
+                          "value": {
+                            "region_rule_ref": {
+                              "metaType": "primitive",
+                              "value": "xs:string",
+                              "isNullable": false
+                            }
+                          },
+                          "isNullable": false
+                        }
+                      }
+                    },
+                    "isNullable": true
+                  }
+                },
+                "isNullable": true
               }
             },
             "isNullable": true
@@ -1554,6 +1741,236 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                           }
                         },
                         "isNullable": false
+                      }
+                    },
+                    "isNullable": true
+                  }
+                },
+                "isNullable": true
+              },
+              "zone_list": {
+                "metaType": "object",
+                "isSingle": true,
+                "value": {
+                  "zone": {
+                    "metaType": "object",
+                    "attributes": {
+                      "metaType": "object",
+                      "value": {
+                        "id": {
+                          "metaType": "primitive",
+                          "value": "xs:string",
+                          "isNullable": false
+                        }
+                      },
+                      "isNullable": false
+                    },
+                    "isSingle": false,
+                    "value": {
+                      "region": {
+                        "metaType": "object",
+                        "attributes": {
+                          "metaType": "object",
+                          "value": {
+                            "id": {
+                              "metaType": "primitive",
+                              "value": "xs:string",
+                              "isNullable": false
+                            }
+                          },
+                          "isNullable": false
+                        },
+                        "isSingle": false,
+                        "value": {
+                          "rule": {
+                            "metaType": "object",
+                            "value": {},
+                            "isSingle": true,
+                            "isNullable": false,
+                            "attributes": {
+                              "metaType": "object",
+                              "value": {
+                                "rule_id_ref": {
+                                  "metaType": "primitive",
+                                  "value": "xs:string",
+                                  "isNullable": false
+                                }
+                              },
+                              "isNullable": false
+                            }
+                          },
+                          "position": {
+                            "metaType": "object",
+                            "value": {},
+                            "isSingle": true,
+                            "isNullable": false,
+                            "attributes": {
+                              "metaType": "object",
+                              "value": {
+                                "x": {
+                                  "metaType": "primitive",
+                                  "value": "xs:integer",
+                                  "isNullable": false
+                                },
+                                "y": {
+                                  "metaType": "primitive",
+                                  "value": "xs:integer",
+                                  "isNullable": false
+                                }
+                              }
+                            }
+                          },
+                          "limit": {
+                            "metaType": "object",
+                            "value": {},
+                            "isSingle": true,
+                            "isNullable": false,
+                            "attributes": {
+                              "metaType": "object",
+                              "value": {
+                                "width": {
+                                  "metaType": "primitive",
+                                  "value": "xs:integer",
+                                  "isNullable": false
+                                },
+                                "height": {
+                                  "metaType": "primitive",
+                                  "value": "xs:integer",
+                                  "isNullable": false
+                                }
+                              }
+                            }
+                          },
+                          "portals": {
+                            "metaType": "object",
+                            "isSingle": true,
+                            "value": {
+                              "portal": {
+                                "metaType": "object",
+                                "attributes": {
+                                  "metaType": "object",
+                                  "value": {
+                                    "id": {
+                                      "metaType": "primitive",
+                                      "value": "xs:string",
+                                      "isNullable": false
+                                    }
+                                  },
+                                  "isNullable": false
+                                },
+                                "isSingle": false,
+                                "value": {
+                                  "from": {
+                                    "metaType": "object",
+                                    "value": {},
+                                    "isSingle": true,
+                                    "isNullable": false,
+                                    "attributes": {
+                                      "metaType": "object",
+                                      "value": {
+                                        "side": {
+                                          "metaType": "primitive",
+                                          "value": "type__rectangle_side",
+                                          "isNullable": false
+                                        },
+                                        "start": {
+                                          "metaType": "primitive",
+                                          "value": "xs:integer",
+                                          "isNullable": false
+                                        },
+                                        "end": {
+                                          "metaType": "primitive",
+                                          "value": "xs:integer",
+                                          "isNullable": false
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "to_rule": {
+                                    "metaType": "object",
+                                    "isSingle": true,
+                                    "value": {
+                                      "region": {
+                                        "metaType": "object",
+                                        "attributes": {
+                                          "metaType": "object",
+                                          "value": {
+                                            "region_rule_ref": {
+                                              "metaType": "primitive",
+                                              "value": "xs:string",
+                                              "isNullable": false
+                                            },
+                                            "side": {
+                                              "metaType": "primitive",
+                                              "value": "type__rectangle_side",
+                                              "isNullable": false
+                                            }
+                                          }
+                                        },
+                                        "isSingle": false,
+                                        "value": {
+                                          "start": {
+                                            "metaType": "reference",
+                                            "value": "type__math_operations",
+                                            "isSingle": true,
+                                            "isNullable": false
+                                          },
+                                          "end": {
+                                            "metaType": "reference",
+                                            "value": "type__math_operations",
+                                            "isSingle": true,
+                                            "isNullable": false
+                                          }
+                                        },
+                                        "isNullable": false
+                                      }
+                                    },
+                                    "isNullable": true
+                                  },
+                                  "to": {
+                                    "metaType": "object",
+                                    "value": {},
+                                    "isSingle": true,
+                                    "isNullable": true,
+                                    "attributes": {
+                                      "metaType": "object",
+                                      "value": {
+                                        "zone_ref": {
+                                          "metaType": "primitive",
+                                          "value": "xs:string",
+                                          "isNullable": false
+                                        },
+                                        "region_ref": {
+                                          "metaType": "primitive",
+                                          "value": "xs:string",
+                                          "isNullable": false
+                                        },
+                                        "side": {
+                                          "metaType": "primitive",
+                                          "value": "type__rectangle_side",
+                                          "isNullable": false
+                                        },
+                                        "start": {
+                                          "metaType": "primitive",
+                                          "value": "xs:integer",
+                                          "isNullable": false
+                                        },
+                                        "end": {
+                                          "metaType": "primitive",
+                                          "value": "xs:integer",
+                                          "isNullable": true
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "isNullable": false
+                              }
+                            },
+                            "isNullable": true
+                          }
+                        },
+                        "isNullable": true
                       }
                     },
                     "isNullable": true
@@ -1946,6 +2363,49 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                   }
                 },
                 "isNullable": true
+              },
+              "zone.create": {
+                "metaType": "object",
+                "value": {},
+                "isSingle": true,
+                "isNullable": true,
+                "attributes": {
+                  "metaType": "object",
+                  "value": {
+                    "zone_rule_ref": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": false
+                }
+              },
+              "region.append": {
+                "metaType": "object",
+                "value": {},
+                "isSingle": true,
+                "isNullable": true,
+                "attributes": {
+                  "metaType": "object",
+                  "value": {
+                    "zone_id_ref": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
+                    },
+                    "region_id_ref": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
+                    },
+                    "portal_id_ref": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
+                    }
+                  }
+                }
               }
             },
             "isNullable": true
@@ -2784,6 +3244,193 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                     }
                   },
                   "isNullable": true
+                },
+                "node_rule": {
+                  "metaType": "object",
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "id": {
+                        "metaType": "primitive",
+                        "value": "xs:string",
+                        "isNullable": false
+                      }
+                    },
+                    "isNullable": false
+                  },
+                  "isSingle": true,
+                  "value": {
+                    "area": {
+                      "metaType": "object",
+                      "isSingle": true,
+                      "value": {
+                        "height": {
+                          "metaType": "reference",
+                          "value": "type__math_operations",
+                          "isSingle": true,
+                          "isNullable": false
+                        },
+                        "width": {
+                          "metaType": "reference",
+                          "value": "type__math_operations",
+                          "isSingle": true,
+                          "isNullable": false
+                        }
+                      },
+                      "isNullable": false
+                    },
+                    "portals": {
+                      "metaType": "object",
+                      "isSingle": true,
+                      "value": {
+                        "portal": {
+                          "metaType": "object",
+                          "attributes": {
+                            "metaType": "object",
+                            "value": {
+                              "side": {
+                                "metaType": "primitive",
+                                "value": "type__rectangle_side",
+                                "isNullable": false
+                              }
+                            },
+                            "isNullable": false
+                          },
+                          "isSingle": false,
+                          "value": {
+                            "width": {
+                              "metaType": "reference",
+                              "value": "type__math_operations",
+                              "isSingle": true,
+                              "isNullable": false
+                            },
+                            "height": {
+                              "metaType": "reference",
+                              "value": "type__math_operations",
+                              "isSingle": true,
+                              "isNullable": false
+                            },
+                            "to": {
+                              "metaType": "object",
+                              "attributes": {
+                                "metaType": "object",
+                                "value": {
+                                  "node_rule_ref": {
+                                    "metaType": "primitive",
+                                    "value": "xs:string",
+                                    "isNullable": false
+                                  }
+                                },
+                                "isNullable": false
+                              },
+                              "isSingle": true,
+                              "value": {
+                                "side": {
+                                  "metaType": "reference",
+                                  "value": "type__rectangle_side",
+                                  "isSingle": true,
+                                  "isNullable": false
+                                },
+                                "width": {
+                                  "metaType": "reference",
+                                  "value": "type__math_operations",
+                                  "isSingle": true,
+                                  "isNullable": false
+                                },
+                                "height": {
+                                  "metaType": "reference",
+                                  "value": "type__math_operations",
+                                  "isSingle": true,
+                                  "isNullable": false
+                                }
+                              },
+                              "isNullable": false
+                            }
+                          },
+                          "isNullable": true
+                        }
+                      },
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": true
+                },
+                "region_rule": {
+                  "metaType": "object",
+                  "isSingle": true,
+                  "value": {
+                    "entry": {
+                      "metaType": "composition",
+                      "value": [
+                        {
+                          "metaType": "object",
+                          "value": {},
+                          "isSingle": true,
+                          "isNullable": false,
+                          "attributes": {
+                            "metaType": "object",
+                            "value": {
+                              "id": {
+                                "metaType": "primitive",
+                                "value": "xs:string",
+                                "isNullable": false
+                              }
+                            },
+                            "isNullable": false
+                          }
+                        },
+                        {
+                          "metaType": "primitive",
+                          "value": "type__region_rule"
+                        }
+                      ],
+                      "isSingle": false,
+                      "isNullable": true
+                    }
+                  },
+                  "isNullable": true
+                },
+                "zone_rule": {
+                  "metaType": "object",
+                  "isSingle": true,
+                  "value": {
+                    "entry": {
+                      "metaType": "object",
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "id": {
+                            "metaType": "primitive",
+                            "value": "xs:string",
+                            "isNullable": false
+                          }
+                        },
+                        "isNullable": false
+                      },
+                      "isSingle": true,
+                      "value": {
+                        "starting_region": {
+                          "metaType": "object",
+                          "value": {},
+                          "isSingle": true,
+                          "isNullable": false,
+                          "attributes": {
+                            "metaType": "object",
+                            "value": {
+                              "region_rule_ref": {
+                                "metaType": "primitive",
+                                "value": "xs:string",
+                                "isNullable": false
+                              }
+                            },
+                            "isNullable": false
+                          }
+                        }
+                      },
+                      "isNullable": true
+                    }
+                  },
+                  "isNullable": true
                 }
               },
               "isNullable": true
@@ -3095,6 +3742,236 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                             }
                           },
                           "isNullable": false
+                        }
+                      },
+                      "isNullable": true
+                    }
+                  },
+                  "isNullable": true
+                },
+                "zone_list": {
+                  "metaType": "object",
+                  "isSingle": true,
+                  "value": {
+                    "zone": {
+                      "metaType": "object",
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "id": {
+                            "metaType": "primitive",
+                            "value": "xs:string",
+                            "isNullable": false
+                          }
+                        },
+                        "isNullable": false
+                      },
+                      "isSingle": false,
+                      "value": {
+                        "region": {
+                          "metaType": "object",
+                          "attributes": {
+                            "metaType": "object",
+                            "value": {
+                              "id": {
+                                "metaType": "primitive",
+                                "value": "xs:string",
+                                "isNullable": false
+                              }
+                            },
+                            "isNullable": false
+                          },
+                          "isSingle": false,
+                          "value": {
+                            "rule": {
+                              "metaType": "object",
+                              "value": {},
+                              "isSingle": true,
+                              "isNullable": false,
+                              "attributes": {
+                                "metaType": "object",
+                                "value": {
+                                  "rule_id_ref": {
+                                    "metaType": "primitive",
+                                    "value": "xs:string",
+                                    "isNullable": false
+                                  }
+                                },
+                                "isNullable": false
+                              }
+                            },
+                            "position": {
+                              "metaType": "object",
+                              "value": {},
+                              "isSingle": true,
+                              "isNullable": false,
+                              "attributes": {
+                                "metaType": "object",
+                                "value": {
+                                  "x": {
+                                    "metaType": "primitive",
+                                    "value": "xs:integer",
+                                    "isNullable": false
+                                  },
+                                  "y": {
+                                    "metaType": "primitive",
+                                    "value": "xs:integer",
+                                    "isNullable": false
+                                  }
+                                }
+                              }
+                            },
+                            "limit": {
+                              "metaType": "object",
+                              "value": {},
+                              "isSingle": true,
+                              "isNullable": false,
+                              "attributes": {
+                                "metaType": "object",
+                                "value": {
+                                  "width": {
+                                    "metaType": "primitive",
+                                    "value": "xs:integer",
+                                    "isNullable": false
+                                  },
+                                  "height": {
+                                    "metaType": "primitive",
+                                    "value": "xs:integer",
+                                    "isNullable": false
+                                  }
+                                }
+                              }
+                            },
+                            "portals": {
+                              "metaType": "object",
+                              "isSingle": true,
+                              "value": {
+                                "portal": {
+                                  "metaType": "object",
+                                  "attributes": {
+                                    "metaType": "object",
+                                    "value": {
+                                      "id": {
+                                        "metaType": "primitive",
+                                        "value": "xs:string",
+                                        "isNullable": false
+                                      }
+                                    },
+                                    "isNullable": false
+                                  },
+                                  "isSingle": false,
+                                  "value": {
+                                    "from": {
+                                      "metaType": "object",
+                                      "value": {},
+                                      "isSingle": true,
+                                      "isNullable": false,
+                                      "attributes": {
+                                        "metaType": "object",
+                                        "value": {
+                                          "side": {
+                                            "metaType": "primitive",
+                                            "value": "type__rectangle_side",
+                                            "isNullable": false
+                                          },
+                                          "start": {
+                                            "metaType": "primitive",
+                                            "value": "xs:integer",
+                                            "isNullable": false
+                                          },
+                                          "end": {
+                                            "metaType": "primitive",
+                                            "value": "xs:integer",
+                                            "isNullable": false
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "to_rule": {
+                                      "metaType": "object",
+                                      "isSingle": true,
+                                      "value": {
+                                        "region": {
+                                          "metaType": "object",
+                                          "attributes": {
+                                            "metaType": "object",
+                                            "value": {
+                                              "region_rule_ref": {
+                                                "metaType": "primitive",
+                                                "value": "xs:string",
+                                                "isNullable": false
+                                              },
+                                              "side": {
+                                                "metaType": "primitive",
+                                                "value": "type__rectangle_side",
+                                                "isNullable": false
+                                              }
+                                            }
+                                          },
+                                          "isSingle": false,
+                                          "value": {
+                                            "start": {
+                                              "metaType": "reference",
+                                              "value": "type__math_operations",
+                                              "isSingle": true,
+                                              "isNullable": false
+                                            },
+                                            "end": {
+                                              "metaType": "reference",
+                                              "value": "type__math_operations",
+                                              "isSingle": true,
+                                              "isNullable": false
+                                            }
+                                          },
+                                          "isNullable": false
+                                        }
+                                      },
+                                      "isNullable": true
+                                    },
+                                    "to": {
+                                      "metaType": "object",
+                                      "value": {},
+                                      "isSingle": true,
+                                      "isNullable": true,
+                                      "attributes": {
+                                        "metaType": "object",
+                                        "value": {
+                                          "zone_ref": {
+                                            "metaType": "primitive",
+                                            "value": "xs:string",
+                                            "isNullable": false
+                                          },
+                                          "region_ref": {
+                                            "metaType": "primitive",
+                                            "value": "xs:string",
+                                            "isNullable": false
+                                          },
+                                          "side": {
+                                            "metaType": "primitive",
+                                            "value": "type__rectangle_side",
+                                            "isNullable": false
+                                          },
+                                          "start": {
+                                            "metaType": "primitive",
+                                            "value": "xs:integer",
+                                            "isNullable": false
+                                          },
+                                          "end": {
+                                            "metaType": "primitive",
+                                            "value": "xs:integer",
+                                            "isNullable": true
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "isNullable": false
+                                }
+                              },
+                              "isNullable": true
+                            }
+                          },
+                          "isNullable": true
                         }
                       },
                       "isNullable": true
@@ -3487,6 +4364,49 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                     }
                   },
                   "isNullable": true
+                },
+                "zone.create": {
+                  "metaType": "object",
+                  "value": {},
+                  "isSingle": true,
+                  "isNullable": true,
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "zone_rule_ref": {
+                        "metaType": "primitive",
+                        "value": "xs:string",
+                        "isNullable": false
+                      }
+                    },
+                    "isNullable": false
+                  }
+                },
+                "region.append": {
+                  "metaType": "object",
+                  "value": {},
+                  "isSingle": true,
+                  "isNullable": true,
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "zone_id_ref": {
+                        "metaType": "primitive",
+                        "value": "xs:string",
+                        "isNullable": false
+                      },
+                      "region_id_ref": {
+                        "metaType": "primitive",
+                        "value": "xs:string",
+                        "isNullable": false
+                      },
+                      "portal_id_ref": {
+                        "metaType": "primitive",
+                        "value": "xs:string",
+                        "isNullable": false
+                      }
+                    }
+                  }
                 }
               },
               "isNullable": true

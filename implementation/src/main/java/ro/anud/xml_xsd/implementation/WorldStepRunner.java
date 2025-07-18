@@ -10,9 +10,9 @@ import ro.anud.xml_xsd.implementation.middleware.locationGraph.LocationGraphCrea
 import ro.anud.xml_xsd.implementation.middleware.locationGraph.LocationGraphCreateAdjacent;
 import ro.anud.xml_xsd.implementation.middleware.person.PersonMoveTo;
 import ro.anud.xml_xsd.implementation.middleware.person.PersonTeleportTo;
+import ro.anud.xml_xsd.implementation.middleware.region.RegionAppendAction;
+import ro.anud.xml_xsd.implementation.middleware.zone.ZoneCreateAction;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.Counter.Counter;
-import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.RandomizationTable.Entry.Entry;
-import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.RandomizationTable.RandomizationTable;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
@@ -38,8 +38,10 @@ public class WorldStepRunner {
     private List<Consumer<WorldStepInstance>> consumers = new ArrayList<>();
     private static long intervalUs = 500_000_000;
 
-    private void runStep(WorldStepInstance worldStepInstance) {
+    public static void runStep(WorldStepInstance worldStepInstance) {
         FromPersonAction.apply(worldStepInstance);
+        ZoneCreateAction.zoneCreateAction(worldStepInstance);
+        RegionAppendAction.regionAppendAction(worldStepInstance);
         PersonCreateAction.personCreateAction(worldStepInstance);
         LocationGraphCreate.apply(worldStepInstance);
         LocationGraphCreateAdjacent.apply(worldStepInstance);

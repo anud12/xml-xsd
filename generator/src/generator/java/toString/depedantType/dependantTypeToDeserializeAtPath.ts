@@ -1,7 +1,7 @@
 
 import {Type} from "../../../../type";
 import {template} from "../../../../template/template";
-import {getTypeName} from "../geTypeName";
+import {getTypeName} from "../getTypeName";
 import {normalizeNameClass, normalizeNameField} from "../normalizeNameClass";
 import {basePackage, getDependantTypePackage} from "./getDependantTypePackage";
 import {DependantType} from "../../typeToString";

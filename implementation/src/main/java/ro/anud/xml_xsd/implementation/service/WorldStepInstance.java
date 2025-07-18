@@ -2,8 +2,6 @@ package ro.anud.xml_xsd.implementation.service;
 
 import lombok.Setter;
 import org.springframework.web.socket.TextMessage;
-import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.LocationGraph;
-import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.Counter.Counter;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.ElapsedTime.ElapsedTime;
@@ -16,7 +14,9 @@ import ro.anud.xml_xsd.implementation.repository.RuleRepository;
 import ro.anud.xml_xsd.implementation.service.location_graph.LocationGraphInstance;
 import ro.anud.xml_xsd.implementation.service.name.NameInstance;
 import ro.anud.xml_xsd.implementation.service.person.PersonInstance;
+import ro.anud.xml_xsd.implementation.service.region.RegionInstance;
 import ro.anud.xml_xsd.implementation.service.util.ComputeOperation;
+import ro.anud.xml_xsd.implementation.service.zone.ZoneInstance;
 import ro.anud.xml_xsd.implementation.util.LinkedNode;
 import ro.anud.xml_xsd.implementation.websocket.WebSocketHandler;
 
@@ -31,6 +31,8 @@ import static ro.anud.xml_xsd.implementation.websocket.Client.ReturnCode.Update;
 
 @Setter
 public class WorldStepInstance {
+
+
 
 
     @FunctionalInterface
@@ -62,6 +64,9 @@ public class WorldStepInstance {
     public final PropertyInstance property = new PropertyInstance(this);
     public final LocationGraphInstance locationGraph = new LocationGraphInstance(this);
     public final NameInstance name = new NameInstance(this);
+    public final ZoneInstance zone = new ZoneInstance(this);
+    public final RegionInstance region = new RegionInstance(this);
+
 
     private int counter = 0;
 
@@ -75,6 +80,8 @@ public class WorldStepInstance {
         property.index();
         locationGraph.index();
         name.index();
+        zone.index();
+        region.index();
         return this;
     }
 

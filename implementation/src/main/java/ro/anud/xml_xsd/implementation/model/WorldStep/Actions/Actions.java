@@ -77,6 +77,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     private List<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Person_moveTo> person_moveTo = new ArrayList<>();
     @Builder.Default
     private List<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.FromPerson.FromPerson> fromPerson = new ArrayList<>();
+    @Builder.Default
+    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Zone_create.Zone_create> zone_create = Optional.empty();
+    @Builder.Default
+    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_append.Region_append> region_append = Optional.empty();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -167,6 +171,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           this.fromPerson.remove(object);
           notifyChange();
         }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Zone_create.Zone_create) {
+          this.zone_create = Optional.empty();
+          notifyChange();
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_append.Region_append) {
+          this.region_append = Optional.empty();
+          notifyChange();
+        }
     }
 
     public int buildIndexForChild(Object object) {
@@ -196,6 +208,12 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.FromPerson.FromPerson) {
           return this.fromPerson.indexOf(object);
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Zone_create.Zone_create) {
+          return 0;
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_append.Region_append) {
+          return 0;
         }
         return 0;
     }
@@ -229,6 +247,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.person_create = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_create.Person_create.fromRawNode(rawNode.getChildrenList("person.create"), this);
         this.person_moveTo = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Person_moveTo.fromRawNode(rawNode.getChildrenList("person.move_to"), this);
         this.fromPerson = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.FromPerson.FromPerson.fromRawNode(rawNode.getChildrenList("from_person"), this);
+        this.zone_create = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Zone_create.Zone_create.fromRawNode(rawNode.getChildrenFirst("zone.create"), this);
+        this.region_append = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_append.Region_append.fromRawNode(rawNode.getChildrenFirst("region.append"), this);
         logReturnVoid();
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
@@ -262,6 +282,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       rawNode.setChildren("person.move_to", person_moveTo.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Person_moveTo::serializeIntoRawNode).toList());
       innerLogger.log("from_person");
       rawNode.setChildren("from_person", fromPerson.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.FromPerson.FromPerson::serializeIntoRawNode).toList());
+      innerLogger.log("zone.create");
+      rawNode.setChildren("zone.create", zone_create.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Zone_create.Zone_create::serializeIntoRawNode).toList());
+      innerLogger.log("region.append");
+      rawNode.setChildren("region.append", region_append.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_append.Region_append::serializeIntoRawNode).toList());
       return rawNode;
     }
 
@@ -524,6 +548,63 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       notifyChange();
       return this;
     }
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Zone_create.Zone_create> getZone_create()
+    {
+      return this.zone_create;
+    }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Zone_create.Zone_create getZone_createOrDefault()
+    {
+      return this.zone_create.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Zone_create.Zone_create();
+        this.zone_create = Optional.of(instance);
+        instance.parentNode(this);
+        return this.zone_create.get();
+      });
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Zone_create.Zone_create> streamZone_createOrDefault()
+    {
+      return java.util.stream.Stream.of(getZone_createOrDefault());
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Zone_create.Zone_create> streamZone_create()
+    {
+      return zone_create.stream();
+    }
+    public Actions setZone_create(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Zone_create.Zone_create value)
+    {
+      this.zone_create = Optional.ofNullable(value);
+      value.parentNode(this);
+      notifyChange();
+      return this;
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_append.Region_append> getRegion_append()
+    {
+      return this.region_append;
+    }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_append.Region_append getRegion_appendOrDefault()
+    {
+      return this.region_append.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_append.Region_append();
+        this.region_append = Optional.of(instance);
+        instance.parentNode(this);
+        return this.region_append.get();
+      });
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_append.Region_append> streamRegion_appendOrDefault()
+    {
+      return java.util.stream.Stream.of(getRegion_appendOrDefault());
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_append.Region_append> streamRegion_append()
+    {
+      return region_append.stream();
+    }
+    public Actions setRegion_append(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_append.Region_append value)
+    {
+      this.region_append = Optional.ofNullable(value);
+      value.parentNode(this);
+      notifyChange();
+      return this;
+    }
 
     public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
        if(xpath.startsWith("."))
@@ -666,6 +747,22 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           this.addFromPerson(newEntry);
           return newEntry.deserializeAtPath(childXPath, rawNode);
         }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Zone_create.Zone_create.nodeName))
+        {
+          if(this.zone_create.isEmpty()) {
+            this.zone_create = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Zone_create.Zone_create());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Zone_create.Zone_create.nodeName.length() + 3);
+          return this.zone_create.get().deserializeAtPath(childXPath, rawNode);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_append.Region_append.nodeName))
+        {
+          if(this.region_append.isEmpty()) {
+            this.region_append = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_append.Region_append());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_append.Region_append.nodeName.length() + 3);
+          return this.region_append.get().deserializeAtPath(childXPath, rawNode);
+        }
 
         deserialize(rawNode);
         return this;
@@ -779,6 +876,22 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
             return this.fromPerson.get(pathIndex).getNodeAtPath(childXPath);
           }
           return Optional.empty();
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Zone_create.Zone_create.nodeName))
+        {
+          if(this.zone_create.isEmpty()) {
+            this.zone_create = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Zone_create.Zone_create());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Zone_create.Zone_create.nodeName.length() + 3);
+          return this.zone_create.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_append.Region_append.nodeName))
+        {
+          if(this.region_append.isEmpty()) {
+            this.region_append = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_append.Region_append());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_append.Region_append.nodeName.length() + 3);
+          return this.region_append.get().getNodeAtPath(childXPath);
         }
         return Optional.of(this);
     }
@@ -1171,6 +1284,49 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
               }
             },
             "isNullable": true
+          },
+          "zone.create": {
+            "metaType": "object",
+            "value": {},
+            "isSingle": true,
+            "isNullable": true,
+            "attributes": {
+              "metaType": "object",
+              "value": {
+                "zone_rule_ref": {
+                  "metaType": "primitive",
+                  "value": "xs:string",
+                  "isNullable": false
+                }
+              },
+              "isNullable": false
+            }
+          },
+          "region.append": {
+            "metaType": "object",
+            "value": {},
+            "isSingle": true,
+            "isNullable": true,
+            "attributes": {
+              "metaType": "object",
+              "value": {
+                "zone_id_ref": {
+                  "metaType": "primitive",
+                  "value": "xs:string",
+                  "isNullable": false
+                },
+                "region_id_ref": {
+                  "metaType": "primitive",
+                  "value": "xs:string",
+                  "isNullable": false
+                },
+                "portal_id_ref": {
+                  "metaType": "primitive",
+                  "value": "xs:string",
+                  "isNullable": false
+                }
+              }
+            }
           }
         },
         "isNullable": true

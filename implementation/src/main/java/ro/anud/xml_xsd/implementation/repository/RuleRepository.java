@@ -28,6 +28,8 @@ public class RuleRepository {
     private final WorldStepInstance worldStepInstance;
     public final NodeRuleRepository nodeRule;
     public final LinkGroupRuleRepository linkGroupRule;
+    public final ZoneRuleRepository zoneRule;
+    public final RegionRuleRepository regionRule;
     private PropertyInstance propertyInstance;
 
 
@@ -37,11 +39,18 @@ public class RuleRepository {
         this.worldStepInstance = worldStepInstance;
         this.linkGroupRule = new LinkGroupRuleRepository(worldStepInstance);
         this.nodeRule = new NodeRuleRepository(worldStepInstance);
+        this.zoneRule = new ZoneRuleRepository(worldStepInstance);
+        this.regionRule = new RegionRuleRepository(worldStepInstance);
     }
     public RuleRepository index() {
         var ruleGroups = worldStepInstance.streamWorldStep()
             .flatMap(WorldStep::streamRuleGroup)
             .toList();
+
+        nodeRule.index(ruleGroups);
+        linkGroupRule.index();
+        zoneRule.index(ruleGroups);
+        regionRule.index(ruleGroups);
 
         var actionRule = ruleGroups
             .stream()
@@ -72,8 +81,6 @@ public class RuleRepository {
                 }
                 classificationRules.put(entry.getId(), entry);
             });
-        nodeRule.index(ruleGroups);
-        linkGroupRule.index();
         return this;
     }
 
