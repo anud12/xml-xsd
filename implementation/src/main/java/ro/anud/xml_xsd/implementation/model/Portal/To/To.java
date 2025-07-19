@@ -57,8 +57,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     //Attributes
-    @Builder.Default
-    private Optional<String> side = Optional.empty();
 
     //Children elements
     @Builder.Default
@@ -147,8 +145,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
         var innerLogger = logger.log("attributes");
         //Deserialize attributes
-        innerLogger.log("side");
-        this.side = rawNode.getAttribute("side");
         innerLogger = logger.log("children");
         //Deserialize children
         this.region = ro.anud.xml_xsd.implementation.model.Portal.To.Region.Region.fromRawNode(rawNode.getChildrenFirst("region").get(), this);
@@ -164,8 +160,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       rawNode.setTag("to");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
-      innerLogger.log("side");
-      this.side.ifPresent(o -> rawNode.setAttribute("side", o));
 
       innerLogger = logger.log("children");
       //Serialize children
@@ -179,17 +173,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         // Godot.GD.Print("Serializing to");
         var updatedRawNode = serializeIntoRawNode();
         updatedRawNode.populateNode(document, element);
-    }
-
-    public Optional<String> getSide()
-    {
-      return this.side;
-    }
-    public To setSide(Optional<String> value)
-    {
-      this.side = value;
-      notifyChange();
-      return this;
     }
     public ro.anud.xml_xsd.implementation.model.Portal.To.Region.Region getRegion()
     {
@@ -243,17 +226,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       "type": "element",
       "value": {
         "metaType": "object",
-        "attributes": {
-          "metaType": "object",
-          "value": {
-            "side": {
-              "metaType": "primitive",
-              "value": "type__rectangle_side",
-              "isNullable": true
-            }
-          },
-          "isNullable": true
-        },
         "isSingle": true,
         "value": {
           "region": {
@@ -275,7 +247,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
             },
             "isSingle": true,
             "value": {
-              "position": {
+              "start": {
                 "metaType": "reference",
                 "value": "type__math_operations",
                 "isSingle": true,

@@ -50,7 +50,7 @@
         </limit>
         <portal>
           <from side="bottom">
-            <position initial=""></position>
+            <start initial=""></start>
             <width initial=""></width>
           </from>
           <to>

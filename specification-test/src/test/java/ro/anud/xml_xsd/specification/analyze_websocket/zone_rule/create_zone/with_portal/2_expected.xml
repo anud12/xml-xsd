@@ -2,7 +2,7 @@
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
-    <counter value="3"/>
+    <counter value="2"/>
     <randomization_table>
       <entry value="1"/>
     </randomization_table>
@@ -16,12 +16,12 @@
         </limit>
         <portal>
           <from side="left">
-            <position initial="1"/>
+            <start initial="1"/>
             <width initial="1"/>
           </from>
           <to>
             <region region_rule_ref="region_rule" side="left">
-              <position initial="1"/>
+              <start initial="1"/>
               <width initial="1"/>
             </region>
           </to>
@@ -43,17 +43,6 @@
           <rule rule_id_ref="region_rule"/>
           <position x="0" y="0"/>
           <limit height="1" width="1"/>
-          <portals>
-            <portal id="0.2">
-              <from start="1" side="left" end="1"/>
-              <to_rule>
-                <region region_rule_ref="region_rule" side="left">
-                  <start initial="1"/>
-                  <end initial="1"/>
-                </region>
-              </to_rule>
-            </portal>
-          </portals>
         </region>
       </zone>
     </zone_list>

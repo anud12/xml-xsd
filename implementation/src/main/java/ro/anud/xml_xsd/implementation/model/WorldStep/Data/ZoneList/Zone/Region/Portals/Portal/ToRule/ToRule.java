@@ -261,6 +261,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         "value": {
           "region": {
             "metaType": "object",
+            "value": {},
+            "isSingle": false,
+            "isNullable": false,
             "attributes": {
               "metaType": "object",
               "value": {
@@ -268,30 +271,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                   "metaType": "primitive",
                   "value": "xs:string",
                   "isNullable": false
-                },
-                "side": {
-                  "metaType": "primitive",
-                  "value": "type__rectangle_side",
-                  "isNullable": false
                 }
-              }
-            },
-            "isSingle": false,
-            "value": {
-              "start": {
-                "metaType": "reference",
-                "value": "type__math_operations",
-                "isSingle": true,
-                "isNullable": false
               },
-              "end": {
-                "metaType": "reference",
-                "value": "type__math_operations",
-                "isSingle": true,
-                "isNullable": false
-              }
-            },
-            "isNullable": false
+              "isNullable": false
+            }
           }
         },
         "isNullable": true

@@ -18,12 +18,12 @@
         </limit>
         <portal>
           <from side="left">
-            <position initial="1"/>
+            <start initial="1"/>
             <width initial="1"/>
           </from>
           <to>
             <region region_rule_ref="region_rule" side="left">
-              <position initial="1"/>
+              <start initial="1"/>
               <width initial="1"/>
             </region>
           </to>

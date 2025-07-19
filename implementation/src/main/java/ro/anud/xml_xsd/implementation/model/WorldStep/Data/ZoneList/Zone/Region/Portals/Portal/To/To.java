@@ -65,8 +65,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     private String side;
 
     private Integer start;
-    @Builder.Default
-    private Optional<Integer> end = Optional.empty();
+
+    private Integer end;
 
     //Children elements
 
@@ -156,7 +156,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         innerLogger.log("start");
         this.start = rawNode.getAttributeIntRequired("start");
         innerLogger.log("end");
-        this.end = rawNode.getAttributeInt("end");
+        this.end = rawNode.getAttributeIntRequired("end");
         innerLogger = logger.log("children");
         //Deserialize children
         logReturnVoid();
@@ -180,7 +180,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       innerLogger.log("start");
       rawNode.setAttribute("start", this.start);
       innerLogger.log("end");
-      this.end.ifPresent(o -> rawNode.setAttribute("end", o));
+      rawNode.setAttribute("end", this.end);
 
       innerLogger = logger.log("children");
       //Serialize children
@@ -234,11 +234,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       notifyChange();
       return this;
     }
-    public Optional<Integer> getEnd()
+    public Integer getEnd()
     {
       return this.end;
     }
-    public To setEnd(Optional<Integer> value)
+    public To setEnd(Integer value)
     {
       this.end = value;
       notifyChange();
@@ -300,7 +300,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
             "end": {
               "metaType": "primitive",
               "value": "xs:integer",
-              "isNullable": true
+              "isNullable": false
             }
           }
         }

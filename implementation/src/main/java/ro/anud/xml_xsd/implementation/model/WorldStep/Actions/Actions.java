@@ -1319,11 +1319,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                   "metaType": "primitive",
                   "value": "xs:string",
                   "isNullable": false
-                },
-                "portal_id_ref": {
-                  "metaType": "primitive",
-                  "value": "xs:string",
-                  "isNullable": false
                 }
               }
             }

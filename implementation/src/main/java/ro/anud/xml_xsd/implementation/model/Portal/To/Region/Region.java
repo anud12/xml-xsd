@@ -64,7 +64,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
     //Children elements
     @Builder.Default
-    private ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations position = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
+    private ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations start = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
     @Builder.Default
     private ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations width = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
 
@@ -122,7 +122,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
     public void removeChild(Object object) {
         if(object instanceof ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations) {
-          throw new RuntimeException("trying to delete position which is required");
+          throw new RuntimeException("trying to delete start which is required");
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations) {
           throw new RuntimeException("trying to delete width which is required");
@@ -163,8 +163,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.side = rawNode.getAttributeRequired("side");
         innerLogger = logger.log("children");
         //Deserialize children
-        innerLogger.log("position");
-        this.position = ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.fromRawNode(rawNode.getChildrenFirst("position").get(), this);
+        innerLogger.log("start");
+        this.start = ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.fromRawNode(rawNode.getChildrenFirst("start").get(), this);
         innerLogger.log("width");
         this.width = ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.fromRawNode(rawNode.getChildrenFirst("width").get(), this);
         logReturnVoid();
@@ -186,8 +186,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
       innerLogger = logger.log("children");
       //Serialize children
-      innerLogger.log("position");
-      rawNode.setChildren("position", Optional.ofNullable(position).stream().map(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations::serializeIntoRawNode).toList());
+      innerLogger.log("start");
+      rawNode.setChildren("start", Optional.ofNullable(start).stream().map(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations::serializeIntoRawNode).toList());
       innerLogger.log("width");
       rawNode.setChildren("width", Optional.ofNullable(width).stream().map(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations::serializeIntoRawNode).toList());
       return rawNode;
@@ -220,17 +220,17 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       notifyChange();
       return this;
     }
-    public ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations getPosition()
+    public ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations getStart()
     {
-      return this.position;
+      return this.start;
     }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamPosition()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamStart()
     {
-      return Optional.ofNullable(position).stream();
+      return Optional.ofNullable(start).stream();
     }
-    public Region setPosition(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations value)
+    public Region setStart(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations value)
     {
-      this.position = value;
+      this.start = value;
       value.parentNode(this);
       notifyChange();
       return this;
@@ -260,7 +260,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName))
         {
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName.length() + 3);
-          return this.position.deserializeAtPath(childXPath, rawNode);
+          return this.start.deserializeAtPath(childXPath, rawNode);
         }
         if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName))
         {
@@ -280,7 +280,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName))
         {
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName.length() + 3);
-          return this.position.getNodeAtPath(childXPath);
+          return this.start.getNodeAtPath(childXPath);
         }
         if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName))
         {
@@ -315,7 +315,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         },
         "isSingle": true,
         "value": {
-          "position": {
+          "start": {
             "metaType": "reference",
             "value": "type__math_operations",
             "isSingle": true,

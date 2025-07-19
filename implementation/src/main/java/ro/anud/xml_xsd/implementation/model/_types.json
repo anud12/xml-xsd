@@ -797,7 +797,7 @@
               },
               "isSingle": true,
               "value": {
-                "position": {
+                "start": {
                   "metaType": "reference",
                   "value": "type__math_operations",
                   "isSingle": true,
@@ -814,17 +814,6 @@
             },
             "to": {
               "metaType": "object",
-              "attributes": {
-                "metaType": "object",
-                "value": {
-                  "side": {
-                    "metaType": "primitive",
-                    "value": "type__rectangle_side",
-                    "isNullable": true
-                  }
-                },
-                "isNullable": true
-              },
               "isSingle": true,
               "value": {
                 "region": {
@@ -846,7 +835,7 @@
                   },
                   "isSingle": true,
                   "value": {
-                    "position": {
+                    "start": {
                       "metaType": "reference",
                       "value": "type__math_operations",
                       "isSingle": true,
@@ -2344,47 +2333,6 @@
                                     }
                                   }
                                 },
-                                "to_rule": {
-                                  "metaType": "object",
-                                  "isSingle": true,
-                                  "value": {
-                                    "region": {
-                                      "metaType": "object",
-                                      "attributes": {
-                                        "metaType": "object",
-                                        "value": {
-                                          "region_rule_ref": {
-                                            "metaType": "primitive",
-                                            "value": "xs:string",
-                                            "isNullable": false
-                                          },
-                                          "side": {
-                                            "metaType": "primitive",
-                                            "value": "type__rectangle_side",
-                                            "isNullable": false
-                                          }
-                                        }
-                                      },
-                                      "isSingle": false,
-                                      "value": {
-                                        "start": {
-                                          "metaType": "reference",
-                                          "value": "type__math_operations",
-                                          "isSingle": true,
-                                          "isNullable": false
-                                        },
-                                        "end": {
-                                          "metaType": "reference",
-                                          "value": "type__math_operations",
-                                          "isSingle": true,
-                                          "isNullable": false
-                                        }
-                                      },
-                                      "isNullable": false
-                                    }
-                                  },
-                                  "isNullable": true
-                                },
                                 "to": {
                                   "metaType": "object",
                                   "value": {},
@@ -2416,7 +2364,7 @@
                                       "end": {
                                         "metaType": "primitive",
                                         "value": "xs:integer",
-                                        "isNullable": true
+                                        "isNullable": false
                                       }
                                     }
                                   }
@@ -2853,11 +2801,6 @@
                     "isNullable": false
                   },
                   "region_id_ref": {
-                    "metaType": "primitive",
-                    "value": "xs:string",
-                    "isNullable": false
-                  },
-                  "portal_id_ref": {
                     "metaType": "primitive",
                     "value": "xs:string",
                     "isNullable": false

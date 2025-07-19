@@ -1,5 +1,6 @@
 <world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../world_step.xsd">
+
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -17,12 +18,12 @@
         </limit>
         <portal>
           <from side="bottom">
-            <position initial="0"/>
-            <width initial="1"/>
+            <start initial="1"/>
+            <width initial="2"/>
           </from>
           <to>
-            <region region_rule_ref="region_rule" side="left">
-              <position initial="0"/>
+            <region region_rule_ref="region_rule" side="top">
+              <start initial="0"/>
               <width initial="1"/>
             </region>
           </to>
@@ -45,9 +46,9 @@
           <position x="0" y="0"/>
           <limit height="10" width="10"/>
           <portals>
-            <portal id="portal_id">
+            <portal id="0.1">
               <from end="2" side="bottom" start="1"/>
-              <to end="1" region_ref="0.0" side="left" start="0" zone_ref="zone_id"/>
+              <to end="1" region_ref="0.0" side="top" start="0" zone_ref="zone_id"/>
             </portal>
           </portals>
         </region>
@@ -55,17 +56,6 @@
           <rule rule_id_ref="region_rule"/>
           <position x="1" y="-10"/>
           <limit height="10" width="10"/>
-          <portals>
-            <portal id="0.1">
-              <from end="1" side="bottom" start="0"/>
-              <to_rule>
-                <region region_rule_ref="region_rule" side="left">
-                  <start initial="0"/>
-                  <end initial="1"/>
-                </region>
-              </to_rule>
-            </portal>
-          </portals>
         </region>
       </zone>
     </zone_list>

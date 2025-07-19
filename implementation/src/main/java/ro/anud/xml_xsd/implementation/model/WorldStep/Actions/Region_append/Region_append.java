@@ -62,8 +62,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
     private String regionIdRef;
 
-    private String portalIdRef;
-
     //Children elements
 
     @ToString.Exclude()
@@ -147,8 +145,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.zoneIdRef = rawNode.getAttributeRequired("zone_id_ref");
         innerLogger.log("region_id_ref");
         this.regionIdRef = rawNode.getAttributeRequired("region_id_ref");
-        innerLogger.log("portal_id_ref");
-        this.portalIdRef = rawNode.getAttributeRequired("portal_id_ref");
         innerLogger = logger.log("children");
         //Deserialize children
         logReturnVoid();
@@ -167,8 +163,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       rawNode.setAttribute("zone_id_ref", this.zoneIdRef);
       innerLogger.log("region_id_ref");
       rawNode.setAttribute("region_id_ref", this.regionIdRef);
-      innerLogger.log("portal_id_ref");
-      rawNode.setAttribute("portal_id_ref", this.portalIdRef);
 
       innerLogger = logger.log("children");
       //Serialize children
@@ -199,16 +193,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public Region_append setRegionIdRef(String value)
     {
       this.regionIdRef = value;
-      notifyChange();
-      return this;
-    }
-    public String getPortalIdRef()
-    {
-      return this.portalIdRef;
-    }
-    public Region_append setPortalIdRef(String value)
-    {
-      this.portalIdRef = value;
       notifyChange();
       return this;
     }
@@ -251,11 +235,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
               "isNullable": false
             },
             "region_id_ref": {
-              "metaType": "primitive",
-              "value": "xs:string",
-              "isNullable": false
-            },
-            "portal_id_ref": {
               "metaType": "primitive",
               "value": "xs:string",
               "isNullable": false

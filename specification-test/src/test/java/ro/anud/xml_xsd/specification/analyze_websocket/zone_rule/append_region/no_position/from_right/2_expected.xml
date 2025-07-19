@@ -17,12 +17,12 @@
         </limit>
         <portal>
           <from side="right">
-            <position initial="0"/>
+            <start initial="0"/>
             <width initial="1"/>
           </from>
           <to>
             <region region_rule_ref="region_rule" side="left">
-              <position initial="0"/>
+              <start initial="0"/>
               <width initial="1"/>
             </region>
           </to>
@@ -47,6 +47,9 @@
           <portals>
             <portal id="portal_id">
               <from end="1" side="right" start="0"/>
+            </portal>
+            <portal id="0.1">
+              <from end="1" side="right" start="0"/>
               <to end="1" region_ref="0.0" side="left" start="0" zone_ref="zone_id"/>
             </portal>
           </portals>
@@ -55,17 +58,6 @@
           <rule rule_id_ref="region_rule"/>
           <position x="10" y="0"/>
           <limit height="10" width="10"/>
-          <portals>
-            <portal id="0.1">
-              <from end="1" side="right" start="0"/>
-              <to_rule>
-                <region region_rule_ref="region_rule" side="left">
-                  <start initial="0"/>
-                  <end initial="1"/>
-                </region>
-              </to_rule>
-            </portal>
-          </portals>
         </region>
       </zone>
     </zone_list>

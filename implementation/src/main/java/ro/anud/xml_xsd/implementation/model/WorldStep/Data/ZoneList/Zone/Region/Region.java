@@ -491,47 +491,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                       }
                     }
                   },
-                  "to_rule": {
-                    "metaType": "object",
-                    "isSingle": true,
-                    "value": {
-                      "region": {
-                        "metaType": "object",
-                        "attributes": {
-                          "metaType": "object",
-                          "value": {
-                            "region_rule_ref": {
-                              "metaType": "primitive",
-                              "value": "xs:string",
-                              "isNullable": false
-                            },
-                            "side": {
-                              "metaType": "primitive",
-                              "value": "type__rectangle_side",
-                              "isNullable": false
-                            }
-                          }
-                        },
-                        "isSingle": false,
-                        "value": {
-                          "start": {
-                            "metaType": "reference",
-                            "value": "type__math_operations",
-                            "isSingle": true,
-                            "isNullable": false
-                          },
-                          "end": {
-                            "metaType": "reference",
-                            "value": "type__math_operations",
-                            "isSingle": true,
-                            "isNullable": false
-                          }
-                        },
-                        "isNullable": false
-                      }
-                    },
-                    "isNullable": true
-                  },
                   "to": {
                     "metaType": "object",
                     "value": {},
@@ -563,7 +522,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                         "end": {
                           "metaType": "primitive",
                           "value": "xs:integer",
-                          "isNullable": true
+                          "isNullable": false
                         }
                       }
                     }

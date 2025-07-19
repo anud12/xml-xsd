@@ -64,8 +64,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @Builder.Default
     private ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.From.From from = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.From.From();
     @Builder.Default
-    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.ToRule> toRule = Optional.empty();
-    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.To.To> to = Optional.empty();
 
     @ToString.Exclude()
@@ -124,10 +122,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.From.From) {
           throw new RuntimeException("trying to delete from which is required");
         }
-        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.ToRule) {
-          this.toRule = Optional.empty();
-          notifyChange();
-        }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.To.To) {
           this.to = Optional.empty();
           notifyChange();
@@ -136,9 +130,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
     public int buildIndexForChild(Object object) {
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.From.From) {
-          return 0;
-        }
-        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.ToRule) {
           return 0;
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.To.To) {
@@ -170,7 +161,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         innerLogger = logger.log("children");
         //Deserialize children
         this.from = ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.From.From.fromRawNode(rawNode.getChildrenFirst("from").get(), this);
-        this.toRule = ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.ToRule.fromRawNode(rawNode.getChildrenFirst("to_rule"), this);
         this.to = ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.To.To.fromRawNode(rawNode.getChildrenFirst("to"), this);
         logReturnVoid();
       } catch (Exception e) {
@@ -191,8 +181,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       //Serialize children
       innerLogger.log("from");
       rawNode.setChildren("from", Optional.ofNullable(from).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.From.From::serializeIntoRawNode).toList());
-      innerLogger.log("to_rule");
-      rawNode.setChildren("to_rule", toRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.ToRule::serializeIntoRawNode).toList());
       innerLogger.log("to");
       rawNode.setChildren("to", to.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.To.To::serializeIntoRawNode).toList());
       return rawNode;
@@ -226,35 +214,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public Portal setFrom(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.From.From value)
     {
       this.from = value;
-      value.parentNode(this);
-      notifyChange();
-      return this;
-    }
-
-    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.ToRule> getToRule()
-    {
-      return this.toRule;
-    }
-    public ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.ToRule getToRuleOrDefault()
-    {
-      return this.toRule.orElseGet(() -> {
-        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.ToRule();
-        this.toRule = Optional.of(instance);
-        instance.parentNode(this);
-        return this.toRule.get();
-      });
-    }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.ToRule> streamToRuleOrDefault()
-    {
-      return java.util.stream.Stream.of(getToRuleOrDefault());
-    }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.ToRule> streamToRule()
-    {
-      return toRule.stream();
-    }
-    public Portal setToRule(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.ToRule value)
-    {
-      this.toRule = Optional.ofNullable(value);
       value.parentNode(this);
       notifyChange();
       return this;
@@ -299,14 +258,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.From.From.nodeName.length() + 3);
           return this.from.deserializeAtPath(childXPath, rawNode);
         }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.ToRule.nodeName))
-        {
-          if(this.toRule.isEmpty()) {
-            this.toRule = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.ToRule());
-          }
-          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.ToRule.nodeName.length() + 3);
-          return this.toRule.get().deserializeAtPath(childXPath, rawNode);
-        }
         if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.To.To.nodeName))
         {
           if(this.to.isEmpty()) {
@@ -329,14 +280,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         {
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.From.From.nodeName.length() + 3);
           return this.from.getNodeAtPath(childXPath);
-        }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.ToRule.nodeName))
-        {
-          if(this.toRule.isEmpty()) {
-            this.toRule = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.ToRule());
-          }
-          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.ToRule.nodeName.length() + 3);
-          return this.toRule.get().getNodeAtPath(childXPath);
         }
         if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.To.To.nodeName))
         {
@@ -396,47 +339,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
               }
             }
           },
-          "to_rule": {
-            "metaType": "object",
-            "isSingle": true,
-            "value": {
-              "region": {
-                "metaType": "object",
-                "attributes": {
-                  "metaType": "object",
-                  "value": {
-                    "region_rule_ref": {
-                      "metaType": "primitive",
-                      "value": "xs:string",
-                      "isNullable": false
-                    },
-                    "side": {
-                      "metaType": "primitive",
-                      "value": "type__rectangle_side",
-                      "isNullable": false
-                    }
-                  }
-                },
-                "isSingle": false,
-                "value": {
-                  "start": {
-                    "metaType": "reference",
-                    "value": "type__math_operations",
-                    "isSingle": true,
-                    "isNullable": false
-                  },
-                  "end": {
-                    "metaType": "reference",
-                    "value": "type__math_operations",
-                    "isSingle": true,
-                    "isNullable": false
-                  }
-                },
-                "isNullable": false
-              }
-            },
-            "isNullable": true
-          },
           "to": {
             "metaType": "object",
             "value": {},
@@ -468,7 +370,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                 "end": {
                   "metaType": "primitive",
                   "value": "xs:integer",
-                  "isNullable": true
+                  "isNullable": false
                 }
               }
             }

@@ -64,7 +64,7 @@ public interface IType_regionRule<T> extends ro.anud.xml_xsd.implementation.util
               },
               "isSingle": true,
               "value": {
-                "position": {
+                "start": {
                   "metaType": "reference",
                   "value": "type__math_operations",
                   "isSingle": true,
@@ -81,17 +81,6 @@ public interface IType_regionRule<T> extends ro.anud.xml_xsd.implementation.util
             },
             "to": {
               "metaType": "object",
-              "attributes": {
-                "metaType": "object",
-                "value": {
-                  "side": {
-                    "metaType": "primitive",
-                    "value": "type__rectangle_side",
-                    "isNullable": true
-                  }
-                },
-                "isNullable": true
-              },
               "isSingle": true,
               "value": {
                 "region": {
@@ -113,7 +102,7 @@ public interface IType_regionRule<T> extends ro.anud.xml_xsd.implementation.util
                   },
                   "isSingle": true,
                   "value": {
-                    "position": {
+                    "start": {
                       "metaType": "reference",
                       "value": "type__math_operations",
                       "isSingle": true,
