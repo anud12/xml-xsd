@@ -79,6 +79,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NodeRule.NodeRule> nodeRule = Optional.empty();
     @Builder.Default
+    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.PortalRule> portalRule = Optional.empty();
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RegionRule.RegionRule> regionRule = Optional.empty();
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ZoneRule.ZoneRule> zoneRule = Optional.empty();
@@ -172,6 +174,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           this.nodeRule = Optional.empty();
           notifyChange();
         }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.PortalRule) {
+          this.portalRule = Optional.empty();
+          notifyChange();
+        }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RegionRule.RegionRule) {
           this.regionRule = Optional.empty();
           notifyChange();
@@ -208,6 +214,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           return 0;
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NodeRule.NodeRule) {
+          return 0;
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.PortalRule) {
           return 0;
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RegionRule.RegionRule) {
@@ -248,6 +257,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.locationGraphRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.LocationGraphRule.fromRawNode(rawNode.getChildrenFirst("location_graph_rule"), this);
         this.locationClassificationRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationClassificationRule.LocationClassificationRule.fromRawNode(rawNode.getChildrenFirst("location_classification_rule"), this);
         this.nodeRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NodeRule.NodeRule.fromRawNode(rawNode.getChildrenFirst("node_rule"), this);
+        this.portalRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.PortalRule.fromRawNode(rawNode.getChildrenFirst("portal_rule"), this);
         this.regionRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RegionRule.RegionRule.fromRawNode(rawNode.getChildrenFirst("region_rule"), this);
         this.zoneRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ZoneRule.ZoneRule.fromRawNode(rawNode.getChildrenFirst("zone_rule"), this);
         logReturnVoid();
@@ -283,6 +293,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       rawNode.setChildren("location_classification_rule", locationClassificationRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationClassificationRule.LocationClassificationRule::serializeIntoRawNode).toList());
       innerLogger.log("node_rule");
       rawNode.setChildren("node_rule", nodeRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NodeRule.NodeRule::serializeIntoRawNode).toList());
+      innerLogger.log("portal_rule");
+      rawNode.setChildren("portal_rule", portalRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.PortalRule::serializeIntoRawNode).toList());
       innerLogger.log("region_rule");
       rawNode.setChildren("region_rule", regionRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RegionRule.RegionRule::serializeIntoRawNode).toList());
       innerLogger.log("zone_rule");
@@ -559,6 +571,35 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return this;
     }
 
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.PortalRule> getPortalRule()
+    {
+      return this.portalRule;
+    }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.PortalRule getPortalRuleOrDefault()
+    {
+      return this.portalRule.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.PortalRule();
+        this.portalRule = Optional.of(instance);
+        instance.parentNode(this);
+        return this.portalRule.get();
+      });
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.PortalRule> streamPortalRuleOrDefault()
+    {
+      return java.util.stream.Stream.of(getPortalRuleOrDefault());
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.PortalRule> streamPortalRule()
+    {
+      return portalRule.stream();
+    }
+    public RuleGroup setPortalRule(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.PortalRule value)
+    {
+      this.portalRule = Optional.ofNullable(value);
+      value.parentNode(this);
+      notifyChange();
+      return this;
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RegionRule.RegionRule> getRegionRule()
     {
       return this.regionRule;
@@ -694,6 +735,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NodeRule.NodeRule.nodeName.length() + 3);
           return this.nodeRule.get().deserializeAtPath(childXPath, rawNode);
         }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.PortalRule.nodeName))
+        {
+          if(this.portalRule.isEmpty()) {
+            this.portalRule = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.PortalRule());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.PortalRule.nodeName.length() + 3);
+          return this.portalRule.get().deserializeAtPath(childXPath, rawNode);
+        }
         if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RegionRule.RegionRule.nodeName))
         {
           if(this.regionRule.isEmpty()) {
@@ -791,6 +840,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           }
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NodeRule.NodeRule.nodeName.length() + 3);
           return this.nodeRule.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.PortalRule.nodeName))
+        {
+          if(this.portalRule.isEmpty()) {
+            this.portalRule = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.PortalRule());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.PortalRule.nodeName.length() + 3);
+          return this.portalRule.get().getNodeAtPath(childXPath);
         }
         if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RegionRule.RegionRule.nodeName))
         {
@@ -1630,6 +1687,41 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                   }
                 },
                 "isNullable": false
+              }
+            },
+            "isNullable": true
+          },
+          "portal_rule": {
+            "metaType": "object",
+            "isSingle": true,
+            "value": {
+              "entry": {
+                "metaType": "composition",
+                "value": [
+                  {
+                    "metaType": "object",
+                    "value": {},
+                    "isSingle": true,
+                    "isNullable": false,
+                    "attributes": {
+                      "metaType": "object",
+                      "value": {
+                        "id": {
+                          "metaType": "primitive",
+                          "value": "xs:string",
+                          "isNullable": false
+                        }
+                      },
+                      "isNullable": false
+                    }
+                  },
+                  {
+                    "metaType": "primitive",
+                    "value": "type__portal_rule"
+                  }
+                ],
+                "isSingle": false,
+                "isNullable": true
               }
             },
             "isNullable": true

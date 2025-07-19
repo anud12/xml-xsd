@@ -1,4 +1,4 @@
-package ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.Region;
+package ro.anud.xml_xsd.implementation.model.Type_portalRule.Limit;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.w3c.dom.Document;
@@ -20,12 +20,12 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @NoArgsConstructor
   @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-  public class Region implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
+  public class Limit implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static String nodeName = "region";
-    public static Region fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static String nodeName = "limit";
+    public static Limit fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
-      var instance = new Region();
+      var instance = new Limit();
       if(Objects.nonNull(parent)) {
         instance.parentNode(parent);
       }
@@ -33,32 +33,32 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
-    public static Region fromRawNode(RawNode rawNode) {
+    public static Limit fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = fromRawNode(rawNode, null);
       return logReturn(instance);
     }
-    public static Optional<Region> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static Optional<Limit> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
         logEnter();
-        return logReturn(rawNode.map(o -> Region.fromRawNode(o, parent)));
+        return logReturn(rawNode.map(o -> Limit.fromRawNode(o, parent)));
     }
-    public static List<Region> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static List<Limit> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
-      List<Region> returnList = Optional.ofNullable(rawNodeList)
+      List<Limit> returnList = Optional.ofNullable(rawNodeList)
           .orElse(List.of())
           .stream()
-          .map(o -> Region.fromRawNode(o, parent))
+          .map(o -> Limit.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
     }
 
     public String classTypeId() {
-      return ".world_step.data.zone_list.zone.region.portals.portal.to_rule.region";
+      return ".type__portal_rule.limit";
     }
 
     //Attributes
 
-    private String regionRuleRef;
+    private Integer width;
 
     //Children elements
 
@@ -89,7 +89,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     private List<Consumer<List<Object>>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
-      return "region";
+      return "limit";
     }
 
     public void notifyChange(List<Object> list) {
@@ -105,9 +105,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       notifyChange();
     }
 
-    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.ToRule> parentAsToRule() {
+    public Optional<ro.anud.xml_xsd.implementation.model.Type_portalRule.Type_portalRule> parentAsType_portalRule() {
       return parentNode.flatMap(node -> {
-       if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.ToRule casted){
+       if (node instanceof ro.anud.xml_xsd.implementation.model.Type_portalRule.Type_portalRule casted){
          return Optional.of(casted);
        }
        return Optional.empty();
@@ -135,12 +135,12 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       try {
         var logger = logEnter();
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing region");
+        // Godot.GD.Print("Deserializing limit");
 
         var innerLogger = logger.log("attributes");
         //Deserialize attributes
-        innerLogger.log("region_rule_ref");
-        this.regionRuleRef = rawNode.getAttributeRequired("region_rule_ref");
+        innerLogger.log("width");
+        this.width = rawNode.getAttributeIntRequired("width");
         innerLogger = logger.log("children");
         //Deserialize children
         logReturnVoid();
@@ -152,11 +152,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
-      rawNode.setTag("region");
+      rawNode.setTag("limit");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
-      innerLogger.log("region_rule_ref");
-      rawNode.setAttribute("region_rule_ref", this.regionRuleRef);
+      innerLogger.log("width");
+      rawNode.setAttribute("width", this.width);
 
       innerLogger = logger.log("children");
       //Serialize children
@@ -165,18 +165,18 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
     public void serialize(Document document, Element element)
     {
-        // Godot.GD.Print("Serializing region");
+        // Godot.GD.Print("Serializing limit");
         var updatedRawNode = serializeIntoRawNode();
         updatedRawNode.populateNode(document, element);
     }
 
-    public String getRegionRuleRef()
+    public Integer getWidth()
     {
-      return this.regionRuleRef;
+      return this.width;
     }
-    public Region setRegionRuleRef(String value)
+    public Limit setWidth(Integer value)
     {
-      this.regionRuleRef = value;
+      this.width = value;
       notifyChange();
       return this;
     }
@@ -208,20 +208,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       "value": {
         "metaType": "object",
         "value": {},
-        "isSingle": false,
+        "isSingle": true,
         "isNullable": false,
         "attributes": {
           "metaType": "object",
           "value": {
-            "region_rule_ref": {
+            "width": {
               "metaType": "primitive",
-              "value": "xs:string",
+              "value": "xs:int",
               "isNullable": false
             }
           },
           "isNullable": false
         }
       },
-      "name": "region"
+      "name": "limit"
     }
   */

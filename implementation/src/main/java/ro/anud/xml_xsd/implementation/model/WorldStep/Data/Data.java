@@ -765,6 +765,44 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                           }
                         }
                       },
+                      "available_portals": {
+                        "metaType": "object",
+                        "isSingle": true,
+                        "value": {
+                          "portal": {
+                            "metaType": "object",
+                            "value": {},
+                            "isSingle": false,
+                            "isNullable": true,
+                            "attributes": {
+                              "metaType": "object",
+                              "value": {
+                                "id": {
+                                  "metaType": "primitive",
+                                  "value": "xs:string",
+                                  "isNullable": false
+                                },
+                                "start": {
+                                  "metaType": "primitive",
+                                  "value": "xs:int",
+                                  "isNullable": false
+                                },
+                                "side": {
+                                  "metaType": "primitive",
+                                  "value": "type__rectangle_side",
+                                  "isNullable": false
+                                },
+                                "portal_rule_ref": {
+                                  "metaType": "primitive",
+                                  "value": "xs:string",
+                                  "isNullable": false
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "isNullable": true
+                      },
                       "portals": {
                         "metaType": "object",
                         "isSingle": true,

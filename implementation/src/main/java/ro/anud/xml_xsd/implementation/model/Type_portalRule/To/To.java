@@ -1,4 +1,4 @@
-package ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.To;
+package ro.anud.xml_xsd.implementation.model.Type_portalRule.To;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.w3c.dom.Document;
@@ -53,14 +53,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public String classTypeId() {
-      return ".type__region_rule.portal.to";
+      return ".type__portal_rule.to";
     }
 
     //Attributes
 
     //Children elements
     @Builder.Default
-    private ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.To.Region.Region region = new ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.To.Region.Region();
+    private List<ro.anud.xml_xsd.implementation.model.Type_portalRule.To.Region.Region> region = new ArrayList<>();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -105,9 +105,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       notifyChange();
     }
 
-    public Optional<ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.Portal> parentAsPortal() {
+    public Optional<ro.anud.xml_xsd.implementation.model.Type_portalRule.Type_portalRule> parentAsType_portalRule() {
       return parentNode.flatMap(node -> {
-       if (node instanceof ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.Portal casted){
+       if (node instanceof ro.anud.xml_xsd.implementation.model.Type_portalRule.Type_portalRule casted){
          return Optional.of(casted);
        }
        return Optional.empty();
@@ -115,14 +115,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void removeChild(Object object) {
-        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.To.Region.Region) {
-          throw new RuntimeException("trying to delete region which is required");
+        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_portalRule.To.Region.Region) {
+          this.region.remove(object);
+          notifyChange();
         }
     }
 
     public int buildIndexForChild(Object object) {
-        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.To.Region.Region) {
-          return 0;
+        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_portalRule.To.Region.Region) {
+          return this.region.indexOf(object);
         }
         return 0;
     }
@@ -147,7 +148,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         //Deserialize attributes
         innerLogger = logger.log("children");
         //Deserialize children
-        this.region = ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.To.Region.Region.fromRawNode(rawNode.getChildrenFirst("region").get(), this);
+        this.region = ro.anud.xml_xsd.implementation.model.Type_portalRule.To.Region.Region.fromRawNode(rawNode.getChildrenList("region"), this);
         logReturnVoid();
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
@@ -164,7 +165,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       innerLogger = logger.log("children");
       //Serialize children
       innerLogger.log("region");
-      rawNode.setChildren("region", Optional.ofNullable(region).stream().map(ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.To.Region.Region::serializeIntoRawNode).toList());
+      rawNode.setChildren("region", region.stream().map(ro.anud.xml_xsd.implementation.model.Type_portalRule.To.Region.Region::serializeIntoRawNode).toList());
       return rawNode;
     }
 
@@ -174,18 +175,31 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         var updatedRawNode = serializeIntoRawNode();
         updatedRawNode.populateNode(document, element);
     }
-    public ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.To.Region.Region getRegion()
+    public List<ro.anud.xml_xsd.implementation.model.Type_portalRule.To.Region.Region> getRegion()
     {
       return this.region;
     }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.To.Region.Region> streamRegion()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_portalRule.To.Region.Region> streamRegion()
     {
-      return Optional.ofNullable(region).stream();
+      return region.stream();
     }
-    public To setRegion(ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.To.Region.Region value)
+    public To addRegion(ro.anud.xml_xsd.implementation.model.Type_portalRule.To.Region.Region value)
     {
-      this.region = value;
+      this.region.add(value);
       value.parentNode(this);
+      notifyChange();
+      return this;
+    }
+    public To addAllRegion(List<ro.anud.xml_xsd.implementation.model.Type_portalRule.To.Region.Region> value)
+    {
+      this.region.addAll(value);
+      value.forEach(e -> e.parentNode(this));
+      notifyChange();
+      return this;
+    }
+    public To removeRegion(ro.anud.xml_xsd.implementation.model.Type_portalRule.To.Region.Region value)
+    {
+      this.region.remove(value);
       notifyChange();
       return this;
     }
@@ -195,10 +209,21 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         {
           xpath = xpath.substring(1);
         }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.To.Region.Region.nodeName))
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_portalRule.To.Region.Region.nodeName + "["))
         {
-          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.To.Region.Region.nodeName.length() + 3);
-          return this.region.deserializeAtPath(childXPath, rawNode);
+          var startTokens = xpath.split(ro.anud.xml_xsd.implementation.model.Type_portalRule.To.Region.Region.nodeName + "\\[");
+          var endToken = startTokens[1].split("]");
+          var indexString = endToken[0];
+          var childXPath = xpath.replace(ro.anud.xml_xsd.implementation.model.Type_portalRule.To.Region.Region.nodeName + "[" + indexString + "]", "");
+          if(!"new".equals(indexString)) {
+            var pathIndex = Integer.parseInt(indexString);
+            if(this.region.size() > pathIndex) {
+              return this.region.get(pathIndex).deserializeAtPath(childXPath,rawNode);
+            }
+          }
+          var newEntry = new ro.anud.xml_xsd.implementation.model.Type_portalRule.To.Region.Region();
+          this.addRegion(newEntry);
+          return newEntry.deserializeAtPath(childXPath, rawNode);
         }
 
         deserialize(rawNode);
@@ -210,10 +235,17 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         {
           xpath = xpath.substring(1);
         }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.To.Region.Region.nodeName))
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_portalRule.To.Region.Region.nodeName + "["))
         {
-          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.To.Region.Region.nodeName.length() + 3);
-          return this.region.getNodeAtPath(childXPath);
+          var startTokens = xpath.split(ro.anud.xml_xsd.implementation.model.Type_portalRule.To.Region.Region.nodeName + "\\[");
+          var endToken = startTokens[1].split("]");
+          var indexString = endToken[0];
+          var childXPath = xpath.replace(ro.anud.xml_xsd.implementation.model.Type_portalRule.To.Region.Region.nodeName + "[" + indexString + "]", "");
+          var pathIndex = Integer.parseInt(indexString);
+          if(this.region.size() > pathIndex) {
+            return this.region.get(pathIndex).getNodeAtPath(childXPath);
+          }
+          return Optional.empty();
         }
         return Optional.of(this);
     }
@@ -230,6 +262,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         "value": {
           "region": {
             "metaType": "object",
+            "value": {},
+            "isSingle": false,
+            "isNullable": true,
             "attributes": {
               "metaType": "object",
               "value": {
@@ -237,30 +272,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                   "metaType": "primitive",
                   "value": "xs:string",
                   "isNullable": false
-                },
-                "side": {
-                  "metaType": "primitive",
-                  "value": "type__rectangle_side",
-                  "isNullable": false
                 }
-              }
-            },
-            "isSingle": true,
-            "value": {
-              "start": {
-                "metaType": "reference",
-                "value": "type__math_operations",
-                "isSingle": true,
-                "isNullable": false
               },
-              "width": {
-                "metaType": "reference",
-                "value": "type__math_operations",
-                "isSingle": true,
-                "isNullable": false
-              }
-            },
-            "isNullable": false
+              "isNullable": false
+            }
           }
         },
         "isNullable": false

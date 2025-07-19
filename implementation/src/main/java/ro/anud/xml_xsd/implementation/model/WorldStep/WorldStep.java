@@ -1354,6 +1354,41 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                 },
                 "isNullable": true
               },
+              "portal_rule": {
+                "metaType": "object",
+                "isSingle": true,
+                "value": {
+                  "entry": {
+                    "metaType": "composition",
+                    "value": [
+                      {
+                        "metaType": "object",
+                        "value": {},
+                        "isSingle": true,
+                        "isNullable": false,
+                        "attributes": {
+                          "metaType": "object",
+                          "value": {
+                            "id": {
+                              "metaType": "primitive",
+                              "value": "xs:string",
+                              "isNullable": false
+                            }
+                          },
+                          "isNullable": false
+                        }
+                      },
+                      {
+                        "metaType": "primitive",
+                        "value": "type__portal_rule"
+                      }
+                    ],
+                    "isSingle": false,
+                    "isNullable": true
+                  }
+                },
+                "isNullable": true
+              },
               "region_rule": {
                 "metaType": "object",
                 "isSingle": true,
@@ -1840,6 +1875,44 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                                 }
                               }
                             }
+                          },
+                          "available_portals": {
+                            "metaType": "object",
+                            "isSingle": true,
+                            "value": {
+                              "portal": {
+                                "metaType": "object",
+                                "value": {},
+                                "isSingle": false,
+                                "isNullable": true,
+                                "attributes": {
+                                  "metaType": "object",
+                                  "value": {
+                                    "id": {
+                                      "metaType": "primitive",
+                                      "value": "xs:string",
+                                      "isNullable": false
+                                    },
+                                    "start": {
+                                      "metaType": "primitive",
+                                      "value": "xs:int",
+                                      "isNullable": false
+                                    },
+                                    "side": {
+                                      "metaType": "primitive",
+                                      "value": "type__rectangle_side",
+                                      "isNullable": false
+                                    },
+                                    "portal_rule_ref": {
+                                      "metaType": "primitive",
+                                      "value": "xs:string",
+                                      "isNullable": false
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "isNullable": true
                           },
                           "portals": {
                             "metaType": "object",
@@ -2340,7 +2413,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                   "isNullable": false
                 }
               },
-              "region.append": {
+              "region.appendNew": {
                 "metaType": "object",
                 "value": {},
                 "isSingle": true,
@@ -3309,6 +3382,41 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                   },
                   "isNullable": true
                 },
+                "portal_rule": {
+                  "metaType": "object",
+                  "isSingle": true,
+                  "value": {
+                    "entry": {
+                      "metaType": "composition",
+                      "value": [
+                        {
+                          "metaType": "object",
+                          "value": {},
+                          "isSingle": true,
+                          "isNullable": false,
+                          "attributes": {
+                            "metaType": "object",
+                            "value": {
+                              "id": {
+                                "metaType": "primitive",
+                                "value": "xs:string",
+                                "isNullable": false
+                              }
+                            },
+                            "isNullable": false
+                          }
+                        },
+                        {
+                          "metaType": "primitive",
+                          "value": "type__portal_rule"
+                        }
+                      ],
+                      "isSingle": false,
+                      "isNullable": true
+                    }
+                  },
+                  "isNullable": true
+                },
                 "region_rule": {
                   "metaType": "object",
                   "isSingle": true,
@@ -3795,6 +3903,44 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                                   }
                                 }
                               }
+                            },
+                            "available_portals": {
+                              "metaType": "object",
+                              "isSingle": true,
+                              "value": {
+                                "portal": {
+                                  "metaType": "object",
+                                  "value": {},
+                                  "isSingle": false,
+                                  "isNullable": true,
+                                  "attributes": {
+                                    "metaType": "object",
+                                    "value": {
+                                      "id": {
+                                        "metaType": "primitive",
+                                        "value": "xs:string",
+                                        "isNullable": false
+                                      },
+                                      "start": {
+                                        "metaType": "primitive",
+                                        "value": "xs:int",
+                                        "isNullable": false
+                                      },
+                                      "side": {
+                                        "metaType": "primitive",
+                                        "value": "type__rectangle_side",
+                                        "isNullable": false
+                                      },
+                                      "portal_rule_ref": {
+                                        "metaType": "primitive",
+                                        "value": "xs:string",
+                                        "isNullable": false
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "isNullable": true
                             },
                             "portals": {
                               "metaType": "object",
@@ -4295,7 +4441,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                     "isNullable": false
                   }
                 },
-                "region.append": {
+                "region.appendNew": {
                   "metaType": "object",
                   "value": {},
                   "isSingle": true,

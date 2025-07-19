@@ -1,10 +1,11 @@
 package ro.anud.xml_xsd.implementation.service.region;
 
+import ro.anud.xml_xsd.implementation.model.Type_regionRule.Portals.Portals;
+import ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.AvailablePortals.AvailablePortals;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Limit.Limit;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.From.From;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.Portal;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.To.To;
-import ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portals;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Position.Position;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Region;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Rule.Rule;
@@ -15,8 +16,6 @@ import ro.anud.xml_xsd.implementation.util.LocalLogger;
 
 import java.util.List;
 import java.util.Optional;
-
-import static ro.anud.xml_xsd.implementation.service.region.RegionRuleChecker.sideNegation;
 
 public class RegionInstance {
     private final WorldStepInstance worldStepInstance;
@@ -44,6 +43,17 @@ public class RegionInstance {
         var logger = LocalLogger.logEnter("RegionInstance.createRegion");
 
         var regionId = worldStepInstance.getNextId();
+
+        List<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.AvailablePortals.Portal.Portal> portals = regionRule.streamPortals()
+            .flatMap(Portals::streamPortal)
+            .map(portal -> ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.AvailablePortals.Portal.Portal.builder()
+                .id(worldStepInstance.getNextId())
+                .side(portal.getSide())
+                .start(worldStepInstance.computeOperation(portal.getStart()).get())
+                .portalRuleRef(portal.getPortalRuleRef())
+                .build())
+            .toList();
+
         var builder = Region.builder()
             .id(regionId)
             .rule(Rule.builder()
@@ -57,6 +67,14 @@ public class RegionInstance {
                 .x(0)
                 .y(0)
                 .build());
+        if (!portals.isEmpty()) {
+            builder.availablePortals(Optional.of(
+                    AvailablePortals.builder()
+                        .portal(portals)
+                        .build()
+                )
+            );
+        }
         return logger.logReturn(builder.build());
     }
 
@@ -66,33 +84,43 @@ public class RegionInstance {
 
         var parentRegionRule = worldStepInstance.ruleRepository.regionRule.getById(parentRegion.getRule().getRuleIdRef()).get();
 
-        var parentPortalRule = worldStepInstance.randomFrom(parentRegionRule.streamPortal())
+        var parentAvailablePortal = worldStepInstance.randomFrom(parentRegion.streamAvailablePortals().flatMap(
+                AvailablePortals::streamPortal).toList())
             .get();
-        var parentPortalRuleRegion = parentPortalRule.getTo().getRegion();
+        var parentPortalRule = worldStepInstance.ruleRepository.portalRule.getById(parentAvailablePortal.getPortalRuleRef()).get();
+
+        var parentPortalRuleRegion = worldStepInstance.randomFrom(parentPortalRule.getTo().getRegion()).get();
 
         var newRegionRule = worldStepInstance.ruleRepository.regionRule.getById(parentPortalRuleRegion.getRegionRuleRef()).get();
 
         var newRegion = createRegion(newRegionRule);
 
-        var fromStart = worldStepInstance.computeOperation(parentPortalRule.getFrom().getStart()).get();
-        var fromEnd = worldStepInstance.computeOperation(parentPortalRule.getFrom().getWidth()).get();
+        ro.anud.xml_xsd.implementation.model.Type_regionRule.Portals.Portal.Portal toRegionPortalRule = worldStepInstance.randomFrom(
+            newRegionRule.streamPortals()
+                .flatMap(Portals::streamPortal)
+                .toList()
+        ).get();
 
-        var toStart = worldStepInstance.computeOperation(parentPortalRule.getTo().getRegion().getStart()).get();
-        var toEnd = worldStepInstance.computeOperation(parentPortalRule.getTo().getRegion().getWidth()).get();
+        var portalWidth = parentPortalRule.getLimit().getWidth();
+
+        var fromStart = parentAvailablePortal.getStart();
+        var fromEnd = fromStart + portalWidth;
+
+        var toStart = worldStepInstance.computeOperation(toRegionPortalRule.getStart()).get();
 
         var parentPortal = Portal.builder()
             .id(worldStepInstance.getNextId())
             .from(From.builder()
-                .side(parentPortalRule.getFrom().getSide())
+                .side(parentAvailablePortal.getSide())
                 .start(fromStart)
                 .end(fromEnd)
                 .build())
             .to(Optional.ofNullable(To.builder()
                 .zoneRef(parentZone.getId())
-                .side(parentPortalRule.getTo().getRegion().getSide())
+                .side(toRegionPortalRule.getSide())
                 .regionRef(newRegion.getId())
                 .start(toStart)
-                .end(toStart + toEnd)
+                .end(toStart + portalWidth)
                 .build()))
             .build();
         computePosition(parentPortal, parentRegion, newRegion);
@@ -103,7 +131,14 @@ public class RegionInstance {
         var outRegion = worldStepInstance.getOutInstance().region.repository.findByZoneIdAndRegionId(
             parentZone.getId(),
             parentRegion.getId());
+
         outRegion.get().getPortalsOrDefault().addPortal(parentPortal);
+        outRegion.get().streamAvailablePortals()
+            .flatMap(AvailablePortals::streamPortal)
+            .filter(portal -> portal.getId().equals(parentAvailablePortal.getId()))
+            .findFirst()
+            .ifPresent(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.AvailablePortals.Portal.Portal::removeFromParent);
+
         logger.logReturnVoid("appending region", newRegion.getId(), "to parent region", parentRegion.getId());
     }
 

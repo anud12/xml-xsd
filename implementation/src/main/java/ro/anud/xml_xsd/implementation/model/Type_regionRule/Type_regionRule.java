@@ -62,7 +62,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @Builder.Default
     private ro.anud.xml_xsd.implementation.model.Type_regionRule.Limit.Limit limit = new ro.anud.xml_xsd.implementation.model.Type_regionRule.Limit.Limit();
     @Builder.Default
-    private List<ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.Portal> portal = new ArrayList<>();
+    private Optional<ro.anud.xml_xsd.implementation.model.Type_regionRule.Portals.Portals> portals = Optional.empty();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -111,8 +111,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         if(object instanceof ro.anud.xml_xsd.implementation.model.Type_regionRule.Limit.Limit) {
           throw new RuntimeException("trying to delete limit which is required");
         }
-        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.Portal) {
-          this.portal.remove(object);
+        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_regionRule.Portals.Portals) {
+          this.portals = Optional.empty();
           notifyChange();
         }
     }
@@ -121,8 +121,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         if(object instanceof ro.anud.xml_xsd.implementation.model.Type_regionRule.Limit.Limit) {
           return 0;
         }
-        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.Portal) {
-          return this.portal.indexOf(object);
+        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_regionRule.Portals.Portals) {
+          return 0;
         }
         return 0;
     }
@@ -148,7 +148,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         innerLogger = logger.log("children");
         //Deserialize children
         this.limit = ro.anud.xml_xsd.implementation.model.Type_regionRule.Limit.Limit.fromRawNode(rawNode.getChildrenFirst("limit").get(), this);
-        this.portal = ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.Portal.fromRawNode(rawNode.getChildrenList("portal"), this);
+        this.portals = ro.anud.xml_xsd.implementation.model.Type_regionRule.Portals.Portals.fromRawNode(rawNode.getChildrenFirst("portals"), this);
         logReturnVoid();
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
@@ -166,8 +166,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       //Serialize children
       innerLogger.log("limit");
       rawNode.setChildren("limit", Optional.ofNullable(limit).stream().map(ro.anud.xml_xsd.implementation.model.Type_regionRule.Limit.Limit::serializeIntoRawNode).toList());
-      innerLogger.log("portal");
-      rawNode.setChildren("portal", portal.stream().map(ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.Portal::serializeIntoRawNode).toList());
+      innerLogger.log("portals");
+      rawNode.setChildren("portals", portals.stream().map(ro.anud.xml_xsd.implementation.model.Type_regionRule.Portals.Portals::serializeIntoRawNode).toList());
       return rawNode;
     }
 
@@ -193,31 +193,31 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return this;
     }
 
-    public List<ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.Portal> getPortal()
+    public Optional<ro.anud.xml_xsd.implementation.model.Type_regionRule.Portals.Portals> getPortals()
     {
-      return this.portal;
+      return this.portals;
     }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.Portal> streamPortal()
+    public ro.anud.xml_xsd.implementation.model.Type_regionRule.Portals.Portals getPortalsOrDefault()
     {
-      return portal.stream();
+      return this.portals.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_regionRule.Portals.Portals();
+        this.portals = Optional.of(instance);
+        instance.parentNode(this);
+        return this.portals.get();
+      });
     }
-    public Type_regionRule addPortal(ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.Portal value)
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_regionRule.Portals.Portals> streamPortalsOrDefault()
     {
-      this.portal.add(value);
+      return java.util.stream.Stream.of(getPortalsOrDefault());
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_regionRule.Portals.Portals> streamPortals()
+    {
+      return portals.stream();
+    }
+    public Type_regionRule setPortals(ro.anud.xml_xsd.implementation.model.Type_regionRule.Portals.Portals value)
+    {
+      this.portals = Optional.ofNullable(value);
       value.parentNode(this);
-      notifyChange();
-      return this;
-    }
-    public Type_regionRule addAllPortal(List<ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.Portal> value)
-    {
-      this.portal.addAll(value);
-      value.forEach(e -> e.parentNode(this));
-      notifyChange();
-      return this;
-    }
-    public Type_regionRule removePortal(ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.Portal value)
-    {
-      this.portal.remove(value);
       notifyChange();
       return this;
     }
@@ -232,21 +232,13 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_regionRule.Limit.Limit.nodeName.length() + 3);
           return this.limit.deserializeAtPath(childXPath, rawNode);
         }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.Portal.nodeName + "["))
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_regionRule.Portals.Portals.nodeName))
         {
-          var startTokens = xpath.split(ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.Portal.nodeName + "\\[");
-          var endToken = startTokens[1].split("]");
-          var indexString = endToken[0];
-          var childXPath = xpath.replace(ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.Portal.nodeName + "[" + indexString + "]", "");
-          if(!"new".equals(indexString)) {
-            var pathIndex = Integer.parseInt(indexString);
-            if(this.portal.size() > pathIndex) {
-              return this.portal.get(pathIndex).deserializeAtPath(childXPath,rawNode);
-            }
+          if(this.portals.isEmpty()) {
+            this.portals = Optional.of(new ro.anud.xml_xsd.implementation.model.Type_regionRule.Portals.Portals());
           }
-          var newEntry = new ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.Portal();
-          this.addPortal(newEntry);
-          return newEntry.deserializeAtPath(childXPath, rawNode);
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_regionRule.Portals.Portals.nodeName.length() + 3);
+          return this.portals.get().deserializeAtPath(childXPath, rawNode);
         }
 
         deserialize(rawNode);
@@ -263,17 +255,13 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_regionRule.Limit.Limit.nodeName.length() + 3);
           return this.limit.getNodeAtPath(childXPath);
         }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.Portal.nodeName + "["))
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_regionRule.Portals.Portals.nodeName))
         {
-          var startTokens = xpath.split(ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.Portal.nodeName + "\\[");
-          var endToken = startTokens[1].split("]");
-          var indexString = endToken[0];
-          var childXPath = xpath.replace(ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.Portal.nodeName + "[" + indexString + "]", "");
-          var pathIndex = Integer.parseInt(indexString);
-          if(this.portal.size() > pathIndex) {
-            return this.portal.get(pathIndex).getNodeAtPath(childXPath);
+          if(this.portals.isEmpty()) {
+            this.portals = Optional.of(new ro.anud.xml_xsd.implementation.model.Type_regionRule.Portals.Portals());
           }
-          return Optional.empty();
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_regionRule.Portals.Portals.nodeName.length() + 3);
+          return this.portals.get().getNodeAtPath(childXPath);
         }
         return Optional.of(this);
     }
@@ -286,7 +274,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       "type": "element",
       "value": {
         "metaType": "object",
-        "isSingle": false,
+        "isSingle": true,
         "value": {
           "limit": {
             "metaType": "object",
@@ -307,11 +295,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
             },
             "isNullable": false
           },
-          "portal": {
+          "portals": {
             "metaType": "object",
-            "isSingle": false,
+            "isSingle": true,
             "value": {
-              "from": {
+              "portal": {
                 "metaType": "object",
                 "attributes": {
                   "metaType": "object",
@@ -320,67 +308,24 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                       "metaType": "primitive",
                       "value": "type__rectangle_side",
                       "isNullable": false
+                    },
+                    "portal_rule_ref": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
                     }
-                  },
-                  "isNullable": false
+                  }
                 },
-                "isSingle": true,
+                "isSingle": false,
                 "value": {
                   "start": {
                     "metaType": "reference",
                     "value": "type__math_operations",
                     "isSingle": true,
                     "isNullable": false
-                  },
-                  "width": {
-                    "metaType": "reference",
-                    "value": "type__math_operations",
-                    "isSingle": true,
-                    "isNullable": false
                   }
                 },
-                "isNullable": false
-              },
-              "to": {
-                "metaType": "object",
-                "isSingle": true,
-                "value": {
-                  "region": {
-                    "metaType": "object",
-                    "attributes": {
-                      "metaType": "object",
-                      "value": {
-                        "region_rule_ref": {
-                          "metaType": "primitive",
-                          "value": "xs:string",
-                          "isNullable": false
-                        },
-                        "side": {
-                          "metaType": "primitive",
-                          "value": "type__rectangle_side",
-                          "isNullable": false
-                        }
-                      }
-                    },
-                    "isSingle": true,
-                    "value": {
-                      "start": {
-                        "metaType": "reference",
-                        "value": "type__math_operations",
-                        "isSingle": true,
-                        "isNullable": false
-                      },
-                      "width": {
-                        "metaType": "reference",
-                        "value": "type__math_operations",
-                        "isSingle": true,
-                        "isNullable": false
-                      }
-                    },
-                    "isNullable": false
-                  }
-                },
-                "isNullable": false
+                "isNullable": true
               }
             },
             "isNullable": true

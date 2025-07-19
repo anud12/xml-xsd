@@ -41,7 +41,7 @@ public class WorldStepRunner {
     public static void runStep(WorldStepInstance worldStepInstance) {
         FromPersonAction.apply(worldStepInstance);
         ZoneCreateAction.zoneCreateAction(worldStepInstance);
-        RegionAppendAction.regionAppendAction(worldStepInstance);
+        RegionAppendAction.regionAppendNewAction(worldStepInstance);
         PersonCreateAction.personCreateAction(worldStepInstance);
         LocationGraphCreate.apply(worldStepInstance);
         LocationGraphCreateAdjacent.apply(worldStepInstance);

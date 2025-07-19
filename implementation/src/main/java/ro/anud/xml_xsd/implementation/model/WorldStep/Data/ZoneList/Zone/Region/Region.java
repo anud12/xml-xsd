@@ -68,6 +68,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     @Builder.Default
     private ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Limit.Limit limit = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Limit.Limit();
     @Builder.Default
+    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.AvailablePortals.AvailablePortals> availablePortals = Optional.empty();
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portals> portals = Optional.empty();
 
     @ToString.Exclude()
@@ -132,6 +134,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Limit.Limit) {
           throw new RuntimeException("trying to delete limit which is required");
         }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.AvailablePortals.AvailablePortals) {
+          this.availablePortals = Optional.empty();
+          notifyChange();
+        }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portals) {
           this.portals = Optional.empty();
           notifyChange();
@@ -146,6 +152,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           return 0;
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Limit.Limit) {
+          return 0;
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.AvailablePortals.AvailablePortals) {
           return 0;
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portals) {
@@ -179,6 +188,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.rule = ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Rule.Rule.fromRawNode(rawNode.getChildrenFirst("rule").get(), this);
         this.position = ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Position.Position.fromRawNode(rawNode.getChildrenFirst("position").get(), this);
         this.limit = ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Limit.Limit.fromRawNode(rawNode.getChildrenFirst("limit").get(), this);
+        this.availablePortals = ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.AvailablePortals.AvailablePortals.fromRawNode(rawNode.getChildrenFirst("available_portals"), this);
         this.portals = ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portals.fromRawNode(rawNode.getChildrenFirst("portals"), this);
         logReturnVoid();
       } catch (Exception e) {
@@ -203,6 +213,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       rawNode.setChildren("position", Optional.ofNullable(position).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Position.Position::serializeIntoRawNode).toList());
       innerLogger.log("limit");
       rawNode.setChildren("limit", Optional.ofNullable(limit).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Limit.Limit::serializeIntoRawNode).toList());
+      innerLogger.log("available_portals");
+      rawNode.setChildren("available_portals", availablePortals.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.AvailablePortals.AvailablePortals::serializeIntoRawNode).toList());
       innerLogger.log("portals");
       rawNode.setChildren("portals", portals.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portals::serializeIntoRawNode).toList());
       return rawNode;
@@ -273,6 +285,35 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return this;
     }
 
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.AvailablePortals.AvailablePortals> getAvailablePortals()
+    {
+      return this.availablePortals;
+    }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.AvailablePortals.AvailablePortals getAvailablePortalsOrDefault()
+    {
+      return this.availablePortals.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.AvailablePortals.AvailablePortals();
+        this.availablePortals = Optional.of(instance);
+        instance.parentNode(this);
+        return this.availablePortals.get();
+      });
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.AvailablePortals.AvailablePortals> streamAvailablePortalsOrDefault()
+    {
+      return java.util.stream.Stream.of(getAvailablePortalsOrDefault());
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.AvailablePortals.AvailablePortals> streamAvailablePortals()
+    {
+      return availablePortals.stream();
+    }
+    public Region setAvailablePortals(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.AvailablePortals.AvailablePortals value)
+    {
+      this.availablePortals = Optional.ofNullable(value);
+      value.parentNode(this);
+      notifyChange();
+      return this;
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portals> getPortals()
     {
       return this.portals;
@@ -322,6 +363,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Limit.Limit.nodeName.length() + 3);
           return this.limit.deserializeAtPath(childXPath, rawNode);
         }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.AvailablePortals.AvailablePortals.nodeName))
+        {
+          if(this.availablePortals.isEmpty()) {
+            this.availablePortals = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.AvailablePortals.AvailablePortals());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.AvailablePortals.AvailablePortals.nodeName.length() + 3);
+          return this.availablePortals.get().deserializeAtPath(childXPath, rawNode);
+        }
         if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portals.nodeName))
         {
           if(this.portals.isEmpty()) {
@@ -354,6 +403,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         {
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Limit.Limit.nodeName.length() + 3);
           return this.limit.getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.AvailablePortals.AvailablePortals.nodeName))
+        {
+          if(this.availablePortals.isEmpty()) {
+            this.availablePortals = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.AvailablePortals.AvailablePortals());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.AvailablePortals.AvailablePortals.nodeName.length() + 3);
+          return this.availablePortals.get().getNodeAtPath(childXPath);
         }
         if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portals.nodeName))
         {
@@ -445,6 +502,44 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                 }
               }
             }
+          },
+          "available_portals": {
+            "metaType": "object",
+            "isSingle": true,
+            "value": {
+              "portal": {
+                "metaType": "object",
+                "value": {},
+                "isSingle": false,
+                "isNullable": true,
+                "attributes": {
+                  "metaType": "object",
+                  "value": {
+                    "id": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
+                    },
+                    "start": {
+                      "metaType": "primitive",
+                      "value": "xs:int",
+                      "isNullable": false
+                    },
+                    "side": {
+                      "metaType": "primitive",
+                      "value": "type__rectangle_side",
+                      "isNullable": false
+                    },
+                    "portal_rule_ref": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
+                    }
+                  }
+                }
+              }
+            },
+            "isNullable": true
           },
           "portals": {
             "metaType": "object",

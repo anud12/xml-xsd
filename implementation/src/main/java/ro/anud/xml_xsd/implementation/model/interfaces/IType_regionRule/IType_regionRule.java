@@ -7,11 +7,9 @@ public interface IType_regionRule<T> extends ro.anud.xml_xsd.implementation.util
   java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_regionRule.Limit.Limit> streamLimit();
   T setLimit(ro.anud.xml_xsd.implementation.model.Type_regionRule.Limit.Limit value);
 
-  java.util.List<ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.Portal> getPortal();
-  java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.Portal> streamPortal();
-  T addPortal(ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.Portal value);
-  T addAllPortal(java.util.List<ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.Portal> value);
-  T removePortal(ro.anud.xml_xsd.implementation.model.Type_regionRule.Portal.Portal value);
+  java.util.Optional<ro.anud.xml_xsd.implementation.model.Type_regionRule.Portals.Portals> getPortals();
+  java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_regionRule.Portals.Portals> streamPortals();
+  T setPortals(ro.anud.xml_xsd.implementation.model.Type_regionRule.Portals.Portals value);
   void deserialize (ro.anud.xml_xsd.implementation.util.RawNode rawNode);
 
   ro.anud.xml_xsd.implementation.util.RawNode serializeIntoRawNode();
@@ -24,7 +22,7 @@ public interface IType_regionRule<T> extends ro.anud.xml_xsd.implementation.util
     "type": "element",
     "value": {
       "metaType": "object",
-      "isSingle": false,
+      "isSingle": true,
       "value": {
         "limit": {
           "metaType": "object",
@@ -45,11 +43,11 @@ public interface IType_regionRule<T> extends ro.anud.xml_xsd.implementation.util
           },
           "isNullable": false
         },
-        "portal": {
+        "portals": {
           "metaType": "object",
-          "isSingle": false,
+          "isSingle": true,
           "value": {
-            "from": {
+            "portal": {
               "metaType": "object",
               "attributes": {
                 "metaType": "object",
@@ -58,67 +56,24 @@ public interface IType_regionRule<T> extends ro.anud.xml_xsd.implementation.util
                     "metaType": "primitive",
                     "value": "type__rectangle_side",
                     "isNullable": false
+                  },
+                  "portal_rule_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string",
+                    "isNullable": false
                   }
-                },
-                "isNullable": false
+                }
               },
-              "isSingle": true,
+              "isSingle": false,
               "value": {
                 "start": {
                   "metaType": "reference",
                   "value": "type__math_operations",
                   "isSingle": true,
                   "isNullable": false
-                },
-                "width": {
-                  "metaType": "reference",
-                  "value": "type__math_operations",
-                  "isSingle": true,
-                  "isNullable": false
                 }
               },
-              "isNullable": false
-            },
-            "to": {
-              "metaType": "object",
-              "isSingle": true,
-              "value": {
-                "region": {
-                  "metaType": "object",
-                  "attributes": {
-                    "metaType": "object",
-                    "value": {
-                      "region_rule_ref": {
-                        "metaType": "primitive",
-                        "value": "xs:string",
-                        "isNullable": false
-                      },
-                      "side": {
-                        "metaType": "primitive",
-                        "value": "type__rectangle_side",
-                        "isNullable": false
-                      }
-                    }
-                  },
-                  "isSingle": true,
-                  "value": {
-                    "start": {
-                      "metaType": "reference",
-                      "value": "type__math_operations",
-                      "isSingle": true,
-                      "isNullable": false
-                    },
-                    "width": {
-                      "metaType": "reference",
-                      "value": "type__math_operations",
-                      "isSingle": true,
-                      "isNullable": false
-                    }
-                  },
-                  "isNullable": false
-                }
-              },
-              "isNullable": false
+              "isNullable": true
             }
           },
           "isNullable": true

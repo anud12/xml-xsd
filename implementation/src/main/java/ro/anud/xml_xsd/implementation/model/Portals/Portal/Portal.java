@@ -1,4 +1,4 @@
-package ro.anud.xml_xsd.implementation.model.Portal.To;
+package ro.anud.xml_xsd.implementation.model.Portals.Portal;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.w3c.dom.Document;
@@ -20,12 +20,12 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @NoArgsConstructor
   @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-  public class To implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
+  public class Portal implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static String nodeName = "to";
-    public static To fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static String nodeName = "portal";
+    public static Portal fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
-      var instance = new To();
+      var instance = new Portal();
       if(Objects.nonNull(parent)) {
         instance.parentNode(parent);
       }
@@ -33,34 +33,38 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
-    public static To fromRawNode(RawNode rawNode) {
+    public static Portal fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = fromRawNode(rawNode, null);
       return logReturn(instance);
     }
-    public static Optional<To> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static Optional<Portal> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
         logEnter();
-        return logReturn(rawNode.map(o -> To.fromRawNode(o, parent)));
+        return logReturn(rawNode.map(o -> Portal.fromRawNode(o, parent)));
     }
-    public static List<To> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static List<Portal> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
-      List<To> returnList = Optional.ofNullable(rawNodeList)
+      List<Portal> returnList = Optional.ofNullable(rawNodeList)
           .orElse(List.of())
           .stream()
-          .map(o -> To.fromRawNode(o, parent))
+          .map(o -> Portal.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
     }
 
     public String classTypeId() {
-      return ".portal.to";
+      return ".portals.portal";
     }
 
     //Attributes
 
+    private String side;
+
+    private String portalRuleRef;
+
     //Children elements
     @Builder.Default
-    private ro.anud.xml_xsd.implementation.model.Portal.To.Region.Region region = new ro.anud.xml_xsd.implementation.model.Portal.To.Region.Region();
+    private ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations start = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -89,7 +93,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     private List<Consumer<List<Object>>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
-      return "to";
+      return "portal";
     }
 
     public void notifyChange(List<Object> list) {
@@ -105,9 +109,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       notifyChange();
     }
 
-    public Optional<ro.anud.xml_xsd.implementation.model.Portal.Portal> parentAsPortal() {
+    public Optional<ro.anud.xml_xsd.implementation.model.Portals.Portals> parentAsPortals() {
       return parentNode.flatMap(node -> {
-       if (node instanceof ro.anud.xml_xsd.implementation.model.Portal.Portal casted){
+       if (node instanceof ro.anud.xml_xsd.implementation.model.Portals.Portals casted){
          return Optional.of(casted);
        }
        return Optional.empty();
@@ -115,13 +119,13 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void removeChild(Object object) {
-        if(object instanceof ro.anud.xml_xsd.implementation.model.Portal.To.Region.Region) {
-          throw new RuntimeException("trying to delete region which is required");
+        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations) {
+          throw new RuntimeException("trying to delete start which is required");
         }
     }
 
     public int buildIndexForChild(Object object) {
-        if(object instanceof ro.anud.xml_xsd.implementation.model.Portal.To.Region.Region) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations) {
           return 0;
         }
         return 0;
@@ -141,13 +145,18 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       try {
         var logger = logEnter();
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing to");
+        // Godot.GD.Print("Deserializing portal");
 
         var innerLogger = logger.log("attributes");
         //Deserialize attributes
+        innerLogger.log("side");
+        this.side = rawNode.getAttributeRequired("side");
+        innerLogger.log("portal_rule_ref");
+        this.portalRuleRef = rawNode.getAttributeRequired("portal_rule_ref");
         innerLogger = logger.log("children");
         //Deserialize children
-        this.region = ro.anud.xml_xsd.implementation.model.Portal.To.Region.Region.fromRawNode(rawNode.getChildrenFirst("region").get(), this);
+        innerLogger.log("start");
+        this.start = ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.fromRawNode(rawNode.getChildrenFirst("start").get(), this);
         logReturnVoid();
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
@@ -157,34 +166,59 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
-      rawNode.setTag("to");
+      rawNode.setTag("portal");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
+      innerLogger.log("side");
+      rawNode.setAttribute("side", this.side);
+      innerLogger.log("portal_rule_ref");
+      rawNode.setAttribute("portal_rule_ref", this.portalRuleRef);
 
       innerLogger = logger.log("children");
       //Serialize children
-      innerLogger.log("region");
-      rawNode.setChildren("region", Optional.ofNullable(region).stream().map(ro.anud.xml_xsd.implementation.model.Portal.To.Region.Region::serializeIntoRawNode).toList());
+      innerLogger.log("start");
+      rawNode.setChildren("start", Optional.ofNullable(start).stream().map(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations::serializeIntoRawNode).toList());
       return rawNode;
     }
 
     public void serialize(Document document, Element element)
     {
-        // Godot.GD.Print("Serializing to");
+        // Godot.GD.Print("Serializing portal");
         var updatedRawNode = serializeIntoRawNode();
         updatedRawNode.populateNode(document, element);
     }
-    public ro.anud.xml_xsd.implementation.model.Portal.To.Region.Region getRegion()
+
+    public String getSide()
     {
-      return this.region;
+      return this.side;
     }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Portal.To.Region.Region> streamRegion()
+    public Portal setSide(String value)
     {
-      return Optional.ofNullable(region).stream();
+      this.side = value;
+      notifyChange();
+      return this;
     }
-    public To setRegion(ro.anud.xml_xsd.implementation.model.Portal.To.Region.Region value)
+    public String getPortalRuleRef()
     {
-      this.region = value;
+      return this.portalRuleRef;
+    }
+    public Portal setPortalRuleRef(String value)
+    {
+      this.portalRuleRef = value;
+      notifyChange();
+      return this;
+    }
+    public ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations getStart()
+    {
+      return this.start;
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamStart()
+    {
+      return Optional.ofNullable(start).stream();
+    }
+    public Portal setStart(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations value)
+    {
+      this.start = value;
       value.parentNode(this);
       notifyChange();
       return this;
@@ -195,10 +229,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         {
           xpath = xpath.substring(1);
         }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Portal.To.Region.Region.nodeName))
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName))
         {
-          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Portal.To.Region.Region.nodeName.length() + 3);
-          return this.region.deserializeAtPath(childXPath, rawNode);
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName.length() + 3);
+          return this.start.deserializeAtPath(childXPath, rawNode);
         }
 
         deserialize(rawNode);
@@ -210,10 +244,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         {
           xpath = xpath.substring(1);
         }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Portal.To.Region.Region.nodeName))
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName))
         {
-          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Portal.To.Region.Region.nodeName.length() + 3);
-          return this.region.getNodeAtPath(childXPath);
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName.length() + 3);
+          return this.start.getNodeAtPath(childXPath);
         }
         return Optional.of(this);
     }
@@ -226,45 +260,32 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       "type": "element",
       "value": {
         "metaType": "object",
-        "isSingle": true,
+        "attributes": {
+          "metaType": "object",
+          "value": {
+            "side": {
+              "metaType": "primitive",
+              "value": "type__rectangle_side",
+              "isNullable": false
+            },
+            "portal_rule_ref": {
+              "metaType": "primitive",
+              "value": "xs:string",
+              "isNullable": false
+            }
+          }
+        },
+        "isSingle": false,
         "value": {
-          "region": {
-            "metaType": "object",
-            "attributes": {
-              "metaType": "object",
-              "value": {
-                "region_rule_ref": {
-                  "metaType": "primitive",
-                  "value": "xs:string",
-                  "isNullable": false
-                },
-                "side": {
-                  "metaType": "primitive",
-                  "value": "type__rectangle_side",
-                  "isNullable": false
-                }
-              }
-            },
+          "start": {
+            "metaType": "reference",
+            "value": "type__math_operations",
             "isSingle": true,
-            "value": {
-              "start": {
-                "metaType": "reference",
-                "value": "type__math_operations",
-                "isSingle": true,
-                "isNullable": false
-              },
-              "width": {
-                "metaType": "reference",
-                "value": "type__math_operations",
-                "isSingle": true,
-                "isNullable": false
-              }
-            },
             "isNullable": false
           }
         },
-        "isNullable": false
+        "isNullable": true
       },
-      "name": "to"
+      "name": "portal"
     }
   */

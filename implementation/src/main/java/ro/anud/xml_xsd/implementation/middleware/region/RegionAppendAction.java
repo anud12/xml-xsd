@@ -1,17 +1,16 @@
 package ro.anud.xml_xsd.implementation.middleware.region;
 
 import ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions;
-import ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_append.Region_append;
+import ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_appendNew.Region_appendNew;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data;
-import ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portals;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 public class RegionAppendAction {
-    public static void regionAppendAction(final WorldStepInstance worldStepInstance) {
+    public static void regionAppendNewAction(final WorldStepInstance worldStepInstance) {
         worldStepInstance.streamWorldStep()
             .flatMap(WorldStep::streamActions)
-            .flatMap(Actions::streamRegion_append)
+            .flatMap(Actions::streamRegion_appendNew)
             .forEach(regionAppend -> {
                 var parentRegion = worldStepInstance.region.repository.findByZoneIdAndRegionId(
                     regionAppend.getZoneIdRef(),
@@ -27,8 +26,8 @@ public class RegionAppendAction {
             });
         worldStepInstance.getOutInstance().streamWorldStep()
             .flatMap(WorldStep::streamActions)
-            .flatMap(Actions::streamRegion_append)
+            .flatMap(Actions::streamRegion_appendNew)
             .toList()
-            .forEach(Region_append::removeFromParent);
+            .forEach(Region_appendNew::removeFromParent);
     }
 }

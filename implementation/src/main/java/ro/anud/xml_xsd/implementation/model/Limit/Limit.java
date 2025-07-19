@@ -58,11 +58,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
     //Attributes
 
+    private Integer width;
+
     //Children elements
-    @Builder.Default
-    private ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations width = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
-    @Builder.Default
-    private ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations height = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -108,21 +106,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void removeChild(Object object) {
-        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations) {
-          throw new RuntimeException("trying to delete width which is required");
-        }
-        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations) {
-          throw new RuntimeException("trying to delete height which is required");
-        }
     }
 
     public int buildIndexForChild(Object object) {
-        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations) {
-          return 0;
-        }
-        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations) {
-          return 0;
-        }
         return 0;
     }
 
@@ -144,12 +130,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
         var innerLogger = logger.log("attributes");
         //Deserialize attributes
+        innerLogger.log("width");
+        this.width = rawNode.getAttributeIntRequired("width");
         innerLogger = logger.log("children");
         //Deserialize children
-        innerLogger.log("width");
-        this.width = ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.fromRawNode(rawNode.getChildrenFirst("width").get(), this);
-        innerLogger.log("height");
-        this.height = ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.fromRawNode(rawNode.getChildrenFirst("height").get(), this);
         logReturnVoid();
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
@@ -162,13 +146,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       rawNode.setTag("limit");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
+      innerLogger.log("width");
+      rawNode.setAttribute("width", this.width);
 
       innerLogger = logger.log("children");
       //Serialize children
-      innerLogger.log("width");
-      rawNode.setChildren("width", Optional.ofNullable(width).stream().map(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations::serializeIntoRawNode).toList());
-      innerLogger.log("height");
-      rawNode.setChildren("height", Optional.ofNullable(height).stream().map(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations::serializeIntoRawNode).toList());
       return rawNode;
     }
 
@@ -178,34 +160,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         var updatedRawNode = serializeIntoRawNode();
         updatedRawNode.populateNode(document, element);
     }
-    public ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations getWidth()
+
+    public Integer getWidth()
     {
       return this.width;
     }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamWidth()
-    {
-      return Optional.ofNullable(width).stream();
-    }
-    public Limit setWidth(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations value)
+    public Limit setWidth(Integer value)
     {
       this.width = value;
-      value.parentNode(this);
-      notifyChange();
-      return this;
-    }
-
-    public ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations getHeight()
-    {
-      return this.height;
-    }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamHeight()
-    {
-      return Optional.ofNullable(height).stream();
-    }
-    public Limit setHeight(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations value)
-    {
-      this.height = value;
-      value.parentNode(this);
       notifyChange();
       return this;
     }
@@ -214,16 +176,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
        if(xpath.startsWith("."))
         {
           xpath = xpath.substring(1);
-        }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName))
-        {
-          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName.length() + 3);
-          return this.width.deserializeAtPath(childXPath, rawNode);
-        }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName))
-        {
-          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName.length() + 3);
-          return this.height.deserializeAtPath(childXPath, rawNode);
         }
 
         deserialize(rawNode);
@@ -234,16 +186,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
        if(xpath.startsWith("."))
         {
           xpath = xpath.substring(1);
-        }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName))
-        {
-          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName.length() + 3);
-          return this.width.getNodeAtPath(childXPath);
-        }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName))
-        {
-          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName.length() + 3);
-          return this.height.getNodeAtPath(childXPath);
         }
         return Optional.of(this);
     }
@@ -256,22 +198,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       "type": "element",
       "value": {
         "metaType": "object",
+        "value": {},
         "isSingle": true,
-        "value": {
-          "width": {
-            "metaType": "reference",
-            "value": "type__math_operations",
-            "isSingle": true,
-            "isNullable": false
+        "isNullable": false,
+        "attributes": {
+          "metaType": "object",
+          "value": {
+            "width": {
+              "metaType": "primitive",
+              "value": "xs:int",
+              "isNullable": false
+            }
           },
-          "height": {
-            "metaType": "reference",
-            "value": "type__math_operations",
-            "isSingle": true,
-            "isNullable": false
-          }
-        },
-        "isNullable": false
+          "isNullable": false
+        }
       },
       "name": "limit"
     }

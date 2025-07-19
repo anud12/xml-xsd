@@ -1,6 +1,5 @@
 package ro.anud.xml_xsd.implementation.repository;
 
-import ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.ActionRule;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.FromPerson;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.ClassificationRule;
@@ -30,6 +29,7 @@ public class RuleRepository {
     public final LinkGroupRuleRepository linkGroupRule;
     public final ZoneRuleRepository zoneRule;
     public final RegionRuleRepository regionRule;
+    public final PortalRepository portalRule;
     private PropertyInstance propertyInstance;
 
 
@@ -41,6 +41,7 @@ public class RuleRepository {
         this.nodeRule = new NodeRuleRepository(worldStepInstance);
         this.zoneRule = new ZoneRuleRepository(worldStepInstance);
         this.regionRule = new RegionRuleRepository(worldStepInstance);
+        this.portalRule = new PortalRepository(worldStepInstance);
     }
     public RuleRepository index() {
         var ruleGroups = worldStepInstance.streamWorldStep()
@@ -51,6 +52,7 @@ public class RuleRepository {
         linkGroupRule.index();
         zoneRule.index(ruleGroups);
         regionRule.index(ruleGroups);
+        portalRule.index();
 
         var actionRule = ruleGroups
             .stream()

@@ -1,4 +1,4 @@
-package ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule;
+package ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.w3c.dom.Document;
@@ -20,12 +20,12 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @NoArgsConstructor
   @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-  public class ToRule implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
+  public class PortalRule implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static String nodeName = "to_rule";
-    public static ToRule fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static String nodeName = "portal_rule";
+    public static PortalRule fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
-      var instance = new ToRule();
+      var instance = new PortalRule();
       if(Objects.nonNull(parent)) {
         instance.parentNode(parent);
       }
@@ -33,34 +33,34 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
-    public static ToRule fromRawNode(RawNode rawNode) {
+    public static PortalRule fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = fromRawNode(rawNode, null);
       return logReturn(instance);
     }
-    public static Optional<ToRule> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static Optional<PortalRule> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
         logEnter();
-        return logReturn(rawNode.map(o -> ToRule.fromRawNode(o, parent)));
+        return logReturn(rawNode.map(o -> PortalRule.fromRawNode(o, parent)));
     }
-    public static List<ToRule> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static List<PortalRule> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
-      List<ToRule> returnList = Optional.ofNullable(rawNodeList)
+      List<PortalRule> returnList = Optional.ofNullable(rawNodeList)
           .orElse(List.of())
           .stream()
-          .map(o -> ToRule.fromRawNode(o, parent))
+          .map(o -> PortalRule.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
     }
 
     public String classTypeId() {
-      return ".world_step.data.zone_list.zone.region.portals.portal.to_rule";
+      return ".world_step.rule_group.portal_rule";
     }
 
     //Attributes
 
     //Children elements
     @Builder.Default
-    private List<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.Region.Region> region = new ArrayList<>();
+    private List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.Entry.Entry> entry = new ArrayList<>();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -89,7 +89,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     private List<Consumer<List<Object>>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
-      return "to_rule";
+      return "portal_rule";
     }
 
     public void notifyChange(List<Object> list) {
@@ -105,9 +105,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       notifyChange();
     }
 
-    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.Portal> parentAsPortal() {
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup> parentAsRuleGroup() {
       return parentNode.flatMap(node -> {
-       if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.Portal casted){
+       if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup casted){
          return Optional.of(casted);
        }
        return Optional.empty();
@@ -115,14 +115,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void removeChild(Object object) {
-        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.Region.Region) {
-          throw new RuntimeException("trying to delete region which is required");
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.Entry.Entry) {
+          this.entry.remove(object);
+          notifyChange();
         }
     }
 
     public int buildIndexForChild(Object object) {
-        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.Region.Region) {
-          return this.region.indexOf(object);
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.Entry.Entry) {
+          return this.entry.indexOf(object);
         }
         return 0;
     }
@@ -141,13 +142,13 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       try {
         var logger = logEnter();
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing to_rule");
+        // Godot.GD.Print("Deserializing portal_rule");
 
         var innerLogger = logger.log("attributes");
         //Deserialize attributes
         innerLogger = logger.log("children");
         //Deserialize children
-        this.region = ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.Region.Region.fromRawNode(rawNode.getChildrenList("region"), this);
+        this.entry = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.Entry.Entry.fromRawNode(rawNode.getChildrenList("entry"), this);
         logReturnVoid();
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
@@ -157,48 +158,48 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
-      rawNode.setTag("to_rule");
+      rawNode.setTag("portal_rule");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
 
       innerLogger = logger.log("children");
       //Serialize children
-      innerLogger.log("region");
-      rawNode.setChildren("region", region.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.Region.Region::serializeIntoRawNode).toList());
+      innerLogger.log("entry");
+      rawNode.setChildren("entry", entry.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.Entry.Entry::serializeIntoRawNode).toList());
       return rawNode;
     }
 
     public void serialize(Document document, Element element)
     {
-        // Godot.GD.Print("Serializing to_rule");
+        // Godot.GD.Print("Serializing portal_rule");
         var updatedRawNode = serializeIntoRawNode();
         updatedRawNode.populateNode(document, element);
     }
-    public List<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.Region.Region> getRegion()
+    public List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.Entry.Entry> getEntry()
     {
-      return this.region;
+      return this.entry;
     }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.Region.Region> streamRegion()
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.Entry.Entry> streamEntry()
     {
-      return region.stream();
+      return entry.stream();
     }
-    public ToRule addRegion(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.Region.Region value)
+    public PortalRule addEntry(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.Entry.Entry value)
     {
-      this.region.add(value);
+      this.entry.add(value);
       value.parentNode(this);
       notifyChange();
       return this;
     }
-    public ToRule addAllRegion(List<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.Region.Region> value)
+    public PortalRule addAllEntry(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.Entry.Entry> value)
     {
-      this.region.addAll(value);
+      this.entry.addAll(value);
       value.forEach(e -> e.parentNode(this));
       notifyChange();
       return this;
     }
-    public ToRule removeRegion(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.Region.Region value)
+    public PortalRule removeEntry(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.Entry.Entry value)
     {
-      this.region.remove(value);
+      this.entry.remove(value);
       notifyChange();
       return this;
     }
@@ -208,20 +209,20 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         {
           xpath = xpath.substring(1);
         }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.Region.Region.nodeName + "["))
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.Entry.Entry.nodeName + "["))
         {
-          var startTokens = xpath.split(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.Region.Region.nodeName + "\\[");
+          var startTokens = xpath.split(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.Entry.Entry.nodeName + "\\[");
           var endToken = startTokens[1].split("]");
           var indexString = endToken[0];
-          var childXPath = xpath.replace(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.Region.Region.nodeName + "[" + indexString + "]", "");
+          var childXPath = xpath.replace(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.Entry.Entry.nodeName + "[" + indexString + "]", "");
           if(!"new".equals(indexString)) {
             var pathIndex = Integer.parseInt(indexString);
-            if(this.region.size() > pathIndex) {
-              return this.region.get(pathIndex).deserializeAtPath(childXPath,rawNode);
+            if(this.entry.size() > pathIndex) {
+              return this.entry.get(pathIndex).deserializeAtPath(childXPath,rawNode);
             }
           }
-          var newEntry = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.Region.Region();
-          this.addRegion(newEntry);
+          var newEntry = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.Entry.Entry();
+          this.addEntry(newEntry);
           return newEntry.deserializeAtPath(childXPath, rawNode);
         }
 
@@ -234,15 +235,15 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         {
           xpath = xpath.substring(1);
         }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.Region.Region.nodeName + "["))
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.Entry.Entry.nodeName + "["))
         {
-          var startTokens = xpath.split(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.Region.Region.nodeName + "\\[");
+          var startTokens = xpath.split(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.Entry.Entry.nodeName + "\\[");
           var endToken = startTokens[1].split("]");
           var indexString = endToken[0];
-          var childXPath = xpath.replace(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portal.ToRule.Region.Region.nodeName + "[" + indexString + "]", "");
+          var childXPath = xpath.replace(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.Entry.Entry.nodeName + "[" + indexString + "]", "");
           var pathIndex = Integer.parseInt(indexString);
-          if(this.region.size() > pathIndex) {
-            return this.region.get(pathIndex).getNodeAtPath(childXPath);
+          if(this.entry.size() > pathIndex) {
+            return this.entry.get(pathIndex).getNodeAtPath(childXPath);
           }
           return Optional.empty();
         }
@@ -259,26 +260,37 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         "metaType": "object",
         "isSingle": true,
         "value": {
-          "region": {
-            "metaType": "object",
-            "value": {},
-            "isSingle": false,
-            "isNullable": false,
-            "attributes": {
-              "metaType": "object",
-              "value": {
-                "region_rule_ref": {
-                  "metaType": "primitive",
-                  "value": "xs:string",
+          "entry": {
+            "metaType": "composition",
+            "value": [
+              {
+                "metaType": "object",
+                "value": {},
+                "isSingle": true,
+                "isNullable": false,
+                "attributes": {
+                  "metaType": "object",
+                  "value": {
+                    "id": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
+                    }
+                  },
                   "isNullable": false
                 }
               },
-              "isNullable": false
-            }
+              {
+                "metaType": "primitive",
+                "value": "type__portal_rule"
+              }
+            ],
+            "isSingle": false,
+            "isNullable": true
           }
         },
         "isNullable": true
       },
-      "name": "to_rule"
+      "name": "portal_rule"
     }
   */

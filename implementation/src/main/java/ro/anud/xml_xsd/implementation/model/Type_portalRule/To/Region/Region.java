@@ -1,4 +1,4 @@
-package ro.anud.xml_xsd.implementation.model.Portal.To.Region;
+package ro.anud.xml_xsd.implementation.model.Type_portalRule.To.Region;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.w3c.dom.Document;
@@ -53,20 +53,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public String classTypeId() {
-      return ".portal.to.region";
+      return ".type__portal_rule.to.region";
     }
 
     //Attributes
 
     private String regionRuleRef;
 
-    private String side;
-
     //Children elements
-    @Builder.Default
-    private ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations start = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
-    @Builder.Default
-    private ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations width = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -111,9 +105,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       notifyChange();
     }
 
-    public Optional<ro.anud.xml_xsd.implementation.model.Portal.To.To> parentAsTo() {
+    public Optional<ro.anud.xml_xsd.implementation.model.Type_portalRule.To.To> parentAsTo() {
       return parentNode.flatMap(node -> {
-       if (node instanceof ro.anud.xml_xsd.implementation.model.Portal.To.To casted){
+       if (node instanceof ro.anud.xml_xsd.implementation.model.Type_portalRule.To.To casted){
          return Optional.of(casted);
        }
        return Optional.empty();
@@ -121,21 +115,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void removeChild(Object object) {
-        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations) {
-          throw new RuntimeException("trying to delete start which is required");
-        }
-        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations) {
-          throw new RuntimeException("trying to delete width which is required");
-        }
     }
 
     public int buildIndexForChild(Object object) {
-        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations) {
-          return 0;
-        }
-        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations) {
-          return 0;
-        }
         return 0;
     }
 
@@ -159,14 +141,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         //Deserialize attributes
         innerLogger.log("region_rule_ref");
         this.regionRuleRef = rawNode.getAttributeRequired("region_rule_ref");
-        innerLogger.log("side");
-        this.side = rawNode.getAttributeRequired("side");
         innerLogger = logger.log("children");
         //Deserialize children
-        innerLogger.log("start");
-        this.start = ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.fromRawNode(rawNode.getChildrenFirst("start").get(), this);
-        innerLogger.log("width");
-        this.width = ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.fromRawNode(rawNode.getChildrenFirst("width").get(), this);
         logReturnVoid();
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
@@ -181,15 +157,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       //Serialize attributes
       innerLogger.log("region_rule_ref");
       rawNode.setAttribute("region_rule_ref", this.regionRuleRef);
-      innerLogger.log("side");
-      rawNode.setAttribute("side", this.side);
 
       innerLogger = logger.log("children");
       //Serialize children
-      innerLogger.log("start");
-      rawNode.setChildren("start", Optional.ofNullable(start).stream().map(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations::serializeIntoRawNode).toList());
-      innerLogger.log("width");
-      rawNode.setChildren("width", Optional.ofNullable(width).stream().map(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations::serializeIntoRawNode).toList());
       return rawNode;
     }
 
@@ -210,62 +180,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       notifyChange();
       return this;
     }
-    public String getSide()
-    {
-      return this.side;
-    }
-    public Region setSide(String value)
-    {
-      this.side = value;
-      notifyChange();
-      return this;
-    }
-    public ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations getStart()
-    {
-      return this.start;
-    }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamStart()
-    {
-      return Optional.ofNullable(start).stream();
-    }
-    public Region setStart(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations value)
-    {
-      this.start = value;
-      value.parentNode(this);
-      notifyChange();
-      return this;
-    }
-
-    public ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations getWidth()
-    {
-      return this.width;
-    }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamWidth()
-    {
-      return Optional.ofNullable(width).stream();
-    }
-    public Region setWidth(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations value)
-    {
-      this.width = value;
-      value.parentNode(this);
-      notifyChange();
-      return this;
-    }
 
     public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
        if(xpath.startsWith("."))
         {
           xpath = xpath.substring(1);
-        }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName))
-        {
-          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName.length() + 3);
-          return this.start.deserializeAtPath(childXPath, rawNode);
-        }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName))
-        {
-          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName.length() + 3);
-          return this.width.deserializeAtPath(childXPath, rawNode);
         }
 
         deserialize(rawNode);
@@ -276,16 +195,6 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
        if(xpath.startsWith("."))
         {
           xpath = xpath.substring(1);
-        }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName))
-        {
-          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName.length() + 3);
-          return this.start.getNodeAtPath(childXPath);
-        }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName))
-        {
-          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName.length() + 3);
-          return this.width.getNodeAtPath(childXPath);
         }
         return Optional.of(this);
     }
@@ -298,6 +207,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       "type": "element",
       "value": {
         "metaType": "object",
+        "value": {},
+        "isSingle": false,
+        "isNullable": true,
         "attributes": {
           "metaType": "object",
           "value": {
@@ -305,30 +217,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
               "metaType": "primitive",
               "value": "xs:string",
               "isNullable": false
-            },
-            "side": {
-              "metaType": "primitive",
-              "value": "type__rectangle_side",
-              "isNullable": false
             }
-          }
-        },
-        "isSingle": true,
-        "value": {
-          "start": {
-            "metaType": "reference",
-            "value": "type__math_operations",
-            "isSingle": true,
-            "isNullable": false
           },
-          "width": {
-            "metaType": "reference",
-            "value": "type__math_operations",
-            "isSingle": true,
-            "isNullable": false
-          }
-        },
-        "isNullable": false
+          "isNullable": false
+        }
       },
       "name": "region"
     }

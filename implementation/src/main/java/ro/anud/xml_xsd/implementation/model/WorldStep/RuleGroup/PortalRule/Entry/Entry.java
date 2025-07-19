@@ -1,4 +1,4 @@
-package ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_append;
+package ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.Entry;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.w3c.dom.Document;
@@ -20,12 +20,12 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @NoArgsConstructor
   @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-  public class Region_append implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
+  public class Entry implements  ro.anud.xml_xsd.implementation.model.interfaces.IType_portalRule.IType_portalRule<Entry>,  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static String nodeName = "region.append";
-    public static Region_append fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static String nodeName = "entry";
+    public static Entry fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
-      var instance = new Region_append();
+      var instance = new Entry();
       if(Objects.nonNull(parent)) {
         instance.parentNode(parent);
       }
@@ -33,36 +33,42 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       instance.deserialize(rawNode);
       return logReturn(instance);
     }
-    public static Region_append fromRawNode(RawNode rawNode) {
+    public static Entry fromRawNode(RawNode rawNode) {
       logEnter();
       var instance = fromRawNode(rawNode, null);
       return logReturn(instance);
     }
-    public static Optional<Region_append> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static Optional<Entry> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
         logEnter();
-        return logReturn(rawNode.map(o -> Region_append.fromRawNode(o, parent)));
+        return logReturn(rawNode.map(o -> Entry.fromRawNode(o, parent)));
     }
-    public static List<Region_append> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static List<Entry> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       logEnter();
-      List<Region_append> returnList = Optional.ofNullable(rawNodeList)
+      List<Entry> returnList = Optional.ofNullable(rawNodeList)
           .orElse(List.of())
           .stream()
-          .map(o -> Region_append.fromRawNode(o, parent))
+          .map(o -> Entry.fromRawNode(o, parent))
           .collect(Collectors.toList());
       return logReturn(returnList);
     }
 
     public String classTypeId() {
-      return ".world_step.actions.region.append";
+      return ".world_step.rule_group.portal_rule.entry";
     }
 
     //Attributes
 
-    private String zoneIdRef;
+    private String id;
 
-    private String regionIdRef;
+    //Attributes of type__portal_rule
 
     //Children elements
+
+    //Children of type__portal_rule
+    @Builder.Default
+    private ro.anud.xml_xsd.implementation.model.Type_portalRule.Limit.Limit limit = new ro.anud.xml_xsd.implementation.model.Type_portalRule.Limit.Limit();
+    @Builder.Default
+    private ro.anud.xml_xsd.implementation.model.Type_portalRule.To.To to = new ro.anud.xml_xsd.implementation.model.Type_portalRule.To.To();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -91,7 +97,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     private List<Consumer<List<Object>>> onChangeList = new ArrayList<>();
 
     public String nodeName() {
-      return "region.append";
+      return "entry";
     }
 
     public void notifyChange(List<Object> list) {
@@ -107,9 +113,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       notifyChange();
     }
 
-    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions> parentAsActions() {
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.PortalRule> parentAsPortalRule() {
       return parentNode.flatMap(node -> {
-       if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions casted){
+       if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.PortalRule casted){
          return Optional.of(casted);
        }
        return Optional.empty();
@@ -137,16 +143,21 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       try {
         var logger = logEnter();
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing region.append");
+        // Godot.GD.Print("Deserializing entry");
 
         var innerLogger = logger.log("attributes");
         //Deserialize attributes
-        innerLogger.log("zone_id_ref");
-        this.zoneIdRef = rawNode.getAttributeRequired("zone_id_ref");
-        innerLogger.log("region_id_ref");
-        this.regionIdRef = rawNode.getAttributeRequired("region_id_ref");
+        innerLogger.log("id");
+        this.id = rawNode.getAttributeRequired("id");
+
+        // Deserialize arguments of type__portal_rule
+
         innerLogger = logger.log("children");
         //Deserialize children
+
+        // Deserialize children of type__portal_rule
+        this.limit = ro.anud.xml_xsd.implementation.model.Type_portalRule.Limit.Limit.fromRawNode(rawNode.getChildrenFirst("limit").get(), this);
+        this.to = ro.anud.xml_xsd.implementation.model.Type_portalRule.To.To.fromRawNode(rawNode.getChildrenFirst("to").get(), this);
         logReturnVoid();
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
@@ -156,46 +167,76 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public RawNode serializeIntoRawNode()
     {
       var logger = logEnter();
-      rawNode.setTag("region.append");
+      rawNode.setTag("entry");
       var innerLogger = logger.log("attributes");
       //Serialize attributes
-      innerLogger.log("zone_id_ref");
-      rawNode.setAttribute("zone_id_ref", this.zoneIdRef);
-      innerLogger.log("region_id_ref");
-      rawNode.setAttribute("region_id_ref", this.regionIdRef);
+      innerLogger.log("id");
+      rawNode.setAttribute("id", this.id);
+
+      // Serialize arguments of type__portal_rule
+
 
       innerLogger = logger.log("children");
       //Serialize children
+
+      // Serialize children of type__portal_rule
+      innerLogger.log("limit");
+      rawNode.setChildren("limit", Optional.ofNullable(limit).stream().map(ro.anud.xml_xsd.implementation.model.Type_portalRule.Limit.Limit::serializeIntoRawNode).toList());
+      innerLogger.log("to");
+      rawNode.setChildren("to", Optional.ofNullable(to).stream().map(ro.anud.xml_xsd.implementation.model.Type_portalRule.To.To::serializeIntoRawNode).toList());
       return rawNode;
     }
 
     public void serialize(Document document, Element element)
     {
-        // Godot.GD.Print("Serializing region.append");
+        // Godot.GD.Print("Serializing entry");
         var updatedRawNode = serializeIntoRawNode();
         updatedRawNode.populateNode(document, element);
     }
 
-    public String getZoneIdRef()
+    public String getId()
     {
-      return this.zoneIdRef;
+      return this.id;
     }
-    public Region_append setZoneIdRef(String value)
+    public Entry setId(String value)
     {
-      this.zoneIdRef = value;
+      this.id = value;
       notifyChange();
       return this;
     }
-    public String getRegionIdRef()
+    public ro.anud.xml_xsd.implementation.model.Type_portalRule.Limit.Limit getLimit()
     {
-      return this.regionIdRef;
+      return this.limit;
     }
-    public Region_append setRegionIdRef(String value)
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_portalRule.Limit.Limit> streamLimit()
     {
-      this.regionIdRef = value;
+      return Optional.ofNullable(limit).stream();
+    }
+    public Entry setLimit(ro.anud.xml_xsd.implementation.model.Type_portalRule.Limit.Limit value)
+    {
+      this.limit = value;
+      value.parentNode(this);
       notifyChange();
       return this;
     }
+
+    public ro.anud.xml_xsd.implementation.model.Type_portalRule.To.To getTo()
+    {
+      return this.to;
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_portalRule.To.To> streamTo()
+    {
+      return Optional.ofNullable(to).stream();
+    }
+    public Entry setTo(ro.anud.xml_xsd.implementation.model.Type_portalRule.To.To value)
+    {
+      this.to = value;
+      value.parentNode(this);
+      notifyChange();
+      return this;
+    }
+
+
 
     public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
        if(xpath.startsWith("."))
@@ -223,25 +264,18 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       "type": "element",
       "value": {
         "metaType": "object",
-        "value": {},
-        "isSingle": true,
-        "isNullable": true,
         "attributes": {
           "metaType": "object",
           "value": {
-            "zone_id_ref": {
-              "metaType": "primitive",
-              "value": "xs:string",
-              "isNullable": false
-            },
-            "region_id_ref": {
+            "id": {
               "metaType": "primitive",
               "value": "xs:string",
               "isNullable": false
             }
           }
-        }
+        },
+        "value": {}
       },
-      "name": "region.append"
+      "name": "entry"
     }
   */
