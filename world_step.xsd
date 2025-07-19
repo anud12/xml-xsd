@@ -594,7 +594,7 @@
             <xs:element name="from">
               <xs:complexType>
                 <xs:sequence>
-                  <xs:element name="position" type="type__math_operations">
+                  <xs:element name="start" type="type__math_operations">
                     <xs:annotation>
                       <xs:documentation>
                         Indicates the fractional position along the target node edge where the portal ends.
@@ -630,7 +630,7 @@
                     </xs:annotation>
                     <xs:complexType>
                       <xs:sequence>
-                        <xs:element name="position" type="type__math_operations">
+                        <xs:element name="start" type="type__math_operations">
                           <xs:annotation>
                             <xs:documentation>
                               Indicates the fractional position along the target node edge where the portal ends.
@@ -657,13 +657,6 @@
                     </xs:complexType>
                   </xs:element>
                 </xs:sequence>
-                <xs:attribute name="side" type="type__rectangle_side">
-                  <xs:annotation>
-                    <xs:documentation>
-                      Represents the side of the rectangle from which the portal is accessible.
-                    </xs:documentation>
-                  </xs:annotation>
-                </xs:attribute>
               </xs:complexType>
             </xs:element>
           </xs:sequence>
@@ -1670,40 +1663,6 @@
                                                 </xs:attribute>
                                               </xs:complexType>
                                             </xs:element>
-                                            <xs:element name="to_rule" minOccurs="0" maxOccurs="1">
-                                              <xs:complexType>
-                                                <xs:sequence>
-                                                  <xs:element name="region" maxOccurs="unbounded">
-                                                    <xs:complexType>
-                                                      <xs:sequence>
-                                                        <xs:element name="start" type="type__math_operations">
-                                                          <xs:annotation>
-                                                            <xs:documentation>
-                                                              Indicates the start position along the target node edge where the portal ends.
-                                                            </xs:documentation>
-                                                          </xs:annotation>
-                                                        </xs:element>
-                                                        <xs:element name="end" type="type__math_operations">
-                                                          <xs:annotation>
-                                                            <xs:documentation>
-                                                              Indicates the end position along the target node edge where the portal ends.
-                                                            </xs:documentation>
-                                                          </xs:annotation>
-                                                        </xs:element>
-                                                      </xs:sequence>
-                                                      <xs:attribute name="region_rule_ref" type="xs:string" use="required"/>
-                                                      <xs:attribute name="side" type="type__rectangle_side" use="required">
-                                                        <xs:annotation>
-                                                          <xs:documentation>
-                                                            Represents the side of the rectangle where the portal leads to.
-                                                          </xs:documentation>
-                                                        </xs:annotation>
-                                                      </xs:attribute>
-                                                    </xs:complexType>
-                                                  </xs:element>
-                                                </xs:sequence>
-                                              </xs:complexType>
-                                            </xs:element>
                                             <xs:element name="to" minOccurs="0">
                                               <xs:annotation>
                                                 <xs:documentation>
@@ -1744,7 +1703,7 @@
                                                     </xs:documentation>
                                                   </xs:annotation>
                                                 </xs:attribute>
-                                                <xs:attribute name="end" type="xs:integer">
+                                                <xs:attribute name="end" type="xs:integer" use="required">
                                                   <xs:annotation>
                                                     <xs:documentation>
                                                       Maximum width of the portal at this endpoint.
@@ -1985,7 +1944,6 @@
                 <xs:complexType>
                   <xs:attribute name="zone_id_ref" type="xs:string" use="required"/>
                   <xs:attribute name="region_id_ref" type="xs:string" use="required"/>
-                  <xs:attribute name="portal_id_ref" type="xs:string" use="required"/>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
