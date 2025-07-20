@@ -178,22 +178,27 @@ public class RegionInstance {
         var portalSizeOffset = halfMax - halfMin;
 
         if (List.of("left", "right").contains(parentPortal.getFrom().getSide())) {
-            var parentOffset = -parentPortal.getFrom().getStart() + parentRegion.getLimit().getHeight();
-            var targetOffset = -toPortal.getStart() + targetRegion.getLimit().getHeight();
-            var offset = targetOffset - parentOffset;
+            var parentOffset = parentPortal.getFrom().getStart();
+            var targetOffset = -toPortal.getStart() + (targetRegion.getLimit().getHeight() / 2 );
+            var offset = targetOffset + parentOffset;
 
-            var finalY = offset + portalSizeOffset + parentRegion.getPosition().getX();
+            var parentPosition = parentRegion.getPosition().getY() - (parentRegion.getLimit().getHeight() / 2);
+
+
+            var finalY = offset + portalSizeOffset + parentPosition;
             position.setY(finalY);
         }
 
 
         if (List.of("top", "bottom").contains(parentPortal.getFrom().getSide())) {
 
-            var parentOffset = -parentPortal.getFrom().getStart() + parentRegion.getLimit().getWidth();
-            var targetOffset = -toPortal.getStart() + targetRegion.getLimit().getWidth();
-            var offset = targetOffset - parentOffset;
+            var parentOffset = parentPortal.getFrom().getStart();
+            var targetOffset = -toPortal.getStart() + (targetRegion.getLimit().getWidth() / 2 );
+            var offset = targetOffset + parentOffset;
 
-            var finalX = offset + portalSizeOffset + parentRegion.getPosition().getY();
+            var parentPosition = parentRegion.getPosition().getX() - (parentRegion.getLimit().getWidth() / 2);
+
+            var finalX = offset + portalSizeOffset + parentPosition;
 
             position.setX(finalX);
         }
