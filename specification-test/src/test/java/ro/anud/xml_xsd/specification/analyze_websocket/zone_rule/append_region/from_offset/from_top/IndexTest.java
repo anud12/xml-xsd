@@ -1,4 +1,4 @@
-package ro.anud.xml_xsd.specification.analyze_websocket.zone_rule.append_region.from_position.from_right;
+package ro.anud.xml_xsd.specification.analyze_websocket.zone_rule.append_region.from_offset.from_top;
 
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
