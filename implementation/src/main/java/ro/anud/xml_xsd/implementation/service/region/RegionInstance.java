@@ -66,6 +66,7 @@ public class RegionInstance {
             .position(Position.builder()
                 .x(0)
                 .y(0)
+                .rotation("normal")
                 .build());
         if (!portals.isEmpty()) {
             builder.availablePortals(Optional.of(

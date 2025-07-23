@@ -740,6 +740,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                               "metaType": "primitive",
                               "value": "xs:integer",
                               "isNullable": false
+                            },
+                            "rotation": {
+                              "metaType": "primitive",
+                              "value": "type__rotation_90deg_step",
+                              "isNullable": false
                             }
                           }
                         }

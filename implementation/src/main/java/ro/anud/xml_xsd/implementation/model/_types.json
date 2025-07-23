@@ -151,6 +151,32 @@
     "isNullable": true
   },
   {
+    "name": "type__rotation_90deg_step",
+    "type": "simple",
+    "value": {
+      "metaType": "union",
+      "value": [
+        {
+          "metaType": "primitive",
+          "value": "\"Normal\""
+        },
+        {
+          "metaType": "primitive",
+          "value": "\"Clockwise\""
+        },
+        {
+          "metaType": "primitive",
+          "value": "\"Inverted\""
+        },
+        {
+          "metaType": "primitive",
+          "value": "\"Counterclockwise\""
+        }
+      ]
+    },
+    "isNullable": true
+  },
+  {
     "name": "type__property_mutation_on",
     "type": "complex",
     "value": {
@@ -2306,6 +2332,11 @@
                               "y": {
                                 "metaType": "primitive",
                                 "value": "xs:integer",
+                                "isNullable": false
+                              },
+                              "rotation": {
+                                "metaType": "primitive",
+                                "value": "type__rotation_90deg_step",
                                 "isNullable": false
                               }
                             }

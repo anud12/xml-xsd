@@ -62,6 +62,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
     private Integer y;
 
+    private String rotation;
+
     //Children elements
 
     @ToString.Exclude()
@@ -145,6 +147,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         this.x = rawNode.getAttributeIntRequired("x");
         innerLogger.log("y");
         this.y = rawNode.getAttributeIntRequired("y");
+        innerLogger.log("rotation");
+        this.rotation = rawNode.getAttributeRequired("rotation");
         innerLogger = logger.log("children");
         //Deserialize children
         logReturnVoid();
@@ -163,6 +167,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       rawNode.setAttribute("x", this.x);
       innerLogger.log("y");
       rawNode.setAttribute("y", this.y);
+      innerLogger.log("rotation");
+      rawNode.setAttribute("rotation", this.rotation);
 
       innerLogger = logger.log("children");
       //Serialize children
@@ -193,6 +199,16 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public Position setY(Integer value)
     {
       this.y = value;
+      notifyChange();
+      return this;
+    }
+    public String getRotation()
+    {
+      return this.rotation;
+    }
+    public Position setRotation(String value)
+    {
+      this.rotation = value;
       notifyChange();
       return this;
     }
@@ -237,6 +253,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
             "y": {
               "metaType": "primitive",
               "value": "xs:integer",
+              "isNullable": false
+            },
+            "rotation": {
+              "metaType": "primitive",
+              "value": "type__rotation_90deg_step",
               "isNullable": false
             }
           }

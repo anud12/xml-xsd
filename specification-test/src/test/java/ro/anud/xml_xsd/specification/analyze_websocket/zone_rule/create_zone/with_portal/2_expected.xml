@@ -42,7 +42,7 @@
       <zone id="0.0">
         <region id="0.1">
           <rule rule_id_ref="region_rule"/>
-          <position x="0" y="0"/>
+          <position x="0" y="0" rotation="normal"/>
           <limit height="1" width="1"/>
           <available_portals>
             <portal id="0.2" portal_rule_ref="portal_rule_id" side="left" start="1"/>

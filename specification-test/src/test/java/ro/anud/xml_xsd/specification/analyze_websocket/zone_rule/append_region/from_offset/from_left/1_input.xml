@@ -44,7 +44,7 @@
       <zone id="zone_id">
         <region id="region_id">
           <rule rule_id_ref="region_rule"/>
-          <position x="0" y="0"/>
+          <position x="0" y="0" rotation="normal"/>
           <limit height="10" width="10"/>
           <available_portals>
             <portal id="available_portal_id" portal_rule_ref="portal_rule" side="left" start="1"/>
