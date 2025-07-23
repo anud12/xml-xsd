@@ -565,6 +565,32 @@
   <!-- Region -->
   <!--######-->
 
+  <xs:complexType name="type__portal_rule">
+    <xs:sequence>
+      <xs:element name="limit">
+        <xs:complexType>
+          <xs:attribute name="width" type="xs:int" use="required">
+            <xs:annotation>
+              <xs:documentation>
+                Represents the width of the portal.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="to">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="region" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:attribute name="region_rule_ref" type="xs:string" use="required"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
 
   <xs:complexType name="type__region_rule">
     <xs:sequence>
@@ -588,75 +614,22 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="portal" minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="portals" minOccurs="0" maxOccurs="1">
         <xs:complexType>
           <xs:sequence>
-            <xs:element name="from">
+            <xs:element name="portal" minOccurs="0" maxOccurs="unbounded">
               <xs:complexType>
                 <xs:sequence>
                   <xs:element name="start" type="type__math_operations">
                     <xs:annotation>
                       <xs:documentation>
-                        Indicates the fractional position along the target node edge where the portal ends.
-                        Value must be between 0 and 100.
-                      </xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="width" type="type__math_operations">
-                    <xs:annotation>
-                      <xs:documentation>
-                        Represents the position of the portal on the rectangle side.
+                        Indicates the starting fractional position along the target node edge where the portal begins.
                       </xs:documentation>
                     </xs:annotation>
                   </xs:element>
                 </xs:sequence>
-                <xs:attribute name="side" type="type__rectangle_side" use="required">
-                  <xs:annotation>
-                    <xs:documentation>
-                      Represents the side of the rectangle from which the portal is accessible.
-                    </xs:documentation>
-                  </xs:annotation>
-                </xs:attribute>
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="to">
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="region">
-                    <xs:annotation>
-                      <xs:documentation>
-                        Represents the rule for the region that the portal leads to.
-                      </xs:documentation>
-                    </xs:annotation>
-                    <xs:complexType>
-                      <xs:sequence>
-                        <xs:element name="start" type="type__math_operations">
-                          <xs:annotation>
-                            <xs:documentation>
-                              Indicates the fractional position along the target node edge where the portal ends.
-                              Value must be between 0 and 100.
-                            </xs:documentation>
-                          </xs:annotation>
-                        </xs:element>
-                        <xs:element name="width" type="type__math_operations"/>
-                      </xs:sequence>
-                      <xs:attribute name="region_rule_ref" type="xs:string" use="required">
-                        <xs:annotation>
-                          <xs:documentation>
-                            Represents the reference to the region rule.
-                          </xs:documentation>
-                        </xs:annotation>
-                      </xs:attribute>
-                      <xs:attribute name="side" type="type__rectangle_side" use="required">
-                        <xs:annotation>
-                          <xs:documentation>
-                            Represents the side of the rectangle where the portal leads to.
-                          </xs:documentation>
-                        </xs:annotation>
-                      </xs:attribute>
-                    </xs:complexType>
-                  </xs:element>
-                </xs:sequence>
+                <xs:attribute name="side" type="type__rectangle_side" use="required"/>
+                <xs:attribute name="portal_rule_ref" type="xs:string" use="required"/>
               </xs:complexType>
             </xs:element>
           </xs:sequence>
@@ -670,6 +643,43 @@
       <xs:enumeration value="right"/>
       <xs:enumeration value="top"/>
       <xs:enumeration value="bottom"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="type__rotation_90deg_step">
+    <xs:annotation>
+      <xs:documentation>
+        Allowed values represent rotations relative to 0 degrees (no rotation).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="normal">
+        <xs:annotation>
+          <xs:documentation>
+            Represents the normal orientation of the rectangle.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="clockwise">
+        <xs:annotation>
+          <xs:documentation>
+            Represents the rectangle rotated 90 degrees.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="inverted">
+        <xs:annotation>
+          <xs:documentation>
+            Represents the rectangle rotated 180 degrees.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="counterclockwise">
+        <xs:annotation>
+          <xs:documentation>
+            Represents the rectangle rotated 270 degrees.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
 
@@ -1277,6 +1287,22 @@
                 </xs:complexType>
               </xs:element>
 
+              <xs:element name="portal_rule" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:complexContent>
+                          <xs:extension base="type__portal_rule">
+                            <xs:attribute name="id" type="xs:string" use="required"/>
+                          </xs:extension>
+                        </xs:complexContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
               <xs:element name="region_rule" minOccurs="0">
                 <xs:complexType>
                   <xs:sequence>
@@ -1560,7 +1586,7 @@
                                   Represents a region within a zone.
                                 </xs:documentation>
                               </xs:annotation>
-                              <xs:sequence>
+                              <xs:all>
                                 <xs:element name="rule">
                                   <xs:complexType>
                                     <xs:attribute name="rule_id_ref" type="xs:string" use="required"/>
@@ -1570,6 +1596,7 @@
                                   <xs:annotation>
                                     <xs:documentation>
                                       Defines the node's position in the zone.
+                                      Reference rotation is assumed to be 0 degrees (no rotation).
                                     </xs:documentation>
                                   </xs:annotation>
                                   <xs:complexType>
@@ -1587,9 +1614,15 @@
                                         </xs:documentation>
                                       </xs:annotation>
                                     </xs:attribute>
+                                    <xs:attribute name="rotation" type="type__rotation_90deg_step" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation>
+                                          Rotation of the rectangle in 90 degree steps.
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
                                   </xs:complexType>
                                 </xs:element>
-
                                 <xs:element name="limit">
                                   <xs:annotation>
                                     <xs:documentation>
@@ -1611,6 +1644,21 @@
                                         </xs:documentation>
                                       </xs:annotation>
                                     </xs:attribute>
+                                  </xs:complexType>
+                                </xs:element>
+
+                                <xs:element name="available_portals" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="portal" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                          <xs:attribute name="id" type="xs:string" use="required"/>
+                                          <xs:attribute name="start" type="xs:int" use="required"/>
+                                          <xs:attribute name="side" type="type__rectangle_side" use="required"/>
+                                          <xs:attribute name="portal_rule_ref" type="xs:string" use="required"/>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
                                   </xs:complexType>
                                 </xs:element>
 
@@ -1729,7 +1777,7 @@
                                   </xs:complexType>
                                 </xs:element>
 
-                              </xs:sequence>
+                              </xs:all>
                               <xs:attribute name="id" type="xs:string" use="required">
                                 <xs:annotation>
                                   <xs:documentation>
@@ -1940,7 +1988,7 @@
                   <xs:attribute name="zone_rule_ref" type="xs:string" use="required"/>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="region.append" minOccurs="0">
+              <xs:element name="region.appendNew" minOccurs="0">
                 <xs:complexType>
                   <xs:attribute name="zone_id_ref" type="xs:string" use="required"/>
                   <xs:attribute name="region_id_ref" type="xs:string" use="required"/>
