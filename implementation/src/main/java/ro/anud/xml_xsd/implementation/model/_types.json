@@ -158,19 +158,19 @@
       "value": [
         {
           "metaType": "primitive",
-          "value": "\"Normal\""
+          "value": "\"normal\""
         },
         {
           "metaType": "primitive",
-          "value": "\"Clockwise\""
+          "value": "\"clockwise\""
         },
         {
           "metaType": "primitive",
-          "value": "\"Inverted\""
+          "value": "\"inverted\""
         },
         {
           "metaType": "primitive",
-          "value": "\"Counterclockwise\""
+          "value": "\"counterclockwise\""
         }
       ]
     },
