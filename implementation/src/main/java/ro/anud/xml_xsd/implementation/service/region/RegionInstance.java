@@ -212,6 +212,16 @@ public class RegionInstance {
                     throw new IllegalArgumentException("Unknown portal side: " + portal.getSide());
                 }
             };
+            case "inverted" -> switch (portal.getSide()) {
+                case "bottom" -> position.setY(position.getY() + regionLimit.height / 2);
+                case "left" -> position.setX(position.getX() + regionLimit.width / 2);
+                case "right" -> position.setX(position.getX() - regionLimit.width / 2);
+                case "top" -> position.setY(position.getY() - regionLimit.height / 2);
+                default -> {
+                    logger.log("Unknown portal side: " + portal.getSide());
+                    throw new IllegalArgumentException("Unknown portal side: " + portal.getSide());
+                }
+            };
             case "clockwise" -> switch (portal.getSide()){
                 case "bottom" -> position.setX(position.getX() - regionLimit.width / 2);
                 case "left" -> position.setY(position.getY() + regionLimit.height / 2);
@@ -222,9 +232,19 @@ public class RegionInstance {
                     throw new IllegalArgumentException("Unknown portal side: " + portal.getSide());
                 }
             };
+            case "counterclockwise" -> switch (portal.getSide()){
+                case "bottom" -> position.setX(position.getX() + regionLimit.width / 2);
+                case "left" -> position.setY(position.getY() - regionLimit.height / 2);
+                case "right" -> position.setY(position.getY() + regionLimit.height / 2);
+                case "top" -> position.setX(position.getX() - regionLimit.width / 2);
+                default -> {
+                    logger.log("Unknown portal side: " + portal.getSide());
+                    throw new IllegalArgumentException("Unknown portal side: " + portal.getSide());
+                }
+            };
             default -> {
-                logger.log("Unknown position rotation: " + position.getRotation());
-                throw new IllegalArgumentException("Unknown position rotation: " + position.getRotation());
+                logger.log("Unknown position rotation: " + region.getPosition().getRotation());
+                throw new IllegalArgumentException("Unknown position rotation: " + region.getPosition().getRotation());
             }
         };
         return logger.logReturn(returnValue);
@@ -247,11 +267,25 @@ public class RegionInstance {
                     position.setY(position.getY() - portalStart + (region.getLimit().getHeight() / 2));
                 default -> throw new IllegalArgumentException("Unknown portal side: " + portal.getSide());
             };
+            case "inverted" -> switch (portal.getSide()) {
+                case "top", "bottom" ->
+                    position.setX(position.getX() - portalStart + (region.getLimit().getWidth() / 2));
+                case "left", "right" ->
+                    position.setY(position.getY() + portalStart - (region.getLimit().getHeight() / 2));
+                default -> throw new IllegalArgumentException("Unknown portal side: " + portal.getSide());
+            };
             case "clockwise" -> switch (portal.getSide()) {
                 case "top", "bottom" ->
                     position.setY(position.getY() + portalStart - (region.getLimit().getHeight() / 2));
                 case "left", "right" ->
                     position.setX(position.getX() - portalStart + (region.getLimit().getHeight() / 2));
+                default -> throw new IllegalArgumentException("Unknown portal side: " + portal.getSide());
+            };
+            case "counterclockwise" -> switch (portal.getSide()) {
+                case "top", "bottom" ->
+                    position.setY(position.getY() - portalStart + (region.getLimit().getHeight() / 2));
+                case "left", "right" ->
+                    position.setX(position.getX() + portalStart - (region.getLimit().getHeight() / 2));
                 default -> throw new IllegalArgumentException("Unknown portal side: " + portal.getSide());
 
             };
@@ -295,6 +329,53 @@ public class RegionInstance {
                         position.setY(position.getY() + toStart - (portalSize - 1) - (targetRegion.getLimit().getHeight() / 2));
                     case "top" ->
                         position.setY(position.getY() + toStart - (portalSize - 1) - (targetRegion.getLimit().getWidth() / 2));
+                    default -> throw new IllegalArgumentException("Unknown fromPortal toSide: " + toSide);
+                };
+                case "right" -> switch (toSide) {
+                    case "bottom" ->
+                        position.setY(position.getY() - toStart - (portalSize + 1) + (targetRegion.getLimit().getWidth() / 2));
+                    case "left" ->
+                        position.setY(position.getY() + toStart - (portalSize - 1) - (targetRegion.getLimit().getHeight() / 2));
+                    case "right" ->
+                        position.setY(position.getY() - toStart - portalSize + (targetRegion.getLimit().getHeight() / 2));
+                    case "top" ->
+                        position.setY(position.getY() + toStart - (portalSize) + (targetRegion.getLimit().getWidth() / 2));
+                    default -> throw new IllegalArgumentException("Unknown fromPortal toSide: " + toSide);
+                };
+                case "top" -> switch (toSide) {
+                    case "bottom" ->
+                        position.setX(position.getX() + toStart - (portalSize - 1) - (targetRegion.getLimit().getHeight() / 2));
+                    case "left" ->
+                        position.setX(position.getX() - toStart - (portalSize + 1) + (targetRegion.getLimit().getWidth() / 2));
+                    case "right" ->
+                        position.setX(position.getX() - toStart - portalSize + (targetRegion.getLimit().getHeight() / 2));
+                    case "top" ->
+                        position.setX(position.getX() + toStart + portalSize - (targetRegion.getLimit().getWidth() / 2));
+                    default -> throw new IllegalArgumentException("Unknown fromPortal toSide: " + toSide);
+                };
+                default -> throw new IllegalArgumentException("Unknown fromPortal fromSide: " + fromSide);
+            };
+            case "inverted" -> switch (fromSide) {
+                case "bottom" -> switch (toSide) {
+                    case "bottom" ->
+                        position.setX(position.getX() + toStart - (portalSize) - (targetRegion.getLimit().getHeight() / 2));
+                    case "left" ->
+                        position.setX(position.getX() - toStart - (portalSize) + (targetRegion.getLimit().getHeight() / 2));
+                    case "right" ->
+                        position.setX(position.getX() + toStart - (portalSize - 1) - (targetRegion.getLimit().getHeight() / 2));
+                    case "top" ->
+                        position.setX(position.getX() + toStart - (portalSize + 1) - (targetRegion.getLimit().getHeight() / 2));
+                    default -> throw new IllegalArgumentException("Unknown fromPortal toSide: " + toSide);
+                };
+                case "left" -> switch (toSide) {
+                    case "bottom" ->
+                        position.setY(position.getY() + toStart - (portalSize - 2) - (targetRegion.getLimit().getWidth() / 2));
+                    case "left" ->
+                        position.setY(position.getY() + toStart - (portalSize - 2) - (targetRegion.getLimit().getHeight() / 2));
+                    case "right" ->
+                        position.setY(position.getY() - toStart - (portalSize - 1) + (targetRegion.getLimit().getHeight() / 2));
+                    case "top" ->
+                        position.setY(position.getY() - toStart - (portalSize - 1) + (targetRegion.getLimit().getWidth() / 2));
                     default -> throw new IllegalArgumentException("Unknown fromPortal toSide: " + toSide);
                 };
                 case "right" -> switch (toSide) {
@@ -368,6 +449,54 @@ public class RegionInstance {
                 };
                 default -> throw new IllegalArgumentException("Unknown fromPortal fromSide: " + fromSide);
             };
+            case "counterclockwise" -> switch (fromSide) {
+                case "bottom" -> switch (toSide) {
+                    case "bottom" ->
+                        position.setY(position.getY() + toStart - (portalSize) - (targetRegion.getLimit().getHeight() / 2));
+                    case "left" ->
+                        position.setY(position.getY() + toStart - (portalSize - 2) - (targetRegion.getLimit().getHeight() / 2));
+                    case "right" ->
+                        position.setY(position.getY() - toStart - (portalSize - 1) + (targetRegion.getLimit().getHeight() / 2));
+                    case "top" ->
+                        position.setY(position.getY() - toStart - (portalSize - 1 ) + (targetRegion.getLimit().getWidth() / 2));
+                    default -> throw new IllegalArgumentException("Unknown fromPortal toSide: " + toSide);
+                };
+                case "left" -> switch (toSide) {
+                    case "bottom" ->
+                        position.setX(position.getX() - toStart - portalSize + (targetRegion.getLimit().getWidth() / 2));
+                    case "left" ->
+                        position.setX(position.getX() + toStart - (portalSize - 2) - (targetRegion.getLimit().getHeight() / 2));
+                    case "right" ->
+                        position.setX(position.getX() - toStart - (portalSize - 1) + (targetRegion.getLimit().getHeight() / 2));
+                    case "top" ->
+                        position.setX(position.getX() - toStart - (portalSize - 1) + (targetRegion.getLimit().getWidth() / 2));
+                    default -> throw new IllegalArgumentException("Unknown fromPortal toSide: " + toSide);
+                };
+
+                case "right" -> switch (toSide) {
+                    case "bottom" ->
+                        position.setX(position.getX() - toStart - (portalSize - 1) + (targetRegion.getLimit().getWidth() / 2));
+                    case "left" ->
+                        position.setX(position.getX() - toStart - (portalSize - 1) + (targetRegion.getLimit().getHeight() / 2));
+                    case "right" ->
+                        position.setX(position.getX() + toStart - (portalSize - 2) - (targetRegion.getLimit().getHeight() / 2));
+                    case "top" ->
+                        position.setX(position.getX() + toStart - (portalSize - 2) - (targetRegion.getLimit().getWidth() / 2));
+                    default -> throw new IllegalArgumentException("Unknown fromPortal toSide: " + toSide);
+                };
+                case "top" -> switch (toSide) {
+                    case "bottom" ->
+                        position.setY(position.getY() + toStart - (portalSize + 1) - (targetRegion.getLimit().getHeight() / 2));
+                    case "left" ->
+                        position.setY(position.getY() - toStart - (portalSize + 1) + (targetRegion.getLimit().getHeight() / 2));
+                    case "right" ->
+                        position.setY(position.getY() + toStart - (portalSize) - (targetRegion.getLimit().getHeight() / 2));
+                    case "top" ->
+                        position.setY(position.getY() + toStart - (portalSize) - (targetRegion.getLimit().getWidth() / 2));
+                    default -> throw new IllegalArgumentException("Unknown fromPortal toSide: " + toSide);
+                };
+                default -> throw new IllegalArgumentException("Unknown fromPortal fromSide: " + fromSide);
+            };
             default -> throw new IllegalArgumentException("Unknown position rotation: " + fromRegion.getPosition().getRotation());
         };
         return logger.logReturn(returnValue);
@@ -419,6 +548,37 @@ public class RegionInstance {
                 };
                 default -> throw new IllegalArgumentException("Unknown parentPortal fromSide: " + fromSide);
             };
+            case "inverted" -> switch (fromSide) {
+                case "bottom" -> switch (toSide) {
+                    case "bottom" -> position.setY(position.getY() + (region.getLimit().getHeight() / 2));
+                    case "left" -> position.setY(position.getY() + (region.getLimit().getWidth() / 2));
+                    case "top" -> position.setY(position.getY() + (region.getLimit().getHeight() / 2));
+                    case "right" -> position.setY(position.getY() + (region.getLimit().getWidth() / 2));
+                    default -> throw new IllegalArgumentException("Unknown parentPortal toSide: " + toSide);
+                };
+                case "left" -> switch (toSide) {
+                    case "bottom" -> position.setX(position.getX() + (region.getLimit().getHeight() / 2));
+                    case "left" -> position.setX(position.getX() + (region.getLimit().getWidth() / 2));
+                    case "right" -> position.setX(position.getX() + (region.getLimit().getWidth() / 2));
+                    case "top" -> position.setX(position.getX() + (region.getLimit().getHeight() / 2));
+                    default -> throw new IllegalArgumentException("Unknown parentPortal toSide: " + toSide);
+                };
+                case "right" -> switch (toSide) {
+                    case "bottom" -> position.setX(position.getX() - (region.getLimit().getHeight() / 2));
+                    case "left" -> position.setX(position.getX() - (region.getLimit().getWidth() / 2));
+                    case "right" -> position.setX(position.getX() - (region.getLimit().getWidth() / 2));
+                    case "top" -> position.setX(position.getX() + (region.getLimit().getHeight() / 2));
+                    default -> throw new IllegalArgumentException("Unknown parentPortal toSide: " + toSide);
+                };
+                case "top" -> switch (toSide) {
+                    case "bottom" -> position.setY(position.getY() - (region.getLimit().getHeight() / 2));
+                    case "left" -> position.setY(position.getY() - (region.getLimit().getWidth() / 2));
+                    case "top" -> position.setY(position.getY() - (region.getLimit().getHeight() / 2));
+                    case "right" -> position.setY(position.getY() - (region.getLimit().getWidth() / 2));
+                    default -> throw new IllegalArgumentException("Unknown parentPortal toSide: " + toSide);
+                };
+                default -> throw new IllegalArgumentException("Unknown parentPortal fromSide: " + fromSide);
+            };
             case "clockwise" -> switch (fromSide) {
                 case "bottom" -> switch (toSide) {
                     case "bottom" -> position.setX(position.getX() - (region.getLimit().getHeight() / 2));
@@ -446,6 +606,37 @@ public class RegionInstance {
                     case "left" -> position.setX(position.getX() + (region.getLimit().getWidth() / 2));
                     case "right" -> position.setX(position.getX() + (region.getLimit().getWidth() / 2));
                     case "top" -> position.setX(position.getX() + (region.getLimit().getHeight() / 2));
+                    default -> throw new IllegalArgumentException("Unknown parentPortal toSide: " + toSide);
+                };
+                default -> throw new IllegalArgumentException("Unknown parentPortal fromSide: " + fromSide);
+            };
+            case "counterclockwise" -> switch (fromSide) {
+                case "bottom" -> switch (toSide) {
+                    case "bottom" -> position.setX(position.getX() + (region.getLimit().getHeight() / 2));
+                    case "left" -> position.setX(position.getX() + (region.getLimit().getWidth() / 2));
+                    case "right" -> position.setX(position.getX() + (region.getLimit().getWidth() / 2));
+                    case "top" -> position.setX(position.getX() + (region.getLimit().getHeight() / 2));
+                    default -> throw new IllegalArgumentException("Unknown parentPortal toSide: " + toSide);
+                };
+                case "left" -> switch (toSide) {
+                    case "bottom" -> position.setY(position.getY() - (region.getLimit().getHeight() / 2));
+                    case "left" -> position.setY(position.getY() + (region.getLimit().getWidth() / 2));
+                    case "right" -> position.setY(position.getY() - (region.getLimit().getWidth() / 2));
+                    case "top" -> position.setY(position.getY() - (region.getLimit().getHeight() / 2));
+                    default -> throw new IllegalArgumentException("Unknown parentPortal toSide: " + toSide);
+                };
+                case "right" -> switch (toSide) {
+                    case "bottom" -> position.setY(position.getY() + (region.getLimit().getHeight() / 2));
+                    case "left" -> position.setY(position.getY() + (region.getLimit().getWidth() / 2));
+                    case "right" -> position.setY(position.getY() + (region.getLimit().getWidth() / 2));
+                    case "top" -> position.setY(position.getY() + (region.getLimit().getHeight() / 2));
+                    default -> throw new IllegalArgumentException("Unknown parentPortal toSide: " + toSide);
+                };
+                case "top" -> switch (toSide) {
+                    case "bottom" -> position.setX(position.getX() - (region.getLimit().getHeight() / 2));
+                    case "left" -> position.setX(position.getX() - (region.getLimit().getWidth() / 2));
+                    case "right" -> position.setX(position.getX() - (region.getLimit().getWidth() / 2));
+                    case "top" -> position.setX(position.getX() - (region.getLimit().getHeight() / 2));
                     default -> throw new IllegalArgumentException("Unknown parentPortal toSide: " + toSide);
                 };
                 default -> throw new IllegalArgumentException("Unknown parentPortal fromSide: " + fromSide);
@@ -506,6 +697,42 @@ public class RegionInstance {
                 default ->
                     throw new IllegalArgumentException("Unknown available toPortalRule side: " + availablePortal.getSide());
             };
+            case "inverted" -> switch (availablePortal.getSide()) {
+                case "bottom" -> switch (toPortalRule.getSide()) {
+                    case "bottom" -> position.setRotation("normal");
+                    case "left" -> position.setRotation("counterclockwise");
+                    case "right" -> position.setRotation("clockwise");
+                    case "top" -> position.setRotation("normal");
+                    default ->
+                        throw new IllegalArgumentException("Unknown toPortalRule side: " + toPortalRule.getSide());
+                };
+                case "left" -> switch (toPortalRule.getSide()) {
+                    case "bottom" -> position.setRotation("clockwise");
+                    case "left" -> position.setRotation("normal");
+                    case "right" -> position.setRotation("inverted");
+                    case "top" -> position.setRotation("counterclockwise");
+                    default ->
+                        throw new IllegalArgumentException("Unknown toPortalRule side: " + toPortalRule.getSide());
+                };
+                case "right" -> switch (toPortalRule.getSide()) {
+                    case "bottom" -> position.setRotation("counterclockwise");
+                    case "left" -> position.setRotation("inverted");
+                    case "right" -> position.setRotation("normal");
+                    case "top" -> position.setRotation("clockwise");
+                    default ->
+                        throw new IllegalArgumentException("Unknown toPortalRule side: " + toPortalRule.getSide());
+                };
+                case "top" -> switch (toPortalRule.getSide()) {
+                    case "bottom" -> position.setRotation("inverted");
+                    case "left" -> position.setRotation("clockwise");
+                    case "right" -> position.setRotation("counterclockwise");
+                    case "top" -> position.setRotation("normal");
+                    default ->
+                        throw new IllegalArgumentException("Unknown toPortalRule side: " + toPortalRule.getSide());
+                };
+                default ->
+                    throw new IllegalArgumentException("Unknown available toPortalRule side: " + availablePortal.getSide());
+            };
             case "clockwise" -> switch (availablePortal.getSide()) {
                 case "bottom" -> switch (toPortalRule.getSide()) {
                     case "bottom" -> position.setRotation("counterclockwise");
@@ -532,14 +759,49 @@ public class RegionInstance {
                 };
                 case "top" ->  switch (toPortalRule.getSide()) {
                     case "bottom" -> position.setRotation("counterclockwise");
+                    case "left" -> position.setRotation("normal");
+                    case "right" -> position.setRotation("inverted");
+                    case "top" -> position.setRotation("clockwise");
+                    default -> throw new IllegalArgumentException("Unknown toPortalRule side: " + toPortalRule.getSide());
+                };
+                default ->
+                    throw new IllegalArgumentException("Unknown available toPortalRule side: " + availablePortal.getSide());
+            };
+            case "counterclockwise" -> switch (availablePortal.getSide()) {
+                case "bottom" -> switch (toPortalRule.getSide()) {
+                    case "bottom" -> position.setRotation("clockwise");
+                    case "left" -> position.setRotation("normal");
+                    case "right" -> position.setRotation("inverted");
+                    case "top" -> position.setRotation("counterclockwise");
+                    default -> throw new IllegalArgumentException("Unknown toPortalRule side: " + toPortalRule.getSide());
+                };
+                case "left" -> switch (toPortalRule.getSide()) {
+                    case "bottom" -> position.setRotation("inverted");
+                    case "left" -> position.setRotation("clockwise");
+                    case "right" -> position.setRotation("counterclockwise");
+                    case "top" -> position.setRotation("normal");
+                    default -> throw new IllegalArgumentException("Unknown toPortalRule side: " + toPortalRule.getSide());
+                };
+                case "right" -> switch (toPortalRule.getSide()) {
+                    case "bottom" -> position.setRotation("normal");
+                    case "left" -> position.setRotation("counterclockwise");
+                    case "right" -> position.setRotation("clockwise");
+                    case "top" -> position.setRotation("inverted");
+                    default -> throw new IllegalArgumentException("Unknown toPortalRule side: " + toPortalRule.getSide());
+                };
+                case "top" -> switch (toPortalRule.getSide()) {
+                    case "bottom" -> position.setRotation("counterclockwise");
+                    case "left" -> position.setRotation("inverted");
+                    case "right" -> position.setRotation("normal");
+                    case "top" -> position.setRotation("clockwise");
                     default -> throw new IllegalArgumentException("Unknown toPortalRule side: " + toPortalRule.getSide());
                 };
                 default ->
                     throw new IllegalArgumentException("Unknown available toPortalRule side: " + availablePortal.getSide());
             };
             default -> {
-                logger.log("Unknown position rotation: " + position.getRotation());
-                throw new IllegalArgumentException("Unknown position rotation: " + position.getRotation());
+                logger.log("Unknown position rotation: " + fromRegion.getPosition().getRotation());
+                throw new IllegalArgumentException("Unknown position rotation: " + fromRegion.getPosition().getRotation());
             }
         };
 

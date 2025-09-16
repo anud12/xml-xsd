@@ -1,0 +1,68 @@
+<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="3"/>
+    <randomization_table>
+      <entry value="1"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <portal_rule>
+      <entry id="portal_rule">
+        <limit width="1"/>
+        <to>
+          <region region_rule_ref="region_rule"/>
+        </to>
+      </entry>
+    </portal_rule>
+    <region_rule>
+      <entry id="region_rule">
+        <limit>
+          <width initial="10"/>
+          <height initial="6"/>
+        </limit>
+        <portals>
+          <portal portal_rule_ref="portal_rule" side="right">
+            <start initial="2"/>
+          </portal>
+        </portals>
+      </entry>
+    </region_rule>
+    <zone_rule>
+      <entry id="zone_rule">
+        <starting_region region_rule_ref="region_rule"/>
+      </entry>
+    </zone_rule>
+  </rule_group>
+  <data>
+    <location/>
+    <people/>
+    <zone_list>
+      <zone id="zone_id">
+        <region id="region_id">
+          <rule rule_id_ref="region_rule"/>
+          <position rotation="counterclockwise" x="100" y="1000"/>
+          <limit height="6" width="10"/>
+          <available_portals/>
+          <portals>
+            <portal id="0.2">
+              <from end="4" side="top" start="3"/>
+              <to end="3" region_ref="0.0" side="right" start="2" zone_ref="zone_id"/>
+            </portal>
+          </portals>
+        </region>
+        <region id="0.0">
+          <rule rule_id_ref="region_rule"/>
+          <position rotation="normal" x="92" y="998"/>
+          <limit height="6" width="10"/>
+          <available_portals>
+            <portal id="0.1" portal_rule_ref="portal_rule" side="right" start="2"/>
+          </available_portals>
+        </region>
+      </zone>
+    </zone_list>
+  </data>
+  <actions/>
+</world_step>
