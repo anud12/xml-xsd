@@ -380,13 +380,13 @@ public class RegionInstance {
                 };
                 case "right" -> switch (toSide) {
                     case "bottom" ->
-                        position.setY(position.getY() - toStart - (portalSize + 1) + (targetRegion.getLimit().getWidth() / 2));
+                        position.setY(position.getY() - toStart - (portalSize - 1) + (targetRegion.getLimit().getWidth() / 2));
                     case "left" ->
-                        position.setY(position.getY() + toStart - (portalSize - 1) - (targetRegion.getLimit().getHeight() / 2));
+                        position.setY(position.getY() - toStart - (portalSize - 1) + (targetRegion.getLimit().getHeight() / 2));
                     case "right" ->
-                        position.setY(position.getY() - toStart - portalSize + (targetRegion.getLimit().getHeight() / 2));
+                        position.setY(position.getY() - toStart - (portalSize) + (targetRegion.getLimit().getHeight() / 2));
                     case "top" ->
-                        position.setY(position.getY() + toStart - (portalSize) + (targetRegion.getLimit().getWidth() / 2));
+                        position.setY(position.getY() + toStart - (portalSize - 2) - (targetRegion.getLimit().getWidth() / 2));
                     default -> throw new IllegalArgumentException("Unknown fromPortal toSide: " + toSide);
                 };
                 case "top" -> switch (toSide) {
@@ -567,7 +567,7 @@ public class RegionInstance {
                     case "bottom" -> position.setX(position.getX() - (region.getLimit().getHeight() / 2));
                     case "left" -> position.setX(position.getX() - (region.getLimit().getWidth() / 2));
                     case "right" -> position.setX(position.getX() - (region.getLimit().getWidth() / 2));
-                    case "top" -> position.setX(position.getX() + (region.getLimit().getHeight() / 2));
+                    case "top" -> position.setX(position.getX() - (region.getLimit().getHeight() / 2));
                     default -> throw new IllegalArgumentException("Unknown parentPortal toSide: " + toSide);
                 };
                 case "top" -> switch (toSide) {

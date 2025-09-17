@@ -9,7 +9,7 @@ import ro.anud.xml_xsd.specification.HttpTestBase;
 import java.util.Collection;
 
 /*description
-#Append region from left portal to target bottom portal
+#Append region from right portal to target bottom portal
 ##When
 - origin region is rotated inverted
 - an append region rule is applied to a zone

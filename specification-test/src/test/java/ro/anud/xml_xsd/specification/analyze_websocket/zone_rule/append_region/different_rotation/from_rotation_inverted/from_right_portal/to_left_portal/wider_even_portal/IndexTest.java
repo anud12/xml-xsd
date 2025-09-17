@@ -1,4 +1,4 @@
-package ro.anud.xml_xsd.specification.analyze_websocket.zone_rule.append_region.different_rotation.from_rotation_inverted.from_right_portal.to_bottom_portal.wider_even_portal;
+package ro.anud.xml_xsd.specification.analyze_websocket.zone_rule.append_region.different_rotation.from_rotation_inverted.from_right_portal.to_left_portal.wider_even_portal;
 
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
@@ -9,7 +9,7 @@ import ro.anud.xml_xsd.specification.HttpTestBase;
 import java.util.Collection;
 
 /*description
-#Append region from right portal to target bottom portal with even portal width
+#Append region from right portal to target left portal with even portal width
 ##When
 - origin region is rotated inverted
 - an append region rule is applied to a zone
