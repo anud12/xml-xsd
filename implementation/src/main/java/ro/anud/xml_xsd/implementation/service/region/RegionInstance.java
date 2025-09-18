@@ -391,13 +391,13 @@ public class RegionInstance {
                 };
                 case "top" -> switch (toSide) {
                     case "bottom" ->
-                        position.setX(position.getX() + toStart - (portalSize - 1) - (targetRegion.getLimit().getHeight() / 2));
+                        position.setX(position.getX() - toStart - (portalSize + 1) + (targetRegion.getLimit().getHeight() / 2));
                     case "left" ->
-                        position.setX(position.getX() - toStart - (portalSize + 1) + (targetRegion.getLimit().getWidth() / 2));
+                        position.setX(position.getX() + toStart - (portalSize - 1) - (targetRegion.getLimit().getHeight() / 2));
                     case "right" ->
                         position.setX(position.getX() - toStart - portalSize + (targetRegion.getLimit().getHeight() / 2));
                     case "top" ->
-                        position.setX(position.getX() + toStart + portalSize - (targetRegion.getLimit().getWidth() / 2));
+                        position.setX(position.getX() - toStart - (portalSize ) + (targetRegion.getLimit().getWidth() / 2));
                     default -> throw new IllegalArgumentException("Unknown fromPortal toSide: " + toSide);
                 };
                 default -> throw new IllegalArgumentException("Unknown fromPortal fromSide: " + fromSide);
