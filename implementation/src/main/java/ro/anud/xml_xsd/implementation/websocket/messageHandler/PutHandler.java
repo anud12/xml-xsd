@@ -13,6 +13,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.StringReader;
 
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
+
 @Component
 public record PutHandler(WorldStepRunner worldStepRunner) implements WebSocketHandler.Factory {
 
@@ -21,8 +23,7 @@ public record PutHandler(WorldStepRunner worldStepRunner) implements WebSocketHa
         try {
             webSocketHandler.add(
                 "put", (client, string) -> {
-                    var putLogger = LocalLogger.logEnter("put");
-                    try {
+                    try (var putLogger = logScope("put")){
                         putLogger.log("Received message: " + string);
 
                         var token = string.split("\n");
@@ -53,10 +54,9 @@ public record PutHandler(WorldStepRunner worldStepRunner) implements WebSocketHa
                         putLogger.log("Sent Put return code to client");
                         client.send(Client.ReturnCode.Put);
                     } catch (Exception e) {
-                        putLogger.log(e);
+                        e.printStackTrace();
                         client.broadcastNOk(e.toString());
                     }
-                    putLogger.logReturnVoid();
                 });
         } catch (Exception e) {
             throw new RuntimeException("Error during WebSocketHandler instantiation", e);

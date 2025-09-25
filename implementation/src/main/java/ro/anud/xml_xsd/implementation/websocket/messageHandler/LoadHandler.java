@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static ro.anud.xml_xsd.implementation.controller.http.AnalyzeController.buildWorldStep;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 @Component
 public record LoadHandler(WorldStepRunner worldStepRunner) implements WebSocketHandler.Factory {
@@ -21,31 +22,33 @@ public record LoadHandler(WorldStepRunner worldStepRunner) implements WebSocketH
     public void instantiate(final WebSocketHandler webSocketHandler) {
         webSocketHandler.add(
             "load", (client, string) -> {
-                var logger = LocalLogger.logEnter("load");
-                worldStepRunner.stop();
-                try {
-                    var worldStep = buildWorldStep(string);
 
-                    logger.log("validating");
-                    var validationResult = new AtrributeValidator()
-                        .validate(Optional.ofNullable(worldStep));
-                    if (!validationResult.isEmpty()) {
-                        logger.log("validation failed");
-                        client.send(Client.ReturnCode.Load, validationResult.stream()
-                            .map(invalidAttribute -> {
-                                var allowedValues = String.join(", ", invalidAttribute.allowedValues());
-                                return "ValidationError: " + invalidAttribute.value() + " at " + invalidAttribute.path() + " not in [" + allowedValues + "]";
-                            })
-                            .collect(Collectors.joining("\n")));
-                        return;
+                try (var logger = logScope("load")){
+                    worldStepRunner.stop();
+                    try {
+                        var worldStep = buildWorldStep(string);
+
+                        logger.log("validating");
+                        var validationResult = new AtrributeValidator()
+                                .validate(Optional.ofNullable(worldStep));
+                        if (!validationResult.isEmpty()) {
+                            logger.log("validation failed");
+                            client.send(Client.ReturnCode.Load, validationResult.stream()
+                                    .map(invalidAttribute -> {
+                                        var allowedValues = String.join(", ", invalidAttribute.allowedValues());
+                                        return "ValidationError: " + invalidAttribute.value() + " at " + invalidAttribute.path() + " not in [" + allowedValues + "]";
+                                    })
+                                    .collect(Collectors.joining("\n")));
+                            return;
+                        }
+                        webSocketHandler.setWorldStepInstance(WorldStepInstance.createNewDoubleBuffered(worldStep));
+
+                        client.broadcast(Client.ReturnCode.Load);
+                    } catch (SAXException e) {
+                        client.broadcastNOk(e.toString());
                     }
-                    webSocketHandler.setWorldStepInstance(WorldStepInstance.createNewDoubleBuffered(worldStep));
-
-                    client.broadcast(Client.ReturnCode.Load);
-                } catch (SAXException e) {
-                    client.broadcastNOk(e.toString());
                 }
-                logger.logReturnVoid();
+
             });
     }
 }

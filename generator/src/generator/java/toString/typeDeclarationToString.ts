@@ -23,17 +23,6 @@ import {dependantTypeToDeserializeAtPath} from "./depedantType/dependantTypeToDe
 import {dependantTypeToGetNodeAtPath} from "./depedantType/dependantTypeToGetNodeAtPath";
 
 
-type ClassTemplateParts = {
-  declaration: (body: string) => string,
-  attributeDeclaration: (dependantType: DependantType) => string,
-  attributeGetterSetter: (dependantType: DependantType) => string,
-  childrenDeclaration: (dependantType: DependantType) => { dependantTypes: DependantType[], templateString: string },
-  childrenGetterSetter: (dependantType: DependantType) => { dependantTypes: DependantType[], templateString: string },
-  fieldGetterSetter: () => string,
-  serializer: () => string,
-}
-
-
 function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadata, dependantType: DependantType, extensions: DependantType[] = []): GetObjectBodyReturn {
   const dependantTypeList: DependantType[] = [];
 

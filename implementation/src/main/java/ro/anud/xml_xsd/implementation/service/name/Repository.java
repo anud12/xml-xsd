@@ -9,6 +9,8 @@ import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 import java.util.HashMap;
 import java.util.Optional;
 
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
+
 public class Repository {
 
     private final HashMap<String, Entry> stringNameRuleHashMap = new HashMap<>();
@@ -18,11 +20,13 @@ public class Repository {
     }
 
     public void index() {
-        worldStepInstance.streamWorldStep()
-            .flatMap(WorldStep::streamRuleGroup)
-            .flatMap(RuleGroup::streamNameRule)
-            .flatMap(NameRule::streamEntry)
-            .forEach(nameRule -> stringNameRuleHashMap.put(nameRule.getId(), nameRule));
+        try (var scope = logScope()){
+            worldStepInstance.streamWorldStep()
+                    .flatMap(WorldStep::streamRuleGroup)
+                    .flatMap(RuleGroup::streamNameRule)
+                    .flatMap(NameRule::streamEntry)
+                    .forEach(nameRule -> stringNameRuleHashMap.put(nameRule.getId(), nameRule));
+        }
     }
 
     public Optional<Entry> getNameTokenById(String id) {

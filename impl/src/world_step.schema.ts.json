@@ -151,6 +151,32 @@
     "isNullable": true
   },
   {
+    "name": "type__rotation_90deg_step",
+    "type": "simple",
+    "value": {
+      "metaType": "union",
+      "value": [
+        {
+          "metaType": "primitive",
+          "value": "\"normal\""
+        },
+        {
+          "metaType": "primitive",
+          "value": "\"clockwise\""
+        },
+        {
+          "metaType": "primitive",
+          "value": "\"inverted\""
+        },
+        {
+          "metaType": "primitive",
+          "value": "\"counterclockwise\""
+        }
+      ]
+    },
+    "isNullable": true
+  },
+  {
     "name": "type__property_mutation_on",
     "type": "complex",
     "value": {
@@ -752,12 +778,64 @@
     }
   },
   {
-    "name": "type__region_rule",
+    "name": "type__portal_rule",
     "type": "complex",
-    "isSingle": false,
+    "isSingle": true,
     "value": {
       "metaType": "object",
-      "isSingle": false,
+      "isSingle": true,
+      "value": {
+        "limit": {
+          "metaType": "object",
+          "value": {},
+          "isSingle": true,
+          "isNullable": false,
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "width": {
+                "metaType": "primitive",
+                "value": "xs:int",
+                "isNullable": false
+              }
+            },
+            "isNullable": false
+          }
+        },
+        "to": {
+          "metaType": "object",
+          "isSingle": true,
+          "value": {
+            "region": {
+              "metaType": "object",
+              "value": {},
+              "isSingle": false,
+              "isNullable": true,
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "region_rule_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string",
+                    "isNullable": false
+                  }
+                },
+                "isNullable": false
+              }
+            }
+          },
+          "isNullable": false
+        }
+      }
+    }
+  },
+  {
+    "name": "type__region_rule",
+    "type": "complex",
+    "isSingle": true,
+    "value": {
+      "metaType": "object",
+      "isSingle": true,
       "value": {
         "limit": {
           "metaType": "object",
@@ -778,11 +856,11 @@
           },
           "isNullable": false
         },
-        "portal": {
+        "portals": {
           "metaType": "object",
-          "isSingle": false,
+          "isSingle": true,
           "value": {
-            "from": {
+            "portal": {
               "metaType": "object",
               "attributes": {
                 "metaType": "object",
@@ -791,78 +869,24 @@
                     "metaType": "primitive",
                     "value": "type__rectangle_side",
                     "isNullable": false
-                  }
-                },
-                "isNullable": false
-              },
-              "isSingle": true,
-              "value": {
-                "position": {
-                  "metaType": "reference",
-                  "value": "type__math_operations",
-                  "isSingle": true,
-                  "isNullable": false
-                },
-                "width": {
-                  "metaType": "reference",
-                  "value": "type__math_operations",
-                  "isSingle": true,
-                  "isNullable": false
-                }
-              },
-              "isNullable": false
-            },
-            "to": {
-              "metaType": "object",
-              "attributes": {
-                "metaType": "object",
-                "value": {
-                  "side": {
+                  },
+                  "portal_rule_ref": {
                     "metaType": "primitive",
-                    "value": "type__rectangle_side",
-                    "isNullable": true
+                    "value": "xs:string",
+                    "isNullable": false
                   }
-                },
-                "isNullable": true
+                }
               },
-              "isSingle": true,
+              "isSingle": false,
               "value": {
-                "region": {
-                  "metaType": "object",
-                  "attributes": {
-                    "metaType": "object",
-                    "value": {
-                      "region_rule_ref": {
-                        "metaType": "primitive",
-                        "value": "xs:string",
-                        "isNullable": false
-                      },
-                      "side": {
-                        "metaType": "primitive",
-                        "value": "type__rectangle_side",
-                        "isNullable": false
-                      }
-                    }
-                  },
+                "start": {
+                  "metaType": "reference",
+                  "value": "type__math_operations",
                   "isSingle": true,
-                  "value": {
-                    "position": {
-                      "metaType": "reference",
-                      "value": "type__math_operations",
-                      "isSingle": true,
-                      "isNullable": false
-                    },
-                    "width": {
-                      "metaType": "reference",
-                      "value": "type__math_operations",
-                      "isSingle": true,
-                      "isNullable": false
-                    }
-                  },
                   "isNullable": false
                 }
               },
-              "isNullable": false
+              "isNullable": true
             }
           },
           "isNullable": true
@@ -1812,6 +1836,41 @@
               },
               "isNullable": true
             },
+            "portal_rule": {
+              "metaType": "object",
+              "isSingle": true,
+              "value": {
+                "entry": {
+                  "metaType": "composition",
+                  "value": [
+                    {
+                      "metaType": "object",
+                      "value": {},
+                      "isSingle": true,
+                      "isNullable": false,
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "id": {
+                            "metaType": "primitive",
+                            "value": "xs:string",
+                            "isNullable": false
+                          }
+                        },
+                        "isNullable": false
+                      }
+                    },
+                    {
+                      "metaType": "primitive",
+                      "value": "type__portal_rule"
+                    }
+                  ],
+                  "isSingle": false,
+                  "isNullable": true
+                }
+              },
+              "isNullable": true
+            },
             "region_rule": {
               "metaType": "object",
               "isSingle": true,
@@ -2274,6 +2333,11 @@
                                 "metaType": "primitive",
                                 "value": "xs:integer",
                                 "isNullable": false
+                              },
+                              "rotation": {
+                                "metaType": "primitive",
+                                "value": "type__rotation_90deg_step",
+                                "isNullable": false
                               }
                             }
                           }
@@ -2298,6 +2362,44 @@
                               }
                             }
                           }
+                        },
+                        "available_portals": {
+                          "metaType": "object",
+                          "isSingle": true,
+                          "value": {
+                            "portal": {
+                              "metaType": "object",
+                              "value": {},
+                              "isSingle": false,
+                              "isNullable": true,
+                              "attributes": {
+                                "metaType": "object",
+                                "value": {
+                                  "id": {
+                                    "metaType": "primitive",
+                                    "value": "xs:string",
+                                    "isNullable": false
+                                  },
+                                  "start": {
+                                    "metaType": "primitive",
+                                    "value": "xs:int",
+                                    "isNullable": false
+                                  },
+                                  "side": {
+                                    "metaType": "primitive",
+                                    "value": "type__rectangle_side",
+                                    "isNullable": false
+                                  },
+                                  "portal_rule_ref": {
+                                    "metaType": "primitive",
+                                    "value": "xs:string",
+                                    "isNullable": false
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "isNullable": true
                         },
                         "portals": {
                           "metaType": "object",
@@ -2344,47 +2446,6 @@
                                     }
                                   }
                                 },
-                                "to_rule": {
-                                  "metaType": "object",
-                                  "isSingle": true,
-                                  "value": {
-                                    "region": {
-                                      "metaType": "object",
-                                      "attributes": {
-                                        "metaType": "object",
-                                        "value": {
-                                          "region_rule_ref": {
-                                            "metaType": "primitive",
-                                            "value": "xs:string",
-                                            "isNullable": false
-                                          },
-                                          "side": {
-                                            "metaType": "primitive",
-                                            "value": "type__rectangle_side",
-                                            "isNullable": false
-                                          }
-                                        }
-                                      },
-                                      "isSingle": false,
-                                      "value": {
-                                        "start": {
-                                          "metaType": "reference",
-                                          "value": "type__math_operations",
-                                          "isSingle": true,
-                                          "isNullable": false
-                                        },
-                                        "end": {
-                                          "metaType": "reference",
-                                          "value": "type__math_operations",
-                                          "isSingle": true,
-                                          "isNullable": false
-                                        }
-                                      },
-                                      "isNullable": false
-                                    }
-                                  },
-                                  "isNullable": true
-                                },
                                 "to": {
                                   "metaType": "object",
                                   "value": {},
@@ -2416,7 +2477,7 @@
                                       "end": {
                                         "metaType": "primitive",
                                         "value": "xs:integer",
-                                        "isNullable": true
+                                        "isNullable": false
                                       }
                                     }
                                   }
@@ -2839,7 +2900,7 @@
                 "isNullable": false
               }
             },
-            "region.append": {
+            "region.appendNew": {
               "metaType": "object",
               "value": {},
               "isSingle": true,
@@ -2853,11 +2914,6 @@
                     "isNullable": false
                   },
                   "region_id_ref": {
-                    "metaType": "primitive",
-                    "value": "xs:string",
-                    "isNullable": false
-                  },
-                  "portal_id_ref": {
                     "metaType": "primitive",
                     "value": "xs:string",
                     "isNullable": false

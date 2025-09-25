@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class AtrributeValidator {
 
@@ -25,14 +26,14 @@ public class AtrributeValidator {
     );
 
     public List<AttributeValidator.InvalidAttribute> validate(Optional<WorldStep> worldStep) {
-        var logger = logEnter("validate");
-        return worldStep.map(step -> attributeValidatorList.stream()
-                .flatMap(attributeValidator -> {
-                    logger.log("validating using", attributeValidator.getClass().getSimpleName());
-                    return attributeValidator.validate(step).stream();
-                })
-                .toList())
-            .orElseGet(List::of);
-
+        try (var logger = logScope("validate")){
+            return worldStep.map(step -> attributeValidatorList.stream()
+                            .flatMap(attributeValidator -> {
+                                logger.log("validating using", attributeValidator.getClass().getSimpleName());
+                                return attributeValidator.validate(step).stream();
+                            })
+                            .toList())
+                    .orElseGet(List::of);
+        }
     }
 }

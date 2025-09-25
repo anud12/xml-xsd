@@ -20,46 +20,48 @@ import java.util.Objects;
 import java.util.Optional;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class PersonMoveTo {
     public static void apply(WorldStepInstance worldStepInstance) {
-        var logger = logEnter();
+        try (var scope = logScope()) {
+            worldStepInstance.getOutInstance().streamWorldStep()
+                    .flatMap(WorldStep::streamActions)
+                    .flatMap(Actions::streamPerson_moveTo)
+                    .toList()
+                    .forEach(Person_moveTo::removeFromParent);
 
-        worldStepInstance.getOutInstance().streamWorldStep()
-            .flatMap(WorldStep::streamActions)
-            .flatMap(Actions::streamPerson_moveTo)
-            .toList()
-            .forEach(Person_moveTo::removeFromParent);
+
+            worldStepInstance.streamWorldStep()
+                    .flatMap(WorldStep::streamActions)
+                    .flatMap(Actions::streamPerson_moveTo)
+                    .toList()
+                    .forEach(personMoveTo -> {
+                        var findPathResult = applyFindPath(worldStepInstance, personMoveTo);
+                        if (findPathResult.isEmpty()) {
+                            applyPath(worldStepInstance, personMoveTo)
+                                    .ifPresent(worldStepInstanceConsumer -> worldStepInstanceConsumer.apply(worldStepInstance.getOutInstance()));
+                        }
+                        findPathResult.ifPresent(worldStepInstanceConsumer -> worldStepInstanceConsumer.apply(worldStepInstance.getOutInstance()));
+                    });
+
+            worldStepInstance.getOutInstance()
+                    .streamWorldStep()
+                    .flatMap(WorldStep::streamActions)
+                    .flatMap(Actions::streamPerson_moveTo)
+                    .toList()
+                    .forEach(personMoveTo -> {
+                        personMoveTo.getPath().ifPresent(path -> {
+                            if (path.getNode().isEmpty()) {
+                                personMoveTo.removeFromParent();
+                            }
+                        });
+                        personMoveTo.getFindPathTowards()
+                                .ifPresent(ignored -> personMoveTo.removeFromParent());
+                    });
+        }
 
 
-        worldStepInstance.streamWorldStep()
-            .flatMap(WorldStep::streamActions)
-            .flatMap(Actions::streamPerson_moveTo)
-            .toList()
-            .forEach(personMoveTo -> {
-                var findPathResult = applyFindPath(worldStepInstance, personMoveTo);
-                if (findPathResult.isEmpty()) {
-                    applyPath(worldStepInstance, personMoveTo)
-                        .ifPresent(worldStepInstanceConsumer -> worldStepInstanceConsumer.apply(worldStepInstance.getOutInstance()));
-                }
-                findPathResult.ifPresent(worldStepInstanceConsumer -> worldStepInstanceConsumer.apply(worldStepInstance.getOutInstance()));
-            });
-
-        worldStepInstance.getOutInstance()
-            .streamWorldStep()
-            .flatMap(WorldStep::streamActions)
-            .flatMap(Actions::streamPerson_moveTo)
-            .toList()
-            .forEach(personMoveTo -> {
-                personMoveTo.getPath().ifPresent(path -> {
-                    if (path.getNode().isEmpty()) {
-                        personMoveTo.removeFromParent();
-                    }
-                });
-                personMoveTo.getFindPathTowards()
-                    .ifPresent(ignored -> personMoveTo.removeFromParent());
-            });
-        logger.logReturnVoid();
     }
 
     private static Optional<Mutation<WorldStepInstance>> applyPath(

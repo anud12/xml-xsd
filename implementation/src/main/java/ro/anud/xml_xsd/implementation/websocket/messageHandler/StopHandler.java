@@ -7,6 +7,8 @@ import ro.anud.xml_xsd.implementation.util.LocalLogger;
 import ro.anud.xml_xsd.implementation.websocket.Client;
 import ro.anud.xml_xsd.implementation.websocket.WebSocketHandler;
 
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
+
 @Component
 public record StopHandler(WorldStepRunner worldStepRunner) implements WebSocketHandler.Factory {
 
@@ -14,15 +16,14 @@ public record StopHandler(WorldStepRunner worldStepRunner) implements WebSocketH
     public void instantiate(final WebSocketHandler webSocketHandler) {
         webSocketHandler.add(
             "stop", (client, string) -> {
-                var logger = LocalLogger.logEnter("start");
+                try (var logger = logScope("start")){
+                    var worldStepInstance = webSocketHandler.getWorldStepInstance();
+                    worldStepRunner.stop();
+                    worldStepInstance.getOutInstance().setWebSocketHandler(null);
+                    worldStepInstance.setWebSocketHandler(null);
 
-                var worldStepInstance = webSocketHandler.getWorldStepInstance();
-                worldStepRunner.stop();
-                worldStepInstance.getOutInstance().setWebSocketHandler(null);
-                worldStepInstance.setWebSocketHandler(null);
-
-                client.send(Client.ReturnCode.Stop);
-                logger.logReturnVoid();
+                    client.send(Client.ReturnCode.Stop);
+                }
             });
     }
 }

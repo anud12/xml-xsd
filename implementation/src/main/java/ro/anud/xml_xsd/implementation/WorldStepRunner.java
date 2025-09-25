@@ -28,6 +28,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 @Component
 public class WorldStepRunner {
@@ -50,22 +51,22 @@ public class WorldStepRunner {
         EventsMetadata.apply(worldStepInstance);
         LocationGraphAddClassification.locationGraphAddClassification(worldStepInstance);
         PersonAssignClassification.apply(worldStepInstance);
-
-        var logger = logEnter("Applying counter synchronization to WorldStepInstance");
-        worldStepInstance.getOutInstance()
-            .getWorldStep()
-            .flatMap(WorldStep::getWorldMetadata)
-            .map(WorldMetadata::getCounter)
-            .ifPresent(counter -> {
-                var value = worldStepInstance.getWorldStep()
-                    .map(WorldStep::getWorldMetadataOrDefault)
+        try (var scope = logScope("Applying counter synchronization to WorldStepInstance")){
+            worldStepInstance.getOutInstance()
+                    .getWorldStep()
+                    .flatMap(WorldStep::getWorldMetadata)
                     .map(WorldMetadata::getCounter)
-                    .map(Counter::getValue)
-                    .orElse(0);
-                counter.setValue(value);
-            });
-        worldStepInstance.getOutInstance().offsetRandomizationTable();
-        logger.logReturnVoid("Counter synchronization applied");
+                    .ifPresent(counter -> {
+                        var value = worldStepInstance.getWorldStep()
+                                .map(WorldStep::getWorldMetadataOrDefault)
+                                .map(WorldMetadata::getCounter)
+                                .map(Counter::getValue)
+                                .orElse(0);
+                        counter.setValue(value);
+                    });
+            worldStepInstance.getOutInstance().offsetRandomizationTable();
+            scope.log("Counter synchronization applied");
+        }
     }
 
     public WorldStepRunner start(WorldStepInstance worldStepInstance, WebSocketHandler webSocketHandler) {
@@ -104,8 +105,8 @@ public class WorldStepRunner {
                 long elapsedTime = System.nanoTime() - startTime;
                 long sleepTime = intervalUs - elapsedTime;
                 System.out.println("------------------------------------------");
-                System.out.println("Task Finished in : " + String.format("%,d", elapsedTime) + "us");
-                System.out.println("Sleeping         : " + String.format("%,d", sleepTime) + "us");
+                System.out.println("Task Finished in : " + String.format("%,d", elapsedTime) + "ns");
+                System.out.println("Sleeping         : " + String.format("%,d", sleepTime) + "ns");
                 System.out.println("------------------------------------------");
 
                 if (sleepTime > 0) {

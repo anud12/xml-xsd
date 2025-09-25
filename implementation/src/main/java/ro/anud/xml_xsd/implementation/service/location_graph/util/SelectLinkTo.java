@@ -11,38 +11,41 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class SelectLinkTo {
 
     public static Stream<LinkTo> selectLinkTo(
         WorldStepInstance worldStepInstance,
         IType_linkTo_selection<?> selection) {
-        var logger = logEnter(selection.buildPath());
-        var originNode = selection.getOrigin_nodeGraph_selection()
-            .map(worldStepInstance.locationGraph::selectNodeGraph)
-            .orElse(Stream.empty())
-            .toList();
-        var destinationNode = selection.getDestination_nodeGraph_selection()
-            .map(worldStepInstance.locationGraph::selectNodeGraph)
-            .orElse(Stream.empty())
-            .toList();
+        try (var scope = logScope()){
+            var originNode = selection.getOrigin_nodeGraph_selection()
+                    .map(worldStepInstance.locationGraph::selectNodeGraph)
+                    .orElse(Stream.empty())
+                    .toList();
+            var destinationNode = selection.getDestination_nodeGraph_selection()
+                    .map(worldStepInstance.locationGraph::selectNodeGraph)
+                    .orElse(Stream.empty())
+                    .toList();
 
-        if ((!originNode.isEmpty()) && destinationNode.isEmpty()) {
-            return originNode.stream()
-                .flatMap(Node::streamLinks)
-                .flatMap(Links::streamLinkTo);
+            if ((!originNode.isEmpty()) && destinationNode.isEmpty()) {
+                return originNode.stream()
+                        .flatMap(Node::streamLinks)
+                        .flatMap(Links::streamLinkTo);
+            }
+            if ((!destinationNode.isEmpty()) && originNode.isEmpty()) {
+                return destinationNode.stream()
+                        .flatMap(Node::streamLinks)
+                        .flatMap(Links::streamLinkTo);
+            }
+            var destinationNodeId = destinationNode.stream()
+                    .map(Node::getId)
+                    .toList();
+            return originNode
+                    .stream().flatMap(Node::streamLinks)
+                    .flatMap(Links::streamLinkTo)
+                    .filter(linkTo -> destinationNodeId.contains(linkTo.getNodeIdRef()));
         }
-        if ((!destinationNode.isEmpty()) && originNode.isEmpty()) {
-            return destinationNode.stream()
-                .flatMap(Node::streamLinks)
-                .flatMap(Links::streamLinkTo);
-        }
-        var destinationNodeId = destinationNode.stream()
-            .map(Node::getId)
-            .toList();
-        return originNode
-            .stream().flatMap(Node::streamLinks)
-            .flatMap(Links::streamLinkTo)
-            .filter(linkTo -> destinationNodeId.contains(linkTo.getNodeIdRef()));
+
     }
 }

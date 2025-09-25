@@ -6,6 +6,7 @@ import ro.anud.xml_xsd.implementation.WorldStepRunner;
 import ro.anud.xml_xsd.implementation.util.LocalLogger;
 import ro.anud.xml_xsd.implementation.websocket.WebSocketHandler;
 
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 import static ro.anud.xml_xsd.implementation.websocket.Client.ReturnCode.Start;
 import static ro.anud.xml_xsd.implementation.websocket.Client.ReturnCode.StartStop;
 
@@ -16,15 +17,15 @@ public record StartHandler(WorldStepRunner worldStepRunner) implements WebSocket
     public void instantiate(final WebSocketHandler webSocketHandler) {
         webSocketHandler.add(
             "start", (client, string) -> {
-                var logger = LocalLogger.logEnter("start");
+                try (var logger = logScope("start")){
+                    var worldStepInstance = webSocketHandler.getWorldStepInstance();
+                    worldStepInstance.getOutInstance().setWebSocketHandler(webSocketHandler);
+                    worldStepRunner.stop()
+                            .start(worldStepInstance, webSocketHandler);
 
-                var worldStepInstance = webSocketHandler.getWorldStepInstance();
-                worldStepInstance.getOutInstance().setWebSocketHandler(webSocketHandler);
-                worldStepRunner.stop()
-                    .start(worldStepInstance, webSocketHandler);
+                    client.send(Start);
+                }
 
-                client.send(Start);
-                logger.logReturnVoid();
             });
     }
 }

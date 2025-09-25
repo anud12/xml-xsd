@@ -339,6 +339,162 @@ namespace XSD.Nworld_step {
         }
       }
     }
+
+    private XSD.Nworld_step.Nrule_group.node_rule? _node_rule = null;
+    public XSD.Nworld_step.Nrule_group.node_rule node_ruleOrCreate
+    {
+      get
+      {
+        if(_node_rule == null)
+        {
+          _node_rule = new();
+          _node_rule.ParentNode = this;
+          NotifyChange();
+        }
+        return _node_rule;
+      }
+      set
+      {
+        _node_rule = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.node_rule? node_rule
+    {
+      get
+      {
+        return _node_rule;
+      }
+      set
+      {
+        _node_rule = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
+
+    private XSD.Nworld_step.Nrule_group.portal_rule? _portal_rule = null;
+    public XSD.Nworld_step.Nrule_group.portal_rule portal_ruleOrCreate
+    {
+      get
+      {
+        if(_portal_rule == null)
+        {
+          _portal_rule = new();
+          _portal_rule.ParentNode = this;
+          NotifyChange();
+        }
+        return _portal_rule;
+      }
+      set
+      {
+        _portal_rule = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.portal_rule? portal_rule
+    {
+      get
+      {
+        return _portal_rule;
+      }
+      set
+      {
+        _portal_rule = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
+
+    private XSD.Nworld_step.Nrule_group.region_rule? _region_rule = null;
+    public XSD.Nworld_step.Nrule_group.region_rule region_ruleOrCreate
+    {
+      get
+      {
+        if(_region_rule == null)
+        {
+          _region_rule = new();
+          _region_rule.ParentNode = this;
+          NotifyChange();
+        }
+        return _region_rule;
+      }
+      set
+      {
+        _region_rule = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.region_rule? region_rule
+    {
+      get
+      {
+        return _region_rule;
+      }
+      set
+      {
+        _region_rule = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
+
+    private XSD.Nworld_step.Nrule_group.zone_rule? _zone_rule = null;
+    public XSD.Nworld_step.Nrule_group.zone_rule zone_ruleOrCreate
+    {
+      get
+      {
+        if(_zone_rule == null)
+        {
+          _zone_rule = new();
+          _zone_rule.ParentNode = this;
+          NotifyChange();
+        }
+        return _zone_rule;
+      }
+      set
+      {
+        _zone_rule = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.zone_rule? zone_rule
+    {
+      get
+      {
+        return _zone_rule;
+      }
+      set
+      {
+        _zone_rule = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
     public rule_group()
     {
     }
@@ -401,6 +557,26 @@ namespace XSD.Nworld_step {
         this.location_classification_rule = location_classification_rule;
       }
 
+      if(linkedNode is XSD.Nworld_step.Nrule_group.node_rule node_rule)
+      {
+        this.node_rule = node_rule;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nrule_group.portal_rule portal_rule)
+      {
+        this.portal_rule = portal_rule;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nrule_group.region_rule region_rule)
+      {
+        this.region_rule = region_rule;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nrule_group.zone_rule zone_rule)
+      {
+        this.zone_rule = zone_rule;
+      }
+
     }
 
     public void ClearChild(dynamic linkedNode)
@@ -443,6 +619,26 @@ namespace XSD.Nworld_step {
       if(linkedNode is XSD.Nworld_step.Nrule_group.location_classification_rule)
       {
         this.location_classification_rule = null;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nrule_group.node_rule)
+      {
+        this.node_rule = null;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nrule_group.portal_rule)
+      {
+        this.portal_rule = null;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nrule_group.region_rule)
+      {
+        this.region_rule = null;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nrule_group.zone_rule)
+      {
+        this.zone_rule = null;
       }
 
     }
@@ -488,6 +684,14 @@ namespace XSD.Nworld_step {
       location_graph_rule = rawNode.InitializeWithRawNode("location_graph_rule", location_graph_rule);
 
       location_classification_rule = rawNode.InitializeWithRawNode("location_classification_rule", location_classification_rule);
+
+      node_rule = rawNode.InitializeWithRawNode("node_rule", node_rule);
+
+      portal_rule = rawNode.InitializeWithRawNode("portal_rule", portal_rule);
+
+      region_rule = rawNode.InitializeWithRawNode("region_rule", region_rule);
+
+      zone_rule = rawNode.InitializeWithRawNode("zone_rule", zone_rule);
       NotifyChange();
     }
 
@@ -519,6 +723,18 @@ namespace XSD.Nworld_step {
       }
       if(location_classification_rule != null) {
         rawNode.children["location_classification_rule"] = new List<RawNode> { location_classification_rule.SerializeIntoRawNode() };
+      }
+      if(node_rule != null) {
+        rawNode.children["node_rule"] = new List<RawNode> { node_rule.SerializeIntoRawNode() };
+      }
+      if(portal_rule != null) {
+        rawNode.children["portal_rule"] = new List<RawNode> { portal_rule.SerializeIntoRawNode() };
+      }
+      if(region_rule != null) {
+        rawNode.children["region_rule"] = new List<RawNode> { region_rule.SerializeIntoRawNode() };
+      }
+      if(zone_rule != null) {
+        rawNode.children["zone_rule"] = new List<RawNode> { zone_rule.SerializeIntoRawNode() };
       }
       return rawNode;
     }
@@ -594,6 +810,34 @@ namespace XSD.Nworld_step {
         this.location_classification_rule.DeserializeAtPath(childXPath, rawNode);
         return;
       }
+      if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.node_rule.TagName))
+      {
+        this.node_rule ??= new XSD.Nworld_step.Nrule_group.node_rule();
+        var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.node_rule.TagName.Length + 3);
+        this.node_rule.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
+      if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.portal_rule.TagName))
+      {
+        this.portal_rule ??= new XSD.Nworld_step.Nrule_group.portal_rule();
+        var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.portal_rule.TagName.Length + 3);
+        this.portal_rule.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
+      if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.region_rule.TagName))
+      {
+        this.region_rule ??= new XSD.Nworld_step.Nrule_group.region_rule();
+        var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.region_rule.TagName.Length + 3);
+        this.region_rule.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
+      if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.zone_rule.TagName))
+      {
+        this.zone_rule ??= new XSD.Nworld_step.Nrule_group.zone_rule();
+        var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.zone_rule.TagName.Length + 3);
+        this.zone_rule.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
 
       Deserialize(rawNode);
     }
@@ -639,6 +883,18 @@ namespace XSD.Nworld_step {
       if(linkedNode is XSD.Nworld_step.Nrule_group.location_classification_rule casted_location_classification_rule) {
         return 0;
       }
+      if(linkedNode is XSD.Nworld_step.Nrule_group.node_rule casted_node_rule) {
+        return 0;
+      }
+      if(linkedNode is XSD.Nworld_step.Nrule_group.portal_rule casted_portal_rule) {
+        return 0;
+      }
+      if(linkedNode is XSD.Nworld_step.Nrule_group.region_rule casted_region_rule) {
+        return 0;
+      }
+      if(linkedNode is XSD.Nworld_step.Nrule_group.zone_rule casted_zone_rule) {
+        return 0;
+      }
       return null;
     }
 
@@ -651,6 +907,10 @@ namespace XSD.Nworld_step {
       || candidateChild is XSD.Nworld_step.Nrule_group.link_group_rule_list
       || candidateChild is XSD.Nworld_step.Nrule_group.location_graph_rule
       || candidateChild is XSD.Nworld_step.Nrule_group.location_classification_rule
+      || candidateChild is XSD.Nworld_step.Nrule_group.node_rule
+      || candidateChild is XSD.Nworld_step.Nrule_group.portal_rule
+      || candidateChild is XSD.Nworld_step.Nrule_group.region_rule
+      || candidateChild is XSD.Nworld_step.Nrule_group.zone_rule
       || false;
     }
 
@@ -660,7 +920,7 @@ namespace XSD.Nworld_step {
             return false;
 
         var other = (rule_group)obj;
-        return Equals(property_rule, other.property_rule) && Equals(classification_rule, other.classification_rule) && Equals(name_rule, other.name_rule) && Equals(action_rule, other.action_rule) && Equals(events_rule, other.events_rule) && Equals(link_group_rule_list, other.link_group_rule_list) && Equals(location_graph_rule, other.location_graph_rule) && Equals(location_classification_rule, other.location_classification_rule);
+        return Equals(property_rule, other.property_rule) && Equals(classification_rule, other.classification_rule) && Equals(name_rule, other.name_rule) && Equals(action_rule, other.action_rule) && Equals(events_rule, other.events_rule) && Equals(link_group_rule_list, other.link_group_rule_list) && Equals(location_graph_rule, other.location_graph_rule) && Equals(location_classification_rule, other.location_classification_rule) && Equals(node_rule, other.node_rule) && Equals(portal_rule, other.portal_rule) && Equals(region_rule, other.region_rule) && Equals(zone_rule, other.zone_rule);
     }
 
     public override int GetHashCode()
@@ -675,6 +935,10 @@ namespace XSD.Nworld_step {
         acc = HashCode.Combine(acc, link_group_rule_list);
         acc = HashCode.Combine(acc, location_graph_rule);
         acc = HashCode.Combine(acc, location_classification_rule);
+        acc = HashCode.Combine(acc, node_rule);
+        acc = HashCode.Combine(acc, portal_rule);
+        acc = HashCode.Combine(acc, region_rule);
+        acc = HashCode.Combine(acc, zone_rule);
         return acc;
     }
   }
