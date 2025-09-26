@@ -7,46 +7,44 @@ using Guiclient.util;
 using Godot;
 using XSD;
 
-namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.Nportals.Nportal.Nto {}
+namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.Navailable_portals.Nportal {}
 namespace XSD {
 }
-namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.Nportals.Nportal {
-  public class to : IEquatable<to>, XSD.ILinkedNode  {
+namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.Navailable_portals {
+  public class portal : IEquatable<portal>, XSD.ILinkedNode  {
 
-    public static string ClassTypeId = ".world_step.data.zone_list.zone.region.portals.portal.to";
-    public static string TagName = "to";
+    public static string ClassTypeId = ".world_step.data.zone_list.zone.region.available_portals.portal";
+    public static string TagName = "portal";
 
-    public string NodeName {get =>"to";}
+    public string NodeName {get =>"portal";}
     public RawNode rawNode = new RawNode();
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<to>> _onSelfChangeCallbackList = new();
+    private List<Action<portal>> _onSelfChangeCallbackList = new();
     private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
-    private System.String _zone_ref;
-    public System.String zone_ref { get => _zone_ref; set => _zone_ref = value; }
-    private System.String _region_ref;
-    public System.String region_ref { get => _region_ref; set => _region_ref = value; }
-    private System.String _side;
-    public System.String side { get => _side; set => _side = value; }
+    private System.String _id;
+    public System.String id { get => _id; set => _id = value; }
     private System.Int32 _start;
     public System.Int32 start { get => _start; set => _start = value; }
-    private System.Int32 _end;
-    public System.Int32 end { get => _end; set => _end = value; }
+    private System.String _side;
+    public System.String side { get => _side; set => _side = value; }
+    private System.String _portal_rule_ref;
+    public System.String portal_rule_ref { get => _portal_rule_ref; set => _portal_rule_ref = value; }
 
     //Children elements
-    public to()
+    public portal()
     {
     }
 
-    public to(RawNode rawNode)
+    public portal(RawNode rawNode)
     {
       Deserialize(rawNode);
     }
 
-    public to(XmlElement xmlElement)
+    public portal(XmlElement xmlElement)
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
@@ -54,25 +52,21 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.Nportals.Nportal {
 
     public void SetAttribute(string name, string? value)
     {
-      if(name == "zone_ref")
+      if(name == "id")
       {
-        Set_zone_ref(value);
-      }
-      if(name == "region_ref")
-      {
-        Set_region_ref(value);
-      }
-      if(name == "side")
-      {
-        Set_side(value);
+        Set_id(value);
       }
       if(name == "start")
       {
         Set_start(value?.ToInt() ?? 0);
       }
-      if(name == "end")
+      if(name == "side")
       {
-        Set_end(value?.ToInt() ?? 0);
+        Set_side(value);
+      }
+      if(name == "portal_rule_ref")
+      {
+        Set_portal_rule_ref(value);
       }
     }
 
@@ -84,7 +78,7 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.Nportals.Nportal {
     {
     }
 
-    public Action OnSelfChange(Action<to> callback)
+    public Action OnSelfChange(Action<portal> callback)
     {
       _onSelfChangeCallbackList.Add(callback);
       return () => _onSelfChangeCallbackList.Remove(callback);
@@ -106,32 +100,27 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.Nportals.Nportal {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing to");
+      // Godot.GD.Print("Deserializing portal");
       //Deserialize arguments
-      if(rawNode.attributes.ContainsKey("zone_ref"))
+      if(rawNode.attributes.ContainsKey("id"))
       {
-        var attribute_zone_ref = rawNode.attributes["zone_ref"];
-        this.zone_ref = rawNode.attributes["zone_ref"];
-      }
-      if(rawNode.attributes.ContainsKey("region_ref"))
-      {
-        var attribute_region_ref = rawNode.attributes["region_ref"];
-        this.region_ref = rawNode.attributes["region_ref"];
-      }
-      if(rawNode.attributes.ContainsKey("side"))
-      {
-        var attribute_side = rawNode.attributes["side"];
-        this.side = rawNode.attributes["side"];
+        var attribute_id = rawNode.attributes["id"];
+        this.id = rawNode.attributes["id"];
       }
       if(rawNode.attributes.ContainsKey("start"))
       {
         var attribute_start = rawNode.attributes["start"];
         this.start = attribute_start.ToInt();
       }
-      if(rawNode.attributes.ContainsKey("end"))
+      if(rawNode.attributes.ContainsKey("side"))
       {
-        var attribute_end = rawNode.attributes["end"];
-        this.end = attribute_end.ToInt();
+        var attribute_side = rawNode.attributes["side"];
+        this.side = rawNode.attributes["side"];
+      }
+      if(rawNode.attributes.ContainsKey("portal_rule_ref"))
+      {
+        var attribute_portal_rule_ref = rawNode.attributes["portal_rule_ref"];
+        this.portal_rule_ref = rawNode.attributes["portal_rule_ref"];
       }
 
       //Deserialize children
@@ -141,25 +130,21 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.Nportals.Nportal {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this._zone_ref != null)
+      if(this._id != null)
       {
-        rawNode.attributes["zone_ref"] = this._zone_ref.ToString();
-      }
-      if(this._region_ref != null)
-      {
-        rawNode.attributes["region_ref"] = this._region_ref.ToString();
-      }
-      if(this._side != null)
-      {
-        rawNode.attributes["side"] = this._side.ToString();
+        rawNode.attributes["id"] = this._id.ToString();
       }
       if(this._start != null)
       {
         rawNode.attributes["start"] = this._start.ToString();
       }
-      if(this._end != null)
+      if(this._side != null)
       {
-        rawNode.attributes["end"] = this._end.ToString();
+        rawNode.attributes["side"] = this._side.ToString();
+      }
+      if(this._portal_rule_ref != null)
+      {
+        rawNode.attributes["portal_rule_ref"] = this._portal_rule_ref.ToString();
       }
 
       //Serialize children
@@ -168,35 +153,17 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.Nportals.Nportal {
 
     public void Serialize(XmlElement element)
     {
-        // Godot.GD.Print("Serializing to");
+        // Godot.GD.Print("Serializing portal");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public System.String Get_zone_ref()
+    public System.String Get_id()
     {
-      return this.zone_ref;
+      return this.id;
     }
-    public void Set_zone_ref(System.String value)
+    public void Set_id(System.String value)
     {
-      this.zone_ref = value;
-      this.NotifyChange();
-    }
-    public System.String Get_region_ref()
-    {
-      return this.region_ref;
-    }
-    public void Set_region_ref(System.String value)
-    {
-      this.region_ref = value;
-      this.NotifyChange();
-    }
-    public System.String Get_side()
-    {
-      return this.side;
-    }
-    public void Set_side(System.String value)
-    {
-      this.side = value;
+      this.id = value;
       this.NotifyChange();
     }
     public System.Int32 Get_start()
@@ -208,13 +175,22 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.Nportals.Nportal {
       this.start = value;
       this.NotifyChange();
     }
-    public System.Int32 Get_end()
+    public System.String Get_side()
     {
-      return this.end;
+      return this.side;
     }
-    public void Set_end(System.Int32 value)
+    public void Set_side(System.String value)
     {
-      this.end = value;
+      this.side = value;
+      this.NotifyChange();
+    }
+    public System.String Get_portal_rule_ref()
+    {
+      return this.portal_rule_ref;
+    }
+    public void Set_portal_rule_ref(System.String value)
+    {
+      this.portal_rule_ref = value;
       this.NotifyChange();
     }
 
@@ -253,24 +229,23 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.Nportals.Nportal {
       return false;
     }
 
-    public bool Equals(to? obj)
+    public bool Equals(portal? obj)
     {
         if (obj == null || GetType() != obj.GetType())
             return false;
 
-        var other = (to)obj;
-        return Equals(zone_ref, other.zone_ref) && Equals(region_ref, other.region_ref) && Equals(side, other.side) && Equals(start, other.start) && Equals(end, other.end);
+        var other = (portal)obj;
+        return Equals(id, other.id) && Equals(start, other.start) && Equals(side, other.side) && Equals(portal_rule_ref, other.portal_rule_ref);
     }
 
     public override int GetHashCode()
     {
         var acc = 0;
 
-        acc = HashCode.Combine(acc, zone_ref);
-        acc = HashCode.Combine(acc, region_ref);
-        acc = HashCode.Combine(acc, side);
+        acc = HashCode.Combine(acc, id);
         acc = HashCode.Combine(acc, start);
-        acc = HashCode.Combine(acc, end);
+        acc = HashCode.Combine(acc, side);
+        acc = HashCode.Combine(acc, portal_rule_ref);
         return acc;
     }
   }

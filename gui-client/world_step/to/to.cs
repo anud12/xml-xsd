@@ -7,40 +7,52 @@ using Guiclient.util;
 using Godot;
 using XSD;
 
-namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.Nlimit {}
+namespace XSD.Nto {}
 namespace XSD {
 }
-namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion {
-  public class limit : IEquatable<limit>, XSD.ILinkedNode  {
+namespace XSD {
+  public class to : IEquatable<to>, XSD.ILinkedNode  {
 
-    public static string ClassTypeId = ".world_step.data.zone_list.zone.region.limit";
-    public static string TagName = "limit";
+    public static string ClassTypeId = ".to";
+    public static string TagName = "to";
 
-    public string NodeName {get =>"limit";}
+    public string NodeName {get =>"to";}
     public RawNode rawNode = new RawNode();
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<limit>> _onSelfChangeCallbackList = new();
+    private List<Action<to>> _onSelfChangeCallbackList = new();
     private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
-    private System.Int32 _width;
-    public System.Int32 width { get => _width; set => _width = value; }
-    private System.Int32 _height;
-    public System.Int32 height { get => _height; set => _height = value; }
 
     //Children elements
-    public limit()
+
+    private LinkedNodeCollection<XSD.Nto.region> _region = new();
+    public LinkedNodeCollection<XSD.Nto.region> region
+    {
+      get => _region;
+      set
+      {
+        _region = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _region.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          NotifyChange();
+        };
+      }
+    }
+    public to()
     {
     }
 
-    public limit(RawNode rawNode)
+    public to(RawNode rawNode)
     {
       Deserialize(rawNode);
     }
 
-    public limit(XmlElement xmlElement)
+    public to(XmlElement xmlElement)
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
@@ -48,25 +60,27 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion {
 
     public void SetAttribute(string name, string? value)
     {
-      if(name == "width")
-      {
-        Set_width(value?.ToInt() ?? 0);
-      }
-      if(name == "height")
-      {
-        Set_height(value?.ToInt() ?? 0);
-      }
     }
 
     public void SetChild(dynamic linkedNode)
     {
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nto.region> region)
+      {
+        this.region = region;
+      }
     }
 
     public void ClearChild(dynamic linkedNode)
     {
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nto.region>)
+      {
+        this.region = null;
+      }
     }
 
-    public Action OnSelfChange(Action<limit> callback)
+    public Action OnSelfChange(Action<to> callback)
     {
       _onSelfChangeCallbackList.Add(callback);
       return () => _onSelfChangeCallbackList.Remove(callback);
@@ -88,62 +102,33 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing limit");
+      // Godot.GD.Print("Deserializing to");
       //Deserialize arguments
-      if(rawNode.attributes.ContainsKey("width"))
-      {
-        var attribute_width = rawNode.attributes["width"];
-        this.width = attribute_width.ToInt();
-      }
-      if(rawNode.attributes.ContainsKey("height"))
-      {
-        var attribute_height = rawNode.attributes["height"];
-        this.height = attribute_height.ToInt();
-      }
 
       //Deserialize children
+      region = rawNode.InitializeWithRawNode("region", region);
+      region.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          NotifyChange();
+        };
       NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this._width != null)
-      {
-        rawNode.attributes["width"] = this._width.ToString();
-      }
-      if(this._height != null)
-      {
-        rawNode.attributes["height"] = this._height.ToString();
-      }
 
       //Serialize children
+      rawNode.children["region"] = region.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 
     public void Serialize(XmlElement element)
     {
-        // Godot.GD.Print("Serializing limit");
+        // Godot.GD.Print("Serializing to");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
-    }
-    public System.Int32 Get_width()
-    {
-      return this.width;
-    }
-    public void Set_width(System.Int32 value)
-    {
-      this.width = value;
-      this.NotifyChange();
-    }
-    public System.Int32 Get_height()
-    {
-      return this.height;
-    }
-    public void Set_height(System.Int32 value)
-    {
-      this.height = value;
-      this.NotifyChange();
     }
 
 
@@ -152,6 +137,25 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion {
       if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
+      }
+      if(xpath.StartsWith(XSD.Nto.region.TagName + "["))
+      {
+        var startIndex = (XSD.Nto.region.TagName + "[").Length;
+        var startTokens = xpath.Split(XSD.Nto.region.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Nto.region.TagName + "[" + indexString + "]", "");
+        var pathIndex = indexString.ToInt();
+        if(this.region.ContainsKey(pathIndex))
+        {
+          this.region[pathIndex].DeserializeAtPath(childXPath, rawNode);
+          return;
+        }
+        var newEntry = new XSD.Nto.region();
+        this.region[pathIndex] = newEntry;
+        newEntry.DeserializeAtPath(childXPath, rawNode);
+
+        return;
       }
 
       Deserialize(rawNode);
@@ -174,28 +178,31 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion {
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
+      if(linkedNode is XSD.Nto.region casted_region) {
+        return this._region.KeyOf(casted_region);
+      }
       return null;
     }
 
     public bool IsValidChildType(ILinkedNode candidateChild) {
-      return false;
+      return candidateChild is XSD.Nto.region
+      || false;
     }
 
-    public bool Equals(limit? obj)
+    public bool Equals(to? obj)
     {
         if (obj == null || GetType() != obj.GetType())
             return false;
 
-        var other = (limit)obj;
-        return Equals(width, other.width) && Equals(height, other.height);
+        var other = (to)obj;
+        return Equals(region, other.region);
     }
 
     public override int GetHashCode()
     {
         var acc = 0;
 
-        acc = HashCode.Combine(acc, width);
-        acc = HashCode.Combine(acc, height);
+        acc = HashCode.Combine(acc, region);
         return acc;
     }
   }

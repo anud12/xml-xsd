@@ -7,42 +7,38 @@ using Guiclient.util;
 using Godot;
 using XSD;
 
-namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.Nposition {}
+namespace XSD.Ntype__portal_rule.Nlimit {}
 namespace XSD {
 }
-namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion {
-  public class position : IEquatable<position>, XSD.ILinkedNode  {
+namespace XSD.Ntype__portal_rule {
+  public class limit : IEquatable<limit>, XSD.ILinkedNode  {
 
-    public static string ClassTypeId = ".world_step.data.zone_list.zone.region.position";
-    public static string TagName = "position";
+    public static string ClassTypeId = ".type__portal_rule.limit";
+    public static string TagName = "limit";
 
-    public string NodeName {get =>"position";}
+    public string NodeName {get =>"limit";}
     public RawNode rawNode = new RawNode();
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<position>> _onSelfChangeCallbackList = new();
+    private List<Action<limit>> _onSelfChangeCallbackList = new();
     private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
-    private System.Int32 _x;
-    public System.Int32 x { get => _x; set => _x = value; }
-    private System.Int32 _y;
-    public System.Int32 y { get => _y; set => _y = value; }
-    private System.String _rotation;
-    public System.String rotation { get => _rotation; set => _rotation = value; }
+    private System.Int32 _width;
+    public System.Int32 width { get => _width; set => _width = value; }
 
     //Children elements
-    public position()
+    public limit()
     {
     }
 
-    public position(RawNode rawNode)
+    public limit(RawNode rawNode)
     {
       Deserialize(rawNode);
     }
 
-    public position(XmlElement xmlElement)
+    public limit(XmlElement xmlElement)
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
@@ -50,17 +46,9 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion {
 
     public void SetAttribute(string name, string? value)
     {
-      if(name == "x")
+      if(name == "width")
       {
-        Set_x(value?.ToInt() ?? 0);
-      }
-      if(name == "y")
-      {
-        Set_y(value?.ToInt() ?? 0);
-      }
-      if(name == "rotation")
-      {
-        Set_rotation(value);
+        Set_width(value?.ToInt() ?? 0);
       }
     }
 
@@ -72,7 +60,7 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion {
     {
     }
 
-    public Action OnSelfChange(Action<position> callback)
+    public Action OnSelfChange(Action<limit> callback)
     {
       _onSelfChangeCallbackList.Add(callback);
       return () => _onSelfChangeCallbackList.Remove(callback);
@@ -94,22 +82,12 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing position");
+      // Godot.GD.Print("Deserializing limit");
       //Deserialize arguments
-      if(rawNode.attributes.ContainsKey("x"))
+      if(rawNode.attributes.ContainsKey("width"))
       {
-        var attribute_x = rawNode.attributes["x"];
-        this.x = attribute_x.ToInt();
-      }
-      if(rawNode.attributes.ContainsKey("y"))
-      {
-        var attribute_y = rawNode.attributes["y"];
-        this.y = attribute_y.ToInt();
-      }
-      if(rawNode.attributes.ContainsKey("rotation"))
-      {
-        var attribute_rotation = rawNode.attributes["rotation"];
-        this.rotation = rawNode.attributes["rotation"];
+        var attribute_width = rawNode.attributes["width"];
+        this.width = attribute_width.ToInt();
       }
 
       //Deserialize children
@@ -119,17 +97,9 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this._x != null)
+      if(this._width != null)
       {
-        rawNode.attributes["x"] = this._x.ToString();
-      }
-      if(this._y != null)
-      {
-        rawNode.attributes["y"] = this._y.ToString();
-      }
-      if(this._rotation != null)
-      {
-        rawNode.attributes["rotation"] = this._rotation.ToString();
+        rawNode.attributes["width"] = this._width.ToString();
       }
 
       //Serialize children
@@ -138,35 +108,17 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion {
 
     public void Serialize(XmlElement element)
     {
-        // Godot.GD.Print("Serializing position");
+        // Godot.GD.Print("Serializing limit");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public System.Int32 Get_x()
+    public System.Int32 Get_width()
     {
-      return this.x;
+      return this.width;
     }
-    public void Set_x(System.Int32 value)
+    public void Set_width(System.Int32 value)
     {
-      this.x = value;
-      this.NotifyChange();
-    }
-    public System.Int32 Get_y()
-    {
-      return this.y;
-    }
-    public void Set_y(System.Int32 value)
-    {
-      this.y = value;
-      this.NotifyChange();
-    }
-    public System.String Get_rotation()
-    {
-      return this.rotation;
-    }
-    public void Set_rotation(System.String value)
-    {
-      this.rotation = value;
+      this.width = value;
       this.NotifyChange();
     }
 
@@ -205,22 +157,20 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion {
       return false;
     }
 
-    public bool Equals(position? obj)
+    public bool Equals(limit? obj)
     {
         if (obj == null || GetType() != obj.GetType())
             return false;
 
-        var other = (position)obj;
-        return Equals(x, other.x) && Equals(y, other.y) && Equals(rotation, other.rotation);
+        var other = (limit)obj;
+        return Equals(width, other.width);
     }
 
     public override int GetHashCode()
     {
         var acc = 0;
 
-        acc = HashCode.Combine(acc, x);
-        acc = HashCode.Combine(acc, y);
-        acc = HashCode.Combine(acc, rotation);
+        acc = HashCode.Combine(acc, width);
         return acc;
     }
   }

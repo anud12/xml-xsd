@@ -7,42 +7,78 @@ using Guiclient.util;
 using Godot;
 using XSD;
 
-namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.Nportals.Nportal.Nfrom {}
+namespace XSD.Nportals.Nportal {}
 namespace XSD {
 }
-namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.Nportals.Nportal {
-  public class from : IEquatable<from>, XSD.ILinkedNode  {
+namespace XSD.Nportals {
+  public class portal : IEquatable<portal>, XSD.ILinkedNode  {
 
-    public static string ClassTypeId = ".world_step.data.zone_list.zone.region.portals.portal.from";
-    public static string TagName = "from";
+    public static string ClassTypeId = ".portals.portal";
+    public static string TagName = "portal";
 
-    public string NodeName {get =>"from";}
+    public string NodeName {get =>"portal";}
     public RawNode rawNode = new RawNode();
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<from>> _onSelfChangeCallbackList = new();
+    private List<Action<portal>> _onSelfChangeCallbackList = new();
     private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
     private System.String _side;
     public System.String side { get => _side; set => _side = value; }
-    private System.Int32 _start;
-    public System.Int32 start { get => _start; set => _start = value; }
-    private System.Int32 _end;
-    public System.Int32 end { get => _end; set => _end = value; }
+    private System.String _portal_rule_ref;
+    public System.String portal_rule_ref { get => _portal_rule_ref; set => _portal_rule_ref = value; }
 
     //Children elements
-    public from()
+    private type__math_operations _start = new type__math_operations();
+    public type__math_operations startOrCreate
+    {
+      get
+      {
+        if(_start == null)
+        {
+          _start = new();
+          _start.ParentNode = this;
+          NotifyChange();
+        }
+        return _start;
+      }
+      set
+      {
+        _start = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__math_operations start
+    {
+      get
+      {
+        return _start;
+      }
+      set
+      {
+        _start = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
+    public portal()
     {
     }
 
-    public from(RawNode rawNode)
+    public portal(RawNode rawNode)
     {
       Deserialize(rawNode);
     }
 
-    public from(XmlElement xmlElement)
+    public portal(XmlElement xmlElement)
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
@@ -54,25 +90,31 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.Nportals.Nportal {
       {
         Set_side(value);
       }
-      if(name == "start")
+      if(name == "portal_rule_ref")
       {
-        Set_start(value?.ToInt() ?? 0);
-      }
-      if(name == "end")
-      {
-        Set_end(value?.ToInt() ?? 0);
+        Set_portal_rule_ref(value);
       }
     }
 
     public void SetChild(dynamic linkedNode)
     {
+      if(linkedNode is type__math_operations start)
+      {
+        this.start = start;
+      }
+
     }
 
     public void ClearChild(dynamic linkedNode)
     {
+      if(linkedNode is type__math_operations)
+      {
+        this.start = new();
+      }
+
     }
 
-    public Action OnSelfChange(Action<from> callback)
+    public Action OnSelfChange(Action<portal> callback)
     {
       _onSelfChangeCallbackList.Add(callback);
       return () => _onSelfChangeCallbackList.Remove(callback);
@@ -94,25 +136,21 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.Nportals.Nportal {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing from");
+      // Godot.GD.Print("Deserializing portal");
       //Deserialize arguments
       if(rawNode.attributes.ContainsKey("side"))
       {
         var attribute_side = rawNode.attributes["side"];
         this.side = rawNode.attributes["side"];
       }
-      if(rawNode.attributes.ContainsKey("start"))
+      if(rawNode.attributes.ContainsKey("portal_rule_ref"))
       {
-        var attribute_start = rawNode.attributes["start"];
-        this.start = attribute_start.ToInt();
-      }
-      if(rawNode.attributes.ContainsKey("end"))
-      {
-        var attribute_end = rawNode.attributes["end"];
-        this.end = attribute_end.ToInt();
+        var attribute_portal_rule_ref = rawNode.attributes["portal_rule_ref"];
+        this.portal_rule_ref = rawNode.attributes["portal_rule_ref"];
       }
 
       //Deserialize children
+      start = rawNode.InitializeWithRawNode("start", start);
       NotifyChange();
     }
 
@@ -123,22 +161,21 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.Nportals.Nportal {
       {
         rawNode.attributes["side"] = this._side.ToString();
       }
-      if(this._start != null)
+      if(this._portal_rule_ref != null)
       {
-        rawNode.attributes["start"] = this._start.ToString();
-      }
-      if(this._end != null)
-      {
-        rawNode.attributes["end"] = this._end.ToString();
+        rawNode.attributes["portal_rule_ref"] = this._portal_rule_ref.ToString();
       }
 
       //Serialize children
+      if(start != null) {
+        rawNode.children["start"] = new List<RawNode> { start.SerializeIntoRawNode() };
+      }
       return rawNode;
     }
 
     public void Serialize(XmlElement element)
     {
-        // Godot.GD.Print("Serializing from");
+        // Godot.GD.Print("Serializing portal");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
@@ -151,22 +188,13 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.Nportals.Nportal {
       this.side = value;
       this.NotifyChange();
     }
-    public System.Int32 Get_start()
+    public System.String Get_portal_rule_ref()
     {
-      return this.start;
+      return this.portal_rule_ref;
     }
-    public void Set_start(System.Int32 value)
+    public void Set_portal_rule_ref(System.String value)
     {
-      this.start = value;
-      this.NotifyChange();
-    }
-    public System.Int32 Get_end()
-    {
-      return this.end;
-    }
-    public void Set_end(System.Int32 value)
-    {
-      this.end = value;
+      this.portal_rule_ref = value;
       this.NotifyChange();
     }
 
@@ -176,6 +204,12 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.Nportals.Nportal {
       if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
+      }
+      if(xpath.StartsWith(type__math_operations.TagName))
+      {
+        var childXPath = xpath.Substring(type__math_operations.TagName.Length + 3);
+        this.start.DeserializeAtPath(childXPath, rawNode);
+        return;
       }
 
       Deserialize(rawNode);
@@ -198,20 +232,24 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.Nportals.Nportal {
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
+      if(linkedNode is type__math_operations casted_start) {
+        return 0;
+      }
       return null;
     }
 
     public bool IsValidChildType(ILinkedNode candidateChild) {
-      return false;
+      return candidateChild is type__math_operations
+      || false;
     }
 
-    public bool Equals(from? obj)
+    public bool Equals(portal? obj)
     {
         if (obj == null || GetType() != obj.GetType())
             return false;
 
-        var other = (from)obj;
-        return Equals(side, other.side) && Equals(start, other.start) && Equals(end, other.end);
+        var other = (portal)obj;
+        return Equals(side, other.side) && Equals(portal_rule_ref, other.portal_rule_ref) && Equals(start, other.start);
     }
 
     public override int GetHashCode()
@@ -219,8 +257,8 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.Nportals.Nportal {
         var acc = 0;
 
         acc = HashCode.Combine(acc, side);
+        acc = HashCode.Combine(acc, portal_rule_ref);
         acc = HashCode.Combine(acc, start);
-        acc = HashCode.Combine(acc, end);
         return acc;
     }
   }

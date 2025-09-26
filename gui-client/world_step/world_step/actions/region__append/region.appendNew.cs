@@ -7,42 +7,40 @@ using Guiclient.util;
 using Godot;
 using XSD;
 
-namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.Nposition {}
+namespace XSD.Nworld_step.Nactions.Nregion__appendNew {}
 namespace XSD {
 }
-namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion {
-  public class position : IEquatable<position>, XSD.ILinkedNode  {
+namespace XSD.Nworld_step.Nactions {
+  public class region__appendNew : IEquatable<region__appendNew>, XSD.ILinkedNode  {
 
-    public static string ClassTypeId = ".world_step.data.zone_list.zone.region.position";
-    public static string TagName = "position";
+    public static string ClassTypeId = ".world_step.actions.region.appendNew";
+    public static string TagName = "region.appendNew";
 
-    public string NodeName {get =>"position";}
+    public string NodeName {get =>"region.appendNew";}
     public RawNode rawNode = new RawNode();
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<position>> _onSelfChangeCallbackList = new();
+    private List<Action<region__appendNew>> _onSelfChangeCallbackList = new();
     private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
-    private System.Int32 _x;
-    public System.Int32 x { get => _x; set => _x = value; }
-    private System.Int32 _y;
-    public System.Int32 y { get => _y; set => _y = value; }
-    private System.String _rotation;
-    public System.String rotation { get => _rotation; set => _rotation = value; }
+    private System.String _zone_id_ref;
+    public System.String zone_id_ref { get => _zone_id_ref; set => _zone_id_ref = value; }
+    private System.String _region_id_ref;
+    public System.String region_id_ref { get => _region_id_ref; set => _region_id_ref = value; }
 
     //Children elements
-    public position()
+    public region__appendNew()
     {
     }
 
-    public position(RawNode rawNode)
+    public region__appendNew(RawNode rawNode)
     {
       Deserialize(rawNode);
     }
 
-    public position(XmlElement xmlElement)
+    public region__appendNew(XmlElement xmlElement)
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
@@ -50,17 +48,13 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion {
 
     public void SetAttribute(string name, string? value)
     {
-      if(name == "x")
+      if(name == "zone_id_ref")
       {
-        Set_x(value?.ToInt() ?? 0);
+        Set_zone_id_ref(value);
       }
-      if(name == "y")
+      if(name == "region_id_ref")
       {
-        Set_y(value?.ToInt() ?? 0);
-      }
-      if(name == "rotation")
-      {
-        Set_rotation(value);
+        Set_region_id_ref(value);
       }
     }
 
@@ -72,7 +66,7 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion {
     {
     }
 
-    public Action OnSelfChange(Action<position> callback)
+    public Action OnSelfChange(Action<region__appendNew> callback)
     {
       _onSelfChangeCallbackList.Add(callback);
       return () => _onSelfChangeCallbackList.Remove(callback);
@@ -94,22 +88,17 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing position");
+      // Godot.GD.Print("Deserializing region.appendNew");
       //Deserialize arguments
-      if(rawNode.attributes.ContainsKey("x"))
+      if(rawNode.attributes.ContainsKey("zone_id_ref"))
       {
-        var attribute_x = rawNode.attributes["x"];
-        this.x = attribute_x.ToInt();
+        var attribute_zone_id_ref = rawNode.attributes["zone_id_ref"];
+        this.zone_id_ref = rawNode.attributes["zone_id_ref"];
       }
-      if(rawNode.attributes.ContainsKey("y"))
+      if(rawNode.attributes.ContainsKey("region_id_ref"))
       {
-        var attribute_y = rawNode.attributes["y"];
-        this.y = attribute_y.ToInt();
-      }
-      if(rawNode.attributes.ContainsKey("rotation"))
-      {
-        var attribute_rotation = rawNode.attributes["rotation"];
-        this.rotation = rawNode.attributes["rotation"];
+        var attribute_region_id_ref = rawNode.attributes["region_id_ref"];
+        this.region_id_ref = rawNode.attributes["region_id_ref"];
       }
 
       //Deserialize children
@@ -119,17 +108,13 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this._x != null)
+      if(this._zone_id_ref != null)
       {
-        rawNode.attributes["x"] = this._x.ToString();
+        rawNode.attributes["zone_id_ref"] = this._zone_id_ref.ToString();
       }
-      if(this._y != null)
+      if(this._region_id_ref != null)
       {
-        rawNode.attributes["y"] = this._y.ToString();
-      }
-      if(this._rotation != null)
-      {
-        rawNode.attributes["rotation"] = this._rotation.ToString();
+        rawNode.attributes["region_id_ref"] = this._region_id_ref.ToString();
       }
 
       //Serialize children
@@ -138,35 +123,26 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion {
 
     public void Serialize(XmlElement element)
     {
-        // Godot.GD.Print("Serializing position");
+        // Godot.GD.Print("Serializing region.appendNew");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public System.Int32 Get_x()
+    public System.String Get_zone_id_ref()
     {
-      return this.x;
+      return this.zone_id_ref;
     }
-    public void Set_x(System.Int32 value)
+    public void Set_zone_id_ref(System.String value)
     {
-      this.x = value;
+      this.zone_id_ref = value;
       this.NotifyChange();
     }
-    public System.Int32 Get_y()
+    public System.String Get_region_id_ref()
     {
-      return this.y;
+      return this.region_id_ref;
     }
-    public void Set_y(System.Int32 value)
+    public void Set_region_id_ref(System.String value)
     {
-      this.y = value;
-      this.NotifyChange();
-    }
-    public System.String Get_rotation()
-    {
-      return this.rotation;
-    }
-    public void Set_rotation(System.String value)
-    {
-      this.rotation = value;
+      this.region_id_ref = value;
       this.NotifyChange();
     }
 
@@ -205,22 +181,21 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion {
       return false;
     }
 
-    public bool Equals(position? obj)
+    public bool Equals(region__appendNew? obj)
     {
         if (obj == null || GetType() != obj.GetType())
             return false;
 
-        var other = (position)obj;
-        return Equals(x, other.x) && Equals(y, other.y) && Equals(rotation, other.rotation);
+        var other = (region__appendNew)obj;
+        return Equals(zone_id_ref, other.zone_id_ref) && Equals(region_id_ref, other.region_id_ref);
     }
 
     public override int GetHashCode()
     {
         var acc = 0;
 
-        acc = HashCode.Combine(acc, x);
-        acc = HashCode.Combine(acc, y);
-        acc = HashCode.Combine(acc, rotation);
+        acc = HashCode.Combine(acc, zone_id_ref);
+        acc = HashCode.Combine(acc, region_id_ref);
         return acc;
     }
   }

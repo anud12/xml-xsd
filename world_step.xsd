@@ -1600,14 +1600,14 @@
                                     </xs:documentation>
                                   </xs:annotation>
                                   <xs:complexType>
-                                    <xs:attribute name="x" type="xs:integer" use="required">
+                                    <xs:attribute name="x" type="xs:int" use="required">
                                       <xs:annotation>
                                         <xs:documentation>
                                           Horizontal coordinate.
                                         </xs:documentation>
                                       </xs:annotation>
                                     </xs:attribute>
-                                    <xs:attribute name="y" type="xs:integer" use="required">
+                                    <xs:attribute name="y" type="xs:int" use="required">
                                       <xs:annotation>
                                         <xs:documentation>
                                           Vertical coordinate.
@@ -1630,14 +1630,14 @@
                                     </xs:documentation>
                                   </xs:annotation>
                                   <xs:complexType>
-                                    <xs:attribute name="width" type="xs:integer" use="required">
+                                    <xs:attribute name="width" type="xs:int" use="required">
                                       <xs:annotation>
                                         <xs:documentation>
                                           Width of the rectangle (decimal).
                                         </xs:documentation>
                                       </xs:annotation>
                                     </xs:attribute>
-                                    <xs:attribute name="height" type="xs:integer" use="required">
+                                    <xs:attribute name="height" type="xs:int" use="required">
                                       <xs:annotation>
                                         <xs:documentation>
                                           Height of the rectangle (decimal).
@@ -1695,14 +1695,14 @@
                                                     </xs:documentation>
                                                   </xs:annotation>
                                                 </xs:attribute>
-                                                <xs:attribute name="start" type="xs:integer" use="required">
+                                                <xs:attribute name="start" type="xs:int" use="required">
                                                   <xs:annotation>
                                                     <xs:documentation>
                                                       Indicates the start position along the source node edge where the portal begins.
                                                     </xs:documentation>
                                                   </xs:annotation>
                                                 </xs:attribute>
-                                                <xs:attribute name="end" type="xs:integer" use="required">
+                                                <xs:attribute name="end" type="xs:int" use="required">
                                                   <xs:annotation>
                                                     <xs:documentation>
                                                       Indicates the end position along the source node edge where the portal begins.
@@ -1743,7 +1743,7 @@
                                                     </xs:documentation>
                                                   </xs:annotation>
                                                 </xs:attribute>
-                                                <xs:attribute name="start" type="xs:integer" use="required">
+                                                <xs:attribute name="start" type="xs:int" use="required">
                                                   <xs:annotation>
                                                     <xs:documentation>
                                                       Indicates the fractional position along the target node edge where the portal ends.
@@ -1751,7 +1751,7 @@
                                                     </xs:documentation>
                                                   </xs:annotation>
                                                 </xs:attribute>
-                                                <xs:attribute name="end" type="xs:integer" use="required">
+                                                <xs:attribute name="end" type="xs:int" use="required">
                                                   <xs:annotation>
                                                     <xs:documentation>
                                                       Maximum width of the portal at this endpoint.
@@ -1989,6 +1989,12 @@
                 </xs:complexType>
               </xs:element>
               <xs:element name="region.appendNew" minOccurs="0">
+                <xs:complexType>
+                  <xs:attribute name="zone_id_ref" type="xs:string" use="required"/>
+                  <xs:attribute name="region_id_ref" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="region.resolvePortals" minOccurs="0">
                 <xs:complexType>
                   <xs:attribute name="zone_id_ref" type="xs:string" use="required"/>
                   <xs:attribute name="region_id_ref" type="xs:string" use="required"/>

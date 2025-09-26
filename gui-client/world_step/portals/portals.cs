@@ -7,40 +7,52 @@ using Guiclient.util;
 using Godot;
 using XSD;
 
-namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.Nlimit {}
+namespace XSD.Nportals {}
 namespace XSD {
 }
-namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion {
-  public class limit : IEquatable<limit>, XSD.ILinkedNode  {
+namespace XSD {
+  public class portals : IEquatable<portals>, XSD.ILinkedNode  {
 
-    public static string ClassTypeId = ".world_step.data.zone_list.zone.region.limit";
-    public static string TagName = "limit";
+    public static string ClassTypeId = ".portals";
+    public static string TagName = "portals";
 
-    public string NodeName {get =>"limit";}
+    public string NodeName {get =>"portals";}
     public RawNode rawNode = new RawNode();
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<limit>> _onSelfChangeCallbackList = new();
+    private List<Action<portals>> _onSelfChangeCallbackList = new();
     private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
-    private System.Int32 _width;
-    public System.Int32 width { get => _width; set => _width = value; }
-    private System.Int32 _height;
-    public System.Int32 height { get => _height; set => _height = value; }
 
     //Children elements
-    public limit()
+
+    private LinkedNodeCollection<XSD.Nportals.portal> _portal = new();
+    public LinkedNodeCollection<XSD.Nportals.portal> portal
+    {
+      get => _portal;
+      set
+      {
+        _portal = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _portal.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          NotifyChange();
+        };
+      }
+    }
+    public portals()
     {
     }
 
-    public limit(RawNode rawNode)
+    public portals(RawNode rawNode)
     {
       Deserialize(rawNode);
     }
 
-    public limit(XmlElement xmlElement)
+    public portals(XmlElement xmlElement)
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
@@ -48,25 +60,27 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion {
 
     public void SetAttribute(string name, string? value)
     {
-      if(name == "width")
-      {
-        Set_width(value?.ToInt() ?? 0);
-      }
-      if(name == "height")
-      {
-        Set_height(value?.ToInt() ?? 0);
-      }
     }
 
     public void SetChild(dynamic linkedNode)
     {
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nportals.portal> portal)
+      {
+        this.portal = portal;
+      }
     }
 
     public void ClearChild(dynamic linkedNode)
     {
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nportals.portal>)
+      {
+        this.portal = null;
+      }
     }
 
-    public Action OnSelfChange(Action<limit> callback)
+    public Action OnSelfChange(Action<portals> callback)
     {
       _onSelfChangeCallbackList.Add(callback);
       return () => _onSelfChangeCallbackList.Remove(callback);
@@ -88,62 +102,33 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing limit");
+      // Godot.GD.Print("Deserializing portals");
       //Deserialize arguments
-      if(rawNode.attributes.ContainsKey("width"))
-      {
-        var attribute_width = rawNode.attributes["width"];
-        this.width = attribute_width.ToInt();
-      }
-      if(rawNode.attributes.ContainsKey("height"))
-      {
-        var attribute_height = rawNode.attributes["height"];
-        this.height = attribute_height.ToInt();
-      }
 
       //Deserialize children
+      portal = rawNode.InitializeWithRawNode("portal", portal);
+      portal.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          NotifyChange();
+        };
       NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this._width != null)
-      {
-        rawNode.attributes["width"] = this._width.ToString();
-      }
-      if(this._height != null)
-      {
-        rawNode.attributes["height"] = this._height.ToString();
-      }
 
       //Serialize children
+      rawNode.children["portal"] = portal.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 
     public void Serialize(XmlElement element)
     {
-        // Godot.GD.Print("Serializing limit");
+        // Godot.GD.Print("Serializing portals");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
-    }
-    public System.Int32 Get_width()
-    {
-      return this.width;
-    }
-    public void Set_width(System.Int32 value)
-    {
-      this.width = value;
-      this.NotifyChange();
-    }
-    public System.Int32 Get_height()
-    {
-      return this.height;
-    }
-    public void Set_height(System.Int32 value)
-    {
-      this.height = value;
-      this.NotifyChange();
     }
 
 
@@ -152,6 +137,25 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion {
       if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
+      }
+      if(xpath.StartsWith(XSD.Nportals.portal.TagName + "["))
+      {
+        var startIndex = (XSD.Nportals.portal.TagName + "[").Length;
+        var startTokens = xpath.Split(XSD.Nportals.portal.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Nportals.portal.TagName + "[" + indexString + "]", "");
+        var pathIndex = indexString.ToInt();
+        if(this.portal.ContainsKey(pathIndex))
+        {
+          this.portal[pathIndex].DeserializeAtPath(childXPath, rawNode);
+          return;
+        }
+        var newEntry = new XSD.Nportals.portal();
+        this.portal[pathIndex] = newEntry;
+        newEntry.DeserializeAtPath(childXPath, rawNode);
+
+        return;
       }
 
       Deserialize(rawNode);
@@ -174,28 +178,31 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion {
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
+      if(linkedNode is XSD.Nportals.portal casted_portal) {
+        return this._portal.KeyOf(casted_portal);
+      }
       return null;
     }
 
     public bool IsValidChildType(ILinkedNode candidateChild) {
-      return false;
+      return candidateChild is XSD.Nportals.portal
+      || false;
     }
 
-    public bool Equals(limit? obj)
+    public bool Equals(portals? obj)
     {
         if (obj == null || GetType() != obj.GetType())
             return false;
 
-        var other = (limit)obj;
-        return Equals(width, other.width) && Equals(height, other.height);
+        var other = (portals)obj;
+        return Equals(portal, other.portal);
     }
 
     public override int GetHashCode()
     {
         var acc = 0;
 
-        acc = HashCode.Combine(acc, width);
-        acc = HashCode.Combine(acc, height);
+        acc = HashCode.Combine(acc, portal);
         return acc;
     }
   }
