@@ -10,9 +10,7 @@ import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
   @EqualsAndHashCode
   @ToString
@@ -24,32 +22,38 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
     public static String nodeName = "actions";
     public static Actions fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-      logEnter();
-      var instance = new Actions();
-      if(Objects.nonNull(parent)) {
-        instance.parentNode(parent);
+      try (var logger = logScope()) {
+        var instance = new Actions();
+        if(Objects.nonNull(parent)) {
+          instance.parentNode(parent);
+        }
+        instance.rawNode(rawNode);
+        instance.deserialize(rawNode);
+        return logger.logReturn(instance);
       }
-      instance.rawNode(rawNode);
-      instance.deserialize(rawNode);
-      return logReturn(instance);
+
     }
     public static Actions fromRawNode(RawNode rawNode) {
-      logEnter();
-      var instance = fromRawNode(rawNode, null);
-      return logReturn(instance);
+      try (var logger = logScope()) {
+        var instance = fromRawNode(rawNode, null);
+        return logger.logReturn(instance);
+      }
     }
     public static Optional<Actions> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-        logEnter();
-        return logReturn(rawNode.map(o -> Actions.fromRawNode(o, parent)));
+        try(var logger = logScope()) {
+          return logger.logReturn(rawNode.map(o -> Actions.fromRawNode(o, parent)));
+        }
+
     }
     public static List<Actions> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-      logEnter();
-      List<Actions> returnList = Optional.ofNullable(rawNodeList)
-          .orElse(List.of())
-          .stream()
-          .map(o -> Actions.fromRawNode(o, parent))
-          .collect(Collectors.toList());
-      return logReturn(returnList);
+      try (var logger = logScope()) {
+        List<Actions> returnList = Optional.ofNullable(rawNodeList)
+            .orElse(List.of())
+            .stream()
+            .map(o -> Actions.fromRawNode(o, parent))
+            .collect(Collectors.toList());
+        return logger.logReturn(returnList);
+      }
     }
 
     public String classTypeId() {
@@ -81,6 +85,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Zone_create.Zone_create> zone_create = Optional.empty();
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_appendNew.Region_appendNew> region_appendNew = Optional.empty();
+    @Builder.Default
+    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals> region_resolvePortals = Optional.empty();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -113,11 +119,12 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void notifyChange(List<Object> list) {
-      var logger = logEnter();
-      list.addLast(this);
-      logger.log("Notify change for", this.buildPath());
-      onChangeList.forEach(consumer -> consumer.accept(list));
-      parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
+      try (var logger = logScope()) {
+        list.addLast(this);
+        logger.log("Notify change for", this.buildPath());
+        onChangeList.forEach(consumer -> consumer.accept(list));
+        parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
+      }
     }
 
     public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -127,11 +134,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep> parentAsWorldStep() {
       return parentNode.flatMap(node -> {
-       if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep casted){
-         return Optional.of(casted);
-       }
-       return Optional.empty();
-     });
+        if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep casted){
+          return Optional.of(casted);
+        }
+        return Optional.empty();
+      });
     }
 
     public void removeChild(Object object) {
@@ -179,6 +186,10 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           this.region_appendNew = Optional.empty();
           notifyChange();
         }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals) {
+          this.region_resolvePortals = Optional.empty();
+          notifyChange();
+        }
     }
 
     public int buildIndexForChild(Object object) {
@@ -215,6 +226,9 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_appendNew.Region_appendNew) {
           return 0;
         }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals) {
+          return 0;
+        }
         return 0;
     }
 
@@ -223,70 +237,78 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public Subscription onChange(Consumer<List<Object>> onChange) {
-      logEnter();
-      onChangeList.add(onChange);
-      return logReturn(() -> onChangeList.remove(onChange));
+      try (var logger = logScope()) {
+        onChangeList.add(onChange);
+        return logger.logReturn(() -> onChangeList.remove(onChange));
+      }
     }
 
     public void deserialize (RawNode rawNode) {
-      try {
-        var logger = logEnter();
+      try (var logger = logScope()) {
         this.rawNode = rawNode;
         // Godot.GD.Print("Deserializing actions");
 
-        var innerLogger = logger.log("attributes");
-        //Deserialize attributes
-        innerLogger = logger.log("children");
-        //Deserialize children
-        this.by = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.By.fromRawNode(rawNode.getChildrenList("by"), this);
-        this.locationGraph_create = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_create.LocationGraph_create.fromRawNode(rawNode.getChildrenList("location_graph.create"), this);
-        this.locationGraph_node_createAdjacent = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_createAdjacent.LocationGraph_node_createAdjacent.fromRawNode(rawNode.getChildrenList("location_graph.node.create_adjacent"), this);
-        this.locationGraph_node_addClassification = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_addClassification.LocationGraph_node_addClassification.fromRawNode(rawNode.getChildrenList("location_graph.node.add_classification"), this);
-        this.person_teleport = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.Person_teleport.fromRawNode(rawNode.getChildrenFirst("person.teleport"), this);
-        this.person_onPerson_propertyMutation = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_onPerson_propertyMutation.Person_onPerson_propertyMutation.fromRawNode(rawNode.getChildrenList("person.on_person.property_mutation"), this);
-        this.person_create = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_create.Person_create.fromRawNode(rawNode.getChildrenList("person.create"), this);
-        this.person_moveTo = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Person_moveTo.fromRawNode(rawNode.getChildrenList("person.move_to"), this);
-        this.fromPerson = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.FromPerson.FromPerson.fromRawNode(rawNode.getChildrenList("from_person"), this);
-        this.zone_create = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Zone_create.Zone_create.fromRawNode(rawNode.getChildrenFirst("zone.create"), this);
-        this.region_appendNew = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_appendNew.Region_appendNew.fromRawNode(rawNode.getChildrenFirst("region.appendNew"), this);
-        logReturnVoid();
+        try (var innerLogger = logScope("attributes")) {
+          //Deserialize attributes
+        }
+        try (var innerLogger = logScope("children")) {
+          //Deserialize children
+          this.by = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.By.fromRawNode(rawNode.getChildrenList("by"), this);
+          this.locationGraph_create = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_create.LocationGraph_create.fromRawNode(rawNode.getChildrenList("location_graph.create"), this);
+          this.locationGraph_node_createAdjacent = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_createAdjacent.LocationGraph_node_createAdjacent.fromRawNode(rawNode.getChildrenList("location_graph.node.create_adjacent"), this);
+          this.locationGraph_node_addClassification = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_addClassification.LocationGraph_node_addClassification.fromRawNode(rawNode.getChildrenList("location_graph.node.add_classification"), this);
+          this.person_teleport = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.Person_teleport.fromRawNode(rawNode.getChildrenFirst("person.teleport"), this);
+          this.person_onPerson_propertyMutation = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_onPerson_propertyMutation.Person_onPerson_propertyMutation.fromRawNode(rawNode.getChildrenList("person.on_person.property_mutation"), this);
+          this.person_create = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_create.Person_create.fromRawNode(rawNode.getChildrenList("person.create"), this);
+          this.person_moveTo = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Person_moveTo.fromRawNode(rawNode.getChildrenList("person.move_to"), this);
+          this.fromPerson = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.FromPerson.FromPerson.fromRawNode(rawNode.getChildrenList("from_person"), this);
+          this.zone_create = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Zone_create.Zone_create.fromRawNode(rawNode.getChildrenFirst("zone.create"), this);
+          this.region_appendNew = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_appendNew.Region_appendNew.fromRawNode(rawNode.getChildrenFirst("region.appendNew"), this);
+          this.region_resolvePortals = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals.fromRawNode(rawNode.getChildrenFirst("region.resolvePortals"), this);
+        }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
       }
+
     }
 
     public RawNode serializeIntoRawNode()
     {
-      var logger = logEnter();
-      rawNode.setTag("actions");
-      var innerLogger = logger.log("attributes");
-      //Serialize attributes
+      try (var logger = logScope()) {
+        rawNode.setTag("actions");
+        try (var innerLogger = logScope("attributes")) {
+          //Serialize attributes
+        }
+        try (var innerLogger = logScope("children")) {
 
-      innerLogger = logger.log("children");
-      //Serialize children
-      innerLogger.log("by");
-      rawNode.setChildren("by", by.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.By::serializeIntoRawNode).toList());
-      innerLogger.log("location_graph.create");
-      rawNode.setChildren("location_graph.create", locationGraph_create.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_create.LocationGraph_create::serializeIntoRawNode).toList());
-      innerLogger.log("location_graph.node.create_adjacent");
-      rawNode.setChildren("location_graph.node.create_adjacent", locationGraph_node_createAdjacent.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_createAdjacent.LocationGraph_node_createAdjacent::serializeIntoRawNode).toList());
-      innerLogger.log("location_graph.node.add_classification");
-      rawNode.setChildren("location_graph.node.add_classification", locationGraph_node_addClassification.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_addClassification.LocationGraph_node_addClassification::serializeIntoRawNode).toList());
-      innerLogger.log("person.teleport");
-      rawNode.setChildren("person.teleport", person_teleport.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.Person_teleport::serializeIntoRawNode).toList());
-      innerLogger.log("person.on_person.property_mutation");
-      rawNode.setChildren("person.on_person.property_mutation", person_onPerson_propertyMutation.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_onPerson_propertyMutation.Person_onPerson_propertyMutation::serializeIntoRawNode).toList());
-      innerLogger.log("person.create");
-      rawNode.setChildren("person.create", person_create.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_create.Person_create::serializeIntoRawNode).toList());
-      innerLogger.log("person.move_to");
-      rawNode.setChildren("person.move_to", person_moveTo.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Person_moveTo::serializeIntoRawNode).toList());
-      innerLogger.log("from_person");
-      rawNode.setChildren("from_person", fromPerson.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.FromPerson.FromPerson::serializeIntoRawNode).toList());
-      innerLogger.log("zone.create");
-      rawNode.setChildren("zone.create", zone_create.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Zone_create.Zone_create::serializeIntoRawNode).toList());
-      innerLogger.log("region.appendNew");
-      rawNode.setChildren("region.appendNew", region_appendNew.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_appendNew.Region_appendNew::serializeIntoRawNode).toList());
-      return rawNode;
+          //Serialize children
+          innerLogger.log("by");
+          rawNode.setChildren("by", by.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.By::serializeIntoRawNode).toList());
+          innerLogger.log("location_graph.create");
+          rawNode.setChildren("location_graph.create", locationGraph_create.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_create.LocationGraph_create::serializeIntoRawNode).toList());
+          innerLogger.log("location_graph.node.create_adjacent");
+          rawNode.setChildren("location_graph.node.create_adjacent", locationGraph_node_createAdjacent.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_createAdjacent.LocationGraph_node_createAdjacent::serializeIntoRawNode).toList());
+          innerLogger.log("location_graph.node.add_classification");
+          rawNode.setChildren("location_graph.node.add_classification", locationGraph_node_addClassification.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.LocationGraph_node_addClassification.LocationGraph_node_addClassification::serializeIntoRawNode).toList());
+          innerLogger.log("person.teleport");
+          rawNode.setChildren("person.teleport", person_teleport.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.Person_teleport::serializeIntoRawNode).toList());
+          innerLogger.log("person.on_person.property_mutation");
+          rawNode.setChildren("person.on_person.property_mutation", person_onPerson_propertyMutation.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_onPerson_propertyMutation.Person_onPerson_propertyMutation::serializeIntoRawNode).toList());
+          innerLogger.log("person.create");
+          rawNode.setChildren("person.create", person_create.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_create.Person_create::serializeIntoRawNode).toList());
+          innerLogger.log("person.move_to");
+          rawNode.setChildren("person.move_to", person_moveTo.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Person_moveTo::serializeIntoRawNode).toList());
+          innerLogger.log("from_person");
+          rawNode.setChildren("from_person", fromPerson.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.FromPerson.FromPerson::serializeIntoRawNode).toList());
+          innerLogger.log("zone.create");
+          rawNode.setChildren("zone.create", zone_create.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Zone_create.Zone_create::serializeIntoRawNode).toList());
+          innerLogger.log("region.appendNew");
+          rawNode.setChildren("region.appendNew", region_appendNew.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_appendNew.Region_appendNew::serializeIntoRawNode).toList());
+          innerLogger.log("region.resolvePortals");
+          rawNode.setChildren("region.resolvePortals", region_resolvePortals.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals::serializeIntoRawNode).toList());
+          return rawNode;
+        }
+      }
     }
 
     public void serialize(Document document, Element element)
@@ -606,6 +628,35 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       return this;
     }
 
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals> getRegion_resolvePortals()
+    {
+      return this.region_resolvePortals;
+    }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals getRegion_resolvePortalsOrDefault()
+    {
+      return this.region_resolvePortals.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals();
+        this.region_resolvePortals = Optional.of(instance);
+        instance.parentNode(this);
+        return this.region_resolvePortals.get();
+      });
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals> streamRegion_resolvePortalsOrDefault()
+    {
+      return java.util.stream.Stream.of(getRegion_resolvePortalsOrDefault());
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals> streamRegion_resolvePortals()
+    {
+      return region_resolvePortals.stream();
+    }
+    public Actions setRegion_resolvePortals(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals value)
+    {
+      this.region_resolvePortals = Optional.ofNullable(value);
+      value.parentNode(this);
+      notifyChange();
+      return this;
+    }
+
     public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
        if(xpath.startsWith("."))
         {
@@ -763,6 +814,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_appendNew.Region_appendNew.nodeName.length() + 3);
           return this.region_appendNew.get().deserializeAtPath(childXPath, rawNode);
         }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals.nodeName))
+        {
+          if(this.region_resolvePortals.isEmpty()) {
+            this.region_resolvePortals = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals.nodeName.length() + 3);
+          return this.region_resolvePortals.get().deserializeAtPath(childXPath, rawNode);
+        }
 
         deserialize(rawNode);
         return this;
@@ -892,6 +951,14 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
           }
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_appendNew.Region_appendNew.nodeName.length() + 3);
           return this.region_appendNew.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals.nodeName))
+        {
+          if(this.region_resolvePortals.isEmpty()) {
+            this.region_resolvePortals = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals.nodeName.length() + 3);
+          return this.region_resolvePortals.get().getNodeAtPath(childXPath);
         }
         return Optional.of(this);
     }
@@ -1303,6 +1370,32 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
             }
           },
           "region.appendNew": {
+            "metaType": "object",
+            "value": {},
+            "isSingle": true,
+            "isNullable": true,
+            "attributes": {
+              "metaType": "object",
+              "value": {
+                "zone_id_ref": {
+                  "metaType": "primitive",
+                  "value": "xs:string",
+                  "isNullable": false
+                },
+                "region_id_ref": {
+                  "metaType": "primitive",
+                  "value": "xs:string",
+                  "isNullable": false
+                },
+                "portal_id_ref": {
+                  "metaType": "primitive",
+                  "value": "xs:string",
+                  "isNullable": false
+                }
+              }
+            }
+          },
+          "region.resolvePortals": {
             "metaType": "object",
             "value": {},
             "isSingle": true,

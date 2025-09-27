@@ -11,7 +11,6 @@ import ro.anud.xml_xsd.implementation.model.interfaces.IType_personSelection.ITy
 import ro.anud.xml_xsd.implementation.service.Mutation;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class CreatePerson {
@@ -160,13 +159,15 @@ public class CreatePerson {
     private static Person createNewPerson(
         final WorldStepInstance worldStepInstance,
         final IType_personSelection<?> typePersonSelection) {
-        var logger = logEnter();
-        var person = new Person();
+        try (var logger = logScope()){
+            var person = new Person();
 
-        person.setId(worldStepInstance.getNextId());
+            person.setId(worldStepInstance.getNextId());
 
-        logger.log("adding person with id", person.getId());
-        logger.logTodo("remove people.addPerson(person)");
-        return person;
+            logger.log("adding person with id", person.getId());
+            logger.logTodo("remove people.addPerson(person)");
+            return person;
+        }
+
     }
 }

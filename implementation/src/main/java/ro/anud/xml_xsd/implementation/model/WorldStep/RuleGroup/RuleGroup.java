@@ -10,9 +10,7 @@ import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
   @EqualsAndHashCode
   @ToString
@@ -24,32 +22,38 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
     public static String nodeName = "rule_group";
     public static RuleGroup fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-      logEnter();
-      var instance = new RuleGroup();
-      if(Objects.nonNull(parent)) {
-        instance.parentNode(parent);
+      try (var logger = logScope()) {
+        var instance = new RuleGroup();
+        if(Objects.nonNull(parent)) {
+          instance.parentNode(parent);
+        }
+        instance.rawNode(rawNode);
+        instance.deserialize(rawNode);
+        return logger.logReturn(instance);
       }
-      instance.rawNode(rawNode);
-      instance.deserialize(rawNode);
-      return logReturn(instance);
+
     }
     public static RuleGroup fromRawNode(RawNode rawNode) {
-      logEnter();
-      var instance = fromRawNode(rawNode, null);
-      return logReturn(instance);
+      try (var logger = logScope()) {
+        var instance = fromRawNode(rawNode, null);
+        return logger.logReturn(instance);
+      }
     }
     public static Optional<RuleGroup> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-        logEnter();
-        return logReturn(rawNode.map(o -> RuleGroup.fromRawNode(o, parent)));
+        try(var logger = logScope()) {
+          return logger.logReturn(rawNode.map(o -> RuleGroup.fromRawNode(o, parent)));
+        }
+
     }
     public static List<RuleGroup> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-      logEnter();
-      List<RuleGroup> returnList = Optional.ofNullable(rawNodeList)
-          .orElse(List.of())
-          .stream()
-          .map(o -> RuleGroup.fromRawNode(o, parent))
-          .collect(Collectors.toList());
-      return logReturn(returnList);
+      try (var logger = logScope()) {
+        List<RuleGroup> returnList = Optional.ofNullable(rawNodeList)
+            .orElse(List.of())
+            .stream()
+            .map(o -> RuleGroup.fromRawNode(o, parent))
+            .collect(Collectors.toList());
+        return logger.logReturn(returnList);
+      }
     }
 
     public String classTypeId() {
@@ -116,11 +120,12 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void notifyChange(List<Object> list) {
-      var logger = logEnter();
-      list.addLast(this);
-      logger.log("Notify change for", this.buildPath());
-      onChangeList.forEach(consumer -> consumer.accept(list));
-      parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
+      try (var logger = logScope()) {
+        list.addLast(this);
+        logger.log("Notify change for", this.buildPath());
+        onChangeList.forEach(consumer -> consumer.accept(list));
+        parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
+      }
     }
 
     public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -130,11 +135,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep> parentAsWorldStep() {
       return parentNode.flatMap(node -> {
-       if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep casted){
-         return Optional.of(casted);
-       }
-       return Optional.empty();
-     });
+        if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep casted){
+          return Optional.of(casted);
+        }
+        return Optional.empty();
+      });
     }
 
     public void removeChild(Object object) {
@@ -233,73 +238,78 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public Subscription onChange(Consumer<List<Object>> onChange) {
-      logEnter();
-      onChangeList.add(onChange);
-      return logReturn(() -> onChangeList.remove(onChange));
+      try (var logger = logScope()) {
+        onChangeList.add(onChange);
+        return logger.logReturn(() -> onChangeList.remove(onChange));
+      }
     }
 
     public void deserialize (RawNode rawNode) {
-      try {
-        var logger = logEnter();
+      try (var logger = logScope()) {
         this.rawNode = rawNode;
         // Godot.GD.Print("Deserializing rule_group");
 
-        var innerLogger = logger.log("attributes");
-        //Deserialize attributes
-        innerLogger = logger.log("children");
-        //Deserialize children
-        this.propertyRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule.fromRawNode(rawNode.getChildrenFirst("property_rule"), this);
-        this.classificationRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.ClassificationRule.fromRawNode(rawNode.getChildrenFirst("classification_rule"), this);
-        this.nameRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.NameRule.fromRawNode(rawNode.getChildrenFirst("name_rule"), this);
-        this.actionRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.ActionRule.fromRawNode(rawNode.getChildrenFirst("action_rule"), this);
-        this.eventsRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.EventsRule.fromRawNode(rawNode.getChildrenFirst("events_rule"), this);
-        this.linkGroupRuleList = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LinkGroupRuleList.LinkGroupRuleList.fromRawNode(rawNode.getChildrenFirst("link_group_rule_list"), this);
-        this.locationGraphRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.LocationGraphRule.fromRawNode(rawNode.getChildrenFirst("location_graph_rule"), this);
-        this.locationClassificationRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationClassificationRule.LocationClassificationRule.fromRawNode(rawNode.getChildrenFirst("location_classification_rule"), this);
-        this.nodeRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NodeRule.NodeRule.fromRawNode(rawNode.getChildrenFirst("node_rule"), this);
-        this.portalRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.PortalRule.fromRawNode(rawNode.getChildrenFirst("portal_rule"), this);
-        this.regionRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RegionRule.RegionRule.fromRawNode(rawNode.getChildrenFirst("region_rule"), this);
-        this.zoneRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ZoneRule.ZoneRule.fromRawNode(rawNode.getChildrenFirst("zone_rule"), this);
-        logReturnVoid();
+        try (var innerLogger = logScope("attributes")) {
+          //Deserialize attributes
+        }
+        try (var innerLogger = logScope("children")) {
+          //Deserialize children
+          this.propertyRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule.fromRawNode(rawNode.getChildrenFirst("property_rule"), this);
+          this.classificationRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.ClassificationRule.fromRawNode(rawNode.getChildrenFirst("classification_rule"), this);
+          this.nameRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.NameRule.fromRawNode(rawNode.getChildrenFirst("name_rule"), this);
+          this.actionRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.ActionRule.fromRawNode(rawNode.getChildrenFirst("action_rule"), this);
+          this.eventsRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.EventsRule.fromRawNode(rawNode.getChildrenFirst("events_rule"), this);
+          this.linkGroupRuleList = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LinkGroupRuleList.LinkGroupRuleList.fromRawNode(rawNode.getChildrenFirst("link_group_rule_list"), this);
+          this.locationGraphRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.LocationGraphRule.fromRawNode(rawNode.getChildrenFirst("location_graph_rule"), this);
+          this.locationClassificationRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationClassificationRule.LocationClassificationRule.fromRawNode(rawNode.getChildrenFirst("location_classification_rule"), this);
+          this.nodeRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NodeRule.NodeRule.fromRawNode(rawNode.getChildrenFirst("node_rule"), this);
+          this.portalRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.PortalRule.fromRawNode(rawNode.getChildrenFirst("portal_rule"), this);
+          this.regionRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RegionRule.RegionRule.fromRawNode(rawNode.getChildrenFirst("region_rule"), this);
+          this.zoneRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ZoneRule.ZoneRule.fromRawNode(rawNode.getChildrenFirst("zone_rule"), this);
+        }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
       }
+
     }
 
     public RawNode serializeIntoRawNode()
     {
-      var logger = logEnter();
-      rawNode.setTag("rule_group");
-      var innerLogger = logger.log("attributes");
-      //Serialize attributes
+      try (var logger = logScope()) {
+        rawNode.setTag("rule_group");
+        try (var innerLogger = logScope("attributes")) {
+          //Serialize attributes
+        }
+        try (var innerLogger = logScope("children")) {
 
-      innerLogger = logger.log("children");
-      //Serialize children
-      innerLogger.log("property_rule");
-      rawNode.setChildren("property_rule", propertyRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule::serializeIntoRawNode).toList());
-      innerLogger.log("classification_rule");
-      rawNode.setChildren("classification_rule", classificationRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.ClassificationRule::serializeIntoRawNode).toList());
-      innerLogger.log("name_rule");
-      rawNode.setChildren("name_rule", nameRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.NameRule::serializeIntoRawNode).toList());
-      innerLogger.log("action_rule");
-      rawNode.setChildren("action_rule", actionRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.ActionRule::serializeIntoRawNode).toList());
-      innerLogger.log("events_rule");
-      rawNode.setChildren("events_rule", eventsRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.EventsRule::serializeIntoRawNode).toList());
-      innerLogger.log("link_group_rule_list");
-      rawNode.setChildren("link_group_rule_list", linkGroupRuleList.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LinkGroupRuleList.LinkGroupRuleList::serializeIntoRawNode).toList());
-      innerLogger.log("location_graph_rule");
-      rawNode.setChildren("location_graph_rule", locationGraphRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.LocationGraphRule::serializeIntoRawNode).toList());
-      innerLogger.log("location_classification_rule");
-      rawNode.setChildren("location_classification_rule", locationClassificationRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationClassificationRule.LocationClassificationRule::serializeIntoRawNode).toList());
-      innerLogger.log("node_rule");
-      rawNode.setChildren("node_rule", nodeRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NodeRule.NodeRule::serializeIntoRawNode).toList());
-      innerLogger.log("portal_rule");
-      rawNode.setChildren("portal_rule", portalRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.PortalRule::serializeIntoRawNode).toList());
-      innerLogger.log("region_rule");
-      rawNode.setChildren("region_rule", regionRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RegionRule.RegionRule::serializeIntoRawNode).toList());
-      innerLogger.log("zone_rule");
-      rawNode.setChildren("zone_rule", zoneRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ZoneRule.ZoneRule::serializeIntoRawNode).toList());
-      return rawNode;
+          //Serialize children
+          innerLogger.log("property_rule");
+          rawNode.setChildren("property_rule", propertyRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule::serializeIntoRawNode).toList());
+          innerLogger.log("classification_rule");
+          rawNode.setChildren("classification_rule", classificationRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.ClassificationRule::serializeIntoRawNode).toList());
+          innerLogger.log("name_rule");
+          rawNode.setChildren("name_rule", nameRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.NameRule::serializeIntoRawNode).toList());
+          innerLogger.log("action_rule");
+          rawNode.setChildren("action_rule", actionRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.ActionRule::serializeIntoRawNode).toList());
+          innerLogger.log("events_rule");
+          rawNode.setChildren("events_rule", eventsRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.EventsRule::serializeIntoRawNode).toList());
+          innerLogger.log("link_group_rule_list");
+          rawNode.setChildren("link_group_rule_list", linkGroupRuleList.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LinkGroupRuleList.LinkGroupRuleList::serializeIntoRawNode).toList());
+          innerLogger.log("location_graph_rule");
+          rawNode.setChildren("location_graph_rule", locationGraphRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.LocationGraphRule::serializeIntoRawNode).toList());
+          innerLogger.log("location_classification_rule");
+          rawNode.setChildren("location_classification_rule", locationClassificationRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationClassificationRule.LocationClassificationRule::serializeIntoRawNode).toList());
+          innerLogger.log("node_rule");
+          rawNode.setChildren("node_rule", nodeRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NodeRule.NodeRule::serializeIntoRawNode).toList());
+          innerLogger.log("portal_rule");
+          rawNode.setChildren("portal_rule", portalRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.PortalRule::serializeIntoRawNode).toList());
+          innerLogger.log("region_rule");
+          rawNode.setChildren("region_rule", regionRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RegionRule.RegionRule::serializeIntoRawNode).toList());
+          innerLogger.log("zone_rule");
+          rawNode.setChildren("zone_rule", zoneRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ZoneRule.ZoneRule::serializeIntoRawNode).toList());
+          return rawNode;
+        }
+      }
     }
 
     public void serialize(Document document, Element element)

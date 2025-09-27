@@ -5,7 +5,6 @@ import ro.anud.xml_xsd.implementation.model.interfaces.IType_propertyMutation.IT
 import ro.anud.xml_xsd.implementation.service.Mutation;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class ApplyPropertyMutation {

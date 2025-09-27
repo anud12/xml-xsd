@@ -10,9 +10,7 @@ import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
   @EqualsAndHashCode
   @ToString
@@ -24,32 +22,38 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
     public static String nodeName = "person.on_person.property_mutation";
     public static Person_onPerson_propertyMutation fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-      logEnter();
-      var instance = new Person_onPerson_propertyMutation();
-      if(Objects.nonNull(parent)) {
-        instance.parentNode(parent);
+      try (var logger = logScope()) {
+        var instance = new Person_onPerson_propertyMutation();
+        if(Objects.nonNull(parent)) {
+          instance.parentNode(parent);
+        }
+        instance.rawNode(rawNode);
+        instance.deserialize(rawNode);
+        return logger.logReturn(instance);
       }
-      instance.rawNode(rawNode);
-      instance.deserialize(rawNode);
-      return logReturn(instance);
+
     }
     public static Person_onPerson_propertyMutation fromRawNode(RawNode rawNode) {
-      logEnter();
-      var instance = fromRawNode(rawNode, null);
-      return logReturn(instance);
+      try (var logger = logScope()) {
+        var instance = fromRawNode(rawNode, null);
+        return logger.logReturn(instance);
+      }
     }
     public static Optional<Person_onPerson_propertyMutation> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-        logEnter();
-        return logReturn(rawNode.map(o -> Person_onPerson_propertyMutation.fromRawNode(o, parent)));
+        try(var logger = logScope()) {
+          return logger.logReturn(rawNode.map(o -> Person_onPerson_propertyMutation.fromRawNode(o, parent)));
+        }
+
     }
     public static List<Person_onPerson_propertyMutation> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-      logEnter();
-      List<Person_onPerson_propertyMutation> returnList = Optional.ofNullable(rawNodeList)
-          .orElse(List.of())
-          .stream()
-          .map(o -> Person_onPerson_propertyMutation.fromRawNode(o, parent))
-          .collect(Collectors.toList());
-      return logReturn(returnList);
+      try (var logger = logScope()) {
+        List<Person_onPerson_propertyMutation> returnList = Optional.ofNullable(rawNodeList)
+            .orElse(List.of())
+            .stream()
+            .map(o -> Person_onPerson_propertyMutation.fromRawNode(o, parent))
+            .collect(Collectors.toList());
+        return logger.logReturn(returnList);
+      }
     }
 
     public String classTypeId() {
@@ -97,11 +101,12 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void notifyChange(List<Object> list) {
-      var logger = logEnter();
-      list.addLast(this);
-      logger.log("Notify change for", this.buildPath());
-      onChangeList.forEach(consumer -> consumer.accept(list));
-      parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
+      try (var logger = logScope()) {
+        list.addLast(this);
+        logger.log("Notify change for", this.buildPath());
+        onChangeList.forEach(consumer -> consumer.accept(list));
+        parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
+      }
     }
 
     public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -111,11 +116,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions> parentAsActions() {
       return parentNode.flatMap(node -> {
-       if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions casted){
-         return Optional.of(casted);
-       }
-       return Optional.empty();
-     });
+        if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions casted){
+          return Optional.of(casted);
+        }
+        return Optional.empty();
+      });
     }
 
     public void removeChild(Object object) {
@@ -130,49 +135,54 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public Subscription onChange(Consumer<List<Object>> onChange) {
-      logEnter();
-      onChangeList.add(onChange);
-      return logReturn(() -> onChangeList.remove(onChange));
+      try (var logger = logScope()) {
+        onChangeList.add(onChange);
+        return logger.logReturn(() -> onChangeList.remove(onChange));
+      }
     }
 
     public void deserialize (RawNode rawNode) {
-      try {
-        var logger = logEnter();
+      try (var logger = logScope()) {
         this.rawNode = rawNode;
         // Godot.GD.Print("Deserializing person.on_person.property_mutation");
 
-        var innerLogger = logger.log("attributes");
-        //Deserialize attributes
-        innerLogger.log("person_id_ref");
-        this.personIdRef = rawNode.getAttributeRequired("person_id_ref");
-        innerLogger.log("target_person_id_ref");
-        this.targetPersonIdRef = rawNode.getAttributeRequired("target_person_id_ref");
-        innerLogger.log("action_property_mutation_rule_ref");
-        this.actionPropertyMutationRuleRef = rawNode.getAttributeRequired("action_property_mutation_rule_ref");
-        innerLogger = logger.log("children");
-        //Deserialize children
-        logReturnVoid();
+        try (var innerLogger = logScope("attributes")) {
+          //Deserialize attributes
+          innerLogger.log("person_id_ref");
+          this.personIdRef = rawNode.getAttributeRequired("person_id_ref");
+          innerLogger.log("target_person_id_ref");
+          this.targetPersonIdRef = rawNode.getAttributeRequired("target_person_id_ref");
+          innerLogger.log("action_property_mutation_rule_ref");
+          this.actionPropertyMutationRuleRef = rawNode.getAttributeRequired("action_property_mutation_rule_ref");
+        }
+        try (var innerLogger = logScope("children")) {
+          //Deserialize children
+        }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
       }
+
     }
 
     public RawNode serializeIntoRawNode()
     {
-      var logger = logEnter();
-      rawNode.setTag("person.on_person.property_mutation");
-      var innerLogger = logger.log("attributes");
-      //Serialize attributes
-      innerLogger.log("person_id_ref");
-      rawNode.setAttribute("person_id_ref", this.personIdRef);
-      innerLogger.log("target_person_id_ref");
-      rawNode.setAttribute("target_person_id_ref", this.targetPersonIdRef);
-      innerLogger.log("action_property_mutation_rule_ref");
-      rawNode.setAttribute("action_property_mutation_rule_ref", this.actionPropertyMutationRuleRef);
+      try (var logger = logScope()) {
+        rawNode.setTag("person.on_person.property_mutation");
+        try (var innerLogger = logScope("attributes")) {
+          //Serialize attributes
+          innerLogger.log("person_id_ref");
+          rawNode.setAttribute("person_id_ref", this.personIdRef);
+          innerLogger.log("target_person_id_ref");
+          rawNode.setAttribute("target_person_id_ref", this.targetPersonIdRef);
+          innerLogger.log("action_property_mutation_rule_ref");
+          rawNode.setAttribute("action_property_mutation_rule_ref", this.actionPropertyMutationRuleRef);
+        }
+        try (var innerLogger = logScope("children")) {
 
-      innerLogger = logger.log("children");
-      //Serialize children
-      return rawNode;
+          //Serialize children
+          return rawNode;
+        }
+      }
     }
 
     public void serialize(Document document, Element element)

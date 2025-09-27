@@ -12,8 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.BiFunction;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.log;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class ShortestPathsInGraphExcludeStart {

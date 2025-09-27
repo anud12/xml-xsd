@@ -21,7 +21,8 @@ import java.io.InvalidClassException;
 import java.io.StringWriter;
 import java.util.*;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.*;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
+
 
 @Builder
 @AllArgsConstructor
@@ -52,36 +53,37 @@ public final class RawNode {
     public static RawNode fromNode(Node node, Optional<RawNode> parentNode) {
 
         var rawNode = RawNode.builder()
-            .tag(node.getNodeName())
-            .parentNode(parentNode)
-            .build();
-        var logger = logEnter();
-
-
-        if (node.hasAttributes()) {
-            var attributeNodeList = node.getAttributes();
-            for (var index = 0; index < attributeNodeList.getLength(); index++) {
-                var item = attributeNodeList.item(index);
-                var attributeKey = item.getNodeName();
-                var value = item.getNodeValue();
-                rawNode.setAttribute(attributeKey, value);
+                .tag(node.getNodeName())
+                .parentNode(parentNode)
+                .build();
+        try (var logger = logScope()) {
+            if (node.hasAttributes()) {
+                var attributeNodeList = node.getAttributes();
+                for (var index = 0; index < attributeNodeList.getLength(); index++) {
+                    var item = attributeNodeList.item(index);
+                    var attributeKey = item.getNodeName();
+                    var value = item.getNodeValue();
+                    rawNode.setAttribute(attributeKey, value);
+                }
             }
+
+            if (node.hasChildNodes()) {
+                var childrenNodeList = node.getChildNodes();
+                for (var index = 0; index < childrenNodeList.getLength(); index++) {
+                    var item = childrenNodeList.item(index);
+                    var childRawNode = RawNode.fromNode(item, Optional.of(rawNode));
+                    rawNode.addChildren(item.getNodeName(), childRawNode);
+                    logger.log("adding child", childRawNode.getPath());
+                }
+            }
+
+
+            return logger.logReturn(
+                    rawNode
+            );
         }
 
-        if (node.hasChildNodes()) {
-            var childrenNodeList = node.getChildNodes();
-            for (var index = 0; index < childrenNodeList.getLength(); index++) {
-                var item = childrenNodeList.item(index);
-                var childRawNode = RawNode.fromNode(item, Optional.of(rawNode));
-                rawNode.addChildren(item.getNodeName(), childRawNode);
-                logger.log("adding child", childRawNode.getPath());
-            }
-        }
 
-
-        return logReturn(
-            rawNode
-        );
     }
 
     public static RawNode fromNode(Node node) {
@@ -89,54 +91,62 @@ public final class RawNode {
     }
 
     public Optional<Integer> getAttributeInt(String key) {
-        logEnter("key:", key);
-        var value = this.attributeMap.get(key);
-        if (Strings.isBlank(value)) {
-            return logReturn(Optional.empty());
+        try (var logger = logScope("key:", key)) {
+            var value = this.attributeMap.get(key);
+            if (Strings.isBlank(value)) {
+                return logger.logReturn(Optional.empty());
+            }
+            return logger.logReturn(Optional.of(Integer.parseInt(value.trim())));
         }
-        return logReturn(Optional.of(Integer.parseInt(value.trim())));
     }
 
     public Optional<Double> getAttributeDouble(String key) {
-        logEnter("key:", key);
-        var value = this.attributeMap.get(key);
-        if (Strings.isBlank(value)) {
-            return logReturn(Optional.empty());
+        try (var logger = logScope("key:", key)) {
+            var value = this.attributeMap.get(key);
+            if (Strings.isBlank(value)) {
+                return logger.logReturn(Optional.empty());
+            }
+            return logger.logReturn(Optional.of(Double.parseDouble(value.trim())));
         }
-        return logReturn(Optional.of(Double.parseDouble(value.trim())));
     }
 
     public Optional<String> getAttribute(String key) {
-        logEnter("key:", key);
-        return Optional.ofNullable(this.attributeMap.get(key));
+        try (var logger = logScope("key:", key)) {
+            return logger.logReturn(Optional.ofNullable(this.attributeMap.get(key)));
+        }
     }
 
     public RawNode setAttribute(String key, Object value) {
-        logEnter("key:", key, "value:", value);
-        setAttribute(key, Optional.of(value));
-        return this;
+        try (var logger = logScope("key:", key)) {
+            setAttribute(key, Optional.of(value));
+            return this;
+        }
     }
 
     public RawNode setAttribute(String key, Optional<Object> value) {
-        logEnter("key:", key, "value:", value);
-        value.ifPresent(o -> attributeMap.put(key, o.toString()));
-        return this;
+        try (var logger = logScope("key:", key)) {
+            value.ifPresent(o -> attributeMap.put(key, o.toString()));
+            return this;
+        }
     }
 
     public int getAttributeIntRequired(String key) {
-        logEnter("key:", key);
-        return logReturn(getAttributeInt(key).get());
+        try (var logger = logScope("key:", key)) {
+            return logger.logReturn(getAttributeInt(key).get());
+        }
     }
 
 
     public double getAttributeDoubleRequired(String key) {
-        logEnter("key:", key);
-        return logReturn(getAttributeDouble(key).get());
+        try (var logger = logScope("key:", key)) {
+            return logger.logReturn(getAttributeDouble(key).get());
+        }
     }
 
     public String getAttributeRequired(String key) {
-        logEnter("key:", key);
-        return getAttribute(key).get();
+        try (var logger = logScope("key:", key)){
+            return logger.logReturn(getAttribute(key).get());
+        }
     }
 
     public Optional<RawNode> getParentNode() {
@@ -149,28 +159,32 @@ public final class RawNode {
     }
 
     public Optional<RawNode> getChildrenFirst(String key) {
-        logEnter("key:", key);
-        if (this.childrenMap.containsKey(key)) {
-            return logReturn(this.childrenMap.get(key).stream().findFirst());
+        try (var logger = logScope("key:", key)){
+            if (this.childrenMap.containsKey(key)) {
+                return logger.logReturn(this.childrenMap.get(key).stream().findFirst());
+            }
+            logger.log("No value found");
+            return logger.logReturn(Optional.empty());
         }
-        return logReturn(Optional.empty(), "No value found");
     }
 
 
     public List<RawNode> getChildrenList(String key) {
-        logEnter("key:", key);
-        var value = this.childrenMap.get(key);
-        if (value == null) {
-            return new ArrayList<>();
+        try (var logger = logScope("key:", key);){
+            var value = this.childrenMap.get(key);
+            if (value == null) {
+                return new ArrayList<>();
+            }
+            return logger.logReturn(this.childrenMap.get(key));
+
         }
-        return logReturn(this.childrenMap.get(key));
     }
 
     public boolean hasChildren() {
         return !this.childrenMap.entrySet().stream()
-            .filter(stringListEntry -> !stringListEntry.getKey().equals("#text"))
-            .map(Map.Entry::getValue)
-            .allMatch(List::isEmpty);
+                .filter(stringListEntry -> !stringListEntry.getKey().equals("#text"))
+                .map(Map.Entry::getValue)
+                .allMatch(List::isEmpty);
     }
 
     public void setChildren(String key, Optional<RawNode> value) {
@@ -191,24 +205,24 @@ public final class RawNode {
     }
 
     public RawNode addChildren(String key, Object value) {
-        logEnter("key:", key, "value:", value);
-        switch (value) {
-            case Optional<?> optionalValue -> {
-                optionalValue.ifPresent(o -> addChildren(key, o));
+        try (var logger = logScope("key:", key, "value:", value)){
+            switch (value) {
+                case Optional<?> optionalValue -> {
+                    optionalValue.ifPresent(o -> addChildren(key, o));
+                }
+                case List<?> listValue -> listValue.forEach(o -> addChildren(key, o));
+                case RawNode rawNode -> {
+                    var childrenList = this.childrenMap.getOrDefault(key, new ArrayList<>());
+                    childrenList.add(rawNode);
+                    this.childrenMap.put(key, childrenList);
+                    this.childrenList.add(rawNode);
+                }
+                case null -> throw new NullPointerException();
+                default -> throw new RuntimeException(new InvalidClassException(value.getClass().getName()));
             }
-            case List<?> listValue -> listValue.forEach(o -> addChildren(key, o));
-            case RawNode rawNode -> {
-                var childrenList = this.childrenMap.getOrDefault(key, new ArrayList<>());
-                childrenList.add(rawNode);
-                this.childrenMap.put(key, childrenList);
-                this.childrenList.add(rawNode);
-            }
-            case null -> throw new NullPointerException();
-            default -> throw new RuntimeException(new InvalidClassException(value.getClass().getName()));
+            return this;
         }
 
-        logReturnVoid();
-        return this;
     }
 
     public String toDocumentString() {
@@ -219,7 +233,7 @@ public final class RawNode {
             StringWriter writer = new StringWriter();
             transformer.transform(new DOMSource(outputDocument), new StreamResult(writer));
             return writer.getBuffer().toString()
-                .replace("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>","");
+                    .replace("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>", "");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -227,46 +241,50 @@ public final class RawNode {
     }
 
     public Document toDocument(String rootElementName) {
-        logEnter(rootElementName);
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = null;
-        try {
-            builder = factory.newDocumentBuilder();
-        } catch (ParserConfigurationException e) {
-            throw new RuntimeException(e);
-        }
-        Document document = builder.newDocument();
-        Element element = document.createElement(rootElementName);
-        this.populateNode(document, element);
-        document.appendChild(element);
+        try (var logger = logScope(rootElementName);){
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = null;
+            try {
+                builder = factory.newDocumentBuilder();
+            } catch (ParserConfigurationException e) {
+                throw new RuntimeException(e);
+            }
+            Document document = builder.newDocument();
+            Element element = document.createElement(rootElementName);
+            this.populateNode(document, element);
+            document.appendChild(element);
 
-        return logReturn(document);
+            return logger.logReturn(document);
+        }
+
     }
 
     public void populateNode(Document document, Element element) {
-        logEnter(getNodePath(element));
-        this.attributeMap.forEach(element::setAttribute);
-        this.childrenMap.forEach((childName, rawNodes) -> {
-            rawNodes.forEach(rawNode -> {
-                if ("#text".equals(childName)) {
-                    log("Ignoring #text child");
-                    return;
-                }
-                log("Creating element with", childName);
-                var childElement = document.createElement(childName);
-                rawNode.populateNode(document, childElement);
-                element.appendChild(childElement);
+        try (var logger = logScope(getNodePath(element))){
+            this.attributeMap.forEach(element::setAttribute);
+            this.childrenMap.forEach((childName, rawNodes) -> {
+                rawNodes.forEach(rawNode -> {
+                    if ("#text".equals(childName)) {
+                        logger.log("Ignoring #text child");
+                        return;
+                    }
+                    logger.log("Creating element with", childName);
+                    var childElement = document.createElement(childName);
+                    rawNode.populateNode(document, childElement);
+                    element.appendChild(childElement);
+                });
             });
-        });
-        logReturnVoid(getNodePath(element));
+            logger.log("executing", getNodePath(element));
+        }
+
     }
 
     public int getChildIndex(RawNode object) {
         return childrenMap.values().stream()
-            .map(rawNodes -> rawNodes.indexOf(object))
-            .filter(integer -> integer != -1)
-            .findFirst()
-            .orElse(0);
+                .map(rawNodes -> rawNodes.indexOf(object))
+                .filter(integer -> integer != -1)
+                .findFirst()
+                .orElse(0);
     }
 
     public String getPath() {

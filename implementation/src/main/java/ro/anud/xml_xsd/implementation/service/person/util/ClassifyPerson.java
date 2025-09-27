@@ -10,7 +10,6 @@ import java.util.function.BiConsumer;
 import java.util.stream.Stream;
 
 import static ro.anud.xml_xsd.implementation.service.person.util.AddClassificationsBasedOnProperty.addClassificationsBasedOnProperty;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class ClassifyPerson {

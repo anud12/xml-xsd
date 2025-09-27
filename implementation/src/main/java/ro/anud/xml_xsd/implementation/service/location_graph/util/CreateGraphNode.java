@@ -19,7 +19,6 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class CreateGraphNode {
@@ -128,8 +127,7 @@ public class CreateGraphNode {
         WorldStepInstance worldStepInstance,
         NodeRule nodeRule,
         String startNodeRef) {
-        try (var scope = logScope()){
-            var logger = logEnter();
+        try (var logger = logScope()){
             logger.log("creating node");
             var nodeElement = new Node()
                     .setNodeRuleRef(startNodeRef)
@@ -162,7 +160,7 @@ public class CreateGraphNode {
                         );
                     });
 
-            return scope.logReturn(nodeElement);
+            return logger.logReturn(nodeElement);
         }
     }
 }

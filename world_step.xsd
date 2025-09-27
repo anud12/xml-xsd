@@ -1992,6 +1992,7 @@
                 <xs:complexType>
                   <xs:attribute name="zone_id_ref" type="xs:string" use="required"/>
                   <xs:attribute name="region_id_ref" type="xs:string" use="required"/>
+                  <xs:attribute name="portal_id_ref" type="xs:string" use="required"/>
                 </xs:complexType>
               </xs:element>
               <xs:element name="region.resolvePortals" minOccurs="0">

@@ -9,7 +9,6 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class EventsMetadata {

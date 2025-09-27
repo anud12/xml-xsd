@@ -1,4 +1,4 @@
-package ro.anud.xml_xsd.specification.analyze_websocket.zone_rule.resolve_links;
+package ro.anud.xml_xsd.specification.analyze_websocket.zone_rule.resolve_portals;
 
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;

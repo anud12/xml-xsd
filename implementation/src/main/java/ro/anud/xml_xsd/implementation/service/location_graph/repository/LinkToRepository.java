@@ -13,7 +13,6 @@ import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.HashMap;
 import java.util.Optional;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class LinkToRepository {

@@ -328,7 +328,7 @@ export type world_step = JsonQueryType<{}, {
       "on_person": JsonQueryType<{"person_id_ref": string;}> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
     "zone.create": JsonQueryType<{"zone_rule_ref": string;}> & JsonQueryType<{}, {}>;
-    "region.appendNew": JsonQueryType<{"zone_id_ref": string;  "region_id_ref": string;}> & JsonQueryType<{}, {}>;
+    "region.appendNew": JsonQueryType<{"zone_id_ref": string;  "region_id_ref": string;  "portal_id_ref": string;}> & JsonQueryType<{}, {}>;
     "region.resolvePortals": JsonQueryType<{"zone_id_ref": string;  "region_id_ref": string;}> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
 }>

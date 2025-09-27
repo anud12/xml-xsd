@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import org.xml.sax.SAXException;
 import ro.anud.xml_xsd.implementation.WorldStepRunner;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
-import ro.anud.xml_xsd.implementation.util.LocalLogger;
 import ro.anud.xml_xsd.implementation.validator.AtrributeValidator;
 import ro.anud.xml_xsd.implementation.websocket.Client;
 import ro.anud.xml_xsd.implementation.websocket.WebSocketHandler;

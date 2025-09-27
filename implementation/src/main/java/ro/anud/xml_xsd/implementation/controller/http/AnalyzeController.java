@@ -40,7 +40,6 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 @RestController()
@@ -52,11 +51,13 @@ public class AnalyzeController {
     public ResponseEntity<String> executeNameRule(
         @RequestBody String request,
         @PathVariable String nameRule) throws ParserConfigurationException, IOException, SAXException {
-        var logger = logEnter();
-        var worldStepInstance = buildWorldStepInstance(request);
-        var result = worldStepInstance.name.calculateNameFromRefString(nameRule);
-        logger.log("result", result);
-        return ResponseEntity.of(result);
+        try (var logger = logScope()){
+            var worldStepInstance = buildWorldStepInstance(request);
+            var result = worldStepInstance.name.calculateNameFromRefString(nameRule);
+            logger.log("result", result);
+            return ResponseEntity.of(result);
+        }
+
     }
 
     @PostMapping("/execute")

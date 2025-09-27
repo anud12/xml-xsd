@@ -2326,12 +2326,12 @@
                             "value": {
                               "x": {
                                 "metaType": "primitive",
-                                "value": "xs:integer",
+                                "value": "xs:int",
                                 "isNullable": false
                               },
                               "y": {
                                 "metaType": "primitive",
-                                "value": "xs:integer",
+                                "value": "xs:int",
                                 "isNullable": false
                               },
                               "rotation": {
@@ -2352,12 +2352,12 @@
                             "value": {
                               "width": {
                                 "metaType": "primitive",
-                                "value": "xs:integer",
+                                "value": "xs:int",
                                 "isNullable": false
                               },
                               "height": {
                                 "metaType": "primitive",
-                                "value": "xs:integer",
+                                "value": "xs:int",
                                 "isNullable": false
                               }
                             }
@@ -2435,12 +2435,12 @@
                                       },
                                       "start": {
                                         "metaType": "primitive",
-                                        "value": "xs:integer",
+                                        "value": "xs:int",
                                         "isNullable": false
                                       },
                                       "end": {
                                         "metaType": "primitive",
-                                        "value": "xs:integer",
+                                        "value": "xs:int",
                                         "isNullable": false
                                       }
                                     }
@@ -2471,12 +2471,12 @@
                                       },
                                       "start": {
                                         "metaType": "primitive",
-                                        "value": "xs:integer",
+                                        "value": "xs:int",
                                         "isNullable": false
                                       },
                                       "end": {
                                         "metaType": "primitive",
-                                        "value": "xs:integer",
+                                        "value": "xs:int",
                                         "isNullable": false
                                       }
                                     }
@@ -2901,6 +2901,32 @@
               }
             },
             "region.appendNew": {
+              "metaType": "object",
+              "value": {},
+              "isSingle": true,
+              "isNullable": true,
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "zone_id_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string",
+                    "isNullable": false
+                  },
+                  "region_id_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string",
+                    "isNullable": false
+                  },
+                  "portal_id_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string",
+                    "isNullable": false
+                  }
+                }
+              }
+            },
+            "region.resolvePortals": {
               "metaType": "object",
               "value": {},
               "isSingle": true,

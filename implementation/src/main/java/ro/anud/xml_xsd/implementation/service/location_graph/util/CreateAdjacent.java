@@ -22,8 +22,6 @@ import static ro.anud.xml_xsd.implementation.service.location_graph.util.CreateG
 import static ro.anud.xml_xsd.implementation.service.location_graph.util.CreateLinkTo.createLinkTo;
 import static ro.anud.xml_xsd.implementation.service.location_graph.util.GetAdjacentNodes.getAdjacentNodes;
 import static ro.anud.xml_xsd.implementation.service.location_graph.util.KeepNotFullLinkGroupElements.*;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
 import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class CreateAdjacent {
@@ -51,8 +49,7 @@ public class CreateAdjacent {
             WorldStepInstance worldStepInstance,
             LocationGraph locationGraphElement,
             Node nodeGraphElement) {
-        try (var scope = logScope()) {
-            var logger = logEnter();
+        try (var logger = logScope()) {
 
             var nodeRule = worldStepInstance.ruleRepository.nodeRule.streamNodeRuleByLocationGraphAndNode(
                     locationGraphElement,
@@ -237,7 +234,7 @@ public class CreateAdjacent {
             var newX = originPosition.getX() + distance * PreComputeTrig.getCosByAngle(angle);
             var newY = originPosition.getY() + distance * PreComputeTrig.getSinByAngle(angle);
 
-            return logReturn(new XYPosition((int) newX, (int) newY));
+            return scope.logReturn(new XYPosition((int) newX, (int) newY));
         }
 
     }

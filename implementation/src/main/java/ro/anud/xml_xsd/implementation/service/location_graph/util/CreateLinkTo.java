@@ -3,12 +3,10 @@ package ro.anud.xml_xsd.implementation.service.location_graph.util;
 import ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.LinkTo;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node;
-import ro.anud.xml_xsd.implementation.service.Mutation;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
 import java.util.Optional;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class CreateLinkTo {
@@ -18,8 +16,7 @@ public class CreateLinkTo {
             ToOption toOption,
             Node node,
             Node targetNode) {
-        try (var scope = logScope()) {
-            var logger = logEnter("node", node.getId(), "targetNode", targetNode.getId());
+        try (var logger = logScope("node", node.getId(), "targetNode", targetNode.getId())) {
             var ratio = toOption.getDistanceToProgressMultiplier()
                     .flatMap(worldStepInstance::computeOperation)
                     .orElse(1);
@@ -41,7 +38,7 @@ public class CreateLinkTo {
             }
             toOption.getPersonProgressProperty().ifPresent(linkTo::setPersonProgressProperty);
 
-            return scope.logReturn(Optional.of(linkTo));
+            return logger.logReturn(Optional.of(linkTo));
         }
     }
 

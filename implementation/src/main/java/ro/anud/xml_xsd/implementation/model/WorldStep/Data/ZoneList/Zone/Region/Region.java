@@ -10,9 +10,7 @@ import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
   @EqualsAndHashCode
   @ToString
@@ -24,32 +22,38 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
     public static String nodeName = "region";
     public static Region fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-      logEnter();
-      var instance = new Region();
-      if(Objects.nonNull(parent)) {
-        instance.parentNode(parent);
+      try (var logger = logScope()) {
+        var instance = new Region();
+        if(Objects.nonNull(parent)) {
+          instance.parentNode(parent);
+        }
+        instance.rawNode(rawNode);
+        instance.deserialize(rawNode);
+        return logger.logReturn(instance);
       }
-      instance.rawNode(rawNode);
-      instance.deserialize(rawNode);
-      return logReturn(instance);
+
     }
     public static Region fromRawNode(RawNode rawNode) {
-      logEnter();
-      var instance = fromRawNode(rawNode, null);
-      return logReturn(instance);
+      try (var logger = logScope()) {
+        var instance = fromRawNode(rawNode, null);
+        return logger.logReturn(instance);
+      }
     }
     public static Optional<Region> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-        logEnter();
-        return logReturn(rawNode.map(o -> Region.fromRawNode(o, parent)));
+        try(var logger = logScope()) {
+          return logger.logReturn(rawNode.map(o -> Region.fromRawNode(o, parent)));
+        }
+
     }
     public static List<Region> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-      logEnter();
-      List<Region> returnList = Optional.ofNullable(rawNodeList)
-          .orElse(List.of())
-          .stream()
-          .map(o -> Region.fromRawNode(o, parent))
-          .collect(Collectors.toList());
-      return logReturn(returnList);
+      try (var logger = logScope()) {
+        List<Region> returnList = Optional.ofNullable(rawNodeList)
+            .orElse(List.of())
+            .stream()
+            .map(o -> Region.fromRawNode(o, parent))
+            .collect(Collectors.toList());
+        return logger.logReturn(returnList);
+      }
     }
 
     public String classTypeId() {
@@ -103,11 +107,12 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public void notifyChange(List<Object> list) {
-      var logger = logEnter();
-      list.addLast(this);
-      logger.log("Notify change for", this.buildPath());
-      onChangeList.forEach(consumer -> consumer.accept(list));
-      parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
+      try (var logger = logScope()) {
+        list.addLast(this);
+        logger.log("Notify change for", this.buildPath());
+        onChangeList.forEach(consumer -> consumer.accept(list));
+        parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
+      }
     }
 
     public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
@@ -117,11 +122,11 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
 
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Zone> parentAsZone() {
       return parentNode.flatMap(node -> {
-       if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Zone casted){
-         return Optional.of(casted);
-       }
-       return Optional.empty();
-     });
+        if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Zone casted){
+          return Optional.of(casted);
+        }
+        return Optional.empty();
+      });
     }
 
     public void removeChild(Object object) {
@@ -168,56 +173,61 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     public Subscription onChange(Consumer<List<Object>> onChange) {
-      logEnter();
-      onChangeList.add(onChange);
-      return logReturn(() -> onChangeList.remove(onChange));
+      try (var logger = logScope()) {
+        onChangeList.add(onChange);
+        return logger.logReturn(() -> onChangeList.remove(onChange));
+      }
     }
 
     public void deserialize (RawNode rawNode) {
-      try {
-        var logger = logEnter();
+      try (var logger = logScope()) {
         this.rawNode = rawNode;
         // Godot.GD.Print("Deserializing region");
 
-        var innerLogger = logger.log("attributes");
-        //Deserialize attributes
-        innerLogger.log("id");
-        this.id = rawNode.getAttributeRequired("id");
-        innerLogger = logger.log("children");
-        //Deserialize children
-        this.rule = ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Rule.Rule.fromRawNode(rawNode.getChildrenFirst("rule").get(), this);
-        this.position = ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Position.Position.fromRawNode(rawNode.getChildrenFirst("position").get(), this);
-        this.limit = ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Limit.Limit.fromRawNode(rawNode.getChildrenFirst("limit").get(), this);
-        this.availablePortals = ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.AvailablePortals.AvailablePortals.fromRawNode(rawNode.getChildrenFirst("available_portals"), this);
-        this.portals = ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portals.fromRawNode(rawNode.getChildrenFirst("portals"), this);
-        logReturnVoid();
+        try (var innerLogger = logScope("attributes")) {
+          //Deserialize attributes
+          innerLogger.log("id");
+          this.id = rawNode.getAttributeRequired("id");
+        }
+        try (var innerLogger = logScope("children")) {
+          //Deserialize children
+          this.rule = ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Rule.Rule.fromRawNode(rawNode.getChildrenFirst("rule").get(), this);
+          this.position = ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Position.Position.fromRawNode(rawNode.getChildrenFirst("position").get(), this);
+          this.limit = ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Limit.Limit.fromRawNode(rawNode.getChildrenFirst("limit").get(), this);
+          this.availablePortals = ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.AvailablePortals.AvailablePortals.fromRawNode(rawNode.getChildrenFirst("available_portals"), this);
+          this.portals = ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portals.fromRawNode(rawNode.getChildrenFirst("portals"), this);
+        }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
       }
+
     }
 
     public RawNode serializeIntoRawNode()
     {
-      var logger = logEnter();
-      rawNode.setTag("region");
-      var innerLogger = logger.log("attributes");
-      //Serialize attributes
-      innerLogger.log("id");
-      rawNode.setAttribute("id", this.id);
+      try (var logger = logScope()) {
+        rawNode.setTag("region");
+        try (var innerLogger = logScope("attributes")) {
+          //Serialize attributes
+          innerLogger.log("id");
+          rawNode.setAttribute("id", this.id);
+        }
+        try (var innerLogger = logScope("children")) {
 
-      innerLogger = logger.log("children");
-      //Serialize children
-      innerLogger.log("rule");
-      rawNode.setChildren("rule", Optional.ofNullable(rule).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Rule.Rule::serializeIntoRawNode).toList());
-      innerLogger.log("position");
-      rawNode.setChildren("position", Optional.ofNullable(position).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Position.Position::serializeIntoRawNode).toList());
-      innerLogger.log("limit");
-      rawNode.setChildren("limit", Optional.ofNullable(limit).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Limit.Limit::serializeIntoRawNode).toList());
-      innerLogger.log("available_portals");
-      rawNode.setChildren("available_portals", availablePortals.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.AvailablePortals.AvailablePortals::serializeIntoRawNode).toList());
-      innerLogger.log("portals");
-      rawNode.setChildren("portals", portals.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portals::serializeIntoRawNode).toList());
-      return rawNode;
+          //Serialize children
+          innerLogger.log("rule");
+          rawNode.setChildren("rule", Optional.ofNullable(rule).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Rule.Rule::serializeIntoRawNode).toList());
+          innerLogger.log("position");
+          rawNode.setChildren("position", Optional.ofNullable(position).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Position.Position::serializeIntoRawNode).toList());
+          innerLogger.log("limit");
+          rawNode.setChildren("limit", Optional.ofNullable(limit).stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Limit.Limit::serializeIntoRawNode).toList());
+          innerLogger.log("available_portals");
+          rawNode.setChildren("available_portals", availablePortals.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.AvailablePortals.AvailablePortals::serializeIntoRawNode).toList());
+          innerLogger.log("portals");
+          rawNode.setChildren("portals", portals.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Portals.Portals::serializeIntoRawNode).toList());
+          return rawNode;
+        }
+      }
     }
 
     public void serialize(Document document, Element element)
@@ -471,12 +481,12 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
               "value": {
                 "x": {
                   "metaType": "primitive",
-                  "value": "xs:integer",
+                  "value": "xs:int",
                   "isNullable": false
                 },
                 "y": {
                   "metaType": "primitive",
-                  "value": "xs:integer",
+                  "value": "xs:int",
                   "isNullable": false
                 },
                 "rotation": {
@@ -497,12 +507,12 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
               "value": {
                 "width": {
                   "metaType": "primitive",
-                  "value": "xs:integer",
+                  "value": "xs:int",
                   "isNullable": false
                 },
                 "height": {
                   "metaType": "primitive",
-                  "value": "xs:integer",
+                  "value": "xs:int",
                   "isNullable": false
                 }
               }
@@ -580,12 +590,12 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                         },
                         "start": {
                           "metaType": "primitive",
-                          "value": "xs:integer",
+                          "value": "xs:int",
                           "isNullable": false
                         },
                         "end": {
                           "metaType": "primitive",
-                          "value": "xs:integer",
+                          "value": "xs:int",
                           "isNullable": false
                         }
                       }
@@ -616,12 +626,12 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                         },
                         "start": {
                           "metaType": "primitive",
-                          "value": "xs:integer",
+                          "value": "xs:int",
                           "isNullable": false
                         },
                         "end": {
                           "metaType": "primitive",
-                          "value": "xs:integer",
+                          "value": "xs:int",
                           "isNullable": false
                         }
                       }

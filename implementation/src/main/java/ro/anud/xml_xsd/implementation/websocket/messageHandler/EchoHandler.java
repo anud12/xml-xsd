@@ -1,7 +1,6 @@
 package ro.anud.xml_xsd.implementation.websocket.messageHandler;
 
 import org.springframework.stereotype.Component;
-import ro.anud.xml_xsd.implementation.util.LocalLogger;
 import ro.anud.xml_xsd.implementation.websocket.WebSocketHandler;
 
 import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;

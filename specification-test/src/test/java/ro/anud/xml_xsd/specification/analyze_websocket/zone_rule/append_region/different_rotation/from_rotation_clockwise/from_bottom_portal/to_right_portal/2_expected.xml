@@ -3,7 +3,7 @@
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
-    <counter value="3"/>
+    <counter value="2"/>
     <randomization_table>
       <entry value="1"/>
     </randomization_table>
@@ -47,7 +47,7 @@
           <limit height="6" width="10"/>
           <available_portals/>
           <portals>
-            <portal id="0.2">
+            <portal id="available_portal_id">
               <from end="5" side="bottom" start="4"/>
               <to end="3" region_ref="0.0" side="right" start="2" zone_ref="zone_id"/>
             </portal>

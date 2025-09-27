@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import ro.anud.xml_xsd.implementation.WorldStepRunner;
-import ro.anud.xml_xsd.implementation.util.LocalLogger;
 import ro.anud.xml_xsd.implementation.util.RawNode;
 import ro.anud.xml_xsd.implementation.websocket.Client;
 import ro.anud.xml_xsd.implementation.websocket.WebSocketHandler;

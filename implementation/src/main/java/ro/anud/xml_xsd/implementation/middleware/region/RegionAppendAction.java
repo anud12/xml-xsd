@@ -24,7 +24,7 @@ public class RegionAppendAction {
                                 .flatMap(Data::streamZoneListOrDefault)
                                 .findFirst()
                                 .ifPresent(zoneList -> {
-                                    worldStepInstance.region.appendTo(parentRegion);
+                                    worldStepInstance.region.appendTo(parentRegion, regionAppend.getPortalIdRef());
                                 });
                     });
             worldStepInstance.getOutInstance().streamWorldStep()

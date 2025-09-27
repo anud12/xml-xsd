@@ -6,7 +6,8 @@ import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
+
 
 public record Client(WebSocketHandler handler, WebSocketSession webSocketSession) {
 
@@ -58,8 +59,8 @@ public record Client(WebSocketHandler handler, WebSocketSession webSocketSession
     }
 
     public void send(ReturnCode returnCode, String message) {
-        try {
-            logEnter("sending ", returnCode.value);
+        try (var logger = logScope("sending ", returnCode.value)){
+
             handler.sendMessage(webSocketSession, new TextMessage(returnCode.value + message));
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -12,7 +12,6 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RegionRule.Entry.Entry;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
-import ro.anud.xml_xsd.implementation.util.LocalLogger;
 
 import java.util.List;
 import java.util.Optional;
@@ -86,14 +85,14 @@ public class RegionInstance {
         }
     }
 
-    public void appendTo(final Region parentRegion) {
+    public void appendTo(final Region parentRegion, String portalIdRef) {
         try (var scope = logScope("parentRegion: ", parentRegion.getId())) {
             var parentZone = parentRegion.parentAsZone().get();
 
             var parentRegionRule = worldStepInstance.ruleRepository.regionRule.getById(parentRegion.getRule().getRuleIdRef()).get();
 
             var parentAvailablePortal = worldStepInstance.randomFrom(parentRegion.streamAvailablePortals().flatMap(
-                            AvailablePortals::streamPortal).toList())
+                            AvailablePortals::streamPortal).filter(portal -> portal.getId().equals(portalIdRef)).toList())
                     .get();
             var parentPortalRule = worldStepInstance.ruleRepository.portalRule.getById(parentAvailablePortal.getPortalRuleRef()).get();
 
@@ -117,7 +116,7 @@ public class RegionInstance {
             var toStart = worldStepInstance.computeOperation(toRegionPortalRule.getStart()).get();
 
             var parentPortal = Portal.builder()
-                    .id(worldStepInstance.getNextId())
+                    .id(portalIdRef)
                     .from(From.builder()
                             .side(parentAvailablePortal.getSide())
                             .start(fromStart)

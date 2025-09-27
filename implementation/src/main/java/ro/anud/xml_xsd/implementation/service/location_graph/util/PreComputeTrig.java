@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
 import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class PreComputeTrig {
@@ -15,8 +14,7 @@ public class PreComputeTrig {
 
 
     static double getCosByAngle(int angle) {
-        var logger = logEnter(angle);
-        try (var scope = logScope()){
+        try (var scope = logScope(angle)){
             //convert angle from degree to radiant
             var radiant = Math.toRadians(angle);
             return scope.logReturn(Math.cos(radiant));
@@ -24,10 +22,9 @@ public class PreComputeTrig {
     }
 
     static double getSinByAngle(int angle) {
-        var logger = logEnter(angle);
-        try (var scope = logScope()){
+        try (var scope = logScope(angle)){
             var radiant = Math.toRadians(angle);
-            return logger.logReturn(Math.sin(radiant));
+            return scope.logReturn(Math.sin(radiant));
         }
     }
 

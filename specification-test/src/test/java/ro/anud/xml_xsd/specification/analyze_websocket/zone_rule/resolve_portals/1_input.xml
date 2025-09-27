@@ -36,12 +36,6 @@
           <available_portals>
             <portal id="0.2" start="4" side="bottom"  portal_rule_ref=""/>
           </available_portals>
-          <portals>
-            <portal id="0.2">
-              <from end="5" side="bottom" start="4"/>
-              <to end="5" region_ref="0.0" side="bottom" start="4" zone_ref="zone_id"/>
-            </portal>
-          </portals>
         </region>
         <region id="0.0">
           <rule rule_id_ref="region_rule"/>
@@ -55,6 +49,6 @@
     </zone_list>
   </data>
   <actions>
-    <zone.resolve_portals zone_rule_ref="zone_rule"/>
+    <region.resolvePortals zone_id_ref="zone_id" region_id_ref="region_id"/>
   </actions>
 </world_step>

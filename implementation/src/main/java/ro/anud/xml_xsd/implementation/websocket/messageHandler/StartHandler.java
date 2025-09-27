@@ -3,12 +3,10 @@ package ro.anud.xml_xsd.implementation.websocket.messageHandler;
 
 import org.springframework.stereotype.Component;
 import ro.anud.xml_xsd.implementation.WorldStepRunner;
-import ro.anud.xml_xsd.implementation.util.LocalLogger;
 import ro.anud.xml_xsd.implementation.websocket.WebSocketHandler;
 
 import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 import static ro.anud.xml_xsd.implementation.websocket.Client.ReturnCode.Start;
-import static ro.anud.xml_xsd.implementation.websocket.Client.ReturnCode.StartStop;
 
 @Component
 public record StartHandler(WorldStepRunner worldStepRunner) implements WebSocketHandler.Factory {

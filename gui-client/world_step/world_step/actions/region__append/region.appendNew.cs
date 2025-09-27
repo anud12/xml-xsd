@@ -29,6 +29,8 @@ namespace XSD.Nworld_step.Nactions {
     public System.String zone_id_ref { get => _zone_id_ref; set => _zone_id_ref = value; }
     private System.String _region_id_ref;
     public System.String region_id_ref { get => _region_id_ref; set => _region_id_ref = value; }
+    private System.String _portal_id_ref;
+    public System.String portal_id_ref { get => _portal_id_ref; set => _portal_id_ref = value; }
 
     //Children elements
     public region__appendNew()
@@ -55,6 +57,10 @@ namespace XSD.Nworld_step.Nactions {
       if(name == "region_id_ref")
       {
         Set_region_id_ref(value);
+      }
+      if(name == "portal_id_ref")
+      {
+        Set_portal_id_ref(value);
       }
     }
 
@@ -100,6 +106,11 @@ namespace XSD.Nworld_step.Nactions {
         var attribute_region_id_ref = rawNode.attributes["region_id_ref"];
         this.region_id_ref = rawNode.attributes["region_id_ref"];
       }
+      if(rawNode.attributes.ContainsKey("portal_id_ref"))
+      {
+        var attribute_portal_id_ref = rawNode.attributes["portal_id_ref"];
+        this.portal_id_ref = rawNode.attributes["portal_id_ref"];
+      }
 
       //Deserialize children
       NotifyChange();
@@ -115,6 +126,10 @@ namespace XSD.Nworld_step.Nactions {
       if(this._region_id_ref != null)
       {
         rawNode.attributes["region_id_ref"] = this._region_id_ref.ToString();
+      }
+      if(this._portal_id_ref != null)
+      {
+        rawNode.attributes["portal_id_ref"] = this._portal_id_ref.ToString();
       }
 
       //Serialize children
@@ -143,6 +158,15 @@ namespace XSD.Nworld_step.Nactions {
     public void Set_region_id_ref(System.String value)
     {
       this.region_id_ref = value;
+      this.NotifyChange();
+    }
+    public System.String Get_portal_id_ref()
+    {
+      return this.portal_id_ref;
+    }
+    public void Set_portal_id_ref(System.String value)
+    {
+      this.portal_id_ref = value;
       this.NotifyChange();
     }
 
@@ -187,7 +211,7 @@ namespace XSD.Nworld_step.Nactions {
             return false;
 
         var other = (region__appendNew)obj;
-        return Equals(zone_id_ref, other.zone_id_ref) && Equals(region_id_ref, other.region_id_ref);
+        return Equals(zone_id_ref, other.zone_id_ref) && Equals(region_id_ref, other.region_id_ref) && Equals(portal_id_ref, other.portal_id_ref);
     }
 
     public override int GetHashCode()
@@ -196,6 +220,7 @@ namespace XSD.Nworld_step.Nactions {
 
         acc = HashCode.Combine(acc, zone_id_ref);
         acc = HashCode.Combine(acc, region_id_ref);
+        acc = HashCode.Combine(acc, portal_id_ref);
         return acc;
     }
   }
