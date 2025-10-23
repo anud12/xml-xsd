@@ -114,6 +114,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions> parentAsActions() {
       return parentNode.flatMap(node -> {
         if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions casted){
@@ -144,19 +150,34 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing region.appendNew");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
           innerLogger.log("zone_id_ref");
-          this.zoneIdRef = rawNode.getAttributeRequired("zone_id_ref");
+          var zoneIdRefValue = rawNode.getAttributeRequired("zone_id_ref");
+          if(Objects.equals(this.zoneIdRef, zoneIdRefValue)) {
+            isDirty = true;
+          }
+          this.zoneIdRef = zoneIdRefValue;
           innerLogger.log("region_id_ref");
-          this.regionIdRef = rawNode.getAttributeRequired("region_id_ref");
+          var regionIdRefValue = rawNode.getAttributeRequired("region_id_ref");
+          if(Objects.equals(this.regionIdRef, regionIdRefValue)) {
+            isDirty = true;
+          }
+          this.regionIdRef = regionIdRefValue;
           innerLogger.log("portal_id_ref");
-          this.portalIdRef = rawNode.getAttributeRequired("portal_id_ref");
+          var portalIdRefValue = rawNode.getAttributeRequired("portal_id_ref");
+          if(Objects.equals(this.portalIdRef, portalIdRefValue)) {
+            isDirty = true;
+          }
+          this.portalIdRef = portalIdRefValue;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);

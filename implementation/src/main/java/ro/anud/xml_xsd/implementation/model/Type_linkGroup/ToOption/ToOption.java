@@ -120,6 +120,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.Type_linkGroup.Type_linkGroup> parentAsType_linkGroup() {
       return parentNode.flatMap(node -> {
         if (node instanceof ro.anud.xml_xsd.implementation.model.Type_linkGroup.Type_linkGroup casted){
@@ -164,18 +170,33 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing to_option");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
           innerLogger.log("node_rule_ref");
-          this.nodeRuleRef = rawNode.getAttributeRequired("node_rule_ref");
+          var nodeRuleRefValue = rawNode.getAttributeRequired("node_rule_ref");
+          if(Objects.equals(this.nodeRuleRef, nodeRuleRefValue)) {
+            isDirty = true;
+          }
+          this.nodeRuleRef = nodeRuleRefValue;
           innerLogger.log("distance");
-          this.distance = rawNode.getAttributeIntRequired("distance");
+          var distanceValue = rawNode.getAttributeIntRequired("distance");
+          if(Objects.equals(this.distance, distanceValue)) {
+            isDirty = true;
+          }
+          this.distance = distanceValue;
           innerLogger.log("maxDistance");
-          this.maxDistance = rawNode.getAttributeInt("maxDistance");
+          var maxDistanceValue = rawNode.getAttributeInt("maxDistance");
+          if(Objects.equals(this.maxDistance, maxDistanceValue)) {
+            isDirty = true;
+          }
+          this.maxDistance = maxDistanceValue;
           innerLogger.log("adjacent_depth_limit");
-          this.adjacentDepthLimit = rawNode.getAttributeIntRequired("adjacent_depth_limit");
+          var adjacentDepthLimitValue = rawNode.getAttributeIntRequired("adjacent_depth_limit");
+          if(Objects.equals(this.adjacentDepthLimit, adjacentDepthLimitValue)) {
+            isDirty = true;
+          }
+          this.adjacentDepthLimit = adjacentDepthLimitValue;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
@@ -183,6 +204,10 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           this.distanceToProgressMultiplier = ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.fromRawNode(rawNode.getChildrenFirst("distance_to_progress_multiplier"), this);
           innerLogger.log("person_progress_property");
           this.personProgressProperty = ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.fromRawNode(rawNode.getChildrenFirst("person_progress_property"), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);

@@ -112,6 +112,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.Person_teleport> parentAsPerson_teleport() {
       return parentNode.flatMap(node -> {
         if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_teleport.Person_teleport casted){
@@ -148,17 +154,24 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing link_to");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
           innerLogger.log("accumulated_progress");
-          this.accumulatedProgress = rawNode.getAttributeIntRequired("accumulated_progress");
+          var accumulatedProgressValue = rawNode.getAttributeIntRequired("accumulated_progress");
+          if(Objects.equals(this.accumulatedProgress, accumulatedProgressValue)) {
+            isDirty = true;
+          }
+          this.accumulatedProgress = accumulatedProgressValue;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
           innerLogger.log("selection");
           this.selection = ro.anud.xml_xsd.implementation.model.Type_linkTo_selection.Type_linkTo_selection.fromRawNode(rawNode.getChildrenFirst("selection").get(), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);

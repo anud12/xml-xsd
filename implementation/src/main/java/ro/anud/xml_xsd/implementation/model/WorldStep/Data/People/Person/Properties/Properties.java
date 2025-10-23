@@ -110,6 +110,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person> parentAsPerson() {
       return parentNode.flatMap(node -> {
         if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person casted){
@@ -147,14 +153,17 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing properties");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
           this.property = ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Property.Property.fromRawNode(rawNode.getChildrenList("property"), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
@@ -197,20 +206,18 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     {
       this.property.add(value);
       value.parentNode(this);
-      notifyChange();
       return this;
     }
     public Properties addAllProperty(List<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Property.Property> value)
     {
       this.property.addAll(value);
       value.forEach(e -> e.parentNode(this));
-      notifyChange();
       return this;
     }
     public Properties removeProperty(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Property.Property value)
     {
       this.property.remove(value);
-      notifyChange();
+      value.clearParentNode();
       return this;
     }
 
@@ -232,8 +239,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
             }
           }
           var newEntry = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Property.Property();
+          var linkedNode = newEntry.deserializeAtPath(childXPath, rawNode);
           this.addProperty(newEntry);
-          return newEntry.deserializeAtPath(childXPath, rawNode);
+          return linkedNode;
         }
 
         deserialize(rawNode);

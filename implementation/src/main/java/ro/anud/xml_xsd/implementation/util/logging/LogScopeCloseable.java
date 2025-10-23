@@ -12,7 +12,7 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.*;
 
 @Getter
 @Setter
-public class LogScopeCloseable implements AutoCloseable{
+public class LogScopeCloseable implements AutoCloseable {
 
     private String methodName = "";
     private String tag = "";
@@ -23,11 +23,20 @@ public class LogScopeCloseable implements AutoCloseable{
     public void close() {
         decreaseIndent();
 
-        String prefix = getIndent() + "┻ " + "[" + methodName + "]: "+ tag +  "exit";
+        String prefix = getIndent() + "┻ " + "[" + methodName + "]: " + " exit: "+ tag;
         if (returnValue != null) {
             prefix += " return: " + returnValue + "";
         }
         absoluteLog(padRight(prefix) + " --- " + getCallerSignature(1));
+    }
+
+    void newScope() {
+        getCaller();
+
+        String prefix = getIndent() + "┳ " + "[" + methodName + "]: " +  " enter: " + tag ;
+        absoluteLog(padRight(prefix) + " --- " + getCallerSignature(2));
+
+        increaseIndent();
     }
 
 
@@ -41,24 +50,20 @@ public class LogScopeCloseable implements AutoCloseable{
     }
 
     private void absoluteLog(String message) {
-        logger.info(message);
+        if (message == null) {
+            logger.info("null");
+            return;
+        }
+        String escaped = message
+                .replace("\r\n", "\\n")
+                .replace("\r", "\\n")
+                .replace("\n", "\\n");
+        logger.info(escaped);
     }
 
     public <T> T logReturn(T value) {
         this.returnValue = value;
         return value;
-    }
-
-    void newScope() {
-        getCaller();
-
-        String prefix = getIndent() + "┳ " + "[" + methodName + "]: " + this.tag + "enter";
-        absoluteLog(padRight(prefix) + " --- " + getCallerSignature(2));
-
-        increaseIndent();
-    }
-
-    public void closeLod() {
     }
 
     public void logTodo(Object... message) {

@@ -114,6 +114,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.EventsRule> parentAsEventsRule() {
       return parentNode.flatMap(node -> {
         if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.EventsRule casted){
@@ -156,18 +162,25 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing entry");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
           innerLogger.log("id");
-          this.id = rawNode.getAttributeRequired("id");
+          var idValue = rawNode.getAttributeRequired("id");
+          if(Objects.equals(this.id, idValue)) {
+            isDirty = true;
+          }
+          this.id = idValue;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
           innerLogger.log("when");
           this.when = ro.anud.xml_xsd.implementation.model.Type_trigger.Type_trigger.fromRawNode(rawNode.getChildrenList("when"), this);
           this.then = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.Entry.Then.Then.fromRawNode(rawNode.getChildrenList("then"), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
@@ -225,20 +238,18 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     {
       this.when.add(value);
       value.parentNode(this);
-      notifyChange();
       return this;
     }
     public Entry addAllWhen(List<ro.anud.xml_xsd.implementation.model.Type_trigger.Type_trigger> value)
     {
       this.when.addAll(value);
       value.forEach(e -> e.parentNode(this));
-      notifyChange();
       return this;
     }
     public Entry removeWhen(ro.anud.xml_xsd.implementation.model.Type_trigger.Type_trigger value)
     {
       this.when.remove(value);
-      notifyChange();
+      value.clearParentNode();
       return this;
     }
     public List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.Entry.Then.Then> getThen()
@@ -253,20 +264,18 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     {
       this.then.add(value);
       value.parentNode(this);
-      notifyChange();
       return this;
     }
     public Entry addAllThen(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.Entry.Then.Then> value)
     {
       this.then.addAll(value);
       value.forEach(e -> e.parentNode(this));
-      notifyChange();
       return this;
     }
     public Entry removeThen(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.Entry.Then.Then value)
     {
       this.then.remove(value);
-      notifyChange();
+      value.clearParentNode();
       return this;
     }
 
@@ -288,8 +297,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
             }
           }
           var newEntry = new ro.anud.xml_xsd.implementation.model.Type_trigger.Type_trigger();
+          var linkedNode = newEntry.deserializeAtPath(childXPath, rawNode);
           this.addWhen(newEntry);
-          return newEntry.deserializeAtPath(childXPath, rawNode);
+          return linkedNode;
         }
         if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.Entry.Then.Then.nodeName + "["))
         {
@@ -304,8 +314,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
             }
           }
           var newEntry = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.Entry.Then.Then();
+          var linkedNode = newEntry.deserializeAtPath(childXPath, rawNode);
           this.addThen(newEntry);
-          return newEntry.deserializeAtPath(childXPath, rawNode);
+          return linkedNode;
         }
 
         deserialize(rawNode);

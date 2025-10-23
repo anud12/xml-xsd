@@ -42,12 +42,13 @@ public record PutHandler(WorldStepRunner worldStepRunner) implements WebSocketHa
                         putLogger.log("Created RawNode from XML document");
 
                         worldStepRunner.queueMutation(worldStepInstance -> {
-                            worldStepInstance.getWorldStep().ifPresent(worldStep -> {
-                                var deserializedNode = worldStep.deserializeAtPath(subPath, rawNode);
-                                putLogger.log("Deserialized node at path: " + subPath);
-                                worldStepInstance.sendLinkNode(deserializedNode);
-                                putLogger.log("Sent LinkedNode to client");
-                            });
+                            try (var mutationLogger = logScope("put mutation")){
+                                worldStepInstance.getOutInstance().getWorldStep().ifPresent(worldStep -> {
+                                    var deserializedNode = worldStep.deserializeAtPath(subPath, rawNode);
+                                    mutationLogger.log("Deserialized node at path: " + deserializedNode.buildPath());
+                                });
+                            }
+
                         });
 
                         putLogger.log("Sent Put return code to client");

@@ -114,6 +114,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions> parentAsActions() {
       return parentNode.flatMap(node -> {
         if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions casted){
@@ -150,18 +156,29 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing from_person");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
           innerLogger.log("person_id_ref");
-          this.personIdRef = rawNode.getAttributeRequired("person_id_ref");
+          var personIdRefValue = rawNode.getAttributeRequired("person_id_ref");
+          if(Objects.equals(this.personIdRef, personIdRefValue)) {
+            isDirty = true;
+          }
+          this.personIdRef = personIdRefValue;
           innerLogger.log("from_person_rule_ref");
-          this.fromPersonRuleRef = rawNode.getAttributeRequired("from_person_rule_ref");
+          var fromPersonRuleRefValue = rawNode.getAttributeRequired("from_person_rule_ref");
+          if(Objects.equals(this.fromPersonRuleRef, fromPersonRuleRefValue)) {
+            isDirty = true;
+          }
+          this.fromPersonRuleRef = fromPersonRuleRefValue;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
           this.onPerson = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.FromPerson.OnPerson.OnPerson.fromRawNode(rawNode.getChildrenFirst("on_person").get(), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);

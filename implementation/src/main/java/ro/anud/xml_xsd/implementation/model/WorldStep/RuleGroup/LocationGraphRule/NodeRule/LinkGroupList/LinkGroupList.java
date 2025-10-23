@@ -112,6 +112,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule> parentAsNodeRule() {
       return parentNode.flatMap(node -> {
         if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule casted){
@@ -156,8 +162,7 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing link_group_list");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
         }
@@ -165,6 +170,10 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           //Deserialize children
           this.reference = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.Reference.Reference.fromRawNode(rawNode.getChildrenList("reference"), this);
           this.linkGroup = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroup.LinkGroup.fromRawNode(rawNode.getChildrenList("link_group"), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
@@ -209,20 +218,18 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     {
       this.reference.add(value);
       value.parentNode(this);
-      notifyChange();
       return this;
     }
     public LinkGroupList addAllReference(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.Reference.Reference> value)
     {
       this.reference.addAll(value);
       value.forEach(e -> e.parentNode(this));
-      notifyChange();
       return this;
     }
     public LinkGroupList removeReference(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.Reference.Reference value)
     {
       this.reference.remove(value);
-      notifyChange();
+      value.clearParentNode();
       return this;
     }
     public List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroup.LinkGroup> getLinkGroup()
@@ -237,20 +244,18 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     {
       this.linkGroup.add(value);
       value.parentNode(this);
-      notifyChange();
       return this;
     }
     public LinkGroupList addAllLinkGroup(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroup.LinkGroup> value)
     {
       this.linkGroup.addAll(value);
       value.forEach(e -> e.parentNode(this));
-      notifyChange();
       return this;
     }
     public LinkGroupList removeLinkGroup(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroup.LinkGroup value)
     {
       this.linkGroup.remove(value);
-      notifyChange();
+      value.clearParentNode();
       return this;
     }
 
@@ -272,8 +277,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
             }
           }
           var newEntry = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.Reference.Reference();
+          var linkedNode = newEntry.deserializeAtPath(childXPath, rawNode);
           this.addReference(newEntry);
-          return newEntry.deserializeAtPath(childXPath, rawNode);
+          return linkedNode;
         }
         if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroup.LinkGroup.nodeName + "["))
         {
@@ -288,8 +294,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
             }
           }
           var newEntry = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroup.LinkGroup();
+          var linkedNode = newEntry.deserializeAtPath(childXPath, rawNode);
           this.addLinkGroup(newEntry);
-          return newEntry.deserializeAtPath(childXPath, rawNode);
+          return linkedNode;
         }
 
         deserialize(rawNode);

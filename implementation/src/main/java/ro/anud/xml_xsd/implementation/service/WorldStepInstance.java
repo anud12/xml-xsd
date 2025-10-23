@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
@@ -115,8 +116,7 @@ public class WorldStepInstance {
     public void sendLinkNode(final LinkedNode linkedNode) {
         try (var scope = logScope("sendLinkNode", linkedNode.buildPath())) {
             if (webSocketHandler.isEmpty()) {
-                scope.log("webSocketHandler is empty");
-                return;
+                throw new RuntimeException("WebSocketHandler is not set");
             }
             webSocketHandler.ifPresent(webSocketHandler1 -> {
                 try {
@@ -172,7 +172,11 @@ public class WorldStepInstance {
 
     private void addUpdateHandlers() {
         this.worldStep.ifPresent(worldStep1 -> worldStep1.onChange(objects -> {
-            sendLinkNode((LinkedNode) objects.getFirst());
+            try (var logScope = logScope()){
+                logScope.log("On change called for", objects.stream().map(Object::toString).collect(Collectors.joining(",")));
+                sendLinkNode((LinkedNode) objects.getFirst());
+            }
+
         }));
     }
 

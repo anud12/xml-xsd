@@ -110,6 +110,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.In_locationGraph.Has_locationGraphId.Has_locationGraphId> parentAsHas_locationGraphId() {
       return parentNode.flatMap(node -> {
         if (node instanceof ro.anud.xml_xsd.implementation.model.In_locationGraph.Has_locationGraphId.Has_locationGraphId casted){
@@ -140,15 +146,22 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing or");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
           innerLogger.log("location_graph_id_ref");
-          this.locationGraphIdRef = rawNode.getAttribute("location_graph_id_ref");
+          var locationGraphIdRefValue = rawNode.getAttribute("location_graph_id_ref");
+          if(Objects.equals(this.locationGraphIdRef, locationGraphIdRefValue)) {
+            isDirty = true;
+          }
+          this.locationGraphIdRef = locationGraphIdRefValue;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);

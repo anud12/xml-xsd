@@ -116,6 +116,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public void removeChild(Object object) {
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata) {
           this.worldMetadata = Optional.empty();
@@ -165,8 +171,7 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing world_step");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
         }
@@ -176,6 +181,10 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           this.ruleGroup = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup.fromRawNode(rawNode.getChildrenList("rule_group"), this);
           this.data = ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data.fromRawNode(rawNode.getChildrenFirst("data"), this);
           this.actions = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions.fromRawNode(rawNode.getChildrenFirst("actions"), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
@@ -253,20 +262,18 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     {
       this.ruleGroup.add(value);
       value.parentNode(this);
-      notifyChange();
       return this;
     }
     public WorldStep addAllRuleGroup(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup> value)
     {
       this.ruleGroup.addAll(value);
       value.forEach(e -> e.parentNode(this));
-      notifyChange();
       return this;
     }
     public WorldStep removeRuleGroup(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup value)
     {
       this.ruleGroup.remove(value);
-      notifyChange();
+      value.clearParentNode();
       return this;
     }
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data> getData()
@@ -353,8 +360,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
             }
           }
           var newEntry = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup();
+          var linkedNode = newEntry.deserializeAtPath(childXPath, rawNode);
           this.addRuleGroup(newEntry);
-          return newEntry.deserializeAtPath(childXPath, rawNode);
+          return linkedNode;
         }
         if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data.nodeName))
         {

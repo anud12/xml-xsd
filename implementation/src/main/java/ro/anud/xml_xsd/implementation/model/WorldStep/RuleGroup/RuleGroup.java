@@ -133,6 +133,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep> parentAsWorldStep() {
       return parentNode.flatMap(node -> {
         if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep casted){
@@ -247,8 +253,7 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing rule_group");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
         }
@@ -266,6 +271,10 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           this.portalRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.PortalRule.fromRawNode(rawNode.getChildrenFirst("portal_rule"), this);
           this.regionRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RegionRule.RegionRule.fromRawNode(rawNode.getChildrenFirst("region_rule"), this);
           this.zoneRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ZoneRule.ZoneRule.fromRawNode(rawNode.getChildrenFirst("zone_rule"), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);

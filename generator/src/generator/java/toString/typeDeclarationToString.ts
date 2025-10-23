@@ -151,6 +151,12 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
         notifyChange();
       }
       
+      public void clearParentNode() {
+        var parentNode = this.parentNode;
+        this.parentNode = Optional.empty();
+        parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+      }
+      
       ${parentTypeName && template()`
         public Optional<${parentFullTypeName}> parentAs${parentTypeName}() {
           return parentNode.flatMap(node -> {
@@ -185,8 +191,7 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
       public void deserialize (RawNode rawNode) {
         try (var logger = logScope()) {
           this.rawNode = rawNode;
-          // Godot.GD.Print("Deserializing ${dependantType.name}");
-          
+          var isDirty = false;
           try (var innerLogger = logScope("attributes")) {
             //Deserialize attributes
             ${dependantTypeToAttributeDeserializationBody(dependantType)}
@@ -208,6 +213,10 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
                                ${dependantTypeToChildrenDeserializationBody(extension)}
                               `
             }).join("\n")}
+          }
+          
+          if(isDirty) {
+            notifyChange();
           }
         } catch (Exception e) {
           throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);

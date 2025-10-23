@@ -1,0 +1,20 @@
+.world_step[0].data[0]
+<data/>
+---
+.world_step[0].data[0].zone_list[0]
+<zone_list/>
+---
+.world_step[0].world_metadata[0].counter[0]
+<counter value="1"/>
+---
+.world_step[0].world_metadata[0].counter[0]
+<counter value="2"/>
+---
+.world_step[0].data[0].zone_list[0].zone[0]
+<zone id="0.0"><region id="0.1"><rule rule_id_ref="region_rule"/><position rotation="normal" x="0" y="0"/><limit height="1" width="1"/></region></zone>
+---
+.world_step[0].actions[0]
+<actions/>
+---
+.world_step[0].world_metadata[0].counter[0]
+<counter value="2"/>

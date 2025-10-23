@@ -118,6 +118,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People> parentAsPeople() {
       return parentNode.flatMap(node -> {
         if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People casted){
@@ -169,20 +175,31 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing person");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
           innerLogger.log("id");
-          this.id = rawNode.getAttributeRequired("id");
+          var idValue = rawNode.getAttributeRequired("id");
+          if(Objects.equals(this.id, idValue)) {
+            isDirty = true;
+          }
+          this.id = idValue;
           innerLogger.log("name");
-          this.name = rawNode.getAttribute("name");
+          var nameValue = rawNode.getAttribute("name");
+          if(Objects.equals(this.name, nameValue)) {
+            isDirty = true;
+          }
+          this.name = nameValue;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
           this.properties = ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Properties.Properties.fromRawNode(rawNode.getChildrenFirst("properties"), this);
           this.relations = ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Relations.Relations.fromRawNode(rawNode.getChildrenList("relations"), this);
           this.classifications = ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications.fromRawNode(rawNode.getChildrenFirst("classifications"), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
@@ -283,20 +300,18 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     {
       this.relations.add(value);
       value.parentNode(this);
-      notifyChange();
       return this;
     }
     public Person addAllRelations(List<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Relations.Relations> value)
     {
       this.relations.addAll(value);
       value.forEach(e -> e.parentNode(this));
-      notifyChange();
       return this;
     }
     public Person removeRelations(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Relations.Relations value)
     {
       this.relations.remove(value);
-      notifyChange();
+      value.clearParentNode();
       return this;
     }
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications> getClassifications()
@@ -354,8 +369,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
             }
           }
           var newEntry = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Relations.Relations();
+          var linkedNode = newEntry.deserializeAtPath(childXPath, rawNode);
           this.addRelations(newEntry);
-          return newEntry.deserializeAtPath(childXPath, rawNode);
+          return linkedNode;
         }
         if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Classifications.Classifications.nodeName))
         {

@@ -110,6 +110,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Path.Path> parentAsPath() {
       return parentNode.flatMap(node -> {
         if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Path.Path casted){
@@ -140,15 +146,22 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing node");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
           innerLogger.log("node_id_ref");
-          this.nodeIdRef = rawNode.getAttributeRequired("node_id_ref");
+          var nodeIdRefValue = rawNode.getAttributeRequired("node_id_ref");
+          if(Objects.equals(this.nodeIdRef, nodeIdRefValue)) {
+            isDirty = true;
+          }
+          this.nodeIdRef = nodeIdRefValue;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);

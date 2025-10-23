@@ -112,6 +112,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public void removeChild(Object object) {
         if(object instanceof ro.anud.xml_xsd.implementation.model.Type_regionRule.Limit.Limit) {
           throw new RuntimeException("trying to delete limit which is required");
@@ -146,8 +152,7 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing type__region_rule");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
         }
@@ -155,6 +160,10 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           //Deserialize children
           this.limit = ro.anud.xml_xsd.implementation.model.Type_regionRule.Limit.Limit.fromRawNode(rawNode.getChildrenFirst("limit").get(), this);
           this.portals = ro.anud.xml_xsd.implementation.model.Type_regionRule.Portals.Portals.fromRawNode(rawNode.getChildrenFirst("portals"), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);

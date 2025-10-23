@@ -116,6 +116,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.NameRule> parentAsNameRule() {
       return parentNode.flatMap(node -> {
         if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.NameRule casted){
@@ -146,12 +152,15 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing entry");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
           innerLogger.log("id");
-          this.id = rawNode.getAttributeRequired("id");
+          var idValue = rawNode.getAttributeRequired("id");
+          if(Objects.equals(this.id, idValue)) {
+            isDirty = true;
+          }
+          this.id = idValue;
 
           // Deserialize arguments of type__name_token
 
@@ -161,6 +170,10 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
           // Deserialize children of type__name_token
           this.nameToken = ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.NameToken.fromRawNode(rawNode.getChildrenList("name_token"), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
@@ -221,20 +234,18 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     {
       this.nameToken.add(value);
       value.parentNode(this);
-      notifyChange();
       return this;
     }
     public Entry addAllNameToken(List<ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.NameToken> value)
     {
       this.nameToken.addAll(value);
       value.forEach(e -> e.parentNode(this));
-      notifyChange();
       return this;
     }
     public Entry removeNameToken(ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.NameToken value)
     {
       this.nameToken.remove(value);
-      notifyChange();
+      value.clearParentNode();
       return this;
     }
 

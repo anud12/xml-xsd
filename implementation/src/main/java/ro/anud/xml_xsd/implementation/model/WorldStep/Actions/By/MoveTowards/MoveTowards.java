@@ -114,6 +114,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.By> parentAsBy() {
       return parentNode.flatMap(node -> {
         if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.By casted){
@@ -144,19 +150,34 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing move_towards");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
           innerLogger.log("layer");
-          this.layer = rawNode.getAttribute("layer");
+          var layerValue = rawNode.getAttribute("layer");
+          if(Objects.equals(this.layer, layerValue)) {
+            isDirty = true;
+          }
+          this.layer = layerValue;
           innerLogger.log("x");
-          this.x = rawNode.getAttributeIntRequired("x");
+          var xValue = rawNode.getAttributeIntRequired("x");
+          if(Objects.equals(this.x, xValue)) {
+            isDirty = true;
+          }
+          this.x = xValue;
           innerLogger.log("y");
-          this.y = rawNode.getAttributeIntRequired("y");
+          var yValue = rawNode.getAttributeIntRequired("y");
+          if(Objects.equals(this.y, yValue)) {
+            isDirty = true;
+          }
+          this.y = yValue;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);

@@ -112,6 +112,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public void removeChild(Object object) {
         if(object instanceof ro.anud.xml_xsd.implementation.model.Type_propertyMutation.From.From) {
           throw new RuntimeException("trying to delete from which is required");
@@ -139,16 +145,23 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing type__property_mutation");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
           innerLogger.log("property_rule_ref");
-          this.propertyRuleRef = rawNode.getAttributeRequired("property_rule_ref");
+          var propertyRuleRefValue = rawNode.getAttributeRequired("property_rule_ref");
+          if(Objects.equals(this.propertyRuleRef, propertyRuleRefValue)) {
+            isDirty = true;
+          }
+          this.propertyRuleRef = propertyRuleRefValue;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
           this.from = ro.anud.xml_xsd.implementation.model.Type_propertyMutation.From.From.fromRawNode(rawNode.getChildrenList("from"), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
@@ -204,20 +217,18 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     {
       this.from.add(value);
       value.parentNode(this);
-      notifyChange();
       return this;
     }
     public Type_propertyMutation addAllFrom(List<ro.anud.xml_xsd.implementation.model.Type_propertyMutation.From.From> value)
     {
       this.from.addAll(value);
       value.forEach(e -> e.parentNode(this));
-      notifyChange();
       return this;
     }
     public Type_propertyMutation removeFrom(ro.anud.xml_xsd.implementation.model.Type_propertyMutation.From.From value)
     {
       this.from.remove(value);
-      notifyChange();
+      value.clearParentNode();
       return this;
     }
 
@@ -239,8 +250,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
             }
           }
           var newEntry = new ro.anud.xml_xsd.implementation.model.Type_propertyMutation.From.From();
+          var linkedNode = newEntry.deserializeAtPath(childXPath, rawNode);
           this.addFrom(newEntry);
-          return newEntry.deserializeAtPath(childXPath, rawNode);
+          return linkedNode;
         }
 
         deserialize(rawNode);

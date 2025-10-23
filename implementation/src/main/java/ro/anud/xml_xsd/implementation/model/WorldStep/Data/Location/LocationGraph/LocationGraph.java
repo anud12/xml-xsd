@@ -114,6 +114,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location> parentAsLocation() {
       return parentNode.flatMap(node -> {
         if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location casted){
@@ -156,17 +162,24 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing location_graph");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
           innerLogger.log("id");
-          this.id = rawNode.getAttributeRequired("id");
+          var idValue = rawNode.getAttributeRequired("id");
+          if(Objects.equals(this.id, idValue)) {
+            isDirty = true;
+          }
+          this.id = idValue;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
           this.rule = ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Rule.Rule.fromRawNode(rawNode.getChildrenFirst("rule").get(), this);
           this.node = ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node.fromRawNode(rawNode.getChildrenList("node"), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
@@ -240,20 +253,18 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     {
       this.node.add(value);
       value.parentNode(this);
-      notifyChange();
       return this;
     }
     public LocationGraph addAllNode(List<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node> value)
     {
       this.node.addAll(value);
       value.forEach(e -> e.parentNode(this));
-      notifyChange();
       return this;
     }
     public LocationGraph removeNode(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node value)
     {
       this.node.remove(value);
-      notifyChange();
+      value.clearParentNode();
       return this;
     }
 
@@ -280,8 +291,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
             }
           }
           var newEntry = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node();
+          var linkedNode = newEntry.deserializeAtPath(childXPath, rawNode);
           this.addNode(newEntry);
-          return newEntry.deserializeAtPath(childXPath, rawNode);
+          return linkedNode;
         }
 
         deserialize(rawNode);

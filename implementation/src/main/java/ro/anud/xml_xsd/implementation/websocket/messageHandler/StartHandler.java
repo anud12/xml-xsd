@@ -17,9 +17,8 @@ public record StartHandler(WorldStepRunner worldStepRunner) implements WebSocket
             "start", (client, string) -> {
                 try (var logger = logScope("start")){
                     var worldStepInstance = webSocketHandler.getWorldStepInstance();
-                    worldStepInstance.getOutInstance().setWebSocketHandler(webSocketHandler);
                     worldStepRunner.stop()
-                            .start(worldStepInstance, webSocketHandler);
+                            .start(webSocketHandler);
 
                     client.send(Start);
                 }

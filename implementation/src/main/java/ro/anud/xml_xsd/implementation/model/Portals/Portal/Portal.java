@@ -114,6 +114,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.Portals.Portals> parentAsPortals() {
       return parentNode.flatMap(node -> {
         if (node instanceof ro.anud.xml_xsd.implementation.model.Portals.Portals casted){
@@ -150,19 +156,30 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing portal");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
           innerLogger.log("side");
-          this.side = rawNode.getAttributeRequired("side");
+          var sideValue = rawNode.getAttributeRequired("side");
+          if(Objects.equals(this.side, sideValue)) {
+            isDirty = true;
+          }
+          this.side = sideValue;
           innerLogger.log("portal_rule_ref");
-          this.portalRuleRef = rawNode.getAttributeRequired("portal_rule_ref");
+          var portalRuleRefValue = rawNode.getAttributeRequired("portal_rule_ref");
+          if(Objects.equals(this.portalRuleRef, portalRuleRefValue)) {
+            isDirty = true;
+          }
+          this.portalRuleRef = portalRuleRefValue;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
           innerLogger.log("start");
           this.start = ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.fromRawNode(rawNode.getChildrenFirst("start").get(), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);

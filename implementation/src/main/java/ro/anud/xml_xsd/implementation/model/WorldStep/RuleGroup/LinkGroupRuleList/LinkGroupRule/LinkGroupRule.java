@@ -122,6 +122,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LinkGroupRuleList.LinkGroupRuleList> parentAsLinkGroupRuleList() {
       return parentNode.flatMap(node -> {
         if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LinkGroupRuleList.LinkGroupRuleList casted){
@@ -152,26 +158,45 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing link_group_rule");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
 
           // Deserialize arguments of type__link_group
           innerLogger.log("id");
-          this.id = rawNode.getAttributeRequired("id");
+          var idValue = rawNode.getAttributeRequired("id");
+          if(Objects.equals(this.id, idValue)) {
+            isDirty = true;
+          }
+          this.id = idValue;
           innerLogger.log("angle");
-          this.angle = rawNode.getAttributeIntRequired("angle");
+          var angleValue = rawNode.getAttributeIntRequired("angle");
+          if(Objects.equals(this.angle, angleValue)) {
+            isDirty = true;
+          }
+          this.angle = angleValue;
           innerLogger.log("angleMax");
-          this.angleMax = rawNode.getAttributeInt("angleMax");
+          var angleMaxValue = rawNode.getAttributeInt("angleMax");
+          if(Objects.equals(this.angleMax, angleMaxValue)) {
+            isDirty = true;
+          }
+          this.angleMax = angleMaxValue;
           innerLogger.log("limit");
-          this.limit = rawNode.getAttributeInt("limit");
+          var limitValue = rawNode.getAttributeInt("limit");
+          if(Objects.equals(this.limit, limitValue)) {
+            isDirty = true;
+          }
+          this.limit = limitValue;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
 
           // Deserialize children of type__link_group
           this.toOption = ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption.fromRawNode(rawNode.getChildrenList("to_option"), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
@@ -266,20 +291,18 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     {
       this.toOption.add(value);
       value.parentNode(this);
-      notifyChange();
       return this;
     }
     public LinkGroupRule addAllToOption(List<ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption> value)
     {
       this.toOption.addAll(value);
       value.forEach(e -> e.parentNode(this));
-      notifyChange();
       return this;
     }
     public LinkGroupRule removeToOption(ro.anud.xml_xsd.implementation.model.Type_linkGroup.ToOption.ToOption value)
     {
       this.toOption.remove(value);
-      notifyChange();
+      value.clearParentNode();
       return this;
     }
 

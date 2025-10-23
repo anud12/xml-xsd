@@ -112,6 +112,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection> parentAsType_nodeGraph_selection() {
       return parentNode.flatMap(node -> {
         if (node instanceof ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection casted){
@@ -149,16 +155,23 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing has__node_graph_id");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
           innerLogger.log("node_graph_id_ref");
-          this.nodeGraphIdRef = rawNode.getAttributeRequired("node_graph_id_ref");
+          var nodeGraphIdRefValue = rawNode.getAttributeRequired("node_graph_id_ref");
+          if(Objects.equals(this.nodeGraphIdRef, nodeGraphIdRefValue)) {
+            isDirty = true;
+          }
+          this.nodeGraphIdRef = nodeGraphIdRefValue;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
           this.or = ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Has_nodeGraphId.Or.Or.fromRawNode(rawNode.getChildrenList("or"), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
@@ -214,20 +227,18 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     {
       this.or.add(value);
       value.parentNode(this);
-      notifyChange();
       return this;
     }
     public Has_nodeGraphId addAllOr(List<ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Has_nodeGraphId.Or.Or> value)
     {
       this.or.addAll(value);
       value.forEach(e -> e.parentNode(this));
-      notifyChange();
       return this;
     }
     public Has_nodeGraphId removeOr(ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Has_nodeGraphId.Or.Or value)
     {
       this.or.remove(value);
-      notifyChange();
+      value.clearParentNode();
       return this;
     }
 
@@ -249,8 +260,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
             }
           }
           var newEntry = new ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Has_nodeGraphId.Or.Or();
+          var linkedNode = newEntry.deserializeAtPath(childXPath, rawNode);
           this.addOr(newEntry);
-          return newEntry.deserializeAtPath(childXPath, rawNode);
+          return linkedNode;
         }
 
         deserialize(rawNode);

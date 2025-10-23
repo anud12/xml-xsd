@@ -15,7 +15,7 @@ public record DownloadHandler() implements WebSocketHandler.Factory {
         webSocketHandler.add(
             "download", (client, string) -> {
                 try (var logger = logScope("download")){
-                    webSocketHandler.getWorldStepInstance().getWorldStep().map(WorldStep::serializeIntoRawNode)
+                    webSocketHandler.getWorldStepInstance().get().getWorldStep().map(WorldStep::serializeIntoRawNode)
                             .map(RawNode::toDocumentString)
                             .ifPresent(string1 -> client.send(Client.ReturnCode.Download, string1));
                 }

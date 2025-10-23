@@ -116,6 +116,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.Links> parentAsLinks() {
       return parentNode.flatMap(node -> {
         if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.Links casted){
@@ -160,20 +166,31 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing link_to");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
           innerLogger.log("node_id_ref");
-          this.nodeIdRef = rawNode.getAttributeRequired("node_id_ref");
+          var nodeIdRefValue = rawNode.getAttributeRequired("node_id_ref");
+          if(Objects.equals(this.nodeIdRef, nodeIdRefValue)) {
+            isDirty = true;
+          }
+          this.nodeIdRef = nodeIdRefValue;
           innerLogger.log("total_progress");
-          this.totalProgress = rawNode.getAttributeIntRequired("total_progress");
+          var totalProgressValue = rawNode.getAttributeIntRequired("total_progress");
+          if(Objects.equals(this.totalProgress, totalProgressValue)) {
+            isDirty = true;
+          }
+          this.totalProgress = totalProgressValue;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
           this.people = ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People.fromRawNode(rawNode.getChildrenFirst("people"), this);
           innerLogger.log("person_progress_property");
           this.personProgressProperty = ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.fromRawNode(rawNode.getChildrenFirst("person_progress_property"), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);

@@ -116,6 +116,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.Setup> parentAsSetup() {
       return parentNode.flatMap(node -> {
         if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.Setup casted){
@@ -153,20 +159,35 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing necessary_node");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
           innerLogger.log("node_rule_ref");
-          this.nodeRuleRef = rawNode.getAttributeRequired("node_rule_ref");
+          var nodeRuleRefValue = rawNode.getAttributeRequired("node_rule_ref");
+          if(Objects.equals(this.nodeRuleRef, nodeRuleRefValue)) {
+            isDirty = true;
+          }
+          this.nodeRuleRef = nodeRuleRefValue;
           innerLogger.log("min");
-          this.min = rawNode.getAttributeIntRequired("min");
+          var minValue = rawNode.getAttributeIntRequired("min");
+          if(Objects.equals(this.min, minValue)) {
+            isDirty = true;
+          }
+          this.min = minValue;
           innerLogger.log("max");
-          this.max = rawNode.getAttributeInt("max");
+          var maxValue = rawNode.getAttributeInt("max");
+          if(Objects.equals(this.max, maxValue)) {
+            isDirty = true;
+          }
+          this.max = maxValue;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
           this.or = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.NecessaryNode.Or.Or.fromRawNode(rawNode.getChildrenList("or"), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
@@ -246,20 +267,18 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     {
       this.or.add(value);
       value.parentNode(this);
-      notifyChange();
       return this;
     }
     public NecessaryNode addAllOr(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.NecessaryNode.Or.Or> value)
     {
       this.or.addAll(value);
       value.forEach(e -> e.parentNode(this));
-      notifyChange();
       return this;
     }
     public NecessaryNode removeOr(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.NecessaryNode.Or.Or value)
     {
       this.or.remove(value);
-      notifyChange();
+      value.clearParentNode();
       return this;
     }
 
@@ -281,8 +300,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
             }
           }
           var newEntry = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.Setup.NecessaryNode.Or.Or();
+          var linkedNode = newEntry.deserializeAtPath(childXPath, rawNode);
           this.addOr(newEntry);
-          return newEntry.deserializeAtPath(childXPath, rawNode);
+          return linkedNode;
         }
 
         deserialize(rawNode);

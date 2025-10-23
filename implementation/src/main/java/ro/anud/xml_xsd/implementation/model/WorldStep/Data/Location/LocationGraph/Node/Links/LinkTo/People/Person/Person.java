@@ -112,6 +112,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People> parentAsPeople() {
       return parentNode.flatMap(node -> {
         if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People casted){
@@ -142,17 +148,28 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing person");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
           innerLogger.log("person_id_ref");
-          this.personIdRef = rawNode.getAttributeRequired("person_id_ref");
+          var personIdRefValue = rawNode.getAttributeRequired("person_id_ref");
+          if(Objects.equals(this.personIdRef, personIdRefValue)) {
+            isDirty = true;
+          }
+          this.personIdRef = personIdRefValue;
           innerLogger.log("accumulated_progress");
-          this.accumulatedProgress = rawNode.getAttributeIntRequired("accumulated_progress");
+          var accumulatedProgressValue = rawNode.getAttributeIntRequired("accumulated_progress");
+          if(Objects.equals(this.accumulatedProgress, accumulatedProgressValue)) {
+            isDirty = true;
+          }
+          this.accumulatedProgress = accumulatedProgressValue;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);

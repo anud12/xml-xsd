@@ -118,6 +118,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule> parentAsPropertyRule() {
       return parentNode.flatMap(node -> {
         if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule casted){
@@ -169,20 +175,31 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing entry");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
           innerLogger.log("id");
-          this.id = rawNode.getAttributeRequired("id");
+          var idValue = rawNode.getAttributeRequired("id");
+          if(Objects.equals(this.id, idValue)) {
+            isDirty = true;
+          }
+          this.id = idValue;
           innerLogger.log("units");
-          this.units = rawNode.getAttributeRequired("units");
+          var unitsValue = rawNode.getAttributeRequired("units");
+          if(Objects.equals(this.units, unitsValue)) {
+            isDirty = true;
+          }
+          this.units = unitsValue;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
           this.personDefault = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PersonDefault.PersonDefault.fromRawNode(rawNode.getChildrenFirst("person_default"), this);
           this.itemDefault = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.ItemDefault.ItemDefault.fromRawNode(rawNode.getChildrenFirst("item_default"), this);
           this.propertyThreshold = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PropertyThreshold.PropertyThreshold.fromRawNode(rawNode.getChildrenList("property-threshold"), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
@@ -312,20 +329,18 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     {
       this.propertyThreshold.add(value);
       value.parentNode(this);
-      notifyChange();
       return this;
     }
     public Entry addAllPropertyThreshold(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PropertyThreshold.PropertyThreshold> value)
     {
       this.propertyThreshold.addAll(value);
       value.forEach(e -> e.parentNode(this));
-      notifyChange();
       return this;
     }
     public Entry removePropertyThreshold(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PropertyThreshold.PropertyThreshold value)
     {
       this.propertyThreshold.remove(value);
-      notifyChange();
+      value.clearParentNode();
       return this;
     }
 
@@ -363,8 +378,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
             }
           }
           var newEntry = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.PropertyThreshold.PropertyThreshold();
+          var linkedNode = newEntry.deserializeAtPath(childXPath, rawNode);
           this.addPropertyThreshold(newEntry);
-          return newEntry.deserializeAtPath(childXPath, rawNode);
+          return linkedNode;
         }
 
         deserialize(rawNode);

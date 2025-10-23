@@ -90,20 +90,18 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
               {
                 this.${normalizeNameField(key)}.add(value);
                 value.parentNode(this);
-                notifyChange();
                 return this;
               }
               public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} addAll${normalizeNameClass(key)}(List<${baseTypeString}> value)
               {
                 this.${normalizeNameField(key)}.addAll(value);
                 value.forEach(e -> e.parentNode(this));
-                notifyChange();
                 return this;
               }
               public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} remove${normalizeNameClass(key)}(${baseTypeString} value)
               {
                 this.${normalizeNameField(key)}.remove(value);
-                notifyChange();
+                value.clearParentNode();
                 return this;
               }
               `}

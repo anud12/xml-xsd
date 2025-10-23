@@ -123,6 +123,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.Entry.Then.Then> parentAsThen() {
       return parentNode.flatMap(node -> {
         if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EventsRule.Entry.Then.Then casted){
@@ -153,8 +159,7 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing select_person");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
 
@@ -173,6 +178,10 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           this.max = ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.fromRawNode(rawNode.getChildrenFirst("max"), this);
           this.property = ro.anud.xml_xsd.implementation.model.Type_personSelection.Property.Property.fromRawNode(rawNode.getChildrenList("property"), this);
           this.classification = ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification.fromRawNode(rawNode.getChildrenList("classification"), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
@@ -317,20 +326,18 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     {
       this.property.add(value);
       value.parentNode(this);
-      notifyChange();
       return this;
     }
     public SelectPerson addAllProperty(List<ro.anud.xml_xsd.implementation.model.Type_personSelection.Property.Property> value)
     {
       this.property.addAll(value);
       value.forEach(e -> e.parentNode(this));
-      notifyChange();
       return this;
     }
     public SelectPerson removeProperty(ro.anud.xml_xsd.implementation.model.Type_personSelection.Property.Property value)
     {
       this.property.remove(value);
-      notifyChange();
+      value.clearParentNode();
       return this;
     }
     public List<ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification> getClassification()
@@ -345,20 +352,18 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     {
       this.classification.add(value);
       value.parentNode(this);
-      notifyChange();
       return this;
     }
     public SelectPerson addAllClassification(List<ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification> value)
     {
       this.classification.addAll(value);
       value.forEach(e -> e.parentNode(this));
-      notifyChange();
       return this;
     }
     public SelectPerson removeClassification(ro.anud.xml_xsd.implementation.model.Type_personSelection.Classification.Classification value)
     {
       this.classification.remove(value);
-      notifyChange();
+      value.clearParentNode();
       return this;
     }
 

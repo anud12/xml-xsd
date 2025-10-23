@@ -16,10 +16,7 @@ public record StopHandler(WorldStepRunner worldStepRunner) implements WebSocketH
         webSocketHandler.add(
             "stop", (client, string) -> {
                 try (var logger = logScope("start")){
-                    var worldStepInstance = webSocketHandler.getWorldStepInstance();
                     worldStepRunner.stop();
-                    worldStepInstance.getOutInstance().setWebSocketHandler(null);
-                    worldStepInstance.setWebSocketHandler(null);
 
                     client.send(Client.ReturnCode.Stop);
                 }

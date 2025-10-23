@@ -114,6 +114,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions> parentAsActions() {
       return parentNode.flatMap(node -> {
         if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions casted){
@@ -158,18 +164,25 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing person.move_to");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
           innerLogger.log("person_id_ref");
-          this.personIdRef = rawNode.getAttributeRequired("person_id_ref");
+          var personIdRefValue = rawNode.getAttributeRequired("person_id_ref");
+          if(Objects.equals(this.personIdRef, personIdRefValue)) {
+            isDirty = true;
+          }
+          this.personIdRef = personIdRefValue;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
           innerLogger.log("find_path_towards");
           this.findPathTowards = ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection.fromRawNode(rawNode.getChildrenFirst("find_path_towards"), this);
           this.path = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Person_moveTo.Path.Path.fromRawNode(rawNode.getChildrenFirst("path"), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);

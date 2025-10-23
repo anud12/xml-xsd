@@ -32,14 +32,15 @@ public class IndexOutOfBounds {
     @TestFactory
     public Stream<DynamicNode> testWebSocketEndpoint() {
         var readUpdates = new ReadUpdates();
+        var startStop = new StartStop();
         return TestStrategy.group("run")
             .and(LoadStep.runValidated(this.getClass(),"1_load.xml"))
             .and(readUpdates.connect())
-            .and(StartHandler.send())
-            .and(AppendHandler.runNodeNotFound(this.getClass(), "2_payload.txt", "3_return.txt"))
-            .and(readUpdates.assertResponse(this.getClass(), "4_expected.txt", "4_expected.txt"))
-            .and(Download.run(this.getClass(), "5_download.txt"))
-            .and(StopHandler.send())
+            .and(PutHandler.runValidated(this.getClass(), "2_payload.txt"))
+            .and(startStop.send())
+            .and(startStop.waitUntilFinished())
+            .and(readUpdates.assertResponse(this.getClass(), "3_expected.txt", "3_expected.txt"))
+            .and(Download.run(this.getClass(), "4_download.txt"))
             .build();
 
     }

@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
@@ -37,12 +38,12 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
     private final HashMap<String, MessageHandler> handlerHashMap = new HashMap<>();
     private final HashMap<String, Client> clientMap;
-    private WorldStepInstance worldStepInstance;
+    private AtomicReference<WorldStepInstance> worldStepInstance = new AtomicReference<>();
     private final Object syncronizer = new Object();
 
     public WebSocketHandler(List<Factory> factoryList) {
         try (var scope = logScope()) {
-            worldStepInstance = WorldStepInstance.createNewDoubleBuffered();
+            worldStepInstance.set(WorldStepInstance.createNewDoubleBuffered());
             clientMap = new HashMap<>();
             factoryList.forEach(factory -> factory.instantiate(this));
         }
@@ -68,7 +69,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
     public void sendMessage(WebSocketSession webSocketSession, final WebSocketMessage<?> message) throws IOException {
         synchronized (syncronizer) {
-            try (var scope = logScope("sendMessage to session id:", webSocketSession.getId(), " message:", message)) {
+            try (var scope = logScope("sendMessage to session id:", webSocketSession.getId(), " message:", message.getPayload())) {
                 if(webSocketSession.isOpen()) {
                     webSocketSession.sendMessage(message);
                 }
@@ -89,7 +90,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        try ( var scope = logScope("session id:", session.getId()) ){
+        try ( var scope = logScope("session id:", session.getId(), "message", message.getPayload()) ){
             String payload = message.getPayload();
             var handledMessageCount = handlerHashMap.entrySet()
                 .stream()

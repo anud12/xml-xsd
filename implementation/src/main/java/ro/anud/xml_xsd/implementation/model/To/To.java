@@ -110,6 +110,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public void removeChild(Object object) {
         if(object instanceof ro.anud.xml_xsd.implementation.model.To.Region.Region) {
           this.region.remove(object);
@@ -138,14 +144,17 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing to");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
           this.region = ro.anud.xml_xsd.implementation.model.To.Region.Region.fromRawNode(rawNode.getChildrenList("region"), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
@@ -188,20 +197,18 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     {
       this.region.add(value);
       value.parentNode(this);
-      notifyChange();
       return this;
     }
     public To addAllRegion(List<ro.anud.xml_xsd.implementation.model.To.Region.Region> value)
     {
       this.region.addAll(value);
       value.forEach(e -> e.parentNode(this));
-      notifyChange();
       return this;
     }
     public To removeRegion(ro.anud.xml_xsd.implementation.model.To.Region.Region value)
     {
       this.region.remove(value);
-      notifyChange();
+      value.clearParentNode();
       return this;
     }
 
@@ -223,8 +230,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
             }
           }
           var newEntry = new ro.anud.xml_xsd.implementation.model.To.Region.Region();
+          var linkedNode = newEntry.deserializeAtPath(childXPath, rawNode);
           this.addRegion(newEntry);
-          return newEntry.deserializeAtPath(childXPath, rawNode);
+          return linkedNode;
         }
 
         deserialize(rawNode);

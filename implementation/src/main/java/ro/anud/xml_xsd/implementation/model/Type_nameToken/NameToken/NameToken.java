@@ -114,6 +114,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.Type_nameToken.Type_nameToken> parentAsType_nameToken() {
       return parentNode.flatMap(node -> {
         if (node instanceof ro.anud.xml_xsd.implementation.model.Type_nameToken.Type_nameToken casted){
@@ -158,17 +164,24 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing name_token");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
           innerLogger.log("prefix");
-          this.prefix = rawNode.getAttributeRequired("prefix");
+          var prefixValue = rawNode.getAttributeRequired("prefix");
+          if(Objects.equals(this.prefix, prefixValue)) {
+            isDirty = true;
+          }
+          this.prefix = prefixValue;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
           this._ref = ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken._ref._ref.fromRawNode(rawNode.getChildrenFirst("ref"), this);
           this.oneOf = ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.OneOf.OneOf.fromRawNode(rawNode.getChildrenFirst("one_of"), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);

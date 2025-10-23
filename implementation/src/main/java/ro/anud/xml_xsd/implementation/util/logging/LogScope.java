@@ -95,7 +95,12 @@ public class LogScope implements AutoCloseable {
     }
 
     static String getIndent(int skip) {
-        return "| ".repeat(getIndentLevel() - skip);
+        try {
+            return "| ".repeat(Math.max(0, getIndentLevel() - skip));
+        } catch (Exception e) {
+            throw e;
+        }
+
     }
 
     static String getIndent() {
@@ -118,10 +123,10 @@ public class LogScope implements AutoCloseable {
 //                .map(Object::toString)
 //                .collect(Collectors.joining(", ", "- ", " - ")));
         var scope = closeableMap.get().getOrDefault(getIndentLevel(), new LogScopeCloseable());
-        scope.newScope();
         scope.setTag(Arrays.stream(tag)
                 .map(Object::toString)
                 .collect(Collectors.joining(", ", "- ", " - ")));
+        scope.newScope();
         return scope;
     }
 

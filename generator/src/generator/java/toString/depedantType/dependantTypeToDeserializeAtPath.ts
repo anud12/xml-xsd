@@ -61,8 +61,9 @@ export const dependantTypeToDeserializeAtPath = (dependantType: DependantType): 
               }
             }
             var newEntry = new ${type}();
+            var linkedNode = newEntry.deserializeAtPath(childXPath, rawNode);
             this.add${normalizeNameClass(key)}(newEntry);
-            return newEntry.deserializeAtPath(childXPath, rawNode);
+            return linkedNode;
           }
         `
       }

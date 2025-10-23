@@ -110,6 +110,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public void removeChild(Object object) {
         if(object instanceof ro.anud.xml_xsd.implementation.model.Portals.Portal.Portal) {
           this.portal.remove(object);
@@ -138,14 +144,17 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing portals");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
           this.portal = ro.anud.xml_xsd.implementation.model.Portals.Portal.Portal.fromRawNode(rawNode.getChildrenList("portal"), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
@@ -188,20 +197,18 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     {
       this.portal.add(value);
       value.parentNode(this);
-      notifyChange();
       return this;
     }
     public Portals addAllPortal(List<ro.anud.xml_xsd.implementation.model.Portals.Portal.Portal> value)
     {
       this.portal.addAll(value);
       value.forEach(e -> e.parentNode(this));
-      notifyChange();
       return this;
     }
     public Portals removePortal(ro.anud.xml_xsd.implementation.model.Portals.Portal.Portal value)
     {
       this.portal.remove(value);
-      notifyChange();
+      value.clearParentNode();
       return this;
     }
 
@@ -223,8 +230,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
             }
           }
           var newEntry = new ro.anud.xml_xsd.implementation.model.Portals.Portal.Portal();
+          var linkedNode = newEntry.deserializeAtPath(childXPath, rawNode);
           this.addPortal(newEntry);
-          return newEntry.deserializeAtPath(childXPath, rawNode);
+          return linkedNode;
         }
 
         deserialize(rawNode);

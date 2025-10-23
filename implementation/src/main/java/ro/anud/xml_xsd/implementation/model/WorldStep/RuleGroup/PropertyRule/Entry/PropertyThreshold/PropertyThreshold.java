@@ -114,6 +114,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public void clearParentNode() {
+      var parentNode = this.parentNode;
+      this.parentNode = Optional.empty();
+      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.Entry> parentAsEntry() {
       return parentNode.flatMap(node -> {
         if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.Entry casted){
@@ -144,19 +150,34 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public void deserialize (RawNode rawNode) {
       try (var logger = logScope()) {
         this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing property-threshold");
-
+        var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
           innerLogger.log("name");
-          this.name = rawNode.getAttributeRequired("name");
+          var nameValue = rawNode.getAttributeRequired("name");
+          if(Objects.equals(this.name, nameValue)) {
+            isDirty = true;
+          }
+          this.name = nameValue;
           innerLogger.log("min-value-inclusive");
-          this.minValueInclusive = rawNode.getAttributeInt("min-value-inclusive");
+          var minValueInclusiveValue = rawNode.getAttributeInt("min-value-inclusive");
+          if(Objects.equals(this.minValueInclusive, minValueInclusiveValue)) {
+            isDirty = true;
+          }
+          this.minValueInclusive = minValueInclusiveValue;
           innerLogger.log("max-value-inclusive");
-          this.maxValueInclusive = rawNode.getAttributeInt("max-value-inclusive");
+          var maxValueInclusiveValue = rawNode.getAttributeInt("max-value-inclusive");
+          if(Objects.equals(this.maxValueInclusive, maxValueInclusiveValue)) {
+            isDirty = true;
+          }
+          this.maxValueInclusive = maxValueInclusiveValue;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
+        }
+
+        if(isDirty) {
+          notifyChange();
         }
       } catch (Exception e) {
         throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);

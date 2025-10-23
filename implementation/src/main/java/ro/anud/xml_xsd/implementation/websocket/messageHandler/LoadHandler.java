@@ -40,7 +40,7 @@ public record LoadHandler(WorldStepRunner worldStepRunner) implements WebSocketH
                                     .collect(Collectors.joining("\n")));
                             return;
                         }
-                        webSocketHandler.setWorldStepInstance(WorldStepInstance.createNewDoubleBuffered(worldStep));
+                        webSocketHandler.getWorldStepInstance().set(WorldStepInstance.createNewDoubleBuffered(worldStep));
 
                         client.broadcast(Client.ReturnCode.Load);
                     } catch (SAXException e) {

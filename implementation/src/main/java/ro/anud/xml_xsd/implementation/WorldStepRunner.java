@@ -16,6 +16,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.Counter.Coun
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
+import ro.anud.xml_xsd.implementation.util.logging.ContextAwareExecutorService;
 import ro.anud.xml_xsd.implementation.websocket.WebSocketHandler;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class WorldStepRunner {
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
     private volatile boolean isRunning = true;
     private CompletableFuture<Object> finishedThread = CompletableFuture.completedFuture(this);
+    private ContextAwareExecutorService contextAwareExecutorService = new ContextAwareExecutorService(Executors.newSingleThreadExecutor());
     private List<Consumer<WorldStepInstance>> consumers = new ArrayList<>();
     private static long intervalUs = 500_000_000;
 
@@ -68,14 +70,13 @@ public class WorldStepRunner {
         }
     }
 
-    public WorldStepRunner start(WorldStepInstance worldStepInstance, WebSocketHandler webSocketHandler) {
+    public WorldStepRunner start(WebSocketHandler webSocketHandler) {
 
-        var innerWorldStepInstance = new AtomicReference<>(worldStepInstance);
+        var innerWorldStepInstance = webSocketHandler.getWorldStepInstance();
         isRunning = true;
         CompletableFuture<Object> firstRun = new CompletableFuture<>();
         finishedThread = new CompletableFuture<>();
-        new Thread(() -> {
-            firstRun.complete(this);
+        contextAwareExecutorService.execute(() -> {
             while (isRunning) {
                 long startTime = System.nanoTime();
                 System.out.println("------------------------------------------");
@@ -84,6 +85,9 @@ public class WorldStepRunner {
                 System.out.println("Consumers list size: " + consumers.size());
                 try {
                     innerWorldStepInstance.getAndUpdate(worldStepInstance1 -> {
+                        var outWorldStepInstance = worldStepInstance1.getOutInstance();
+                        worldStepInstance1.setWebSocketHandler(null);
+                        outWorldStepInstance.setWebSocketHandler(webSocketHandler);
                         consumers.forEach(worldStepConsumer -> {
                             try {
                                 worldStepConsumer.accept(worldStepInstance1);
@@ -92,15 +96,17 @@ public class WorldStepRunner {
                             }
                         });
                         consumers.clear();
-                        worldStepInstance1.setWebSocketHandler(webSocketHandler);
                         runStep(worldStepInstance1);
+                        worldStepInstance1.setOutInstance(outWorldStepInstance);
+                        outWorldStepInstance.setOutInstance(worldStepInstance1);
                         worldStepInstance1.setWebSocketHandler(null);
-                        worldStepInstance1.getOutInstance().setWebSocketHandler(webSocketHandler);
+                        outWorldStepInstance.setWebSocketHandler(null);
                         return worldStepInstance1.getOutInstance();
                     });
                 } catch (Exception e) {
                     e.printStackTrace(); // Handle exceptions in the task
                 }
+                firstRun.complete(this);
                 long elapsedTime = System.nanoTime() - startTime;
                 long sleepTime = intervalUs - elapsedTime;
                 System.out.println("------------------------------------------");
@@ -117,7 +123,7 @@ public class WorldStepRunner {
                 }
             }
             finishedThread.complete(this);
-        }).start();
+        });
         try {
             firstRun.get();
         } catch (InterruptedException e) {
@@ -129,8 +135,8 @@ public class WorldStepRunner {
     }
 
     public WorldStepRunner stop() {
-        isRunning = false;
         try {
+            isRunning = false;
             finishedThread.get();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
