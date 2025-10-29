@@ -4,7 +4,7 @@
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
-    <counter value="2"/>
+    <counter value="0"/>
     <randomization_table>
       <entry value="1"/>
     </randomization_table>
@@ -28,14 +28,27 @@
     <location/>
     <people/>
     <zone_list>
-      <zone id="0.0">
-        <region id="0.1">
+      <zone id="zone_id">
+        <region id="region_id">
           <rule rule_id_ref="region_rule"/>
-          <position x="0" y="0" rotation="normal"/>
-          <limit height="1" width="1"/>
+          <position rotation="clockwise" x="100" y="1000"/>
+          <limit height="6" width="10"/>
+          <available_portals>
+            <portal id="0.2" portal_rule_ref="" side="bottom" start="4"/>
+          </available_portals>
+        </region>
+        <region id="0.0">
+          <rule rule_id_ref="region_rule"/>
+          <position rotation="counterclockwise" x="94" y="1001"/>
+          <limit height="6" width="10"/>
+          <available_portals>
+            <portal id="0.1" portal_rule_ref="portal_rule" side="bottom" start="4"/>
+          </available_portals>
         </region>
       </zone>
     </zone_list>
   </data>
-  <actions/>
+  <actions>
+    <region.resolvePortals region_id_ref="region_id" zone_id_ref="zone_id"/>
+  </actions>
 </world_step>

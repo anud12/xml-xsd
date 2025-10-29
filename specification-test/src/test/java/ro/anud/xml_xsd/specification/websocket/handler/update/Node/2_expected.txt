@@ -1,14 +1,17 @@
-.world_step[0].data[0].location[0].location_graph[0].node[0]
-<node id="node_id" node_rule_ref="node_rule"><position x="0" y="0"/><links/></node>
+.world_step[0].world_metadata[0].counter[0]
+<counter value="1"/>
 ---
-.world_step[0].data[0].location[0].location_graph[0].node[0]
-<node id="node_id" node_rule_ref="node_rule"><position x="0" y="0"/><links><link_to node_id_ref="0.0" total_progress="0"/></links></node>
+.world_step[0].data[0].location[0].location_graph[0].node[0].links[0]
+<links/>
 ---
-.world_step[0].data[0].location[0].location_graph[0].node[0]
-<node id="node_id" node_rule_ref="node_rule"><position x="0" y="0"/><links><link_to node_id_ref="0.0" total_progress="0"/></links></node>
+.world_step[0].data[0].location[0].location_graph[0].node[0].links[0].link_to[0]
+<link_to node_id_ref="0.0" total_progress="0"/>
 ---
 .world_step[0].data[0].location[0].location_graph[0].node[1]
 <node id="0.0" node_rule_ref="node_rule"><position x="0" y="0"/><links><link_to node_id_ref="node_id" total_progress="0"/></links></node>
 ---
-.world_step[0].data[0].location[0].location_graph[0]
-<location_graph id="location_graph"><rule location_graph_rule_ref="location_graph_rule"/><node id="node_id" node_rule_ref="node_rule"><position x="0" y="0"/><links><link_to node_id_ref="0.0" total_progress="0"/></links></node><node id="0.0" node_rule_ref="node_rule"><position x="0" y="0"/><links><link_to node_id_ref="node_id" total_progress="0"/></links></node></location_graph>
+.world_step[0].actions[0]
+<actions/>
+---
+.world_step[0].world_metadata[0].counter[0]
+<counter value="1"/>

@@ -48,7 +48,7 @@ public class Send {
             .and(
                 "assert main response", response -> {
                     String relativePath = Paths.get(runningClass.getResource("").toURI()).toString();
-                    Assertions.assertThat(response.main).isEqualTo(new String(Files.readAllBytes(Path.of(
+                    Assertions.assertThat(response.main).isEqualToNormalizingNewlines(new String(Files.readAllBytes(Path.of(
                         relativePath,
                         expectedFileName))
                     ).replaceFirst("\r\n", "\n"));
@@ -58,7 +58,7 @@ public class Send {
             .and(
                 "assert other response", response -> {
                     String relativePath = Paths.get(runningClass.getResource("").toURI()).toString();
-                    Assertions.assertThat(response.other).isEqualTo(new String(Files.readAllBytes(Path.of(
+                    Assertions.assertThat(response.other).isEqualToNormalizingNewlines(new String(Files.readAllBytes(Path.of(
                         relativePath,
                         expectedOtherFileName))
                     ).replaceFirst("\r\n", "\n"));

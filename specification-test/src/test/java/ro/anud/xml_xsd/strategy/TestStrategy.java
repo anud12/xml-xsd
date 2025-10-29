@@ -12,6 +12,14 @@ import java.util.stream.Stream;
 
 public abstract sealed class TestStrategy permits TestStrategy.Unit, TestStrategy.Value {
 
+    private static Runnable BEFORE_EACH = () -> {
+        try {
+            Thread.sleep(25);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    };
+
     private sealed interface AbstractConsumer permits AndLambda, ValueAndLambda {
     }
 
@@ -35,7 +43,9 @@ public abstract sealed class TestStrategy permits TestStrategy.Unit, TestStrateg
 
     protected final Value.CaseStepContainer currentContainer;
 
-    protected TestStrategy(final Value.CaseStepContainer currentContainer) {this.currentContainer = currentContainer;}
+    protected TestStrategy(final Value.CaseStepContainer currentContainer) {
+        this.currentContainer = currentContainer;
+    }
 
     public <U> Value<U> and(String name, final Value.Supplier<U> function) {
         currentContainer.caseStepList()
@@ -105,7 +115,10 @@ public abstract sealed class TestStrategy permits TestStrategy.Unit, TestStrateg
         public <Return> Value<Return> and(final String endTest, final Function<T, Return> lambda) {
             currentContainer.caseStepList().add(new Step<>(
                 endTest,
-                arg -> Optional.of(lambda.call((T) arg))
+                arg -> {
+                    BEFORE_EACH.run();
+                    return Optional.of(lambda.call((T) arg));
+                }
             ));
             return new Value<>(currentContainer);
         }
@@ -115,6 +128,7 @@ public abstract sealed class TestStrategy permits TestStrategy.Unit, TestStrateg
             currentContainer.caseStepList().add(new Step<>(
                 name,
                 object -> {
+                    BEFORE_EACH.run();
                     //noinspection unchecked
                     consumer.call((T) object);
                     return Optional.ofNullable(object);
@@ -125,7 +139,11 @@ public abstract sealed class TestStrategy permits TestStrategy.Unit, TestStrateg
 
         public <U> U and(final ValueAndLambda<T, U> lambda) {
             try {
-                return lambda.accept(this);
+                ValueAndLambda<T,U> dd = caseBuilder -> {
+                    BEFORE_EACH.run();
+                    return lambda.accept(caseBuilder);
+                };
+                return dd.accept(this);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

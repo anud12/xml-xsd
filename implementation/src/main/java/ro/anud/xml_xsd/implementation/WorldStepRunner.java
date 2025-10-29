@@ -86,7 +86,7 @@ public class WorldStepRunner {
                 try {
                     innerWorldStepInstance.getAndUpdate(worldStepInstance1 -> {
                         var outWorldStepInstance = worldStepInstance1.getOutInstance();
-                        worldStepInstance1.setWebSocketHandler(null);
+                        worldStepInstance1.setWebSocketHandler(webSocketHandler);
                         outWorldStepInstance.setWebSocketHandler(webSocketHandler);
                         consumers.forEach(worldStepConsumer -> {
                             try {

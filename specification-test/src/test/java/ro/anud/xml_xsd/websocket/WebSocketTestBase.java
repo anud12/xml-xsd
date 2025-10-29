@@ -2,6 +2,9 @@ package ro.anud.xml_xsd.websocket;
 
 import org.junit.jupiter.api.DynamicTest;
 import ro.anud.xml_xsd.specification.WebSocketTestClient;
+import ro.anud.xml_xsd.strategy.TestStrategy;
+import ro.anud.xml_xsd.websocket.tests.LoadStep;
+import ro.anud.xml_xsd.websocket.tests.ReadUpdates;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,11 +18,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WebSocketTestBase {
 
+
     public static Collection<DynamicTest> runTestRelativeToClass(
-        final Class<?> aClass,
-        WebSocketTestClient.Command command) {
+            final Class<?> aClass,
+            WebSocketTestClient.Command command) {
         return List.of(
-            send(aClass, command)
+                send(aClass, command)
         );
     }
 

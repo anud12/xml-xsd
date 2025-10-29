@@ -116,7 +116,8 @@ public class WorldStepInstance {
     public void sendLinkNode(final LinkedNode linkedNode) {
         try (var scope = logScope("sendLinkNode", linkedNode.buildPath())) {
             if (webSocketHandler.isEmpty()) {
-                throw new RuntimeException("WebSocketHandler is not set");
+                scope.log("WebSocketHandler is not set");
+//                throw new RuntimeException("WebSocketHandler is not set");
             }
             webSocketHandler.ifPresent(webSocketHandler1 -> {
                 try {

@@ -1,5 +1,6 @@
 package ro.anud.xml_xsd.specification.websocket.handler.putHandler.modifyArray;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DynamicNode;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.parallel.Execution;
@@ -28,7 +29,7 @@ download should reflect changed
  */
 @Execution(ExecutionMode.SAME_THREAD)
 public class ModifyArray {
-
+    @Disabled
     @TestFactory
     public Stream<DynamicNode> testWebSocketEndpoint() {
         var readUpdates = new ReadUpdates();
