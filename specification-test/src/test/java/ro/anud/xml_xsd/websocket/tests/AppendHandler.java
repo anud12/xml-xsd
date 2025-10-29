@@ -32,6 +32,7 @@ public class AppendHandler {
                                 .equals(response)
                             ).findFirst();
                         if (value.isPresent()) {
+                            webSocketTestClient.disconnect();
                             return value.get().body();
                         }
                         Thread.sleep(1);

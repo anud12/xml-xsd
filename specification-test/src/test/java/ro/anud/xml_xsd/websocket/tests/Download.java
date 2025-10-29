@@ -24,7 +24,9 @@ public class Download {
                     String uri = "ws://localhost:" + 8080 + "/ws";
                     WebSocketTestClient loadClient = new WebSocketTestClient();
                     loadClient.connect(uri);
-                    return loadClient.sendMessageSync(WebSocketTestClient.Command.Download.value);
+                    var message = loadClient.sendMessageSync(WebSocketTestClient.Command.Download.value);
+                    loadClient.disconnect();
+                    return message;
                 })
             .and(
                 "assert received message", (message) -> {
@@ -44,7 +46,9 @@ public class Download {
                     String uri = "ws://localhost:" + 8080 + "/ws";
                     WebSocketTestClient loadClient = new WebSocketTestClient();
                     loadClient.connect(uri);
-                    return loadClient.sendMessageSync(WebSocketTestClient.Command.Download.value);
+                    var message = loadClient.sendMessageSync(WebSocketTestClient.Command.Download.value);
+                    loadClient.disconnect();
+                    return message;
                 })
             .and(
                 "assert received message", (message) -> {
@@ -67,11 +71,6 @@ public class Download {
                     } catch (XMLUnitException e) {
                         Assertions.assertThat(prettyFormat(strippedMessage)).isEqualTo(prettyFormat(expected));
                     }
-
-//                    Assertions.assertThat(prettyFormat(strippedMessage)).isEqualToNormalizingNewlines(prettyFormat(new String(Files.readAllBytes(Path.of(
-//                        relativePath,
-//                        fileName))
-//                    )));
                 });
     }
 

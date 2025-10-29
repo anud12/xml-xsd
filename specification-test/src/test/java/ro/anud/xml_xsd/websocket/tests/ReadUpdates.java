@@ -57,7 +57,8 @@ public class ReadUpdates {
                             .map(WebSocketTestClient.ResponseMessage::body).toList()
                     );
                     Assertions.assertThat(message).isEqualToNormalizingNewlines(payload);
-
+                    mainClient.get().disconnect();
+                    otherClient.get().disconnect();
 
                     var otherPayload = new String(
                         Files.readAllBytes(Path.of(

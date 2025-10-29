@@ -33,14 +33,16 @@ public class ModifyArray {
     @TestFactory
     public Stream<DynamicNode> testWebSocketEndpoint() {
         var readUpdates = new ReadUpdates();
+        var startStop = new StartStop();
         return TestStrategy.group("run")
             .and(LoadStep.runValidated(this.getClass(),"1_load.xml"))
             .and(readUpdates.connect())
-            .and(StartHandler.send())
             .and(PutHandler.runValidated(this.getClass(), "2_update.txt"))
+            .and(startStop.send())
+            .and(startStop.waitUntilFinished())
             .and(readUpdates.assertResponse(this.getClass(), "3_expected.txt", "3_expected.txt"))
             .and(Download.run(this.getClass(), "4_download.txt"))
-            .and(StopHandler.send())
+
             .build();
 
     }

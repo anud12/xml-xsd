@@ -17,6 +17,7 @@ public class StopHandler {
             .and(
                 "send stop", mainClient -> {
                     mainClient.sendMessage(WebSocketTestClient.Command.Stop.value);
+                    mainClient.disconnect();
                 });
     }
 }

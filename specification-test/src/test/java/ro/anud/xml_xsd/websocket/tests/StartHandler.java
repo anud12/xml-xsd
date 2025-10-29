@@ -17,6 +17,7 @@ public class StartHandler {
             .and(
                 "send start", mainClient -> {
                     mainClient.sendMessage(WebSocketTestClient.Command.Start.value);
+                    mainClient.disconnect();
                 });
     }
 }

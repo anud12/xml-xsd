@@ -34,6 +34,7 @@ public class StartStop {
                         var count = atomicReference.get().getAllResponses().stream().anyMatch(responseMessage -> responseMessage.response().equals(
                             WebSocketTestClient.Response.StartStop));
                         if (count) {
+                            atomicReference.get().disconnect();
                             return;
                         }
                         Thread.sleep(1);

@@ -2,6 +2,7 @@ package ro.anud.xml_xsd.specification;
 
 import jakarta.websocket.*;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +15,14 @@ import java.util.stream.Collectors;
 public class WebSocketTestClient {
     private Session session;
     private List<String> receivedMessage = new ArrayList<>();
+
+    public void disconnect() {
+        try {
+            session.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public record ResponseMessage(Response response, String body) {
         static ResponseMessage fromFullString(String message) {

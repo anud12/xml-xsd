@@ -1,5 +1,6 @@
 package ro.anud.xml_xsd.utils;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DynamicNode;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.parallel.Execution;
@@ -11,6 +12,7 @@ import ro.anud.xml_xsd.websocket.tests.StartHandler;
 import java.util.stream.Stream;
 
 @Execution(ExecutionMode.SAME_THREAD)
+@Disabled
 public class StartServer {
     @TestFactory
     public Stream<DynamicNode> test() {

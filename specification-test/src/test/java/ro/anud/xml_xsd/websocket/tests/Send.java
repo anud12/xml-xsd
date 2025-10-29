@@ -40,10 +40,12 @@ public class Send {
                     var mainClient = entry.mainClient;
 
                     record Entry(String main, String other) {}
-                    return new Entry(
-                        mainClient.sendMessageSync(command.value + "\n" + payload),
-                        entry.otherClient.getLastReceivedMessage()
+                    var message = new Entry(
+                            mainClient.sendMessageSync(command.value + "\n" + payload),
+                            entry.otherClient.getLastReceivedMessage()
                     );
+                    mainClient.disconnect();
+                    return message;
                 })
             .and(
                 "assert main response", response -> {

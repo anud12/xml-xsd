@@ -32,6 +32,7 @@ public class LoadStep {
                                 .equals(WebSocketTestClient.Response.Load)
                             ).findFirst();
                         if (value.isPresent()) {
+                            webSocketTestClient.disconnect();
                             return value.get().body();
                         }
                         Thread.sleep(1);
