@@ -64,6 +64,8 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
     //Children elements
     @Builder.Default
+    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities> entities = Optional.empty();
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People> people = Optional.empty();
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location> location = Optional.empty();
@@ -94,30 +96,37 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     }
 
     @Builder.Default
-    private List<Consumer<List<Object>>> onChangeList = new ArrayList<>();
+    private List<ro.anud.xml_xsd.implementation.util.ChangeCallback<Data>> onChangeList = new ArrayList<>();
+    @Builder.Default
+    private List<ro.anud.xml_xsd.implementation.util.RemoveCallback<Data>> onRemoveList = new ArrayList<>();
 
     public String nodeName() {
       return "data";
     }
+    public static Data of() {
+      return new Data();
+    }
 
-    public void notifyChange(List<Object> list) {
+    public void notifyChange(ro.anud.xml_xsd.implementation.util.LinkedNode object) {
       try (var logger = logScope()) {
-        list.addLast(this);
         logger.log("Notify change for", this.buildPath());
-        onChangeList.forEach(consumer -> consumer.accept(list));
-        parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
+        onChangeList.forEach(consumer -> consumer.onChange(object, this));
+        parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(object));
+      }
+    }
+
+    public void notifyRemove(ro.anud.xml_xsd.implementation.util.LinkedNode object) {
+      try (var logger = logScope()) {
+        logger.log("Notify remove for", this.buildPath());
+        onRemoveList.forEach(consumer -> consumer.onRemove(object, this));
+        parentNode.ifPresent(linkedNode -> linkedNode.notifyRemove(object));
       }
     }
 
     public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+      this.parentNode.ifPresent(parent -> notifyRemove());
       this.parentNode = Optional.of(linkedNode);
       notifyChange();
-    }
-
-    public void clearParentNode() {
-      var parentNode = this.parentNode;
-      this.parentNode = Optional.empty();
-      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
     }
 
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep> parentAsWorldStep() {
@@ -130,6 +139,10 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     }
 
     public void removeChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities) {
+          this.entities = Optional.empty();
+          notifyChange();
+        }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People) {
           this.people = Optional.empty();
           notifyChange();
@@ -145,6 +158,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     }
 
     public int buildIndexForChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities) {
+          return 0;
+        }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People) {
           return 0;
         }
@@ -161,10 +177,16 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<List<Object>> onChange) {
+    public Subscription onChange(ro.anud.xml_xsd.implementation.util.ChangeCallback<Data> callback) {
       try (var logger = logScope()) {
-        onChangeList.add(onChange);
-        return logger.logReturn(() -> onChangeList.remove(onChange));
+        onChangeList.add(callback);
+        return logger.logReturn(() -> onChangeList.remove(callback));
+      }
+    }
+    public Subscription onRemove(ro.anud.xml_xsd.implementation.util.RemoveCallback<Data> callback) {
+      try (var logger = logScope()) {
+        onRemoveList.add(callback);
+        return logger.logReturn(() -> onRemoveList.remove(callback));
       }
     }
 
@@ -177,6 +199,7 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
+          this.entities = ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities.fromRawNode(rawNode.getChildrenFirst("entities"), this);
           this.people = ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People.fromRawNode(rawNode.getChildrenFirst("people"), this);
           this.location = ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location.fromRawNode(rawNode.getChildrenFirst("location"), this);
           this.zoneList = ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList.fromRawNode(rawNode.getChildrenFirst("zone_list"), this);
@@ -201,6 +224,8 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         try (var innerLogger = logScope("children")) {
 
           //Serialize children
+          innerLogger.log("entities");
+          rawNode.setChildren("entities", entities.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities::serializeIntoRawNode).toList());
           innerLogger.log("people");
           rawNode.setChildren("people", people.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People::serializeIntoRawNode).toList());
           innerLogger.log("location");
@@ -218,6 +243,35 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         var updatedRawNode = serializeIntoRawNode();
         updatedRawNode.populateNode(document, element);
     }
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities> getEntities()
+    {
+      return this.entities;
+    }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities getEntitiesOrDefault()
+    {
+      return this.entities.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities();
+        this.entities = Optional.of(instance);
+        instance.parentNode(this);
+        return this.entities.get();
+      });
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities> streamEntitiesOrDefault()
+    {
+      return java.util.stream.Stream.of(getEntitiesOrDefault());
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities> streamEntities()
+    {
+      return entities.stream();
+    }
+    public Data setEntities(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities value)
+    {
+      this.entities = Optional.ofNullable(value);
+      value.parentNode(this);
+      notifyChange();
+      return this;
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People> getPeople()
     {
       return this.people;
@@ -310,6 +364,14 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         {
           xpath = xpath.substring(1);
         }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities.nodeName))
+        {
+          if(this.entities.isEmpty()) {
+            this.entities = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities.nodeName.length() + 3);
+          return this.entities.get().deserializeAtPath(childXPath, rawNode);
+        }
         if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People.nodeName))
         {
           if(this.people.isEmpty()) {
@@ -343,6 +405,14 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
        if(xpath.startsWith("."))
         {
           xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities.nodeName))
+        {
+          if(this.entities.isEmpty()) {
+            this.entities = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities.nodeName.length() + 3);
+          return this.entities.get().getNodeAtPath(childXPath);
         }
         if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People.nodeName))
         {
@@ -381,6 +451,30 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         "metaType": "object",
         "isSingle": true,
         "value": {
+          "entities": {
+            "metaType": "object",
+            "isSingle": true,
+            "value": {
+              "entity": {
+                "metaType": "composition",
+                "value": [
+                  {
+                    "metaType": "object",
+                    "value": {},
+                    "isSingle": true,
+                    "isNullable": false
+                  },
+                  {
+                    "metaType": "primitive",
+                    "value": "type__entity"
+                  }
+                ],
+                "isSingle": false,
+                "isNullable": true
+              }
+            },
+            "isNullable": true
+          },
           "people": {
             "metaType": "object",
             "isSingle": true,

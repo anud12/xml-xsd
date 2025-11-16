@@ -36,13 +36,11 @@ public class PersonRepository {
             loadData(data);
 
             subscription.ifPresent(Subscription::unsubscribe);
-            subscription = worldStepInstance.getWorldStep().map(worldStep -> worldStep.onChange(classes -> {
-                classes.forEach(o -> {
-                    if (o instanceof People people) {
-                        scope.log("worldStep onChange triggered is instance of", People.class);
-                        loadData(Stream.of(people));
-                    }
-                });
+            subscription = worldStepInstance.getWorldStep().map(worldStep -> worldStep.onChange((linkedNode, worldStepNode) -> {
+                if (linkedNode instanceof People people) {
+                    scope.log("worldStep onChange triggered is instance of", People.class);
+                    loadData(Stream.of(people));
+                }
             }));
             return this;
         }

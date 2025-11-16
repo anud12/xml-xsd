@@ -87,6 +87,8 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_appendNew.Region_appendNew> region_appendNew = Optional.empty();
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals> region_resolvePortals = Optional.empty();
+    @Builder.Default
+    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create> entity_create = Optional.empty();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -112,30 +114,37 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     }
 
     @Builder.Default
-    private List<Consumer<List<Object>>> onChangeList = new ArrayList<>();
+    private List<ro.anud.xml_xsd.implementation.util.ChangeCallback<Actions>> onChangeList = new ArrayList<>();
+    @Builder.Default
+    private List<ro.anud.xml_xsd.implementation.util.RemoveCallback<Actions>> onRemoveList = new ArrayList<>();
 
     public String nodeName() {
       return "actions";
     }
+    public static Actions of() {
+      return new Actions();
+    }
 
-    public void notifyChange(List<Object> list) {
+    public void notifyChange(ro.anud.xml_xsd.implementation.util.LinkedNode object) {
       try (var logger = logScope()) {
-        list.addLast(this);
         logger.log("Notify change for", this.buildPath());
-        onChangeList.forEach(consumer -> consumer.accept(list));
-        parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
+        onChangeList.forEach(consumer -> consumer.onChange(object, this));
+        parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(object));
+      }
+    }
+
+    public void notifyRemove(ro.anud.xml_xsd.implementation.util.LinkedNode object) {
+      try (var logger = logScope()) {
+        logger.log("Notify remove for", this.buildPath());
+        onRemoveList.forEach(consumer -> consumer.onRemove(object, this));
+        parentNode.ifPresent(linkedNode -> linkedNode.notifyRemove(object));
       }
     }
 
     public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+      this.parentNode.ifPresent(parent -> notifyRemove());
       this.parentNode = Optional.of(linkedNode);
       notifyChange();
-    }
-
-    public void clearParentNode() {
-      var parentNode = this.parentNode;
-      this.parentNode = Optional.empty();
-      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
     }
 
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep> parentAsWorldStep() {
@@ -196,6 +205,10 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           this.region_resolvePortals = Optional.empty();
           notifyChange();
         }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create) {
+          this.entity_create = Optional.empty();
+          notifyChange();
+        }
     }
 
     public int buildIndexForChild(Object object) {
@@ -235,6 +248,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals) {
           return 0;
         }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create) {
+          return 0;
+        }
         return 0;
     }
 
@@ -242,10 +258,16 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<List<Object>> onChange) {
+    public Subscription onChange(ro.anud.xml_xsd.implementation.util.ChangeCallback<Actions> callback) {
       try (var logger = logScope()) {
-        onChangeList.add(onChange);
-        return logger.logReturn(() -> onChangeList.remove(onChange));
+        onChangeList.add(callback);
+        return logger.logReturn(() -> onChangeList.remove(callback));
+      }
+    }
+    public Subscription onRemove(ro.anud.xml_xsd.implementation.util.RemoveCallback<Actions> callback) {
+      try (var logger = logScope()) {
+        onRemoveList.add(callback);
+        return logger.logReturn(() -> onRemoveList.remove(callback));
       }
     }
 
@@ -270,6 +292,7 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           this.zone_create = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Zone_create.Zone_create.fromRawNode(rawNode.getChildrenFirst("zone.create"), this);
           this.region_appendNew = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_appendNew.Region_appendNew.fromRawNode(rawNode.getChildrenFirst("region.appendNew"), this);
           this.region_resolvePortals = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals.fromRawNode(rawNode.getChildrenFirst("region.resolvePortals"), this);
+          this.entity_create = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create.fromRawNode(rawNode.getChildrenFirst("entity.create"), this);
         }
 
         if(isDirty) {
@@ -315,6 +338,8 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           rawNode.setChildren("region.appendNew", region_appendNew.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_appendNew.Region_appendNew::serializeIntoRawNode).toList());
           innerLogger.log("region.resolvePortals");
           rawNode.setChildren("region.resolvePortals", region_resolvePortals.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals::serializeIntoRawNode).toList());
+          innerLogger.log("entity.create");
+          rawNode.setChildren("entity.create", entity_create.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create::serializeIntoRawNode).toList());
           return rawNode;
         }
       }
@@ -650,6 +675,35 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       return this;
     }
 
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create> getEntity_create()
+    {
+      return this.entity_create;
+    }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create getEntity_createOrDefault()
+    {
+      return this.entity_create.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create();
+        this.entity_create = Optional.of(instance);
+        instance.parentNode(this);
+        return this.entity_create.get();
+      });
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create> streamEntity_createOrDefault()
+    {
+      return java.util.stream.Stream.of(getEntity_createOrDefault());
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create> streamEntity_create()
+    {
+      return entity_create.stream();
+    }
+    public Actions setEntity_create(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create value)
+    {
+      this.entity_create = Optional.ofNullable(value);
+      value.parentNode(this);
+      notifyChange();
+      return this;
+    }
+
     public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
        if(xpath.startsWith("."))
         {
@@ -823,6 +877,14 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals.nodeName.length() + 3);
           return this.region_resolvePortals.get().deserializeAtPath(childXPath, rawNode);
         }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create.nodeName))
+        {
+          if(this.entity_create.isEmpty()) {
+            this.entity_create = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create.nodeName.length() + 3);
+          return this.entity_create.get().deserializeAtPath(childXPath, rawNode);
+        }
 
         deserialize(rawNode);
         return this;
@@ -960,6 +1022,14 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           }
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals.nodeName.length() + 3);
           return this.region_resolvePortals.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create.nodeName))
+        {
+          if(this.entity_create.isEmpty()) {
+            this.entity_create = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create.nodeName.length() + 3);
+          return this.entity_create.get().getNodeAtPath(childXPath);
         }
         return Optional.of(this);
     }
@@ -1415,6 +1485,23 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
                   "isNullable": false
                 }
               }
+            }
+          },
+          "entity.create": {
+            "metaType": "object",
+            "value": {},
+            "isSingle": true,
+            "isNullable": true,
+            "attributes": {
+              "metaType": "object",
+              "value": {
+                "entity_rule_ref": {
+                  "metaType": "primitive",
+                  "value": "xs:string",
+                  "isNullable": false
+                }
+              },
+              "isNullable": false
             }
           }
         },

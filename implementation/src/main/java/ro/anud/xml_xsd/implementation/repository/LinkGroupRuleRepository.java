@@ -28,9 +28,8 @@ public class LinkGroupRuleRepository {
     public void index() {
         try (var scope = logScope()) {
             subscription.ifPresent(Subscription::unsubscribe);
-            subscription = worldStepInstance.getWorldStep().map(worldStep -> worldStep.onChange(objects -> {
-                scope.logTodo("Streamline checking");
-                if (objects.stream().map(Object::getClass).anyMatch(o -> o.equals(LinkGroupRuleList.class))) {
+            subscription = worldStepInstance.getWorldStep().map(worldStep -> worldStep.onChange((objects, worldStepNode) -> {
+                if(objects instanceof LinkGroupRuleList) {
                     loadData();
                 }
             }));

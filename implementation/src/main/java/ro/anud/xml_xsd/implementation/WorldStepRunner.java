@@ -5,6 +5,7 @@ import ro.anud.xml_xsd.implementation.middleware.EventsMetadata;
 import ro.anud.xml_xsd.implementation.middleware.PersonAssignClassification;
 import ro.anud.xml_xsd.implementation.middleware.action.FromPersonAction;
 import ro.anud.xml_xsd.implementation.middleware.action.PersonCreateAction;
+import ro.anud.xml_xsd.implementation.middleware.entity.EntityCreate;
 import ro.anud.xml_xsd.implementation.middleware.locationGraph.LocationGraphAddClassification;
 import ro.anud.xml_xsd.implementation.middleware.locationGraph.LocationGraphCreate;
 import ro.anud.xml_xsd.implementation.middleware.locationGraph.LocationGraphCreateAdjacent;
@@ -15,6 +16,7 @@ import ro.anud.xml_xsd.implementation.middleware.zone.ZoneCreateAction;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.Counter.Counter;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
+import ro.anud.xml_xsd.implementation.service.Middleware;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 import ro.anud.xml_xsd.implementation.util.logging.ContextAwareExecutorService;
 import ro.anud.xml_xsd.implementation.websocket.WebSocketHandler;
@@ -25,7 +27,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
 import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
@@ -39,8 +40,12 @@ public class WorldStepRunner {
     private ContextAwareExecutorService contextAwareExecutorService = new ContextAwareExecutorService(Executors.newSingleThreadExecutor());
     private List<Consumer<WorldStepInstance>> consumers = new ArrayList<>();
     private static long intervalUs = 500_000_000;
+    private static List<Middleware> middlewareList = List.of(
+        new EntityCreate()
+    );
 
     public static void runStep(WorldStepInstance worldStepInstance) {
+        middlewareList.forEach(middleware -> middleware.apply(worldStepInstance));
         FromPersonAction.apply(worldStepInstance);
         ZoneCreateAction.zoneCreateAction(worldStepInstance);
         RegionAppendAction.regionAppendNewAction(worldStepInstance);

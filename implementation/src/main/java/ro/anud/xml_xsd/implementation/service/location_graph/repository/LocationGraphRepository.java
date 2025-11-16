@@ -30,9 +30,8 @@ public class LocationGraphRepository {
     public LocationGraphRepository index() {
         try (var scope = logScope()) {
             subscription.ifPresent(Subscription::unsubscribe);
-            subscription = worldStepInstance.getWorldStep().map(worldStep -> worldStep.onChange(objects -> {
-                scope.logTodo("Streamline checking for Node.class");
-                if (objects.stream().map(Object::getClass).anyMatch(o -> o.equals(LocationGraph.class))) {
+            subscription = worldStepInstance.getWorldStep().map(worldStep -> worldStep.onChange((objects, worldStepNode) -> {
+                if(objects instanceof LocationGraph) {
                     loadData();
                 }
             }));

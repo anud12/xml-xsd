@@ -11,7 +11,7 @@ class IndentedLoggerTest {
 
     @Test
     void testScopeLoggingWithExtendedBusinessFlow() {
-        try (LogScope scope = logScope()) {
+        try (var scope = logScope()) {
             OrderService orderService = new OrderService();
             orderService.processOrder("ORD-456");
         }
@@ -19,7 +19,7 @@ class IndentedLoggerTest {
 
     class OrderService {
         void processOrder(String orderId) {
-            try (LogScope scope = LogScope.logScope("Extracting fromPerson")) {
+            try (var scope = LogScope.logScope("Extracting fromPerson")) {
                 scope.log("OrderService: Start processing order " + orderId);
                 OrderValidator validator = new OrderValidator();
                 scope.log("OrderService: Validator created");
@@ -53,7 +53,7 @@ class IndentedLoggerTest {
 
     class OrderValidator {
         boolean validate(String orderId) {
-            try (LogScope scope = logScope()) {
+            try (var scope = logScope()) {
                 scope.log("OrderValidator: Validating order " + orderId);
                 boolean result = orderId.startsWith("ORD");
                 scope.logReturn(result);
@@ -64,7 +64,7 @@ class IndentedLoggerTest {
 
     class OrderCalculator {
         double calculate(String orderId, int itemCount) {
-            try (LogScope scope = logScope()) {
+            try (var scope = logScope()) {
                 scope.log("OrderCalculator: Calculating total for " + orderId);
                 double total = itemCount * 19.99;
                 scope.logReturn(total);
@@ -75,7 +75,7 @@ class IndentedLoggerTest {
 
     class DiscountService {
         double applyDiscount(String orderId, double total) {
-            try (LogScope scope = logScope()) {
+            try (var scope = logScope()) {
                 scope.log("DiscountService: Checking discount for " + orderId);
                 double discounted = total > 50 ? total * 0.9 : total;
                 scope.logReturn(discounted);
@@ -86,7 +86,7 @@ class IndentedLoggerTest {
 
     class PaymentService {
         boolean processPayment(String orderId, double amount) {
-            try (LogScope scope = logScope()) {
+            try (var scope = logScope()) {
                 scope.log("PaymentService: Processing payment for " + orderId);
                 boolean success = amount < 1000;
                 scope.logReturn(success);
@@ -97,7 +97,7 @@ class IndentedLoggerTest {
 
     class OrderRepository {
         void save(String orderId, double total) {
-            try (LogScope scope = logScope()) {
+            try (var scope = logScope()) {
                 scope.log("OrderRepository: Saving order " + orderId);
                 // Simulate save
                 scope.log("OrderRepository: Order " + orderId + " saved with total $" + total);
@@ -114,7 +114,7 @@ class IndentedLoggerTest {
         for (int i = 0; i < threadCount; i++) {
             final String orderId = orderIds[i];
             threads[i] = new Thread(() -> {
-                try (LogScope scope = logScope()) {
+                try (var scope = logScope()) {
                     OrderService orderService = new OrderService();
                     orderService.processOrder(orderId);
                 }

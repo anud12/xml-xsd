@@ -7,6 +7,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGrap
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.Links;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
+import ro.anud.xml_xsd.implementation.service.Repository;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 import ro.anud.xml_xsd.implementation.util.Subscription;
 
@@ -15,7 +16,7 @@ import java.util.Optional;
 
 import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
-public class LinkToRepository {
+public class LinkToRepository implements Repository<LinkTo> {
 
     private final WorldStepInstance worldStepInstance;
 
@@ -28,21 +29,19 @@ public class LinkToRepository {
         }
     }
 
-    public LinkToRepository index() {
+    public void index() {
         try (var scope = logScope()) {
             subscription.ifPresent(Subscription::unsubscribe);
-            subscription = worldStepInstance.getWorldStep().map(worldStep -> worldStep.onChange(objects -> {
-                scope.logTodo("Streamline checking");
-                if (objects.stream().map(Object::getClass).anyMatch(o -> o.equals(LocationGraph.class))) {
+            subscription = worldStepInstance.getWorldStep().map(worldStep -> worldStep.onChange((objects, worldStepNode) -> {
+                if(objects instanceof LocationGraph) {
                     loadData();
                 }
             }));
-            return this;
         }
 
     }
 
-    private void loadData() {
+    public void loadData() {
         try (var scope = logScope()) {
             linkToByTargetNodeIdMapByNode.clear();
             worldStepInstance.streamWorldStep()

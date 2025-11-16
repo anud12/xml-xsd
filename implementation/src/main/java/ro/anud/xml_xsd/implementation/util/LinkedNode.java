@@ -19,19 +19,25 @@ public interface LinkedNode {
 
     RawNode rawNode();
 
-    void notifyChange(List<Object> clazzSet);
+    void notifyChange(LinkedNode linkedNode);
     default void notifyChange() {
-        notifyChange(new ArrayList<>());
+        notifyChange(this);
+    }
+    void notifyRemove(LinkedNode linkedNode);
+    default void notifyRemove() {
+        notifyRemove(this);
     }
 
     default void clearParentNode() {
-        //TODO: implement and call it on remove child
+        notifyRemove();
+        var parentNode = parentNode();
+        parentNode = Optional.empty();
+        parentNode.ifPresent(LinkedNode::notifyChange);
     }
 
     int buildIndexForChild(Object object);
 
-
-    public LinkedNode deserializeAtPath(String xpath, RawNode rawNode);
+    LinkedNode deserializeAtPath(String xpath, RawNode rawNode);
 
     default String buildPath() {
         var index = parentNode().map(linkedNode -> linkedNode.buildIndexForChild(this)).orElse(0);

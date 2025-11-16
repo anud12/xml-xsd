@@ -65,6 +65,8 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
     //Children elements
     @Builder.Default
+    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.EntityRule> entityRule = Optional.empty();
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule> propertyRule = Optional.empty();
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.ClassificationRule> classificationRule = Optional.empty();
@@ -113,30 +115,37 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     }
 
     @Builder.Default
-    private List<Consumer<List<Object>>> onChangeList = new ArrayList<>();
+    private List<ro.anud.xml_xsd.implementation.util.ChangeCallback<RuleGroup>> onChangeList = new ArrayList<>();
+    @Builder.Default
+    private List<ro.anud.xml_xsd.implementation.util.RemoveCallback<RuleGroup>> onRemoveList = new ArrayList<>();
 
     public String nodeName() {
       return "rule_group";
     }
+    public static RuleGroup of() {
+      return new RuleGroup();
+    }
 
-    public void notifyChange(List<Object> list) {
+    public void notifyChange(ro.anud.xml_xsd.implementation.util.LinkedNode object) {
       try (var logger = logScope()) {
-        list.addLast(this);
         logger.log("Notify change for", this.buildPath());
-        onChangeList.forEach(consumer -> consumer.accept(list));
-        parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
+        onChangeList.forEach(consumer -> consumer.onChange(object, this));
+        parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(object));
+      }
+    }
+
+    public void notifyRemove(ro.anud.xml_xsd.implementation.util.LinkedNode object) {
+      try (var logger = logScope()) {
+        logger.log("Notify remove for", this.buildPath());
+        onRemoveList.forEach(consumer -> consumer.onRemove(object, this));
+        parentNode.ifPresent(linkedNode -> linkedNode.notifyRemove(object));
       }
     }
 
     public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+      this.parentNode.ifPresent(parent -> notifyRemove());
       this.parentNode = Optional.of(linkedNode);
       notifyChange();
-    }
-
-    public void clearParentNode() {
-      var parentNode = this.parentNode;
-      this.parentNode = Optional.empty();
-      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
     }
 
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep> parentAsWorldStep() {
@@ -149,6 +158,10 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     }
 
     public void removeChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.EntityRule) {
+          this.entityRule = Optional.empty();
+          notifyChange();
+        }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule) {
           this.propertyRule = Optional.empty();
           notifyChange();
@@ -200,6 +213,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     }
 
     public int buildIndexForChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.EntityRule) {
+          return 0;
+        }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule) {
           return 0;
         }
@@ -243,10 +259,16 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<List<Object>> onChange) {
+    public Subscription onChange(ro.anud.xml_xsd.implementation.util.ChangeCallback<RuleGroup> callback) {
       try (var logger = logScope()) {
-        onChangeList.add(onChange);
-        return logger.logReturn(() -> onChangeList.remove(onChange));
+        onChangeList.add(callback);
+        return logger.logReturn(() -> onChangeList.remove(callback));
+      }
+    }
+    public Subscription onRemove(ro.anud.xml_xsd.implementation.util.RemoveCallback<RuleGroup> callback) {
+      try (var logger = logScope()) {
+        onRemoveList.add(callback);
+        return logger.logReturn(() -> onRemoveList.remove(callback));
       }
     }
 
@@ -259,6 +281,7 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
+          this.entityRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.EntityRule.fromRawNode(rawNode.getChildrenFirst("entity_rule"), this);
           this.propertyRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule.fromRawNode(rawNode.getChildrenFirst("property_rule"), this);
           this.classificationRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.ClassificationRule.fromRawNode(rawNode.getChildrenFirst("classification_rule"), this);
           this.nameRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.NameRule.NameRule.fromRawNode(rawNode.getChildrenFirst("name_rule"), this);
@@ -292,6 +315,8 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         try (var innerLogger = logScope("children")) {
 
           //Serialize children
+          innerLogger.log("entity_rule");
+          rawNode.setChildren("entity_rule", entityRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.EntityRule::serializeIntoRawNode).toList());
           innerLogger.log("property_rule");
           rawNode.setChildren("property_rule", propertyRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule::serializeIntoRawNode).toList());
           innerLogger.log("classification_rule");
@@ -329,6 +354,35 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     }
 
     /* ignored attribute key={key} of type=Object*/
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.EntityRule> getEntityRule()
+    {
+      return this.entityRule;
+    }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.EntityRule getEntityRuleOrDefault()
+    {
+      return this.entityRule.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.EntityRule();
+        this.entityRule = Optional.of(instance);
+        instance.parentNode(this);
+        return this.entityRule.get();
+      });
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.EntityRule> streamEntityRuleOrDefault()
+    {
+      return java.util.stream.Stream.of(getEntityRuleOrDefault());
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.EntityRule> streamEntityRule()
+    {
+      return entityRule.stream();
+    }
+    public RuleGroup setEntityRule(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.EntityRule value)
+    {
+      this.entityRule = Optional.ofNullable(value);
+      value.parentNode(this);
+      notifyChange();
+      return this;
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule> getPropertyRule()
     {
       return this.propertyRule;
@@ -682,6 +736,14 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         {
           xpath = xpath.substring(1);
         }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.EntityRule.nodeName))
+        {
+          if(this.entityRule.isEmpty()) {
+            this.entityRule = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.EntityRule());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.EntityRule.nodeName.length() + 3);
+          return this.entityRule.get().deserializeAtPath(childXPath, rawNode);
+        }
         if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule.nodeName))
         {
           if(this.propertyRule.isEmpty()) {
@@ -787,6 +849,14 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
        if(xpath.startsWith("."))
         {
           xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.EntityRule.nodeName))
+        {
+          if(this.entityRule.isEmpty()) {
+            this.entityRule = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.EntityRule());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.EntityRule.nodeName.length() + 3);
+          return this.entityRule.get().getNodeAtPath(childXPath);
         }
         if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule.nodeName))
         {
@@ -907,6 +977,30 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         },
         "isSingle": false,
         "value": {
+          "entity_rule": {
+            "metaType": "object",
+            "isSingle": true,
+            "value": {
+              "entry": {
+                "metaType": "composition",
+                "value": [
+                  {
+                    "metaType": "object",
+                    "value": {},
+                    "isSingle": true,
+                    "isNullable": false
+                  },
+                  {
+                    "metaType": "primitive",
+                    "value": "type__entity_rule"
+                  }
+                ],
+                "isSingle": false,
+                "isNullable": true
+              }
+            },
+            "isNullable": true
+          },
           "property_rule": {
             "metaType": "object",
             "isSingle": true,

@@ -27,6 +27,45 @@ namespace XSD.Nworld_step {
     //Attributes
 
     //Children elements
+    private XSD.Nworld_step.Ndata.entities? _entities = null;
+    public XSD.Nworld_step.Ndata.entities entitiesOrCreate
+    {
+      get
+      {
+        if(_entities == null)
+        {
+          _entities = new();
+          _entities.ParentNode = this;
+          NotifyChange();
+        }
+        return _entities;
+      }
+      set
+      {
+        _entities = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Ndata.entities? entities
+    {
+      get
+      {
+        return _entities;
+      }
+      set
+      {
+        _entities = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
+
     private XSD.Nworld_step.Ndata.people? _people = null;
     public XSD.Nworld_step.Ndata.people peopleOrCreate
     {
@@ -164,6 +203,11 @@ namespace XSD.Nworld_step {
 
     public void SetChild(dynamic linkedNode)
     {
+      if(linkedNode is XSD.Nworld_step.Ndata.entities entities)
+      {
+        this.entities = entities;
+      }
+
       if(linkedNode is XSD.Nworld_step.Ndata.people people)
       {
         this.people = people;
@@ -183,6 +227,11 @@ namespace XSD.Nworld_step {
 
     public void ClearChild(dynamic linkedNode)
     {
+      if(linkedNode is XSD.Nworld_step.Ndata.entities)
+      {
+        this.entities = null;
+      }
+
       if(linkedNode is XSD.Nworld_step.Ndata.people)
       {
         this.people = null;
@@ -226,6 +275,8 @@ namespace XSD.Nworld_step {
       //Deserialize arguments
 
       //Deserialize children
+      entities = rawNode.InitializeWithRawNode("entities", entities);
+
       people = rawNode.InitializeWithRawNode("people", people);
 
       location = rawNode.InitializeWithRawNode("location", location);
@@ -239,6 +290,9 @@ namespace XSD.Nworld_step {
       //Serialize arguments
 
       //Serialize children
+      if(entities != null) {
+        rawNode.children["entities"] = new List<RawNode> { entities.SerializeIntoRawNode() };
+      }
       if(people != null) {
         rawNode.children["people"] = new List<RawNode> { people.SerializeIntoRawNode() };
       }
@@ -264,6 +318,13 @@ namespace XSD.Nworld_step {
       if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
+      }
+      if(xpath.StartsWith(XSD.Nworld_step.Ndata.entities.TagName))
+      {
+        this.entities ??= new XSD.Nworld_step.Ndata.entities();
+        var childXPath = xpath.Substring(XSD.Nworld_step.Ndata.entities.TagName.Length + 3);
+        this.entities.DeserializeAtPath(childXPath, rawNode);
+        return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Ndata.people.TagName))
       {
@@ -307,6 +368,9 @@ namespace XSD.Nworld_step {
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
+      if(linkedNode is XSD.Nworld_step.Ndata.entities casted_entities) {
+        return 0;
+      }
       if(linkedNode is XSD.Nworld_step.Ndata.people casted_people) {
         return 0;
       }
@@ -320,7 +384,8 @@ namespace XSD.Nworld_step {
     }
 
     public bool IsValidChildType(ILinkedNode candidateChild) {
-      return candidateChild is XSD.Nworld_step.Ndata.people
+      return candidateChild is XSD.Nworld_step.Ndata.entities
+      || candidateChild is XSD.Nworld_step.Ndata.people
       || candidateChild is XSD.Nworld_step.Ndata.location
       || candidateChild is XSD.Nworld_step.Ndata.zone_list
       || false;
@@ -332,13 +397,14 @@ namespace XSD.Nworld_step {
             return false;
 
         var other = (data)obj;
-        return Equals(people, other.people) && Equals(location, other.location) && Equals(zone_list, other.zone_list);
+        return Equals(entities, other.entities) && Equals(people, other.people) && Equals(location, other.location) && Equals(zone_list, other.zone_list);
     }
 
     public override int GetHashCode()
     {
         var acc = 0;
 
+        acc = HashCode.Combine(acc, entities);
         acc = HashCode.Combine(acc, people);
         acc = HashCode.Combine(acc, location);
         acc = HashCode.Combine(acc, zone_list);

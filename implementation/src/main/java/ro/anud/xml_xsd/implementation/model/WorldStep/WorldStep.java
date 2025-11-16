@@ -96,30 +96,37 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     }
 
     @Builder.Default
-    private List<Consumer<List<Object>>> onChangeList = new ArrayList<>();
+    private List<ro.anud.xml_xsd.implementation.util.ChangeCallback<WorldStep>> onChangeList = new ArrayList<>();
+    @Builder.Default
+    private List<ro.anud.xml_xsd.implementation.util.RemoveCallback<WorldStep>> onRemoveList = new ArrayList<>();
 
     public String nodeName() {
       return "world_step";
     }
+    public static WorldStep of() {
+      return new WorldStep();
+    }
 
-    public void notifyChange(List<Object> list) {
+    public void notifyChange(ro.anud.xml_xsd.implementation.util.LinkedNode object) {
       try (var logger = logScope()) {
-        list.addLast(this);
         logger.log("Notify change for", this.buildPath());
-        onChangeList.forEach(consumer -> consumer.accept(list));
-        parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(list));
+        onChangeList.forEach(consumer -> consumer.onChange(object, this));
+        parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(object));
+      }
+    }
+
+    public void notifyRemove(ro.anud.xml_xsd.implementation.util.LinkedNode object) {
+      try (var logger = logScope()) {
+        logger.log("Notify remove for", this.buildPath());
+        onRemoveList.forEach(consumer -> consumer.onRemove(object, this));
+        parentNode.ifPresent(linkedNode -> linkedNode.notifyRemove(object));
       }
     }
 
     public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+      this.parentNode.ifPresent(parent -> notifyRemove());
       this.parentNode = Optional.of(linkedNode);
       notifyChange();
-    }
-
-    public void clearParentNode() {
-      var parentNode = this.parentNode;
-      this.parentNode = Optional.empty();
-      parentNode.ifPresent(ro.anud.xml_xsd.implementation.util.LinkedNode::notifyChange);
     }
 
     public void removeChild(Object object) {
@@ -161,10 +168,16 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<List<Object>> onChange) {
+    public Subscription onChange(ro.anud.xml_xsd.implementation.util.ChangeCallback<WorldStep> callback) {
       try (var logger = logScope()) {
-        onChangeList.add(onChange);
-        return logger.logReturn(() -> onChangeList.remove(onChange));
+        onChangeList.add(callback);
+        return logger.logReturn(() -> onChangeList.remove(callback));
+      }
+    }
+    public Subscription onRemove(ro.anud.xml_xsd.implementation.util.RemoveCallback<WorldStep> callback) {
+      try (var logger = logScope()) {
+        onRemoveList.add(callback);
+        return logger.logReturn(() -> onRemoveList.remove(callback));
       }
     }
 
@@ -569,6 +582,30 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
             },
             "isSingle": false,
             "value": {
+              "entity_rule": {
+                "metaType": "object",
+                "isSingle": true,
+                "value": {
+                  "entry": {
+                    "metaType": "composition",
+                    "value": [
+                      {
+                        "metaType": "object",
+                        "value": {},
+                        "isSingle": true,
+                        "isNullable": false
+                      },
+                      {
+                        "metaType": "primitive",
+                        "value": "type__entity_rule"
+                      }
+                    ],
+                    "isSingle": false,
+                    "isNullable": true
+                  }
+                },
+                "isNullable": true
+              },
               "property_rule": {
                 "metaType": "object",
                 "isSingle": true,
@@ -1491,6 +1528,30 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
             "metaType": "object",
             "isSingle": true,
             "value": {
+              "entities": {
+                "metaType": "object",
+                "isSingle": true,
+                "value": {
+                  "entity": {
+                    "metaType": "composition",
+                    "value": [
+                      {
+                        "metaType": "object",
+                        "value": {},
+                        "isSingle": true,
+                        "isNullable": false
+                      },
+                      {
+                        "metaType": "primitive",
+                        "value": "type__entity"
+                      }
+                    ],
+                    "isSingle": false,
+                    "isNullable": true
+                  }
+                },
+                "isNullable": true
+              },
               "people": {
                 "metaType": "object",
                 "isSingle": true,
@@ -2482,6 +2543,23 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
                     }
                   }
                 }
+              },
+              "entity.create": {
+                "metaType": "object",
+                "value": {},
+                "isSingle": true,
+                "isNullable": true,
+                "attributes": {
+                  "metaType": "object",
+                  "value": {
+                    "entity_rule_ref": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": false
+                }
               }
             },
             "isNullable": true
@@ -2628,6 +2706,30 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
               },
               "isSingle": false,
               "value": {
+                "entity_rule": {
+                  "metaType": "object",
+                  "isSingle": true,
+                  "value": {
+                    "entry": {
+                      "metaType": "composition",
+                      "value": [
+                        {
+                          "metaType": "object",
+                          "value": {},
+                          "isSingle": true,
+                          "isNullable": false
+                        },
+                        {
+                          "metaType": "primitive",
+                          "value": "type__entity_rule"
+                        }
+                      ],
+                      "isSingle": false,
+                      "isNullable": true
+                    }
+                  },
+                  "isNullable": true
+                },
                 "property_rule": {
                   "metaType": "object",
                   "isSingle": true,
@@ -3550,6 +3652,30 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
               "metaType": "object",
               "isSingle": true,
               "value": {
+                "entities": {
+                  "metaType": "object",
+                  "isSingle": true,
+                  "value": {
+                    "entity": {
+                      "metaType": "composition",
+                      "value": [
+                        {
+                          "metaType": "object",
+                          "value": {},
+                          "isSingle": true,
+                          "isNullable": false
+                        },
+                        {
+                          "metaType": "primitive",
+                          "value": "type__entity"
+                        }
+                      ],
+                      "isSingle": false,
+                      "isNullable": true
+                    }
+                  },
+                  "isNullable": true
+                },
                 "people": {
                   "metaType": "object",
                   "isSingle": true,
@@ -4540,6 +4666,23 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
                         "isNullable": false
                       }
                     }
+                  }
+                },
+                "entity.create": {
+                  "metaType": "object",
+                  "value": {},
+                  "isSingle": true,
+                  "isNullable": true,
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "entity_rule_ref": {
+                        "metaType": "primitive",
+                        "value": "xs:string",
+                        "isNullable": false
+                      }
+                    },
+                    "isNullable": false
                   }
                 }
               },

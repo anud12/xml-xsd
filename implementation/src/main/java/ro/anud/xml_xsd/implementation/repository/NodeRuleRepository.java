@@ -30,9 +30,9 @@ public class NodeRuleRepository {
     public void index(List<RuleGroup> ruleGroupList) {
         try (var scope = logScope()){
             subscription.ifPresent(Subscription::unsubscribe);
-            subscription = worldStepInstance.getWorldStep().map(worldStep -> worldStep.onChange(objects -> {
+            subscription = worldStepInstance.getWorldStep().map(worldStep -> worldStep.onChange((linkedNode,  worldStepNode) -> {
                 scope.logTodo("Streamline checking");
-                if (objects.stream().map(Object::getClass).anyMatch(o -> o.equals(NodeRule.class))) {
+                if(linkedNode instanceof NodeRule) {
                     loadData();
                 }
             }));

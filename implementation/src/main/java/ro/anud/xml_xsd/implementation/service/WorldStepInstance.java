@@ -11,6 +11,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadat
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.model.interfaces.IType_mathOperations.IType_mathOperations;
 import ro.anud.xml_xsd.implementation.repository.RuleRepository;
+import ro.anud.xml_xsd.implementation.service.entity.EntityInstance;
 import ro.anud.xml_xsd.implementation.service.location_graph.LocationGraphInstance;
 import ro.anud.xml_xsd.implementation.service.name.NameInstance;
 import ro.anud.xml_xsd.implementation.service.person.PersonInstance;
@@ -32,7 +33,6 @@ import static ro.anud.xml_xsd.implementation.websocket.Client.ReturnCode.Update;
 
 @Setter
 public class WorldStepInstance {
-
 
 
 
@@ -75,6 +75,7 @@ public class WorldStepInstance {
     public final NameInstance name = new NameInstance(this);
     public final ZoneInstance zone = new ZoneInstance(this);
     public final RegionInstance region = new RegionInstance(this);
+    public final EntityInstance entity = new EntityInstance(this);
 
 
     private int counter = 0;
@@ -172,10 +173,10 @@ public class WorldStepInstance {
     }
 
     private void addUpdateHandlers() {
-        this.worldStep.ifPresent(worldStep1 -> worldStep1.onChange(objects -> {
+        this.worldStep.ifPresent(worldStep1 -> worldStep1.onChange((object, thisObject) -> {
             try (var logScope = logScope()){
-                logScope.log("On change called for", objects.stream().map(Object::toString).collect(Collectors.joining(",")));
-                sendLinkNode((LinkedNode) objects.getFirst());
+                logScope.log("On change called for", object);
+                sendLinkNode(object);
             }
 
         }));

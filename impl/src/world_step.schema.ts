@@ -25,6 +25,8 @@ export type type__rotation_90deg_step = "normal"
   | "clockwise"
   | "inverted"
   | "counterclockwise"
+export type type__entity = JsonQueryType<{"entity_rule_ref": string;}>
+export type type__entity_rule = JsonQueryType<{"name": string;}>
 export type type__property_mutation_on = JsonQueryType<{"on": type_person_select;}>
   & type__property_mutation
 export type type__property_mutation = JsonQueryType<{"property_rule_ref": string;}, {
@@ -124,6 +126,10 @@ export type world_step = JsonQueryType<{}, {
     }> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
   "rule_group": JsonQueryType<{"id": any;}, {
+    "entity_rule": JsonQueryType<{}, {
+      "entry": JsonQueryType<{}>
+        & type__entity_rule & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
     "property_rule": JsonQueryType<{}, {
       "entry": JsonQueryType<{"id": string;  "units": string;}, {
         "person_default": JsonQueryType<{}>
@@ -237,6 +243,10 @@ export type world_step = JsonQueryType<{}, {
     }> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
   "data": JsonQueryType<{}, {
+    "entities": JsonQueryType<{}, {
+      "entity": JsonQueryType<{}>
+        & type__entity & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
     "people": JsonQueryType<{}, {
       "person": JsonQueryType<{"id": string;  "name": string;}, {
         "properties": JsonQueryType<{}, {
@@ -330,5 +340,6 @@ export type world_step = JsonQueryType<{}, {
     "zone.create": JsonQueryType<{"zone_rule_ref": string;}> & JsonQueryType<{}, {}>;
     "region.appendNew": JsonQueryType<{"zone_id_ref": string;  "region_id_ref": string;  "portal_id_ref": string;}> & JsonQueryType<{}, {}>;
     "region.resolvePortals": JsonQueryType<{"zone_id_ref": string;  "region_id_ref": string;}> & JsonQueryType<{}, {}>;
+    "entity.create": JsonQueryType<{"entity_rule_ref": string;}> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
 }>

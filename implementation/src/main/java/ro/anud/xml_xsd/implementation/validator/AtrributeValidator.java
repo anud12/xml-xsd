@@ -11,21 +11,22 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 public class AtrributeValidator {
 
     List<AttributeValidator> attributeValidatorList = List.of(
-        new PropertyRefValidator(),
-        new ActionRuleRefValidation(),
-        new ClassificationRuleRefValidator(),
-        new LocationClassificationRuleRefValidator(),
-        new LinkGroupRuleRefValidator(),
-        new PersonRefValidator(),
-        new PersonIdRefValidator(),
-        new NameRuleRefValidator(),
-        new NodeRuleRefValidator(),
-        new NodeIdRefValidator(),
-        new LocationGraphIdRefValidator()
-    );
+            new PropertyRefValidator(),
+            new ActionRuleRefValidation(),
+            new ClassificationRuleRefValidator(),
+            new LocationClassificationRuleRefValidator(),
+            new LinkGroupRuleRefValidator(),
+            new PersonRefValidator(),
+            new PersonIdRefValidator(),
+            new NameRuleRefValidator(),
+            new NodeRuleRefValidator(),
+            new NodeIdRefValidator(),
+            new LocationGraphIdRefValidator(),
+            new EntityRuleRefValidator()
+            );
 
     public List<AttributeValidator.InvalidAttribute> validate(Optional<WorldStep> worldStep) {
-        try (var logger = logScope("validate")){
+        try (var logger = logScope("validate")) {
             return worldStep.map(step -> attributeValidatorList.stream()
                             .flatMap(attributeValidator -> {
                                 logger.log("validating using", attributeValidator.getClass().getSimpleName());

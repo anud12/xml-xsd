@@ -1,5 +1,15 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
+
+  <xs:complexType name="type__entity">
+    <xs:attribute name="entity_rule_ref" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="type__entity_rule">
+    <xs:attribute name="name" type="xs:string" use="required"/>
+  </xs:complexType>
+
+
   <xs:complexType name="type__property_mutation_on">
     <xs:complexContent>
       <xs:extension base="type__property_mutation">
@@ -788,6 +798,20 @@
           <xs:complexType>
             <xs:all>
 
+              <xs:element name="entity_rule" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:complexContent>
+                          <xs:extension base="type__entity_rule"/>
+                        </xs:complexContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
 
               <xs:element name="property_rule" minOccurs="0">
                 <xs:complexType>
@@ -1347,6 +1371,19 @@
         <xs:element name="data" minOccurs="0">
           <xs:complexType>
             <xs:all>
+              <xs:element name="entities" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="entity" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:complexContent>
+                          <xs:extension base="type__entity"/>
+                        </xs:complexContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
               <xs:element name="people" minOccurs="0">
                 <xs:complexType>
                   <xs:sequence>
@@ -1999,6 +2036,11 @@
                 <xs:complexType>
                   <xs:attribute name="zone_id_ref" type="xs:string" use="required"/>
                   <xs:attribute name="region_id_ref" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="entity.create" minOccurs="0">
+                <xs:complexType>
+                  <xs:attribute name="entity_rule_ref" type="xs:string" use="required"/>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>

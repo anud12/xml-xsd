@@ -177,6 +177,52 @@
     "isNullable": true
   },
   {
+    "name": "type__entity",
+    "type": "complex",
+    "isSingle": true,
+    "isNullable": false,
+    "value": {
+      "metaType": "object",
+      "value": {},
+      "isSingle": true,
+      "isNullable": false,
+      "attributes": {
+        "metaType": "object",
+        "value": {
+          "entity_rule_ref": {
+            "metaType": "primitive",
+            "value": "xs:string",
+            "isNullable": true
+          }
+        },
+        "isNullable": true
+      }
+    }
+  },
+  {
+    "name": "type__entity_rule",
+    "type": "complex",
+    "isSingle": true,
+    "isNullable": false,
+    "value": {
+      "metaType": "object",
+      "value": {},
+      "isSingle": true,
+      "isNullable": false,
+      "attributes": {
+        "metaType": "object",
+        "value": {
+          "name": {
+            "metaType": "primitive",
+            "value": "xs:string",
+            "isNullable": false
+          }
+        },
+        "isNullable": false
+      }
+    }
+  },
+  {
     "name": "type__property_mutation_on",
     "type": "complex",
     "value": {
@@ -1033,6 +1079,30 @@
           },
           "isSingle": false,
           "value": {
+            "entity_rule": {
+              "metaType": "object",
+              "isSingle": true,
+              "value": {
+                "entry": {
+                  "metaType": "composition",
+                  "value": [
+                    {
+                      "metaType": "object",
+                      "value": {},
+                      "isSingle": true,
+                      "isNullable": false
+                    },
+                    {
+                      "metaType": "primitive",
+                      "value": "type__entity_rule"
+                    }
+                  ],
+                  "isSingle": false,
+                  "isNullable": true
+                }
+              },
+              "isNullable": true
+            },
             "property_rule": {
               "metaType": "object",
               "isSingle": true,
@@ -1955,6 +2025,30 @@
           "metaType": "object",
           "isSingle": true,
           "value": {
+            "entities": {
+              "metaType": "object",
+              "isSingle": true,
+              "value": {
+                "entity": {
+                  "metaType": "composition",
+                  "value": [
+                    {
+                      "metaType": "object",
+                      "value": {},
+                      "isSingle": true,
+                      "isNullable": false
+                    },
+                    {
+                      "metaType": "primitive",
+                      "value": "type__entity"
+                    }
+                  ],
+                  "isSingle": false,
+                  "isNullable": true
+                }
+              },
+              "isNullable": true
+            },
             "people": {
               "metaType": "object",
               "isSingle": true,
@@ -2945,6 +3039,23 @@
                     "isNullable": false
                   }
                 }
+              }
+            },
+            "entity.create": {
+              "metaType": "object",
+              "value": {},
+              "isSingle": true,
+              "isNullable": true,
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "entity_rule_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string",
+                    "isNullable": false
+                  }
+                },
+                "isNullable": false
               }
             }
           },
