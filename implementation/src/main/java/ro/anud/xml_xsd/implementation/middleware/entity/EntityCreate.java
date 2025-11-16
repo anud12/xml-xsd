@@ -1,12 +1,14 @@
 package ro.anud.xml_xsd.implementation.middleware.entity;
 
-import ro.anud.xml_xsd.implementation.model.Type_entity.Type_entity;
+import ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Container.Container;
+import ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entity.Entity;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
+import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 import ro.anud.xml_xsd.implementation.service.action.ActionCreate;
 
 import java.util.Optional;
@@ -20,9 +22,20 @@ public class EntityCreate implements ActionCreate<Entity, Entity_create, Entitie
     }
 
     @Override
-    public Entity create(Entity_create action) {
+    public Entity create(WorldStepInstance worldStepInstance, Entity_create action) {
+        var rule = worldStepInstance.ruleRepository.entityRule.byName.get(action.getEntityRuleRef()).get();
         return Entity.builder()
-                .entityRuleRef(Optional.ofNullable(action.getEntityRuleRef()))
+                .entityRuleRef(Optional.ofNullable(rule.getName()))
+                .containers(rule.getContainers()
+                        .map(containers -> Containers.builder()
+                                .container(containers.streamContainer()
+                                        .map(container -> Container.builder()
+                                                .containerRuleRef(container.getContainerRuleRef())
+                                                .build()
+                                        )
+                                        .toList())
+                                .build())
+                )
                 .build();
     }
 

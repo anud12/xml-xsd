@@ -11,13 +11,13 @@ public non-sealed interface ActionCreate<Node, ActionNode, ParentNode> extends A
         void apply(WorldStepInstance outWorldStepInstance);
     }
     Stream<ActionNode> getAction(Stream<WorldStep> worldStep);
-    Node create(ActionNode action);
+    Node create(WorldStepInstance worldStepInstance, ActionNode action);
     ParentNode getParentNode(Stream<WorldStep> worldStep);
     void append(ParentNode parentNode, Node node);
 
     default void apply(WorldStepInstance worldStepInstance) {
         var actionStream = getAction(worldStepInstance.streamWorldStep());
-        var node = actionStream.map(this::create);
+        var node = actionStream.map(actionNode -> create(worldStepInstance, actionNode));
 
         var parentNode = getParentNode(worldStepInstance.getOutInstance().streamWorldStep());
         node.forEach(node1 -> append(parentNode,node1));

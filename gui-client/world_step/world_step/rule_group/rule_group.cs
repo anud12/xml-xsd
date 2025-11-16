@@ -67,6 +67,45 @@ namespace XSD.Nworld_step {
       }
     }
 
+    private XSD.Nworld_step.Nrule_group.container_rule? _container_rule = null;
+    public XSD.Nworld_step.Nrule_group.container_rule container_ruleOrCreate
+    {
+      get
+      {
+        if(_container_rule == null)
+        {
+          _container_rule = new();
+          _container_rule.ParentNode = this;
+          NotifyChange();
+        }
+        return _container_rule;
+      }
+      set
+      {
+        _container_rule = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.container_rule? container_rule
+    {
+      get
+      {
+        return _container_rule;
+      }
+      set
+      {
+        _container_rule = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
+
     private XSD.Nworld_step.Nrule_group.property_rule? _property_rule = null;
     public XSD.Nworld_step.Nrule_group.property_rule property_ruleOrCreate
     {
@@ -561,6 +600,11 @@ namespace XSD.Nworld_step {
         this.entity_rule = entity_rule;
       }
 
+      if(linkedNode is XSD.Nworld_step.Nrule_group.container_rule container_rule)
+      {
+        this.container_rule = container_rule;
+      }
+
       if(linkedNode is XSD.Nworld_step.Nrule_group.property_rule property_rule)
       {
         this.property_rule = property_rule;
@@ -628,6 +672,11 @@ namespace XSD.Nworld_step {
       if(linkedNode is XSD.Nworld_step.Nrule_group.entity_rule)
       {
         this.entity_rule = null;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nrule_group.container_rule)
+      {
+        this.container_rule = null;
       }
 
       if(linkedNode is XSD.Nworld_step.Nrule_group.property_rule)
@@ -720,6 +769,8 @@ namespace XSD.Nworld_step {
       //Deserialize children
       entity_rule = rawNode.InitializeWithRawNode("entity_rule", entity_rule);
 
+      container_rule = rawNode.InitializeWithRawNode("container_rule", container_rule);
+
       property_rule = rawNode.InitializeWithRawNode("property_rule", property_rule);
 
       classification_rule = rawNode.InitializeWithRawNode("classification_rule", classification_rule);
@@ -753,6 +804,9 @@ namespace XSD.Nworld_step {
       //Serialize children
       if(entity_rule != null) {
         rawNode.children["entity_rule"] = new List<RawNode> { entity_rule.SerializeIntoRawNode() };
+      }
+      if(container_rule != null) {
+        rawNode.children["container_rule"] = new List<RawNode> { container_rule.SerializeIntoRawNode() };
       }
       if(property_rule != null) {
         rawNode.children["property_rule"] = new List<RawNode> { property_rule.SerializeIntoRawNode() };
@@ -813,6 +867,13 @@ namespace XSD.Nworld_step {
         this.entity_rule ??= new XSD.Nworld_step.Nrule_group.entity_rule();
         var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.entity_rule.TagName.Length + 3);
         this.entity_rule.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
+      if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.container_rule.TagName))
+      {
+        this.container_rule ??= new XSD.Nworld_step.Nrule_group.container_rule();
+        var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.container_rule.TagName.Length + 3);
+        this.container_rule.DeserializeAtPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.property_rule.TagName))
@@ -923,6 +984,9 @@ namespace XSD.Nworld_step {
       if(linkedNode is XSD.Nworld_step.Nrule_group.entity_rule casted_entity_rule) {
         return 0;
       }
+      if(linkedNode is XSD.Nworld_step.Nrule_group.container_rule casted_container_rule) {
+        return 0;
+      }
       if(linkedNode is XSD.Nworld_step.Nrule_group.property_rule casted_property_rule) {
         return 0;
       }
@@ -964,6 +1028,7 @@ namespace XSD.Nworld_step {
 
     public bool IsValidChildType(ILinkedNode candidateChild) {
       return candidateChild is XSD.Nworld_step.Nrule_group.entity_rule
+      || candidateChild is XSD.Nworld_step.Nrule_group.container_rule
       || candidateChild is XSD.Nworld_step.Nrule_group.property_rule
       || candidateChild is XSD.Nworld_step.Nrule_group.classification_rule
       || candidateChild is XSD.Nworld_step.Nrule_group.name_rule
@@ -985,7 +1050,7 @@ namespace XSD.Nworld_step {
             return false;
 
         var other = (rule_group)obj;
-        return Equals(entity_rule, other.entity_rule) && Equals(property_rule, other.property_rule) && Equals(classification_rule, other.classification_rule) && Equals(name_rule, other.name_rule) && Equals(action_rule, other.action_rule) && Equals(events_rule, other.events_rule) && Equals(link_group_rule_list, other.link_group_rule_list) && Equals(location_graph_rule, other.location_graph_rule) && Equals(location_classification_rule, other.location_classification_rule) && Equals(node_rule, other.node_rule) && Equals(portal_rule, other.portal_rule) && Equals(region_rule, other.region_rule) && Equals(zone_rule, other.zone_rule);
+        return Equals(entity_rule, other.entity_rule) && Equals(container_rule, other.container_rule) && Equals(property_rule, other.property_rule) && Equals(classification_rule, other.classification_rule) && Equals(name_rule, other.name_rule) && Equals(action_rule, other.action_rule) && Equals(events_rule, other.events_rule) && Equals(link_group_rule_list, other.link_group_rule_list) && Equals(location_graph_rule, other.location_graph_rule) && Equals(location_classification_rule, other.location_classification_rule) && Equals(node_rule, other.node_rule) && Equals(portal_rule, other.portal_rule) && Equals(region_rule, other.region_rule) && Equals(zone_rule, other.zone_rule);
     }
 
     public override int GetHashCode()
@@ -993,6 +1058,7 @@ namespace XSD.Nworld_step {
         var acc = 0;
 
         acc = HashCode.Combine(acc, entity_rule);
+        acc = HashCode.Combine(acc, container_rule);
         acc = HashCode.Combine(acc, property_rule);
         acc = HashCode.Combine(acc, classification_rule);
         acc = HashCode.Combine(acc, name_rule);

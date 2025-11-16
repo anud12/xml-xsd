@@ -25,8 +25,11 @@ export type type__rotation_90deg_step = "normal"
   | "clockwise"
   | "inverted"
   | "counterclockwise"
-export type type__entity = JsonQueryType<{"entity_rule_ref": string;}>
-export type type__entity_rule = JsonQueryType<{"name": string;}>
+export type type__entity = JsonQueryType<{"entity_rule_ref": string;}, {
+  "containers": JsonQueryType<{}, {
+    "container": JsonQueryType<{"container_rule_ref": string;}> & JsonQueryType<{}, {}>;
+  }> & JsonQueryType<{}, {}>;
+}>
 export type type__property_mutation_on = JsonQueryType<{"on": type_person_select;}>
   & type__property_mutation
 export type type__property_mutation = JsonQueryType<{"property_rule_ref": string;}, {
@@ -127,8 +130,14 @@ export type world_step = JsonQueryType<{}, {
   }> & JsonQueryType<{}, {}>;
   "rule_group": JsonQueryType<{"id": any;}, {
     "entity_rule": JsonQueryType<{}, {
-      "entry": JsonQueryType<{}>
-        & type__entity_rule & JsonQueryType<{}, {}>;
+      "entry": JsonQueryType<{"name": string;}, {
+        "containers": JsonQueryType<{}, {
+          "container": JsonQueryType<{"container_rule_ref": string;}> & JsonQueryType<{}, {}>;
+        }> & JsonQueryType<{}, {}>;
+      }> & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
+    "container_rule": JsonQueryType<{}, {
+      "entry": JsonQueryType<{"name": string;}> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
     "property_rule": JsonQueryType<{}, {
       "entry": JsonQueryType<{"id": string;  "units": string;}, {

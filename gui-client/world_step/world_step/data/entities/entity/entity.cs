@@ -14,7 +14,7 @@ namespace XSD {
     public System.String? entity_rule_ref { get; set; }
 
     //Children elements
-
+    public XSD.Ntype__entity.containers containers { get; set; }
     public void Deserialize (RawNode rawNode);
 
     public RawNode SerializeIntoRawNode();
@@ -46,7 +46,44 @@ namespace XSD.Nworld_step.Ndata.Nentities {
     //Children elements
 
     //Children of type__entity
+    private XSD.Ntype__entity.containers? _containers = null;
+    public XSD.Ntype__entity.containers containersOrCreate
+    {
+      get
+      {
+        if(_containers == null)
+        {
+          _containers = new();
+          _containers.ParentNode = this;
+          NotifyChange();
+        }
+        return _containers;
+      }
+      set
+      {
+        _containers = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
 
+      }
+    }
+    public XSD.Ntype__entity.containers? containers
+    {
+      get
+      {
+        return _containers;
+      }
+      set
+      {
+        _containers = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
     public entity()
     {
     }
@@ -109,7 +146,7 @@ namespace XSD.Nworld_step.Ndata.Nentities {
       //Deserialize children
 
       // Deserialize children of type__entity
-
+  containers = rawNode.InitializeWithRawNode("containers", containers);
       NotifyChange();
     }
 
@@ -126,7 +163,9 @@ namespace XSD.Nworld_step.Ndata.Nentities {
       //Serialize children
 
       // Serialize children of type__entity
-
+  if(containers != null) {
+    rawNode.children["containers"] = new List<RawNode> { containers.SerializeIntoRawNode() };
+  }
       return rawNode;
     }
 

@@ -29,6 +29,44 @@ namespace XSD {
     public System.String? entity_rule_ref { get => _entity_rule_ref; set => _entity_rule_ref = value; }
 
     //Children elements
+    private XSD.Ntype__entity.containers? _containers = null;
+    public XSD.Ntype__entity.containers containersOrCreate
+    {
+      get
+      {
+        if(_containers == null)
+        {
+          _containers = new();
+          _containers.ParentNode = this;
+          NotifyChange();
+        }
+        return _containers;
+      }
+      set
+      {
+        _containers = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Ntype__entity.containers? containers
+    {
+      get
+      {
+        return _containers;
+      }
+      set
+      {
+        _containers = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
     public type__entity()
     {
     }
@@ -54,10 +92,20 @@ namespace XSD {
 
     public void SetChild(dynamic linkedNode)
     {
+      if(linkedNode is XSD.Ntype__entity.containers containers)
+      {
+        this.containers = containers;
+      }
+
     }
 
     public void ClearChild(dynamic linkedNode)
     {
+      if(linkedNode is XSD.Ntype__entity.containers)
+      {
+        this.containers = null;
+      }
+
     }
 
     public Action OnSelfChange(Action<type__entity> callback)
@@ -91,6 +139,7 @@ namespace XSD {
       }
 
       //Deserialize children
+      containers = rawNode.InitializeWithRawNode("containers", containers);
       NotifyChange();
     }
 
@@ -103,6 +152,9 @@ namespace XSD {
       }
 
       //Serialize children
+      if(containers != null) {
+        rawNode.children["containers"] = new List<RawNode> { containers.SerializeIntoRawNode() };
+      }
       return rawNode;
     }
 
@@ -129,6 +181,13 @@ namespace XSD {
       {
         xpath = xpath.Substring(1);
       }
+      if(xpath.StartsWith(XSD.Ntype__entity.containers.TagName))
+      {
+        this.containers ??= new XSD.Ntype__entity.containers();
+        var childXPath = xpath.Substring(XSD.Ntype__entity.containers.TagName.Length + 3);
+        this.containers.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
 
       Deserialize(rawNode);
     }
@@ -150,11 +209,15 @@ namespace XSD {
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
+      if(linkedNode is XSD.Ntype__entity.containers casted_containers) {
+        return 0;
+      }
       return null;
     }
 
     public bool IsValidChildType(ILinkedNode candidateChild) {
-      return false;
+      return candidateChild is XSD.Ntype__entity.containers
+      || false;
     }
 
     public bool Equals(type__entity? obj)
@@ -163,7 +226,7 @@ namespace XSD {
             return false;
 
         var other = (type__entity)obj;
-        return Equals(entity_rule_ref, other.entity_rule_ref);
+        return Equals(entity_rule_ref, other.entity_rule_ref) && Equals(containers, other.containers);
     }
 
     public override int GetHashCode()
@@ -171,6 +234,7 @@ namespace XSD {
         var acc = 0;
 
         acc = HashCode.Combine(acc, entity_rule_ref);
+        acc = HashCode.Combine(acc, containers);
         return acc;
     }
   }

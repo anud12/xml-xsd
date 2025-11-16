@@ -9,6 +9,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.PropertyInstance;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
+import ro.anud.xml_xsd.implementation.service.entity.repository.EntityRuleRepository;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -30,6 +31,7 @@ public class RuleRepository {
     public final ZoneRuleRepository zoneRule;
     public final RegionRuleRepository regionRule;
     public final PortalRepository portalRule;
+    public final EntityRuleRepository entityRule;
     private PropertyInstance propertyInstance;
 
 
@@ -42,7 +44,9 @@ public class RuleRepository {
             this.zoneRule = new ZoneRuleRepository(worldStepInstance);
             this.regionRule = new RegionRuleRepository(worldStepInstance);
             this.portalRule = new PortalRepository(worldStepInstance);
+            entityRule = new EntityRuleRepository(worldStepInstance);
         }
+        ;
     }
     public RuleRepository index() {
         try (var scope = logScope()){
@@ -55,6 +59,7 @@ public class RuleRepository {
             zoneRule.index(ruleGroups);
             regionRule.index(ruleGroups);
             portalRule.index();
+            entityRule.index();
 
             var actionRule = ruleGroups
                 .stream()

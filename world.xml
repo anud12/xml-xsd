@@ -114,7 +114,11 @@
   <rule_group id="default">
     
     <entity_rule>
-      <entry name="attribute"/>
+      <entry name="attribute">
+        <containers>
+          <container container_rule_ref="container"/>
+        </containers>
+      </entry>
       <entry name=""/>
     </entity_rule>
     <!--_-->

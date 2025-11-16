@@ -9,22 +9,9 @@ using XSD;
 
 namespace XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry {}
 namespace XSD {
-  public interface Itype__entity_rule {
-    //Attributes
-    public System.String name { get; set; }
-
-    //Children elements
-
-    public void Deserialize (RawNode rawNode);
-
-    public RawNode SerializeIntoRawNode();
-
-    public void Serialize(XmlElement element);
-
-  }
 }
 namespace XSD.Nworld_step.Nrule_group.Nentity_rule {
-  public class entry : IEquatable<entry>, XSD.ILinkedNode , Itype__entity_rule {
+  public class entry : IEquatable<entry>, XSD.ILinkedNode  {
 
     public static string ClassTypeId = ".world_step.rule_group.entity_rule.entry";
     public static string TagName = "entry";
@@ -38,15 +25,48 @@ namespace XSD.Nworld_step.Nrule_group.Nentity_rule {
     private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
-
-    //Attributes of type__entity_rule
     private System.String _name;
     public System.String name { get => _name; set => _name = value; }
 
     //Children elements
+    private XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.containers? _containers = null;
+    public XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.containers containersOrCreate
+    {
+      get
+      {
+        if(_containers == null)
+        {
+          _containers = new();
+          _containers.ParentNode = this;
+          NotifyChange();
+        }
+        return _containers;
+      }
+      set
+      {
+        _containers = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
 
-    //Children of type__entity_rule
-
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.containers? containers
+    {
+      get
+      {
+        return _containers;
+      }
+      set
+      {
+        _containers = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
     public entry()
     {
     }
@@ -64,14 +84,28 @@ namespace XSD.Nworld_step.Nrule_group.Nentity_rule {
 
     public void SetAttribute(string name, string? value)
     {
+      if(name == "name")
+      {
+        Set_name(value);
+      }
     }
 
     public void SetChild(dynamic linkedNode)
     {
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.containers containers)
+      {
+        this.containers = containers;
+      }
+
     }
 
     public void ClearChild(dynamic linkedNode)
     {
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.containers)
+      {
+        this.containers = null;
+      }
+
     }
 
     public Action OnSelfChange(Action<entry> callback)
@@ -98,35 +132,29 @@ namespace XSD.Nworld_step.Nrule_group.Nentity_rule {
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing entry");
       //Deserialize arguments
-
-      // Deserialize arguments of type__entity_rule
-  if(rawNode.attributes.ContainsKey("name"))
-  {
-    var attribute_name = rawNode.attributes["name"];
-    this.name = rawNode.attributes["name"];
-  }
+      if(rawNode.attributes.ContainsKey("name"))
+      {
+        var attribute_name = rawNode.attributes["name"];
+        this.name = rawNode.attributes["name"];
+      }
 
       //Deserialize children
-
-      // Deserialize children of type__entity_rule
-
+      containers = rawNode.InitializeWithRawNode("containers", containers);
       NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-
-      // Serialize arguments of type__entity_rule
-  if(this._name != null)
-  {
-    rawNode.attributes["name"] = this._name.ToString();
-  }
+      if(this._name != null)
+      {
+        rawNode.attributes["name"] = this._name.ToString();
+      }
 
       //Serialize children
-
-      // Serialize children of type__entity_rule
-
+      if(containers != null) {
+        rawNode.children["containers"] = new List<RawNode> { containers.SerializeIntoRawNode() };
+      }
       return rawNode;
     }
 
@@ -153,6 +181,13 @@ namespace XSD.Nworld_step.Nrule_group.Nentity_rule {
       {
         xpath = xpath.Substring(1);
       }
+      if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.containers.TagName))
+      {
+        this.containers ??= new XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.containers();
+        var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.containers.TagName.Length + 3);
+        this.containers.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
 
       Deserialize(rawNode);
     }
@@ -174,25 +209,33 @@ namespace XSD.Nworld_step.Nrule_group.Nentity_rule {
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.containers casted_containers) {
+        return 0;
+      }
       return null;
     }
 
     public bool IsValidChildType(ILinkedNode candidateChild) {
-      return false;
+      return candidateChild is XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.containers
+      || false;
     }
 
-        public bool Equals(entry? obj)
-        {
-            if (obj == null || GetType() != obj.GetType())
-                return false;
-
-            var other = (entry)obj;
-            return object.Equals(this, other);
-        }
-
-    public int GetHashCode()
+    public bool Equals(entry? obj)
     {
-        return base.GetHashCode();
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (entry)obj;
+        return Equals(name, other.name) && Equals(containers, other.containers);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, name);
+        acc = HashCode.Combine(acc, containers);
+        return acc;
     }
   }
 }

@@ -22,7 +22,8 @@ public class AtrributeValidator {
             new NodeRuleRefValidator(),
             new NodeIdRefValidator(),
             new LocationGraphIdRefValidator(),
-            new EntityRuleRefValidator()
+            new EntityRuleRefValidator(),
+            new ContainerRuleRefValidator()
             );
 
     public List<AttributeValidator.InvalidAttribute> validate(Optional<WorldStep> worldStep) {

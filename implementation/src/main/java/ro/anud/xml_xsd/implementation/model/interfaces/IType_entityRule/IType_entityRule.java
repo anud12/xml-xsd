@@ -7,7 +7,9 @@ public interface IType_entityRule<T> extends ro.anud.xml_xsd.implementation.util
   T setName(String value);
 
   //Children elements
-
+  java.util.Optional<ro.anud.xml_xsd.implementation.model.Type_entityRule.Containers.Containers> getContainers();
+  java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_entityRule.Containers.Containers> streamContainers();
+  T setContainers(ro.anud.xml_xsd.implementation.model.Type_entityRule.Containers.Containers value);
   void deserialize (ro.anud.xml_xsd.implementation.util.RawNode rawNode);
 
   ro.anud.xml_xsd.implementation.util.RawNode serializeIntoRawNode();
@@ -20,9 +22,6 @@ public interface IType_entityRule<T> extends ro.anud.xml_xsd.implementation.util
     "type": "element",
     "value": {
       "metaType": "object",
-      "value": {},
-      "isSingle": true,
-      "isNullable": false,
       "attributes": {
         "metaType": "object",
         "value": {
@@ -33,6 +32,33 @@ public interface IType_entityRule<T> extends ro.anud.xml_xsd.implementation.util
           }
         },
         "isNullable": false
+      },
+      "isSingle": true,
+      "value": {
+        "containers": {
+          "metaType": "object",
+          "isSingle": true,
+          "value": {
+            "container": {
+              "metaType": "object",
+              "value": {},
+              "isSingle": false,
+              "isNullable": true,
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "container_rule_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string",
+                    "isNullable": false
+                  }
+                },
+                "isNullable": false
+              }
+            }
+          },
+          "isNullable": true
+        }
       }
     },
     "name": "type__entity_rule"

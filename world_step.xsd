@@ -2,11 +2,20 @@
 
 
   <xs:complexType name="type__entity">
+    <xs:all>
+      <xs:element name="containers" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="container" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:attribute name="container_rule_ref" use="required" type="xs:string"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:all>
     <xs:attribute name="entity_rule_ref" type="xs:string"/>
-  </xs:complexType>
-
-  <xs:complexType name="type__entity_rule">
-    <xs:attribute name="name" type="xs:string" use="required"/>
   </xs:complexType>
 
 
@@ -803,9 +812,32 @@
                   <xs:sequence>
                     <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
-                        <xs:complexContent>
-                          <xs:extension base="type__entity_rule"/>
-                        </xs:complexContent>
+                        <xs:sequence>
+                          <xs:element name="containers" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="container" minOccurs="0" maxOccurs="unbounded">
+                                  <xs:complexType>
+                                    <xs:attribute name="container_rule_ref" use="required" type="xs:string"/>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="name" type="xs:string" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+              <xs:element name="container_rule" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:attribute name="name" type="xs:string" use="required"/>
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>

@@ -69,6 +69,8 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     //Children elements
 
     //Children of type__entity
+    @Builder.Default
+    private Optional<ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers> containers = Optional.empty();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -179,7 +181,7 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           //Deserialize children
 
           // Deserialize children of type__entity
-
+          this.containers = ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers.fromRawNode(rawNode.getChildrenFirst("containers"), this);
         }
 
         if(isDirty) {
@@ -207,7 +209,8 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           //Serialize children
 
           // Serialize children of type__entity
-
+          innerLogger.log("containers");
+          rawNode.setChildren("containers", containers.stream().map(ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers::serializeIntoRawNode).toList());
           return rawNode;
         }
       }
@@ -226,6 +229,34 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public Entity setEntityRuleRef(Optional<String> value)
     {
       this.entityRuleRef = value;
+      notifyChange();
+      return this;
+    }
+    public Optional<ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers> getContainers()
+    {
+      return this.containers;
+    }
+    public ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers getContainersOrDefault()
+    {
+      return this.containers.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers();
+        this.containers = Optional.of(instance);
+        instance.parentNode(this);
+        return this.containers.get();
+      });
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers> streamContainersOrDefault()
+    {
+      return java.util.stream.Stream.of(getContainersOrDefault());
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers> streamContainers()
+    {
+      return containers.stream();
+    }
+    public Entity setContainers(ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers value)
+    {
+      this.containers = Optional.ofNullable(value);
+      value.parentNode(this);
       notifyChange();
       return this;
     }
