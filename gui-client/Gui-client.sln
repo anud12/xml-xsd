@@ -1,12 +1,15 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gui-client", "Gui-client.csproj", "{1BF89E9E-FCC2-4803-A73B-3AD36783E4D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-	Debug|Any CPU = Debug|Any CPU
-	ExportDebug|Any CPU = ExportDebug|Any CPU
-	ExportRelease|Any CPU = ExportRelease|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		ExportDebug|Any CPU = ExportDebug|Any CPU
+		ExportRelease|Any CPU = ExportRelease|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{1BF89E9E-FCC2-4803-A73B-3AD36783E4D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -15,5 +18,11 @@ Global
 		{1BF89E9E-FCC2-4803-A73B-3AD36783E4D8}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
 		{1BF89E9E-FCC2-4803-A73B-3AD36783E4D8}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
 		{1BF89E9E-FCC2-4803-A73B-3AD36783E4D8}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FBAAE0C3-E1B1-4809-B120-5DF56EC5605D}
 	EndGlobalSection
 EndGlobal

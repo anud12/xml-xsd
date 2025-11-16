@@ -10,9 +10,7 @@ import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
   @EqualsAndHashCode
   @ToString
@@ -22,33 +20,44 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class DoElement implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/world_step/actions/by/do";
-
-    public static DoElement fromRawNode(RawNode rawNode) {
-      logEnter();
-      var instance = new DoElement();
-      instance.rawNode(rawNode);
-      instance.deserialize(rawNode);
-      return logReturn(instance);
-    }
+    public static String nodeName = "do";
     public static DoElement fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-      logEnter();
-      var instance = fromRawNode(rawNode);
-      instance.parentNode(parent);
-      return logReturn(instance);
+      try (var logger = logScope()) {
+        var instance = new DoElement();
+        if(Objects.nonNull(parent)) {
+          instance.parentNode(parent);
+        }
+        instance.rawNode(rawNode);
+        instance.deserialize(rawNode);
+        return logger.logReturn(instance);
+      }
+
+    }
+    public static DoElement fromRawNode(RawNode rawNode) {
+      try (var logger = logScope()) {
+        var instance = fromRawNode(rawNode, null);
+        return logger.logReturn(instance);
+      }
     }
     public static Optional<DoElement> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-        logEnter();
-        return logReturn(rawNode.map(o -> DoElement.fromRawNode(o, parent)));
+        try(var logger = logScope()) {
+          return logger.logReturn(rawNode.map(o -> DoElement.fromRawNode(o, parent)));
+        }
+
     }
     public static List<DoElement> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-      logEnter();
-      List<DoElement> returnList = Optional.ofNullable(rawNodeList)
-          .orElse(List.of())
-          .stream()
-          .map(o -> DoElement.fromRawNode(o, parent))
-          .collect(Collectors.toList());
-      return logReturn(returnList);
+      try (var logger = logScope()) {
+        List<DoElement> returnList = Optional.ofNullable(rawNodeList)
+            .orElse(List.of())
+            .stream()
+            .map(o -> DoElement.fromRawNode(o, parent))
+            .collect(Collectors.toList());
+        return logger.logReturn(returnList);
+      }
+    }
+
+    public String classTypeId() {
+      return ".world_step.actions.by.do";
     }
 
     //Attributes
@@ -85,34 +94,46 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     @Builder.Default
-    private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
+    private List<ro.anud.xml_xsd.implementation.util.ChangeCallback<DoElement>> onChangeList = new ArrayList<>();
+    @Builder.Default
+    private List<ro.anud.xml_xsd.implementation.util.RemoveCallback<DoElement>> onRemoveList = new ArrayList<>();
 
     public String nodeName() {
       return "do";
     }
-
-    public void childChanged(Set<Object> set) {
-      set.add(this);
-      onChangeList.forEach(consumer -> consumer.accept(set));
-      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(set));
+    public static DoElement of() {
+      return new DoElement();
     }
 
-    private void triggerOnChange() {
-      childChanged(new HashSet<>());
+    public void notifyChange(ro.anud.xml_xsd.implementation.util.LinkedNode object) {
+      try (var logger = logScope()) {
+        logger.log("Notify change for", this.buildPath());
+        onChangeList.forEach(consumer -> consumer.onChange(object, this));
+        parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(object));
+      }
+    }
+
+    public void notifyRemove(ro.anud.xml_xsd.implementation.util.LinkedNode object) {
+      try (var logger = logScope()) {
+        logger.log("Notify remove for", this.buildPath());
+        onRemoveList.forEach(consumer -> consumer.onRemove(object, this));
+        parentNode.ifPresent(linkedNode -> linkedNode.notifyRemove(object));
+      }
     }
 
     public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+      this.parentNode.ifPresent(parent -> notifyRemove());
       this.parentNode = Optional.of(linkedNode);
-      triggerOnChange();
+      notifyChange();
     }
 
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.By> parentAsBy() {
       return parentNode.flatMap(node -> {
-       if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.By casted){
-         return Optional.of(casted);
-       }
-       return Optional.empty();
-     });
+        if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.By.By casted){
+          return Optional.of(casted);
+        }
+        return Optional.empty();
+      });
     }
 
     public void removeChild(Object object) {
@@ -126,44 +147,76 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<Set<Object>> onChange) {
-      logEnter();
-      onChangeList.add(onChange);
-      return logReturn(() -> onChangeList.remove(onChange));
+    public Subscription onChange(ro.anud.xml_xsd.implementation.util.ChangeCallback<DoElement> callback) {
+      try (var logger = logScope()) {
+        onChangeList.add(callback);
+        return logger.logReturn(() -> onChangeList.remove(callback));
+      }
+    }
+    public Subscription onRemove(ro.anud.xml_xsd.implementation.util.RemoveCallback<DoElement> callback) {
+      try (var logger = logScope()) {
+        onRemoveList.add(callback);
+        return logger.logReturn(() -> onRemoveList.remove(callback));
+      }
     }
 
     public void deserialize (RawNode rawNode) {
-      var logger = logEnter();
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing do");
-      var innerLogger = logger.log("attributes");
-      //Deserialize attributes
-      innerLogger.log("action_rule_ref");
-      this.actionRuleRef = rawNode.getAttribute("action_rule_ref");
-      innerLogger.log("action_ref");
-      this.actionRef = rawNode.getAttribute("action_ref");
-      innerLogger.log("person_ref");
-      this.personRef = rawNode.getAttributeRequired("person_ref");
-      innerLogger = logger.log("children");
-      //Deserialize children
-      logReturnVoid();
+      try (var logger = logScope()) {
+        this.rawNode = rawNode;
+        var isDirty = false;
+        try (var innerLogger = logScope("attributes")) {
+          //Deserialize attributes
+          innerLogger.log("action_rule_ref");
+          var actionRuleRefValue = rawNode.getAttribute("action_rule_ref");
+          if(Objects.equals(this.actionRuleRef, actionRuleRefValue)) {
+            isDirty = true;
+          }
+          this.actionRuleRef = actionRuleRefValue;
+          innerLogger.log("action_ref");
+          var actionRefValue = rawNode.getAttribute("action_ref");
+          if(Objects.equals(this.actionRef, actionRefValue)) {
+            isDirty = true;
+          }
+          this.actionRef = actionRefValue;
+          innerLogger.log("person_ref");
+          var personRefValue = rawNode.getAttributeRequired("person_ref");
+          if(Objects.equals(this.personRef, personRefValue)) {
+            isDirty = true;
+          }
+          this.personRef = personRefValue;
+        }
+        try (var innerLogger = logScope("children")) {
+          //Deserialize children
+        }
+
+        if(isDirty) {
+          notifyChange();
+        }
+      } catch (Exception e) {
+        throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
+      }
+
     }
 
     public RawNode serializeIntoRawNode()
     {
-      var logger = logEnter();
-      var innerLogger = logger.log("attributes");
-      //Serialize attributes
-      innerLogger.log("action_rule_ref");
-      this.actionRuleRef.ifPresent(o -> rawNode.setAttribute("action_rule_ref", o));
-      innerLogger.log("action_ref");
-      this.actionRef.ifPresent(o -> rawNode.setAttribute("action_ref", o));
-      innerLogger.log("person_ref");
-      rawNode.setAttribute("person_ref", this.personRef);
+      try (var logger = logScope()) {
+        rawNode.setTag("do");
+        try (var innerLogger = logScope("attributes")) {
+          //Serialize attributes
+          innerLogger.log("action_rule_ref");
+          this.actionRuleRef.ifPresent(o -> rawNode.setAttribute("action_rule_ref", o));
+          innerLogger.log("action_ref");
+          this.actionRef.ifPresent(o -> rawNode.setAttribute("action_ref", o));
+          innerLogger.log("person_ref");
+          rawNode.setAttribute("person_ref", this.personRef);
+        }
+        try (var innerLogger = logScope("children")) {
 
-      innerLogger = logger.log("children");
-      //Serialize children
-      return rawNode;
+          //Serialize children
+          return rawNode;
+        }
+      }
     }
 
     public void serialize(Document document, Element element)
@@ -180,7 +233,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public DoElement setActionRuleRef(Optional<String> value)
     {
       this.actionRuleRef = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Optional<String> getActionRef()
@@ -190,7 +243,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public DoElement setActionRef(Optional<String> value)
     {
       this.actionRef = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public String getPersonRef()
@@ -200,11 +253,29 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public DoElement setPersonRef(String value)
     {
       this.personRef = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
 
+    public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+
+        deserialize(rawNode);
+        return this;
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getNodeAtPath(String xpath) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+        return Optional.of(this);
+    }
   }
+
 
   /*
     dependant type:

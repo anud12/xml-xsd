@@ -10,9 +10,7 @@ import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
   @EqualsAndHashCode
   @ToString
@@ -22,33 +20,44 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class ToOption implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/type__link_group/to_option";
-
-    public static ToOption fromRawNode(RawNode rawNode) {
-      logEnter();
-      var instance = new ToOption();
-      instance.rawNode(rawNode);
-      instance.deserialize(rawNode);
-      return logReturn(instance);
-    }
+    public static String nodeName = "to_option";
     public static ToOption fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-      logEnter();
-      var instance = fromRawNode(rawNode);
-      instance.parentNode(parent);
-      return logReturn(instance);
+      try (var logger = logScope()) {
+        var instance = new ToOption();
+        if(Objects.nonNull(parent)) {
+          instance.parentNode(parent);
+        }
+        instance.rawNode(rawNode);
+        instance.deserialize(rawNode);
+        return logger.logReturn(instance);
+      }
+
+    }
+    public static ToOption fromRawNode(RawNode rawNode) {
+      try (var logger = logScope()) {
+        var instance = fromRawNode(rawNode, null);
+        return logger.logReturn(instance);
+      }
     }
     public static Optional<ToOption> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-        logEnter();
-        return logReturn(rawNode.map(o -> ToOption.fromRawNode(o, parent)));
+        try(var logger = logScope()) {
+          return logger.logReturn(rawNode.map(o -> ToOption.fromRawNode(o, parent)));
+        }
+
     }
     public static List<ToOption> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-      logEnter();
-      List<ToOption> returnList = Optional.ofNullable(rawNodeList)
-          .orElse(List.of())
-          .stream()
-          .map(o -> ToOption.fromRawNode(o, parent))
-          .collect(Collectors.toList());
-      return logReturn(returnList);
+      try (var logger = logScope()) {
+        List<ToOption> returnList = Optional.ofNullable(rawNodeList)
+            .orElse(List.of())
+            .stream()
+            .map(o -> ToOption.fromRawNode(o, parent))
+            .collect(Collectors.toList());
+        return logger.logReturn(returnList);
+      }
+    }
+
+    public String classTypeId() {
+      return ".type__link_group.to_option";
     }
 
     //Attributes
@@ -91,42 +100,56 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     @Builder.Default
-    private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
+    private List<ro.anud.xml_xsd.implementation.util.ChangeCallback<ToOption>> onChangeList = new ArrayList<>();
+    @Builder.Default
+    private List<ro.anud.xml_xsd.implementation.util.RemoveCallback<ToOption>> onRemoveList = new ArrayList<>();
 
     public String nodeName() {
       return "to_option";
     }
-
-    public void childChanged(Set<Object> set) {
-      set.add(this);
-      onChangeList.forEach(consumer -> consumer.accept(set));
-      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(set));
+    public static ToOption of() {
+      return new ToOption();
     }
 
-    private void triggerOnChange() {
-      childChanged(new HashSet<>());
+    public void notifyChange(ro.anud.xml_xsd.implementation.util.LinkedNode object) {
+      try (var logger = logScope()) {
+        logger.log("Notify change for", this.buildPath());
+        onChangeList.forEach(consumer -> consumer.onChange(object, this));
+        parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(object));
+      }
+    }
+
+    public void notifyRemove(ro.anud.xml_xsd.implementation.util.LinkedNode object) {
+      try (var logger = logScope()) {
+        logger.log("Notify remove for", this.buildPath());
+        onRemoveList.forEach(consumer -> consumer.onRemove(object, this));
+        parentNode.ifPresent(linkedNode -> linkedNode.notifyRemove(object));
+      }
     }
 
     public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+      this.parentNode.ifPresent(parent -> notifyRemove());
       this.parentNode = Optional.of(linkedNode);
-      triggerOnChange();
+      notifyChange();
     }
 
     public Optional<ro.anud.xml_xsd.implementation.model.Type_linkGroup.Type_linkGroup> parentAsType_linkGroup() {
       return parentNode.flatMap(node -> {
-       if (node instanceof ro.anud.xml_xsd.implementation.model.Type_linkGroup.Type_linkGroup casted){
-         return Optional.of(casted);
-       }
-       return Optional.empty();
-     });
+        if (node instanceof ro.anud.xml_xsd.implementation.model.Type_linkGroup.Type_linkGroup casted){
+          return Optional.of(casted);
+        }
+        return Optional.empty();
+      });
     }
 
     public void removeChild(Object object) {
         if(object instanceof ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations) {
           this.distanceToProgressMultiplier = Optional.empty();
+          notifyChange();
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations) {
           this.personProgressProperty = Optional.empty();
+          notifyChange();
         }
     }
 
@@ -144,56 +167,92 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<Set<Object>> onChange) {
-      logEnter();
-      onChangeList.add(onChange);
-      return logReturn(() -> onChangeList.remove(onChange));
+    public Subscription onChange(ro.anud.xml_xsd.implementation.util.ChangeCallback<ToOption> callback) {
+      try (var logger = logScope()) {
+        onChangeList.add(callback);
+        return logger.logReturn(() -> onChangeList.remove(callback));
+      }
+    }
+    public Subscription onRemove(ro.anud.xml_xsd.implementation.util.RemoveCallback<ToOption> callback) {
+      try (var logger = logScope()) {
+        onRemoveList.add(callback);
+        return logger.logReturn(() -> onRemoveList.remove(callback));
+      }
     }
 
     public void deserialize (RawNode rawNode) {
-      var logger = logEnter();
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing to_option");
-      var innerLogger = logger.log("attributes");
-      //Deserialize attributes
-      innerLogger.log("node_rule_ref");
-      this.nodeRuleRef = rawNode.getAttributeRequired("node_rule_ref");
-      innerLogger.log("distance");
-      this.distance = rawNode.getAttributeIntRequired("distance");
-      innerLogger.log("maxDistance");
-      this.maxDistance = rawNode.getAttributeInt("maxDistance");
-      innerLogger.log("adjacent_depth_limit");
-      this.adjacentDepthLimit = rawNode.getAttributeIntRequired("adjacent_depth_limit");
-      innerLogger = logger.log("children");
-      //Deserialize children
-      innerLogger.log("distance_to_progress_multiplier");
-      this.distanceToProgressMultiplier = ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.fromRawNode(rawNode.getChildrenFirst("distance_to_progress_multiplier"), this);
-      innerLogger.log("person_progress_property");
-      this.personProgressProperty = ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.fromRawNode(rawNode.getChildrenFirst("person_progress_property"), this);
-      logReturnVoid();
+      try (var logger = logScope()) {
+        this.rawNode = rawNode;
+        var isDirty = false;
+        try (var innerLogger = logScope("attributes")) {
+          //Deserialize attributes
+          innerLogger.log("node_rule_ref");
+          var nodeRuleRefValue = rawNode.getAttributeRequired("node_rule_ref");
+          if(Objects.equals(this.nodeRuleRef, nodeRuleRefValue)) {
+            isDirty = true;
+          }
+          this.nodeRuleRef = nodeRuleRefValue;
+          innerLogger.log("distance");
+          var distanceValue = rawNode.getAttributeIntRequired("distance");
+          if(Objects.equals(this.distance, distanceValue)) {
+            isDirty = true;
+          }
+          this.distance = distanceValue;
+          innerLogger.log("maxDistance");
+          var maxDistanceValue = rawNode.getAttributeInt("maxDistance");
+          if(Objects.equals(this.maxDistance, maxDistanceValue)) {
+            isDirty = true;
+          }
+          this.maxDistance = maxDistanceValue;
+          innerLogger.log("adjacent_depth_limit");
+          var adjacentDepthLimitValue = rawNode.getAttributeIntRequired("adjacent_depth_limit");
+          if(Objects.equals(this.adjacentDepthLimit, adjacentDepthLimitValue)) {
+            isDirty = true;
+          }
+          this.adjacentDepthLimit = adjacentDepthLimitValue;
+        }
+        try (var innerLogger = logScope("children")) {
+          //Deserialize children
+          innerLogger.log("distance_to_progress_multiplier");
+          this.distanceToProgressMultiplier = ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.fromRawNode(rawNode.getChildrenFirst("distance_to_progress_multiplier"), this);
+          innerLogger.log("person_progress_property");
+          this.personProgressProperty = ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.fromRawNode(rawNode.getChildrenFirst("person_progress_property"), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
+        }
+      } catch (Exception e) {
+        throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
+      }
+
     }
 
     public RawNode serializeIntoRawNode()
     {
-      var logger = logEnter();
-      var innerLogger = logger.log("attributes");
-      //Serialize attributes
-      innerLogger.log("node_rule_ref");
-      rawNode.setAttribute("node_rule_ref", this.nodeRuleRef);
-      innerLogger.log("distance");
-      rawNode.setAttribute("distance", this.distance);
-      innerLogger.log("maxDistance");
-      this.maxDistance.ifPresent(o -> rawNode.setAttribute("maxDistance", o));
-      innerLogger.log("adjacent_depth_limit");
-      rawNode.setAttribute("adjacent_depth_limit", this.adjacentDepthLimit);
+      try (var logger = logScope()) {
+        rawNode.setTag("to_option");
+        try (var innerLogger = logScope("attributes")) {
+          //Serialize attributes
+          innerLogger.log("node_rule_ref");
+          rawNode.setAttribute("node_rule_ref", this.nodeRuleRef);
+          innerLogger.log("distance");
+          rawNode.setAttribute("distance", this.distance);
+          innerLogger.log("maxDistance");
+          this.maxDistance.ifPresent(o -> rawNode.setAttribute("maxDistance", o));
+          innerLogger.log("adjacent_depth_limit");
+          rawNode.setAttribute("adjacent_depth_limit", this.adjacentDepthLimit);
+        }
+        try (var innerLogger = logScope("children")) {
 
-      innerLogger = logger.log("children");
-      //Serialize children
-      innerLogger.log("distance_to_progress_multiplier");
-      rawNode.setChildren("distance_to_progress_multiplier", distanceToProgressMultiplier.stream().map(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations::serializeIntoRawNode).toList());
-      innerLogger.log("person_progress_property");
-      rawNode.setChildren("person_progress_property", personProgressProperty.stream().map(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations::serializeIntoRawNode).toList());
-      return rawNode;
+          //Serialize children
+          innerLogger.log("distance_to_progress_multiplier");
+          rawNode.setChildren("distance_to_progress_multiplier", distanceToProgressMultiplier.stream().map(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations::serializeIntoRawNode).toList());
+          innerLogger.log("person_progress_property");
+          rawNode.setChildren("person_progress_property", personProgressProperty.stream().map(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations::serializeIntoRawNode).toList());
+          return rawNode;
+        }
+      }
     }
 
     public void serialize(Document document, Element element)
@@ -210,7 +269,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public ToOption setNodeRuleRef(String value)
     {
       this.nodeRuleRef = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Integer getDistance()
@@ -220,7 +279,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public ToOption setDistance(Integer value)
     {
       this.distance = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Optional<Integer> getMaxDistance()
@@ -230,7 +289,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public ToOption setMaxDistance(Optional<Integer> value)
     {
       this.maxDistance = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Integer getAdjacentDepthLimit()
@@ -240,7 +299,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public ToOption setAdjacentDepthLimit(Integer value)
     {
       this.adjacentDepthLimit = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Optional<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> getDistanceToProgressMultiplier()
@@ -251,8 +310,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.distanceToProgressMultiplier.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
-        instance.parentNode(this);
         this.distanceToProgressMultiplier = Optional.of(instance);
+        instance.parentNode(this);
         return this.distanceToProgressMultiplier.get();
       });
     }
@@ -268,7 +327,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.distanceToProgressMultiplier = Optional.ofNullable(value);
       value.parentNode(this);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
 
@@ -280,8 +339,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.personProgressProperty.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
-        instance.parentNode(this);
         this.personProgressProperty = Optional.of(instance);
+        instance.parentNode(this);
         return this.personProgressProperty.get();
       });
     }
@@ -297,11 +356,61 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.personProgressProperty = Optional.ofNullable(value);
       value.parentNode(this);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
 
+    public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName))
+        {
+          if(this.distanceToProgressMultiplier.isEmpty()) {
+            this.distanceToProgressMultiplier = Optional.of(new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName.length() + 3);
+          return this.distanceToProgressMultiplier.get().deserializeAtPath(childXPath, rawNode);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName))
+        {
+          if(this.personProgressProperty.isEmpty()) {
+            this.personProgressProperty = Optional.of(new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName.length() + 3);
+          return this.personProgressProperty.get().deserializeAtPath(childXPath, rawNode);
+        }
+
+        deserialize(rawNode);
+        return this;
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getNodeAtPath(String xpath) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName))
+        {
+          if(this.distanceToProgressMultiplier.isEmpty()) {
+            this.distanceToProgressMultiplier = Optional.of(new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName.length() + 3);
+          return this.distanceToProgressMultiplier.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName))
+        {
+          if(this.personProgressProperty.isEmpty()) {
+            this.personProgressProperty = Optional.of(new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName.length() + 3);
+          return this.personProgressProperty.get().getNodeAtPath(childXPath);
+        }
+        return Optional.of(this);
+    }
   }
+
 
   /*
     dependant type:

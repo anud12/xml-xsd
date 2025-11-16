@@ -7,43 +7,48 @@ import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class CalculateName {
     public static Optional<String> calculateNameFromRefString(WorldStepInstance worldStepInstance, String ref) {
-        var logger = logEnter();
-        return logger.logReturn(worldStepInstance.name
-            .repository
-            .getNameTokenById(ref)
-            .flatMap(iTypeNameToken -> calculateNameFromChildren(worldStepInstance, iTypeNameToken))
-        );
+        try (var scope = logScope()){
+            return scope.logReturn(worldStepInstance.name
+                    .repository
+                    .getNameTokenById(ref)
+                    .flatMap(iTypeNameToken -> calculateNameFromChildren(worldStepInstance, iTypeNameToken))
+            );
+        }
+
     }
 
     private static Optional<String> calculateNameFromChildren(WorldStepInstance worldStepInstance, Entry rule) {
-        var logger = logEnter();
-        var result = rule.streamNameToken().map(nameToken -> {
-            return calculateChildren(worldStepInstance, nameToken);
-        }).collect(Collectors.joining(""));
+        try (var scope = logScope()){
+            var result = rule.streamNameToken()
+                    .map(nameToken -> calculateChildren(worldStepInstance, nameToken))
+                    .collect(Collectors.joining(""));
 
-        return logger.logReturn(Optional.of(result));
+            return scope.logReturn(Optional.of(result));
+        }
     }
 
     private static String calculateChildren(final WorldStepInstance worldStepInstance, final NameToken nameToken) {
-        var logger = logEnter();
-        var value = nameToken.getPrefix();
-        var refResult = nameToken.get_ref()
-            .flatMap(ref -> calculateNameFromRefString(worldStepInstance, ref.getNameRuleRef()))
-            .orElse("");
-        logger.log("refResult", refResult);
-        var nameResult = nameToken.getOneOf().flatMap(groupNameToken -> {
-            var nameTokenList = groupNameToken.getNameToken();
-            return worldStepInstance.randomFrom(nameTokenList).map(nameToken1 -> calculateChildren(
-                worldStepInstance,
-                nameToken1));
-        }).orElse("");
-        logger.log("nameResult", nameResult);
-        value += refResult;
-        value += nameResult;
-        return logger.logReturn(value);
+        try (var scope = logScope()){
+            var value = nameToken.getPrefix();
+            var refResult = nameToken.get_ref()
+                    .flatMap(ref -> calculateNameFromRefString(worldStepInstance, ref.getNameRuleRef()))
+                    .orElse("");
+            scope.log("refResult", refResult);
+            var nameResult = nameToken.getOneOf().flatMap(groupNameToken -> {
+                var nameTokenList = groupNameToken.getNameToken();
+                return worldStepInstance.randomFrom(nameTokenList).map(nameToken1 -> calculateChildren(
+                        worldStepInstance,
+                        nameToken1));
+            }).orElse("");
+            scope.log("nameResult", nameResult);
+            value += refResult;
+            value += nameResult;
+            return scope.logReturn(value);
+
+        }
     }
 }

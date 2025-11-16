@@ -10,9 +10,7 @@ import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
   @EqualsAndHashCode
   @ToString
@@ -22,33 +20,44 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class ExistingPerson implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/world_step/rule_group/location_graph_rule/node_rule/existing_person";
-
-    public static ExistingPerson fromRawNode(RawNode rawNode) {
-      logEnter();
-      var instance = new ExistingPerson();
-      instance.rawNode(rawNode);
-      instance.deserialize(rawNode);
-      return logReturn(instance);
-    }
+    public static String nodeName = "existing_person";
     public static ExistingPerson fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-      logEnter();
-      var instance = fromRawNode(rawNode);
-      instance.parentNode(parent);
-      return logReturn(instance);
+      try (var logger = logScope()) {
+        var instance = new ExistingPerson();
+        if(Objects.nonNull(parent)) {
+          instance.parentNode(parent);
+        }
+        instance.rawNode(rawNode);
+        instance.deserialize(rawNode);
+        return logger.logReturn(instance);
+      }
+
+    }
+    public static ExistingPerson fromRawNode(RawNode rawNode) {
+      try (var logger = logScope()) {
+        var instance = fromRawNode(rawNode, null);
+        return logger.logReturn(instance);
+      }
     }
     public static Optional<ExistingPerson> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-        logEnter();
-        return logReturn(rawNode.map(o -> ExistingPerson.fromRawNode(o, parent)));
+        try(var logger = logScope()) {
+          return logger.logReturn(rawNode.map(o -> ExistingPerson.fromRawNode(o, parent)));
+        }
+
     }
     public static List<ExistingPerson> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-      logEnter();
-      List<ExistingPerson> returnList = Optional.ofNullable(rawNodeList)
-          .orElse(List.of())
-          .stream()
-          .map(o -> ExistingPerson.fromRawNode(o, parent))
-          .collect(Collectors.toList());
-      return logReturn(returnList);
+      try (var logger = logScope()) {
+        List<ExistingPerson> returnList = Optional.ofNullable(rawNodeList)
+            .orElse(List.of())
+            .stream()
+            .map(o -> ExistingPerson.fromRawNode(o, parent))
+            .collect(Collectors.toList());
+        return logger.logReturn(returnList);
+      }
+    }
+
+    public String classTypeId() {
+      return ".world_step.rule_group.location_graph_rule.node_rule.existing_person";
     }
 
     //Attributes
@@ -85,34 +94,46 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     @Builder.Default
-    private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
+    private List<ro.anud.xml_xsd.implementation.util.ChangeCallback<ExistingPerson>> onChangeList = new ArrayList<>();
+    @Builder.Default
+    private List<ro.anud.xml_xsd.implementation.util.RemoveCallback<ExistingPerson>> onRemoveList = new ArrayList<>();
 
     public String nodeName() {
       return "existing_person";
     }
-
-    public void childChanged(Set<Object> set) {
-      set.add(this);
-      onChangeList.forEach(consumer -> consumer.accept(set));
-      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(set));
+    public static ExistingPerson of() {
+      return new ExistingPerson();
     }
 
-    private void triggerOnChange() {
-      childChanged(new HashSet<>());
+    public void notifyChange(ro.anud.xml_xsd.implementation.util.LinkedNode object) {
+      try (var logger = logScope()) {
+        logger.log("Notify change for", this.buildPath());
+        onChangeList.forEach(consumer -> consumer.onChange(object, this));
+        parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(object));
+      }
+    }
+
+    public void notifyRemove(ro.anud.xml_xsd.implementation.util.LinkedNode object) {
+      try (var logger = logScope()) {
+        logger.log("Notify remove for", this.buildPath());
+        onRemoveList.forEach(consumer -> consumer.onRemove(object, this));
+        parentNode.ifPresent(linkedNode -> linkedNode.notifyRemove(object));
+      }
     }
 
     public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+      this.parentNode.ifPresent(parent -> notifyRemove());
       this.parentNode = Optional.of(linkedNode);
-      triggerOnChange();
+      notifyChange();
     }
 
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule> parentAsNodeRule() {
       return parentNode.flatMap(node -> {
-       if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule casted){
-         return Optional.of(casted);
-       }
-       return Optional.empty();
-     });
+        if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.NodeRule casted){
+          return Optional.of(casted);
+        }
+        return Optional.empty();
+      });
     }
 
     public void removeChild(Object object) {
@@ -132,44 +153,72 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<Set<Object>> onChange) {
-      logEnter();
-      onChangeList.add(onChange);
-      return logReturn(() -> onChangeList.remove(onChange));
+    public Subscription onChange(ro.anud.xml_xsd.implementation.util.ChangeCallback<ExistingPerson> callback) {
+      try (var logger = logScope()) {
+        onChangeList.add(callback);
+        return logger.logReturn(() -> onChangeList.remove(callback));
+      }
+    }
+    public Subscription onRemove(ro.anud.xml_xsd.implementation.util.RemoveCallback<ExistingPerson> callback) {
+      try (var logger = logScope()) {
+        onRemoveList.add(callback);
+        return logger.logReturn(() -> onRemoveList.remove(callback));
+      }
     }
 
     public void deserialize (RawNode rawNode) {
-      var logger = logEnter();
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing existing_person");
-      var innerLogger = logger.log("attributes");
-      //Deserialize attributes
-      innerLogger.log("min");
-      this.min = rawNode.getAttributeIntRequired("min");
-      innerLogger.log("max");
-      this.max = rawNode.getAttributeInt("max");
-      innerLogger = logger.log("children");
-      //Deserialize children
-      innerLogger.log("person_selection");
-      this.personSelection = ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection.fromRawNode(rawNode.getChildrenFirst("person_selection").get(), this);
-      logReturnVoid();
+      try (var logger = logScope()) {
+        this.rawNode = rawNode;
+        var isDirty = false;
+        try (var innerLogger = logScope("attributes")) {
+          //Deserialize attributes
+          innerLogger.log("min");
+          var minValue = rawNode.getAttributeIntRequired("min");
+          if(Objects.equals(this.min, minValue)) {
+            isDirty = true;
+          }
+          this.min = minValue;
+          innerLogger.log("max");
+          var maxValue = rawNode.getAttributeInt("max");
+          if(Objects.equals(this.max, maxValue)) {
+            isDirty = true;
+          }
+          this.max = maxValue;
+        }
+        try (var innerLogger = logScope("children")) {
+          //Deserialize children
+          innerLogger.log("person_selection");
+          this.personSelection = ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection.fromRawNode(rawNode.getChildrenFirst("person_selection").get(), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
+        }
+      } catch (Exception e) {
+        throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
+      }
+
     }
 
     public RawNode serializeIntoRawNode()
     {
-      var logger = logEnter();
-      var innerLogger = logger.log("attributes");
-      //Serialize attributes
-      innerLogger.log("min");
-      rawNode.setAttribute("min", this.min);
-      innerLogger.log("max");
-      this.max.ifPresent(o -> rawNode.setAttribute("max", o));
+      try (var logger = logScope()) {
+        rawNode.setTag("existing_person");
+        try (var innerLogger = logScope("attributes")) {
+          //Serialize attributes
+          innerLogger.log("min");
+          rawNode.setAttribute("min", this.min);
+          innerLogger.log("max");
+          this.max.ifPresent(o -> rawNode.setAttribute("max", o));
+        }
+        try (var innerLogger = logScope("children")) {
 
-      innerLogger = logger.log("children");
-      //Serialize children
-      innerLogger.log("person_selection");
-      rawNode.setChildren("person_selection", Optional.ofNullable(personSelection).stream().map(ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection::serializeIntoRawNode).toList());
-      return rawNode;
+          //Serialize children
+          innerLogger.log("person_selection");
+          rawNode.setChildren("person_selection", Optional.ofNullable(personSelection).stream().map(ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection::serializeIntoRawNode).toList());
+          return rawNode;
+        }
+      }
     }
 
     public void serialize(Document document, Element element)
@@ -186,7 +235,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public ExistingPerson setMin(Integer value)
     {
       this.min = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Optional<Integer> getMax()
@@ -196,7 +245,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public ExistingPerson setMax(Optional<Integer> value)
     {
       this.max = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection getPersonSelection()
@@ -211,11 +260,39 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.personSelection = value;
       value.parentNode(this);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
 
+    public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection.nodeName))
+        {
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection.nodeName.length() + 3);
+          return this.personSelection.deserializeAtPath(childXPath, rawNode);
+        }
+
+        deserialize(rawNode);
+        return this;
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getNodeAtPath(String xpath) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection.nodeName))
+        {
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_personSelection.Type_personSelection.nodeName.length() + 3);
+          return this.personSelection.getNodeAtPath(childXPath);
+        }
+        return Optional.of(this);
+    }
   }
+
 
   /*
     dependant type:

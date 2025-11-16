@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Xml;
 using System.Xml.Serialization;
+using Guiclient.util;
 
 public partial class WorldStep2 : Godot.Node
 {
@@ -17,8 +18,7 @@ public partial class WorldStep2 : Godot.Node
 	public override void _Ready()
 	{
 		loadWorldStep = new LoadWorldStep(GetNode<Node>("%WorldContainer"));
-		System.Console.WriteLine("Hello, World! 1");
-		GD.Print("Hello, World! 2");
+		Logger.Info("Hello, World! 2");
 		
 		var load = GetNode<Button>("./UI/Load");
 		
@@ -33,7 +33,7 @@ public partial class WorldStep2 : Godot.Node
 		
 		// var worldStep = LoadWorldStep.load(path);
 
-		GD.Print("Loading world step from " + path);
+		Logger.Info("Loading world step from " + path);
 
 		loadWorldStep?.loadFromPath(path);
 	}

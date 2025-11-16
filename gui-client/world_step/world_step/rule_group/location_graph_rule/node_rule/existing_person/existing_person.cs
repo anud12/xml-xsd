@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -8,14 +11,64 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.Nexisting_
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
-  public class existing_person  {
+  public class existing_person : IEquatable<existing_person>, XSD.ILinkedNode  {
+
+    public static string ClassTypeId = ".world_step.rule_group.location_graph_rule.node_rule.existing_person";
+    public static string TagName = "existing_person";
+
+    public string NodeName {get =>"existing_person";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<existing_person>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
+
     //Attributes
-    public System.Int32 min;
-    public System.Int32? max;
+    private System.Int32 _min;
+    public System.Int32 min { get => _min; set => _min = value; }
+    private System.Int32? _max;
+    public System.Int32? max { get => _max; set => _max = value; }
 
     //Children elements
-    public type__person_selection person_selection = new type__person_selection();
+    private type__person_selection _person_selection = new type__person_selection();
+    public type__person_selection person_selectionOrCreate
+    {
+      get
+      {
+        if(_person_selection == null)
+        {
+          _person_selection = new();
+          _person_selection.ParentNode = this;
+          NotifyChange();
+        }
+        return _person_selection;
+      }
+      set
+      {
+        _person_selection = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__person_selection person_selection
+    {
+      get
+      {
+        return _person_selection;
+      }
+      set
+      {
+        _person_selection = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
     public existing_person()
     {
     }
@@ -29,6 +82,55 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
+    }
+
+    public void SetAttribute(string name, string? value)
+    {
+      if(name == "min")
+      {
+        Set_min(value?.ToInt() ?? 0);
+      }
+      if(name == "max")
+      {
+        Set_max(value?.ToInt() ?? 0);
+      }
+    }
+
+    public void SetChild(dynamic linkedNode)
+    {
+      if(linkedNode is type__person_selection person_selection)
+      {
+        this.person_selection = person_selection;
+      }
+
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is type__person_selection)
+      {
+        this.person_selection = new();
+      }
+
+    }
+
+    public Action OnSelfChange(Action<existing_person> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -48,19 +150,20 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
       }
 
       //Deserialize children
-      this.person_selection = rawNode.InitializeWithRawNode("person_selection", this.person_selection);
+      person_selection = rawNode.InitializeWithRawNode("person_selection", person_selection);
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.min != null)
+      if(this._min != null)
       {
-        rawNode.attributes["min"] = this.min.ToString();
+        rawNode.attributes["min"] = this._min.ToString();
       }
-      if(this.max != null)
+      if(this._max != null)
       {
-        rawNode.attributes["max"] = this.max?.ToString();
+        rawNode.attributes["max"] = this._max?.ToString();
       }
 
       //Serialize children
@@ -83,6 +186,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
     public void Set_min(System.Int32 value)
     {
       this.min = value;
+      this.NotifyChange();
     }
     public System.Int32? Get_max()
     {
@@ -91,14 +195,71 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule {
     public void Set_max(System.Int32? value)
     {
       this.max = value;
+      this.NotifyChange();
     }
-    public type__person_selection Get_person_selection()
+
+
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
-      return this.person_selection;
+      if(xpath.StartsWith("."))
+      {
+        xpath = xpath.Substring(1);
+      }
+      if(xpath.StartsWith(type__person_selection.TagName))
+      {
+        var childXPath = xpath.Substring(type__person_selection.TagName.Length + 3);
+        this.person_selection.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
+
+      Deserialize(rawNode);
     }
-    public void Set_person_selection(type__person_selection value)
+
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
-      this.person_selection = value;
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
+    }
+
+    public void NotifyChange()
+    {
+      NotifyChange(new ());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is type__person_selection casted_person_selection) {
+        return 0;
+      }
+      return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is type__person_selection
+      || false;
+    }
+
+    public bool Equals(existing_person? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (existing_person)obj;
+        return Equals(min, other.min) && Equals(max, other.max) && Equals(person_selection, other.person_selection);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, min);
+        acc = HashCode.Combine(acc, max);
+        acc = HashCode.Combine(acc, person_selection);
+        return acc;
     }
   }
 }

@@ -2,7 +2,7 @@ import {DependantType} from "../../typeToString";
 import {template} from "../../../../template/template";
 import {normalizeNameClass, normalizeNameField} from "../normalizeNameClass";
 import {basePackage, getDependantTypePackage} from "./getDependantTypePackage";
-import {getTypeName} from "../geTypeName";
+import {getTypeName} from "../getTypeName";
 
 export const dependantTypeToChildrenSerializationBody = (dependantType: DependantType): string | undefined => {
 

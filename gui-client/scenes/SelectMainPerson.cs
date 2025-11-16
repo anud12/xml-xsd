@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using util.dataStore;
 
 public partial class SelectMainPerson : Control
 {
@@ -23,7 +24,7 @@ public partial class SelectMainPerson : Control
 			button.Pressed += () =>
 			{
 				StoreSession.mainPersonId.data = person.id;
-				GetTree().ChangeSceneToPacked(WorldStep.PackedScene);
+				GetTree().ChangeSceneToPacked(WorldStepScene.PackedScene);
 			};
 			personContainer.AddChild(button);
 		});

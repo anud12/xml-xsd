@@ -10,9 +10,7 @@ import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
   @EqualsAndHashCode
   @ToString
@@ -22,33 +20,44 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class LinkTo implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/world_step/data/location/location_graph/node/links/link_to";
-
-    public static LinkTo fromRawNode(RawNode rawNode) {
-      logEnter();
-      var instance = new LinkTo();
-      instance.rawNode(rawNode);
-      instance.deserialize(rawNode);
-      return logReturn(instance);
-    }
+    public static String nodeName = "link_to";
     public static LinkTo fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-      logEnter();
-      var instance = fromRawNode(rawNode);
-      instance.parentNode(parent);
-      return logReturn(instance);
+      try (var logger = logScope()) {
+        var instance = new LinkTo();
+        if(Objects.nonNull(parent)) {
+          instance.parentNode(parent);
+        }
+        instance.rawNode(rawNode);
+        instance.deserialize(rawNode);
+        return logger.logReturn(instance);
+      }
+
+    }
+    public static LinkTo fromRawNode(RawNode rawNode) {
+      try (var logger = logScope()) {
+        var instance = fromRawNode(rawNode, null);
+        return logger.logReturn(instance);
+      }
     }
     public static Optional<LinkTo> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-        logEnter();
-        return logReturn(rawNode.map(o -> LinkTo.fromRawNode(o, parent)));
+        try(var logger = logScope()) {
+          return logger.logReturn(rawNode.map(o -> LinkTo.fromRawNode(o, parent)));
+        }
+
     }
     public static List<LinkTo> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-      logEnter();
-      List<LinkTo> returnList = Optional.ofNullable(rawNodeList)
-          .orElse(List.of())
-          .stream()
-          .map(o -> LinkTo.fromRawNode(o, parent))
-          .collect(Collectors.toList());
-      return logReturn(returnList);
+      try (var logger = logScope()) {
+        List<LinkTo> returnList = Optional.ofNullable(rawNodeList)
+            .orElse(List.of())
+            .stream()
+            .map(o -> LinkTo.fromRawNode(o, parent))
+            .collect(Collectors.toList());
+        return logger.logReturn(returnList);
+      }
+    }
+
+    public String classTypeId() {
+      return ".world_step.data.location.location_graph.node.links.link_to";
     }
 
     //Attributes
@@ -87,42 +96,56 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     @Builder.Default
-    private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
+    private List<ro.anud.xml_xsd.implementation.util.ChangeCallback<LinkTo>> onChangeList = new ArrayList<>();
+    @Builder.Default
+    private List<ro.anud.xml_xsd.implementation.util.RemoveCallback<LinkTo>> onRemoveList = new ArrayList<>();
 
     public String nodeName() {
       return "link_to";
     }
-
-    public void childChanged(Set<Object> set) {
-      set.add(this);
-      onChangeList.forEach(consumer -> consumer.accept(set));
-      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(set));
+    public static LinkTo of() {
+      return new LinkTo();
     }
 
-    private void triggerOnChange() {
-      childChanged(new HashSet<>());
+    public void notifyChange(ro.anud.xml_xsd.implementation.util.LinkedNode object) {
+      try (var logger = logScope()) {
+        logger.log("Notify change for", this.buildPath());
+        onChangeList.forEach(consumer -> consumer.onChange(object, this));
+        parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(object));
+      }
+    }
+
+    public void notifyRemove(ro.anud.xml_xsd.implementation.util.LinkedNode object) {
+      try (var logger = logScope()) {
+        logger.log("Notify remove for", this.buildPath());
+        onRemoveList.forEach(consumer -> consumer.onRemove(object, this));
+        parentNode.ifPresent(linkedNode -> linkedNode.notifyRemove(object));
+      }
     }
 
     public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+      this.parentNode.ifPresent(parent -> notifyRemove());
       this.parentNode = Optional.of(linkedNode);
-      triggerOnChange();
+      notifyChange();
     }
 
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.Links> parentAsLinks() {
       return parentNode.flatMap(node -> {
-       if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.Links casted){
-         return Optional.of(casted);
-       }
-       return Optional.empty();
-     });
+        if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.Links casted){
+          return Optional.of(casted);
+        }
+        return Optional.empty();
+      });
     }
 
     public void removeChild(Object object) {
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People) {
           this.people = Optional.empty();
+          notifyChange();
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations) {
           this.personProgressProperty = Optional.empty();
+          notifyChange();
         }
     }
 
@@ -140,47 +163,75 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<Set<Object>> onChange) {
-      logEnter();
-      onChangeList.add(onChange);
-      return logReturn(() -> onChangeList.remove(onChange));
+    public Subscription onChange(ro.anud.xml_xsd.implementation.util.ChangeCallback<LinkTo> callback) {
+      try (var logger = logScope()) {
+        onChangeList.add(callback);
+        return logger.logReturn(() -> onChangeList.remove(callback));
+      }
+    }
+    public Subscription onRemove(ro.anud.xml_xsd.implementation.util.RemoveCallback<LinkTo> callback) {
+      try (var logger = logScope()) {
+        onRemoveList.add(callback);
+        return logger.logReturn(() -> onRemoveList.remove(callback));
+      }
     }
 
     public void deserialize (RawNode rawNode) {
-      var logger = logEnter();
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing link_to");
-      var innerLogger = logger.log("attributes");
-      //Deserialize attributes
-      innerLogger.log("node_id_ref");
-      this.nodeIdRef = rawNode.getAttributeRequired("node_id_ref");
-      innerLogger.log("total_progress");
-      this.totalProgress = rawNode.getAttributeIntRequired("total_progress");
-      innerLogger = logger.log("children");
-      //Deserialize children
-      this.people = ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People.fromRawNode(rawNode.getChildrenFirst("people"), this);
-      innerLogger.log("person_progress_property");
-      this.personProgressProperty = ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.fromRawNode(rawNode.getChildrenFirst("person_progress_property"), this);
-      logReturnVoid();
+      try (var logger = logScope()) {
+        this.rawNode = rawNode;
+        var isDirty = false;
+        try (var innerLogger = logScope("attributes")) {
+          //Deserialize attributes
+          innerLogger.log("node_id_ref");
+          var nodeIdRefValue = rawNode.getAttributeRequired("node_id_ref");
+          if(Objects.equals(this.nodeIdRef, nodeIdRefValue)) {
+            isDirty = true;
+          }
+          this.nodeIdRef = nodeIdRefValue;
+          innerLogger.log("total_progress");
+          var totalProgressValue = rawNode.getAttributeIntRequired("total_progress");
+          if(Objects.equals(this.totalProgress, totalProgressValue)) {
+            isDirty = true;
+          }
+          this.totalProgress = totalProgressValue;
+        }
+        try (var innerLogger = logScope("children")) {
+          //Deserialize children
+          this.people = ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People.fromRawNode(rawNode.getChildrenFirst("people"), this);
+          innerLogger.log("person_progress_property");
+          this.personProgressProperty = ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.fromRawNode(rawNode.getChildrenFirst("person_progress_property"), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
+        }
+      } catch (Exception e) {
+        throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
+      }
+
     }
 
     public RawNode serializeIntoRawNode()
     {
-      var logger = logEnter();
-      var innerLogger = logger.log("attributes");
-      //Serialize attributes
-      innerLogger.log("node_id_ref");
-      rawNode.setAttribute("node_id_ref", this.nodeIdRef);
-      innerLogger.log("total_progress");
-      rawNode.setAttribute("total_progress", this.totalProgress);
+      try (var logger = logScope()) {
+        rawNode.setTag("link_to");
+        try (var innerLogger = logScope("attributes")) {
+          //Serialize attributes
+          innerLogger.log("node_id_ref");
+          rawNode.setAttribute("node_id_ref", this.nodeIdRef);
+          innerLogger.log("total_progress");
+          rawNode.setAttribute("total_progress", this.totalProgress);
+        }
+        try (var innerLogger = logScope("children")) {
 
-      innerLogger = logger.log("children");
-      //Serialize children
-      innerLogger.log("people");
-      rawNode.setChildren("people", people.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People::serializeIntoRawNode).toList());
-      innerLogger.log("person_progress_property");
-      rawNode.setChildren("person_progress_property", personProgressProperty.stream().map(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations::serializeIntoRawNode).toList());
-      return rawNode;
+          //Serialize children
+          innerLogger.log("people");
+          rawNode.setChildren("people", people.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People::serializeIntoRawNode).toList());
+          innerLogger.log("person_progress_property");
+          rawNode.setChildren("person_progress_property", personProgressProperty.stream().map(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations::serializeIntoRawNode).toList());
+          return rawNode;
+        }
+      }
     }
 
     public void serialize(Document document, Element element)
@@ -197,7 +248,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public LinkTo setNodeIdRef(String value)
     {
       this.nodeIdRef = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Integer getTotalProgress()
@@ -207,7 +258,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public LinkTo setTotalProgress(Integer value)
     {
       this.totalProgress = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People> getPeople()
@@ -218,8 +269,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.people.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People();
-        instance.parentNode(this);
         this.people = Optional.of(instance);
+        instance.parentNode(this);
         return this.people.get();
       });
     }
@@ -235,7 +286,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.people = Optional.ofNullable(value);
       value.parentNode(this);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
 
@@ -247,8 +298,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.personProgressProperty.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
-        instance.parentNode(this);
         this.personProgressProperty = Optional.of(instance);
+        instance.parentNode(this);
         return this.personProgressProperty.get();
       });
     }
@@ -264,11 +315,61 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.personProgressProperty = Optional.ofNullable(value);
       value.parentNode(this);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
 
+    public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People.nodeName))
+        {
+          if(this.people.isEmpty()) {
+            this.people = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People.nodeName.length() + 3);
+          return this.people.get().deserializeAtPath(childXPath, rawNode);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName))
+        {
+          if(this.personProgressProperty.isEmpty()) {
+            this.personProgressProperty = Optional.of(new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName.length() + 3);
+          return this.personProgressProperty.get().deserializeAtPath(childXPath, rawNode);
+        }
+
+        deserialize(rawNode);
+        return this;
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getNodeAtPath(String xpath) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People.nodeName))
+        {
+          if(this.people.isEmpty()) {
+            this.people = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People.nodeName.length() + 3);
+          return this.people.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName))
+        {
+          if(this.personProgressProperty.isEmpty()) {
+            this.personProgressProperty = Optional.of(new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName.length() + 3);
+          return this.personProgressProperty.get().getNodeAtPath(childXPath);
+        }
+        return Optional.of(this);
+    }
   }
+
 
   /*
     dependant type:

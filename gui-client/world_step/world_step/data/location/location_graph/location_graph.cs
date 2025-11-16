@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -8,14 +11,78 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Nlocation {
-  public class location_graph  {
+  public class location_graph : IEquatable<location_graph>, XSD.ILinkedNode  {
+
+    public static string ClassTypeId = ".world_step.data.location.location_graph";
+    public static string TagName = "location_graph";
+
+    public string NodeName {get =>"location_graph";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<location_graph>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
+
     //Attributes
-    public System.String id;
+    private System.String _id;
+    public System.String id { get => _id; set => _id = value; }
 
     //Children elements
-    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.rule rule = new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.rule();
-    public List<XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.node> node = new List<XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.node>();
+    private XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.rule _rule = new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.rule();
+    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.rule ruleOrCreate
+    {
+      get
+      {
+        if(_rule == null)
+        {
+          _rule = new();
+          _rule.ParentNode = this;
+          NotifyChange();
+        }
+        return _rule;
+      }
+      set
+      {
+        _rule = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.rule rule
+    {
+      get
+      {
+        return _rule;
+      }
+      set
+      {
+        _rule = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
+
+    private LinkedNodeCollection<XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.node> _node = new();
+    public LinkedNodeCollection<XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.node> node
+    {
+      get => _node;
+      set
+      {
+        _node = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _node.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          NotifyChange();
+        };
+      }
+    }
     public location_graph()
     {
     }
@@ -31,6 +98,62 @@ namespace XSD.Nworld_step.Ndata.Nlocation {
       Deserialize(rawNode);
     }
 
+    public void SetAttribute(string name, string? value)
+    {
+      if(name == "id")
+      {
+        Set_id(value);
+      }
+    }
+
+    public void SetChild(dynamic linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.rule rule)
+      {
+        this.rule = rule;
+      }
+
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.node> node)
+      {
+        this.node = node;
+      }
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.rule)
+      {
+        this.rule = new();
+      }
+
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.node>)
+      {
+        this.node = new();
+      }
+    }
+
+
+    public Action OnSelfChange(Action<location_graph> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -43,16 +166,23 @@ namespace XSD.Nworld_step.Ndata.Nlocation {
       }
 
       //Deserialize children
-      this.rule = rawNode.InitializeWithRawNode("rule", this.rule);
-      this.node = rawNode.InitializeWithRawNode("node", this.node);
+      rule = rawNode.InitializeWithRawNode("rule", rule);
+
+      node = rawNode.InitializeWithRawNode("node", node);
+      node.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          NotifyChange();
+        };
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.id != null)
+      if(this._id != null)
       {
-        rawNode.attributes["id"] = this.id.ToString();
+        rawNode.attributes["id"] = this._id.ToString();
       }
 
       //Serialize children
@@ -76,36 +206,94 @@ namespace XSD.Nworld_step.Ndata.Nlocation {
     public void Set_id(System.String value)
     {
       this.id = value;
+      this.NotifyChange();
     }
-    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.rule Get_rule()
+
+
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
-      return this.rule;
-    }
-    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.rule GetOrInsertDefault_rule()
-    {
-      if(this.rule == null) {
-        this.rule = new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.rule();
+      if(xpath.StartsWith("."))
+      {
+        xpath = xpath.Substring(1);
       }
-      return this.rule;
-    }
-    public void Set_rule(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.rule value)
-    {
-      this.rule = value;
-    }
-    public List<XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.node> Get_node()
-    {
-      return this.node;
-    }
-    public List<XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.node> GetOrInsertDefault_node()
-    {
-      if(this.node == null) {
-        this.node = new List<XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.node>();
+      if(xpath.StartsWith(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.rule.TagName))
+      {
+        var childXPath = xpath.Substring(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.rule.TagName.Length + 3);
+        this.rule.DeserializeAtPath(childXPath, rawNode);
+        return;
       }
-      return this.node;
+      if(xpath.StartsWith(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.node.TagName + "["))
+      {
+        var startIndex = (XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.node.TagName + "[").Length;
+        var startTokens = xpath.Split(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.node.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.node.TagName + "[" + indexString + "]", "");
+        var pathIndex = indexString.ToInt();
+        if(this.node.ContainsKey(pathIndex))
+        {
+          this.node[pathIndex].DeserializeAtPath(childXPath, rawNode);
+          return;
+        }
+        var newEntry = new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.node();
+        this.node[pathIndex] = newEntry;
+        newEntry.DeserializeAtPath(childXPath, rawNode);
+
+        return;
+      }
+
+      Deserialize(rawNode);
     }
-    public void Set_node(List<XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.node> value)
+
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
-      this.node = value;
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
+    }
+
+    public void NotifyChange()
+    {
+      NotifyChange(new ());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.rule casted_rule) {
+        return 0;
+      }
+      if(linkedNode is XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.node casted_node) {
+        return this._node.KeyOf(casted_node);
+      }
+      return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.rule
+      || candidateChild is XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.node
+      || false;
+    }
+
+    public bool Equals(location_graph? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (location_graph)obj;
+        return Equals(id, other.id) && Equals(rule, other.rule) && Equals(node, other.node);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, id);
+        acc = HashCode.Combine(acc, rule);
+        acc = HashCode.Combine(acc, node);
+        return acc;
     }
   }
 }

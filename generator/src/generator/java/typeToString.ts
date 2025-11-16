@@ -1,10 +1,5 @@
-import {Type, TypeDeclaration, TypeObject, TypeReference} from "../../type";
-import {template} from "../../template/template";
-import {typeDeclarationElementToString} from "./toString/typeDeclarationToString";
-import {unionTypeDeclarationToString} from "./toString/unionTypeDeclarationToString";
-import {compositionTypeDeclarationToString} from "./toString/compositionTypeDeclarationToString";
+import {Type, TypeDeclaration} from "../../type";
 import {DirectoryMetadata} from "../../memory_fs/directoryMetadata";
-import {dependantTypeGetFullQualifiedName} from "./toString/depedantType/dependantTypeGetFullQualifiedName";
 import {dependantTypeToString} from "./toString/dependantTypeToString";
 
 export type DependantType<T extends Type = Type> = {

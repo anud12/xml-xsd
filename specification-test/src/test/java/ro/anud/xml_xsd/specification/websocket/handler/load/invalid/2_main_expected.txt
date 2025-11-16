@@ -1,0 +1,2 @@
+ValidationError: invalidPerson at //actions[0]/from_person[0]@person_id_ref not in []
+ValidationError: invalidPerson at //actions[0]/from_person[0]/on_person[0]@person_id_ref not in []

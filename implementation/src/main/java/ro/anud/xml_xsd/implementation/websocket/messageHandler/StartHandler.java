@@ -1,0 +1,28 @@
+package ro.anud.xml_xsd.implementation.websocket.messageHandler;
+
+
+import org.springframework.stereotype.Component;
+import ro.anud.xml_xsd.implementation.WorldStepRunner;
+import ro.anud.xml_xsd.implementation.websocket.WebSocketHandler;
+
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
+import static ro.anud.xml_xsd.implementation.websocket.Client.ReturnCode.Start;
+
+@Component
+public record StartHandler(WorldStepRunner worldStepRunner) implements WebSocketHandler.Factory {
+
+    @Override
+    public void instantiate(final WebSocketHandler webSocketHandler) {
+        webSocketHandler.add(
+            "start", (client, string) -> {
+                try (var logger = logScope("start")){
+                    var worldStepInstance = webSocketHandler.getWorldStepInstance();
+                    worldStepRunner.stop()
+                            .start(webSocketHandler);
+
+                    client.send(Start);
+                }
+
+            });
+    }
+}

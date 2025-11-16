@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -8,15 +11,44 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_nod
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup {
-  public class necessary_node  {
+  public class necessary_node : IEquatable<necessary_node>, XSD.ILinkedNode  {
+
+    public static string ClassTypeId = ".world_step.rule_group.location_graph_rule.setup.necessary_node";
+    public static string TagName = "necessary_node";
+
+    public string NodeName {get =>"necessary_node";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<necessary_node>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
+
     //Attributes
-    public System.String node_rule_ref;
-    public System.Int32 min;
-    public System.Int32? max;
+    private System.String _node_rule_ref;
+    public System.String node_rule_ref { get => _node_rule_ref; set => _node_rule_ref = value; }
+    private System.Int32 _min;
+    public System.Int32 min { get => _min; set => _min = value; }
+    private System.Int32? _max;
+    public System.Int32? max { get => _max; set => _max = value; }
 
     //Children elements
-    public List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or>? or = new List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or>();
+
+    private LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or> _or = new();
+    public LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or> or
+    {
+      get => _or;
+      set
+      {
+        _or = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _or.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          NotifyChange();
+        };
+      }
+    }
     public necessary_node()
     {
     }
@@ -30,6 +62,59 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup {
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
+    }
+
+    public void SetAttribute(string name, string? value)
+    {
+      if(name == "node_rule_ref")
+      {
+        Set_node_rule_ref(value);
+      }
+      if(name == "min")
+      {
+        Set_min(value?.ToInt() ?? 0);
+      }
+      if(name == "max")
+      {
+        Set_max(value?.ToInt() ?? 0);
+      }
+    }
+
+    public void SetChild(dynamic linkedNode)
+    {
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or> or)
+      {
+        this.or = or;
+      }
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or>)
+      {
+        this.or = null;
+      }
+    }
+
+    public Action OnSelfChange(Action<necessary_node> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -54,23 +139,29 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup {
       }
 
       //Deserialize children
-      this.or = rawNode.InitializeWithRawNode("or", this.or);
+      or = rawNode.InitializeWithRawNode("or", or);
+      or.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          NotifyChange();
+        };
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.node_rule_ref != null)
+      if(this._node_rule_ref != null)
       {
-        rawNode.attributes["node_rule_ref"] = this.node_rule_ref.ToString();
+        rawNode.attributes["node_rule_ref"] = this._node_rule_ref.ToString();
       }
-      if(this.min != null)
+      if(this._min != null)
       {
-        rawNode.attributes["min"] = this.min.ToString();
+        rawNode.attributes["min"] = this._min.ToString();
       }
-      if(this.max != null)
+      if(this._max != null)
       {
-        rawNode.attributes["max"] = this.max?.ToString();
+        rawNode.attributes["max"] = this._max?.ToString();
       }
 
       //Serialize children
@@ -91,6 +182,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup {
     public void Set_node_rule_ref(System.String value)
     {
       this.node_rule_ref = value;
+      this.NotifyChange();
     }
     public System.Int32 Get_min()
     {
@@ -99,6 +191,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup {
     public void Set_min(System.Int32 value)
     {
       this.min = value;
+      this.NotifyChange();
     }
     public System.Int32? Get_max()
     {
@@ -107,21 +200,85 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup {
     public void Set_max(System.Int32? value)
     {
       this.max = value;
+      this.NotifyChange();
     }
-    public List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or>? Get_or()
+
+
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
-      return this.or;
-    }
-    public List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or> GetOrInsertDefault_or()
-    {
-      if(this.or == null) {
-        this.or = new List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or>();
+      if(xpath.StartsWith("."))
+      {
+        xpath = xpath.Substring(1);
       }
-      return this.or;
+      if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or.TagName + "["))
+      {
+        var startIndex = (XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or.TagName + "[").Length;
+        var startTokens = xpath.Split(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or.TagName + "[" + indexString + "]", "");
+        var pathIndex = indexString.ToInt();
+        if(this.or.ContainsKey(pathIndex))
+        {
+          this.or[pathIndex].DeserializeAtPath(childXPath, rawNode);
+          return;
+        }
+        var newEntry = new XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or();
+        this.or[pathIndex] = newEntry;
+        newEntry.DeserializeAtPath(childXPath, rawNode);
+
+        return;
+      }
+
+      Deserialize(rawNode);
     }
-    public void Set_or(List<XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or>? value)
+
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
-      this.or = value;
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
+    }
+
+    public void NotifyChange()
+    {
+      NotifyChange(new ());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or casted_or) {
+        return this._or.KeyOf(casted_or);
+      }
+      return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nsetup.Nnecessary_node.or
+      || false;
+    }
+
+    public bool Equals(necessary_node? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (necessary_node)obj;
+        return Equals(node_rule_ref, other.node_rule_ref) && Equals(min, other.min) && Equals(max, other.max) && Equals(or, other.or);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, node_rule_ref);
+        acc = HashCode.Combine(acc, min);
+        acc = HashCode.Combine(acc, max);
+        acc = HashCode.Combine(acc, or);
+        return acc;
     }
   }
 }

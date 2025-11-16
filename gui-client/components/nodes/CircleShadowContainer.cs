@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using Guiclient.util;
 
 [Tool]
 [GlobalClass]
@@ -7,12 +8,12 @@ public partial class CircleShadowContainer : PanelContainer
 {
     public CircleShadowContainer()
     {
-        GD.Print("CircleContainer constructor");
+        Logger.Info("CircleContainer constructor");
     }
 
     public override void _Ready()
     {
-        GD.Print("CircleContainer _Ready");
+        Logger.Info("CircleContainer _Ready");
     }
 
     public override void _Draw()

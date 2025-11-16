@@ -1,7 +1,7 @@
 import {template} from "../../../template/template";
 import {Type} from "../../../type";
 import {DependantType, GetObjectBodyReturn} from "../typeToString";
-import {getTypeName, primitives} from "./geTypeName";
+import {getTypeName, primitives} from "./getTypeName";
 import {normalizeNameClass} from "./normalizeNameClass";
 import {dependantTypeToAttributeDeclaration} from "./depedantType/dependantTypeToAttributeDeclaration";
 import {dependantTypeToChildrenDeclaration} from "./depedantType/dependantTypeToChildrenDeclaration";
@@ -19,17 +19,8 @@ import {interfaceTypeDeclarationToString} from "./interfaceTypeDeclarationToStri
 import {dependantTypeToRemoveChild} from "./depedantType/dependantTypeToRemoveChild";
 import {dependantTypeToBuildIndexForChild} from "./depedantType/dependantTypeToBuildIndexForChild";
 import {dependantTypeBuildXpath} from "./depedantType/dependantTypeBuildXpath";
-
-
-type ClassTemplateParts = {
-  declaration: (body: string) => string,
-  attributeDeclaration: (dependantType: DependantType) => string,
-  attributeGetterSetter: (dependantType: DependantType) => string,
-  childrenDeclaration: (dependantType: DependantType) => { dependantTypes: DependantType[], templateString: string },
-  childrenGetterSetter: (dependantType: DependantType) => { dependantTypes: DependantType[], templateString: string },
-  fieldGetterSetter: () => string,
-  serializer: () => string,
-}
+import {dependantTypeToDeserializeAtPath} from "./depedantType/dependantTypeToDeserializeAtPath";
+import {dependantTypeToGetNodeAtPath} from "./depedantType/dependantTypeToGetNodeAtPath";
 
 
 function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadata, dependantType: DependantType, extensions: DependantType[] = []): GetObjectBodyReturn {
@@ -54,34 +45,45 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
     @AllArgsConstructor
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     public class ${normalizeNameClass(dependantType.name)} implements ${extensionNames.length > 0 && ` ${extensionNames.map(e => e + `<${normalizeNameClass(dependantType.name)}>`).join(", ")}, `} ro.anud.xml_xsd.implementation.util.LinkedNode {
-          
-      public static final String TYPE_ID = "${dependantTypeBuildXpath(dependantType)}";
-          
-      public static ${normalizeNameClass(dependantType.name)} fromRawNode(RawNode rawNode) {
-        logEnter();
-        var instance = new ${normalizeNameClass(dependantType.name)}();
-        instance.rawNode(rawNode);
-        instance.deserialize(rawNode);
-        return logReturn(instance);
-      }
+      
+      public static String nodeName = "${dependantType.name}";
       public static ${normalizeNameClass(dependantType.name)} fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-        logEnter();
-        var instance = fromRawNode(rawNode);
-        instance.parentNode(parent);
-        return logReturn(instance);
+        try (var logger = logScope()) {
+          var instance = new ${normalizeNameClass(dependantType.name)}();
+          if(Objects.nonNull(parent)) {
+            instance.parentNode(parent);
+          }
+          instance.rawNode(rawNode);
+          instance.deserialize(rawNode);
+          return logger.logReturn(instance);
+        }
+        
+      }
+      public static ${normalizeNameClass(dependantType.name)} fromRawNode(RawNode rawNode) {
+        try (var logger = logScope()) {
+          var instance = fromRawNode(rawNode, null);
+          return logger.logReturn(instance);
+        }
       }
       public static Optional<${normalizeNameClass(dependantType.name)}> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-          logEnter();
-          return logReturn(rawNode.map(o -> ${normalizeNameClass(dependantType.name)}.fromRawNode(o, parent)));
+          try(var logger = logScope()) {
+            return logger.logReturn(rawNode.map(o -> ${normalizeNameClass(dependantType.name)}.fromRawNode(o, parent)));
+          }
+          
       }
       public static List<${normalizeNameClass(dependantType.name)}> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-        logEnter();
-        List<${normalizeNameClass(dependantType.name)}> returnList = Optional.ofNullable(rawNodeList)
-            .orElse(List.of())
-            .stream()
-            .map(o -> ${normalizeNameClass(dependantType.name)}.fromRawNode(o, parent))
-            .collect(Collectors.toList());
-        return logReturn(returnList);
+        try (var logger = logScope()) {
+          List<${normalizeNameClass(dependantType.name)}> returnList = Optional.ofNullable(rawNodeList)
+              .orElse(List.of())
+              .stream()
+              .map(o -> ${normalizeNameClass(dependantType.name)}.fromRawNode(o, parent))
+              .collect(Collectors.toList());
+          return logger.logReturn(returnList);
+        }
+      }
+      
+      public String classTypeId() {
+        return "${dependantTypeBuildXpath(dependantType)}";
       }
       
       //Attributes
@@ -129,36 +131,48 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
       }
       
       @Builder.Default
-      private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
+      private List<ro.anud.xml_xsd.implementation.util.ChangeCallback<${normalizeNameClass(dependantType.name)}>> onChangeList = new ArrayList<>();
+      @Builder.Default
+      private List<ro.anud.xml_xsd.implementation.util.RemoveCallback<${normalizeNameClass(dependantType.name)}>> onRemoveList = new ArrayList<>();
       
       public String nodeName() {
         return "${dependantType.name}";
       }
-      
-      public void childChanged(Set<Object> set) {
-        set.add(this);
-        onChangeList.forEach(consumer -> consumer.accept(set));
-        parentNode.ifPresent(linkedNode -> linkedNode.childChanged(set));
+      public static ${normalizeNameClass(dependantType.name)} of() {
+        return new ${normalizeNameClass(dependantType.name)}(); 
       }
       
-      private void triggerOnChange() {
-        childChanged(new HashSet<>());
+      public void notifyChange(ro.anud.xml_xsd.implementation.util.LinkedNode object) {
+        try (var logger = logScope()) {
+          logger.log("Notify change for", this.buildPath());
+          onChangeList.forEach(consumer -> consumer.onChange(object, this));
+          parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(object));          
+        }
+      }
+      
+      public void notifyRemove(ro.anud.xml_xsd.implementation.util.LinkedNode object) {
+        try (var logger = logScope()) {
+          logger.log("Notify remove for", this.buildPath());
+          onRemoveList.forEach(consumer -> consumer.onRemove(object, this));
+          parentNode.ifPresent(linkedNode -> linkedNode.notifyRemove(object));          
+        }
       }
   
       public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+        this.parentNode.ifPresent(parent -> notifyRemove());
         this.parentNode = Optional.of(linkedNode);
-        triggerOnChange();
+        notifyChange();
       }
       
       ${parentTypeName && template()`
-       public Optional<${parentFullTypeName}> parentAs${parentTypeName}() {
-         return parentNode.flatMap(node -> {
-          if (node instanceof ${parentFullTypeName} casted){
-            return Optional.of(casted);
-          }
-          return Optional.empty();
-        });
-       }
+        public Optional<${parentFullTypeName}> parentAs${parentTypeName}() {
+          return parentNode.flatMap(node -> {
+            if (node instanceof ${parentFullTypeName} casted){
+              return Optional.of(casted);
+            }
+            return Optional.empty();
+          });
+        }
       `}
       
       public void removeChild(Object object) {
@@ -174,64 +188,84 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
         parentNode.ifPresent(node -> node.removeChild(this));
       }
       
-      public Subscription onChange(Consumer<Set<Object>> onChange) {
-        logEnter();
-        onChangeList.add(onChange);
-        return logReturn(() -> onChangeList.remove(onChange));
+      public Subscription onChange(ro.anud.xml_xsd.implementation.util.ChangeCallback<${normalizeNameClass(dependantType.name)}> callback) {
+        try (var logger = logScope()) {
+          onChangeList.add(callback);
+          return logger.logReturn(() -> onChangeList.remove(callback));
+        }
+      }
+      public Subscription onRemove(ro.anud.xml_xsd.implementation.util.RemoveCallback<${normalizeNameClass(dependantType.name)}> callback) {
+        try (var logger = logScope()) {
+          onRemoveList.add(callback);
+          return logger.logReturn(() -> onRemoveList.remove(callback));
+        }
       }
       
       public void deserialize (RawNode rawNode) {
-        var logger = logEnter();
-        this.rawNode = rawNode;
-        // Godot.GD.Print("Deserializing ${dependantType.name}");
-        var innerLogger = logger.log("attributes");
-        //Deserialize attributes
-        ${dependantTypeToAttributeDeserializationBody(dependantType)}
+        try (var logger = logScope()) {
+          this.rawNode = rawNode;
+          var isDirty = false;
+          try (var innerLogger = logScope("attributes")) {
+            //Deserialize attributes
+            ${dependantTypeToAttributeDeserializationBody(dependantType)}
+          
+            ${extensions.map(extension => {
+                return template()`
+                                // Deserialize arguments of ${extension.name}
+                                ${dependantTypeToAttributeDeserializationBody(extension)}
+                              `
+              }).join("\n")}
+          }
+          try (var innerLogger = logScope("children")) {
+            //Deserialize children
+            ${dependantTypeToChildrenDeserializationBody(dependantType)}
+            
+            ${extensions.map(extension => {
+              return template()`
+                               // Deserialize children of ${extension.name}
+                               ${dependantTypeToChildrenDeserializationBody(extension)}
+                              `
+            }).join("\n")}
+          }
+          
+          if(isDirty) {
+            notifyChange();
+          }
+        } catch (Exception e) {
+          throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
+        }
         
-        ${extensions.map(extension => {
-    return template()`
-                   // Deserialize arguments of ${extension.name}
-                   ${dependantTypeToAttributeDeserializationBody(extension)}
-                  `
-  }).join("\n")}
-        innerLogger = logger.log("children");
-        //Deserialize children
-        ${dependantTypeToChildrenDeserializationBody(dependantType)}
-        
-        ${extensions.map(extension => {
-    return template()`
-                     // Deserialize children of ${extension.name}
-                     ${dependantTypeToChildrenDeserializationBody(extension)}
-                    `
-  }).join("\n")}
-        logReturnVoid();
       }
       
       public RawNode serializeIntoRawNode() 
       {
-        var logger = logEnter();
-        var innerLogger = logger.log("attributes");
-        //Serialize attributes
-        ${dependantTypeToAttributeSerializationBody(dependantType)}
+        try (var logger = logScope()) {
+          rawNode.setTag("${dependantType.name}");
+          try (var innerLogger = logScope("attributes")) {
+            //Serialize attributes
+            ${dependantTypeToAttributeSerializationBody(dependantType)}
+          
+            ${extensions.map(extension => {
+              return template()`
+                             // Serialize arguments of ${extension.name}
+                             ${dependantTypeToAttributeSerializationBody(extension)}
+                            `
+            }).join("\n")}
+          }
+          try (var innerLogger = logScope("children")) {
+          
+            //Serialize children
+            ${dependantTypeToChildrenSerializationBody(dependantType)}
         
-        ${extensions.map(extension => {
-    return template()`
-                   // Serialize arguments of ${extension.name}
-                   ${dependantTypeToAttributeSerializationBody(extension)}
-                  `
-  }).join("\n")}
-        
-        innerLogger = logger.log("children");
-        //Serialize children
-        ${dependantTypeToChildrenSerializationBody(dependantType)}
-        
-        ${extensions.map(extension => {
-    return template()`
-           // Serialize children of ${extension.name}
-           ${dependantTypeToChildrenSerializationBody(extension)}
-          `
-  }).join("\n")}
-        return rawNode;
+            ${extensions.map(extension => {
+                return template()`
+                       // Serialize children of ${extension.name}
+                       ${dependantTypeToChildrenSerializationBody(extension)}
+                      `
+              }).join("\n")}
+            return rawNode;
+          }
+        }
       }
       
       public void serialize(Document document, Element element)
@@ -246,6 +280,26 @@ function typeDeclarationElementToClassString(directoryMetadata: DirectoryMetadat
       ${dependantTypeToChildrenGetterSetter(dependantType)?.templateString}
       ${extensions.map(extension => dependantTypeToChildrenGetterSetter(extension, dependantType)?.templateString).join("\n")}
       
+      
+      public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
+         if(xpath.startsWith(".")) 
+          {
+            xpath = xpath.substring(1);
+          }
+          ${dependantTypeToDeserializeAtPath(dependantType)?.templateString}
+          
+          deserialize(rawNode);
+          return this;
+      }
+    
+      public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getNodeAtPath(String xpath) {
+         if(xpath.startsWith(".")) 
+          {
+            xpath = xpath.substring(1);
+          }
+          ${dependantTypeToGetNodeAtPath(dependantType)?.templateString}
+          return Optional.of(this);
+      }
     }
     
     
@@ -302,9 +356,7 @@ export function typeDeclarationElementToString(directoryMetadata: DirectoryMetad
       import java.util.function.Consumer;
       import java.util.stream.Collectors;
       
-      import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
-      import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-      import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
+      import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       `
 
   const templateString = template()`

@@ -1,12 +1,9 @@
 package ro.anud.xml_xsd.implementation.service;
 
 
-import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
-import ro.anud.xml_xsd.implementation.model.interfaces.IType_mathOperations.IType_mathOperations;
-
 import java.util.Optional;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class PropertyInstance {
 
@@ -21,7 +18,9 @@ public class PropertyInstance {
     private WorldStepInstance worldStepInstance;
 
     public PropertyInstance(WorldStepInstance worldStepInstance) {
-        this.worldStepInstance = worldStepInstance;
+        try (var scope = logScope()) {
+            this.worldStepInstance = worldStepInstance;
+        }
     }
 
 }

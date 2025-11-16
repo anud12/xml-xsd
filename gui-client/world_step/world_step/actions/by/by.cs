@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -8,14 +11,101 @@ namespace XSD.Nworld_step.Nactions.Nby {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions {
-  public class by  {
+  public class by : IEquatable<by>, XSD.ILinkedNode  {
+
+    public static string ClassTypeId = ".world_step.actions.by";
+    public static string TagName = "by";
+
+    public string NodeName {get =>"by";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<by>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
+
     //Attributes
-    public System.String person_ref;
+    private System.String _person_ref;
+    public System.String person_ref { get => _person_ref; set => _person_ref = value; }
 
     //Children elements
-    public XSD.Nworld_step.Nactions.Nby._do _do = new XSD.Nworld_step.Nactions.Nby._do();
-    public XSD.Nworld_step.Nactions.Nby.move_towards? move_towards = null;
+    private XSD.Nworld_step.Nactions.Nby._do __do = new XSD.Nworld_step.Nactions.Nby._do();
+    public XSD.Nworld_step.Nactions.Nby._do _doOrCreate
+    {
+      get
+      {
+        if(__do == null)
+        {
+          __do = new();
+          __do.ParentNode = this;
+          NotifyChange();
+        }
+        return __do;
+      }
+      set
+      {
+        __do = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nactions.Nby._do _do
+    {
+      get
+      {
+        return __do;
+      }
+      set
+      {
+        __do = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
+
+    private XSD.Nworld_step.Nactions.Nby.move_towards? _move_towards = null;
+    public XSD.Nworld_step.Nactions.Nby.move_towards move_towardsOrCreate
+    {
+      get
+      {
+        if(_move_towards == null)
+        {
+          _move_towards = new();
+          _move_towards.ParentNode = this;
+          NotifyChange();
+        }
+        return _move_towards;
+      }
+      set
+      {
+        _move_towards = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nactions.Nby.move_towards? move_towards
+    {
+      get
+      {
+        return _move_towards;
+      }
+      set
+      {
+        _move_towards = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
     public by()
     {
     }
@@ -31,6 +121,61 @@ namespace XSD.Nworld_step.Nactions {
       Deserialize(rawNode);
     }
 
+    public void SetAttribute(string name, string? value)
+    {
+      if(name == "person_ref")
+      {
+        Set_person_ref(value);
+      }
+    }
+
+    public void SetChild(dynamic linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Nactions.Nby._do _do)
+      {
+        this._do = _do;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nactions.Nby.move_towards move_towards)
+      {
+        this.move_towards = move_towards;
+      }
+
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Nactions.Nby._do)
+      {
+        this._do = new();
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nactions.Nby.move_towards)
+      {
+        this.move_towards = null;
+      }
+
+    }
+
+    public Action OnSelfChange(Action<by> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -43,16 +188,18 @@ namespace XSD.Nworld_step.Nactions {
       }
 
       //Deserialize children
-      this._do = rawNode.InitializeWithRawNode("do", this._do);
-      this.move_towards = rawNode.InitializeWithRawNode("move_towards", this.move_towards);
+      _do = rawNode.InitializeWithRawNode("do", _do);
+
+      move_towards = rawNode.InitializeWithRawNode("move_towards", move_towards);
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.person_ref != null)
+      if(this._person_ref != null)
       {
-        rawNode.attributes["person_ref"] = this.person_ref.ToString();
+        rawNode.attributes["person_ref"] = this._person_ref.ToString();
       }
 
       //Serialize children
@@ -78,36 +225,82 @@ namespace XSD.Nworld_step.Nactions {
     public void Set_person_ref(System.String value)
     {
       this.person_ref = value;
+      this.NotifyChange();
     }
-    public XSD.Nworld_step.Nactions.Nby._do Get__do()
+
+
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
-      return this._do;
-    }
-    public XSD.Nworld_step.Nactions.Nby._do GetOrInsertDefault__do()
-    {
-      if(this._do == null) {
-        this._do = new XSD.Nworld_step.Nactions.Nby._do();
+      if(xpath.StartsWith("."))
+      {
+        xpath = xpath.Substring(1);
       }
-      return this._do;
-    }
-    public void Set__do(XSD.Nworld_step.Nactions.Nby._do value)
-    {
-      this._do = value;
-    }
-    public XSD.Nworld_step.Nactions.Nby.move_towards? Get_move_towards()
-    {
-      return this.move_towards;
-    }
-    public XSD.Nworld_step.Nactions.Nby.move_towards GetOrInsertDefault_move_towards()
-    {
-      if(this.move_towards == null) {
-        this.move_towards = new XSD.Nworld_step.Nactions.Nby.move_towards();
+      if(xpath.StartsWith(XSD.Nworld_step.Nactions.Nby._do.TagName))
+      {
+        var childXPath = xpath.Substring(XSD.Nworld_step.Nactions.Nby._do.TagName.Length + 3);
+        this._do.DeserializeAtPath(childXPath, rawNode);
+        return;
       }
-      return this.move_towards;
+      if(xpath.StartsWith(XSD.Nworld_step.Nactions.Nby.move_towards.TagName))
+      {
+        this.move_towards ??= new XSD.Nworld_step.Nactions.Nby.move_towards();
+        var childXPath = xpath.Substring(XSD.Nworld_step.Nactions.Nby.move_towards.TagName.Length + 3);
+        this.move_towards.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
+
+      Deserialize(rawNode);
     }
-    public void Set_move_towards(XSD.Nworld_step.Nactions.Nby.move_towards? value)
+
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
-      this.move_towards = value;
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
+    }
+
+    public void NotifyChange()
+    {
+      NotifyChange(new ());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Nactions.Nby._do casted__do) {
+        return 0;
+      }
+      if(linkedNode is XSD.Nworld_step.Nactions.Nby.move_towards casted_move_towards) {
+        return 0;
+      }
+      return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nactions.Nby._do
+      || candidateChild is XSD.Nworld_step.Nactions.Nby.move_towards
+      || false;
+    }
+
+    public bool Equals(by? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (by)obj;
+        return Equals(person_ref, other.person_ref) && Equals(_do, other._do) && Equals(move_towards, other.move_towards);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, person_ref);
+        acc = HashCode.Combine(acc, _do);
+        acc = HashCode.Combine(acc, move_towards);
+        return acc;
     }
   }
 }

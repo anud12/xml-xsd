@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -8,10 +11,22 @@ namespace XSD.Nworld_step.Nactions.Nfrom_person.Non_person {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions.Nfrom_person {
-  public class on_person  {
+  public class on_person : IEquatable<on_person>, XSD.ILinkedNode  {
+
+    public static string ClassTypeId = ".world_step.actions.from_person.on_person";
+    public static string TagName = "on_person";
+
+    public string NodeName {get =>"on_person";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<on_person>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
+
     //Attributes
-    public System.String person_id_ref;
+    private System.String _person_id_ref;
+    public System.String person_id_ref { get => _person_id_ref; set => _person_id_ref = value; }
 
     //Children elements
     public on_person()
@@ -29,6 +44,41 @@ namespace XSD.Nworld_step.Nactions.Nfrom_person {
       Deserialize(rawNode);
     }
 
+    public void SetAttribute(string name, string? value)
+    {
+      if(name == "person_id_ref")
+      {
+        Set_person_id_ref(value);
+      }
+    }
+
+    public void SetChild(dynamic linkedNode)
+    {
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+    }
+
+    public Action OnSelfChange(Action<on_person> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -41,14 +91,15 @@ namespace XSD.Nworld_step.Nactions.Nfrom_person {
       }
 
       //Deserialize children
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.person_id_ref != null)
+      if(this._person_id_ref != null)
       {
-        rawNode.attributes["person_id_ref"] = this.person_id_ref.ToString();
+        rawNode.attributes["person_id_ref"] = this._person_id_ref.ToString();
       }
 
       //Serialize children
@@ -68,6 +119,59 @@ namespace XSD.Nworld_step.Nactions.Nfrom_person {
     public void Set_person_id_ref(System.String value)
     {
       this.person_id_ref = value;
+      this.NotifyChange();
+    }
+
+
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith("."))
+      {
+        xpath = xpath.Substring(1);
+      }
+
+      Deserialize(rawNode);
+    }
+
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
+    }
+
+    public void NotifyChange()
+    {
+      NotifyChange(new ());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(on_person? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (on_person)obj;
+        return Equals(person_id_ref, other.person_id_ref);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, person_id_ref);
+        return acc;
     }
   }
 }

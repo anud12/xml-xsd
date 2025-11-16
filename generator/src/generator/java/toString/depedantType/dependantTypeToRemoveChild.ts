@@ -19,13 +19,19 @@ export const dependantTypeToRemoveChild = (dependantType: DependantType): string
 
     let extractString = `null`;
     if(value.isSingle && value.isNullable) {
-      extractString = `this.${normalizeNameField(key)} = Optional.empty();`;
+      extractString = template()`
+        this.${normalizeNameField(key)} = Optional.empty();
+        notifyChange();
+      `;
     }
     if(value.isSingle && !value.isNullable) {
       extractString = `throw new RuntimeException("trying to delete ${normalizeNameField(key)} which is required");`;
     }
     if(!value.isSingle && value.isNullable) {
-      extractString = `this.${normalizeNameField(key)}.remove(object);`;
+      extractString = template()`
+        this.${normalizeNameField(key)}.remove(object);
+        notifyChange();
+      `;
     }
     if(!value.isSingle && !value.isNullable) {
       extractString = `throw new RuntimeException("trying to delete ${normalizeNameField(key)} which is required");`;

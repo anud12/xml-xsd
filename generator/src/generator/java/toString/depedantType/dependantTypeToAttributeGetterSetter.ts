@@ -1,7 +1,7 @@
 import {DependantType} from "../../typeToString";
 import {template} from "../../../../template/template";
 import {normalizeNameClass, normalizeNameField} from "../normalizeNameClass";
-import {getTypeName, primitives} from "../geTypeName";
+import {getTypeName, primitives} from "../getTypeName";
 
 export const dependantTypeToAttributeGetterSetter = (dependantType: DependantType, parentDependantType?:DependantType): string | undefined => {
 
@@ -14,28 +14,28 @@ export const dependantTypeToAttributeGetterSetter = (dependantType: DependantTyp
     let type = getTypeName(value, key, dependantType);
 
     if (value.metaType === "primitive") {
-      if (type !== primitives.int) {
+      if([primitives.int, primitives.double].includes(type)) {
         const typeString = value.isNullable
-          ? `Optional<${primitives.string}>`
-          : primitives.string;
+          ? `Optional<${type}>`
+          : type;
 
         return template()`
-                public ${typeString} get${normalizeNameClass(key)}()
-                {
-                  return this.${normalizeNameField(key)};
-                }
-                public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} set${normalizeNameClass(key)}(${typeString} value)
-                {
-                  this.${normalizeNameField(key)} = value;
-                  triggerOnChange();
-                  return this;
-                }
-                `
+              public ${typeString} get${normalizeNameClass(key)}()
+              {
+                return this.${normalizeNameField(key)};
+              }
+              public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} set${normalizeNameClass(key)}(${typeString} value)
+              {
+                this.${normalizeNameField(key)} = value;
+                notifyChange();
+                return this;
+              }
+              `
       }
 
       const typeString = value.isNullable
-        ? `Optional<${type}>`
-        : type;
+          ? `Optional<${primitives.string}>`
+          : primitives.string;
 
       return template()`
               public ${typeString} get${normalizeNameClass(key)}()
@@ -45,7 +45,7 @@ export const dependantTypeToAttributeGetterSetter = (dependantType: DependantTyp
               public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} set${normalizeNameClass(key)}(${typeString} value)
               {
                 this.${normalizeNameField(key)} = value;
-                triggerOnChange();
+                notifyChange();
                 return this;
               }
               `

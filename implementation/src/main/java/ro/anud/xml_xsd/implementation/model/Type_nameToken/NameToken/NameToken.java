@@ -10,9 +10,7 @@ import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
   @EqualsAndHashCode
   @ToString
@@ -22,33 +20,44 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class NameToken implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/type__name_token/name_token";
-
-    public static NameToken fromRawNode(RawNode rawNode) {
-      logEnter();
-      var instance = new NameToken();
-      instance.rawNode(rawNode);
-      instance.deserialize(rawNode);
-      return logReturn(instance);
-    }
+    public static String nodeName = "name_token";
     public static NameToken fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-      logEnter();
-      var instance = fromRawNode(rawNode);
-      instance.parentNode(parent);
-      return logReturn(instance);
+      try (var logger = logScope()) {
+        var instance = new NameToken();
+        if(Objects.nonNull(parent)) {
+          instance.parentNode(parent);
+        }
+        instance.rawNode(rawNode);
+        instance.deserialize(rawNode);
+        return logger.logReturn(instance);
+      }
+
+    }
+    public static NameToken fromRawNode(RawNode rawNode) {
+      try (var logger = logScope()) {
+        var instance = fromRawNode(rawNode, null);
+        return logger.logReturn(instance);
+      }
     }
     public static Optional<NameToken> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-        logEnter();
-        return logReturn(rawNode.map(o -> NameToken.fromRawNode(o, parent)));
+        try(var logger = logScope()) {
+          return logger.logReturn(rawNode.map(o -> NameToken.fromRawNode(o, parent)));
+        }
+
     }
     public static List<NameToken> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-      logEnter();
-      List<NameToken> returnList = Optional.ofNullable(rawNodeList)
-          .orElse(List.of())
-          .stream()
-          .map(o -> NameToken.fromRawNode(o, parent))
-          .collect(Collectors.toList());
-      return logReturn(returnList);
+      try (var logger = logScope()) {
+        List<NameToken> returnList = Optional.ofNullable(rawNodeList)
+            .orElse(List.of())
+            .stream()
+            .map(o -> NameToken.fromRawNode(o, parent))
+            .collect(Collectors.toList());
+        return logger.logReturn(returnList);
+      }
+    }
+
+    public String classTypeId() {
+      return ".type__name_token.name_token";
     }
 
     //Attributes
@@ -85,42 +94,56 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     @Builder.Default
-    private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
+    private List<ro.anud.xml_xsd.implementation.util.ChangeCallback<NameToken>> onChangeList = new ArrayList<>();
+    @Builder.Default
+    private List<ro.anud.xml_xsd.implementation.util.RemoveCallback<NameToken>> onRemoveList = new ArrayList<>();
 
     public String nodeName() {
       return "name_token";
     }
-
-    public void childChanged(Set<Object> set) {
-      set.add(this);
-      onChangeList.forEach(consumer -> consumer.accept(set));
-      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(set));
+    public static NameToken of() {
+      return new NameToken();
     }
 
-    private void triggerOnChange() {
-      childChanged(new HashSet<>());
+    public void notifyChange(ro.anud.xml_xsd.implementation.util.LinkedNode object) {
+      try (var logger = logScope()) {
+        logger.log("Notify change for", this.buildPath());
+        onChangeList.forEach(consumer -> consumer.onChange(object, this));
+        parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(object));
+      }
+    }
+
+    public void notifyRemove(ro.anud.xml_xsd.implementation.util.LinkedNode object) {
+      try (var logger = logScope()) {
+        logger.log("Notify remove for", this.buildPath());
+        onRemoveList.forEach(consumer -> consumer.onRemove(object, this));
+        parentNode.ifPresent(linkedNode -> linkedNode.notifyRemove(object));
+      }
     }
 
     public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+      this.parentNode.ifPresent(parent -> notifyRemove());
       this.parentNode = Optional.of(linkedNode);
-      triggerOnChange();
+      notifyChange();
     }
 
     public Optional<ro.anud.xml_xsd.implementation.model.Type_nameToken.Type_nameToken> parentAsType_nameToken() {
       return parentNode.flatMap(node -> {
-       if (node instanceof ro.anud.xml_xsd.implementation.model.Type_nameToken.Type_nameToken casted){
-         return Optional.of(casted);
-       }
-       return Optional.empty();
-     });
+        if (node instanceof ro.anud.xml_xsd.implementation.model.Type_nameToken.Type_nameToken casted){
+          return Optional.of(casted);
+        }
+        return Optional.empty();
+      });
     }
 
     public void removeChild(Object object) {
         if(object instanceof ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken._ref._ref) {
           this._ref = Optional.empty();
+          notifyChange();
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.OneOf.OneOf) {
           this.oneOf = Optional.empty();
+          notifyChange();
         }
     }
 
@@ -138,42 +161,66 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<Set<Object>> onChange) {
-      logEnter();
-      onChangeList.add(onChange);
-      return logReturn(() -> onChangeList.remove(onChange));
+    public Subscription onChange(ro.anud.xml_xsd.implementation.util.ChangeCallback<NameToken> callback) {
+      try (var logger = logScope()) {
+        onChangeList.add(callback);
+        return logger.logReturn(() -> onChangeList.remove(callback));
+      }
+    }
+    public Subscription onRemove(ro.anud.xml_xsd.implementation.util.RemoveCallback<NameToken> callback) {
+      try (var logger = logScope()) {
+        onRemoveList.add(callback);
+        return logger.logReturn(() -> onRemoveList.remove(callback));
+      }
     }
 
     public void deserialize (RawNode rawNode) {
-      var logger = logEnter();
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing name_token");
-      var innerLogger = logger.log("attributes");
-      //Deserialize attributes
-      innerLogger.log("prefix");
-      this.prefix = rawNode.getAttributeRequired("prefix");
-      innerLogger = logger.log("children");
-      //Deserialize children
-      this._ref = ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken._ref._ref.fromRawNode(rawNode.getChildrenFirst("ref"), this);
-      this.oneOf = ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.OneOf.OneOf.fromRawNode(rawNode.getChildrenFirst("one_of"), this);
-      logReturnVoid();
+      try (var logger = logScope()) {
+        this.rawNode = rawNode;
+        var isDirty = false;
+        try (var innerLogger = logScope("attributes")) {
+          //Deserialize attributes
+          innerLogger.log("prefix");
+          var prefixValue = rawNode.getAttributeRequired("prefix");
+          if(Objects.equals(this.prefix, prefixValue)) {
+            isDirty = true;
+          }
+          this.prefix = prefixValue;
+        }
+        try (var innerLogger = logScope("children")) {
+          //Deserialize children
+          this._ref = ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken._ref._ref.fromRawNode(rawNode.getChildrenFirst("ref"), this);
+          this.oneOf = ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.OneOf.OneOf.fromRawNode(rawNode.getChildrenFirst("one_of"), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
+        }
+      } catch (Exception e) {
+        throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
+      }
+
     }
 
     public RawNode serializeIntoRawNode()
     {
-      var logger = logEnter();
-      var innerLogger = logger.log("attributes");
-      //Serialize attributes
-      innerLogger.log("prefix");
-      rawNode.setAttribute("prefix", this.prefix);
+      try (var logger = logScope()) {
+        rawNode.setTag("name_token");
+        try (var innerLogger = logScope("attributes")) {
+          //Serialize attributes
+          innerLogger.log("prefix");
+          rawNode.setAttribute("prefix", this.prefix);
+        }
+        try (var innerLogger = logScope("children")) {
 
-      innerLogger = logger.log("children");
-      //Serialize children
-      innerLogger.log("ref");
-      rawNode.setChildren("ref", _ref.stream().map(ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken._ref._ref::serializeIntoRawNode).toList());
-      innerLogger.log("one_of");
-      rawNode.setChildren("one_of", oneOf.stream().map(ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.OneOf.OneOf::serializeIntoRawNode).toList());
-      return rawNode;
+          //Serialize children
+          innerLogger.log("ref");
+          rawNode.setChildren("ref", _ref.stream().map(ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken._ref._ref::serializeIntoRawNode).toList());
+          innerLogger.log("one_of");
+          rawNode.setChildren("one_of", oneOf.stream().map(ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.OneOf.OneOf::serializeIntoRawNode).toList());
+          return rawNode;
+        }
+      }
     }
 
     public void serialize(Document document, Element element)
@@ -190,7 +237,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     public NameToken setPrefix(String value)
     {
       this.prefix = value;
-      triggerOnChange();
+      notifyChange();
       return this;
     }
     public Optional<ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken._ref._ref> get_ref()
@@ -201,8 +248,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this._ref.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken._ref._ref();
-        instance.parentNode(this);
         this._ref = Optional.of(instance);
+        instance.parentNode(this);
         return this._ref.get();
       });
     }
@@ -218,7 +265,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this._ref = Optional.ofNullable(value);
       value.parentNode(this);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
 
@@ -230,8 +277,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.oneOf.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.OneOf.OneOf();
-        instance.parentNode(this);
         this.oneOf = Optional.of(instance);
+        instance.parentNode(this);
         return this.oneOf.get();
       });
     }
@@ -247,11 +294,61 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.oneOf = Optional.ofNullable(value);
       value.parentNode(this);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
 
+    public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken._ref._ref.nodeName))
+        {
+          if(this._ref.isEmpty()) {
+            this._ref = Optional.of(new ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken._ref._ref());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken._ref._ref.nodeName.length() + 3);
+          return this._ref.get().deserializeAtPath(childXPath, rawNode);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.OneOf.OneOf.nodeName))
+        {
+          if(this.oneOf.isEmpty()) {
+            this.oneOf = Optional.of(new ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.OneOf.OneOf());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.OneOf.OneOf.nodeName.length() + 3);
+          return this.oneOf.get().deserializeAtPath(childXPath, rawNode);
+        }
+
+        deserialize(rawNode);
+        return this;
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getNodeAtPath(String xpath) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken._ref._ref.nodeName))
+        {
+          if(this._ref.isEmpty()) {
+            this._ref = Optional.of(new ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken._ref._ref());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken._ref._ref.nodeName.length() + 3);
+          return this._ref.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.OneOf.OneOf.nodeName))
+        {
+          if(this.oneOf.isEmpty()) {
+            this.oneOf = Optional.of(new ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.OneOf.OneOf());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_nameToken.NameToken.OneOf.OneOf.nodeName.length() + 3);
+          return this.oneOf.get().getNodeAtPath(childXPath);
+        }
+        return Optional.of(this);
+    }
   }
+
 
   /*
     dependant type:

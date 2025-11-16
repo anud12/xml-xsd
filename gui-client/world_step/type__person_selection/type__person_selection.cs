@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -8,16 +11,170 @@ namespace XSD.Ntype__person_selection {}
 namespace XSD {
 }
 namespace XSD {
-  public class type__person_selection  {
+  public class type__person_selection : IEquatable<type__person_selection>, XSD.ILinkedNode  {
+
+    public static string ClassTypeId = ".type__person_selection";
+    public static string TagName = "type__person_selection";
+
+    public string NodeName {get =>"type__person_selection";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<type__person_selection>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
+
     //Attributes
 
     //Children elements
-    public type__math_operations? radius = null;
-    public type__math_operations? min = null;
-    public type__math_operations? max = null;
-    public List<XSD.Ntype__person_selection.property>? property = new List<XSD.Ntype__person_selection.property>();
-    public List<XSD.Ntype__person_selection.classification>? classification = new List<XSD.Ntype__person_selection.classification>();
+    private type__math_operations? _radius = null;
+    public type__math_operations radiusOrCreate
+    {
+      get
+      {
+        if(_radius == null)
+        {
+          _radius = new();
+          _radius.ParentNode = this;
+          NotifyChange();
+        }
+        return _radius;
+      }
+      set
+      {
+        _radius = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__math_operations? radius
+    {
+      get
+      {
+        return _radius;
+      }
+      set
+      {
+        _radius = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
+
+    private type__math_operations? _min = null;
+    public type__math_operations minOrCreate
+    {
+      get
+      {
+        if(_min == null)
+        {
+          _min = new();
+          _min.ParentNode = this;
+          NotifyChange();
+        }
+        return _min;
+      }
+      set
+      {
+        _min = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__math_operations? min
+    {
+      get
+      {
+        return _min;
+      }
+      set
+      {
+        _min = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
+
+    private type__math_operations? _max = null;
+    public type__math_operations maxOrCreate
+    {
+      get
+      {
+        if(_max == null)
+        {
+          _max = new();
+          _max.ParentNode = this;
+          NotifyChange();
+        }
+        return _max;
+      }
+      set
+      {
+        _max = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__math_operations? max
+    {
+      get
+      {
+        return _max;
+      }
+      set
+      {
+        _max = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
+
+    private LinkedNodeCollection<XSD.Ntype__person_selection.property> _property = new();
+    public LinkedNodeCollection<XSD.Ntype__person_selection.property> property
+    {
+      get => _property;
+      set
+      {
+        _property = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _property.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          NotifyChange();
+        };
+      }
+    }
+
+    private LinkedNodeCollection<XSD.Ntype__person_selection.classification> _classification = new();
+    public LinkedNodeCollection<XSD.Ntype__person_selection.classification> classification
+    {
+      get => _classification;
+      set
+      {
+        _classification = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _classification.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          NotifyChange();
+        };
+      }
+    }
     public type__person_selection()
     {
     }
@@ -33,6 +190,88 @@ namespace XSD {
       Deserialize(rawNode);
     }
 
+    public void SetAttribute(string name, string? value)
+    {
+    }
+
+    public void SetChild(dynamic linkedNode)
+    {
+      if(linkedNode is type__math_operations radius)
+      {
+        this.radius = radius;
+      }
+
+      if(linkedNode is type__math_operations min)
+      {
+        this.min = min;
+      }
+
+      if(linkedNode is type__math_operations max)
+      {
+        this.max = max;
+      }
+
+
+      if(linkedNode is LinkedNodeCollection<XSD.Ntype__person_selection.property> property)
+      {
+        this.property = property;
+      }
+
+      if(linkedNode is LinkedNodeCollection<XSD.Ntype__person_selection.classification> classification)
+      {
+        this.classification = classification;
+      }
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is type__math_operations)
+      {
+        this.radius = null;
+      }
+
+      if(linkedNode is type__math_operations)
+      {
+        this.min = null;
+      }
+
+      if(linkedNode is type__math_operations)
+      {
+        this.max = null;
+      }
+
+
+      if(linkedNode is LinkedNodeCollection<XSD.Ntype__person_selection.property>)
+      {
+        this.property = null;
+      }
+
+      if(linkedNode is LinkedNodeCollection<XSD.Ntype__person_selection.classification>)
+      {
+        this.classification = null;
+      }
+    }
+
+
+    public Action OnSelfChange(Action<type__person_selection> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -40,11 +279,25 @@ namespace XSD {
       //Deserialize arguments
 
       //Deserialize children
-      this.radius = rawNode.InitializeWithRawNode("radius", this.radius);
-      this.min = rawNode.InitializeWithRawNode("min", this.min);
-      this.max = rawNode.InitializeWithRawNode("max", this.max);
-      this.property = rawNode.InitializeWithRawNode("property", this.property);
-      this.classification = rawNode.InitializeWithRawNode("classification", this.classification);
+      radius = rawNode.InitializeWithRawNode("radius", radius);
+
+      min = rawNode.InitializeWithRawNode("min", min);
+
+      max = rawNode.InitializeWithRawNode("max", max);
+
+      property = rawNode.InitializeWithRawNode("property", property);
+      property.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          NotifyChange();
+        };
+      classification = rawNode.InitializeWithRawNode("classification", classification);
+      classification.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          NotifyChange();
+        };
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -72,59 +325,140 @@ namespace XSD {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public type__math_operations? Get_radius()
+
+
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
-      return this.radius;
-    }
-    public void Set_radius(type__math_operations? value)
-    {
-      this.radius = value;
-    }
-    public type__math_operations? Get_min()
-    {
-      return this.min;
-    }
-    public void Set_min(type__math_operations? value)
-    {
-      this.min = value;
-    }
-    public type__math_operations? Get_max()
-    {
-      return this.max;
-    }
-    public void Set_max(type__math_operations? value)
-    {
-      this.max = value;
-    }
-    public List<XSD.Ntype__person_selection.property>? Get_property()
-    {
-      return this.property;
-    }
-    public List<XSD.Ntype__person_selection.property> GetOrInsertDefault_property()
-    {
-      if(this.property == null) {
-        this.property = new List<XSD.Ntype__person_selection.property>();
+      if(xpath.StartsWith("."))
+      {
+        xpath = xpath.Substring(1);
       }
-      return this.property;
-    }
-    public void Set_property(List<XSD.Ntype__person_selection.property>? value)
-    {
-      this.property = value;
-    }
-    public List<XSD.Ntype__person_selection.classification>? Get_classification()
-    {
-      return this.classification;
-    }
-    public List<XSD.Ntype__person_selection.classification> GetOrInsertDefault_classification()
-    {
-      if(this.classification == null) {
-        this.classification = new List<XSD.Ntype__person_selection.classification>();
+      if(xpath.StartsWith(type__math_operations.TagName))
+      {
+        this.radius ??= new type__math_operations();
+        var childXPath = xpath.Substring(type__math_operations.TagName.Length + 3);
+        this.radius.DeserializeAtPath(childXPath, rawNode);
+        return;
       }
-      return this.classification;
+      if(xpath.StartsWith(type__math_operations.TagName))
+      {
+        this.min ??= new type__math_operations();
+        var childXPath = xpath.Substring(type__math_operations.TagName.Length + 3);
+        this.min.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
+      if(xpath.StartsWith(type__math_operations.TagName))
+      {
+        this.max ??= new type__math_operations();
+        var childXPath = xpath.Substring(type__math_operations.TagName.Length + 3);
+        this.max.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
+      if(xpath.StartsWith(XSD.Ntype__person_selection.property.TagName + "["))
+      {
+        var startIndex = (XSD.Ntype__person_selection.property.TagName + "[").Length;
+        var startTokens = xpath.Split(XSD.Ntype__person_selection.property.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Ntype__person_selection.property.TagName + "[" + indexString + "]", "");
+        var pathIndex = indexString.ToInt();
+        if(this.property.ContainsKey(pathIndex))
+        {
+          this.property[pathIndex].DeserializeAtPath(childXPath, rawNode);
+          return;
+        }
+        var newEntry = new XSD.Ntype__person_selection.property();
+        this.property[pathIndex] = newEntry;
+        newEntry.DeserializeAtPath(childXPath, rawNode);
+
+        return;
+      }
+      if(xpath.StartsWith(XSD.Ntype__person_selection.classification.TagName + "["))
+      {
+        var startIndex = (XSD.Ntype__person_selection.classification.TagName + "[").Length;
+        var startTokens = xpath.Split(XSD.Ntype__person_selection.classification.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Ntype__person_selection.classification.TagName + "[" + indexString + "]", "");
+        var pathIndex = indexString.ToInt();
+        if(this.classification.ContainsKey(pathIndex))
+        {
+          this.classification[pathIndex].DeserializeAtPath(childXPath, rawNode);
+          return;
+        }
+        var newEntry = new XSD.Ntype__person_selection.classification();
+        this.classification[pathIndex] = newEntry;
+        newEntry.DeserializeAtPath(childXPath, rawNode);
+
+        return;
+      }
+
+      Deserialize(rawNode);
     }
-    public void Set_classification(List<XSD.Ntype__person_selection.classification>? value)
+
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
-      this.classification = value;
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
+    }
+
+    public void NotifyChange()
+    {
+      NotifyChange(new ());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is type__math_operations casted_radius) {
+        return 0;
+      }
+      if(linkedNode is type__math_operations casted_min) {
+        return 0;
+      }
+      if(linkedNode is type__math_operations casted_max) {
+        return 0;
+      }
+      if(linkedNode is XSD.Ntype__person_selection.property casted_property) {
+        return this._property.KeyOf(casted_property);
+      }
+      if(linkedNode is XSD.Ntype__person_selection.classification casted_classification) {
+        return this._classification.KeyOf(casted_classification);
+      }
+      return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is type__math_operations
+      || candidateChild is type__math_operations
+      || candidateChild is type__math_operations
+      || candidateChild is XSD.Ntype__person_selection.property
+      || candidateChild is XSD.Ntype__person_selection.classification
+      || false;
+    }
+
+    public bool Equals(type__person_selection? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (type__person_selection)obj;
+        return Equals(radius, other.radius) && Equals(min, other.min) && Equals(max, other.max) && Equals(property, other.property) && Equals(classification, other.classification);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, radius);
+        acc = HashCode.Combine(acc, min);
+        acc = HashCode.Combine(acc, max);
+        acc = HashCode.Combine(acc, property);
+        acc = HashCode.Combine(acc, classification);
+        return acc;
     }
   }
 }

@@ -11,7 +11,16 @@ export const dependantTypeToChildrenDeserializationBody = (dependantType: Depend
 
   return Object.entries(dependantType.value.value).map(([key, value]) => {
     if (value.metaType === "object" || value.metaType === "union" || value.metaType === "composition" || value.metaType === "reference") {
-      return template()`this.${normalizeName(key)} = rawNode.InitializeWithRawNode("${key}", this.${normalizeName(key)});`;
+      return template()`
+        ${normalizeName(key)} = rawNode.InitializeWithRawNode("${key}", ${normalizeName(key)});
+        ${!value.isSingle && template()`
+            ${normalizeName(key)}.OnAdd = (value) =>
+              {
+                value.ParentNode = this;
+                NotifyChange();
+              };
+        `}
+      `;
     }
   }).filter(e => e).join("\n")
 

@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -8,12 +11,38 @@ namespace XSD.Nworld_step.Ndata.Nlocation {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata {
-  public class location  {
+  public class location : IEquatable<location>, XSD.ILinkedNode  {
+
+    public static string ClassTypeId = ".world_step.data.location";
+    public static string TagName = "location";
+
+    public string NodeName {get =>"location";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<location>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
+
     //Attributes
 
     //Children elements
-    public List<XSD.Nworld_step.Ndata.Nlocation.location_graph>? location_graph = new List<XSD.Nworld_step.Ndata.Nlocation.location_graph>();
+
+    private LinkedNodeCollection<XSD.Nworld_step.Ndata.Nlocation.location_graph> _location_graph = new();
+    public LinkedNodeCollection<XSD.Nworld_step.Ndata.Nlocation.location_graph> location_graph
+    {
+      get => _location_graph;
+      set
+      {
+        _location_graph = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _location_graph.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          NotifyChange();
+        };
+      }
+    }
     public location()
     {
     }
@@ -29,6 +58,47 @@ namespace XSD.Nworld_step.Ndata {
       Deserialize(rawNode);
     }
 
+    public void SetAttribute(string name, string? value)
+    {
+    }
+
+    public void SetChild(dynamic linkedNode)
+    {
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Ndata.Nlocation.location_graph> location_graph)
+      {
+        this.location_graph = location_graph;
+      }
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Ndata.Nlocation.location_graph>)
+      {
+        this.location_graph = null;
+      }
+    }
+
+    public Action OnSelfChange(Action<location> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -36,7 +106,13 @@ namespace XSD.Nworld_step.Ndata {
       //Deserialize arguments
 
       //Deserialize children
-      this.location_graph = rawNode.InitializeWithRawNode("location_graph", this.location_graph);
+      location_graph = rawNode.InitializeWithRawNode("location_graph", location_graph);
+      location_graph.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          NotifyChange();
+        };
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -54,20 +130,80 @@ namespace XSD.Nworld_step.Ndata {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public List<XSD.Nworld_step.Ndata.Nlocation.location_graph>? Get_location_graph()
+
+
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
-      return this.location_graph;
-    }
-    public List<XSD.Nworld_step.Ndata.Nlocation.location_graph> GetOrInsertDefault_location_graph()
-    {
-      if(this.location_graph == null) {
-        this.location_graph = new List<XSD.Nworld_step.Ndata.Nlocation.location_graph>();
+      if(xpath.StartsWith("."))
+      {
+        xpath = xpath.Substring(1);
       }
-      return this.location_graph;
+      if(xpath.StartsWith(XSD.Nworld_step.Ndata.Nlocation.location_graph.TagName + "["))
+      {
+        var startIndex = (XSD.Nworld_step.Ndata.Nlocation.location_graph.TagName + "[").Length;
+        var startTokens = xpath.Split(XSD.Nworld_step.Ndata.Nlocation.location_graph.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Ndata.Nlocation.location_graph.TagName + "[" + indexString + "]", "");
+        var pathIndex = indexString.ToInt();
+        if(this.location_graph.ContainsKey(pathIndex))
+        {
+          this.location_graph[pathIndex].DeserializeAtPath(childXPath, rawNode);
+          return;
+        }
+        var newEntry = new XSD.Nworld_step.Ndata.Nlocation.location_graph();
+        this.location_graph[pathIndex] = newEntry;
+        newEntry.DeserializeAtPath(childXPath, rawNode);
+
+        return;
+      }
+
+      Deserialize(rawNode);
     }
-    public void Set_location_graph(List<XSD.Nworld_step.Ndata.Nlocation.location_graph>? value)
+
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
-      this.location_graph = value;
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
+    }
+
+    public void NotifyChange()
+    {
+      NotifyChange(new ());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Ndata.Nlocation.location_graph casted_location_graph) {
+        return this._location_graph.KeyOf(casted_location_graph);
+      }
+      return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Ndata.Nlocation.location_graph
+      || false;
+    }
+
+    public bool Equals(location? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (location)obj;
+        return Equals(location_graph, other.location_graph);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, location_graph);
+        return acc;
     }
   }
 }

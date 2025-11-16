@@ -1,8 +1,9 @@
 using System;
 using System.Diagnostics;
 using System.Threading;
-using dataStore;
+using util.dataStore;
 using Godot;
+using Guiclient.util;
 
 namespace Dependencies
 {
@@ -82,7 +83,7 @@ namespace Dependencies
                 {
                     while (process.HasExited == false)
                     {
-                        GD.Print("nodeDependency: " + process.StandardOutput.ReadLine());
+                        Logger.Info("nodeDependency: " + process.StandardOutput.ReadLine());
                     }
                 }).Start();
                 //thread to read from standard error
@@ -90,7 +91,7 @@ namespace Dependencies
                 {
                     while (process.HasExited == false)
                     {
-                        GD.Print("nodeDependency [Error]: " + process.StandardError.ReadLine());
+                        Logger.Info("nodeDependency [Error]: " + process.StandardError.ReadLine());
                     }
                 }).Start();
 

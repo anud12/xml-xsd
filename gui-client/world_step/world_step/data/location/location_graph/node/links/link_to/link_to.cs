@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -8,15 +11,103 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to 
 namespace XSD {
 }
 namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks {
-  public class link_to  {
+  public class link_to : IEquatable<link_to>, XSD.ILinkedNode  {
+
+    public static string ClassTypeId = ".world_step.data.location.location_graph.node.links.link_to";
+    public static string TagName = "link_to";
+
+    public string NodeName {get =>"link_to";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<link_to>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
+
     //Attributes
-    public System.String node_id_ref;
-    public System.Int32 total_progress;
+    private System.String _node_id_ref;
+    public System.String node_id_ref { get => _node_id_ref; set => _node_id_ref = value; }
+    private System.Int32 _total_progress;
+    public System.Int32 total_progress { get => _total_progress; set => _total_progress = value; }
 
     //Children elements
-    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people? people = null;
-    public type__math_operations? person_progress_property = null;
+    private XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people? _people = null;
+    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people peopleOrCreate
+    {
+      get
+      {
+        if(_people == null)
+        {
+          _people = new();
+          _people.ParentNode = this;
+          NotifyChange();
+        }
+        return _people;
+      }
+      set
+      {
+        _people = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people? people
+    {
+      get
+      {
+        return _people;
+      }
+      set
+      {
+        _people = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
+
+    private type__math_operations? _person_progress_property = null;
+    public type__math_operations person_progress_propertyOrCreate
+    {
+      get
+      {
+        if(_person_progress_property == null)
+        {
+          _person_progress_property = new();
+          _person_progress_property.ParentNode = this;
+          NotifyChange();
+        }
+        return _person_progress_property;
+      }
+      set
+      {
+        _person_progress_property = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__math_operations? person_progress_property
+    {
+      get
+      {
+        return _person_progress_property;
+      }
+      set
+      {
+        _person_progress_property = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
     public link_to()
     {
     }
@@ -30,6 +121,65 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks {
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
+    }
+
+    public void SetAttribute(string name, string? value)
+    {
+      if(name == "node_id_ref")
+      {
+        Set_node_id_ref(value);
+      }
+      if(name == "total_progress")
+      {
+        Set_total_progress(value?.ToInt() ?? 0);
+      }
+    }
+
+    public void SetChild(dynamic linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people people)
+      {
+        this.people = people;
+      }
+
+      if(linkedNode is type__math_operations person_progress_property)
+      {
+        this.person_progress_property = person_progress_property;
+      }
+
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people)
+      {
+        this.people = null;
+      }
+
+      if(linkedNode is type__math_operations)
+      {
+        this.person_progress_property = null;
+      }
+
+    }
+
+    public Action OnSelfChange(Action<link_to> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -49,20 +199,22 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks {
       }
 
       //Deserialize children
-      this.people = rawNode.InitializeWithRawNode("people", this.people);
-      this.person_progress_property = rawNode.InitializeWithRawNode("person_progress_property", this.person_progress_property);
+      people = rawNode.InitializeWithRawNode("people", people);
+
+      person_progress_property = rawNode.InitializeWithRawNode("person_progress_property", person_progress_property);
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.node_id_ref != null)
+      if(this._node_id_ref != null)
       {
-        rawNode.attributes["node_id_ref"] = this.node_id_ref.ToString();
+        rawNode.attributes["node_id_ref"] = this._node_id_ref.ToString();
       }
-      if(this.total_progress != null)
+      if(this._total_progress != null)
       {
-        rawNode.attributes["total_progress"] = this.total_progress.ToString();
+        rawNode.attributes["total_progress"] = this._total_progress.ToString();
       }
 
       //Serialize children
@@ -88,6 +240,7 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks {
     public void Set_node_id_ref(System.String value)
     {
       this.node_id_ref = value;
+      this.NotifyChange();
     }
     public System.Int32 Get_total_progress()
     {
@@ -96,29 +249,84 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks {
     public void Set_total_progress(System.Int32 value)
     {
       this.total_progress = value;
+      this.NotifyChange();
     }
-    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people? Get_people()
+
+
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
-      return this.people;
-    }
-    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people GetOrInsertDefault_people()
-    {
-      if(this.people == null) {
-        this.people = new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people();
+      if(xpath.StartsWith("."))
+      {
+        xpath = xpath.Substring(1);
       }
-      return this.people;
+      if(xpath.StartsWith(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people.TagName))
+      {
+        this.people ??= new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people();
+        var childXPath = xpath.Substring(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people.TagName.Length + 3);
+        this.people.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
+      if(xpath.StartsWith(type__math_operations.TagName))
+      {
+        this.person_progress_property ??= new type__math_operations();
+        var childXPath = xpath.Substring(type__math_operations.TagName.Length + 3);
+        this.person_progress_property.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
+
+      Deserialize(rawNode);
     }
-    public void Set_people(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people? value)
+
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
-      this.people = value;
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
-    public type__math_operations? Get_person_progress_property()
+
+    public void NotifyChange()
     {
-      return this.person_progress_property;
+      NotifyChange(new ());
     }
-    public void Set_person_progress_property(type__math_operations? value)
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
-      this.person_progress_property = value;
+      if(linkedNode is XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people casted_people) {
+        return 0;
+      }
+      if(linkedNode is type__math_operations casted_person_progress_property) {
+        return 0;
+      }
+      return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people
+      || candidateChild is type__math_operations
+      || false;
+    }
+
+    public bool Equals(link_to? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (link_to)obj;
+        return Equals(node_id_ref, other.node_id_ref) && Equals(total_progress, other.total_progress) && Equals(people, other.people) && Equals(person_progress_property, other.person_progress_property);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, node_id_ref);
+        acc = HashCode.Combine(acc, total_progress);
+        acc = HashCode.Combine(acc, people);
+        acc = HashCode.Combine(acc, person_progress_property);
+        return acc;
     }
   }
 }

@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -8,11 +11,24 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport.Nlocation_graph {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions.Nperson__teleport {
-  public class location_graph  {
+  public class location_graph : IEquatable<location_graph>, XSD.ILinkedNode  {
+
+    public static string ClassTypeId = ".world_step.actions.person.teleport.location_graph";
+    public static string TagName = "location_graph";
+
+    public string NodeName {get =>"location_graph";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<location_graph>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
+
     //Attributes
-    public System.String location_graph_id_ref;
-    public System.String node_id_ref;
+    private System.String _location_graph_id_ref;
+    public System.String location_graph_id_ref { get => _location_graph_id_ref; set => _location_graph_id_ref = value; }
+    private System.String _node_id_ref;
+    public System.String node_id_ref { get => _node_id_ref; set => _node_id_ref = value; }
 
     //Children elements
     public location_graph()
@@ -28,6 +44,45 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
+    }
+
+    public void SetAttribute(string name, string? value)
+    {
+      if(name == "location_graph_id_ref")
+      {
+        Set_location_graph_id_ref(value);
+      }
+      if(name == "node_id_ref")
+      {
+        Set_node_id_ref(value);
+      }
+    }
+
+    public void SetChild(dynamic linkedNode)
+    {
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+    }
+
+    public Action OnSelfChange(Action<location_graph> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -47,18 +102,19 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
       }
 
       //Deserialize children
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.location_graph_id_ref != null)
+      if(this._location_graph_id_ref != null)
       {
-        rawNode.attributes["location_graph_id_ref"] = this.location_graph_id_ref.ToString();
+        rawNode.attributes["location_graph_id_ref"] = this._location_graph_id_ref.ToString();
       }
-      if(this.node_id_ref != null)
+      if(this._node_id_ref != null)
       {
-        rawNode.attributes["node_id_ref"] = this.node_id_ref.ToString();
+        rawNode.attributes["node_id_ref"] = this._node_id_ref.ToString();
       }
 
       //Serialize children
@@ -78,6 +134,7 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
     public void Set_location_graph_id_ref(System.String value)
     {
       this.location_graph_id_ref = value;
+      this.NotifyChange();
     }
     public System.String Get_node_id_ref()
     {
@@ -86,6 +143,60 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
     public void Set_node_id_ref(System.String value)
     {
       this.node_id_ref = value;
+      this.NotifyChange();
+    }
+
+
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith("."))
+      {
+        xpath = xpath.Substring(1);
+      }
+
+      Deserialize(rawNode);
+    }
+
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
+    }
+
+    public void NotifyChange()
+    {
+      NotifyChange(new ());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(location_graph? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (location_graph)obj;
+        return Equals(location_graph_id_ref, other.location_graph_id_ref) && Equals(node_id_ref, other.node_id_ref);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, location_graph_id_ref);
+        acc = HashCode.Combine(acc, node_id_ref);
+        return acc;
     }
   }
 }

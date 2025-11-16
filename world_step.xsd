@@ -1,5 +1,15 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
+
+  <xs:complexType name="type__entity">
+    <xs:attribute name="entity_rule_ref" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="type__entity_rule">
+    <xs:attribute name="name" type="xs:string" use="required"/>
+  </xs:complexType>
+
+
   <xs:complexType name="type__property_mutation_on">
     <xs:complexContent>
       <xs:extension base="type__property_mutation">
@@ -561,6 +571,129 @@
     </xs:attribute>
   </xs:complexType>
 
+  <!--######-->
+  <!-- Region -->
+  <!--######-->
+
+  <xs:complexType name="type__portal_rule">
+    <xs:sequence>
+      <xs:element name="limit">
+        <xs:complexType>
+          <xs:attribute name="width" type="xs:int" use="required">
+            <xs:annotation>
+              <xs:documentation>
+                Represents the width of the portal.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="to">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="region" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:attribute name="region_rule_ref" type="xs:string" use="required"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="type__region_rule">
+    <xs:sequence>
+      <xs:element name="limit">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="width" type="type__math_operations">
+              <xs:annotation>
+                <xs:documentation>
+                  Represents the width of the region.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="height" type="type__math_operations">
+              <xs:annotation>
+                <xs:documentation>
+                  Represents the height of the region.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="portals" minOccurs="0" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="portal" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="start" type="type__math_operations">
+                    <xs:annotation>
+                      <xs:documentation>
+                        Indicates the starting fractional position along the target node edge where the portal begins.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:sequence>
+                <xs:attribute name="side" type="type__rectangle_side" use="required"/>
+                <xs:attribute name="portal_rule_ref" type="xs:string" use="required"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="type__rectangle_side">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="left"/>
+      <xs:enumeration value="right"/>
+      <xs:enumeration value="top"/>
+      <xs:enumeration value="bottom"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="type__rotation_90deg_step">
+    <xs:annotation>
+      <xs:documentation>
+        Allowed values represent rotations relative to 0 degrees (no rotation).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="normal">
+        <xs:annotation>
+          <xs:documentation>
+            Represents the normal orientation of the rectangle.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="clockwise">
+        <xs:annotation>
+          <xs:documentation>
+            Represents the rectangle rotated 90 degrees.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="inverted">
+        <xs:annotation>
+          <xs:documentation>
+            Represents the rectangle rotated 180 degrees.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="counterclockwise">
+        <xs:annotation>
+          <xs:documentation>
+            Represents the rectangle rotated 270 degrees.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+
   <xs:element name="world_step">
     <xs:complexType>
       <xs:sequence>
@@ -664,6 +797,20 @@
           </xs:annotation>
           <xs:complexType>
             <xs:all>
+
+              <xs:element name="entity_rule" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:complexContent>
+                          <xs:extension base="type__entity_rule"/>
+                        </xs:complexContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
 
 
               <xs:element name="property_rule" minOccurs="0">
@@ -1102,6 +1249,118 @@
                 </xs:complexType>
               </xs:element>
 
+              <xs:element name="node_rule" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="area">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Represents the area of the node.
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="height" type="type__math_operations"/>
+                          <xs:element name="width" type="type__math_operations"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="portals">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Represents the portals of the node.
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="portal" minOccurs="0" maxOccurs="unbounded">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Represents a portal in the node.
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="width" type="type__math_operations"/>
+                                <xs:element name="height" type="type__math_operations"/>
+                                <xs:element name="to">
+                                  <xs:annotation>
+                                    <xs:documentation>
+                                      Represents the target node of the portal.
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="side" type="type__rectangle_side"/>
+                                      <xs:element name="width" type="type__math_operations"/>
+                                      <xs:element name="height" type="type__math_operations"/>
+                                    </xs:sequence>
+                                    <xs:attribute name="node_rule_ref" type="xs:string" use="required"/>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                              <xs:attribute name="side" type="type__rectangle_side" use="required">
+                              </xs:attribute>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="id" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
+
+              <xs:element name="portal_rule" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:complexContent>
+                          <xs:extension base="type__portal_rule">
+                            <xs:attribute name="id" type="xs:string" use="required"/>
+                          </xs:extension>
+                        </xs:complexContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+              <xs:element name="region_rule" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:complexContent>
+                          <xs:extension base="type__region_rule">
+                            <xs:attribute name="id" type="xs:string" use="required"/>
+                          </xs:extension>
+                        </xs:complexContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+              <xs:element name="zone_rule" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="entry" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="starting_region">
+                            <xs:complexType>
+                              <xs:attribute name="region_rule_ref" type="xs:string" use="required"/>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="id" type="xs:string" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
 
             </xs:all>
 
@@ -1112,6 +1371,19 @@
         <xs:element name="data" minOccurs="0">
           <xs:complexType>
             <xs:all>
+              <xs:element name="entities" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="entity" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:complexContent>
+                          <xs:extension base="type__entity"/>
+                        </xs:complexContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
               <xs:element name="people" minOccurs="0">
                 <xs:complexType>
                   <xs:sequence>
@@ -1337,6 +1609,229 @@
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
+
+              <xs:element name="zone_list" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="zone" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element  name="region" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:annotation>
+                                <xs:documentation>
+                                  Represents a region within a zone.
+                                </xs:documentation>
+                              </xs:annotation>
+                              <xs:all>
+                                <xs:element name="rule">
+                                  <xs:complexType>
+                                    <xs:attribute name="rule_id_ref" type="xs:string" use="required"/>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="position">
+                                  <xs:annotation>
+                                    <xs:documentation>
+                                      Defines the node's position in the zone.
+                                      Reference rotation is assumed to be 0 degrees (no rotation).
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                  <xs:complexType>
+                                    <xs:attribute name="x" type="xs:int" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation>
+                                          Horizontal coordinate.
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="y" type="xs:int" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation>
+                                          Vertical coordinate.
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="rotation" type="type__rotation_90deg_step" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation>
+                                          Rotation of the rectangle in 90 degree steps.
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="limit">
+                                  <xs:annotation>
+                                    <xs:documentation>
+                                      Defines the dimensions of the region.
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                  <xs:complexType>
+                                    <xs:attribute name="width" type="xs:int" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation>
+                                          Width of the rectangle (decimal).
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="height" type="xs:int" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation>
+                                          Height of the rectangle (decimal).
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                  </xs:complexType>
+                                </xs:element>
+
+                                <xs:element name="available_portals" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="portal" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                          <xs:attribute name="id" type="xs:string" use="required"/>
+                                          <xs:attribute name="start" type="xs:int" use="required"/>
+                                          <xs:attribute name="side" type="type__rectangle_side" use="required"/>
+                                          <xs:attribute name="portal_rule_ref" type="xs:string" use="required"/>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+
+                                <xs:element name="portals" minOccurs="0">
+                                  <xs:annotation>
+                                    <xs:documentation>
+                                      Container element for portals originating from this node.
+                                      Each Portal connects this node to a target node.
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="portal" maxOccurs="unbounded">
+                                        <xs:annotation>
+                                          <xs:documentation>
+                                            Defines a connection between nodes.
+                                          </xs:documentation>
+                                        </xs:annotation>
+                                        <xs:complexType>
+                                          <xs:sequence>
+
+                                            <xs:element name="from">
+                                              <xs:annotation>
+                                                <xs:documentation>
+                                                  Represents the source node or region from which the portal originates within the zone.
+                                                  This element defines the starting point of the portal connection to another region.
+                                                </xs:documentation>
+                                              </xs:annotation>
+                                              <xs:complexType>
+                                                <xs:attribute name="side" type="type__rectangle_side" use="required">
+                                                  <xs:annotation>
+                                                    <xs:documentation>
+                                                      Specifies the edge of the source node or region from which the portal originates.
+                                                    </xs:documentation>
+                                                  </xs:annotation>
+                                                </xs:attribute>
+                                                <xs:attribute name="start" type="xs:int" use="required">
+                                                  <xs:annotation>
+                                                    <xs:documentation>
+                                                      Indicates the start position along the source node edge where the portal begins.
+                                                    </xs:documentation>
+                                                  </xs:annotation>
+                                                </xs:attribute>
+                                                <xs:attribute name="end" type="xs:int" use="required">
+                                                  <xs:annotation>
+                                                    <xs:documentation>
+                                                      Indicates the end position along the source node edge where the portal begins.
+                                                    </xs:documentation>
+                                                  </xs:annotation>
+                                                </xs:attribute>
+                                              </xs:complexType>
+                                            </xs:element>
+                                            <xs:element name="to" minOccurs="0">
+                                              <xs:annotation>
+                                                <xs:documentation>
+                                                  Represents the target node or region to which the portal connects within the zone.
+                                                  This element defines the endpoint of the portal connection to another region.
+                                                </xs:documentation>
+                                              </xs:annotation>
+                                              <xs:complexType>
+                                                <xs:attribute name="zone_ref" type="xs:string" use="required">
+                                                  <xs:annotation>
+                                                    <xs:documentation>
+                                                      Reference to the zone where the target node or region is located.
+                                                      This allows linking to regions in different zones.
+                                                    </xs:documentation>
+                                                  </xs:annotation>
+                                                </xs:attribute>
+                                                <xs:attribute name="region_ref" type="xs:string" use="required">
+                                                  <xs:annotation>
+                                                    <xs:documentation>
+                                                      Reference to the specific region within the target zone.
+                                                      This identifies the destination region for the portal connection.
+                                                    </xs:documentation>
+                                                  </xs:annotation>
+                                                </xs:attribute>
+                                                <xs:attribute name="side" type="type__rectangle_side" use="required">
+                                                  <xs:annotation>
+                                                    <xs:documentation>
+                                                      Specifies the edge of the target node or region where the portal connects.
+                                                      This defines the destination side for the portal connection.
+                                                    </xs:documentation>
+                                                  </xs:annotation>
+                                                </xs:attribute>
+                                                <xs:attribute name="start" type="xs:int" use="required">
+                                                  <xs:annotation>
+                                                    <xs:documentation>
+                                                      Indicates the fractional position along the target node edge where the portal ends.
+                                                      Value must be between 0.0 and 100 .
+                                                    </xs:documentation>
+                                                  </xs:annotation>
+                                                </xs:attribute>
+                                                <xs:attribute name="end" type="xs:int" use="required">
+                                                  <xs:annotation>
+                                                    <xs:documentation>
+                                                      Maximum width of the portal at this endpoint.
+                                                      If not specified, defaults to the width of the target node edge.
+                                                    </xs:documentation>
+                                                  </xs:annotation>
+                                                </xs:attribute>
+                                              </xs:complexType>
+                                            </xs:element>
+
+                                          </xs:sequence>
+                                          <xs:attribute name="id" type="xs:string" use="required">
+                                            <xs:annotation>
+                                              <xs:documentation>
+                                                Unique identifier for the portal.
+                                                This allows referencing the portal in other parts of the configuration.
+                                              </xs:documentation>
+                                            </xs:annotation>
+                                          </xs:attribute>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+
+                              </xs:all>
+                              <xs:attribute name="id" type="xs:string" use="required">
+                                <xs:annotation>
+                                  <xs:documentation>
+                                    Unique identifier for the region.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="id" type="xs:string" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
             </xs:all>
           </xs:complexType>
         </xs:element>
@@ -1523,6 +2018,29 @@
                   </xs:all>
                   <xs:attribute name="person_id_ref" type="xs:string" use="required"/>
                   <xs:attribute name="from_person_rule_ref" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="zone.create" minOccurs="0">
+                <xs:complexType>
+                  <xs:attribute name="zone_rule_ref" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="region.appendNew" minOccurs="0">
+                <xs:complexType>
+                  <xs:attribute name="zone_id_ref" type="xs:string" use="required"/>
+                  <xs:attribute name="region_id_ref" type="xs:string" use="required"/>
+                  <xs:attribute name="portal_id_ref" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="region.resolvePortals" minOccurs="0">
+                <xs:complexType>
+                  <xs:attribute name="zone_id_ref" type="xs:string" use="required"/>
+                  <xs:attribute name="region_id_ref" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="entity.create" minOccurs="0">
+                <xs:complexType>
+                  <xs:attribute name="entity_rule_ref" type="xs:string" use="required"/>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>

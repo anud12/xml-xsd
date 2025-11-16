@@ -5,7 +5,7 @@ import ro.anud.xml_xsd.implementation.model.interfaces.IType_propertyMutation.IT
 import ro.anud.xml_xsd.implementation.service.Mutation;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class ApplyPropertyMutation {
 
@@ -15,36 +15,38 @@ public class ApplyPropertyMutation {
         final IType_propertyMutation<?> typePropertyMutation,
         final Person selfPerson,
         final Person targetPerson) {
-        var logger = logEnter(
-            "applicablePerson",
-            applicablePerson.getId(),
-            "selfPerson",
-            selfPerson.getId(),
-            "targetPerson",
-            targetPerson.getId()
-        );
+        try (var scope = logScope(
+                "applicablePerson",
+                applicablePerson.getId(),
+                "selfPerson",
+                selfPerson.getId(),
+                "targetPerson",
+                targetPerson.getId()
+        )) {
 
-        var result = ComputePropertyMutation.computePropertyMutation(
-            worldStepInstance,
-            typePropertyMutation,
-            selfPerson,
-            targetPerson);
+            var result = ComputePropertyMutation.computePropertyMutation(
+                    worldStepInstance,
+                    typePropertyMutation,
+                    selfPerson,
+                    targetPerson);
 
-        logger.log("applying mutation");
+            scope.log("applying mutation");
 
-        return Mutation.of(outInstance -> {
-            var outPerson = outInstance
-                .person.repository.getOrCreate(applicablePerson);
-            result.forEach(mutation -> {
-                    logger.log("outPerson", outPerson.getId(), "propertyRuleRef", mutation.propertyRuleRef(), "deltaValue", mutation.deltaValue());
-                    outInstance.person.mutatePropertyIfPresent(
-                        outPerson,
-                        mutation.propertyRuleRef(),
-                        integer -> integer + mutation.deltaValue()
-                    );
-                });
-            return outPerson;
-            }
-        );
+            return Mutation.of(outInstance -> {
+                        var outPerson = outInstance
+                                .person.repository.getOrCreate(applicablePerson);
+                        result.forEach(mutation -> {
+                            scope.log("outPerson", outPerson.getId(), "propertyRuleRef", mutation.propertyRuleRef(), "deltaValue", mutation.deltaValue());
+                            outInstance.person.mutatePropertyIfPresent(
+                                    outPerson,
+                                    mutation.propertyRuleRef(),
+                                    integer -> integer + mutation.deltaValue()
+                            );
+                        });
+                        return outPerson;
+                    }
+            );
+        }
+
     }
 }

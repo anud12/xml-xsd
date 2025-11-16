@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -8,17 +11,107 @@ namespace XSD.Nto_option {}
 namespace XSD {
 }
 namespace XSD {
-  public class to_option  {
+  public class to_option : IEquatable<to_option>, XSD.ILinkedNode  {
+
+    public static string ClassTypeId = ".to_option";
+    public static string TagName = "to_option";
+
+    public string NodeName {get =>"to_option";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<to_option>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
+
     //Attributes
-    public System.String node_rule_ref;
-    public System.Int32 distance;
-    public System.Int32? maxDistance;
-    public System.Int32 adjacent_depth_limit;
+    private System.String _node_rule_ref;
+    public System.String node_rule_ref { get => _node_rule_ref; set => _node_rule_ref = value; }
+    private System.Int32 _distance;
+    public System.Int32 distance { get => _distance; set => _distance = value; }
+    private System.Int32? _maxDistance;
+    public System.Int32? maxDistance { get => _maxDistance; set => _maxDistance = value; }
+    private System.Int32 _adjacent_depth_limit;
+    public System.Int32 adjacent_depth_limit { get => _adjacent_depth_limit; set => _adjacent_depth_limit = value; }
 
     //Children elements
-    public type__math_operations? distance_to_progress_multiplier = null;
-    public type__math_operations? person_progress_property = null;
+    private type__math_operations? _distance_to_progress_multiplier = null;
+    public type__math_operations distance_to_progress_multiplierOrCreate
+    {
+      get
+      {
+        if(_distance_to_progress_multiplier == null)
+        {
+          _distance_to_progress_multiplier = new();
+          _distance_to_progress_multiplier.ParentNode = this;
+          NotifyChange();
+        }
+        return _distance_to_progress_multiplier;
+      }
+      set
+      {
+        _distance_to_progress_multiplier = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__math_operations? distance_to_progress_multiplier
+    {
+      get
+      {
+        return _distance_to_progress_multiplier;
+      }
+      set
+      {
+        _distance_to_progress_multiplier = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
+
+    private type__math_operations? _person_progress_property = null;
+    public type__math_operations person_progress_propertyOrCreate
+    {
+      get
+      {
+        if(_person_progress_property == null)
+        {
+          _person_progress_property = new();
+          _person_progress_property.ParentNode = this;
+          NotifyChange();
+        }
+        return _person_progress_property;
+      }
+      set
+      {
+        _person_progress_property = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__math_operations? person_progress_property
+    {
+      get
+      {
+        return _person_progress_property;
+      }
+      set
+      {
+        _person_progress_property = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
     public to_option()
     {
     }
@@ -32,6 +125,73 @@ namespace XSD {
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
+    }
+
+    public void SetAttribute(string name, string? value)
+    {
+      if(name == "node_rule_ref")
+      {
+        Set_node_rule_ref(value);
+      }
+      if(name == "distance")
+      {
+        Set_distance(value?.ToInt() ?? 0);
+      }
+      if(name == "maxDistance")
+      {
+        Set_maxDistance(value?.ToInt() ?? 0);
+      }
+      if(name == "adjacent_depth_limit")
+      {
+        Set_adjacent_depth_limit(value?.ToInt() ?? 0);
+      }
+    }
+
+    public void SetChild(dynamic linkedNode)
+    {
+      if(linkedNode is type__math_operations distance_to_progress_multiplier)
+      {
+        this.distance_to_progress_multiplier = distance_to_progress_multiplier;
+      }
+
+      if(linkedNode is type__math_operations person_progress_property)
+      {
+        this.person_progress_property = person_progress_property;
+      }
+
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is type__math_operations)
+      {
+        this.distance_to_progress_multiplier = null;
+      }
+
+      if(linkedNode is type__math_operations)
+      {
+        this.person_progress_property = null;
+      }
+
+    }
+
+    public Action OnSelfChange(Action<to_option> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
     }
 
     public void Deserialize (RawNode rawNode)
@@ -61,28 +221,30 @@ namespace XSD {
       }
 
       //Deserialize children
-      this.distance_to_progress_multiplier = rawNode.InitializeWithRawNode("distance_to_progress_multiplier", this.distance_to_progress_multiplier);
-      this.person_progress_property = rawNode.InitializeWithRawNode("person_progress_property", this.person_progress_property);
+      distance_to_progress_multiplier = rawNode.InitializeWithRawNode("distance_to_progress_multiplier", distance_to_progress_multiplier);
+
+      person_progress_property = rawNode.InitializeWithRawNode("person_progress_property", person_progress_property);
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.node_rule_ref != null)
+      if(this._node_rule_ref != null)
       {
-        rawNode.attributes["node_rule_ref"] = this.node_rule_ref.ToString();
+        rawNode.attributes["node_rule_ref"] = this._node_rule_ref.ToString();
       }
-      if(this.distance != null)
+      if(this._distance != null)
       {
-        rawNode.attributes["distance"] = this.distance.ToString();
+        rawNode.attributes["distance"] = this._distance.ToString();
       }
-      if(this.maxDistance != null)
+      if(this._maxDistance != null)
       {
-        rawNode.attributes["maxDistance"] = this.maxDistance?.ToString();
+        rawNode.attributes["maxDistance"] = this._maxDistance?.ToString();
       }
-      if(this.adjacent_depth_limit != null)
+      if(this._adjacent_depth_limit != null)
       {
-        rawNode.attributes["adjacent_depth_limit"] = this.adjacent_depth_limit.ToString();
+        rawNode.attributes["adjacent_depth_limit"] = this._adjacent_depth_limit.ToString();
       }
 
       //Serialize children
@@ -108,6 +270,7 @@ namespace XSD {
     public void Set_node_rule_ref(System.String value)
     {
       this.node_rule_ref = value;
+      this.NotifyChange();
     }
     public System.Int32 Get_distance()
     {
@@ -116,6 +279,7 @@ namespace XSD {
     public void Set_distance(System.Int32 value)
     {
       this.distance = value;
+      this.NotifyChange();
     }
     public System.Int32? Get_maxDistance()
     {
@@ -124,6 +288,7 @@ namespace XSD {
     public void Set_maxDistance(System.Int32? value)
     {
       this.maxDistance = value;
+      this.NotifyChange();
     }
     public System.Int32 Get_adjacent_depth_limit()
     {
@@ -132,22 +297,86 @@ namespace XSD {
     public void Set_adjacent_depth_limit(System.Int32 value)
     {
       this.adjacent_depth_limit = value;
+      this.NotifyChange();
     }
-    public type__math_operations? Get_distance_to_progress_multiplier()
+
+
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
-      return this.distance_to_progress_multiplier;
+      if(xpath.StartsWith("."))
+      {
+        xpath = xpath.Substring(1);
+      }
+      if(xpath.StartsWith(type__math_operations.TagName))
+      {
+        this.distance_to_progress_multiplier ??= new type__math_operations();
+        var childXPath = xpath.Substring(type__math_operations.TagName.Length + 3);
+        this.distance_to_progress_multiplier.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
+      if(xpath.StartsWith(type__math_operations.TagName))
+      {
+        this.person_progress_property ??= new type__math_operations();
+        var childXPath = xpath.Substring(type__math_operations.TagName.Length + 3);
+        this.person_progress_property.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
+
+      Deserialize(rawNode);
     }
-    public void Set_distance_to_progress_multiplier(type__math_operations? value)
+
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
-      this.distance_to_progress_multiplier = value;
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
-    public type__math_operations? Get_person_progress_property()
+
+    public void NotifyChange()
     {
-      return this.person_progress_property;
+      NotifyChange(new ());
     }
-    public void Set_person_progress_property(type__math_operations? value)
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
-      this.person_progress_property = value;
+      if(linkedNode is type__math_operations casted_distance_to_progress_multiplier) {
+        return 0;
+      }
+      if(linkedNode is type__math_operations casted_person_progress_property) {
+        return 0;
+      }
+      return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is type__math_operations
+      || candidateChild is type__math_operations
+      || false;
+    }
+
+    public bool Equals(to_option? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (to_option)obj;
+        return Equals(node_rule_ref, other.node_rule_ref) && Equals(distance, other.distance) && Equals(maxDistance, other.maxDistance) && Equals(adjacent_depth_limit, other.adjacent_depth_limit) && Equals(distance_to_progress_multiplier, other.distance_to_progress_multiplier) && Equals(person_progress_property, other.person_progress_property);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, node_rule_ref);
+        acc = HashCode.Combine(acc, distance);
+        acc = HashCode.Combine(acc, maxDistance);
+        acc = HashCode.Combine(acc, adjacent_depth_limit);
+        acc = HashCode.Combine(acc, distance_to_progress_multiplier);
+        acc = HashCode.Combine(acc, person_progress_property);
+        return acc;
     }
   }
 }

@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class LinkGroupRuleRepository {
 
@@ -20,38 +20,45 @@ public class LinkGroupRuleRepository {
     private HashMap<String, LinkGroupRule> map = new HashMap<>();
 
     public LinkGroupRuleRepository(WorldStepInstance worldStepInstance) {
-        this.worldStepInstance = worldStepInstance;
+        try (var scope = logScope()) {
+            this.worldStepInstance = worldStepInstance;
+        }
     }
 
     public void index() {
-        var logger = logEnter("LinkGroupRuleRepository indexing");
-        subscription.ifPresent(Subscription::unsubscribe);
-        subscription = worldStepInstance.getWorldStep().map(worldStep -> worldStep.onChange(objects -> {
-            logger.logTodo("Streamline checking");
-            if (objects.stream().map(Object::getClass).anyMatch(o -> o.equals(LinkGroupRuleList.class))) {
-                loadData();
-            }
-        }));
-        loadData();
+        try (var scope = logScope()) {
+            subscription.ifPresent(Subscription::unsubscribe);
+            subscription = worldStepInstance.getWorldStep().map(worldStep -> worldStep.onChange((objects, worldStepNode) -> {
+                if(objects instanceof LinkGroupRuleList) {
+                    loadData();
+                }
+            }));
+            loadData();
+        }
+
     }
 
     private void loadData() {
-        var logger = logEnter();
-        map.clear();
-        worldStepInstance.streamWorldStep()
-            .flatMap(WorldStep::streamRuleGroup)
-            .flatMap(RuleGroup::streamLinkGroupRuleList)
-            .flatMap(LinkGroupRuleList::streamLinkGroupRule)
-            .forEach(linkGroupRule -> {
-                map.put(linkGroupRule.getId(), linkGroupRule);
-            });
-        logger.logReturnVoid();
+        try (var scope = logScope()) {
+            map.clear();
+            worldStepInstance.streamWorldStep()
+                .flatMap(WorldStep::streamRuleGroup)
+                .flatMap(RuleGroup::streamLinkGroupRuleList)
+                .flatMap(LinkGroupRuleList::streamLinkGroupRule)
+                .forEach(linkGroupRule -> {
+                    map.put(linkGroupRule.getId(), linkGroupRule);
+                });
+        }
     }
     public Optional<LinkGroupRule> getById(String id) {
-        return logEnter().logReturn(Optional.ofNullable(map.get(id)));
+        try (var scope = logScope("Get LinkGroupRule by id: " + id)) {
+            return scope.logReturn(Optional.ofNullable(map.get(id)));
+        }
     }
 
     public Stream<LinkGroupRule> streamById(String id) {
-        return logEnter().logReturn(getById(id).stream());
+        try (var scope = logScope("Stream LinkGroupRule by id: " + id)) {
+            return scope.logReturn(getById(id).stream());
+        }
     }
 }

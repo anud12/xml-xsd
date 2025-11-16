@@ -10,9 +10,7 @@ import ro.anud.xml_xsd.implementation.util.Subscription;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturn;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
   @EqualsAndHashCode
   @ToString
@@ -22,42 +20,57 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   public class Data implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static final String TYPE_ID = "/world_step/data";
-
-    public static Data fromRawNode(RawNode rawNode) {
-      logEnter();
-      var instance = new Data();
-      instance.rawNode(rawNode);
-      instance.deserialize(rawNode);
-      return logReturn(instance);
-    }
+    public static String nodeName = "data";
     public static Data fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-      logEnter();
-      var instance = fromRawNode(rawNode);
-      instance.parentNode(parent);
-      return logReturn(instance);
+      try (var logger = logScope()) {
+        var instance = new Data();
+        if(Objects.nonNull(parent)) {
+          instance.parentNode(parent);
+        }
+        instance.rawNode(rawNode);
+        instance.deserialize(rawNode);
+        return logger.logReturn(instance);
+      }
+
+    }
+    public static Data fromRawNode(RawNode rawNode) {
+      try (var logger = logScope()) {
+        var instance = fromRawNode(rawNode, null);
+        return logger.logReturn(instance);
+      }
     }
     public static Optional<Data> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-        logEnter();
-        return logReturn(rawNode.map(o -> Data.fromRawNode(o, parent)));
+        try(var logger = logScope()) {
+          return logger.logReturn(rawNode.map(o -> Data.fromRawNode(o, parent)));
+        }
+
     }
     public static List<Data> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
-      logEnter();
-      List<Data> returnList = Optional.ofNullable(rawNodeList)
-          .orElse(List.of())
-          .stream()
-          .map(o -> Data.fromRawNode(o, parent))
-          .collect(Collectors.toList());
-      return logReturn(returnList);
+      try (var logger = logScope()) {
+        List<Data> returnList = Optional.ofNullable(rawNodeList)
+            .orElse(List.of())
+            .stream()
+            .map(o -> Data.fromRawNode(o, parent))
+            .collect(Collectors.toList());
+        return logger.logReturn(returnList);
+      }
+    }
+
+    public String classTypeId() {
+      return ".world_step.data";
     }
 
     //Attributes
 
     //Children elements
     @Builder.Default
+    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities> entities = Optional.empty();
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People> people = Optional.empty();
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location> location = Optional.empty();
+    @Builder.Default
+    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList> zoneList = Optional.empty();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -83,50 +96,78 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     }
 
     @Builder.Default
-    private List<Consumer<Set<Object>>> onChangeList = new ArrayList<>();
+    private List<ro.anud.xml_xsd.implementation.util.ChangeCallback<Data>> onChangeList = new ArrayList<>();
+    @Builder.Default
+    private List<ro.anud.xml_xsd.implementation.util.RemoveCallback<Data>> onRemoveList = new ArrayList<>();
 
     public String nodeName() {
       return "data";
     }
-
-    public void childChanged(Set<Object> set) {
-      set.add(this);
-      onChangeList.forEach(consumer -> consumer.accept(set));
-      parentNode.ifPresent(linkedNode -> linkedNode.childChanged(set));
+    public static Data of() {
+      return new Data();
     }
 
-    private void triggerOnChange() {
-      childChanged(new HashSet<>());
+    public void notifyChange(ro.anud.xml_xsd.implementation.util.LinkedNode object) {
+      try (var logger = logScope()) {
+        logger.log("Notify change for", this.buildPath());
+        onChangeList.forEach(consumer -> consumer.onChange(object, this));
+        parentNode.ifPresent(linkedNode -> linkedNode.notifyChange(object));
+      }
+    }
+
+    public void notifyRemove(ro.anud.xml_xsd.implementation.util.LinkedNode object) {
+      try (var logger = logScope()) {
+        logger.log("Notify remove for", this.buildPath());
+        onRemoveList.forEach(consumer -> consumer.onRemove(object, this));
+        parentNode.ifPresent(linkedNode -> linkedNode.notifyRemove(object));
+      }
     }
 
     public void parentNode(ro.anud.xml_xsd.implementation.util.LinkedNode linkedNode) {
+      this.parentNode.ifPresent(parent -> notifyRemove());
       this.parentNode = Optional.of(linkedNode);
-      triggerOnChange();
+      notifyChange();
     }
 
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep> parentAsWorldStep() {
       return parentNode.flatMap(node -> {
-       if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep casted){
-         return Optional.of(casted);
-       }
-       return Optional.empty();
-     });
+        if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep casted){
+          return Optional.of(casted);
+        }
+        return Optional.empty();
+      });
     }
 
     public void removeChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities) {
+          this.entities = Optional.empty();
+          notifyChange();
+        }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People) {
           this.people = Optional.empty();
+          notifyChange();
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location) {
           this.location = Optional.empty();
+          notifyChange();
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList) {
+          this.zoneList = Optional.empty();
+          notifyChange();
         }
     }
 
     public int buildIndexForChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities) {
+          return 0;
+        }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People) {
           return 0;
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location) {
+          return 0;
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList) {
           return 0;
         }
         return 0;
@@ -136,38 +177,64 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(Consumer<Set<Object>> onChange) {
-      logEnter();
-      onChangeList.add(onChange);
-      return logReturn(() -> onChangeList.remove(onChange));
+    public Subscription onChange(ro.anud.xml_xsd.implementation.util.ChangeCallback<Data> callback) {
+      try (var logger = logScope()) {
+        onChangeList.add(callback);
+        return logger.logReturn(() -> onChangeList.remove(callback));
+      }
+    }
+    public Subscription onRemove(ro.anud.xml_xsd.implementation.util.RemoveCallback<Data> callback) {
+      try (var logger = logScope()) {
+        onRemoveList.add(callback);
+        return logger.logReturn(() -> onRemoveList.remove(callback));
+      }
     }
 
     public void deserialize (RawNode rawNode) {
-      var logger = logEnter();
-      this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing data");
-      var innerLogger = logger.log("attributes");
-      //Deserialize attributes
-      innerLogger = logger.log("children");
-      //Deserialize children
-      this.people = ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People.fromRawNode(rawNode.getChildrenFirst("people"), this);
-      this.location = ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location.fromRawNode(rawNode.getChildrenFirst("location"), this);
-      logReturnVoid();
+      try (var logger = logScope()) {
+        this.rawNode = rawNode;
+        var isDirty = false;
+        try (var innerLogger = logScope("attributes")) {
+          //Deserialize attributes
+        }
+        try (var innerLogger = logScope("children")) {
+          //Deserialize children
+          this.entities = ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities.fromRawNode(rawNode.getChildrenFirst("entities"), this);
+          this.people = ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People.fromRawNode(rawNode.getChildrenFirst("people"), this);
+          this.location = ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location.fromRawNode(rawNode.getChildrenFirst("location"), this);
+          this.zoneList = ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList.fromRawNode(rawNode.getChildrenFirst("zone_list"), this);
+        }
+
+        if(isDirty) {
+          notifyChange();
+        }
+      } catch (Exception e) {
+        throw new RuntimeException("Deserialization failed for: " + this.buildPath(), e);
+      }
+
     }
 
     public RawNode serializeIntoRawNode()
     {
-      var logger = logEnter();
-      var innerLogger = logger.log("attributes");
-      //Serialize attributes
+      try (var logger = logScope()) {
+        rawNode.setTag("data");
+        try (var innerLogger = logScope("attributes")) {
+          //Serialize attributes
+        }
+        try (var innerLogger = logScope("children")) {
 
-      innerLogger = logger.log("children");
-      //Serialize children
-      innerLogger.log("people");
-      rawNode.setChildren("people", people.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People::serializeIntoRawNode).toList());
-      innerLogger.log("location");
-      rawNode.setChildren("location", location.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location::serializeIntoRawNode).toList());
-      return rawNode;
+          //Serialize children
+          innerLogger.log("entities");
+          rawNode.setChildren("entities", entities.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities::serializeIntoRawNode).toList());
+          innerLogger.log("people");
+          rawNode.setChildren("people", people.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People::serializeIntoRawNode).toList());
+          innerLogger.log("location");
+          rawNode.setChildren("location", location.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location::serializeIntoRawNode).toList());
+          innerLogger.log("zone_list");
+          rawNode.setChildren("zone_list", zoneList.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList::serializeIntoRawNode).toList());
+          return rawNode;
+        }
+      }
     }
 
     public void serialize(Document document, Element element)
@@ -176,6 +243,35 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         var updatedRawNode = serializeIntoRawNode();
         updatedRawNode.populateNode(document, element);
     }
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities> getEntities()
+    {
+      return this.entities;
+    }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities getEntitiesOrDefault()
+    {
+      return this.entities.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities();
+        this.entities = Optional.of(instance);
+        instance.parentNode(this);
+        return this.entities.get();
+      });
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities> streamEntitiesOrDefault()
+    {
+      return java.util.stream.Stream.of(getEntitiesOrDefault());
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities> streamEntities()
+    {
+      return entities.stream();
+    }
+    public Data setEntities(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities value)
+    {
+      this.entities = Optional.ofNullable(value);
+      value.parentNode(this);
+      notifyChange();
+      return this;
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People> getPeople()
     {
       return this.people;
@@ -184,8 +280,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.people.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People();
-        instance.parentNode(this);
         this.people = Optional.of(instance);
+        instance.parentNode(this);
         return this.people.get();
       });
     }
@@ -201,7 +297,7 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.people = Optional.ofNullable(value);
       value.parentNode(this);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
 
@@ -213,8 +309,8 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       return this.location.orElseGet(() -> {
         var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location();
-        instance.parentNode(this);
         this.location = Optional.of(instance);
+        instance.parentNode(this);
         return this.location.get();
       });
     }
@@ -230,11 +326,122 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
     {
       this.location = Optional.ofNullable(value);
       value.parentNode(this);
-      triggerOnChange();
+      notifyChange();
       return this;
     }
 
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList> getZoneList()
+    {
+      return this.zoneList;
+    }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList getZoneListOrDefault()
+    {
+      return this.zoneList.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList();
+        this.zoneList = Optional.of(instance);
+        instance.parentNode(this);
+        return this.zoneList.get();
+      });
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList> streamZoneListOrDefault()
+    {
+      return java.util.stream.Stream.of(getZoneListOrDefault());
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList> streamZoneList()
+    {
+      return zoneList.stream();
+    }
+    public Data setZoneList(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList value)
+    {
+      this.zoneList = Optional.ofNullable(value);
+      value.parentNode(this);
+      notifyChange();
+      return this;
+    }
+
+    public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities.nodeName))
+        {
+          if(this.entities.isEmpty()) {
+            this.entities = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities.nodeName.length() + 3);
+          return this.entities.get().deserializeAtPath(childXPath, rawNode);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People.nodeName))
+        {
+          if(this.people.isEmpty()) {
+            this.people = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People.nodeName.length() + 3);
+          return this.people.get().deserializeAtPath(childXPath, rawNode);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location.nodeName))
+        {
+          if(this.location.isEmpty()) {
+            this.location = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location.nodeName.length() + 3);
+          return this.location.get().deserializeAtPath(childXPath, rawNode);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList.nodeName))
+        {
+          if(this.zoneList.isEmpty()) {
+            this.zoneList = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList.nodeName.length() + 3);
+          return this.zoneList.get().deserializeAtPath(childXPath, rawNode);
+        }
+
+        deserialize(rawNode);
+        return this;
+    }
+
+    public Optional<ro.anud.xml_xsd.implementation.util.LinkedNode> getNodeAtPath(String xpath) {
+       if(xpath.startsWith("."))
+        {
+          xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities.nodeName))
+        {
+          if(this.entities.isEmpty()) {
+            this.entities = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities.nodeName.length() + 3);
+          return this.entities.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People.nodeName))
+        {
+          if(this.people.isEmpty()) {
+            this.people = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.People.nodeName.length() + 3);
+          return this.people.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location.nodeName))
+        {
+          if(this.location.isEmpty()) {
+            this.location = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location.nodeName.length() + 3);
+          return this.location.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList.nodeName))
+        {
+          if(this.zoneList.isEmpty()) {
+            this.zoneList = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList.nodeName.length() + 3);
+          return this.zoneList.get().getNodeAtPath(childXPath);
+        }
+        return Optional.of(this);
+    }
   }
+
 
   /*
     dependant type:
@@ -244,6 +451,30 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
         "metaType": "object",
         "isSingle": true,
         "value": {
+          "entities": {
+            "metaType": "object",
+            "isSingle": true,
+            "value": {
+              "entity": {
+                "metaType": "composition",
+                "value": [
+                  {
+                    "metaType": "object",
+                    "value": {},
+                    "isSingle": true,
+                    "isNullable": false
+                  },
+                  {
+                    "metaType": "primitive",
+                    "value": "type__entity"
+                  }
+                ],
+                "isSingle": false,
+                "isNullable": true
+              }
+            },
+            "isNullable": true
+          },
           "people": {
             "metaType": "object",
             "isSingle": true,
@@ -547,6 +778,238 @@ import static ro.anud.xml_xsd.implementation.util.LocalLogger.logReturnVoid;
                       }
                     },
                     "isNullable": false
+                  }
+                },
+                "isNullable": true
+              }
+            },
+            "isNullable": true
+          },
+          "zone_list": {
+            "metaType": "object",
+            "isSingle": true,
+            "value": {
+              "zone": {
+                "metaType": "object",
+                "attributes": {
+                  "metaType": "object",
+                  "value": {
+                    "id": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": false
+                },
+                "isSingle": false,
+                "value": {
+                  "region": {
+                    "metaType": "object",
+                    "attributes": {
+                      "metaType": "object",
+                      "value": {
+                        "id": {
+                          "metaType": "primitive",
+                          "value": "xs:string",
+                          "isNullable": false
+                        }
+                      },
+                      "isNullable": false
+                    },
+                    "isSingle": false,
+                    "value": {
+                      "rule": {
+                        "metaType": "object",
+                        "value": {},
+                        "isSingle": true,
+                        "isNullable": false,
+                        "attributes": {
+                          "metaType": "object",
+                          "value": {
+                            "rule_id_ref": {
+                              "metaType": "primitive",
+                              "value": "xs:string",
+                              "isNullable": false
+                            }
+                          },
+                          "isNullable": false
+                        }
+                      },
+                      "position": {
+                        "metaType": "object",
+                        "value": {},
+                        "isSingle": true,
+                        "isNullable": false,
+                        "attributes": {
+                          "metaType": "object",
+                          "value": {
+                            "x": {
+                              "metaType": "primitive",
+                              "value": "xs:int",
+                              "isNullable": false
+                            },
+                            "y": {
+                              "metaType": "primitive",
+                              "value": "xs:int",
+                              "isNullable": false
+                            },
+                            "rotation": {
+                              "metaType": "primitive",
+                              "value": "type__rotation_90deg_step",
+                              "isNullable": false
+                            }
+                          }
+                        }
+                      },
+                      "limit": {
+                        "metaType": "object",
+                        "value": {},
+                        "isSingle": true,
+                        "isNullable": false,
+                        "attributes": {
+                          "metaType": "object",
+                          "value": {
+                            "width": {
+                              "metaType": "primitive",
+                              "value": "xs:int",
+                              "isNullable": false
+                            },
+                            "height": {
+                              "metaType": "primitive",
+                              "value": "xs:int",
+                              "isNullable": false
+                            }
+                          }
+                        }
+                      },
+                      "available_portals": {
+                        "metaType": "object",
+                        "isSingle": true,
+                        "value": {
+                          "portal": {
+                            "metaType": "object",
+                            "value": {},
+                            "isSingle": false,
+                            "isNullable": true,
+                            "attributes": {
+                              "metaType": "object",
+                              "value": {
+                                "id": {
+                                  "metaType": "primitive",
+                                  "value": "xs:string",
+                                  "isNullable": false
+                                },
+                                "start": {
+                                  "metaType": "primitive",
+                                  "value": "xs:int",
+                                  "isNullable": false
+                                },
+                                "side": {
+                                  "metaType": "primitive",
+                                  "value": "type__rectangle_side",
+                                  "isNullable": false
+                                },
+                                "portal_rule_ref": {
+                                  "metaType": "primitive",
+                                  "value": "xs:string",
+                                  "isNullable": false
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "isNullable": true
+                      },
+                      "portals": {
+                        "metaType": "object",
+                        "isSingle": true,
+                        "value": {
+                          "portal": {
+                            "metaType": "object",
+                            "attributes": {
+                              "metaType": "object",
+                              "value": {
+                                "id": {
+                                  "metaType": "primitive",
+                                  "value": "xs:string",
+                                  "isNullable": false
+                                }
+                              },
+                              "isNullable": false
+                            },
+                            "isSingle": false,
+                            "value": {
+                              "from": {
+                                "metaType": "object",
+                                "value": {},
+                                "isSingle": true,
+                                "isNullable": false,
+                                "attributes": {
+                                  "metaType": "object",
+                                  "value": {
+                                    "side": {
+                                      "metaType": "primitive",
+                                      "value": "type__rectangle_side",
+                                      "isNullable": false
+                                    },
+                                    "start": {
+                                      "metaType": "primitive",
+                                      "value": "xs:int",
+                                      "isNullable": false
+                                    },
+                                    "end": {
+                                      "metaType": "primitive",
+                                      "value": "xs:int",
+                                      "isNullable": false
+                                    }
+                                  }
+                                }
+                              },
+                              "to": {
+                                "metaType": "object",
+                                "value": {},
+                                "isSingle": true,
+                                "isNullable": true,
+                                "attributes": {
+                                  "metaType": "object",
+                                  "value": {
+                                    "zone_ref": {
+                                      "metaType": "primitive",
+                                      "value": "xs:string",
+                                      "isNullable": false
+                                    },
+                                    "region_ref": {
+                                      "metaType": "primitive",
+                                      "value": "xs:string",
+                                      "isNullable": false
+                                    },
+                                    "side": {
+                                      "metaType": "primitive",
+                                      "value": "type__rectangle_side",
+                                      "isNullable": false
+                                    },
+                                    "start": {
+                                      "metaType": "primitive",
+                                      "value": "xs:int",
+                                      "isNullable": false
+                                    },
+                                    "end": {
+                                      "metaType": "primitive",
+                                      "value": "xs:int",
+                                      "isNullable": false
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "isNullable": false
+                          }
+                        },
+                        "isNullable": true
+                      }
+                    },
+                    "isNullable": true
                   }
                 },
                 "isNullable": true

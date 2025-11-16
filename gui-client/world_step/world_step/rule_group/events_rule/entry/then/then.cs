@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -8,13 +11,76 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry {
-  public class then  {
+  public class then : IEquatable<then>, XSD.ILinkedNode  {
+
+    public static string ClassTypeId = ".world_step.rule_group.events_rule.entry.then";
+    public static string TagName = "then";
+
+    public string NodeName {get =>"then";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<then>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
+
     //Attributes
 
     //Children elements
-    public List<XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person>? select_person = new List<XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person>();
-    public XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.property_mutation? property_mutation = null;
+
+    private LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person> _select_person = new();
+    public LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person> select_person
+    {
+      get => _select_person;
+      set
+      {
+        _select_person = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _select_person.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          NotifyChange();
+        };
+      }
+    }
+    private XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.property_mutation? _property_mutation = null;
+    public XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.property_mutation property_mutationOrCreate
+    {
+      get
+      {
+        if(_property_mutation == null)
+        {
+          _property_mutation = new();
+          _property_mutation.ParentNode = this;
+          NotifyChange();
+        }
+        return _property_mutation;
+      }
+      set
+      {
+        _property_mutation = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.property_mutation? property_mutation
+    {
+      get
+      {
+        return _property_mutation;
+      }
+      set
+      {
+        _property_mutation = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
     public then()
     {
     }
@@ -30,6 +96,57 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry {
       Deserialize(rawNode);
     }
 
+    public void SetAttribute(string name, string? value)
+    {
+    }
+
+    public void SetChild(dynamic linkedNode)
+    {
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person> select_person)
+      {
+        this.select_person = select_person;
+      }
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.property_mutation property_mutation)
+      {
+        this.property_mutation = property_mutation;
+      }
+
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person>)
+      {
+        this.select_person = null;
+      }
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.property_mutation)
+      {
+        this.property_mutation = null;
+      }
+
+    }
+
+    public Action OnSelfChange(Action<then> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -37,8 +154,14 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry {
       //Deserialize arguments
 
       //Deserialize children
-      this.select_person = rawNode.InitializeWithRawNode("select_person", this.select_person);
-      this.property_mutation = rawNode.InitializeWithRawNode("property_mutation", this.property_mutation);
+      select_person = rawNode.InitializeWithRawNode("select_person", select_person);
+      select_person.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          NotifyChange();
+        };
+      property_mutation = rawNode.InitializeWithRawNode("property_mutation", property_mutation);
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -59,21 +182,92 @@ namespace XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public List<XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person>? Get_select_person()
+
+
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
-      return this.select_person;
+      if(xpath.StartsWith("."))
+      {
+        xpath = xpath.Substring(1);
+      }
+      if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person.TagName + "["))
+      {
+        var startIndex = (XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person.TagName + "[").Length;
+        var startTokens = xpath.Split(XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person.TagName + "[" + indexString + "]", "");
+        var pathIndex = indexString.ToInt();
+        if(this.select_person.ContainsKey(pathIndex))
+        {
+          this.select_person[pathIndex].DeserializeAtPath(childXPath, rawNode);
+          return;
+        }
+        var newEntry = new XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person();
+        this.select_person[pathIndex] = newEntry;
+        newEntry.DeserializeAtPath(childXPath, rawNode);
+
+        return;
+      }
+      if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.property_mutation.TagName))
+      {
+        this.property_mutation ??= new XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.property_mutation();
+        var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.property_mutation.TagName.Length + 3);
+        this.property_mutation.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
+
+      Deserialize(rawNode);
     }
-    public void Set_select_person(List<XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person>? value)
+
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
-      this.select_person = value;
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
-    public XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.property_mutation? Get_property_mutation()
+
+    public void NotifyChange()
     {
-      return this.property_mutation;
+      NotifyChange(new ());
     }
-    public void Set_property_mutation(XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.property_mutation? value)
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
-      this.property_mutation = value;
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person casted_select_person) {
+        return this._select_person.KeyOf(casted_select_person);
+      }
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.property_mutation casted_property_mutation) {
+        return 0;
+      }
+      return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.select_person
+      || candidateChild is XSD.Nworld_step.Nrule_group.Nevents_rule.Nentry.Nthen.property_mutation
+      || false;
+    }
+
+    public bool Equals(then? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (then)obj;
+        return Equals(select_person, other.select_person) && Equals(property_mutation, other.property_mutation);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, select_person);
+        acc = HashCode.Combine(acc, property_mutation);
+        return acc;
     }
   }
 }

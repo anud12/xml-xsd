@@ -21,7 +21,7 @@
       <entry value="254" />
       <entry value="140" />
       <entry value="16" />
-      <entry value="66 " />
+      <entry value="66" />
       <entry value="74" />
       <entry value="21" />
       <entry value="211" />
@@ -91,7 +91,7 @@
       <entry value="122" />
       <entry value="175" />
       <entry value="249" />
-      <entry value="0 " />
+      <entry value="0" />
       <entry value="175" />
       <entry value="143" />
       <entry value="70" />
@@ -482,7 +482,7 @@
                   <and do="add" value="0">
                     <add_property property_rule_ref="weaponSkill" />
                   </and>
-                  <and do="multiply" value="-1" />
+                  <and do="multiply" value="-1" />    
                 </operation>
               </from>
             </property_mutation>
@@ -537,6 +537,12 @@
       <node_rule id="wilderness">
         <name name_rule_ref="wildernessNodeName" />
         <link_group_list>
+          <reference link_group_rule_ref="to_city" />
+          <reference link_group_rule_ref="to_farm" />
+          <reference link_group_rule_ref="to_wilderness" />
+          <reference link_group_rule_ref="to_wilderness" />
+          <reference link_group_rule_ref="to_wilderness" />
+          <reference link_group_rule_ref="to_wilderness" />
         </link_group_list>
         <existing_person min="1" max="4">
           <person_selection>
@@ -553,7 +559,7 @@
   </rule_group>
   <data>
     <people>
-      <person id="0" name="BillyWithVeryLongName">
+      <person id="0" name="BillyWithVeryLongNameChanged">
         <properties>
           <property property_rule_ref="health" value="10" />
         </properties>

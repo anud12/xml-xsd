@@ -134,7 +134,7 @@ public class HttpRequestTest {
                 Thread.currentThread().interrupt();
                 throw new RuntimeException("Thread was interrupted", e);
             }
-            currentDelay = (int) (currentDelay * 1.5);
+            currentDelay = (int) ((currentDelay + 100) * 1.5);
         }
         throw new RuntimeException("All heartbeat attempts failed");
 

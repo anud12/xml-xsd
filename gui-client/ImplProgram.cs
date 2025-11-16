@@ -7,19 +7,22 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
-using Godot;
+using Guiclient.util;
 using XSD;
 
 public class ImplProgram
 {
 
     static public Task<String> SendHttp(world_step worldStep) {
+        
         return Task.Run(() =>
         {
+            Logger.Info("Starting SendHttp");
+            
             var document = new XmlDocument();
             XmlElement worldStepElement = document.CreateElement("world_step");
             document.AppendChild(worldStepElement);
-            GD.Print("Serializing world step");
+            Logger.Info("Serializing world step");
             worldStep.Serialize(worldStepElement);
 
             // Deserialize document to string
@@ -29,6 +32,7 @@ public class ImplProgram
             xmlTextWriter.Flush();
             var documentString = stringWriter.GetStringBuilder().ToString();
 
+            Logger.Info("Saving request.xml");
             // Save the document string to a file
             using (StreamWriter sw = new StreamWriter("request.xml"))
             {
@@ -36,12 +40,16 @@ public class ImplProgram
             }
 
             // Send the document string to the server
+            Logger.Info("Sending HTTP POST to http://localhost:8080/analyze/execute");
             using (var client = new System.Net.Http.HttpClient())
             {
                 var content = new StringContent(documentString, Encoding.UTF8, "text/xml");
                 var response = client.PostAsync("http://localhost:8080/analyze/execute", content).Result;
+                
+                Logger.Info($"HTTP response status: {response.StatusCode}");
                 var responseString = response.Content.ReadAsStringAsync().Result;
-                GD.Print(responseString);
+                Logger.Info("Received response from server");
+                Logger.Info(responseString);
                 //write the received message to a file
                 using (StreamWriter sw = new StreamWriter("response.xml"))
                 {
@@ -51,6 +59,7 @@ public class ImplProgram
                     responseDocument.Save(sw);
                 }
 
+                Logger.Info("Saved response.xml");
                 return responseString;
             }
         });
@@ -63,7 +72,7 @@ public class ImplProgram
             var document = new XmlDocument();
             XmlElement worldStepElement = document.CreateElement("world_step");
             document.AppendChild(worldStepElement);
-            GD.Print("Serializing world step");
+            Logger.Info("Serializing world step");
             worldStep.Serialize(worldStepElement);
 
             // Deserialize document to string
@@ -88,22 +97,22 @@ public class ImplProgram
                 catch (AggregateException e)
                 {
                     e.InnerException.Equals(new WebSocketException("Unable to connect to the remote server"));
-                    GD.PrintErr("Unable to connect to the remote server");
+                    Logger.Error("Unable to connect to the remote server");
                     return null;
                 }
-                GD.Print("Connected to the server");
+                Logger.Info("Connected to the server");
 
 
 
                 // Send the document string to the server
                 var bytesToSend = Encoding.UTF8.GetBytes(documentString);
-                GD.Print($"Sending");
+                Logger.Info($"Sending");
                 ws.SendAsync(new ArraySegment<byte>(bytesToSend), WebSocketMessageType.Text, true, CancellationToken.None).Wait();
 
                 // Read all contents from the WebSocket
                 string receivedMessageTask = ReceiveMessagesAsync(ws, bytesToSend.Length);
                 string receivedMessage = receivedMessageTask;
-                GD.Print($"Received");
+                Logger.Info($"Received");
 
                 //write the received message to a file
                 using (StreamWriter sw = new StreamWriter("response.xml"))
@@ -112,7 +121,7 @@ public class ImplProgram
                 }
 
                 ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", CancellationToken.None).Wait();
-                GD.Print("Connection closed");
+                Logger.Info("Connection closed");
                 return receivedMessage;
             }
         });
@@ -187,10 +196,10 @@ public class ImplProgram
 
 
             // Print the output to the console
-            GD.Print(output);
+            Logger.Info(output);
 
             // Print the error to the console
-            GD.PrintErr(error);
+            Logger.Error(error);
         }
     }
 }

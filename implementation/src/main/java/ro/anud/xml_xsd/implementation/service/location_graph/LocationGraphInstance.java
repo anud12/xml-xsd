@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class LocationGraphInstance {
     final WorldStepInstance worldStepInstance;
@@ -76,44 +76,47 @@ public class LocationGraphInstance {
     }
 
     public Optional<Mutation<Node>> createAdjacent(final String locationGraphId, final String nodeRuleId) {
-        var logger = logEnter();
-        var locationGraphElementResult = this.worldStepInstance.locationGraph.locationGraphRepository.getLocationGraphById(
-            locationGraphId);
-        if (locationGraphElementResult.isEmpty()) {
-            logger.log("locationGraph not found");
-            return logger.logReturn(Optional.empty());
+        try (var scope = logScope()){
+            var locationGraphElementResult = this.worldStepInstance.locationGraph.locationGraphRepository.getLocationGraphById(
+                    locationGraphId);
+            if (locationGraphElementResult.isEmpty()) {
+                scope.log("locationGraph not found");
+                return scope.logReturn(Optional.empty());
+            }
+            var locationGraphElement = locationGraphElementResult.get();
+            return CreateAdjacent.createAdjacent(worldStepInstance, locationGraphElement, nodeRuleId);
         }
-        var locationGraphElement = locationGraphElementResult.get();
-        return CreateAdjacent.createAdjacent(worldStepInstance, locationGraphElement, nodeRuleId);
     }
 
     public void removePerson(final String personIdRef) {
-        var logger = logEnter("personIdRef:", personIdRef);
-        worldStepInstance.streamWorldStep()
-            .flatMap(WorldStep::streamData)
-            .flatMap(Data::streamLocation)
-            .flatMap(Location::streamLocationGraph)
-            .flatMap(LocationGraph::streamNode)
-            .forEach(node -> {
-                node.streamPeople()
-                    .flatMap(People::streamPerson)
-                    .filter(person -> person.getPersonIdRef().equals(personIdRef))
-                    .toList()
-                    .forEach(person -> {
-                        logger.log("removing person", person.buildPath());
-                        person.removeFromParent();
+        try (var scope = logScope("personIdRef:", personIdRef)){
+            worldStepInstance.streamWorldStep()
+                    .flatMap(WorldStep::streamData)
+                    .flatMap(Data::streamLocation)
+                    .flatMap(Location::streamLocationGraph)
+                    .flatMap(LocationGraph::streamNode)
+                    .forEach(node -> {
+                        node.streamPeople()
+                                .flatMap(People::streamPerson)
+                                .filter(person -> person.getPersonIdRef().equals(personIdRef))
+                                .toList()
+                                .forEach(person -> {
+                                    scope.log("removing person", person.buildPath());
+                                    person.removeFromParent();
+                                });
+                        node.streamLinks()
+                                .flatMap(Links::streamLinkTo)
+                                .flatMap(LinkTo::streamPeople)
+                                .flatMap(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People::streamPerson)
+                                .filter(person -> person.getPersonIdRef().equals(personIdRef))
+                                .toList()
+                                .forEach(person -> {
+                                    scope.log("removing person", person.buildPath());
+                                    person.removeFromParent();
+                                });
                     });
-                node.streamLinks()
-                    .flatMap(Links::streamLinkTo)
-                    .flatMap(LinkTo::streamPeople)
-                    .flatMap(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People::streamPerson)
-                    .filter(person -> person.getPersonIdRef().equals(personIdRef))
-                    .toList()
-                    .forEach(person -> {
-                        logger.log("removing person", person.buildPath());
-                        person.removeFromParent();
-                    });
-            });
+        }
+
     }
 
     public List<List<Node>> shortestPathsInGraphExcludeStart(
@@ -135,37 +138,39 @@ public class LocationGraphInstance {
     public record FindPersonResult(LocationGraph locationGraph, Optional<Node> node, Optional<LinkTo> linkTo) {}
 
     public List<FindPersonResult> findPersonLocation(String personId) {
-        var logger = logEnter("personId:", personId);
-        var locationGraphStream = worldStepInstance.streamWorldStep()
-            .flatMap(WorldStep::streamData)
-            .flatMap(Data::streamLocation)
-            .flatMap(Location::streamLocationGraph);
+        try (var scope = logScope("personId:", personId)){
+            var locationGraphStream = worldStepInstance.streamWorldStep()
+                    .flatMap(WorldStep::streamData)
+                    .flatMap(Data::streamLocation)
+                    .flatMap(Location::streamLocationGraph);
 
 
-        var result = locationGraphStream
-            .flatMap(locationGraph -> {
-                var nodeElement = locationGraph.streamNode()
-                    .filter(node -> node.streamPeople()
-                        .flatMap(People::streamPerson)
-                        .anyMatch(innerPerson -> innerPerson.getPersonIdRef().equals(personId)))
-                    .findAny();
-                if (nodeElement.isPresent()) {
-                    return Stream.of(new FindPersonResult(locationGraph, nodeElement, Optional.empty()));
-                }
-                var linkToPerson = locationGraph.streamNode()
-                    .flatMap(Node::streamLinks)
-                    .flatMap(Links::streamLinkTo)
-                    .filter(linkTo -> linkTo.streamPeople()
-                        .flatMap(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People::streamPerson)
-                        .anyMatch(innerPerson -> innerPerson.getPersonIdRef().equals(personId))
-                    )
-                    .findAny();
-                if (linkToPerson.isPresent()) {
-                    return Stream.of(new FindPersonResult(locationGraph, Optional.empty(), linkToPerson));
-                }
-                return Stream.empty();
-            }).toList();
+            var result = locationGraphStream
+                    .flatMap(locationGraph -> {
+                        var nodeElement = locationGraph.streamNode()
+                                .filter(node -> node.streamPeople()
+                                        .flatMap(People::streamPerson)
+                                        .anyMatch(innerPerson -> innerPerson.getPersonIdRef().equals(personId)))
+                                .findAny();
+                        if (nodeElement.isPresent()) {
+                            return Stream.of(new FindPersonResult(locationGraph, nodeElement, Optional.empty()));
+                        }
+                        var linkToPerson = locationGraph.streamNode()
+                                .flatMap(Node::streamLinks)
+                                .flatMap(Links::streamLinkTo)
+                                .filter(linkTo -> linkTo.streamPeople()
+                                        .flatMap(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People::streamPerson)
+                                        .anyMatch(innerPerson -> innerPerson.getPersonIdRef().equals(personId))
+                                )
+                                .findAny();
+                        if (linkToPerson.isPresent()) {
+                            return Stream.of(new FindPersonResult(locationGraph, Optional.empty(), linkToPerson));
+                        }
+                        return Stream.empty();
+                    }).toList();
 
-        return logger.logReturn(result);
+            return scope.logReturn(result);
+        }
+
     }
 }

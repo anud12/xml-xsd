@@ -7,11 +7,13 @@ using System.Xml;
 using System.Xml.Serialization;
 using Godot;
 using GodotPlugins.Game;
+using Guiclient.util;
 using XSD;
 using XSD.Nworld_step.Nactions;
 using XSD.Nworld_step.Ndata.Nlocation;
 using XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph;
 using Node = Godot.Node;
+using util.dataStore;
 
 public class LoadWorldStep
 {
@@ -27,7 +29,7 @@ public class LoadWorldStep
 	public void loadFromPath(string path)
 	{
 
-		GD.Print("Loading: " + path);
+		Logger.Info("Loading: " + path);
 		using (StreamReader sr = new StreamReader(path))
 		{
 			load(sr.ReadToEnd());
@@ -36,14 +38,14 @@ public class LoadWorldStep
 
 	public world_step deserializeFromPath(string path)
 	{
-		GD.Print("deserializeFromPath: " + path);
+		Logger.Info("deserializeFromPath: " + path);
 		using (StreamReader sr = new StreamReader(path))
 		{
 			var data = sr.ReadToEnd();
 			XmlDocument xmlDocument = new XmlDocument();
 			xmlDocument.LoadXml(data);
 
-			GD.Print("Starting deserialization");
+			Logger.Info("Starting deserialization");
 			return new world_step(xmlDocument.DocumentElement);
 		}
 	}
@@ -51,7 +53,7 @@ public class LoadWorldStep
 
 	public void load(string data)
 	{
-		GD.Print("Removing children");
+		Logger.Info("Removing children");
 		node.GetChildren()
 		.ToList()
 		.ForEach(child => node.RemoveChild(child));
@@ -59,19 +61,19 @@ public class LoadWorldStep
 		XmlDocument xmlDocument = new XmlDocument();
 		xmlDocument.LoadXml(data);
 
-		GD.Print("Starting deserialization");
+		Logger.Info("Starting deserialization");
 		worldStep = new world_step(xmlDocument.DocumentElement);
 
-		GD.Print("Loading nodes and links");
+		Logger.Info("Loading nodes and links");
 		var nodes = loadLinks(worldStep).Concat(loadNodes(worldStep));
 
-		GD.Print("Adding nodes and links");
+		Logger.Info("Adding nodes and links");
 		nodes.ToList().ForEach(child => node.AddChild(child));
 	}
 
 	public static void executeNextStep()
 	{
-		GD.Print("Executing next step");
+		Logger.Info("Executing next step");
 		var worldStep = StoreWorld_Step.instance.data;
 		ImplProgram.SendHttp(worldStep)
 			.ContinueWith(async result =>
@@ -82,7 +84,7 @@ public class LoadWorldStep
 				}
 				XmlDocument xmlDocument = new XmlDocument();
 				xmlDocument.LoadXml(await result);
-				GD.Print("Starting deserialization");
+				Logger.Info("Starting deserialization");
 				worldStep = new world_step(xmlDocument.DocumentElement);
 				StoreWorld_Step.instance.QueueSet(worldStep);
 			});
@@ -104,7 +106,7 @@ public class LoadWorldStep
 			newPosition += locationGraphNodeComponent.getOffset();
 			locationGraphNodeComponent.SetPosition(newPosition);
 
-			locationGraphNodeComponent.initialize(node, worldStep);
+			locationGraphNodeComponent.Update(node);
 			locationGraphNodeComponent.setOnCreateAdjacentButtonPressed(node => addAdjacent(locationGraph, node));
 			return new Node[] { locationGraphNodeComponent };
 		})) ?? Array.Empty<Node>().AsEnumerable();
@@ -112,7 +114,7 @@ public class LoadWorldStep
 
 	private void addAdjacent(location_graph locationGraph, node node)
 	{
-		GD.Print("Adding adjacent to " + node.id);
+		Logger.Info("Adding adjacent to " + node.id);
 
 		var createAdjacent = new location_graph__node__create_adjacent
 		{
@@ -128,11 +130,11 @@ public class LoadWorldStep
 		var nodeById = worldStep.data.location?.location_graph?.SelectMany(locationGraph => locationGraph.node).ToDictionary(node => node.id);
 		return worldStep.data.location?.location_graph?.SelectMany(locationGraph => locationGraph.node.SelectMany(node =>
 			{
-				GD.Print("node.link_to: " + node.links?.link_to.Count);
+				Logger.Info("node.link_to: " + node.links?.link_to.Count);
 				return node.links?.link_to.Select(linkTo =>
 				{
 					var startNode = node;
-					GD.Print("linkTo.node_id_ref: " + linkTo.node_id_ref);
+					Logger.Info("linkTo.node_id_ref: " + linkTo.node_id_ref);
 					var endNode = nodeById[linkTo.node_id_ref];
 					var start = new Vector2((float)startNode.position.x * SCALE, (float)startNode.position.y * SCALE);
 					var end = new Vector2((float)endNode.position.x * SCALE, (float)endNode.position.y * SCALE);

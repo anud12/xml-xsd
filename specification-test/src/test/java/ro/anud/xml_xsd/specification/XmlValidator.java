@@ -29,6 +29,20 @@ public class XmlValidator {
         return true;
     }
 
+    public static void validateXmlString(Class<?> runningTestClass, String xmlFile) {
+        try {
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            var document = documentBuilderFactory.newDocumentBuilder().parse(new ByteArrayInputStream(xmlFile.getBytes(StandardCharsets.UTF_8)));
+            var schemaPathString = document.getDocumentElement().getAttribute("xsi:noNamespaceSchemaLocation");
+            var runningTestClassPath = runningTestClass.getResource("").getPath().replaceFirst("/..", "");
+            var rootRelativePathString = runningTestClassPath + schemaPathString;
+            rootRelativePathString = rootRelativePathString.replaceFirst(Pattern.quote("/.."),"");
+            Assertions.assertThat(validateXMLSchema(rootRelativePathString, xmlFile))
+                .isEqualTo(true);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
     public static Optional<DynamicTest> validateXmlString(Class<?> runningTestClass, String displayName, Optional<String> xmlFileOptional) {
         if(xmlFileOptional.isEmpty()) {
             return empty();

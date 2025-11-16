@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class GetAdjacentNodes {
     public static List<Node> getAdjacentNodes(
@@ -18,32 +18,34 @@ public class GetAdjacentNodes {
         final Node originNode,
         final Integer maxDepth,
         ArrayList<Node> excludeNodes) {
-        var logger = logEnter();
-        if (maxDepth.equals(0)) {
-            return new ArrayList<>();
+        try (var scope = logScope()){
+            if (maxDepth.equals(0)) {
+                return new ArrayList<>();
+            }
+            excludeNodes.add(originNode);
+            var allNodes = locationGraph.streamNode()
+                    .filter(node -> excludeNodes.stream().noneMatch(element -> element.getId().equals(node.getId())))
+                    .collect(Collectors.groupingBy(Node::getId));
+
+            var linkedNodes = originNode.streamLinks()
+                    .flatMap(Links::streamLinkTo)
+                    .flatMap(linkTo -> allNodes.getOrDefault(linkTo.getNodeIdRef(), List.of()).stream())
+                    .toList();
+            excludeNodes.addAll(linkedNodes);
+
+            var childrenNode = linkedNodes.stream().flatMap(node -> getAdjacentNodes(
+                    worldStepInstance,
+                    locationGraph,
+                    node,
+                    maxDepth - 1,
+                    excludeNodes).stream()
+            ).toList();
+            var resultList = new ArrayList<Node>();
+            resultList.addAll(linkedNodes);
+            resultList.addAll(childrenNode);
+            return scope.logReturn(resultList);
         }
-        excludeNodes.add(originNode);
-        var allNodes = locationGraph.streamNode()
-            .filter(node -> excludeNodes.stream().noneMatch(element -> element.getId().equals(node.getId())))
-            .collect(Collectors.groupingBy(Node::getId));
 
-        var linkedNodes = originNode.streamLinks()
-            .flatMap(Links::streamLinkTo)
-            .flatMap(linkTo -> allNodes.getOrDefault(linkTo.getNodeIdRef(), List.of()).stream())
-            .toList();
-        excludeNodes.addAll(linkedNodes);
-
-        var childrenNode = linkedNodes.stream().flatMap(node -> getAdjacentNodes(
-            worldStepInstance,
-            locationGraph,
-            node,
-            maxDepth - 1,
-            excludeNodes).stream()
-        ).toList();
-        var resultList = new ArrayList<Node>();
-        resultList.addAll(linkedNodes);
-        resultList.addAll(childrenNode);
-        return logger.logReturn(resultList);
     }
 
 

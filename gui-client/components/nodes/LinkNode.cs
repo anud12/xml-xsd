@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Godot;
+using Guiclient.util;
 
 [Tool]
 [GlobalClass]
@@ -314,7 +315,7 @@ public partial class LinkNode : Control
             if (child != null)
             {
                 child.GlobalPosition = newPosition;
-                GD.Print("Child Rotation: " + angle);
+                Logger.Info("Child Rotation: " + angle);
                 child.Rotation = angle;
                 child.EmitSignal(SignalName.ItemRectChanged);
                 

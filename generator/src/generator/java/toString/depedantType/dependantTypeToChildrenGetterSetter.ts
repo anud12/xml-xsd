@@ -1,7 +1,7 @@
 import {DependantType} from "../../typeToString";
 import {template} from "../../../../template/template";
 import {normalizeNameClass, normalizeNameField} from "../normalizeNameClass";
-import {getTypeName} from "../geTypeName";
+import {getTypeName} from "../getTypeName";
 import {Type} from "../../../../type";
 import {basePackage, getDependantTypePackage} from "./getDependantTypePackage";
 
@@ -61,8 +61,8 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
               {
                 return this.${normalizeNameField(key)}.orElseGet(() -> {
                   var instance = new ${baseTypeString}();
-                  instance.parentNode(this);
                   this.${normalizeNameField(key)} = Optional.of(instance);
+                  instance.parentNode(this);
                   return this.${normalizeNameField(key)}.get();
                 });
               }
@@ -81,7 +81,7 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
                 ${value.isNullable && `this.${normalizeNameField(key)} = Optional.ofNullable(value);`}
                 ${!value.isNullable && `this.${normalizeNameField(key)} = value;`}
                 value.parentNode(this);
-                triggerOnChange();
+                notifyChange();
                 return this;
               }
               `}
@@ -90,20 +90,18 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
               {
                 this.${normalizeNameField(key)}.add(value);
                 value.parentNode(this);
-                triggerOnChange();
                 return this;
               }
               public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} addAll${normalizeNameClass(key)}(List<${baseTypeString}> value)
               {
                 this.${normalizeNameField(key)}.addAll(value);
                 value.forEach(e -> e.parentNode(this));
-                triggerOnChange();
                 return this;
               }
               public ${normalizeNameClass(parentDependantType?.name ?? dependantType.name)} remove${normalizeNameClass(key)}(${baseTypeString} value)
               {
                 this.${normalizeNameField(key)}.remove(value);
-                triggerOnChange();
+                value.clearParentNode();
                 return this;
               }
               `}

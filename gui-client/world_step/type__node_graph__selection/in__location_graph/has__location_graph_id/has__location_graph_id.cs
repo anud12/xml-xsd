@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -8,13 +11,40 @@ namespace XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_gr
 namespace XSD {
 }
 namespace XSD.Ntype__node_graph__selection.Nin__location_graph {
-  public class has__location_graph_id  {
+  public class has__location_graph_id : IEquatable<has__location_graph_id>, XSD.ILinkedNode  {
+
+    public static string ClassTypeId = ".type__node_graph__selection.in__location_graph.has__location_graph_id";
+    public static string TagName = "has__location_graph_id";
+
+    public string NodeName {get =>"has__location_graph_id";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<has__location_graph_id>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
+
     //Attributes
-    public System.String location_graph_id_ref;
+    private System.String _location_graph_id_ref;
+    public System.String location_graph_id_ref { get => _location_graph_id_ref; set => _location_graph_id_ref = value; }
 
     //Children elements
-    public List<XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or>? or = new List<XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or>();
+
+    private LinkedNodeCollection<XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or> _or = new();
+    public LinkedNodeCollection<XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or> or
+    {
+      get => _or;
+      set
+      {
+        _or = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _or.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          NotifyChange();
+        };
+      }
+    }
     public has__location_graph_id()
     {
     }
@@ -30,6 +60,51 @@ namespace XSD.Ntype__node_graph__selection.Nin__location_graph {
       Deserialize(rawNode);
     }
 
+    public void SetAttribute(string name, string? value)
+    {
+      if(name == "location_graph_id_ref")
+      {
+        Set_location_graph_id_ref(value);
+      }
+    }
+
+    public void SetChild(dynamic linkedNode)
+    {
+
+      if(linkedNode is LinkedNodeCollection<XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or> or)
+      {
+        this.or = or;
+      }
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+
+      if(linkedNode is LinkedNodeCollection<XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or>)
+      {
+        this.or = null;
+      }
+    }
+
+    public Action OnSelfChange(Action<has__location_graph_id> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -42,15 +117,21 @@ namespace XSD.Ntype__node_graph__selection.Nin__location_graph {
       }
 
       //Deserialize children
-      this.or = rawNode.InitializeWithRawNode("or", this.or);
+      or = rawNode.InitializeWithRawNode("or", or);
+      or.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          NotifyChange();
+        };
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.location_graph_id_ref != null)
+      if(this._location_graph_id_ref != null)
       {
-        rawNode.attributes["location_graph_id_ref"] = this.location_graph_id_ref.ToString();
+        rawNode.attributes["location_graph_id_ref"] = this._location_graph_id_ref.ToString();
       }
 
       //Serialize children
@@ -71,21 +152,83 @@ namespace XSD.Ntype__node_graph__selection.Nin__location_graph {
     public void Set_location_graph_id_ref(System.String value)
     {
       this.location_graph_id_ref = value;
+      this.NotifyChange();
     }
-    public List<XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or>? Get_or()
+
+
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
-      return this.or;
-    }
-    public List<XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or> GetOrInsertDefault_or()
-    {
-      if(this.or == null) {
-        this.or = new List<XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or>();
+      if(xpath.StartsWith("."))
+      {
+        xpath = xpath.Substring(1);
       }
-      return this.or;
+      if(xpath.StartsWith(XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or.TagName + "["))
+      {
+        var startIndex = (XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or.TagName + "[").Length;
+        var startTokens = xpath.Split(XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or.TagName + "[" + indexString + "]", "");
+        var pathIndex = indexString.ToInt();
+        if(this.or.ContainsKey(pathIndex))
+        {
+          this.or[pathIndex].DeserializeAtPath(childXPath, rawNode);
+          return;
+        }
+        var newEntry = new XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or();
+        this.or[pathIndex] = newEntry;
+        newEntry.DeserializeAtPath(childXPath, rawNode);
+
+        return;
+      }
+
+      Deserialize(rawNode);
     }
-    public void Set_or(List<XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or>? value)
+
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
-      this.or = value;
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
+    }
+
+    public void NotifyChange()
+    {
+      NotifyChange(new ());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or casted_or) {
+        return this._or.KeyOf(casted_or);
+      }
+      return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Ntype__node_graph__selection.Nin__location_graph.Nhas__location_graph_id.or
+      || false;
+    }
+
+    public bool Equals(has__location_graph_id? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (has__location_graph_id)obj;
+        return Equals(location_graph_id_ref, other.location_graph_id_ref) && Equals(or, other.or);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, location_graph_id_ref);
+        acc = HashCode.Combine(acc, or);
+        return acc;
     }
   }
 }

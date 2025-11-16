@@ -7,7 +7,7 @@ import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class ComputePropertyMutation {
 
@@ -17,35 +17,39 @@ public class ComputePropertyMutation {
         final IType_propertyMutation<?> typePropertyMutation,
         final Person selfPerson,
         final Person targetPerson) {
-        var logger = logEnter(
-            "selfPerson",
-            selfPerson.getId(),
-            "targetPerson",
-            targetPerson.getId()
-        );
-        var propertyRuleRef = typePropertyMutation.getPropertyRuleRef();
-        logger.log("propertyRuleRef:", propertyRuleRef);
-        return typePropertyMutation.streamFrom()
-            .flatMap(from -> {
-                logger.log("participant:", from.getParticipant());
-                var person = switch (from.getParticipant()) {
-                    case "self" -> selfPerson;
-                    default -> targetPerson;
-                };
-                var innerLog = logger.log("on personId:", person.getId());
-                var newValueOptional = worldStepInstance.computeOperation(
-                    from.getOperation(),
-                    person);
-                if (newValueOptional.isEmpty()) {
-                    return Stream.empty();
-                }
+        try (var scope = logScope(
+                "selfPerson",
+                selfPerson.getId(),
+                "targetPerson",
+                targetPerson.getId()
+        )){
+            var propertyRuleRef = typePropertyMutation.getPropertyRuleRef();
+            scope.log("propertyRuleRef:", propertyRuleRef);
+            return typePropertyMutation.streamFrom()
+                    .flatMap(from -> {
+                        scope.log("participant:", from.getParticipant());
+                        var person = switch (from.getParticipant()) {
+                            case "self" -> selfPerson;
+                            default -> targetPerson;
+                        };
+                        try (var innerLog = logScope()){
+                            var newValueOptional = worldStepInstance.computeOperation(
+                                    from.getOperation(),
+                                    person);
+                            if (newValueOptional.isEmpty()) {
+                                return Stream.empty();
+                            }
 
-                var deltaValue = newValueOptional.get();
-                innerLog.log("deltaValue", deltaValue);
-                var result = new Result(propertyRuleRef, deltaValue);
-                innerLog.log("result", result);
-                return Stream.of(result);
-            })
-            .toList();
+                            var deltaValue = newValueOptional.get();
+                            innerLog.log("deltaValue", deltaValue);
+                            var result = new Result(propertyRuleRef, deltaValue);
+                            innerLog.log("result", result);
+                            return Stream.of(result);
+                        }
+
+                    })
+                    .toList();
+        }
+
     }
 }

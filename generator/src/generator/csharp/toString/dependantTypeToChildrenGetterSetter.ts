@@ -23,14 +23,14 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
 
       const fullPathTypeString = value.isSingle
         ? `${getDependantTypeChildNamespace(dependantType)}.${type}`
-        : `List<${getDependantTypeChildNamespace(dependantType)}.${type}>`;
+        : `LinkedNodeCollection<${getDependantTypeChildNamespace(dependantType)}.${type}>`;
       const fullPathNullableTypeString = value.isNullable
         ? `${fullPathTypeString}?`
         : fullPathTypeString;
 
       const typeString = value.isSingle
         ? `${type}`
-        : `List<${type}>`;
+        : `LinkedNodeCollection<${type}>`;
       const nullableTypeString = value.isNullable
         ? `${typeString}?`
         : typeString;
@@ -42,23 +42,24 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
           name: type,
           parentType: dependantType,
         })
-        return template()`
-              public ${fullPathNullableTypeString} Get_${normalizeName(key)}()
-              {
-                return this.${normalizeName(key)};
-              }
-              public ${fullPathTypeString} GetOrInsertDefault_${normalizeName(key)}()
-              {
-                if(this.${normalizeName(key)} == null) {
-                  this.${normalizeName(key)} = new ${fullPathTypeString}();
-                }
-                return this.${normalizeName(key)};
-              }
-              public void Set_${normalizeName(key)}(${fullPathNullableTypeString} value)
-              {
-                this.${normalizeName(key)} = value;
-              }
-              `
+        // return template()`
+        //       public ${fullPathNullableTypeString} Get_${normalizeName(key)}()
+        //       {
+        //         return ${normalizeName(key)};
+        //       }
+        //       public ${fullPathTypeString} GetOrInsertDefault_${normalizeName(key)}()
+        //       {
+        //         #pragma warning disable CS8603 // Possible null reference return.
+        //         return this.Get_${normalizeName(key)}();
+        //         #pragma warning restore CS8603 // Possible null reference return.
+        //       }
+        //       public void Set_${normalizeName(key)}(${fullPathNullableTypeString} value)
+        //       {
+        //         this.${normalizeName(key)} = value;
+        //         this.OnSelfChange();
+        //       }
+        //       `
+        return "";
       }
       if (value.metaType === "union" || value.metaType === "composition") {
         dependantTypeList.push({
@@ -67,16 +68,18 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
           name: type,
           parentType: dependantType,
         })
-        return template()`
-              public ${fullPathNullableTypeString} Get_${normalizeName(key)}()
-              {
-                return this.${normalizeName(key)};
-              }
-              public void Set_${normalizeName(key)}(${fullPathNullableTypeString} value)
-              {
-                this.${normalizeName(key)} = value;
-              }
-              `
+        // return template()`
+        //       public ${fullPathNullableTypeString} Get_${normalizeName(key)}()
+        //       {
+        //         return this.${normalizeName(key)};
+        //       }
+        //       public void Set_${normalizeName(key)}(${fullPathNullableTypeString} value)
+        //       {
+        //         this.${normalizeName(key)} = value;
+        //         this.OnSelfChange();
+        //       }
+        //       `
+        return "";
       }
       if (value.metaType === "reference") {
         dependantTypeList.push({
@@ -84,16 +87,18 @@ export const dependantTypeToChildrenGetterSetter = (dependantType: DependantType
           value: value,
           name: type,
         })
-        return template()`
-              public ${nullableTypeString} Get_${normalizeName(key)}()
-              {
-                return this.${normalizeName(key)};
-              }
-              public void Set_${normalizeName(key)}(${nullableTypeString} value)
-              {
-                this.${normalizeName(key)} = value;
-              }
-              `
+        // return template()`
+        //       public ${nullableTypeString} Get_${normalizeName(key)}()
+        //       {
+        //         return this.${normalizeName(key)};
+        //       }
+        //       public void Set_${normalizeName(key)}(${nullableTypeString} value)
+        //       {
+        //         this.${normalizeName(key)} = value;
+        //         this.OnSelfChange();
+        //       }
+        //       `
+        return "";
       }
       return template()`/* ignored children key:${key} of type:${type}*/`
     }).filter(e => e).join("\n")

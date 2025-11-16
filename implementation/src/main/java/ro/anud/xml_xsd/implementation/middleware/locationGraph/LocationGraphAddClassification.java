@@ -6,40 +6,42 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGrap
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class LocationGraphAddClassification {
     public static void locationGraphAddClassification(WorldStepInstance worldStepInstance) {
-        var logger = logEnter();
-        worldStepInstance.streamWorldStep()
-            .flatMap(WorldStep::streamActions)
-            .flatMap(Actions::streamLocationGraph_node_addClassification)
-            .forEach(locationGraphNodeAddClassification -> {
-                worldStepInstance.locationGraph.selectNodeGraph(locationGraphNodeAddClassification.getNodeGraphSelection())
-                    .forEach(node -> {
+        try (var scope = logScope()){
+            worldStepInstance.streamWorldStep()
+                    .flatMap(WorldStep::streamActions)
+                    .flatMap(Actions::streamLocationGraph_node_addClassification)
+                    .forEach(locationGraphNodeAddClassification -> {
+                        worldStepInstance.locationGraph.selectNodeGraph(locationGraphNodeAddClassification.getNodeGraphSelection())
+                                .forEach(node -> {
 
-                        var toBeAddedClassification = locationGraphNodeAddClassification.getToBeAdded_classification();
+                                    var toBeAddedClassification = locationGraphNodeAddClassification.getToBeAdded_classification();
 
-                        var outNodeClassification = worldStepInstance.getOutInstance()
-                            .locationGraph
-                            .nodeRepository
-                            .getNodeOrDefault(node)
-                            .getClassificationsOrDefault();
-                        outNodeClassification.addClassification(new Classification()
-                            .setLocationClassificationRuleRef(toBeAddedClassification.getLocationClassificationRuleRef())
-                        );
-                        toBeAddedClassification.streamAnd().forEach(and -> {
-                            outNodeClassification.addClassification(new Classification()
-                                .setLocationClassificationRuleRef(and.getLocationClassificationRuleRef())
-                            );
-                        });
+                                    var outNodeClassification = worldStepInstance.getOutInstance()
+                                            .locationGraph
+                                            .nodeRepository
+                                            .getNodeOrDefault(node)
+                                            .getClassificationsOrDefault();
+                                    outNodeClassification.addClassification(new Classification()
+                                            .setLocationClassificationRuleRef(toBeAddedClassification.getLocationClassificationRuleRef())
+                                    );
+                                    toBeAddedClassification.streamAnd().forEach(and -> {
+                                        outNodeClassification.addClassification(new Classification()
+                                                .setLocationClassificationRuleRef(and.getLocationClassificationRuleRef())
+                                        );
+                                    });
+                                });
                     });
-            });
 
-        worldStepInstance.getOutInstance().streamWorldStep()
-            .flatMap(WorldStep::streamActions)
-            .flatMap(Actions::streamLocationGraph_node_addClassification)
-            .toList()
-            .forEach(LocationGraph_node_addClassification::removeFromParent);
+            worldStepInstance.getOutInstance().streamWorldStep()
+                    .flatMap(WorldStep::streamActions)
+                    .flatMap(Actions::streamLocationGraph_node_addClassification)
+                    .toList()
+                    .forEach(LocationGraph_node_addClassification::removeFromParent);
+        }
+
     }
 }

@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -8,13 +11,62 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport.Nlink_to {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nactions.Nperson__teleport {
-  public class link_to  {
+  public class link_to : IEquatable<link_to>, XSD.ILinkedNode  {
+
+    public static string ClassTypeId = ".world_step.actions.person.teleport.link_to";
+    public static string TagName = "link_to";
+
+    public string NodeName {get =>"link_to";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<link_to>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
+
     //Attributes
-    public System.Int32 accumulated_progress;
+    private System.Int32 _accumulated_progress;
+    public System.Int32 accumulated_progress { get => _accumulated_progress; set => _accumulated_progress = value; }
 
     //Children elements
-    public type__link_to__selection selection = new type__link_to__selection();
+    private type__link_to__selection _selection = new type__link_to__selection();
+    public type__link_to__selection selectionOrCreate
+    {
+      get
+      {
+        if(_selection == null)
+        {
+          _selection = new();
+          _selection.ParentNode = this;
+          NotifyChange();
+        }
+        return _selection;
+      }
+      set
+      {
+        _selection = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__link_to__selection selection
+    {
+      get
+      {
+        return _selection;
+      }
+      set
+      {
+        _selection = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
     public link_to()
     {
     }
@@ -30,6 +82,51 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
       Deserialize(rawNode);
     }
 
+    public void SetAttribute(string name, string? value)
+    {
+      if(name == "accumulated_progress")
+      {
+        Set_accumulated_progress(value?.ToInt() ?? 0);
+      }
+    }
+
+    public void SetChild(dynamic linkedNode)
+    {
+      if(linkedNode is type__link_to__selection selection)
+      {
+        this.selection = selection;
+      }
+
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is type__link_to__selection)
+      {
+        this.selection = new();
+      }
+
+    }
+
+    public Action OnSelfChange(Action<link_to> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -42,15 +139,16 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
       }
 
       //Deserialize children
-      this.selection = rawNode.InitializeWithRawNode("selection", this.selection);
+      selection = rawNode.InitializeWithRawNode("selection", selection);
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.accumulated_progress != null)
+      if(this._accumulated_progress != null)
       {
-        rawNode.attributes["accumulated_progress"] = this.accumulated_progress.ToString();
+        rawNode.attributes["accumulated_progress"] = this._accumulated_progress.ToString();
       }
 
       //Serialize children
@@ -73,14 +171,70 @@ namespace XSD.Nworld_step.Nactions.Nperson__teleport {
     public void Set_accumulated_progress(System.Int32 value)
     {
       this.accumulated_progress = value;
+      this.NotifyChange();
     }
-    public type__link_to__selection Get_selection()
+
+
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
-      return this.selection;
+      if(xpath.StartsWith("."))
+      {
+        xpath = xpath.Substring(1);
+      }
+      if(xpath.StartsWith(type__link_to__selection.TagName))
+      {
+        var childXPath = xpath.Substring(type__link_to__selection.TagName.Length + 3);
+        this.selection.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
+
+      Deserialize(rawNode);
     }
-    public void Set_selection(type__link_to__selection value)
+
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
-      this.selection = value;
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
+    }
+
+    public void NotifyChange()
+    {
+      NotifyChange(new ());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is type__link_to__selection casted_selection) {
+        return 0;
+      }
+      return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is type__link_to__selection
+      || false;
+    }
+
+    public bool Equals(link_to? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (link_to)obj;
+        return Equals(accumulated_progress, other.accumulated_progress) && Equals(selection, other.selection);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, accumulated_progress);
+        acc = HashCode.Combine(acc, selection);
+        return acc;
     }
   }
 }

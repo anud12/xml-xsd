@@ -12,6 +12,7 @@ public class LocalLogger {
     static Logger logger = LoggerFactory.getLogger(RawNode.class);
 
     private static boolean SKIP_STACK = false;
+    private static boolean SKIP_PRINT = false;
 
     public static class LogClass {
         static String PARENT_DELIMITER = "|>";
@@ -26,6 +27,9 @@ public class LocalLogger {
         }
 
         public LogClass log(Object... args) {
+            if(SKIP_PRINT) {
+                return new LogClass();
+            }
             var prefix = " [ log  ]";
             if(SKIP_STACK) {
                 print(getStringBuilder(prefix, args , List.of()));
@@ -34,9 +38,16 @@ public class LocalLogger {
             var stackTrace = Thread.currentThread().getStackTrace();
             var filterStacktrace = filterStacktrace(stackTrace);
 
-            var previousStackTrace = filterStacktrace.get(0);
-            var methodName = previousStackTrace.getMethodName();
-            var logLine = logLine(previousStackTrace);
+            var methodName = Optional.ofNullable(filterStacktrace)
+                .filter(stack -> !stack.isEmpty())
+                .map(stack -> stack.get(0).getMethodName())
+                .orElse("UNKNOWN_METHOD");
+
+            var logLine = Optional.ofNullable(filterStacktrace)
+                .filter(stack -> !stack.isEmpty())
+                .map(stack -> stack.get(0))
+                .map(LocalLogger::logLine)
+                .orElse(new StringBuilder(" ---  at UNKNOWN_LINE"));
 
             printWithStack(filterStacktrace, getStringBuilder(methodName + prefix, args , filterStacktrace));
 //            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + logLine);
@@ -59,6 +70,9 @@ public class LocalLogger {
         }
 
         public LogClass logTodo(Object... args) {
+            if(SKIP_PRINT) {
+                return new LogClass();
+            }
             var prefix = " [ TODO ]";
             if(SKIP_STACK) {
                 print(getStringBuilder(prefix, args , List.of()));
@@ -67,9 +81,16 @@ public class LocalLogger {
             var stackTrace = Thread.currentThread().getStackTrace();
             var filterStacktrace = filterStacktrace(stackTrace);
 
-            var previousStackTrace = filterStacktrace.get(0);
-            var logLine = logLine(previousStackTrace);
-            var methodName = previousStackTrace.getMethodName();
+            var methodName = Optional.ofNullable(filterStacktrace)
+                .filter(stack -> !stack.isEmpty())
+                .map(stack -> stack.get(0).getMethodName())
+                .orElse("UNKNOWN_METHOD");
+
+            var logLine = Optional.ofNullable(filterStacktrace)
+                .filter(stack -> !stack.isEmpty())
+                .map(stack -> stack.get(0))
+                .map(LocalLogger::logLine)
+                .orElse(new StringBuilder(" ---  at UNKNOWN_LINE"));
 
             printWithStack(filterStacktrace, getStringBuilder(methodName + prefix, args , filterStacktrace));
 //            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + logLine);
@@ -77,6 +98,9 @@ public class LocalLogger {
         }
 
         public LogClass logEnter(Object... args) {
+            if(SKIP_PRINT) {
+                return new LogClass();
+            }
             var prefix = " [enter ]";
             if(SKIP_STACK) {
                 print(getStringBuilder(prefix, args , List.of()));
@@ -85,8 +109,16 @@ public class LocalLogger {
             var stackTrace = Thread.currentThread().getStackTrace();
             var filterStacktrace = filterStacktrace(stackTrace);
 
-            var previousStackTrace = filterStacktrace.get(0);
-            var methodName = previousStackTrace.getMethodName();
+            var methodName = Optional.ofNullable(filterStacktrace)
+                .filter(stack -> !stack.isEmpty())
+                .map(stack -> stack.get(0).getMethodName())
+                .orElse("UNKNOWN_METHOD");
+
+            var logLine = Optional.ofNullable(filterStacktrace)
+                .filter(stack -> !stack.isEmpty())
+                .map(stack -> stack.get(0))
+                .map(LocalLogger::logLine)
+                .orElse(new StringBuilder(" ---  at UNKNOWN_LINE"));
 
             printWithStack(filterStacktrace, getStringBuilder(methodName + prefix, args , filterStacktrace));
 //            LoggerFactory.getLogger(previousStackTrace.getClassName()).info(String.valueOf(line) + logLine);
@@ -94,6 +126,9 @@ public class LocalLogger {
         }
 
         public <T> T logReturn(T returnValue, Object... args) {
+            if(SKIP_PRINT) {
+                return returnValue;
+            }
             var prefix = " [return]";
             if(SKIP_STACK) {
                 print(getStringBuilder(prefix, args , List.of()));
@@ -102,9 +137,16 @@ public class LocalLogger {
             var stackTrace = Thread.currentThread().getStackTrace();
             var filterStacktrace = filterStacktrace(stackTrace);
 
-            var previousStackTrace = filterStacktrace.get(0);
-            var logLine = logLine(previousStackTrace);
-            var methodName = previousStackTrace.getMethodName();
+            var methodName = Optional.ofNullable(filterStacktrace)
+                .filter(stack -> !stack.isEmpty())
+                .map(stack -> stack.get(0).getMethodName())
+                .orElse("UNKNOWN_METHOD");
+
+            var logLine = Optional.ofNullable(filterStacktrace)
+                .filter(stack -> !stack.isEmpty())
+                .map(stack -> stack.get(0))
+                .map(LocalLogger::logLine)
+                .orElse(new StringBuilder(" ---  at UNKNOWN_LINE"));
             var line = getStringBuilder(methodName + prefix, args , filterStacktrace);
             var returnValueString = Optional.ofNullable(returnValue).map(Objects::toString).orElse("null");
             line.append("value: [" + returnValueString + "]");
@@ -116,6 +158,9 @@ public class LocalLogger {
         }
 
         public void logReturnVoid(Object... args) {
+            if(SKIP_PRINT) {
+                return;
+            }
             var prefix = " [return]";
             if(SKIP_STACK) {
                 print(getStringBuilder(prefix, args , List.of()));
@@ -124,8 +169,16 @@ public class LocalLogger {
             var stackTrace = Thread.currentThread().getStackTrace();
             var filterStacktrace = filterStacktrace(stackTrace);
 
-            var previousStackTrace = filterStacktrace.get(0);
-            var methodName = previousStackTrace.getMethodName();
+            var methodName = Optional.ofNullable(filterStacktrace)
+                .filter(stack -> !stack.isEmpty())
+                .map(stack -> stack.get(0).getMethodName())
+                .orElse("UNKNOWN_METHOD");
+
+            var logLine = Optional.ofNullable(filterStacktrace)
+                .filter(stack -> !stack.isEmpty())
+                .map(stack -> stack.get(0))
+                .map(LocalLogger::logLine)
+                .orElse(new StringBuilder(" ---  at UNKNOWN_LINE"));
 
             StringBuilder line = getStringBuilder(methodName +  prefix, args , filterStacktrace);
             line.append(ARG_SEPARATOR);
@@ -179,10 +232,16 @@ public class LocalLogger {
             line.insert(0, IDENT);
         }
 
-        var previousStackTrace = filterStacktrace.get(0);
-        var logLine = logLine(previousStackTrace);
-        line.append(logLine);
-        LoggerFactory.getLogger(previousStackTrace.getClassName()).info(line.toString());
+        Optional.ofNullable(filterStacktrace)
+            .filter(stack -> !stack.isEmpty())
+            .ifPresentOrElse(stack -> {
+                var previousStackTrace = stack.get(0);
+                var logLine = logLine(previousStackTrace);
+                line.append(logLine);
+                LoggerFactory.getLogger(previousStackTrace.getClassName()).info(line.toString());
+            }, () -> {
+                LoggerFactory.getLogger(LocalLogger.class).warn("filterStacktrace is empty, unable to log stack trace.");
+            });
 
     }
 

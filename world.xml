@@ -112,6 +112,11 @@
 
 
   <rule_group id="default">
+    
+    <entity_rule>
+      <entry name="attribute"/>
+      <entry name=""/>
+    </entity_rule>
     <!--_-->
     <!--_-->
     <!--_-->

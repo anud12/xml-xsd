@@ -1,0 +1,106 @@
+[gd_scene load_steps=2 format=3 uid="uid://dunktel24vey5"]
+
+[ext_resource type="Script" path="res://scenes/ServerControls.cs" id="1_sv516"]
+
+[node name="PanelContainer" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_sv516")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="BoxContainer" type="BoxContainer" parent="MarginContainer"]
+layout_mode = 2
+vertical = true
+
+[node name="ServerLabel" type="Label" parent="MarginContainer/BoxContainer"]
+layout_mode = 2
+text = "Server"
+
+[node name="BoxContainer" type="BoxContainer" parent="MarginContainer/BoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+vertical = true
+
+[node name="BoxContainer" type="BoxContainer" parent="MarginContainer/BoxContainer/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/BoxContainer/BoxContainer/BoxContainer"]
+layout_mode = 2
+text = "Url:"
+
+[node name="TextEdit" type="TextEdit" parent="MarginContainer/BoxContainer/BoxContainer/BoxContainer"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BoxContainer2" type="BoxContainer" parent="MarginContainer/BoxContainer/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="MarginContainer/BoxContainer/BoxContainer/BoxContainer2"]
+layout_mode = 2
+text = "Status:"
+
+[node name="Status" type="Label" parent="MarginContainer/BoxContainer/BoxContainer/BoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="BoxContainer3" type="BoxContainer" parent="MarginContainer/BoxContainer/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="MarginContainer/BoxContainer/BoxContainer/BoxContainer3"]
+layout_mode = 2
+text = "Connected:"
+
+[node name="BoxContainer" type="BoxContainer" parent="MarginContainer/BoxContainer/BoxContainer/BoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ConnectButton" type="CheckButton" parent="MarginContainer/BoxContainer/BoxContainer/BoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="BoxContainer5" type="BoxContainer" parent="MarginContainer/BoxContainer/BoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BoxContainer4" type="BoxContainer" parent="MarginContainer/BoxContainer/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="StartStopButton" type="Button" parent="MarginContainer/BoxContainer/BoxContainer/BoxContainer4"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Start/Stop
+"
+
+[node name="LoadButton" type="Button" parent="MarginContainer/BoxContainer/BoxContainer/BoxContainer4"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Load"
+
+[node name="DownloadButton" type="Button" parent="MarginContainer/BoxContainer/BoxContainer/BoxContainer4"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Download"
+
+[node name="StartButton" type="Button" parent="MarginContainer/BoxContainer/BoxContainer/BoxContainer4"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Start"

@@ -1,0 +1,207 @@
+[gd_scene load_steps=9 format=3 uid="uid://cfcl0ch64pt2k"]
+
+[ext_resource type="Script" path="res://scenes/WorldStepScene.cs" id="1_nceax"]
+[ext_resource type="Theme" uid="uid://dskjtmlounwht" path="res://mainTheme.tres" id="1_thifx"]
+[ext_resource type="Script" path="res://components/nodes/MainPersonSelect.cs" id="3_7q138"]
+[ext_resource type="Script" path="res://components/nodes/ServerToggle.cs" id="3_djd6i"]
+[ext_resource type="Script" path="res://components/nodes/DataStoreDispatcher.cs" id="3_e37i8"]
+[ext_resource type="Script" path="res://components/nodes/ButtonWithDropdownNode.cs" id="4_703po"]
+[ext_resource type="Script" path="res://components/nodes/LinkedNodeViewer.cs" id="6_qslo5"]
+[ext_resource type="Script" path="res://components/nodes/ViewState.cs" id="8_3uxpp"]
+
+[node name="Control" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_thifx")
+script = ExtResource("1_nceax")
+
+[node name="DataStoreDispatcher" type="Node" parent="."]
+script = ExtResource("3_e37i8")
+
+[node name="BoxContainer2" type="BoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+vertical = true
+
+[node name="BoxContainer2" type="BoxContainer" parent="BoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 0
+vertical = true
+
+[node name="PanelContainer" type="PanelContainer" parent="BoxContainer2/BoxContainer2"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BoxContainer2/BoxContainer2/PanelContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Server" type="Button" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Server"
+script = ExtResource("3_djd6i")
+_window = null
+
+[node name="ViewState" type="Button" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "View state"
+script = ExtResource("8_3uxpp")
+_window = null
+
+[node name="Button" type="Button" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "LinkedNodeViewer"
+script = ExtResource("6_qslo5")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Main Person
+"
+
+[node name="MainPersonSelect" type="OptionButton" parent="BoxContainer2/BoxContainer2/PanelContainer/HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+item_count = 1
+selected = 0
+popup/item_0/text = "Select Person"
+popup/item_0/id = 0
+script = ExtResource("3_7q138")
+
+[node name="PanelContainer2" type="PanelContainer" parent="BoxContainer2/BoxContainer2"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BoxContainer2/BoxContainer2/PanelContainer2"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BoxContainer2/BoxContainer2/PanelContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="BoxContainer2/BoxContainer2/PanelContainer2/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Location :"
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="BoxContainer2/BoxContainer2/PanelContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+vertical_scroll_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BoxContainer2/BoxContainer2/PanelContainer2/HBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RootLocationGraph" type="BoxContainer" parent="BoxContainer2/BoxContainer2/PanelContainer2/HBoxContainer/ScrollContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 0
+script = ExtResource("4_703po")
+options = [null]
+_options = [null]
+_button = null
+_optionButton = null
+
+[node name="BoxContainer" type="BoxContainer" parent="BoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+vertical = true
+
+[node name="BoxContainer2" type="BoxContainer" parent="BoxContainer2/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="BoxContainer2/BoxContainer/BoxContainer2"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 2
+
+[node name="BoxContainer" type="BoxContainer" parent="BoxContainer2/BoxContainer/BoxContainer2/MarginContainer"]
+layout_mode = 2
+vertical = true
+
+[node name="Label" type="Label" parent="BoxContainer2/BoxContainer/BoxContainer2/MarginContainer/BoxContainer"]
+layout_mode = 2
+text = "Location Graphs"
+
+[node name="LocationGraphList" type="VBoxContainer" parent="BoxContainer2/BoxContainer/BoxContainer2/MarginContainer/BoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Button" type="Button" parent="BoxContainer2/BoxContainer/BoxContainer2/MarginContainer/BoxContainer/LocationGraphList"]
+layout_mode = 2
+text = "First
+"
+
+[node name="Button2" type="Button" parent="BoxContainer2/BoxContainer/BoxContainer2/MarginContainer/BoxContainer/LocationGraphList"]
+layout_mode = 2
+text = "First
+"
+
+[node name="Button3" type="Button" parent="BoxContainer2/BoxContainer/BoxContainer2/MarginContainer/BoxContainer/LocationGraphList"]
+layout_mode = 2
+text = "First
+"
+
+[node name="Button4" type="Button" parent="BoxContainer2/BoxContainer/BoxContainer2/MarginContainer/BoxContainer/LocationGraphList"]
+layout_mode = 2
+text = "First
+"
+
+[node name="Button5" type="Button" parent="BoxContainer2/BoxContainer/BoxContainer2/MarginContainer/BoxContainer/LocationGraphList"]
+layout_mode = 2
+text = "First
+"
+
+[node name="Button6" type="Button" parent="BoxContainer2/BoxContainer/BoxContainer2/MarginContainer/BoxContainer/LocationGraphList"]
+layout_mode = 2
+text = "First
+"
+
+[node name="Button7" type="Button" parent="BoxContainer2/BoxContainer/BoxContainer2/MarginContainer/BoxContainer/LocationGraphList"]
+layout_mode = 2
+text = "First
+"
+
+[node name="Panel" type="Panel" parent="BoxContainer2/BoxContainer/BoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LocationGraphSceneContainer" type="BoxContainer" parent="BoxContainer2/BoxContainer/BoxContainer2/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="MainPersonContainer" type="BoxContainer" parent="BoxContainer2/BoxContainer/BoxContainer2/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -100.0
+offset_right = 100.0
+grow_vertical = 0
+alignment = 2

@@ -1,8 +1,6 @@
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using dataStore;
 using Godot;
-using XSD;
+using Guiclient.util;
+using util.dataStore;
 
 [Tool]
 [GlobalClass]
@@ -11,9 +9,10 @@ public partial class MainPersonSelect : PersonSelect
 
     public MainPersonSelect()
     {
-        GD.Print("MainPersonSelect constructor");
-        value.OnSet((person, unsubscribe) =>
+        Logger.Info("MainPersonSelect constructor");
+        Value.OnSet(this, (person, unsubscribe) =>
         {
+            Logger.Info("MainPersonSelect Value.OnSet triggered");
             if (IsInstanceValid(this) == false)
             {
                 unsubscribe();
@@ -25,8 +24,9 @@ public partial class MainPersonSelect : PersonSelect
             }
             StoreSession.mainPersonId.data = person.id;
         });
-        StoreSession.mainPersonId.OnSet((mainPersonId, unsubscribe) =>
+        StoreSession.mainPersonId.OnSet(this, (mainPersonId, unsubscribe) =>
         {
+            Logger.Info("MainPersonSelect StoreSession.mainPersonId.OnSet triggered");
             if (IsInstanceValid(this) == false)
             {
                 unsubscribe();

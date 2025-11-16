@@ -1,0 +1,74 @@
+[gd_scene load_steps=3 format=3 uid="uid://dh8kcwvd8d30w"]
+
+[ext_resource type="Script" path="res://components/CollectionNodeExplorer.cs" id="1_n5tte"]
+[ext_resource type="Script" path="res://components/nodes/NodeExplorerButton.cs" id="2_tk43y"]
+
+[node name="Control" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+script = ExtResource("1_n5tte")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="BoxContainer" type="BoxContainer" parent="ScrollContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+vertical = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/MarginContainer/BoxContainer"]
+layout_mode = 2
+
+[node name="NodeName" type="CheckButton" parent="ScrollContainer/MarginContainer/BoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+button_pressed = true
+text = "Node Name"
+alignment = 2
+icon_alignment = 2
+
+[node name="Container" type="HSeparator" parent="ScrollContainer/MarginContainer/BoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NodeExplorerButton" type="Button" parent="ScrollContainer/MarginContainer/BoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Explore"
+script = ExtResource("2_tk43y")
+Scene = null
+
+[node name="RefreshButton" type="Button" parent="ScrollContainer/MarginContainer/BoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Refresh"
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/MarginContainer/BoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 7
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/MarginContainer/BoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="ChildContainer" type="VBoxContainer" parent="ScrollContainer/MarginContainer/BoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="AddButton" type="Button" parent="ScrollContainer/MarginContainer/BoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Add Item"

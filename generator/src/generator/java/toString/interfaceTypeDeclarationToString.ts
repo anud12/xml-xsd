@@ -1,7 +1,7 @@
 import {DependantType, GetObjectBodyReturn} from "../typeToString";
 import {normalizeNameClass} from "./normalizeNameClass";
 import {template} from "../../../template/template";
-import {getTypeName, primitives} from "./geTypeName";
+import {getTypeName, primitives} from "./getTypeName";
 import {Type} from "../../../type";
 import {basePackage, getDependantTypePackage} from "./depedantType/getDependantTypePackage";
 import {DirectoryMetadata} from "../../../memory_fs/directoryMetadata";
@@ -20,7 +20,7 @@ export function interfaceTypeDeclarationToString(directoryMetadata: DirectoryMet
 
   const templateString = template()`
     public interface ${interfaceName}<T> extends ro.anud.xml_xsd.implementation.util.LinkedNode {
-    
+                
       ${dependantType.value.attributes?.metaType === "object" && template()`
         //Attributes
         ${Object.entries(dependantType.value.attributes.value ?? {}).map(([key, value]) => {

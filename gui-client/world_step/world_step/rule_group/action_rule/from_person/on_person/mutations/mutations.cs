@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -8,12 +11,60 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.Nmuta
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person {
-  public class mutations  {
+  public class mutations : IEquatable<mutations>, XSD.ILinkedNode  {
+
+    public static string ClassTypeId = ".world_step.rule_group.action_rule.from_person.on_person.mutations";
+    public static string TagName = "mutations";
+
+    public string NodeName {get =>"mutations";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<mutations>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
+
     //Attributes
 
     //Children elements
-    public type__property_mutation? property_mutation = null;
+    private type__property_mutation? _property_mutation = null;
+    public type__property_mutation property_mutationOrCreate
+    {
+      get
+      {
+        if(_property_mutation == null)
+        {
+          _property_mutation = new();
+          _property_mutation.ParentNode = this;
+          NotifyChange();
+        }
+        return _property_mutation;
+      }
+      set
+      {
+        _property_mutation = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__property_mutation? property_mutation
+    {
+      get
+      {
+        return _property_mutation;
+      }
+      set
+      {
+        _property_mutation = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
     public mutations()
     {
     }
@@ -29,6 +80,47 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person {
       Deserialize(rawNode);
     }
 
+    public void SetAttribute(string name, string? value)
+    {
+    }
+
+    public void SetChild(dynamic linkedNode)
+    {
+      if(linkedNode is type__property_mutation property_mutation)
+      {
+        this.property_mutation = property_mutation;
+      }
+
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is type__property_mutation)
+      {
+        this.property_mutation = null;
+      }
+
+    }
+
+    public Action OnSelfChange(Action<mutations> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -36,7 +128,8 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person {
       //Deserialize arguments
 
       //Deserialize children
-      this.property_mutation = rawNode.InitializeWithRawNode("property_mutation", this.property_mutation);
+      property_mutation = rawNode.InitializeWithRawNode("property_mutation", property_mutation);
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -56,13 +149,68 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public type__property_mutation? Get_property_mutation()
+
+
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
-      return this.property_mutation;
+      if(xpath.StartsWith("."))
+      {
+        xpath = xpath.Substring(1);
+      }
+      if(xpath.StartsWith(type__property_mutation.TagName))
+      {
+        this.property_mutation ??= new type__property_mutation();
+        var childXPath = xpath.Substring(type__property_mutation.TagName.Length + 3);
+        this.property_mutation.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
+
+      Deserialize(rawNode);
     }
-    public void Set_property_mutation(type__property_mutation? value)
+
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
-      this.property_mutation = value;
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
+    }
+
+    public void NotifyChange()
+    {
+      NotifyChange(new ());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is type__property_mutation casted_property_mutation) {
+        return 0;
+      }
+      return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is type__property_mutation
+      || false;
+    }
+
+    public bool Equals(mutations? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (mutations)obj;
+        return Equals(property_mutation, other.property_mutation);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, property_mutation);
+        return acc;
     }
   }
 }

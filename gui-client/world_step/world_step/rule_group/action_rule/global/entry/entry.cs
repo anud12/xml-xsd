@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -9,30 +12,116 @@ namespace XSD {
   public interface Itype__action {
 
     //Children elements
-    public XSD.Ntype__action.from Get_from();
-    public void Set_from(XSD.Ntype__action.from value);
-    public XSD.Ntype__action.on Get_on();
-    public void Set_on(XSD.Ntype__action.on value);
+    public XSD.Ntype__action.from from { get; set; }
+    public XSD.Ntype__action.on on { get; set; }
     public void Deserialize (RawNode rawNode);
 
     public RawNode SerializeIntoRawNode();
 
     public void Serialize(XmlElement element);
+
   }
 }
 namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nglobal {
-  public class entry : Itype__action {
+  public class entry : IEquatable<entry>, XSD.ILinkedNode , Itype__action {
+
+    public static string ClassTypeId = ".world_step.rule_group.action_rule.global.entry";
+    public static string TagName = "entry";
+
+    public string NodeName {get =>"entry";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<entry>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
+
     //Attributes
-    public System.String id;
+    private System.String _id;
+    public System.String id { get => _id; set => _id = value; }
 
     //Attributes of type__action
 
     //Children elements
 
     //Children of type__action
-    public XSD.Ntype__action.from from = new XSD.Ntype__action.from();
-    public XSD.Ntype__action.on on = new XSD.Ntype__action.on();
+    private XSD.Ntype__action.from _from = new XSD.Ntype__action.from();
+    public XSD.Ntype__action.from fromOrCreate
+    {
+      get
+      {
+        if(_from == null)
+        {
+          _from = new();
+          _from.ParentNode = this;
+          NotifyChange();
+        }
+        return _from;
+      }
+      set
+      {
+        _from = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Ntype__action.from from
+    {
+      get
+      {
+        return _from;
+      }
+      set
+      {
+        _from = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
+
+    private XSD.Ntype__action.on _on = new XSD.Ntype__action.on();
+    public XSD.Ntype__action.on onOrCreate
+    {
+      get
+      {
+        if(_on == null)
+        {
+          _on = new();
+          _on.ParentNode = this;
+          NotifyChange();
+        }
+        return _on;
+      }
+      set
+      {
+        _on = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Ntype__action.on on
+    {
+      get
+      {
+        return _on;
+      }
+      set
+      {
+        _on = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
     public entry()
     {
     }
@@ -48,6 +137,42 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nglobal {
       Deserialize(rawNode);
     }
 
+    public void SetAttribute(string name, string? value)
+    {
+      if(name == "id")
+      {
+        Set_id(value);
+      }
+    }
+
+    public void SetChild(dynamic linkedNode)
+    {
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+    }
+
+
+    public Action OnSelfChange(Action<entry> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -61,19 +186,22 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nglobal {
 
       // Deserialize arguments of type__action
 
+
       //Deserialize children
 
       // Deserialize children of type__action
-  this.from = rawNode.InitializeWithRawNode("from", this.from);
-  this.on = rawNode.InitializeWithRawNode("on", this.on);
+  from = rawNode.InitializeWithRawNode("from", from);
+
+  on = rawNode.InitializeWithRawNode("on", on);
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.id != null)
+      if(this._id != null)
       {
-        rawNode.attributes["id"] = this.id.ToString();
+        rawNode.attributes["id"] = this._id.ToString();
       }
 
       // Serialize arguments of type__action
@@ -104,36 +232,59 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nglobal {
     public void Set_id(System.String value)
     {
       this.id = value;
+      this.NotifyChange();
     }
-    public XSD.Ntype__action.from Get_from()
+
+
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
-      return this.from;
-    }
-    public XSD.Ntype__action.from GetOrInsertDefault_from()
-    {
-      if(this.from == null) {
-        this.from = new XSD.Ntype__action.from();
+      if(xpath.StartsWith("."))
+      {
+        xpath = xpath.Substring(1);
       }
-      return this.from;
+
+      Deserialize(rawNode);
     }
-    public void Set_from(XSD.Ntype__action.from value)
+
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
-      this.from = value;
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
-    public XSD.Ntype__action.on Get_on()
+
+    public void NotifyChange()
     {
-      return this.on;
+      NotifyChange(new ());
     }
-    public XSD.Ntype__action.on GetOrInsertDefault_on()
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
-      if(this.on == null) {
-        this.on = new XSD.Ntype__action.on();
-      }
-      return this.on;
+      return null;
     }
-    public void Set_on(XSD.Ntype__action.on value)
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(entry? obj)
     {
-      this.on = value;
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (entry)obj;
+        return Equals(id, other.id);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, id);
+        return acc;
     }
   }
 }

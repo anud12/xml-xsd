@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -8,12 +11,60 @@ namespace XSD.Ntype__trigger {}
 namespace XSD {
 }
 namespace XSD {
-  public class type__trigger  {
+  public class type__trigger : IEquatable<type__trigger>, XSD.ILinkedNode  {
+
+    public static string ClassTypeId = ".type__trigger";
+    public static string TagName = "type__trigger";
+
+    public string NodeName {get =>"type__trigger";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<type__trigger>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
+
     //Attributes
 
     //Children elements
-    public XSD.Ntype__trigger.person_action_used person_action_used = new XSD.Ntype__trigger.person_action_used();
+    private XSD.Ntype__trigger.person_action_used _person_action_used = new XSD.Ntype__trigger.person_action_used();
+    public XSD.Ntype__trigger.person_action_used person_action_usedOrCreate
+    {
+      get
+      {
+        if(_person_action_used == null)
+        {
+          _person_action_used = new();
+          _person_action_used.ParentNode = this;
+          NotifyChange();
+        }
+        return _person_action_used;
+      }
+      set
+      {
+        _person_action_used = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Ntype__trigger.person_action_used person_action_used
+    {
+      get
+      {
+        return _person_action_used;
+      }
+      set
+      {
+        _person_action_used = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
     public type__trigger()
     {
     }
@@ -29,6 +80,47 @@ namespace XSD {
       Deserialize(rawNode);
     }
 
+    public void SetAttribute(string name, string? value)
+    {
+    }
+
+    public void SetChild(dynamic linkedNode)
+    {
+      if(linkedNode is XSD.Ntype__trigger.person_action_used person_action_used)
+      {
+        this.person_action_used = person_action_used;
+      }
+
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is XSD.Ntype__trigger.person_action_used)
+      {
+        this.person_action_used = new();
+      }
+
+    }
+
+    public Action OnSelfChange(Action<type__trigger> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -36,7 +128,8 @@ namespace XSD {
       //Deserialize arguments
 
       //Deserialize children
-      this.person_action_used = rawNode.InitializeWithRawNode("person_action_used", this.person_action_used);
+      person_action_used = rawNode.InitializeWithRawNode("person_action_used", person_action_used);
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -56,20 +149,67 @@ namespace XSD {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public XSD.Ntype__trigger.person_action_used Get_person_action_used()
+
+
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
-      return this.person_action_used;
-    }
-    public XSD.Ntype__trigger.person_action_used GetOrInsertDefault_person_action_used()
-    {
-      if(this.person_action_used == null) {
-        this.person_action_used = new XSD.Ntype__trigger.person_action_used();
+      if(xpath.StartsWith("."))
+      {
+        xpath = xpath.Substring(1);
       }
-      return this.person_action_used;
+      if(xpath.StartsWith(XSD.Ntype__trigger.person_action_used.TagName))
+      {
+        var childXPath = xpath.Substring(XSD.Ntype__trigger.person_action_used.TagName.Length + 3);
+        this.person_action_used.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
+
+      Deserialize(rawNode);
     }
-    public void Set_person_action_used(XSD.Ntype__trigger.person_action_used value)
+
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
-      this.person_action_used = value;
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
+    }
+
+    public void NotifyChange()
+    {
+      NotifyChange(new ());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Ntype__trigger.person_action_used casted_person_action_used) {
+        return 0;
+      }
+      return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Ntype__trigger.person_action_used
+      || false;
+    }
+
+    public bool Equals(type__trigger? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (type__trigger)obj;
+        return Equals(person_action_used, other.person_action_used);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, person_action_used);
+        return acc;
     }
   }
 }

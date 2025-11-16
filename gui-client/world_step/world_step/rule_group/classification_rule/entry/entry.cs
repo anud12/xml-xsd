@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -8,13 +11,40 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Nclassification_rule {
-  public class entry  {
+  public class entry : IEquatable<entry>, XSD.ILinkedNode  {
+
+    public static string ClassTypeId = ".world_step.rule_group.classification_rule.entry";
+    public static string TagName = "entry";
+
+    public string NodeName {get =>"entry";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<entry>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
+
     //Attributes
-    public System.String id;
+    private System.String _id;
+    public System.String id { get => _id; set => _id = value; }
 
     //Children elements
-    public List<XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property>? property = new List<XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property>();
+
+    private LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property> _property = new();
+    public LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property> property
+    {
+      get => _property;
+      set
+      {
+        _property = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _property.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          NotifyChange();
+        };
+      }
+    }
     public entry()
     {
     }
@@ -30,6 +60,51 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule {
       Deserialize(rawNode);
     }
 
+    public void SetAttribute(string name, string? value)
+    {
+      if(name == "id")
+      {
+        Set_id(value);
+      }
+    }
+
+    public void SetChild(dynamic linkedNode)
+    {
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property> property)
+      {
+        this.property = property;
+      }
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property>)
+      {
+        this.property = null;
+      }
+    }
+
+    public Action OnSelfChange(Action<entry> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -42,15 +117,21 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule {
       }
 
       //Deserialize children
-      this.property = rawNode.InitializeWithRawNode("property", this.property);
+      property = rawNode.InitializeWithRawNode("property", property);
+      property.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          NotifyChange();
+        };
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.id != null)
+      if(this._id != null)
       {
-        rawNode.attributes["id"] = this.id.ToString();
+        rawNode.attributes["id"] = this._id.ToString();
       }
 
       //Serialize children
@@ -71,21 +152,83 @@ namespace XSD.Nworld_step.Nrule_group.Nclassification_rule {
     public void Set_id(System.String value)
     {
       this.id = value;
+      this.NotifyChange();
     }
-    public List<XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property>? Get_property()
+
+
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
-      return this.property;
-    }
-    public List<XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property> GetOrInsertDefault_property()
-    {
-      if(this.property == null) {
-        this.property = new List<XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property>();
+      if(xpath.StartsWith("."))
+      {
+        xpath = xpath.Substring(1);
       }
-      return this.property;
+      if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property.TagName + "["))
+      {
+        var startIndex = (XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property.TagName + "[").Length;
+        var startTokens = xpath.Split(XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property.TagName + "[" + indexString + "]", "");
+        var pathIndex = indexString.ToInt();
+        if(this.property.ContainsKey(pathIndex))
+        {
+          this.property[pathIndex].DeserializeAtPath(childXPath, rawNode);
+          return;
+        }
+        var newEntry = new XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property();
+        this.property[pathIndex] = newEntry;
+        newEntry.DeserializeAtPath(childXPath, rawNode);
+
+        return;
+      }
+
+      Deserialize(rawNode);
     }
-    public void Set_property(List<XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property>? value)
+
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
-      this.property = value;
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
+    }
+
+    public void NotifyChange()
+    {
+      NotifyChange(new ());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property casted_property) {
+        return this._property.KeyOf(casted_property);
+      }
+      return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Nworld_step.Nrule_group.Nclassification_rule.Nentry.property
+      || false;
+    }
+
+    public bool Equals(entry? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (entry)obj;
+        return Equals(id, other.id) && Equals(property, other.property);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, id);
+        acc = HashCode.Combine(acc, property);
+        return acc;
     }
   }
 }

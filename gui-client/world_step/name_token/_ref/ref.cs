@@ -1,0 +1,177 @@
+using System;
+using System.Collections.Immutable;
+using System.Collections.Generic;
+using System.Xml;
+using System.Linq;
+using Guiclient.util;
+using Godot;
+using XSD;
+
+namespace XSD.Nname_token.N_ref {}
+namespace XSD {
+}
+namespace XSD.Nname_token {
+  public class _ref : IEquatable<_ref>, XSD.ILinkedNode  {
+
+    public static string ClassTypeId = ".name_token.ref";
+    public static string TagName = "ref";
+
+    public string NodeName {get =>"ref";}
+    public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<_ref>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
+
+    //Attributes
+    private System.String _name_rule_ref;
+    public System.String name_rule_ref { get => _name_rule_ref; set => _name_rule_ref = value; }
+
+    //Children elements
+    public _ref()
+    {
+    }
+
+    public _ref(RawNode rawNode)
+    {
+      Deserialize(rawNode);
+    }
+
+    public _ref(XmlElement xmlElement)
+    {
+      this.rawNode.Deserialize(xmlElement);
+      Deserialize(rawNode);
+    }
+
+    public void SetAttribute(string name, string? value)
+    {
+      if(name == "name_rule_ref")
+      {
+        Set_name_rule_ref(value);
+      }
+    }
+
+    public void SetChild(dynamic linkedNode)
+    {
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+    }
+
+    public Action OnSelfChange(Action<_ref> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
+    }
+
+    public void Deserialize (RawNode rawNode)
+    {
+      this.rawNode = rawNode;
+      // Godot.GD.Print("Deserializing ref");
+      //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("name_rule_ref"))
+      {
+        var attribute_name_rule_ref = rawNode.attributes["name_rule_ref"];
+        this.name_rule_ref = rawNode.attributes["name_rule_ref"];
+      }
+
+      //Deserialize children
+      NotifyChange();
+    }
+
+    public RawNode SerializeIntoRawNode()
+    {
+      //Serialize arguments
+      if(this._name_rule_ref != null)
+      {
+        rawNode.attributes["name_rule_ref"] = this._name_rule_ref.ToString();
+      }
+
+      //Serialize children
+      return rawNode;
+    }
+
+    public void Serialize(XmlElement element)
+    {
+        // Godot.GD.Print("Serializing ref");
+        var updatedRawNode = SerializeIntoRawNode();
+        updatedRawNode.Serialize(element);
+    }
+    public System.String Get_name_rule_ref()
+    {
+      return this.name_rule_ref;
+    }
+    public void Set_name_rule_ref(System.String value)
+    {
+      this.name_rule_ref = value;
+      this.NotifyChange();
+    }
+
+
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith("."))
+      {
+        xpath = xpath.Substring(1);
+      }
+
+      Deserialize(rawNode);
+    }
+
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
+    }
+
+    public void NotifyChange()
+    {
+      NotifyChange(new ());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(_ref? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (_ref)obj;
+        return Equals(name_rule_ref, other.name_rule_ref);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, name_rule_ref);
+        return acc;
+    }
+  }
+}

@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using Guiclient.util;
 
 [Tool]
 [GlobalClass]
@@ -34,7 +35,7 @@ public partial class CircleContainer : Container
     //enter tree callback
     public override void _EnterTree()
     {
-        GD.Print("CircleContainer constructor");
+        Logger.Info("CircleContainer constructor");
         GetRect().Grow(0);
         updateMaxSize();
         updateChild();
@@ -52,15 +53,15 @@ public partial class CircleContainer : Container
     private void updateChild()
     {
         var maxSize = new Vector2(radius * 2, radius * 2);
-        GD.Print("maxSize: " + maxSize);
+        Logger.Info("maxSize: " + maxSize);
         var childSize = new Vector2(maxSize.X * 0.7071F, maxSize.Y * 0.7071F);
         // Update size of children
         foreach (Node child in GetChildren())
         {
-            GD.Print("child className: " + child.GetType().Name);
+            Logger.Info("child className: " + child.GetType().Name);
             if (child is Control control)
             {
-                GD.Print("child is Control");
+                Logger.Info("child is Control");
                 control.Position = new Vector2(maxSize.X * 0.1464F, maxSize.Y * 0.1464F);
                 control.Size = childSize;
                 control.AnchorTop = 0F;

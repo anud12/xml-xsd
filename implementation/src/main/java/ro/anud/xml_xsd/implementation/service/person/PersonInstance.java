@@ -17,7 +17,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static ro.anud.xml_xsd.implementation.service.person.util.GetProperty.computeBaseProperty;
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class PersonInstance {
 
@@ -38,8 +38,9 @@ public class PersonInstance {
     }
 
     public Optional<Integer> getProperty(final Person person, final String propertyRef) {
-        var logger = logEnter("personId:", person.getId(), "propertyRef:", propertyRef);
-        return logger.logReturn(GetProperty.getProperty(this.worldStepInstance, person, propertyRef));
+        try (var logger = logScope()){
+            return logger.logReturn(GetProperty.getProperty(this.worldStepInstance, person, propertyRef));
+        }
     }
 
     public Mutation<Person> applyPropertyMutation(
@@ -57,8 +58,9 @@ public class PersonInstance {
     }
 
     public Stream<String> classifyPerson(Person person) {
-        var logger = logEnter("personId", person.getId());
-        return logger.logReturn(ClassifyPerson.getPersonClassifications(this.worldStepInstance, person));
+        try (var logger = logScope()){
+            return logger.logReturn(ClassifyPerson.getPersonClassifications(this.worldStepInstance, person));
+        }
     }
 
     public Mutation<Person> createPerson(final IType_personSelection<?> personSelection) {
@@ -69,56 +71,59 @@ public class PersonInstance {
         final Person person,
         final String propertyRef,
         Function<Integer, Integer> computedValue) {
-        var logger = logEnter("person", person.getId(), "propertyRef", propertyRef);
-        var propertiesElement = person.getPropertiesOrDefault();
-        var propertyValue = propertiesElement
-            .streamProperty()
-            .filter(property -> property.getPropertyRuleRef().equals(propertyRef))
-            .findFirst()
-            .map(property -> {
-                var currentValue = property.getValue();
-                var newValue = computedValue.apply(currentValue);
-                logger.log("mutating currentValue", currentValue, "newValue", newValue);
+        try (var logger = logScope("person", person.getId(), "propertyRef", propertyRef)){
+            var propertiesElement = person.getPropertiesOrDefault();
+            var propertyValue = propertiesElement
+                    .streamProperty()
+                    .filter(property -> property.getPropertyRuleRef().equals(propertyRef))
+                    .findFirst()
+                    .map(property -> {
+                        var currentValue = property.getValue();
+                        var newValue = computedValue.apply(currentValue);
+                        logger.log("mutating currentValue", currentValue, "newValue", newValue);
+                        property.setValue(newValue);
+                        return property;
+                    });
+
+            if(propertyValue.isPresent()) {
+                return propertyValue;
+            }
+            logger.log("computing base property");
+            return computeBaseProperty(worldStepInstance, person, propertyRef).map(integer -> {
+                var property = new Property();
+                var newValue = computedValue.apply(integer);
+                logger.log("mutating currentValue", integer, "newValue", newValue);
                 property.setValue(newValue);
+                property.setPropertyRuleRef(propertyRef);
+                propertiesElement.addProperty(property);
                 return property;
             });
-
-        if(propertyValue.isPresent()) {
-            return propertyValue;
         }
-        logger.log("computing base property");
-        return computeBaseProperty(worldStepInstance, person, propertyRef).map(integer -> {
-            var property = new Property();
-            var newValue = computedValue.apply(integer);
-            logger.log("mutating currentValue", integer, "newValue", newValue);
-            property.setValue(newValue);
-            property.setPropertyRuleRef(propertyRef);
-            propertiesElement.addProperty(property);
-            return property;
-        });
-
     }
 
     public Property mutateProperty(
         final Person person,
         final String propertyRef,
         Function<Optional<Integer>, Integer> computedValue) {
-        var logger = logEnter("person", person.getId(), "propertyRef", propertyRef);
-        return mutatePropertyIfPresent(person,propertyRef,integer -> computedValue.apply(Optional.of(integer)))
-            .orElseGet(() -> {
-                var newProperty = new Property()
-                    .setValue(computedValue.apply(computeBaseProperty(worldStepInstance, person, propertyRef)))
-                    .setPropertyRuleRef(propertyRef);
-                var propertiesElement = person.getPropertiesOrDefault();
-                propertiesElement.addProperty(newProperty);
-                return newProperty;
-            });
+        try (var logger = logScope("person", person.getId(), "propertyRef", propertyRef)){
+            return mutatePropertyIfPresent(person,propertyRef,integer -> computedValue.apply(Optional.of(integer)))
+                    .orElseGet(() -> {
+                        var newProperty = new Property()
+                                .setValue(computedValue.apply(computeBaseProperty(worldStepInstance, person, propertyRef)))
+                                .setPropertyRuleRef(propertyRef);
+                        var propertiesElement = person.getPropertiesOrDefault();
+                        propertiesElement.addProperty(newProperty);
+                        return newProperty;
+                    });
+        }
+
     }
 
     public Property setProperty(final Person person, final String propertyRef, final int newValue) {
-        var logger = logEnter("person", person.getId(), "propertyRef", propertyRef);
-        logger.log("creating default");
-        return mutateProperty(person, propertyRef, (ignored) -> newValue);
+        try (var logger = logScope("person", person.getId(), "propertyRef", propertyRef)){
+            logger.log("creating default");
+            return mutateProperty(person, propertyRef, (ignored) -> newValue);
+        }
     }
 
 }

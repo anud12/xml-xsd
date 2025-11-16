@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -8,13 +11,99 @@ namespace XSD.Ntype__link_to__selection {}
 namespace XSD {
 }
 namespace XSD {
-  public class type__link_to__selection  {
+  public class type__link_to__selection : IEquatable<type__link_to__selection>, XSD.ILinkedNode  {
+
+    public static string ClassTypeId = ".type__link_to__selection";
+    public static string TagName = "type__link_to__selection";
+
+    public string NodeName {get =>"type__link_to__selection";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<type__link_to__selection>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
+
     //Attributes
 
     //Children elements
-    public type__node_graph__selection? origin__node_graph__selection = null;
-    public type__node_graph__selection? destination__node_graph__selection = null;
+    private type__node_graph__selection? _origin__node_graph__selection = null;
+    public type__node_graph__selection origin__node_graph__selectionOrCreate
+    {
+      get
+      {
+        if(_origin__node_graph__selection == null)
+        {
+          _origin__node_graph__selection = new();
+          _origin__node_graph__selection.ParentNode = this;
+          NotifyChange();
+        }
+        return _origin__node_graph__selection;
+      }
+      set
+      {
+        _origin__node_graph__selection = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__node_graph__selection? origin__node_graph__selection
+    {
+      get
+      {
+        return _origin__node_graph__selection;
+      }
+      set
+      {
+        _origin__node_graph__selection = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
+
+    private type__node_graph__selection? _destination__node_graph__selection = null;
+    public type__node_graph__selection destination__node_graph__selectionOrCreate
+    {
+      get
+      {
+        if(_destination__node_graph__selection == null)
+        {
+          _destination__node_graph__selection = new();
+          _destination__node_graph__selection.ParentNode = this;
+          NotifyChange();
+        }
+        return _destination__node_graph__selection;
+      }
+      set
+      {
+        _destination__node_graph__selection = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public type__node_graph__selection? destination__node_graph__selection
+    {
+      get
+      {
+        return _destination__node_graph__selection;
+      }
+      set
+      {
+        _destination__node_graph__selection = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
     public type__link_to__selection()
     {
     }
@@ -30,6 +119,57 @@ namespace XSD {
       Deserialize(rawNode);
     }
 
+    public void SetAttribute(string name, string? value)
+    {
+    }
+
+    public void SetChild(dynamic linkedNode)
+    {
+      if(linkedNode is type__node_graph__selection origin__node_graph__selection)
+      {
+        this.origin__node_graph__selection = origin__node_graph__selection;
+      }
+
+      if(linkedNode is type__node_graph__selection destination__node_graph__selection)
+      {
+        this.destination__node_graph__selection = destination__node_graph__selection;
+      }
+
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is type__node_graph__selection)
+      {
+        this.origin__node_graph__selection = null;
+      }
+
+      if(linkedNode is type__node_graph__selection)
+      {
+        this.destination__node_graph__selection = null;
+      }
+
+    }
+
+    public Action OnSelfChange(Action<type__link_to__selection> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -37,8 +177,10 @@ namespace XSD {
       //Deserialize arguments
 
       //Deserialize children
-      this.origin__node_graph__selection = rawNode.InitializeWithRawNode("origin__node_graph__selection", this.origin__node_graph__selection);
-      this.destination__node_graph__selection = rawNode.InitializeWithRawNode("destination__node_graph__selection", this.destination__node_graph__selection);
+      origin__node_graph__selection = rawNode.InitializeWithRawNode("origin__node_graph__selection", origin__node_graph__selection);
+
+      destination__node_graph__selection = rawNode.InitializeWithRawNode("destination__node_graph__selection", destination__node_graph__selection);
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -61,21 +203,80 @@ namespace XSD {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public type__node_graph__selection? Get_origin__node_graph__selection()
+
+
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
-      return this.origin__node_graph__selection;
+      if(xpath.StartsWith("."))
+      {
+        xpath = xpath.Substring(1);
+      }
+      if(xpath.StartsWith(type__node_graph__selection.TagName))
+      {
+        this.origin__node_graph__selection ??= new type__node_graph__selection();
+        var childXPath = xpath.Substring(type__node_graph__selection.TagName.Length + 3);
+        this.origin__node_graph__selection.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
+      if(xpath.StartsWith(type__node_graph__selection.TagName))
+      {
+        this.destination__node_graph__selection ??= new type__node_graph__selection();
+        var childXPath = xpath.Substring(type__node_graph__selection.TagName.Length + 3);
+        this.destination__node_graph__selection.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
+
+      Deserialize(rawNode);
     }
-    public void Set_origin__node_graph__selection(type__node_graph__selection? value)
+
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
-      this.origin__node_graph__selection = value;
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
     }
-    public type__node_graph__selection? Get_destination__node_graph__selection()
+
+    public void NotifyChange()
     {
-      return this.destination__node_graph__selection;
+      NotifyChange(new ());
     }
-    public void Set_destination__node_graph__selection(type__node_graph__selection? value)
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
-      this.destination__node_graph__selection = value;
+      if(linkedNode is type__node_graph__selection casted_origin__node_graph__selection) {
+        return 0;
+      }
+      if(linkedNode is type__node_graph__selection casted_destination__node_graph__selection) {
+        return 0;
+      }
+      return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is type__node_graph__selection
+      || candidateChild is type__node_graph__selection
+      || false;
+    }
+
+    public bool Equals(type__link_to__selection? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (type__link_to__selection)obj;
+        return Equals(origin__node_graph__selection, other.origin__node_graph__selection) && Equals(destination__node_graph__selection, other.destination__node_graph__selection);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, origin__node_graph__selection);
+        acc = HashCode.Combine(acc, destination__node_graph__selection);
+        return acc;
     }
   }
 }

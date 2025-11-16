@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static ro.anud.xml_xsd.implementation.util.LocalLogger.logEnter;
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class CreateGraphNode {
 
@@ -31,33 +31,34 @@ public class CreateGraphNode {
         WorldStepInstance worldStepInstance,
         LocationGraph locationGraph,
         String startNodeRef) {
-        var logger = logEnter("locationGraphId", locationGraph.getId(), "nodeRef", startNodeRef);
+        try (var scope = logScope("locationGraphId", locationGraph.getId(), "nodeRef", startNodeRef)) {
+            var rule = worldStepInstance.streamWorldStep()
+                    .flatMap(WorldStep::streamRuleGroup)
+                    .flatMap(RuleGroup::streamLocationGraphRule)
+                    .filter(locationGraphRule -> locationGraphRule.getId().equals(locationGraph.getRule().getLocationGraphRuleRef()))
+                    .flatMap(LocationGraphRule::streamNodeRule)
+                    .filter(nodeRule -> nodeRule.getId().equals(startNodeRef))
+                    .findFirst();
 
-        var rule = worldStepInstance.streamWorldStep()
-            .flatMap(WorldStep::streamRuleGroup)
-            .flatMap(RuleGroup::streamLocationGraphRule)
-            .filter(locationGraphRule -> locationGraphRule.getId().equals(locationGraph.getRule().getLocationGraphRuleRef()))
-            .flatMap(LocationGraphRule::streamNodeRule)
-            .filter(nodeRule -> nodeRule.getId().equals(startNodeRef))
-            .findFirst();
+            if(rule.isEmpty()) {
+                scope.log("rule not found");
+                return Optional.empty();
+            }
+            var createdNode = instantiateGraphNode(worldStepInstance, rule.get(), startNodeRef);
 
-        if(rule.isEmpty()) {
-            logger.log("rule not found");
-            return Optional.empty();
+
+            var personList = computeRuleExistingPerson(worldStepInstance, rule.get());
+            personList
+                    .stream()
+                    .map(person -> new Person().setPersonIdRef(person.getId()))
+                    .forEach(person -> {
+                        var peopleElement = createdNode.getPeopleOrDefault();
+                        peopleElement.addPerson(person);
+                    });
+
+            return scope.logReturn(Optional.of(new Result(createdNode, personList)));
         }
-        var createdNode = instantiateGraphNode(worldStepInstance, rule.get(), startNodeRef);
-
-
-        var personList = computeRuleExistingPerson(worldStepInstance, rule.get());
-        personList
-            .stream()
-            .map(person -> new Person().setPersonIdRef(person.getId()))
-            .forEach(person -> {
-                var peopleElement = createdNode.getPeopleOrDefault();
-                peopleElement.addPerson(person);
-            });
-
-        return Optional.of(new Result(createdNode, personList));
+        
     }
 
     public static Optional<Result> createGraphNode(
@@ -66,94 +67,100 @@ public class CreateGraphNode {
         String startNodeRef,
         final CreateAdjacent.XYPosition position,
         final Stream<String> classificationLocationList) {
-        var result = createGraphNode(worldStepInstance, locationGraph, startNodeRef);
+        try (var scope = logScope()){
 
-        if (result.isEmpty()) {
-            return result;
+            var result = createGraphNode(worldStepInstance, locationGraph, startNodeRef);
+
+            if (result.isEmpty()) {
+                return result;
+            }
+            var createdNode = result.get().node;
+
+            createdNode.getPosition().ifPresent(position1 -> {
+                position1.setX(position.x());
+                position1.setY(position.y());
+            });
+            classificationLocationList.forEach(string -> createdNode
+                    .getClassificationsOrDefault()
+                    .addClassification(new Classification()
+                            .setLocationClassificationRuleRef(string)
+                    ));
+
+            return scope.logReturn(result);
         }
-        var createdNode = result.get().node;
-
-        createdNode.getPosition().ifPresent(position1 -> {
-            position1.setX(position.x());
-            position1.setY(position.y());
-        });
-        classificationLocationList.forEach(string -> createdNode
-            .getClassificationsOrDefault()
-            .addClassification(new Classification()
-                .setLocationClassificationRuleRef(string)
-            ));
-
-        return result;
     }
 
     private static List<ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person> computeRuleExistingPerson(
         WorldStepInstance worldStepInstance,
         NodeRule nodeRule) {
-        var logger = logEnter("locationGraphId", nodeRule.getId(), "nodeRule", nodeRule.getId());
-        logger.log("adding existing person");
-        var existingPersonRule = nodeRule.getExistingPerson();
-        var personList = existingPersonRule
-            .stream()
-            .flatMap(existingPerson -> {
-                var min = existingPerson.getMin();
-                var max = existingPerson.getMax().orElse(min);
-                var iterations = worldStepInstance.randomBetweenInt(min, max);
-                logger.log("min", min, "max", max, "iterations", iterations);
-                return IntStream.range(0, iterations)
-                    .boxed()
-                    .map(ignored -> {
-                        var personMutation = worldStepInstance.person.createPerson(existingPerson.getPersonSelection());
-                        personMutation.apply(worldStepInstance.getOutInstance());
-                        var person = personMutation.apply(worldStepInstance);
-                        logger.logTodo("Remove mutation on outInstance");
-                        logger.log("adding personId ", person.getId());
-                        return person;
+        try (var scope = logScope("locationGraphId", nodeRule.getId(), "nodeRule", nodeRule.getId())) {
+            scope.log("adding existing person");
+            var existingPersonRule = nodeRule.getExistingPerson();
+            var personList = existingPersonRule
+                    .stream()
+                    .flatMap(existingPerson -> {
+                        var min = existingPerson.getMin();
+                        var max = existingPerson.getMax().orElse(min);
+                        var iterations = worldStepInstance.randomBetweenInt(min, max);
+                        scope.log("min", min, "max", max, "iterations", iterations);
+                        return IntStream.range(0, iterations)
+                                .boxed()
+                                .map(ignored -> {
+                                    var personMutation = worldStepInstance.person.createPerson(existingPerson.getPersonSelection());
+                                    personMutation.apply(worldStepInstance.getOutInstance());
+                                    var person = personMutation.apply(worldStepInstance);
+                                    scope.logTodo("Remove mutation on outInstance");
+                                    scope.log("adding personId ", person.getId());
+                                    return person;
+                                });
                     });
-            });
-        if (existingPersonRule.isEmpty()) {
-            logger.log("no existing person rule");
-            return List.of();
+            if (existingPersonRule.isEmpty()) {
+                scope.log("no existing person rule");
+                return List.of();
+            }
+            return scope.logReturn(personList.toList());
         }
-        return personList.toList();
+
     }
 
     private static Node instantiateGraphNode(
         WorldStepInstance worldStepInstance,
         NodeRule nodeRule,
         String startNodeRef) {
-        var logger = logEnter();
-        logger.log("creating node");
-        var nodeElement = new Node()
-            .setNodeRuleRef(startNodeRef)
-            .setId(worldStepInstance.getNextId());
+        try (var logger = logScope()){
+            logger.log("creating node");
+            var nodeElement = new Node()
+                    .setNodeRuleRef(startNodeRef)
+                    .setId(worldStepInstance.getNextId());
 
-        logger.log("addingName");
-        var nameRule = nodeRule.getName()
-            .map(Name::getNameRuleRef);
-        nameRule
-            .flatMap(worldStepInstance.name::calculateNameFromRefString)
-            .ifPresent(s -> {
-                logger.log("setting name", s);
-                nodeElement.getNameOrDefault().setValue(s);
-            });
-        if (nameRule.isEmpty()) {
-            logger.log("no name rule");
+            logger.log("addingName");
+            var nameRule = nodeRule.getName()
+                    .map(Name::getNameRuleRef);
+            nameRule
+                    .flatMap(worldStepInstance.name::calculateNameFromRefString)
+                    .ifPresent(s -> {
+                        logger.log("setting name", s);
+                        nodeElement.getNameOrDefault().setValue(s);
+                    });
+            if (nameRule.isEmpty()) {
+                logger.log("no name rule");
+            }
+
+            logger.log("setting position");
+            nodeElement.setPosition(new Position()
+                    .setX(0)
+                    .setY(0)
+            );
+
+            nodeRule.streamClassifications()
+                    .flatMap(Classifications::streamClassification)
+                    .forEach(classification -> {
+                        nodeElement.getClassificationsOrDefault().addClassification(new Classification()
+                                .setLocationClassificationRuleRef(classification.getLocationClassificationRuleRef())
+                        );
+                    });
+
+            return logger.logReturn(nodeElement);
         }
-
-        logger.log("setting position");
-        nodeElement.setPosition(new Position()
-            .setX(0)
-            .setY(0)
-        );
-
-        nodeRule.streamClassifications()
-            .flatMap(Classifications::streamClassification)
-            .forEach(classification -> {
-                nodeElement.getClassificationsOrDefault().addClassification(new Classification()
-                    .setLocationClassificationRuleRef(classification.getLocationClassificationRuleRef())
-                );
-            });
-
-        return nodeElement;
     }
 }

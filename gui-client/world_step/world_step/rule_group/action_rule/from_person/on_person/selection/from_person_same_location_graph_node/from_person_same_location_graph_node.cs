@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -8,10 +11,22 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.Nsele
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.Nselection {
-  public class from_person_same_location_graph_node  {
+  public class from_person_same_location_graph_node : IEquatable<from_person_same_location_graph_node>, XSD.ILinkedNode  {
+
+    public static string ClassTypeId = ".world_step.rule_group.action_rule.from_person.on_person.selection.from_person_same_location_graph_node";
+    public static string TagName = "from_person_same_location_graph_node";
+
+    public string NodeName {get =>"from_person_same_location_graph_node";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<from_person_same_location_graph_node>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
+
     //Attributes
-    public System.String value;
+    private System.String _value;
+    public System.String value { get => _value; set => _value = value; }
 
     //Children elements
     public from_person_same_location_graph_node()
@@ -29,6 +44,41 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.Nsele
       Deserialize(rawNode);
     }
 
+    public void SetAttribute(string name, string? value)
+    {
+      if(name == "value")
+      {
+        Set_value(value);
+      }
+    }
+
+    public void SetChild(dynamic linkedNode)
+    {
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+    }
+
+    public Action OnSelfChange(Action<from_person_same_location_graph_node> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -41,14 +91,15 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.Nsele
       }
 
       //Deserialize children
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.value != null)
+      if(this._value != null)
       {
-        rawNode.attributes["value"] = this.value.ToString();
+        rawNode.attributes["value"] = this._value.ToString();
       }
 
       //Serialize children
@@ -68,6 +119,59 @@ namespace XSD.Nworld_step.Nrule_group.Naction_rule.Nfrom_person.Non_person.Nsele
     public void Set_value(System.String value)
     {
       this.value = value;
+      this.NotifyChange();
+    }
+
+
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith("."))
+      {
+        xpath = xpath.Substring(1);
+      }
+
+      Deserialize(rawNode);
+    }
+
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
+    }
+
+    public void NotifyChange()
+    {
+      NotifyChange(new ());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(from_person_same_location_graph_node? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (from_person_same_location_graph_node)obj;
+        return Equals(value, other.value);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, value);
+        return acc;
     }
   }
 }

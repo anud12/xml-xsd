@@ -1,4 +1,5 @@
 import {DependantType} from "../typeToString";
+import {normalizeName} from "./normalizeName";
 
 export const getDependantTypeNamespace = (dependantType:DependantType):string => {
   let subNamespaces: string[] = [];
@@ -9,6 +10,6 @@ export const getDependantTypeNamespace = (dependantType:DependantType):string =>
   }
   subNamespaces.reverse()
 
-  return `XSD${subNamespaces.map(e => `.N${e}`).join("")}`;
+  return `XSD${subNamespaces.map(e => `.N${normalizeName(e)}`).join("")}`;
 }
 

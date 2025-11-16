@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -8,12 +11,60 @@ namespace XSD.Non {}
 namespace XSD {
 }
 namespace XSD {
-  public class on  {
+  public class on : IEquatable<on>, XSD.ILinkedNode  {
+
+    public static string ClassTypeId = ".on";
+    public static string TagName = "on";
+
+    public string NodeName {get =>"on";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<on>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
+
     //Attributes
 
     //Children elements
-    public XSD.Non.person? person = null;
+    private XSD.Non.person? _person = null;
+    public XSD.Non.person personOrCreate
+    {
+      get
+      {
+        if(_person == null)
+        {
+          _person = new();
+          _person.ParentNode = this;
+          NotifyChange();
+        }
+        return _person;
+      }
+      set
+      {
+        _person = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Non.person? person
+    {
+      get
+      {
+        return _person;
+      }
+      set
+      {
+        _person = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
     public on()
     {
     }
@@ -29,6 +80,47 @@ namespace XSD {
       Deserialize(rawNode);
     }
 
+    public void SetAttribute(string name, string? value)
+    {
+    }
+
+    public void SetChild(dynamic linkedNode)
+    {
+      if(linkedNode is XSD.Non.person person)
+      {
+        this.person = person;
+      }
+
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+      if(linkedNode is XSD.Non.person)
+      {
+        this.person = null;
+      }
+
+    }
+
+    public Action OnSelfChange(Action<on> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -36,7 +128,8 @@ namespace XSD {
       //Deserialize arguments
 
       //Deserialize children
-      this.person = rawNode.InitializeWithRawNode("person", this.person);
+      person = rawNode.InitializeWithRawNode("person", person);
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
@@ -56,20 +149,68 @@ namespace XSD {
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
     }
-    public XSD.Non.person? Get_person()
+
+
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
     {
-      return this.person;
-    }
-    public XSD.Non.person GetOrInsertDefault_person()
-    {
-      if(this.person == null) {
-        this.person = new XSD.Non.person();
+      if(xpath.StartsWith("."))
+      {
+        xpath = xpath.Substring(1);
       }
-      return this.person;
+      if(xpath.StartsWith(XSD.Non.person.TagName))
+      {
+        this.person ??= new XSD.Non.person();
+        var childXPath = xpath.Substring(XSD.Non.person.TagName.Length + 3);
+        this.person.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
+
+      Deserialize(rawNode);
     }
-    public void Set_person(XSD.Non.person? value)
+
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
     {
-      this.person = value;
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
+    }
+
+    public void NotifyChange()
+    {
+      NotifyChange(new ());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      if(linkedNode is XSD.Non.person casted_person) {
+        return 0;
+      }
+      return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return candidateChild is XSD.Non.person
+      || false;
+    }
+
+    public bool Equals(on? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (on)obj;
+        return Equals(person, other.person);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, person);
+        return acc;
     }
   }
 }

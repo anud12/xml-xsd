@@ -17,6 +17,16 @@ export type type__group__operation__and = "add"
   | "divide_dice"
   | "modulo"
   | "modulo_dice"
+export type type__rectangle_side = "left"
+  | "right"
+  | "top"
+  | "bottom"
+export type type__rotation_90deg_step = "normal"
+  | "clockwise"
+  | "inverted"
+  | "counterclockwise"
+export type type__entity = JsonQueryType<{"entity_rule_ref": string;}>
+export type type__entity_rule = JsonQueryType<{"name": string;}>
 export type type__property_mutation_on = JsonQueryType<{"on": type_person_select;}>
   & type__property_mutation
 export type type__property_mutation = JsonQueryType<{"property_rule_ref": string;}, {
@@ -87,6 +97,23 @@ export type type__link_group = JsonQueryType<{"id": string;  "angle": string;  "
     "person_progress_property": type__math_operations & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
 }>
+export type type__portal_rule = JsonQueryType<{}, {
+  "limit": JsonQueryType<{"width": string;}> & JsonQueryType<{}, {}>;
+  "to": JsonQueryType<{}, {
+    "region": JsonQueryType<{"region_rule_ref": string;}> & JsonQueryType<{}, {}>;
+  }> & JsonQueryType<{}, {}>;
+}>
+export type type__region_rule = JsonQueryType<{}, {
+  "limit": JsonQueryType<{}, {
+    "width": type__math_operations & JsonQueryType<{}, {}>;
+    "height": type__math_operations & JsonQueryType<{}, {}>;
+  }> & JsonQueryType<{}, {}>;
+  "portals": JsonQueryType<{}, {
+    "portal": JsonQueryType<{"side": type__rectangle_side;  "portal_rule_ref": string;}, {
+      "start": type__math_operations & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
+  }> & JsonQueryType<{}, {}>;
+}>
 export type world_step = JsonQueryType<{}, {
   "world_metadata": JsonQueryType<{}, {
     "previous_world_step": JsonQueryType<{"value": string;}> & JsonQueryType<{}, {}>;
@@ -99,6 +126,10 @@ export type world_step = JsonQueryType<{}, {
     }> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
   "rule_group": JsonQueryType<{"id": any;}, {
+    "entity_rule": JsonQueryType<{}, {
+      "entry": JsonQueryType<{}>
+        & type__entity_rule & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
     "property_rule": JsonQueryType<{}, {
       "entry": JsonQueryType<{"id": string;  "units": string;}, {
         "person_default": JsonQueryType<{}>
@@ -180,8 +211,42 @@ export type world_step = JsonQueryType<{}, {
     "location_classification_rule": JsonQueryType<{}, {
       "entry": JsonQueryType<{"id": string;}> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
+    "node_rule": JsonQueryType<{"id": string;}, {
+      "area": JsonQueryType<{}, {
+        "height": type__math_operations & JsonQueryType<{}, {}>;
+        "width": type__math_operations & JsonQueryType<{}, {}>;
+      }> & JsonQueryType<{}, {}>;
+      "portals": JsonQueryType<{}, {
+        "portal": JsonQueryType<{"side": type__rectangle_side;}, {
+          "width": type__math_operations & JsonQueryType<{}, {}>;
+          "height": type__math_operations & JsonQueryType<{}, {}>;
+          "to": JsonQueryType<{"node_rule_ref": string;}, {
+            "side": type__rectangle_side & JsonQueryType<{}, {}>;
+            "width": type__math_operations & JsonQueryType<{}, {}>;
+            "height": type__math_operations & JsonQueryType<{}, {}>;
+          }> & JsonQueryType<{}, {}>;
+        }> & JsonQueryType<{}, {}>;
+      }> & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
+    "portal_rule": JsonQueryType<{}, {
+      "entry": JsonQueryType<{"id": string;}>
+        & type__portal_rule & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
+    "region_rule": JsonQueryType<{}, {
+      "entry": JsonQueryType<{"id": string;}>
+        & type__region_rule & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
+    "zone_rule": JsonQueryType<{}, {
+      "entry": JsonQueryType<{"id": string;}, {
+        "starting_region": JsonQueryType<{"region_rule_ref": string;}> & JsonQueryType<{}, {}>;
+      }> & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
   "data": JsonQueryType<{}, {
+    "entities": JsonQueryType<{}, {
+      "entity": JsonQueryType<{}>
+        & type__entity & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
     "people": JsonQueryType<{}, {
       "person": JsonQueryType<{"id": string;  "name": string;}, {
         "properties": JsonQueryType<{}, {
@@ -212,6 +277,24 @@ export type world_step = JsonQueryType<{}, {
           }> & JsonQueryType<{}, {}>;
           "people": JsonQueryType<{}, {
             "person": JsonQueryType<{"person_id_ref": string;}> & JsonQueryType<{}, {}>;
+          }> & JsonQueryType<{}, {}>;
+        }> & JsonQueryType<{}, {}>;
+      }> & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
+    "zone_list": JsonQueryType<{}, {
+      "zone": JsonQueryType<{"id": string;}, {
+        "region": JsonQueryType<{"id": string;}, {
+          "rule": JsonQueryType<{"rule_id_ref": string;}> & JsonQueryType<{}, {}>;
+          "position": JsonQueryType<{"x": string;  "y": string;  "rotation": type__rotation_90deg_step;}> & JsonQueryType<{}, {}>;
+          "limit": JsonQueryType<{"width": string;  "height": string;}> & JsonQueryType<{}, {}>;
+          "available_portals": JsonQueryType<{}, {
+            "portal": JsonQueryType<{"id": string;  "start": string;  "side": type__rectangle_side;  "portal_rule_ref": string;}> & JsonQueryType<{}, {}>;
+          }> & JsonQueryType<{}, {}>;
+          "portals": JsonQueryType<{}, {
+            "portal": JsonQueryType<{"id": string;}, {
+              "from": JsonQueryType<{"side": type__rectangle_side;  "start": string;  "end": string;}> & JsonQueryType<{}, {}>;
+              "to": JsonQueryType<{"zone_ref": string;  "region_ref": string;  "side": type__rectangle_side;  "start": string;  "end": string;}> & JsonQueryType<{}, {}>;
+            }> & JsonQueryType<{}, {}>;
           }> & JsonQueryType<{}, {}>;
         }> & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
@@ -254,5 +337,9 @@ export type world_step = JsonQueryType<{}, {
     "from_person": JsonQueryType<{"person_id_ref": string;  "from_person_rule_ref": string;}, {
       "on_person": JsonQueryType<{"person_id_ref": string;}> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
+    "zone.create": JsonQueryType<{"zone_rule_ref": string;}> & JsonQueryType<{}, {}>;
+    "region.appendNew": JsonQueryType<{"zone_id_ref": string;  "region_id_ref": string;  "portal_id_ref": string;}> & JsonQueryType<{}, {}>;
+    "region.resolvePortals": JsonQueryType<{"zone_id_ref": string;  "region_id_ref": string;}> & JsonQueryType<{}, {}>;
+    "entity.create": JsonQueryType<{"entity_rule_ref": string;}> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
 }>

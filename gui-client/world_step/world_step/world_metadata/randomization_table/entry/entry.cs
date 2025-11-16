@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using Guiclient.util;
 using Godot;
 using XSD;
 
@@ -8,10 +11,22 @@ namespace XSD.Nworld_step.Nworld_metadata.Nrandomization_table.Nentry {}
 namespace XSD {
 }
 namespace XSD.Nworld_step.Nworld_metadata.Nrandomization_table {
-  public class entry  {
+  public class entry : IEquatable<entry>, XSD.ILinkedNode  {
+
+    public static string ClassTypeId = ".world_step.world_metadata.randomization_table.entry";
+    public static string TagName = "entry";
+
+    public string NodeName {get =>"entry";}
     public RawNode rawNode = new RawNode();
+
+    private ILinkedNode? _parentNode;
+    public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
+    private List<Action<entry>> _onSelfChangeCallbackList = new();
+    private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
+
     //Attributes
-    public System.Int32 value;
+    private System.Int32 _value;
+    public System.Int32 value { get => _value; set => _value = value; }
 
     //Children elements
     public entry()
@@ -29,6 +44,41 @@ namespace XSD.Nworld_step.Nworld_metadata.Nrandomization_table {
       Deserialize(rawNode);
     }
 
+    public void SetAttribute(string name, string? value)
+    {
+      if(name == "value")
+      {
+        Set_value(value?.ToInt() ?? 0);
+      }
+    }
+
+    public void SetChild(dynamic linkedNode)
+    {
+    }
+
+    public void ClearChild(dynamic linkedNode)
+    {
+    }
+
+    public Action OnSelfChange(Action<entry> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+    public Action OnSelfChangeNode(Action<ILinkedNode> callback)
+    {
+      _onSelfChangeCallbackList.Add(callback);
+      return () => _onSelfChangeCallbackList.Remove(callback);
+    }
+
+
+    public Action OnChange(Action<List<ILinkedNode>> callback)
+    {
+      _onChangeCallbackList.Add(callback);
+      return () => _onChangeCallbackList.Remove(callback);
+    }
+
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
@@ -41,14 +91,15 @@ namespace XSD.Nworld_step.Nworld_metadata.Nrandomization_table {
       }
 
       //Deserialize children
+      NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this.value != null)
+      if(this._value != null)
       {
-        rawNode.attributes["value"] = this.value.ToString();
+        rawNode.attributes["value"] = this._value.ToString();
       }
 
       //Serialize children
@@ -68,6 +119,59 @@ namespace XSD.Nworld_step.Nworld_metadata.Nrandomization_table {
     public void Set_value(System.Int32 value)
     {
       this.value = value;
+      this.NotifyChange();
+    }
+
+
+    public void DeserializeAtPath(string xpath, RawNode rawNode)
+    {
+      if(xpath.StartsWith("."))
+      {
+        xpath = xpath.Substring(1);
+      }
+
+      Deserialize(rawNode);
+    }
+
+    public void NotifyChange(List<ILinkedNode> linkedNodes)
+    {
+      if(_parentNode == null)
+        return;
+      linkedNodes.Add(this);
+      _onSelfChangeCallbackList.ForEach(action => action(this));
+      _onChangeCallbackList.ForEach(action => action(linkedNodes));
+      _parentNode.NotifyChange(linkedNodes);
+    }
+
+    public void NotifyChange()
+    {
+      NotifyChange(new ());
+    }
+
+    public int? BuildIndexForChild(ILinkedNode linkedNode)
+    {
+      return null;
+    }
+
+    public bool IsValidChildType(ILinkedNode candidateChild) {
+      return false;
+    }
+
+    public bool Equals(entry? obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (entry)obj;
+        return Equals(value, other.value);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, value);
+        return acc;
     }
   }
 }
