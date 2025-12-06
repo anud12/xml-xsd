@@ -19,9 +19,7 @@
       </entry>
     </entity_rule>
   </rule_group>
-  <actions>
-    <entity.create entity_rule_ref="entity_rule"/>
-  </actions>
+  <actions/>
   <data>
     <entities>
       <entity entity_rule_ref="entity_rule">
