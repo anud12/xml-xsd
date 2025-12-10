@@ -8,6 +8,20 @@
           <xs:sequence>
             <xs:element name="container" minOccurs="0" maxOccurs="unbounded">
               <xs:complexType>
+                <xs:all>
+                  <xs:element name="entities" minOccurs="0">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="entity" minOccurs="0" maxOccurs="unbounded">
+                          <xs:complexType>
+                            <xs:attribute name="entity_id_ref" use="required" type="xs:string"/>
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:all>
+                <xs:attribute name="id" use="required" type="xs:string"/>
                 <xs:attribute name="container_rule_ref" use="required" type="xs:string"/>
               </xs:complexType>
             </xs:element>
@@ -15,6 +29,7 @@
         </xs:complexType>
       </xs:element>
     </xs:all>
+    <xs:attribute name="id" use="required" type="xs:string"/>
     <xs:attribute name="entity_rule_ref" type="xs:string"/>
   </xs:complexType>
 
@@ -837,6 +852,17 @@
                   <xs:sequence>
                     <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="allowed_entity" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:all>
+                                <xs:element name="max" type="type__math_operations" minOccurs="0"/>
+                                <xs:element name="min" type="type__math_operations" minOccurs="0"/>
+                              </xs:all>
+                              <xs:attribute name="entity_rule_ref" type="xs:string" use="required"/>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
                         <xs:attribute name="name" type="xs:string" use="required"/>
                       </xs:complexType>
                     </xs:element>
@@ -2073,6 +2099,12 @@
               <xs:element name="entity.create" minOccurs="0">
                 <xs:complexType>
                   <xs:attribute name="entity_rule_ref" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="container.addOnEntity" minOccurs="0">
+                <xs:complexType>
+                  <xs:attribute name="container_rule_ref" type="xs:string" use="required"/>
+                  <xs:attribute name="entity_id" type="xs:string" use="required"/>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>

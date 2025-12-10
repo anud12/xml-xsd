@@ -1,5 +1,8 @@
 package ro.anud.xml_xsd.implementation.service;
 
+import java.util.Set;
+
 public interface Middleware {
-    public void apply(WorldStepInstance worldStepInstance);
+    void apply(WorldStepInstance worldStepInstance);
+
 }

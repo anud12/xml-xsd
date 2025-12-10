@@ -11,6 +11,7 @@ namespace XSD.Nworld_step.Ndata.Nentities.Nentity {}
 namespace XSD {
   public interface Itype__entity {
     //Attributes
+    public System.String id { get; set; }
     public System.String? entity_rule_ref { get; set; }
 
     //Children elements
@@ -40,6 +41,8 @@ namespace XSD.Nworld_step.Ndata.Nentities {
     //Attributes
 
     //Attributes of type__entity
+    private System.String _id;
+    public System.String id { get => _id; set => _id = value; }
     private System.String? _entity_rule_ref;
     public System.String? entity_rule_ref { get => _entity_rule_ref; set => _entity_rule_ref = value; }
 
@@ -137,6 +140,11 @@ namespace XSD.Nworld_step.Ndata.Nentities {
       //Deserialize arguments
 
       // Deserialize arguments of type__entity
+  if(rawNode.attributes.ContainsKey("id"))
+  {
+    var attribute_id = rawNode.attributes["id"];
+    this.id = rawNode.attributes["id"];
+  }
   if(rawNode.attributes.ContainsKey("entity_rule_ref"))
   {
     var attribute_entity_rule_ref = rawNode.attributes["entity_rule_ref"];
@@ -155,6 +163,10 @@ namespace XSD.Nworld_step.Ndata.Nentities {
       //Serialize arguments
 
       // Serialize arguments of type__entity
+  if(this._id != null)
+  {
+    rawNode.attributes["id"] = this._id.ToString();
+  }
   if(this._entity_rule_ref != null)
   {
     rawNode.attributes["entity_rule_ref"] = this._entity_rule_ref?.ToString();
@@ -174,6 +186,15 @@ namespace XSD.Nworld_step.Ndata.Nentities {
         // Godot.GD.Print("Serializing entity");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
+    }
+    public System.String Get_id()
+    {
+      return this.id;
+    }
+    public void Set_id(System.String value)
+    {
+      this.id = value;
+      this.NotifyChange();
     }
     public System.String? Get_entity_rule_ref()
     {

@@ -25,10 +25,50 @@ namespace XSD.Ntype__entity.Ncontainers {
     private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
+    private System.String _id;
+    public System.String id { get => _id; set => _id = value; }
     private System.String _container_rule_ref;
     public System.String container_rule_ref { get => _container_rule_ref; set => _container_rule_ref = value; }
 
     //Children elements
+    private XSD.Ntype__entity.Ncontainers.Ncontainer.entities? _entities = null;
+    public XSD.Ntype__entity.Ncontainers.Ncontainer.entities entitiesOrCreate
+    {
+      get
+      {
+        if(_entities == null)
+        {
+          _entities = new();
+          _entities.ParentNode = this;
+          NotifyChange();
+        }
+        return _entities;
+      }
+      set
+      {
+        _entities = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Ntype__entity.Ncontainers.Ncontainer.entities? entities
+    {
+      get
+      {
+        return _entities;
+      }
+      set
+      {
+        _entities = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
     public container()
     {
     }
@@ -46,6 +86,10 @@ namespace XSD.Ntype__entity.Ncontainers {
 
     public void SetAttribute(string name, string? value)
     {
+      if(name == "id")
+      {
+        Set_id(value);
+      }
       if(name == "container_rule_ref")
       {
         Set_container_rule_ref(value);
@@ -54,10 +98,20 @@ namespace XSD.Ntype__entity.Ncontainers {
 
     public void SetChild(dynamic linkedNode)
     {
+      if(linkedNode is XSD.Ntype__entity.Ncontainers.Ncontainer.entities entities)
+      {
+        this.entities = entities;
+      }
+
     }
 
     public void ClearChild(dynamic linkedNode)
     {
+      if(linkedNode is XSD.Ntype__entity.Ncontainers.Ncontainer.entities)
+      {
+        this.entities = null;
+      }
+
     }
 
     public Action OnSelfChange(Action<container> callback)
@@ -84,6 +138,11 @@ namespace XSD.Ntype__entity.Ncontainers {
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing container");
       //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("id"))
+      {
+        var attribute_id = rawNode.attributes["id"];
+        this.id = rawNode.attributes["id"];
+      }
       if(rawNode.attributes.ContainsKey("container_rule_ref"))
       {
         var attribute_container_rule_ref = rawNode.attributes["container_rule_ref"];
@@ -91,18 +150,26 @@ namespace XSD.Ntype__entity.Ncontainers {
       }
 
       //Deserialize children
+      entities = rawNode.InitializeWithRawNode("entities", entities);
       NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
+      if(this._id != null)
+      {
+        rawNode.attributes["id"] = this._id.ToString();
+      }
       if(this._container_rule_ref != null)
       {
         rawNode.attributes["container_rule_ref"] = this._container_rule_ref.ToString();
       }
 
       //Serialize children
+      if(entities != null) {
+        rawNode.children["entities"] = new List<RawNode> { entities.SerializeIntoRawNode() };
+      }
       return rawNode;
     }
 
@@ -111,6 +178,15 @@ namespace XSD.Ntype__entity.Ncontainers {
         // Godot.GD.Print("Serializing container");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
+    }
+    public System.String Get_id()
+    {
+      return this.id;
+    }
+    public void Set_id(System.String value)
+    {
+      this.id = value;
+      this.NotifyChange();
     }
     public System.String Get_container_rule_ref()
     {
@@ -128,6 +204,13 @@ namespace XSD.Ntype__entity.Ncontainers {
       if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
+      }
+      if(xpath.StartsWith(XSD.Ntype__entity.Ncontainers.Ncontainer.entities.TagName))
+      {
+        this.entities ??= new XSD.Ntype__entity.Ncontainers.Ncontainer.entities();
+        var childXPath = xpath.Substring(XSD.Ntype__entity.Ncontainers.Ncontainer.entities.TagName.Length + 3);
+        this.entities.DeserializeAtPath(childXPath, rawNode);
+        return;
       }
 
       Deserialize(rawNode);
@@ -150,11 +233,15 @@ namespace XSD.Ntype__entity.Ncontainers {
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
+      if(linkedNode is XSD.Ntype__entity.Ncontainers.Ncontainer.entities casted_entities) {
+        return 0;
+      }
       return null;
     }
 
     public bool IsValidChildType(ILinkedNode candidateChild) {
-      return false;
+      return candidateChild is XSD.Ntype__entity.Ncontainers.Ncontainer.entities
+      || false;
     }
 
     public bool Equals(container? obj)
@@ -163,14 +250,16 @@ namespace XSD.Ntype__entity.Ncontainers {
             return false;
 
         var other = (container)obj;
-        return Equals(container_rule_ref, other.container_rule_ref);
+        return Equals(id, other.id) && Equals(container_rule_ref, other.container_rule_ref) && Equals(entities, other.entities);
     }
 
     public override int GetHashCode()
     {
         var acc = 0;
 
+        acc = HashCode.Combine(acc, id);
         acc = HashCode.Combine(acc, container_rule_ref);
+        acc = HashCode.Combine(acc, entities);
         return acc;
     }
   }

@@ -7,23 +7,34 @@ import ro.anud.xml_xsd.implementation.util.LinkedNode;
 
 import java.util.stream.Stream;
 
-public non-sealed interface ActionCreate<Node, ActionNode extends LinkedNode, ParentNode> extends Action, Middleware {
+import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
+
+public non-sealed interface ActionCreate<Node, ActionNode extends LinkedNode, ParentNode> extends Action {
     interface Mutation {
         void apply(WorldStepInstance outWorldStepInstance);
     }
     Stream<ActionNode> getAction(Stream<WorldStep> worldStep);
-    Node create(WorldStepInstance worldStepInstance, ActionNode action);
-    ParentNode getParentNode(Stream<WorldStep> worldStep);
+    Node create(WorldStepInstance worldStepInstance, ActionNode actionNode);
+    ParentNode getParentNode(Stream<WorldStep> worldStep, ActionNode actionNode);
     void append(ParentNode parentNode, Node node);
 
-    default void apply(WorldStepInstance worldStepInstance) {
-        var actionStream = getAction(worldStepInstance.streamWorldStep());
-        var node = actionStream.map(actionNode -> create(worldStepInstance, actionNode));
+    default Node applyAction(WorldStepInstance worldStepInstance, ActionNode actionNode) {
+        try (var scope = logScope()){
+            Node node = create(worldStepInstance, actionNode);
 
-        var parentNode = getParentNode(worldStepInstance.getOutInstance().streamWorldStep());
-        node.forEach(node1 -> append(parentNode,node1));
-        getAction(worldStepInstance.getOutInstance().streamWorldStep()).forEach(actionNode -> {
-            actionNode.parentNode().ifPresent(linkedNode -> linkedNode.removeChild(actionNode));
-        });
+            ParentNode parentNode = getParentNode(worldStepInstance.getOutInstance().streamWorldStep(), actionNode);
+            append(parentNode,node);
+            getAction(worldStepInstance.getOutInstance().streamWorldStep()).forEach(actionNode1 -> {
+                actionNode1.parentNode().ifPresent(linkedNode -> linkedNode.removeChild(actionNode1));
+            });
+            return node;
+        }
+    }
+
+    default void apply(WorldStepInstance worldStepInstance) {
+        try(var scope = logScope()) {
+            getAction(worldStepInstance.streamWorldStep())
+                    .forEach(actionNode -> applyAction(worldStepInstance,actionNode));
+        }
     }
 }

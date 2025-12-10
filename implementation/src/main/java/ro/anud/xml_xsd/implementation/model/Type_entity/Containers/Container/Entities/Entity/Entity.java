@@ -1,4 +1,4 @@
-package ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entity;
+package ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Container.Entities.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.w3c.dom.Document;
@@ -18,7 +18,7 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
   @NoArgsConstructor
   @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-  public class Entity implements  ro.anud.xml_xsd.implementation.model.interfaces.IType_entity.IType_entity<Entity>,  ro.anud.xml_xsd.implementation.util.LinkedNode {
+  public class Entity implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
     public static String nodeName = "entity";
     public static Entity fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
@@ -57,22 +57,14 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     }
 
     public String classTypeId() {
-      return ".world_step.data.entities.entity";
+      return ".type__entity.containers.container.entities.entity";
     }
 
     //Attributes
 
-    //Attributes of type__entity
-
-    private String id;
-    @Builder.Default
-    private Optional<String> entityRuleRef = Optional.empty();
+    private String entityIdRef;
 
     //Children elements
-
-    //Children of type__entity
-    @Builder.Default
-    private Optional<ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers> containers = Optional.empty();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -131,9 +123,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
-    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities> parentAsEntities() {
+    public Optional<ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Container.Entities.Entities> parentAsEntities() {
       return parentNode.flatMap(node -> {
-        if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities casted){
+        if (node instanceof ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Container.Entities.Entities casted){
           return Optional.of(casted);
         }
         return Optional.empty();
@@ -170,26 +162,15 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
-
-          // Deserialize arguments of type__entity
-          innerLogger.log("id");
-          var idValue = rawNode.getAttributeRequired("id");
-          if(Objects.equals(this.id, idValue)) {
+          innerLogger.log("entity_id_ref");
+          var entityIdRefValue = rawNode.getAttributeRequired("entity_id_ref");
+          if(Objects.equals(this.entityIdRef, entityIdRefValue)) {
             isDirty = true;
           }
-          this.id = idValue;
-          innerLogger.log("entity_rule_ref");
-          var entityRuleRefValue = rawNode.getAttribute("entity_rule_ref");
-          if(Objects.equals(this.entityRuleRef, entityRuleRefValue)) {
-            isDirty = true;
-          }
-          this.entityRuleRef = entityRuleRefValue;
+          this.entityIdRef = entityIdRefValue;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
-
-          // Deserialize children of type__entity
-          this.containers = ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers.fromRawNode(rawNode.getChildrenFirst("containers"), this);
         }
 
         if(isDirty) {
@@ -207,20 +188,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         rawNode.setTag("entity");
         try (var innerLogger = logScope("attributes")) {
           //Serialize attributes
-
-          // Serialize arguments of type__entity
-          innerLogger.log("id");
-          rawNode.setAttribute("id", this.id);
-          innerLogger.log("entity_rule_ref");
-          this.entityRuleRef.ifPresent(o -> rawNode.setAttribute("entity_rule_ref", o));
+          innerLogger.log("entity_id_ref");
+          rawNode.setAttribute("entity_id_ref", this.entityIdRef);
         }
         try (var innerLogger = logScope("children")) {
 
           //Serialize children
-
-          // Serialize children of type__entity
-          innerLogger.log("containers");
-          rawNode.setChildren("containers", containers.stream().map(ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers::serializeIntoRawNode).toList());
           return rawNode;
         }
       }
@@ -232,55 +205,17 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         var updatedRawNode = serializeIntoRawNode();
         updatedRawNode.populateNode(document, element);
     }
-    public String getId()
-    {
-      return this.id;
-    }
-    public Entity setId(String value)
-    {
-      this.id = value;
-      notifyChange();
-      return this;
-    }
-    public Optional<String> getEntityRuleRef()
-    {
-      return this.entityRuleRef;
-    }
-    public Entity setEntityRuleRef(Optional<String> value)
-    {
-      this.entityRuleRef = value;
-      notifyChange();
-      return this;
-    }
-    public Optional<ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers> getContainers()
-    {
-      return this.containers;
-    }
-    public ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers getContainersOrDefault()
-    {
-      return this.containers.orElseGet(() -> {
-        var instance = new ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers();
-        this.containers = Optional.of(instance);
-        instance.parentNode(this);
-        return this.containers.get();
-      });
-    }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers> streamContainersOrDefault()
-    {
-      return java.util.stream.Stream.of(getContainersOrDefault());
-    }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers> streamContainers()
-    {
-      return containers.stream();
-    }
-    public Entity setContainers(ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers value)
-    {
-      this.containers = Optional.ofNullable(value);
-      value.parentNode(this);
-      notifyChange();
-      return this;
-    }
 
+    public String getEntityIdRef()
+    {
+      return this.entityIdRef;
+    }
+    public Entity setEntityIdRef(String value)
+    {
+      this.entityIdRef = value;
+      notifyChange();
+      return this;
+    }
 
     public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
        if(xpath.startsWith("."))
@@ -308,11 +243,20 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       "type": "element",
       "value": {
         "metaType": "object",
+        "value": {},
+        "isSingle": false,
+        "isNullable": true,
         "attributes": {
           "metaType": "object",
-          "value": {}
-        },
-        "value": {}
+          "value": {
+            "entity_id_ref": {
+              "metaType": "primitive",
+              "value": "xs:string",
+              "isNullable": false
+            }
+          },
+          "isNullable": false
+        }
       },
       "name": "entity"
     }
