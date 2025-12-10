@@ -65,6 +65,8 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     private String name;
 
     //Children elements
+    @Builder.Default
+    private List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ContainerRule.Entry.AllowedEntity.AllowedEntity> allowedEntity = new ArrayList<>();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -133,9 +135,16 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     }
 
     public void removeChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ContainerRule.Entry.AllowedEntity.AllowedEntity) {
+          this.allowedEntity.remove(object);
+          notifyChange();
+        }
     }
 
     public int buildIndexForChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ContainerRule.Entry.AllowedEntity.AllowedEntity) {
+          return this.allowedEntity.indexOf(object);
+        }
         return 0;
     }
 
@@ -171,6 +180,7 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
+          this.allowedEntity = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ContainerRule.Entry.AllowedEntity.AllowedEntity.fromRawNode(rawNode.getChildrenList("allowed_entity"), this);
         }
 
         if(isDirty) {
@@ -194,6 +204,8 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         try (var innerLogger = logScope("children")) {
 
           //Serialize children
+          innerLogger.log("allowed_entity");
+          rawNode.setChildren("allowed_entity", allowedEntity.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ContainerRule.Entry.AllowedEntity.AllowedEntity::serializeIntoRawNode).toList());
           return rawNode;
         }
       }
@@ -216,11 +228,54 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
       return this;
     }
+    public List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ContainerRule.Entry.AllowedEntity.AllowedEntity> getAllowedEntity()
+    {
+      return this.allowedEntity;
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ContainerRule.Entry.AllowedEntity.AllowedEntity> streamAllowedEntity()
+    {
+      return allowedEntity.stream();
+    }
+    public Entry addAllowedEntity(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ContainerRule.Entry.AllowedEntity.AllowedEntity value)
+    {
+      this.allowedEntity.add(value);
+      value.parentNode(this);
+      return this;
+    }
+    public Entry addAllAllowedEntity(List<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ContainerRule.Entry.AllowedEntity.AllowedEntity> value)
+    {
+      this.allowedEntity.addAll(value);
+      value.forEach(e -> e.parentNode(this));
+      return this;
+    }
+    public Entry removeAllowedEntity(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ContainerRule.Entry.AllowedEntity.AllowedEntity value)
+    {
+      this.allowedEntity.remove(value);
+      value.clearParentNode();
+      return this;
+    }
 
     public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
        if(xpath.startsWith("."))
         {
           xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ContainerRule.Entry.AllowedEntity.AllowedEntity.nodeName + "["))
+        {
+          var startTokens = xpath.split(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ContainerRule.Entry.AllowedEntity.AllowedEntity.nodeName + "\\[");
+          var endToken = startTokens[1].split("]");
+          var indexString = endToken[0];
+          var childXPath = xpath.replace(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ContainerRule.Entry.AllowedEntity.AllowedEntity.nodeName + "[" + indexString + "]", "");
+          if(!"new".equals(indexString)) {
+            var pathIndex = Integer.parseInt(indexString);
+            if(this.allowedEntity.size() > pathIndex) {
+              return this.allowedEntity.get(pathIndex).deserializeAtPath(childXPath,rawNode);
+            }
+          }
+          var newEntry = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ContainerRule.Entry.AllowedEntity.AllowedEntity();
+          var linkedNode = newEntry.deserializeAtPath(childXPath, rawNode);
+          this.addAllowedEntity(newEntry);
+          return linkedNode;
         }
 
         deserialize(rawNode);
@@ -231,6 +286,18 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
        if(xpath.startsWith("."))
         {
           xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ContainerRule.Entry.AllowedEntity.AllowedEntity.nodeName + "["))
+        {
+          var startTokens = xpath.split(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ContainerRule.Entry.AllowedEntity.AllowedEntity.nodeName + "\\[");
+          var endToken = startTokens[1].split("]");
+          var indexString = endToken[0];
+          var childXPath = xpath.replace(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ContainerRule.Entry.AllowedEntity.AllowedEntity.nodeName + "[" + indexString + "]", "");
+          var pathIndex = Integer.parseInt(indexString);
+          if(this.allowedEntity.size() > pathIndex) {
+            return this.allowedEntity.get(pathIndex).getNodeAtPath(childXPath);
+          }
+          return Optional.empty();
         }
         return Optional.of(this);
     }
@@ -243,9 +310,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       "type": "element",
       "value": {
         "metaType": "object",
-        "value": {},
-        "isSingle": false,
-        "isNullable": true,
         "attributes": {
           "metaType": "object",
           "value": {
@@ -256,7 +320,41 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
             }
           },
           "isNullable": false
-        }
+        },
+        "isSingle": false,
+        "value": {
+          "allowed_entity": {
+            "metaType": "object",
+            "attributes": {
+              "metaType": "object",
+              "value": {
+                "entity_rule_ref": {
+                  "metaType": "primitive",
+                  "value": "xs:string",
+                  "isNullable": false
+                }
+              },
+              "isNullable": false
+            },
+            "isSingle": false,
+            "value": {
+              "max": {
+                "metaType": "reference",
+                "value": "type__math_operations",
+                "isSingle": true,
+                "isNullable": true
+              },
+              "min": {
+                "metaType": "reference",
+                "value": "type__math_operations",
+                "isSingle": true,
+                "isNullable": true
+              }
+            },
+            "isNullable": true
+          }
+        },
+        "isNullable": true
       },
       "name": "entry"
     }

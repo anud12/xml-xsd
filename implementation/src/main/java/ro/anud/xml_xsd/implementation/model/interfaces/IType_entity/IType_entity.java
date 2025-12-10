@@ -3,6 +3,8 @@ package ro.anud.xml_xsd.implementation.model.interfaces.IType_entity;
 public interface IType_entity<T> extends ro.anud.xml_xsd.implementation.util.LinkedNode {
 
   //Attributes
+  String getId();
+  T setId(String value);
   java.util.Optional<String> getEntityRuleRef();
   T setEntityRuleRef(java.util.Optional<String> value);
 
@@ -25,13 +27,17 @@ public interface IType_entity<T> extends ro.anud.xml_xsd.implementation.util.Lin
       "attributes": {
         "metaType": "object",
         "value": {
+          "id": {
+            "metaType": "primitive",
+            "value": "xs:string",
+            "isNullable": false
+          },
           "entity_rule_ref": {
             "metaType": "primitive",
             "value": "xs:string",
             "isNullable": true
           }
-        },
-        "isNullable": true
+        }
       },
       "isSingle": true,
       "value": {
@@ -41,20 +47,49 @@ public interface IType_entity<T> extends ro.anud.xml_xsd.implementation.util.Lin
           "value": {
             "container": {
               "metaType": "object",
-              "value": {},
-              "isSingle": false,
-              "isNullable": true,
               "attributes": {
                 "metaType": "object",
                 "value": {
+                  "id": {
+                    "metaType": "primitive",
+                    "value": "xs:string",
+                    "isNullable": false
+                  },
                   "container_rule_ref": {
                     "metaType": "primitive",
                     "value": "xs:string",
                     "isNullable": false
                   }
-                },
-                "isNullable": false
-              }
+                }
+              },
+              "isSingle": false,
+              "value": {
+                "entities": {
+                  "metaType": "object",
+                  "isSingle": true,
+                  "value": {
+                    "entity": {
+                      "metaType": "object",
+                      "value": {},
+                      "isSingle": false,
+                      "isNullable": true,
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "entity_id_ref": {
+                            "metaType": "primitive",
+                            "value": "xs:string",
+                            "isNullable": false
+                          }
+                        },
+                        "isNullable": false
+                      }
+                    }
+                  },
+                  "isNullable": true
+                }
+              },
+              "isNullable": true
             }
           },
           "isNullable": true

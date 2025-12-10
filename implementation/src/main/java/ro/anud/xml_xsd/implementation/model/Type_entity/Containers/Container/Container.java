@@ -62,9 +62,13 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
     //Attributes
 
+    private String id;
+
     private String containerRuleRef;
 
     //Children elements
+    @Builder.Default
+    private Optional<ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Container.Entities.Entities> entities = Optional.empty();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -133,9 +137,16 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     }
 
     public void removeChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Container.Entities.Entities) {
+          this.entities = Optional.empty();
+          notifyChange();
+        }
     }
 
     public int buildIndexForChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Container.Entities.Entities) {
+          return 0;
+        }
         return 0;
     }
 
@@ -162,6 +173,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
+          innerLogger.log("id");
+          var idValue = rawNode.getAttributeRequired("id");
+          if(Objects.equals(this.id, idValue)) {
+            isDirty = true;
+          }
+          this.id = idValue;
           innerLogger.log("container_rule_ref");
           var containerRuleRefValue = rawNode.getAttributeRequired("container_rule_ref");
           if(Objects.equals(this.containerRuleRef, containerRuleRefValue)) {
@@ -171,6 +188,7 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
+          this.entities = ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Container.Entities.Entities.fromRawNode(rawNode.getChildrenFirst("entities"), this);
         }
 
         if(isDirty) {
@@ -188,12 +206,16 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         rawNode.setTag("container");
         try (var innerLogger = logScope("attributes")) {
           //Serialize attributes
+          innerLogger.log("id");
+          rawNode.setAttribute("id", this.id);
           innerLogger.log("container_rule_ref");
           rawNode.setAttribute("container_rule_ref", this.containerRuleRef);
         }
         try (var innerLogger = logScope("children")) {
 
           //Serialize children
+          innerLogger.log("entities");
+          rawNode.setChildren("entities", entities.stream().map(ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Container.Entities.Entities::serializeIntoRawNode).toList());
           return rawNode;
         }
       }
@@ -206,6 +228,16 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         updatedRawNode.populateNode(document, element);
     }
 
+    public String getId()
+    {
+      return this.id;
+    }
+    public Container setId(String value)
+    {
+      this.id = value;
+      notifyChange();
+      return this;
+    }
     public String getContainerRuleRef()
     {
       return this.containerRuleRef;
@@ -216,11 +248,47 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
       return this;
     }
+    public Optional<ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Container.Entities.Entities> getEntities()
+    {
+      return this.entities;
+    }
+    public ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Container.Entities.Entities getEntitiesOrDefault()
+    {
+      return this.entities.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Container.Entities.Entities();
+        this.entities = Optional.of(instance);
+        instance.parentNode(this);
+        return this.entities.get();
+      });
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Container.Entities.Entities> streamEntitiesOrDefault()
+    {
+      return java.util.stream.Stream.of(getEntitiesOrDefault());
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Container.Entities.Entities> streamEntities()
+    {
+      return entities.stream();
+    }
+    public Container setEntities(ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Container.Entities.Entities value)
+    {
+      this.entities = Optional.ofNullable(value);
+      value.parentNode(this);
+      notifyChange();
+      return this;
+    }
 
     public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
        if(xpath.startsWith("."))
         {
           xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Container.Entities.Entities.nodeName))
+        {
+          if(this.entities.isEmpty()) {
+            this.entities = Optional.of(new ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Container.Entities.Entities());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Container.Entities.Entities.nodeName.length() + 3);
+          return this.entities.get().deserializeAtPath(childXPath, rawNode);
         }
 
         deserialize(rawNode);
@@ -231,6 +299,14 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
        if(xpath.startsWith("."))
         {
           xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Container.Entities.Entities.nodeName))
+        {
+          if(this.entities.isEmpty()) {
+            this.entities = Optional.of(new ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Container.Entities.Entities());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Container.Entities.Entities.nodeName.length() + 3);
+          return this.entities.get().getNodeAtPath(childXPath);
         }
         return Optional.of(this);
     }
@@ -243,20 +319,49 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       "type": "element",
       "value": {
         "metaType": "object",
-        "value": {},
-        "isSingle": false,
-        "isNullable": true,
         "attributes": {
           "metaType": "object",
           "value": {
+            "id": {
+              "metaType": "primitive",
+              "value": "xs:string",
+              "isNullable": false
+            },
             "container_rule_ref": {
               "metaType": "primitive",
               "value": "xs:string",
               "isNullable": false
             }
-          },
-          "isNullable": false
-        }
+          }
+        },
+        "isSingle": false,
+        "value": {
+          "entities": {
+            "metaType": "object",
+            "isSingle": true,
+            "value": {
+              "entity": {
+                "metaType": "object",
+                "value": {},
+                "isSingle": false,
+                "isNullable": true,
+                "attributes": {
+                  "metaType": "object",
+                  "value": {
+                    "entity_id_ref": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": false
+                }
+              }
+            },
+            "isNullable": true
+          }
+        },
+        "isNullable": true
       },
       "name": "container"
     }

@@ -29,6 +29,22 @@ namespace XSD.Nworld_step.Nrule_group.Ncontainer_rule {
     public System.String name { get => _name; set => _name = value; }
 
     //Children elements
+
+    private LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Ncontainer_rule.Nentry.allowed_entity> _allowed_entity = new();
+    public LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Ncontainer_rule.Nentry.allowed_entity> allowed_entity
+    {
+      get => _allowed_entity;
+      set
+      {
+        _allowed_entity = value;
+        value.ForEach(linkedNode => linkedNode.ParentNode = this);
+        _allowed_entity.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          NotifyChange();
+        };
+      }
+    }
     public entry()
     {
     }
@@ -54,10 +70,20 @@ namespace XSD.Nworld_step.Nrule_group.Ncontainer_rule {
 
     public void SetChild(dynamic linkedNode)
     {
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Ncontainer_rule.Nentry.allowed_entity> allowed_entity)
+      {
+        this.allowed_entity = allowed_entity;
+      }
     }
 
     public void ClearChild(dynamic linkedNode)
     {
+
+      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nrule_group.Ncontainer_rule.Nentry.allowed_entity>)
+      {
+        this.allowed_entity = null;
+      }
     }
 
     public Action OnSelfChange(Action<entry> callback)
@@ -91,6 +117,12 @@ namespace XSD.Nworld_step.Nrule_group.Ncontainer_rule {
       }
 
       //Deserialize children
+      allowed_entity = rawNode.InitializeWithRawNode("allowed_entity", allowed_entity);
+      allowed_entity.OnAdd = (value) =>
+        {
+          value.ParentNode = this;
+          NotifyChange();
+        };
       NotifyChange();
     }
 
@@ -103,6 +135,7 @@ namespace XSD.Nworld_step.Nrule_group.Ncontainer_rule {
       }
 
       //Serialize children
+      rawNode.children["allowed_entity"] = allowed_entity.Select(x => x.SerializeIntoRawNode()).ToList();
       return rawNode;
     }
 
@@ -129,6 +162,25 @@ namespace XSD.Nworld_step.Nrule_group.Ncontainer_rule {
       {
         xpath = xpath.Substring(1);
       }
+      if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Ncontainer_rule.Nentry.allowed_entity.TagName + "["))
+      {
+        var startIndex = (XSD.Nworld_step.Nrule_group.Ncontainer_rule.Nentry.allowed_entity.TagName + "[").Length;
+        var startTokens = xpath.Split(XSD.Nworld_step.Nrule_group.Ncontainer_rule.Nentry.allowed_entity.TagName + "[");
+        var endToken = startTokens[1].Split("]");
+        var indexString = endToken[0];
+        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Nrule_group.Ncontainer_rule.Nentry.allowed_entity.TagName + "[" + indexString + "]", "");
+        var pathIndex = indexString.ToInt();
+        if(this.allowed_entity.ContainsKey(pathIndex))
+        {
+          this.allowed_entity[pathIndex].DeserializeAtPath(childXPath, rawNode);
+          return;
+        }
+        var newEntry = new XSD.Nworld_step.Nrule_group.Ncontainer_rule.Nentry.allowed_entity();
+        this.allowed_entity[pathIndex] = newEntry;
+        newEntry.DeserializeAtPath(childXPath, rawNode);
+
+        return;
+      }
 
       Deserialize(rawNode);
     }
@@ -150,11 +202,15 @@ namespace XSD.Nworld_step.Nrule_group.Ncontainer_rule {
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Ncontainer_rule.Nentry.allowed_entity casted_allowed_entity) {
+        return this._allowed_entity.KeyOf(casted_allowed_entity);
+      }
       return null;
     }
 
     public bool IsValidChildType(ILinkedNode candidateChild) {
-      return false;
+      return candidateChild is XSD.Nworld_step.Nrule_group.Ncontainer_rule.Nentry.allowed_entity
+      || false;
     }
 
     public bool Equals(entry? obj)
@@ -163,7 +219,7 @@ namespace XSD.Nworld_step.Nrule_group.Ncontainer_rule {
             return false;
 
         var other = (entry)obj;
-        return Equals(name, other.name);
+        return Equals(name, other.name) && Equals(allowed_entity, other.allowed_entity);
     }
 
     public override int GetHashCode()
@@ -171,6 +227,7 @@ namespace XSD.Nworld_step.Nrule_group.Ncontainer_rule {
         var acc = 0;
 
         acc = HashCode.Combine(acc, name);
+        acc = HashCode.Combine(acc, allowed_entity);
         return acc;
     }
   }

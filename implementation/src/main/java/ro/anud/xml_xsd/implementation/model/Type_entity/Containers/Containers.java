@@ -293,20 +293,49 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         "value": {
           "container": {
             "metaType": "object",
-            "value": {},
-            "isSingle": false,
-            "isNullable": true,
             "attributes": {
               "metaType": "object",
               "value": {
+                "id": {
+                  "metaType": "primitive",
+                  "value": "xs:string",
+                  "isNullable": false
+                },
                 "container_rule_ref": {
                   "metaType": "primitive",
                   "value": "xs:string",
                   "isNullable": false
                 }
-              },
-              "isNullable": false
-            }
+              }
+            },
+            "isSingle": false,
+            "value": {
+              "entities": {
+                "metaType": "object",
+                "isSingle": true,
+                "value": {
+                  "entity": {
+                    "metaType": "object",
+                    "value": {},
+                    "isSingle": false,
+                    "isNullable": true,
+                    "attributes": {
+                      "metaType": "object",
+                      "value": {
+                        "entity_id_ref": {
+                          "metaType": "primitive",
+                          "value": "xs:string",
+                          "isNullable": false
+                        }
+                      },
+                      "isNullable": false
+                    }
+                  }
+                },
+                "isNullable": true
+              }
+            },
+            "isNullable": true
           }
         },
         "isNullable": true

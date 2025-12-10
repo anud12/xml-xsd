@@ -32,6 +32,7 @@ public class RuleRepository {
     public final RegionRuleRepository regionRule;
     public final PortalRepository portalRule;
     public final EntityRuleRepository entityRule;
+    public final ContainerRuleRepository containerRule;
     private PropertyInstance propertyInstance;
 
 
@@ -45,6 +46,7 @@ public class RuleRepository {
             this.regionRule = new RegionRuleRepository(worldStepInstance);
             this.portalRule = new PortalRepository(worldStepInstance);
             entityRule = new EntityRuleRepository(worldStepInstance);
+            this.containerRule = new ContainerRuleRepository(worldStepInstance);
         }
         ;
     }
@@ -60,6 +62,7 @@ public class RuleRepository {
             regionRule.index(ruleGroups);
             portalRule.index();
             entityRule.index();
+            containerRule.index();
 
             var actionRule = ruleGroups
                 .stream()

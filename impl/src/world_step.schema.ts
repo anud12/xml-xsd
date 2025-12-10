@@ -25,9 +25,13 @@ export type type__rotation_90deg_step = "normal"
   | "clockwise"
   | "inverted"
   | "counterclockwise"
-export type type__entity = JsonQueryType<{"entity_rule_ref": string;}, {
+export type type__entity = JsonQueryType<{"id": string;  "entity_rule_ref": string;}, {
   "containers": JsonQueryType<{}, {
-    "container": JsonQueryType<{"container_rule_ref": string;}> & JsonQueryType<{}, {}>;
+    "container": JsonQueryType<{"id": string;  "container_rule_ref": string;}, {
+      "entities": JsonQueryType<{}, {
+        "entity": JsonQueryType<{"entity_id_ref": string;}> & JsonQueryType<{}, {}>;
+      }> & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
 }>
 export type type__property_mutation_on = JsonQueryType<{"on": type_person_select;}>
@@ -137,7 +141,12 @@ export type world_step = JsonQueryType<{}, {
       }> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
     "container_rule": JsonQueryType<{}, {
-      "entry": JsonQueryType<{"name": string;}> & JsonQueryType<{}, {}>;
+      "entry": JsonQueryType<{"name": string;}, {
+        "allowed_entity": JsonQueryType<{"entity_rule_ref": string;}, {
+          "max": type__math_operations & JsonQueryType<{}, {}>;
+          "min": type__math_operations & JsonQueryType<{}, {}>;
+        }> & JsonQueryType<{}, {}>;
+      }> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
     "property_rule": JsonQueryType<{}, {
       "entry": JsonQueryType<{"id": string;  "units": string;}, {
@@ -350,5 +359,6 @@ export type world_step = JsonQueryType<{}, {
     "region.appendNew": JsonQueryType<{"zone_id_ref": string;  "region_id_ref": string;  "portal_id_ref": string;}> & JsonQueryType<{}, {}>;
     "region.resolvePortals": JsonQueryType<{"zone_id_ref": string;  "region_id_ref": string;}> & JsonQueryType<{}, {}>;
     "entity.create": JsonQueryType<{"entity_rule_ref": string;}> & JsonQueryType<{}, {}>;
+    "container.addOnEntity": JsonQueryType<{"container_rule_ref": string;  "entity_id": string;}> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
 }>

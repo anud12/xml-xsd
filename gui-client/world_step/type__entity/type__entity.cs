@@ -25,6 +25,8 @@ namespace XSD {
     private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
+    private System.String _id;
+    public System.String id { get => _id; set => _id = value; }
     private System.String? _entity_rule_ref;
     public System.String? entity_rule_ref { get => _entity_rule_ref; set => _entity_rule_ref = value; }
 
@@ -84,6 +86,10 @@ namespace XSD {
 
     public void SetAttribute(string name, string? value)
     {
+      if(name == "id")
+      {
+        Set_id(value);
+      }
       if(name == "entity_rule_ref")
       {
         Set_entity_rule_ref(value);
@@ -132,6 +138,11 @@ namespace XSD {
       this.rawNode = rawNode;
       // Godot.GD.Print("Deserializing type__entity");
       //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("id"))
+      {
+        var attribute_id = rawNode.attributes["id"];
+        this.id = rawNode.attributes["id"];
+      }
       if(rawNode.attributes.ContainsKey("entity_rule_ref"))
       {
         var attribute_entity_rule_ref = rawNode.attributes["entity_rule_ref"];
@@ -146,6 +157,10 @@ namespace XSD {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
+      if(this._id != null)
+      {
+        rawNode.attributes["id"] = this._id.ToString();
+      }
       if(this._entity_rule_ref != null)
       {
         rawNode.attributes["entity_rule_ref"] = this._entity_rule_ref?.ToString();
@@ -163,6 +178,15 @@ namespace XSD {
         // Godot.GD.Print("Serializing type__entity");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
+    }
+    public System.String Get_id()
+    {
+      return this.id;
+    }
+    public void Set_id(System.String value)
+    {
+      this.id = value;
+      this.NotifyChange();
     }
     public System.String? Get_entity_rule_ref()
     {
@@ -226,13 +250,14 @@ namespace XSD {
             return false;
 
         var other = (type__entity)obj;
-        return Equals(entity_rule_ref, other.entity_rule_ref) && Equals(containers, other.containers);
+        return Equals(id, other.id) && Equals(entity_rule_ref, other.entity_rule_ref) && Equals(containers, other.containers);
     }
 
     public override int GetHashCode()
     {
         var acc = 0;
 
+        acc = HashCode.Combine(acc, id);
         acc = HashCode.Combine(acc, entity_rule_ref);
         acc = HashCode.Combine(acc, containers);
         return acc;

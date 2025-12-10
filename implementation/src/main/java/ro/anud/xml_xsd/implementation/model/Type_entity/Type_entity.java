@@ -61,6 +61,8 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     }
 
     //Attributes
+
+    private String id;
     @Builder.Default
     private Optional<String> entityRuleRef = Optional.empty();
 
@@ -162,6 +164,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
+          innerLogger.log("id");
+          var idValue = rawNode.getAttributeRequired("id");
+          if(Objects.equals(this.id, idValue)) {
+            isDirty = true;
+          }
+          this.id = idValue;
           innerLogger.log("entity_rule_ref");
           var entityRuleRefValue = rawNode.getAttribute("entity_rule_ref");
           if(Objects.equals(this.entityRuleRef, entityRuleRefValue)) {
@@ -189,6 +197,8 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         rawNode.setTag("type__entity");
         try (var innerLogger = logScope("attributes")) {
           //Serialize attributes
+          innerLogger.log("id");
+          rawNode.setAttribute("id", this.id);
           innerLogger.log("entity_rule_ref");
           this.entityRuleRef.ifPresent(o -> rawNode.setAttribute("entity_rule_ref", o));
         }
@@ -209,6 +219,16 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         updatedRawNode.populateNode(document, element);
     }
 
+    public String getId()
+    {
+      return this.id;
+    }
+    public Type_entity setId(String value)
+    {
+      this.id = value;
+      notifyChange();
+      return this;
+    }
     public Optional<String> getEntityRuleRef()
     {
       return this.entityRuleRef;
@@ -293,13 +313,17 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         "attributes": {
           "metaType": "object",
           "value": {
+            "id": {
+              "metaType": "primitive",
+              "value": "xs:string",
+              "isNullable": false
+            },
             "entity_rule_ref": {
               "metaType": "primitive",
               "value": "xs:string",
               "isNullable": true
             }
-          },
-          "isNullable": true
+          }
         },
         "isSingle": true,
         "value": {
@@ -309,20 +333,49 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
             "value": {
               "container": {
                 "metaType": "object",
-                "value": {},
-                "isSingle": false,
-                "isNullable": true,
                 "attributes": {
                   "metaType": "object",
                   "value": {
+                    "id": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
+                    },
                     "container_rule_ref": {
                       "metaType": "primitive",
                       "value": "xs:string",
                       "isNullable": false
                     }
-                  },
-                  "isNullable": false
-                }
+                  }
+                },
+                "isSingle": false,
+                "value": {
+                  "entities": {
+                    "metaType": "object",
+                    "isSingle": true,
+                    "value": {
+                      "entity": {
+                        "metaType": "object",
+                        "value": {},
+                        "isSingle": false,
+                        "isNullable": true,
+                        "attributes": {
+                          "metaType": "object",
+                          "value": {
+                            "entity_id_ref": {
+                              "metaType": "primitive",
+                              "value": "xs:string",
+                              "isNullable": false
+                            }
+                          },
+                          "isNullable": false
+                        }
+                      }
+                    },
+                    "isNullable": true
+                  }
+                },
+                "isNullable": true
               }
             },
             "isNullable": true

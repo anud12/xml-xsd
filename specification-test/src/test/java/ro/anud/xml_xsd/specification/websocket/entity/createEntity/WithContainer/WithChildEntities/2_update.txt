@@ -1,0 +1,26 @@
+.world_step[0].world_metadata[0].counter[0]
+<counter value="1"/>
+---
+.world_step[0].world_metadata[0].counter[0]
+<counter value="2"/>
+---
+.world_step[0].data[0]
+<data/>
+---
+.world_step[0].data[0].entities[0]
+<entities/>
+---
+.world_step[0].data[0].entities[0].entity[0]
+<entity entity_rule_ref="child_entity" id="0.1"/>
+---
+.world_step[0].actions[0]
+<actions/>
+---
+.world_step[0].world_metadata[0].counter[0]
+<counter value="3"/>
+---
+.world_step[0].data[0].entities[0].entity[1]
+<entity entity_rule_ref="entity_rule" id="0.0"><containers><container container_rule_ref="container_rule" id="0.2"><entities><entity entity_id_ref="0.1"/></entities></container></containers></entity>
+---
+.world_step[0].world_metadata[0].counter[0]
+<counter value="3"/>

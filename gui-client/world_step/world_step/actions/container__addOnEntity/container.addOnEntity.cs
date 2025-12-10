@@ -7,78 +7,40 @@ using Guiclient.util;
 using Godot;
 using XSD;
 
-namespace XSD.Ncontainers.Ncontainer {}
+namespace XSD.Nworld_step.Nactions.Ncontainer__addOnEntity {}
 namespace XSD {
 }
-namespace XSD.Ncontainers {
-  public class container : IEquatable<container>, XSD.ILinkedNode  {
+namespace XSD.Nworld_step.Nactions {
+  public class container__addOnEntity : IEquatable<container__addOnEntity>, XSD.ILinkedNode  {
 
-    public static string ClassTypeId = ".containers.container";
-    public static string TagName = "container";
+    public static string ClassTypeId = ".world_step.actions.container.addOnEntity";
+    public static string TagName = "container.addOnEntity";
 
-    public string NodeName {get =>"container";}
+    public string NodeName {get =>"container.addOnEntity";}
     public RawNode rawNode = new RawNode();
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<container>> _onSelfChangeCallbackList = new();
+    private List<Action<container__addOnEntity>> _onSelfChangeCallbackList = new();
     private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
-    private System.String _id;
-    public System.String id { get => _id; set => _id = value; }
     private System.String _container_rule_ref;
     public System.String container_rule_ref { get => _container_rule_ref; set => _container_rule_ref = value; }
+    private System.String _entity_id;
+    public System.String entity_id { get => _entity_id; set => _entity_id = value; }
 
     //Children elements
-    private XSD.Ncontainers.Ncontainer.entities? _entities = null;
-    public XSD.Ncontainers.Ncontainer.entities entitiesOrCreate
-    {
-      get
-      {
-        if(_entities == null)
-        {
-          _entities = new();
-          _entities.ParentNode = this;
-          NotifyChange();
-        }
-        return _entities;
-      }
-      set
-      {
-        _entities = value;
-        if(value != null)
-        {
-          value.ParentNode = this;
-        }
-
-      }
-    }
-    public XSD.Ncontainers.Ncontainer.entities? entities
-    {
-      get
-      {
-        return _entities;
-      }
-      set
-      {
-        _entities = value;
-        if(value != null)
-        {
-          value.ParentNode = this;
-        }
-      }
-    }
-    public container()
+    public container__addOnEntity()
     {
     }
 
-    public container(RawNode rawNode)
+    public container__addOnEntity(RawNode rawNode)
     {
       Deserialize(rawNode);
     }
 
-    public container(XmlElement xmlElement)
+    public container__addOnEntity(XmlElement xmlElement)
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
@@ -86,35 +48,25 @@ namespace XSD.Ncontainers {
 
     public void SetAttribute(string name, string? value)
     {
-      if(name == "id")
-      {
-        Set_id(value);
-      }
       if(name == "container_rule_ref")
       {
         Set_container_rule_ref(value);
+      }
+      if(name == "entity_id")
+      {
+        Set_entity_id(value);
       }
     }
 
     public void SetChild(dynamic linkedNode)
     {
-      if(linkedNode is XSD.Ncontainers.Ncontainer.entities entities)
-      {
-        this.entities = entities;
-      }
-
     }
 
     public void ClearChild(dynamic linkedNode)
     {
-      if(linkedNode is XSD.Ncontainers.Ncontainer.entities)
-      {
-        this.entities = null;
-      }
-
     }
 
-    public Action OnSelfChange(Action<container> callback)
+    public Action OnSelfChange(Action<container__addOnEntity> callback)
     {
       _onSelfChangeCallbackList.Add(callback);
       return () => _onSelfChangeCallbackList.Remove(callback);
@@ -136,57 +88,44 @@ namespace XSD.Ncontainers {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing container");
+      // Godot.GD.Print("Deserializing container.addOnEntity");
       //Deserialize arguments
-      if(rawNode.attributes.ContainsKey("id"))
-      {
-        var attribute_id = rawNode.attributes["id"];
-        this.id = rawNode.attributes["id"];
-      }
       if(rawNode.attributes.ContainsKey("container_rule_ref"))
       {
         var attribute_container_rule_ref = rawNode.attributes["container_rule_ref"];
         this.container_rule_ref = rawNode.attributes["container_rule_ref"];
       }
+      if(rawNode.attributes.ContainsKey("entity_id"))
+      {
+        var attribute_entity_id = rawNode.attributes["entity_id"];
+        this.entity_id = rawNode.attributes["entity_id"];
+      }
 
       //Deserialize children
-      entities = rawNode.InitializeWithRawNode("entities", entities);
       NotifyChange();
     }
 
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
-      if(this._id != null)
-      {
-        rawNode.attributes["id"] = this._id.ToString();
-      }
       if(this._container_rule_ref != null)
       {
         rawNode.attributes["container_rule_ref"] = this._container_rule_ref.ToString();
       }
+      if(this._entity_id != null)
+      {
+        rawNode.attributes["entity_id"] = this._entity_id.ToString();
+      }
 
       //Serialize children
-      if(entities != null) {
-        rawNode.children["entities"] = new List<RawNode> { entities.SerializeIntoRawNode() };
-      }
       return rawNode;
     }
 
     public void Serialize(XmlElement element)
     {
-        // Godot.GD.Print("Serializing container");
+        // Godot.GD.Print("Serializing container.addOnEntity");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
-    }
-    public System.String Get_id()
-    {
-      return this.id;
-    }
-    public void Set_id(System.String value)
-    {
-      this.id = value;
-      this.NotifyChange();
     }
     public System.String Get_container_rule_ref()
     {
@@ -197,6 +136,15 @@ namespace XSD.Ncontainers {
       this.container_rule_ref = value;
       this.NotifyChange();
     }
+    public System.String Get_entity_id()
+    {
+      return this.entity_id;
+    }
+    public void Set_entity_id(System.String value)
+    {
+      this.entity_id = value;
+      this.NotifyChange();
+    }
 
 
     public void DeserializeAtPath(string xpath, RawNode rawNode)
@@ -204,13 +152,6 @@ namespace XSD.Ncontainers {
       if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
-      }
-      if(xpath.StartsWith(XSD.Ncontainers.Ncontainer.entities.TagName))
-      {
-        this.entities ??= new XSD.Ncontainers.Ncontainer.entities();
-        var childXPath = xpath.Substring(XSD.Ncontainers.Ncontainer.entities.TagName.Length + 3);
-        this.entities.DeserializeAtPath(childXPath, rawNode);
-        return;
       }
 
       Deserialize(rawNode);
@@ -233,33 +174,28 @@ namespace XSD.Ncontainers {
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
-      if(linkedNode is XSD.Ncontainers.Ncontainer.entities casted_entities) {
-        return 0;
-      }
       return null;
     }
 
     public bool IsValidChildType(ILinkedNode candidateChild) {
-      return candidateChild is XSD.Ncontainers.Ncontainer.entities
-      || false;
+      return false;
     }
 
-    public bool Equals(container? obj)
+    public bool Equals(container__addOnEntity? obj)
     {
         if (obj == null || GetType() != obj.GetType())
             return false;
 
-        var other = (container)obj;
-        return Equals(id, other.id) && Equals(container_rule_ref, other.container_rule_ref) && Equals(entities, other.entities);
+        var other = (container__addOnEntity)obj;
+        return Equals(container_rule_ref, other.container_rule_ref) && Equals(entity_id, other.entity_id);
     }
 
     public override int GetHashCode()
     {
         var acc = 0;
 
-        acc = HashCode.Combine(acc, id);
         acc = HashCode.Combine(acc, container_rule_ref);
-        acc = HashCode.Combine(acc, entities);
+        acc = HashCode.Combine(acc, entity_id);
         return acc;
     }
   }

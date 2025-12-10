@@ -5,6 +5,7 @@ import ro.anud.xml_xsd.implementation.middleware.EventsMetadata;
 import ro.anud.xml_xsd.implementation.middleware.PersonAssignClassification;
 import ro.anud.xml_xsd.implementation.middleware.action.FromPersonAction;
 import ro.anud.xml_xsd.implementation.middleware.action.PersonCreateAction;
+import ro.anud.xml_xsd.implementation.middleware.container.ContainerCreate;
 import ro.anud.xml_xsd.implementation.middleware.entity.EntityCreate;
 import ro.anud.xml_xsd.implementation.middleware.locationGraph.LocationGraphAddClassification;
 import ro.anud.xml_xsd.implementation.middleware.locationGraph.LocationGraphCreate;
@@ -16,13 +17,14 @@ import ro.anud.xml_xsd.implementation.middleware.zone.ZoneCreateAction;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.Counter.Counter;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
-import ro.anud.xml_xsd.implementation.service.Middleware;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
+import ro.anud.xml_xsd.implementation.service.action.Action;
 import ro.anud.xml_xsd.implementation.util.logging.ContextAwareExecutorService;
 import ro.anud.xml_xsd.implementation.websocket.WebSocketHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -40,9 +42,15 @@ public class WorldStepRunner {
     private ContextAwareExecutorService contextAwareExecutorService = new ContextAwareExecutorService(Executors.newSingleThreadExecutor());
     private List<Consumer<WorldStepInstance>> consumers = new ArrayList<>();
     private static long intervalUs = 500_000_000;
-    private static List<Middleware> middlewareList = List.of(
-        new EntityCreate()
+    private static Set<Action> middlewareList = Set.of(
+            new EntityCreate(),
+            new ContainerCreate()
     );
+
+    {
+        middlewareList.forEach(middleware -> middleware.assignDependencies(middlewareList));
+    }
+
 
     public static void runStep(WorldStepInstance worldStepInstance) {
         middlewareList.forEach(middleware -> middleware.apply(worldStepInstance));
@@ -57,7 +65,7 @@ public class WorldStepRunner {
         EventsMetadata.apply(worldStepInstance);
         LocationGraphAddClassification.locationGraphAddClassification(worldStepInstance);
         PersonAssignClassification.apply(worldStepInstance);
-        try (var scope = logScope("Applying counter synchronization to WorldStepInstance")){
+        try (var scope = logScope("Applying counter synchronization to WorldStepInstance")) {
             worldStepInstance.getOutInstance()
                     .getWorldStep()
                     .flatMap(WorldStep::getWorldMetadata)
