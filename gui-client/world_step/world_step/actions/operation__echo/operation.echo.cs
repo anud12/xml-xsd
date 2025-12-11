@@ -7,24 +7,36 @@ using Guiclient.util;
 using Godot;
 using XSD;
 
-namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry.Nperson_default {}
+namespace XSD.Nworld_step.Nactions.Noperation__echo {}
 namespace XSD {
+  public interface Itype__math_operations {
+    public void Deserialize (RawNode rawNode);
+
+    public RawNode SerializeIntoRawNode();
+
+    public void Serialize(XmlElement element);
+
+  }
 }
-namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {
-  public class person_default : IEquatable<person_default>, XSD.ILinkedNode , Itype__math_operations {
+namespace XSD.Nworld_step.Nactions {
+  public class operation__echo : IEquatable<operation__echo>, XSD.ILinkedNode , Itype__math_operations {
 
-    public static string ClassTypeId = ".world_step.rule_group.property_rule.entry.person_default";
-    public static string TagName = "person_default";
+    public static string ClassTypeId = ".world_step.actions.operation.echo";
+    public static string TagName = "operation.echo";
 
-    public string NodeName {get =>"person_default";}
+    public string NodeName {get =>"operation.echo";}
     public RawNode rawNode = new RawNode();
 
     private ILinkedNode? _parentNode;
     public ILinkedNode? ParentNode {get => _parentNode; set => _parentNode = value;}
-    private List<Action<person_default>> _onSelfChangeCallbackList = new();
+    private List<Action<operation__echo>> _onSelfChangeCallbackList = new();
     private List<Action<List<ILinkedNode>>> _onChangeCallbackList = new();
 
     //Attributes
+    private System.String _id;
+    public System.String id { get => _id; set => _id = value; }
+    private System.String _entity_id_ref;
+    public System.String entity_id_ref { get => _entity_id_ref; set => _entity_id_ref = value; }
 
     //Attributes of type__math_operations
 
@@ -32,16 +44,16 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {
 
     //Children of type__math_operations
 
-    public person_default()
+    public operation__echo()
     {
     }
 
-    public person_default(RawNode rawNode)
+    public operation__echo(RawNode rawNode)
     {
       Deserialize(rawNode);
     }
 
-    public person_default(XmlElement xmlElement)
+    public operation__echo(XmlElement xmlElement)
     {
       this.rawNode.Deserialize(xmlElement);
       Deserialize(rawNode);
@@ -49,6 +61,14 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {
 
     public void SetAttribute(string name, string? value)
     {
+      if(name == "id")
+      {
+        Set_id(value);
+      }
+      if(name == "entity_id_ref")
+      {
+        Set_entity_id_ref(value);
+      }
     }
 
     public void SetChild(dynamic linkedNode)
@@ -60,7 +80,7 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {
     }
 
 
-    public Action OnSelfChange(Action<person_default> callback)
+    public Action OnSelfChange(Action<operation__echo> callback)
     {
       _onSelfChangeCallbackList.Add(callback);
       return () => _onSelfChangeCallbackList.Remove(callback);
@@ -82,8 +102,18 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {
     public void Deserialize (RawNode rawNode)
     {
       this.rawNode = rawNode;
-      // Godot.GD.Print("Deserializing person_default");
+      // Godot.GD.Print("Deserializing operation.echo");
       //Deserialize arguments
+      if(rawNode.attributes.ContainsKey("id"))
+      {
+        var attribute_id = rawNode.attributes["id"];
+        this.id = rawNode.attributes["id"];
+      }
+      if(rawNode.attributes.ContainsKey("entity_id_ref"))
+      {
+        var attribute_entity_id_ref = rawNode.attributes["entity_id_ref"];
+        this.entity_id_ref = rawNode.attributes["entity_id_ref"];
+      }
 
       // Deserialize arguments of type__math_operations
 
@@ -98,6 +128,14 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {
     public RawNode SerializeIntoRawNode()
     {
       //Serialize arguments
+      if(this._id != null)
+      {
+        rawNode.attributes["id"] = this._id.ToString();
+      }
+      if(this._entity_id_ref != null)
+      {
+        rawNode.attributes["entity_id_ref"] = this._entity_id_ref.ToString();
+      }
 
       // Serialize arguments of type__math_operations
 
@@ -111,9 +149,27 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {
 
     public void Serialize(XmlElement element)
     {
-        // Godot.GD.Print("Serializing person_default");
+        // Godot.GD.Print("Serializing operation.echo");
         var updatedRawNode = SerializeIntoRawNode();
         updatedRawNode.Serialize(element);
+    }
+    public System.String Get_id()
+    {
+      return this.id;
+    }
+    public void Set_id(System.String value)
+    {
+      this.id = value;
+      this.NotifyChange();
+    }
+    public System.String Get_entity_id_ref()
+    {
+      return this.entity_id_ref;
+    }
+    public void Set_entity_id_ref(System.String value)
+    {
+      this.entity_id_ref = value;
+      this.NotifyChange();
     }
 
 
@@ -151,18 +207,22 @@ namespace XSD.Nworld_step.Nrule_group.Nproperty_rule.Nentry {
       return false;
     }
 
-        public bool Equals(person_default? obj)
-        {
-            if (obj == null || GetType() != obj.GetType())
-                return false;
-
-            var other = (person_default)obj;
-            return object.Equals(this, other);
-        }
-
-    public int GetHashCode()
+    public bool Equals(operation__echo? obj)
     {
-        return base.GetHashCode();
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        var other = (operation__echo)obj;
+        return Equals(id, other.id) && Equals(entity_id_ref, other.entity_id_ref);
+    }
+
+    public override int GetHashCode()
+    {
+        var acc = 0;
+
+        acc = HashCode.Combine(acc, id);
+        acc = HashCode.Combine(acc, entity_id_ref);
+        return acc;
     }
   }
 }

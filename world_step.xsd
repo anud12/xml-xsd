@@ -224,6 +224,24 @@
           <xs:attribute name="property_rule_ref" type="xs:string" use="required"/>
         </xs:complexType>
       </xs:element>
+      <xs:element name="count_entity" minOccurs="0">
+        <xs:complexType>
+          <xs:all>
+            <xs:element name="in_container">
+              <xs:annotation>
+                <xs:documentation>
+                  Search in container but only on top level
+                </xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="container_rule_ref" use="required" type="xs:string"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:all>
+          <xs:attribute name="do" use="required" type="type__group__operation__and"/>
+          <xs:attribute name="entity_rule_ref" type="xs:string" use="required"/>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="and" minOccurs="0" maxOccurs="unbounded">
         <xs:complexType>
           <xs:complexContent>
@@ -2105,6 +2123,16 @@
                 <xs:complexType>
                   <xs:attribute name="container_rule_ref" type="xs:string" use="required"/>
                   <xs:attribute name="entity_id" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="operation.echo" minOccurs="0">
+                <xs:complexType>
+                  <xs:complexContent>
+                    <xs:extension base="type__math_operations">
+                      <xs:attribute name="id" type="xs:string" use="required"/>
+                      <xs:attribute name="entity_id_ref" type="xs:string" use="required"/>
+                    </xs:extension>
+                  </xs:complexContent>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>

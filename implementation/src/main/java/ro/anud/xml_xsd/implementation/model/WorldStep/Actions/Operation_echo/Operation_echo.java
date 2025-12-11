@@ -1,4 +1,4 @@
-package ro.anud.xml_xsd.implementation.model.Type_mathOperations;
+package ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Operation_echo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.w3c.dom.Document;
@@ -18,12 +18,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
   @NoArgsConstructor
   @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-  public class Type_mathOperations implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
+  public class Operation_echo implements  ro.anud.xml_xsd.implementation.model.interfaces.IType_mathOperations.IType_mathOperations<Operation_echo>,  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static String nodeName = "type__math_operations";
-    public static Type_mathOperations fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static String nodeName = "operation.echo";
+    public static Operation_echo fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       try (var logger = logScope()) {
-        var instance = new Type_mathOperations();
+        var instance = new Operation_echo();
         if(Objects.nonNull(parent)) {
           instance.parentNode(parent);
         }
@@ -33,36 +33,45 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       }
 
     }
-    public static Type_mathOperations fromRawNode(RawNode rawNode) {
+    public static Operation_echo fromRawNode(RawNode rawNode) {
       try (var logger = logScope()) {
         var instance = fromRawNode(rawNode, null);
         return logger.logReturn(instance);
       }
     }
-    public static Optional<Type_mathOperations> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static Optional<Operation_echo> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
         try(var logger = logScope()) {
-          return logger.logReturn(rawNode.map(o -> Type_mathOperations.fromRawNode(o, parent)));
+          return logger.logReturn(rawNode.map(o -> Operation_echo.fromRawNode(o, parent)));
         }
 
     }
-    public static List<Type_mathOperations> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static List<Operation_echo> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       try (var logger = logScope()) {
-        List<Type_mathOperations> returnList = Optional.ofNullable(rawNodeList)
+        List<Operation_echo> returnList = Optional.ofNullable(rawNodeList)
             .orElse(List.of())
             .stream()
-            .map(o -> Type_mathOperations.fromRawNode(o, parent))
+            .map(o -> Operation_echo.fromRawNode(o, parent))
             .collect(Collectors.toList());
         return logger.logReturn(returnList);
       }
     }
 
     public String classTypeId() {
-      return ".type__math_operations";
+      return ".world_step.actions.operation.echo";
     }
 
     //Attributes
 
+    private String id;
+
+    private String entityIdRef;
+
+    //Attributes of type__math_operations
+
     //Children elements
+
+    //Children of type__math_operations
+
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -88,15 +97,15 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     }
 
     @Builder.Default
-    private List<ro.anud.xml_xsd.implementation.util.ChangeCallback<Type_mathOperations>> onChangeList = new ArrayList<>();
+    private List<ro.anud.xml_xsd.implementation.util.ChangeCallback<Operation_echo>> onChangeList = new ArrayList<>();
     @Builder.Default
-    private List<ro.anud.xml_xsd.implementation.util.RemoveCallback<Type_mathOperations>> onRemoveList = new ArrayList<>();
+    private List<ro.anud.xml_xsd.implementation.util.RemoveCallback<Operation_echo>> onRemoveList = new ArrayList<>();
 
     public String nodeName() {
-      return "type__math_operations";
+      return "operation.echo";
     }
-    public static Type_mathOperations of() {
-      return new Type_mathOperations();
+    public static Operation_echo of() {
+      return new Operation_echo();
     }
 
     public void notifyChange(ro.anud.xml_xsd.implementation.util.LinkedNode object) {
@@ -121,6 +130,15 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions> parentAsActions() {
+      return parentNode.flatMap(node -> {
+        if (node instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions casted){
+          return Optional.of(casted);
+        }
+        return Optional.empty();
+      });
+    }
+
     public void removeChild(Object object) {
     }
 
@@ -132,13 +150,13 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(ro.anud.xml_xsd.implementation.util.ChangeCallback<Type_mathOperations> callback) {
+    public Subscription onChange(ro.anud.xml_xsd.implementation.util.ChangeCallback<Operation_echo> callback) {
       try (var logger = logScope()) {
         onChangeList.add(callback);
         return logger.logReturn(() -> onChangeList.remove(callback));
       }
     }
-    public Subscription onRemove(ro.anud.xml_xsd.implementation.util.RemoveCallback<Type_mathOperations> callback) {
+    public Subscription onRemove(ro.anud.xml_xsd.implementation.util.RemoveCallback<Operation_echo> callback) {
       try (var logger = logScope()) {
         onRemoveList.add(callback);
         return logger.logReturn(() -> onRemoveList.remove(callback));
@@ -151,9 +169,27 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         var isDirty = false;
         try (var innerLogger = logScope("attributes")) {
           //Deserialize attributes
+          innerLogger.log("id");
+          var idValue = rawNode.getAttributeRequired("id");
+          if(Objects.equals(this.id, idValue)) {
+            isDirty = true;
+          }
+          this.id = idValue;
+          innerLogger.log("entity_id_ref");
+          var entityIdRefValue = rawNode.getAttributeRequired("entity_id_ref");
+          if(Objects.equals(this.entityIdRef, entityIdRefValue)) {
+            isDirty = true;
+          }
+          this.entityIdRef = entityIdRefValue;
+
+          // Deserialize arguments of type__math_operations
+
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
+
+          // Deserialize children of type__math_operations
+
         }
 
         if(isDirty) {
@@ -168,13 +204,23 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public RawNode serializeIntoRawNode()
     {
       try (var logger = logScope()) {
-        rawNode.setTag("type__math_operations");
+        rawNode.setTag("operation.echo");
         try (var innerLogger = logScope("attributes")) {
           //Serialize attributes
+          innerLogger.log("id");
+          rawNode.setAttribute("id", this.id);
+          innerLogger.log("entity_id_ref");
+          rawNode.setAttribute("entity_id_ref", this.entityIdRef);
+
+          // Serialize arguments of type__math_operations
+
         }
         try (var innerLogger = logScope("children")) {
 
           //Serialize children
+
+          // Serialize children of type__math_operations
+
           return rawNode;
         }
       }
@@ -182,10 +228,32 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
     public void serialize(Document document, Element element)
     {
-        // Godot.GD.Print("Serializing type__math_operations");
+        // Godot.GD.Print("Serializing operation.echo");
         var updatedRawNode = serializeIntoRawNode();
         updatedRawNode.populateNode(document, element);
     }
+
+    public String getId()
+    {
+      return this.id;
+    }
+    public Operation_echo setId(String value)
+    {
+      this.id = value;
+      notifyChange();
+      return this;
+    }
+    public String getEntityIdRef()
+    {
+      return this.entityIdRef;
+    }
+    public Operation_echo setEntityIdRef(String value)
+    {
+      this.entityIdRef = value;
+      notifyChange();
+      return this;
+    }
+
 
     public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
        if(xpath.startsWith("."))
@@ -212,31 +280,24 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     {
       "type": "element",
       "value": {
-        "metaType": "composition",
-        "value": [
-          {
-            "metaType": "object",
-            "value": {},
-            "isSingle": true,
-            "isNullable": false,
-            "attributes": {
-              "metaType": "object",
-              "value": {
-                "initial": {
-                  "metaType": "primitive",
-                  "value": "xs:int",
-                  "isNullable": false
-                }
-              },
+        "metaType": "object",
+        "attributes": {
+          "metaType": "object",
+          "value": {
+            "id": {
+              "metaType": "primitive",
+              "value": "xs:string",
+              "isNullable": false
+            },
+            "entity_id_ref": {
+              "metaType": "primitive",
+              "value": "xs:string",
               "isNullable": false
             }
-          },
-          {
-            "metaType": "primitive",
-            "value": "type__math_operations_and"
           }
-        ]
+        },
+        "value": {}
       },
-      "name": "type__math_operations"
+      "name": "operation.echo"
     }
   */

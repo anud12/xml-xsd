@@ -1,0 +1,5 @@
+.world_step[0].actions[0]
+<actions/>
+---
+.world_step[0].world_metadata[0].counter[0]
+<counter value="0"/>

@@ -45,9 +45,9 @@ public class CreatePerson {
                     .forEach(property -> {
                         try (var innerLogger = logScope("personSelection", property.getPropertyRuleRef())) {
                             innerLogger.log("compute max");
-                            var maxOptional = worldStepInstance.computeOperation(property.getMax(), person);
+                            var maxOptional = property.getMax().flatMap(typeMathOperations -> worldStepInstance.computeOperation(typeMathOperations, person));
                             innerLogger.log("compute min");
-                            var minOptional = worldStepInstance.computeOperation(property.getMin(), person);
+                            var minOptional = property.getMin().flatMap(typeMathOperations -> worldStepInstance.computeOperation(typeMathOperations, person));
 
                             if (minOptional.isEmpty() && maxOptional.isEmpty()) {
                                 innerLogger.log("min and max are empty");

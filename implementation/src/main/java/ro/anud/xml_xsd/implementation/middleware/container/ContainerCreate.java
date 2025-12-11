@@ -46,7 +46,7 @@ public class ContainerCreate implements ActionCreate<Container, Container_addOnE
             Optional<Entities> entities = Optional.of(
                     rule.streamAllowedEntity()
                             .flatMap(allowedEntity -> allowedEntity.getMin()
-                                    .flatMap(worldStepInstance::computeOperation)
+                                    .flatMap(typeMathOperations -> worldStepInstance.computeOperation(typeMathOperations))
                                     .stream()
                                     .flatMap(integer -> {
                                         try (var inner = logScope("creating "+ integer + "  child entities")) {
