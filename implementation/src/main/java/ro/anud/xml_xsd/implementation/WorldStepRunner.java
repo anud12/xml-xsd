@@ -10,6 +10,7 @@ import ro.anud.xml_xsd.implementation.middleware.entity.EntityCreate;
 import ro.anud.xml_xsd.implementation.middleware.locationGraph.LocationGraphAddClassification;
 import ro.anud.xml_xsd.implementation.middleware.locationGraph.LocationGraphCreate;
 import ro.anud.xml_xsd.implementation.middleware.locationGraph.LocationGraphCreateAdjacent;
+import ro.anud.xml_xsd.implementation.middleware.operation.OperationEchoAction;
 import ro.anud.xml_xsd.implementation.middleware.person.PersonMoveTo;
 import ro.anud.xml_xsd.implementation.middleware.person.PersonTeleportTo;
 import ro.anud.xml_xsd.implementation.middleware.region.RegionAppendAction;
@@ -54,6 +55,7 @@ public class WorldStepRunner {
 
     public static void runStep(WorldStepInstance worldStepInstance) {
         middlewareList.forEach(middleware -> middleware.apply(worldStepInstance));
+        OperationEchoAction.apply(worldStepInstance);
         FromPersonAction.apply(worldStepInstance);
         ZoneCreateAction.zoneCreateAction(worldStepInstance);
         RegionAppendAction.regionAppendNewAction(worldStepInstance);

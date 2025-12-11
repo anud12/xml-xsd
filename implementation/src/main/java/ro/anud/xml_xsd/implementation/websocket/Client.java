@@ -22,6 +22,7 @@ public record Client(WebSocketHandler handler, WebSocketSession webSocketSession
         Update("update\n"),
         Stop("stop\n"),
         Put("put\n"),
+        Debug("debug\n"),
         ;
 
         public final String value;

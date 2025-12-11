@@ -2661,6 +2661,38 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
                     }
                   }
                 }
+              },
+              "operation.echo": {
+                "metaType": "composition",
+                "value": [
+                  {
+                    "metaType": "object",
+                    "value": {},
+                    "isSingle": true,
+                    "isNullable": false,
+                    "attributes": {
+                      "metaType": "object",
+                      "value": {
+                        "id": {
+                          "metaType": "primitive",
+                          "value": "xs:string",
+                          "isNullable": false
+                        },
+                        "entity_id_ref": {
+                          "metaType": "primitive",
+                          "value": "xs:string",
+                          "isNullable": false
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "metaType": "primitive",
+                    "value": "type__math_operations"
+                  }
+                ],
+                "isSingle": true,
+                "isNullable": true
               }
             },
             "isNullable": true
@@ -4886,6 +4918,38 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
                       }
                     }
                   }
+                },
+                "operation.echo": {
+                  "metaType": "composition",
+                  "value": [
+                    {
+                      "metaType": "object",
+                      "value": {},
+                      "isSingle": true,
+                      "isNullable": false,
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "id": {
+                            "metaType": "primitive",
+                            "value": "xs:string",
+                            "isNullable": false
+                          },
+                          "entity_id_ref": {
+                            "metaType": "primitive",
+                            "value": "xs:string",
+                            "isNullable": false
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "metaType": "primitive",
+                      "value": "type__math_operations"
+                    }
+                  ],
+                  "isSingle": true,
+                  "isNullable": true
                 }
               },
               "isNullable": true

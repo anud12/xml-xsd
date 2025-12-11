@@ -460,6 +460,45 @@
             "isNullable": false
           }
         },
+        "count_entity": {
+          "metaType": "object",
+          "attributes": {
+            "metaType": "object",
+            "value": {
+              "do": {
+                "metaType": "primitive",
+                "value": "type__group__operation__and",
+                "isNullable": false
+              },
+              "entity_rule_ref": {
+                "metaType": "primitive",
+                "value": "xs:string",
+                "isNullable": false
+              }
+            }
+          },
+          "isSingle": true,
+          "value": {
+            "in_container": {
+              "metaType": "object",
+              "value": {},
+              "isSingle": true,
+              "isNullable": false,
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "container_rule_ref": {
+                    "metaType": "primitive",
+                    "value": "xs:string",
+                    "isNullable": false
+                  }
+                },
+                "isNullable": false
+              }
+            }
+          },
+          "isNullable": true
+        },
         "and": {
           "metaType": "composition",
           "value": [
@@ -3191,6 +3230,38 @@
                   }
                 }
               }
+            },
+            "operation.echo": {
+              "metaType": "composition",
+              "value": [
+                {
+                  "metaType": "object",
+                  "value": {},
+                  "isSingle": true,
+                  "isNullable": false,
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "id": {
+                        "metaType": "primitive",
+                        "value": "xs:string",
+                        "isNullable": false
+                      },
+                      "entity_id_ref": {
+                        "metaType": "primitive",
+                        "value": "xs:string",
+                        "isNullable": false
+                      }
+                    }
+                  }
+                },
+                {
+                  "metaType": "primitive",
+                  "value": "type__math_operations"
+                }
+              ],
+              "isSingle": true,
+              "isNullable": true
             }
           },
           "isNullable": true

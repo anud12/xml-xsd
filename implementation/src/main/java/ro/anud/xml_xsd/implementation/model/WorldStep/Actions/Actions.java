@@ -91,6 +91,8 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create> entity_create = Optional.empty();
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Container_addOnEntity.Container_addOnEntity> container_addOnEntity = Optional.empty();
+    @Builder.Default
+    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Operation_echo.Operation_echo> operation_echo = Optional.empty();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -215,6 +217,10 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           this.container_addOnEntity = Optional.empty();
           notifyChange();
         }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Operation_echo.Operation_echo) {
+          this.operation_echo = Optional.empty();
+          notifyChange();
+        }
     }
 
     public int buildIndexForChild(Object object) {
@@ -260,6 +266,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Container_addOnEntity.Container_addOnEntity) {
           return 0;
         }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Operation_echo.Operation_echo) {
+          return 0;
+        }
         return 0;
     }
 
@@ -303,6 +312,7 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           this.region_resolvePortals = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals.fromRawNode(rawNode.getChildrenFirst("region.resolvePortals"), this);
           this.entity_create = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create.fromRawNode(rawNode.getChildrenFirst("entity.create"), this);
           this.container_addOnEntity = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Container_addOnEntity.Container_addOnEntity.fromRawNode(rawNode.getChildrenFirst("container.addOnEntity"), this);
+          this.operation_echo = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Operation_echo.Operation_echo.fromRawNode(rawNode.getChildrenFirst("operation.echo"), this);
         }
 
         if(isDirty) {
@@ -352,6 +362,8 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           rawNode.setChildren("entity.create", entity_create.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create::serializeIntoRawNode).toList());
           innerLogger.log("container.addOnEntity");
           rawNode.setChildren("container.addOnEntity", container_addOnEntity.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Container_addOnEntity.Container_addOnEntity::serializeIntoRawNode).toList());
+          innerLogger.log("operation.echo");
+          rawNode.setChildren("operation.echo", operation_echo.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Operation_echo.Operation_echo::serializeIntoRawNode).toList());
           return rawNode;
         }
       }
@@ -745,6 +757,35 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       return this;
     }
 
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Operation_echo.Operation_echo> getOperation_echo()
+    {
+      return this.operation_echo;
+    }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Operation_echo.Operation_echo getOperation_echoOrDefault()
+    {
+      return this.operation_echo.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Operation_echo.Operation_echo();
+        this.operation_echo = Optional.of(instance);
+        instance.parentNode(this);
+        return this.operation_echo.get();
+      });
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Operation_echo.Operation_echo> streamOperation_echoOrDefault()
+    {
+      return java.util.stream.Stream.of(getOperation_echoOrDefault());
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Operation_echo.Operation_echo> streamOperation_echo()
+    {
+      return operation_echo.stream();
+    }
+    public Actions setOperation_echo(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Operation_echo.Operation_echo value)
+    {
+      this.operation_echo = Optional.ofNullable(value);
+      value.parentNode(this);
+      notifyChange();
+      return this;
+    }
+
     public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
        if(xpath.startsWith("."))
         {
@@ -934,6 +975,14 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Container_addOnEntity.Container_addOnEntity.nodeName.length() + 3);
           return this.container_addOnEntity.get().deserializeAtPath(childXPath, rawNode);
         }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Operation_echo.Operation_echo.nodeName))
+        {
+          if(this.operation_echo.isEmpty()) {
+            this.operation_echo = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Operation_echo.Operation_echo());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Operation_echo.Operation_echo.nodeName.length() + 3);
+          return this.operation_echo.get().deserializeAtPath(childXPath, rawNode);
+        }
 
         deserialize(rawNode);
         return this;
@@ -1087,6 +1136,14 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           }
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Container_addOnEntity.Container_addOnEntity.nodeName.length() + 3);
           return this.container_addOnEntity.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Operation_echo.Operation_echo.nodeName))
+        {
+          if(this.operation_echo.isEmpty()) {
+            this.operation_echo = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Operation_echo.Operation_echo());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Operation_echo.Operation_echo.nodeName.length() + 3);
+          return this.operation_echo.get().getNodeAtPath(childXPath);
         }
         return Optional.of(this);
     }
@@ -1581,6 +1638,38 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
                 }
               }
             }
+          },
+          "operation.echo": {
+            "metaType": "composition",
+            "value": [
+              {
+                "metaType": "object",
+                "value": {},
+                "isSingle": true,
+                "isNullable": false,
+                "attributes": {
+                  "metaType": "object",
+                  "value": {
+                    "id": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
+                    },
+                    "entity_id_ref": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
+                    }
+                  }
+                }
+              },
+              {
+                "metaType": "primitive",
+                "value": "type__math_operations"
+              }
+            ],
+            "isSingle": true,
+            "isNullable": true
           }
         },
         "isNullable": true

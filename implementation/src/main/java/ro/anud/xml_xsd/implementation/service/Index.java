@@ -16,12 +16,22 @@ public abstract class Index<T, U extends LinkedNode> {
     public static <T,U extends LinkedNode> Index<T,U> of(Class<U> clazz, Function<U, T> function) {
         return new Index<>(clazz) {
             @Override
-            protected T getKey(U u) {
+            protected Optional<T> getKey(U u) {
+                return Optional.of(function.apply(u));
+            }
+        };
+    }
+
+    public static <T,U extends LinkedNode> Index<T,U> ofOptional(Class<U> clazz, Function<U, Optional<T>> function) {
+        return new Index<>(clazz) {
+            @Override
+            protected Optional<T> getKey(U u) {
                 return function.apply(u);
             }
         };
     }
-    protected abstract T getKey(U u);
+
+    protected abstract Optional<T> getKey(U u);
 
     private final HashMap<T, U> hashMap = new HashMap<>();
     private final Class<U> clazz;
@@ -29,12 +39,12 @@ public abstract class Index<T, U extends LinkedNode> {
     public void addListeners(WorldStepInstance worldStepInstance) {
         worldStepInstance.getWorldStep().get().onChange((origin, worldStep) -> {
             if(clazz.isAssignableFrom(origin.getClass())) {
-                hashMap.put(getKey((U) origin), (U) origin);
+                getKey((U) origin).ifPresent(key -> hashMap.put(key, (U) origin));
             }
         });
         worldStepInstance.getWorldStep().get().onRemove((origin, worldStep) -> {
             if(clazz.isAssignableFrom(origin.getClass())) {
-                hashMap.remove(getKey((U) origin));
+                getKey((U) origin).ifPresent(hashMap::remove);
             }
         });
     }
@@ -42,7 +52,7 @@ public abstract class Index<T, U extends LinkedNode> {
     public void index(List<U> uList) {
         hashMap.clear();
         uList.forEach(u -> {
-            hashMap.put(getKey(u), u);
+            getKey(u).ifPresent(key -> hashMap.put(key, u));
         });
     }
 
@@ -50,7 +60,7 @@ public abstract class Index<T, U extends LinkedNode> {
         return Optional.ofNullable(hashMap.get(t));
     }
     public void set(U u) {
-        hashMap.put(getKey(u), u);
+        getKey(u).ifPresent(key -> hashMap.put(key, u));
     }
 
 }

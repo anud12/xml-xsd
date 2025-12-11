@@ -2,6 +2,8 @@ package ro.anud.xml_xsd.implementation.service;
 
 import lombok.Setter;
 import org.springframework.web.socket.TextMessage;
+import ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations;
+import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entity.Entity;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.Counter.Counter;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.ElapsedTime.ElapsedTime;
@@ -25,15 +27,13 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
-import static ro.anud.xml_xsd.implementation.websocket.Client.ReturnCode.Update;
+import static ro.anud.xml_xsd.implementation.websocket.Client.ReturnCode.*;
 
 @Setter
 public class WorldStepInstance {
-
 
 
     @FunctionalInterface
@@ -93,6 +93,7 @@ public class WorldStepInstance {
             name.index();
             zone.index();
             region.index();
+            entity.repository.index();
             return this;
         }
     }
@@ -113,6 +114,27 @@ public class WorldStepInstance {
 
         return this;
     }
+
+
+    public void broadcastDebug(String message) {
+        try (var scope = logScope("send debug message", message)) {
+            if (webSocketHandler.isEmpty()) {
+                scope.log("WebSocketHandler is not set");
+//                throw new RuntimeException("WebSocketHandler is not set");
+            }
+            webSocketHandler.ifPresent(webSocketHandler1 -> {
+                try {
+                    var payload = Debug.value + message;
+                    scope.log("sending message", payload);
+                    webSocketHandler1.broadCastMessage(new TextMessage(payload));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
+
+    }
+
 
     public void sendLinkNode(final LinkedNode linkedNode) {
         try (var scope = logScope("sendLinkNode", linkedNode.buildPath())) {
@@ -148,7 +170,26 @@ public class WorldStepInstance {
         Person person) {
         try (var scope = logScope()) {
             return scope.logReturn(ComputeOperation.computeOperation(this, typeMathOperations, person));
+        }
+    }
 
+    public <T extends IType_mathOperations<?>> Optional<Integer> computeOperation(
+            T typeMathOperations,
+            Entity entity) {
+        try (var scope = logScope()) {
+            return scope.logReturn(ComputeOperation.computeOperation(this, typeMathOperations, entity));
+        }
+    }
+    public Optional<Integer> computeOperation(
+            Type_mathOperations typeMathOperations,
+            Person person) {
+        try (var scope = logScope()) {
+            return scope.logReturn(ComputeOperation.computeOperation(this, typeMathOperations, person));
+        }
+    }
+    public Optional<Integer> computeOperation(Type_mathOperations typeMathOperations) {
+        try (var scope = logScope()) {
+            return scope.logReturn(ComputeOperation.computeOperation(this, typeMathOperations));
         }
     }
 
@@ -156,18 +197,6 @@ public class WorldStepInstance {
         T typeMathOperations) {
         try(var scope = logScope()){
             return scope.logReturn(ComputeOperation.computeOperation(this, typeMathOperations));
-        }
-
-    }
-
-    public <T extends IType_mathOperations<?>> Optional<Integer> computeOperation(
-        Optional<T> typeMathOperations,
-        Person person) {
-        try (var scope = logScope()) {
-            if (typeMathOperations.isEmpty()) {
-                return scope.logReturn(Optional.empty());
-            }
-            return scope.logReturn(ComputeOperation.computeOperation(this, typeMathOperations.get(), person));
         }
 
     }

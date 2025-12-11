@@ -9,6 +9,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.PropertyInstance;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
+import ro.anud.xml_xsd.implementation.service.entity.repository.EntityRepository;
 import ro.anud.xml_xsd.implementation.service.entity.repository.EntityRuleRepository;
 
 import java.util.Collection;
@@ -32,6 +33,7 @@ public class RuleRepository {
     public final RegionRuleRepository regionRule;
     public final PortalRepository portalRule;
     public final EntityRuleRepository entityRule;
+    private final EntityRepository entityRepository;
     public final ContainerRuleRepository containerRule;
     private PropertyInstance propertyInstance;
 
@@ -45,8 +47,9 @@ public class RuleRepository {
             this.zoneRule = new ZoneRuleRepository(worldStepInstance);
             this.regionRule = new RegionRuleRepository(worldStepInstance);
             this.portalRule = new PortalRepository(worldStepInstance);
-            entityRule = new EntityRuleRepository(worldStepInstance);
+            this.entityRule = new EntityRuleRepository(worldStepInstance);
             this.containerRule = new ContainerRuleRepository(worldStepInstance);
+            this.entityRepository = new EntityRepository(worldStepInstance);
         }
         ;
     }

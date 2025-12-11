@@ -23,7 +23,7 @@ public class GetProperty {
             var property = worldStepInstance.ruleRepository.getPropertyById(propertyRef).stream();
             var personDefaultOptional = property.flatMap(Entry::streamPersonDefault).findAny();
 
-            return logger.logReturn(worldStepInstance.computeOperation(personDefaultOptional, person));
+            return logger.logReturn(personDefaultOptional.flatMap(personDefault -> worldStepInstance.computeOperation(personDefault, person)));
 
         }
 

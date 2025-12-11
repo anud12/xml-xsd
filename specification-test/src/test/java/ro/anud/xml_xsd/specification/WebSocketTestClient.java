@@ -40,7 +40,8 @@ public class WebSocketTestClient {
         Load("load\n"),
         Put("put\n"),
         Append("append\n"),
-        Append_nodeNotFound("append_nodeNotFound\n");
+        Append_nodeNotFound("append_nodeNotFound\n"),
+        Debug("debug\n");
 
         public final String command;
         public static Response fromString(String string) {

@@ -387,6 +387,45 @@ namespace XSD.Nworld_step {
         }
       }
     }
+
+    private XSD.Nworld_step.Nactions.operation__echo? _operation__echo = null;
+    public XSD.Nworld_step.Nactions.operation__echo operation__echoOrCreate
+    {
+      get
+      {
+        if(_operation__echo == null)
+        {
+          _operation__echo = new();
+          _operation__echo.ParentNode = this;
+          NotifyChange();
+        }
+        return _operation__echo;
+      }
+      set
+      {
+        _operation__echo = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nactions.operation__echo? operation__echo
+    {
+      get
+      {
+        return _operation__echo;
+      }
+      set
+      {
+        _operation__echo = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
     public actions()
     {
     }
@@ -478,6 +517,11 @@ namespace XSD.Nworld_step {
         this.container__addOnEntity = container__addOnEntity;
       }
 
+      if(linkedNode is XSD.Nworld_step.Nactions.operation__echo operation__echo)
+      {
+        this.operation__echo = operation__echo;
+      }
+
     }
 
     public void ClearChild(dynamic linkedNode)
@@ -550,6 +594,11 @@ namespace XSD.Nworld_step {
       if(linkedNode is XSD.Nworld_step.Nactions.container__addOnEntity)
       {
         this.container__addOnEntity = null;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nactions.operation__echo)
+      {
+        this.operation__echo = null;
       }
 
     }
@@ -640,6 +689,8 @@ namespace XSD.Nworld_step {
       entity__create = rawNode.InitializeWithRawNode("entity.create", entity__create);
 
       container__addOnEntity = rawNode.InitializeWithRawNode("container.addOnEntity", container__addOnEntity);
+
+      operation__echo = rawNode.InitializeWithRawNode("operation.echo", operation__echo);
       NotifyChange();
     }
 
@@ -673,6 +724,9 @@ namespace XSD.Nworld_step {
       }
       if(container__addOnEntity != null) {
         rawNode.children["container.addOnEntity"] = new List<RawNode> { container__addOnEntity.SerializeIntoRawNode() };
+      }
+      if(operation__echo != null) {
+        rawNode.children["operation.echo"] = new List<RawNode> { operation__echo.SerializeIntoRawNode() };
       }
       return rawNode;
     }
@@ -885,6 +939,13 @@ namespace XSD.Nworld_step {
         this.container__addOnEntity.DeserializeAtPath(childXPath, rawNode);
         return;
       }
+      if(xpath.StartsWith(XSD.Nworld_step.Nactions.operation__echo.TagName))
+      {
+        this.operation__echo ??= new XSD.Nworld_step.Nactions.operation__echo();
+        var childXPath = xpath.Substring(XSD.Nworld_step.Nactions.operation__echo.TagName.Length + 3);
+        this.operation__echo.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
 
       Deserialize(rawNode);
     }
@@ -948,6 +1009,9 @@ namespace XSD.Nworld_step {
       if(linkedNode is XSD.Nworld_step.Nactions.container__addOnEntity casted_container__addOnEntity) {
         return 0;
       }
+      if(linkedNode is XSD.Nworld_step.Nactions.operation__echo casted_operation__echo) {
+        return 0;
+      }
       return null;
     }
 
@@ -966,6 +1030,7 @@ namespace XSD.Nworld_step {
       || candidateChild is XSD.Nworld_step.Nactions.region__resolvePortals
       || candidateChild is XSD.Nworld_step.Nactions.entity__create
       || candidateChild is XSD.Nworld_step.Nactions.container__addOnEntity
+      || candidateChild is XSD.Nworld_step.Nactions.operation__echo
       || false;
     }
 
@@ -975,7 +1040,7 @@ namespace XSD.Nworld_step {
             return false;
 
         var other = (actions)obj;
-        return Equals(by, other.by) && Equals(location_graph__create, other.location_graph__create) && Equals(location_graph__node__create_adjacent, other.location_graph__node__create_adjacent) && Equals(location_graph__node__add_classification, other.location_graph__node__add_classification) && Equals(person__teleport, other.person__teleport) && Equals(person__on_person__property_mutation, other.person__on_person__property_mutation) && Equals(person__create, other.person__create) && Equals(person__move_to, other.person__move_to) && Equals(from_person, other.from_person) && Equals(zone__create, other.zone__create) && Equals(region__appendNew, other.region__appendNew) && Equals(region__resolvePortals, other.region__resolvePortals) && Equals(entity__create, other.entity__create) && Equals(container__addOnEntity, other.container__addOnEntity);
+        return Equals(by, other.by) && Equals(location_graph__create, other.location_graph__create) && Equals(location_graph__node__create_adjacent, other.location_graph__node__create_adjacent) && Equals(location_graph__node__add_classification, other.location_graph__node__add_classification) && Equals(person__teleport, other.person__teleport) && Equals(person__on_person__property_mutation, other.person__on_person__property_mutation) && Equals(person__create, other.person__create) && Equals(person__move_to, other.person__move_to) && Equals(from_person, other.from_person) && Equals(zone__create, other.zone__create) && Equals(region__appendNew, other.region__appendNew) && Equals(region__resolvePortals, other.region__resolvePortals) && Equals(entity__create, other.entity__create) && Equals(container__addOnEntity, other.container__addOnEntity) && Equals(operation__echo, other.operation__echo);
     }
 
     public override int GetHashCode()
@@ -996,6 +1061,7 @@ namespace XSD.Nworld_step {
         acc = HashCode.Combine(acc, region__resolvePortals);
         acc = HashCode.Combine(acc, entity__create);
         acc = HashCode.Combine(acc, container__addOnEntity);
+        acc = HashCode.Combine(acc, operation__echo);
         return acc;
     }
   }

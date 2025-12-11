@@ -56,6 +56,9 @@ export type type__trigger = JsonQueryType<{}, {
 }>
 export type type__math_operations_and = JsonQueryType<{}, {
   "add_property": JsonQueryType<{"property_rule_ref": string;}> & JsonQueryType<{}, {}>;
+  "count_entity": JsonQueryType<{"do": type__group__operation__and;  "entity_rule_ref": string;}, {
+    "in_container": JsonQueryType<{"container_rule_ref": string;}> & JsonQueryType<{}, {}>;
+  }> & JsonQueryType<{}, {}>;
   "and": JsonQueryType<{"do": type__group__operation__and;  "value": string;}>
     & type__math_operations_and | any & JsonQueryType<{}, {}>;
 }>
@@ -360,5 +363,7 @@ export type world_step = JsonQueryType<{}, {
     "region.resolvePortals": JsonQueryType<{"zone_id_ref": string;  "region_id_ref": string;}> & JsonQueryType<{}, {}>;
     "entity.create": JsonQueryType<{"entity_rule_ref": string;}> & JsonQueryType<{}, {}>;
     "container.addOnEntity": JsonQueryType<{"container_rule_ref": string;  "entity_id": string;}> & JsonQueryType<{}, {}>;
+    "operation.echo": JsonQueryType<{"id": string;  "entity_id_ref": string;}>
+      & type__math_operations & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
 }>
