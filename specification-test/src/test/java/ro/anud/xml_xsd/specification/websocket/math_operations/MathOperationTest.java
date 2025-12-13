@@ -10,12 +10,12 @@ import ro.anud.xml_xsd.websocket.tests.*;
 import java.util.stream.Stream;
 
 /*description
-# entity.create
+# operation.echo
 ## When
-entity.create action is used with entity rule ref
+counting entities in an entity container
 
 ## It should
-create an empty entity
+return 1
  */
 
 /*tags
@@ -26,7 +26,7 @@ create an empty entity
 
 
 @Execution(ExecutionMode.SAME_THREAD)
-public class CreateEntityTest {
+public class MathOperationTest {
 
 
     @TestFactory

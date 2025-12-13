@@ -44,53 +44,53 @@ public class ContainerCreate implements ActionCreate<Container, Container_addOnE
         try (var scope = logScope()) {
             var rule = worldStepInstance.ruleRepository.containerRule.byName.get(action.getContainerRuleRef()).get();
             Optional<Entities> entities = Optional.of(
-                    rule.streamAllowedEntity()
-                            .flatMap(allowedEntity -> allowedEntity.getMin()
-                                    .flatMap(typeMathOperations -> worldStepInstance.computeOperation(typeMathOperations))
-                                    .stream()
-                                    .flatMap(integer -> {
-                                        try (var inner = logScope("creating "+ integer + "  child entities")) {
-                                            return IntStream.range(0, integer)
-                                                    .mapToObj(i -> entityCreate.applyAction(worldStepInstance, Entity_create.builder()
-                                                                    .entityRuleRef(allowedEntity.getEntityRuleRef())
-                                                                    .build())
-                                                            .getId()
-                                                    )
-                                                    .map(id -> ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Container.Entities.Entity.Entity.builder()
-                                                            .entityIdRef(id)
-                                                            .build()
-                                                    );
-                                        }
-                                    })
-                                )
-                            .toList()
-                )
-                .flatMap(list -> switch (list.size()) {
-                                            case 0 -> Optional.empty();
-                                            default -> Optional.of(Entities.builder()
-                                                    .entity(list)
-                                                    .build());
-                                        });
-                                        return Container.builder()
-                                                .containerRuleRef(action.getContainerRuleRef())
-                                                .id(worldStepInstance.getNextId())
-                                                .entities(entities)
-                                                .build();
-                                    }
-        }
-
-        @Override
-        public Entity getParentNode (Stream < WorldStep > worldStep, Container_addOnEntity containerAddOnEntity){
-            return worldStep.flatMap(WorldStep::streamData)
-                    .flatMap(Data::streamEntities)
-                    .flatMap(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities::streamEntity)
-                    .filter(entity -> entity.getId().equals(containerAddOnEntity.getEntityId()))
-                    .findFirst()
-                    .get();
-        }
-
-        @Override
-        public void append (Entity entity, Container container){
-            entity.streamContainersOrDefault().findFirst().ifPresent(containers -> containers.addContainer(container));
+                            rule.streamAllowedEntity()
+                                    .flatMap(allowedEntity -> allowedEntity.getMin()
+                                            .flatMap(typeMathOperations -> worldStepInstance.computeOperation(typeMathOperations))
+                                            .stream()
+                                            .flatMap(integer -> {
+                                                try (var inner = logScope("creating " + integer + "  child entities")) {
+                                                    return IntStream.range(0, integer)
+                                                            .mapToObj(i -> entityCreate.applyAction(worldStepInstance, Entity_create.builder()
+                                                                            .entityRuleRef(allowedEntity.getEntityRuleRef())
+                                                                            .build())
+                                                                    .getId()
+                                                            )
+                                                            .map(id -> ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Container.Entities.Entity.Entity.builder()
+                                                                    .entityIdRef(id)
+                                                                    .build()
+                                                            );
+                                                }
+                                            })
+                                    )
+                                    .toList()
+                    )
+                    .flatMap(list -> switch (list.size()) {
+                        case 0 -> Optional.empty();
+                        default -> Optional.of(Entities.builder()
+                                .entity(list)
+                                .build());
+                    });
+            return Container.builder()
+                    .containerRuleRef(action.getContainerRuleRef())
+                    .id(worldStepInstance.getNextId())
+                    .entities(entities)
+                    .build();
         }
     }
+
+    @Override
+    public Entity getParentNode(Stream<WorldStep> worldStep, Container_addOnEntity containerAddOnEntity) {
+        return worldStep.flatMap(WorldStep::streamData)
+                .flatMap(Data::streamEntities)
+                .flatMap(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities::streamEntity)
+                .filter(entity -> entity.getId().equals(containerAddOnEntity.getEntityId()))
+                .findFirst()
+                .get();
+    }
+
+    @Override
+    public void append(Entity entity, Container container) {
+        entity.streamContainersOrDefault().findFirst().ifPresent(containers -> containers.addContainer(container));
+    }
+}

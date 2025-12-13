@@ -1,4 +1,4 @@
-package ro.anud.xml_xsd.implementation.model.Type_entityRule;
+package ro.anud.xml_xsd.implementation.model.TextMap.Text;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.w3c.dom.Document;
@@ -18,12 +18,12 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
   @NoArgsConstructor
   @AllArgsConstructor
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-  public class Type_entityRule implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
+  public class Text implements  ro.anud.xml_xsd.implementation.util.LinkedNode {
 
-    public static String nodeName = "type__entity_rule";
-    public static Type_entityRule fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static String nodeName = "text";
+    public static Text fromRawNode(RawNode rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       try (var logger = logScope()) {
-        var instance = new Type_entityRule();
+        var instance = new Text();
         if(Objects.nonNull(parent)) {
           instance.parentNode(parent);
         }
@@ -33,40 +33,40 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       }
 
     }
-    public static Type_entityRule fromRawNode(RawNode rawNode) {
+    public static Text fromRawNode(RawNode rawNode) {
       try (var logger = logScope()) {
         var instance = fromRawNode(rawNode, null);
         return logger.logReturn(instance);
       }
     }
-    public static Optional<Type_entityRule> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static Optional<Text> fromRawNode(Optional<RawNode> rawNode, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
         try(var logger = logScope()) {
-          return logger.logReturn(rawNode.map(o -> Type_entityRule.fromRawNode(o, parent)));
+          return logger.logReturn(rawNode.map(o -> Text.fromRawNode(o, parent)));
         }
 
     }
-    public static List<Type_entityRule> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
+    public static List<Text> fromRawNode(List<RawNode> rawNodeList, ro.anud.xml_xsd.implementation.util.LinkedNode parent) {
       try (var logger = logScope()) {
-        List<Type_entityRule> returnList = Optional.ofNullable(rawNodeList)
+        List<Text> returnList = Optional.ofNullable(rawNodeList)
             .orElse(List.of())
             .stream()
-            .map(o -> Type_entityRule.fromRawNode(o, parent))
+            .map(o -> Text.fromRawNode(o, parent))
             .collect(Collectors.toList());
         return logger.logReturn(returnList);
       }
     }
 
     public String classTypeId() {
-      return ".type__entity_rule";
+      return ".text_map.text";
     }
 
     //Attributes
 
     private String name;
 
+    private String value;
+
     //Children elements
-    @Builder.Default
-    private Optional<ro.anud.xml_xsd.implementation.model.Type_entityRule.Containers.Containers> containers = Optional.empty();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -92,15 +92,15 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     }
 
     @Builder.Default
-    private List<ro.anud.xml_xsd.implementation.util.ChangeCallback<Type_entityRule>> onChangeList = new ArrayList<>();
+    private List<ro.anud.xml_xsd.implementation.util.ChangeCallback<Text>> onChangeList = new ArrayList<>();
     @Builder.Default
-    private List<ro.anud.xml_xsd.implementation.util.RemoveCallback<Type_entityRule>> onRemoveList = new ArrayList<>();
+    private List<ro.anud.xml_xsd.implementation.util.RemoveCallback<Text>> onRemoveList = new ArrayList<>();
 
     public String nodeName() {
-      return "type__entity_rule";
+      return "text";
     }
-    public static Type_entityRule of() {
-      return new Type_entityRule();
+    public static Text of() {
+      return new Text();
     }
 
     public void notifyChange(ro.anud.xml_xsd.implementation.util.LinkedNode object) {
@@ -125,17 +125,19 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
     }
 
-    public void removeChild(Object object) {
-        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_entityRule.Containers.Containers) {
-          this.containers = Optional.empty();
-          notifyChange();
+    public Optional<ro.anud.xml_xsd.implementation.model.TextMap.TextMap> parentAsTextMap() {
+      return parentNode.flatMap(node -> {
+        if (node instanceof ro.anud.xml_xsd.implementation.model.TextMap.TextMap casted){
+          return Optional.of(casted);
         }
+        return Optional.empty();
+      });
+    }
+
+    public void removeChild(Object object) {
     }
 
     public int buildIndexForChild(Object object) {
-        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_entityRule.Containers.Containers) {
-          return 0;
-        }
         return 0;
     }
 
@@ -143,13 +145,13 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       parentNode.ifPresent(node -> node.removeChild(this));
     }
 
-    public Subscription onChange(ro.anud.xml_xsd.implementation.util.ChangeCallback<Type_entityRule> callback) {
+    public Subscription onChange(ro.anud.xml_xsd.implementation.util.ChangeCallback<Text> callback) {
       try (var logger = logScope()) {
         onChangeList.add(callback);
         return logger.logReturn(() -> onChangeList.remove(callback));
       }
     }
-    public Subscription onRemove(ro.anud.xml_xsd.implementation.util.RemoveCallback<Type_entityRule> callback) {
+    public Subscription onRemove(ro.anud.xml_xsd.implementation.util.RemoveCallback<Text> callback) {
       try (var logger = logScope()) {
         onRemoveList.add(callback);
         return logger.logReturn(() -> onRemoveList.remove(callback));
@@ -168,10 +170,15 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
             isDirty = true;
           }
           this.name = nameValue;
+          innerLogger.log("value");
+          var valueValue = rawNode.getAttributeRequired("value");
+          if(Objects.equals(this.value, valueValue)) {
+            isDirty = true;
+          }
+          this.value = valueValue;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
-          this.containers = ro.anud.xml_xsd.implementation.model.Type_entityRule.Containers.Containers.fromRawNode(rawNode.getChildrenFirst("containers"), this);
         }
 
         if(isDirty) {
@@ -186,17 +193,17 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     public RawNode serializeIntoRawNode()
     {
       try (var logger = logScope()) {
-        rawNode.setTag("type__entity_rule");
+        rawNode.setTag("text");
         try (var innerLogger = logScope("attributes")) {
           //Serialize attributes
           innerLogger.log("name");
           rawNode.setAttribute("name", this.name);
+          innerLogger.log("value");
+          rawNode.setAttribute("value", this.value);
         }
         try (var innerLogger = logScope("children")) {
 
           //Serialize children
-          innerLogger.log("containers");
-          rawNode.setChildren("containers", containers.stream().map(ro.anud.xml_xsd.implementation.model.Type_entityRule.Containers.Containers::serializeIntoRawNode).toList());
           return rawNode;
         }
       }
@@ -204,7 +211,7 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
     public void serialize(Document document, Element element)
     {
-        // Godot.GD.Print("Serializing type__entity_rule");
+        // Godot.GD.Print("Serializing text");
         var updatedRawNode = serializeIntoRawNode();
         updatedRawNode.populateNode(document, element);
     }
@@ -213,37 +220,19 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     {
       return this.name;
     }
-    public Type_entityRule setName(String value)
+    public Text setName(String value)
     {
       this.name = value;
       notifyChange();
       return this;
     }
-    public Optional<ro.anud.xml_xsd.implementation.model.Type_entityRule.Containers.Containers> getContainers()
+    public String getValue()
     {
-      return this.containers;
+      return this.value;
     }
-    public ro.anud.xml_xsd.implementation.model.Type_entityRule.Containers.Containers getContainersOrDefault()
+    public Text setValue(String value)
     {
-      return this.containers.orElseGet(() -> {
-        var instance = new ro.anud.xml_xsd.implementation.model.Type_entityRule.Containers.Containers();
-        this.containers = Optional.of(instance);
-        instance.parentNode(this);
-        return this.containers.get();
-      });
-    }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_entityRule.Containers.Containers> streamContainersOrDefault()
-    {
-      return java.util.stream.Stream.of(getContainersOrDefault());
-    }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_entityRule.Containers.Containers> streamContainers()
-    {
-      return containers.stream();
-    }
-    public Type_entityRule setContainers(ro.anud.xml_xsd.implementation.model.Type_entityRule.Containers.Containers value)
-    {
-      this.containers = Optional.ofNullable(value);
-      value.parentNode(this);
+      this.value = value;
       notifyChange();
       return this;
     }
@@ -252,14 +241,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
        if(xpath.startsWith("."))
         {
           xpath = xpath.substring(1);
-        }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_entityRule.Containers.Containers.nodeName))
-        {
-          if(this.containers.isEmpty()) {
-            this.containers = Optional.of(new ro.anud.xml_xsd.implementation.model.Type_entityRule.Containers.Containers());
-          }
-          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_entityRule.Containers.Containers.nodeName.length() + 3);
-          return this.containers.get().deserializeAtPath(childXPath, rawNode);
         }
 
         deserialize(rawNode);
@@ -270,14 +251,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
        if(xpath.startsWith("."))
         {
           xpath = xpath.substring(1);
-        }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_entityRule.Containers.Containers.nodeName))
-        {
-          if(this.containers.isEmpty()) {
-            this.containers = Optional.of(new ro.anud.xml_xsd.implementation.model.Type_entityRule.Containers.Containers());
-          }
-          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_entityRule.Containers.Containers.nodeName.length() + 3);
-          return this.containers.get().getNodeAtPath(childXPath);
         }
         return Optional.of(this);
     }
@@ -290,6 +263,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       "type": "element",
       "value": {
         "metaType": "object",
+        "value": {},
+        "isSingle": false,
+        "isNullable": true,
         "attributes": {
           "metaType": "object",
           "value": {
@@ -297,38 +273,15 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
               "metaType": "primitive",
               "value": "xs:string",
               "isNullable": false
-            }
-          },
-          "isNullable": false
-        },
-        "isSingle": true,
-        "value": {
-          "containers": {
-            "metaType": "object",
-            "isSingle": true,
-            "value": {
-              "container": {
-                "metaType": "object",
-                "value": {},
-                "isSingle": false,
-                "isNullable": true,
-                "attributes": {
-                  "metaType": "object",
-                  "value": {
-                    "container_rule_ref": {
-                      "metaType": "primitive",
-                      "value": "xs:string",
-                      "isNullable": false
-                    }
-                  },
-                  "isNullable": false
-                }
-              }
             },
-            "isNullable": true
+            "value": {
+              "metaType": "primitive",
+              "value": "xs:string",
+              "isNullable": false
+            }
           }
         }
       },
-      "name": "type__entity_rule"
+      "name": "text"
     }
   */

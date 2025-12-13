@@ -29,6 +29,45 @@ namespace XSD.Nworld_step.Nrule_group.Nentity_rule {
     public System.String name { get => _name; set => _name = value; }
 
     //Children elements
+    private XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.text_map? _text_map = null;
+    public XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.text_map text_mapOrCreate
+    {
+      get
+      {
+        if(_text_map == null)
+        {
+          _text_map = new();
+          _text_map.ParentNode = this;
+          NotifyChange();
+        }
+        return _text_map;
+      }
+      set
+      {
+        _text_map = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.text_map? text_map
+    {
+      get
+      {
+        return _text_map;
+      }
+      set
+      {
+        _text_map = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
+
     private XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.containers? _containers = null;
     public XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.containers containersOrCreate
     {
@@ -92,6 +131,11 @@ namespace XSD.Nworld_step.Nrule_group.Nentity_rule {
 
     public void SetChild(dynamic linkedNode)
     {
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.text_map text_map)
+      {
+        this.text_map = text_map;
+      }
+
       if(linkedNode is XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.containers containers)
       {
         this.containers = containers;
@@ -101,6 +145,11 @@ namespace XSD.Nworld_step.Nrule_group.Nentity_rule {
 
     public void ClearChild(dynamic linkedNode)
     {
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.text_map)
+      {
+        this.text_map = null;
+      }
+
       if(linkedNode is XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.containers)
       {
         this.containers = null;
@@ -139,6 +188,8 @@ namespace XSD.Nworld_step.Nrule_group.Nentity_rule {
       }
 
       //Deserialize children
+      text_map = rawNode.InitializeWithRawNode("text_map", text_map);
+
       containers = rawNode.InitializeWithRawNode("containers", containers);
       NotifyChange();
     }
@@ -152,6 +203,9 @@ namespace XSD.Nworld_step.Nrule_group.Nentity_rule {
       }
 
       //Serialize children
+      if(text_map != null) {
+        rawNode.children["text_map"] = new List<RawNode> { text_map.SerializeIntoRawNode() };
+      }
       if(containers != null) {
         rawNode.children["containers"] = new List<RawNode> { containers.SerializeIntoRawNode() };
       }
@@ -181,6 +235,13 @@ namespace XSD.Nworld_step.Nrule_group.Nentity_rule {
       {
         xpath = xpath.Substring(1);
       }
+      if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.text_map.TagName))
+      {
+        this.text_map ??= new XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.text_map();
+        var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.text_map.TagName.Length + 3);
+        this.text_map.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
       if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.containers.TagName))
       {
         this.containers ??= new XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.containers();
@@ -209,6 +270,9 @@ namespace XSD.Nworld_step.Nrule_group.Nentity_rule {
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
+      if(linkedNode is XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.text_map casted_text_map) {
+        return 0;
+      }
       if(linkedNode is XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.containers casted_containers) {
         return 0;
       }
@@ -216,7 +280,8 @@ namespace XSD.Nworld_step.Nrule_group.Nentity_rule {
     }
 
     public bool IsValidChildType(ILinkedNode candidateChild) {
-      return candidateChild is XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.containers
+      return candidateChild is XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.text_map
+      || candidateChild is XSD.Nworld_step.Nrule_group.Nentity_rule.Nentry.containers
       || false;
     }
 
@@ -226,7 +291,7 @@ namespace XSD.Nworld_step.Nrule_group.Nentity_rule {
             return false;
 
         var other = (entry)obj;
-        return Equals(name, other.name) && Equals(containers, other.containers);
+        return Equals(name, other.name) && Equals(text_map, other.text_map) && Equals(containers, other.containers);
     }
 
     public override int GetHashCode()
@@ -234,6 +299,7 @@ namespace XSD.Nworld_step.Nrule_group.Nentity_rule {
         var acc = 0;
 
         acc = HashCode.Combine(acc, name);
+        acc = HashCode.Combine(acc, text_map);
         acc = HashCode.Combine(acc, containers);
         return acc;
     }

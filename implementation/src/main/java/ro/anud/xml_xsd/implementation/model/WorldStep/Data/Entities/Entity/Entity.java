@@ -72,6 +72,8 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
     //Children of type__entity
     @Builder.Default
+    private Optional<ro.anud.xml_xsd.implementation.model.Type_entity.TextMap.TextMap> textMap = Optional.empty();
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers> containers = Optional.empty();
 
     @ToString.Exclude()
@@ -189,6 +191,7 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           //Deserialize children
 
           // Deserialize children of type__entity
+          this.textMap = ro.anud.xml_xsd.implementation.model.Type_entity.TextMap.TextMap.fromRawNode(rawNode.getChildrenFirst("text_map"), this);
           this.containers = ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers.fromRawNode(rawNode.getChildrenFirst("containers"), this);
         }
 
@@ -219,6 +222,8 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           //Serialize children
 
           // Serialize children of type__entity
+          innerLogger.log("text_map");
+          rawNode.setChildren("text_map", textMap.stream().map(ro.anud.xml_xsd.implementation.model.Type_entity.TextMap.TextMap::serializeIntoRawNode).toList());
           innerLogger.log("containers");
           rawNode.setChildren("containers", containers.stream().map(ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers::serializeIntoRawNode).toList());
           return rawNode;
@@ -252,6 +257,35 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
       return this;
     }
+    public Optional<ro.anud.xml_xsd.implementation.model.Type_entity.TextMap.TextMap> getTextMap()
+    {
+      return this.textMap;
+    }
+    public ro.anud.xml_xsd.implementation.model.Type_entity.TextMap.TextMap getTextMapOrDefault()
+    {
+      return this.textMap.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.Type_entity.TextMap.TextMap();
+        this.textMap = Optional.of(instance);
+        instance.parentNode(this);
+        return this.textMap.get();
+      });
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_entity.TextMap.TextMap> streamTextMapOrDefault()
+    {
+      return java.util.stream.Stream.of(getTextMapOrDefault());
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_entity.TextMap.TextMap> streamTextMap()
+    {
+      return textMap.stream();
+    }
+    public Entity setTextMap(ro.anud.xml_xsd.implementation.model.Type_entity.TextMap.TextMap value)
+    {
+      this.textMap = Optional.ofNullable(value);
+      value.parentNode(this);
+      notifyChange();
+      return this;
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers> getContainers()
     {
       return this.containers;

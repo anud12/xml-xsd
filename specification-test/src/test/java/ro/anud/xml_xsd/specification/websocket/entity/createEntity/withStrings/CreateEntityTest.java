@@ -1,4 +1,4 @@
-package ro.anud.xml_xsd.specification.websocket.entity.createEntity.WithContainer.WithChildEntities;
+package ro.anud.xml_xsd.specification.websocket.entity.createEntity.withStrings;
 
 import org.junit.jupiter.api.DynamicNode;
 import org.junit.jupiter.api.TestFactory;
@@ -15,19 +15,15 @@ import java.util.stream.Stream;
 /*description
 # entity.create
 ## When
-entity.create action is used with entity rule ref
-and container
-
-and container has minimum entities set
+entity.create action is used with entity rule ref and text_map
 
 ## It should
-create an entity with container
-create another entity referenced by container
+create an empty entity
  */
 
 /*tags
   action,entity,entity.create,
-  container,
+  text_map,
  */
 
 

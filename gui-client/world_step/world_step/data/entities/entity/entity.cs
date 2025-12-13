@@ -15,6 +15,7 @@ namespace XSD {
     public System.String? entity_rule_ref { get; set; }
 
     //Children elements
+    public XSD.Ntype__entity.text_map text_map { get; set; }
     public XSD.Ntype__entity.containers containers { get; set; }
     public void Deserialize (RawNode rawNode);
 
@@ -49,6 +50,45 @@ namespace XSD.Nworld_step.Ndata.Nentities {
     //Children elements
 
     //Children of type__entity
+    private XSD.Ntype__entity.text_map? _text_map = null;
+    public XSD.Ntype__entity.text_map text_mapOrCreate
+    {
+      get
+      {
+        if(_text_map == null)
+        {
+          _text_map = new();
+          _text_map.ParentNode = this;
+          NotifyChange();
+        }
+        return _text_map;
+      }
+      set
+      {
+        _text_map = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Ntype__entity.text_map? text_map
+    {
+      get
+      {
+        return _text_map;
+      }
+      set
+      {
+        _text_map = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
+
     private XSD.Ntype__entity.containers? _containers = null;
     public XSD.Ntype__entity.containers containersOrCreate
     {
@@ -154,6 +194,8 @@ namespace XSD.Nworld_step.Ndata.Nentities {
       //Deserialize children
 
       // Deserialize children of type__entity
+  text_map = rawNode.InitializeWithRawNode("text_map", text_map);
+
   containers = rawNode.InitializeWithRawNode("containers", containers);
       NotifyChange();
     }
@@ -175,6 +217,9 @@ namespace XSD.Nworld_step.Ndata.Nentities {
       //Serialize children
 
       // Serialize children of type__entity
+  if(text_map != null) {
+    rawNode.children["text_map"] = new List<RawNode> { text_map.SerializeIntoRawNode() };
+  }
   if(containers != null) {
     rawNode.children["containers"] = new List<RawNode> { containers.SerializeIntoRawNode() };
   }

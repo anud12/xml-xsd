@@ -1,4 +1,4 @@
-package ro.anud.xml_xsd.specification.websocket.entity.createEntity.WithContainer;
+package ro.anud.xml_xsd.specification.websocket.entity.createEntity.withContainer;
 
 import org.junit.jupiter.api.DynamicNode;
 import org.junit.jupiter.api.TestFactory;
@@ -23,8 +23,8 @@ create an entity with container
  */
 
 /*tags
-  action,entity,entity.create,
-  container,
+    math_operations,entity,
+    container,
  */
 
 

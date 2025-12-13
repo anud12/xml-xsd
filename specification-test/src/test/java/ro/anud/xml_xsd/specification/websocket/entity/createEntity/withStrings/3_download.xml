@@ -1,5 +1,5 @@
 <world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
+            xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -10,13 +10,21 @@
   </world_metadata>
   <rule_group id="rule_group_id">
     <entity_rule>
-      <entry name="entity_rule"/>
+      <entry name="entity_rule">
+        <text_map>
+          <text name="name" value="value"/>
+        </text_map>
+      </entry>
     </entity_rule>
   </rule_group>
   <actions/>
   <data>
     <entities>
-      <entity entity_rule_ref="entity_rule" id="0.0"/>
+      <entity entity_rule_ref="entity_rule" id="0.0">
+        <text_map>
+          <text name="name" value="value"/>
+        </text_map>
+      </entity>
     </entities>
   </data>
 </world_step>

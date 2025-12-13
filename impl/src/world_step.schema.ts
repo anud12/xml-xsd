@@ -26,6 +26,9 @@ export type type__rotation_90deg_step = "normal"
   | "inverted"
   | "counterclockwise"
 export type type__entity = JsonQueryType<{"id": string;  "entity_rule_ref": string;}, {
+  "text_map": JsonQueryType<{}, {
+    "text": JsonQueryType<{"name": string;  "value": string;}> & JsonQueryType<{}, {}>;
+  }> & JsonQueryType<{}, {}>;
   "containers": JsonQueryType<{}, {
     "container": JsonQueryType<{"id": string;  "container_rule_ref": string;}, {
       "entities": JsonQueryType<{}, {
@@ -138,6 +141,9 @@ export type world_step = JsonQueryType<{}, {
   "rule_group": JsonQueryType<{"id": any;}, {
     "entity_rule": JsonQueryType<{}, {
       "entry": JsonQueryType<{"name": string;}, {
+        "text_map": JsonQueryType<{}, {
+          "text": JsonQueryType<{"name": string;  "value": string;}> & JsonQueryType<{}, {}>;
+        }> & JsonQueryType<{}, {}>;
         "containers": JsonQueryType<{}, {
           "container": JsonQueryType<{"container_rule_ref": string;}> & JsonQueryType<{}, {}>;
         }> & JsonQueryType<{}, {}>;

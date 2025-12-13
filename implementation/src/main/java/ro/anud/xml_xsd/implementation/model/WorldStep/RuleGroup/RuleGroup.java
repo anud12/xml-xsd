@@ -1053,6 +1053,34 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
                 },
                 "isSingle": false,
                 "value": {
+                  "text_map": {
+                    "metaType": "object",
+                    "isSingle": true,
+                    "value": {
+                      "text": {
+                        "metaType": "object",
+                        "value": {},
+                        "isSingle": false,
+                        "isNullable": true,
+                        "attributes": {
+                          "metaType": "object",
+                          "value": {
+                            "name": {
+                              "metaType": "primitive",
+                              "value": "xs:string",
+                              "isNullable": false
+                            },
+                            "value": {
+                              "metaType": "primitive",
+                              "value": "xs:string",
+                              "isNullable": false
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "isNullable": true
+                  },
                   "containers": {
                     "metaType": "object",
                     "isSingle": true,
