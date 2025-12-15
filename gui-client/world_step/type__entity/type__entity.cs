@@ -31,6 +31,45 @@ namespace XSD {
     public System.String? entity_rule_ref { get => _entity_rule_ref; set => _entity_rule_ref = value; }
 
     //Children elements
+    private XSD.Ntype__entity.text_map? _text_map = null;
+    public XSD.Ntype__entity.text_map text_mapOrCreate
+    {
+      get
+      {
+        if(_text_map == null)
+        {
+          _text_map = new();
+          _text_map.ParentNode = this;
+          NotifyChange();
+        }
+        return _text_map;
+      }
+      set
+      {
+        _text_map = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Ntype__entity.text_map? text_map
+    {
+      get
+      {
+        return _text_map;
+      }
+      set
+      {
+        _text_map = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
+
     private XSD.Ntype__entity.containers? _containers = null;
     public XSD.Ntype__entity.containers containersOrCreate
     {
@@ -98,6 +137,11 @@ namespace XSD {
 
     public void SetChild(dynamic linkedNode)
     {
+      if(linkedNode is XSD.Ntype__entity.text_map text_map)
+      {
+        this.text_map = text_map;
+      }
+
       if(linkedNode is XSD.Ntype__entity.containers containers)
       {
         this.containers = containers;
@@ -107,6 +151,11 @@ namespace XSD {
 
     public void ClearChild(dynamic linkedNode)
     {
+      if(linkedNode is XSD.Ntype__entity.text_map)
+      {
+        this.text_map = null;
+      }
+
       if(linkedNode is XSD.Ntype__entity.containers)
       {
         this.containers = null;
@@ -150,6 +199,8 @@ namespace XSD {
       }
 
       //Deserialize children
+      text_map = rawNode.InitializeWithRawNode("text_map", text_map);
+
       containers = rawNode.InitializeWithRawNode("containers", containers);
       NotifyChange();
     }
@@ -167,6 +218,9 @@ namespace XSD {
       }
 
       //Serialize children
+      if(text_map != null) {
+        rawNode.children["text_map"] = new List<RawNode> { text_map.SerializeIntoRawNode() };
+      }
       if(containers != null) {
         rawNode.children["containers"] = new List<RawNode> { containers.SerializeIntoRawNode() };
       }
@@ -205,6 +259,13 @@ namespace XSD {
       {
         xpath = xpath.Substring(1);
       }
+      if(xpath.StartsWith(XSD.Ntype__entity.text_map.TagName))
+      {
+        this.text_map ??= new XSD.Ntype__entity.text_map();
+        var childXPath = xpath.Substring(XSD.Ntype__entity.text_map.TagName.Length + 3);
+        this.text_map.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
       if(xpath.StartsWith(XSD.Ntype__entity.containers.TagName))
       {
         this.containers ??= new XSD.Ntype__entity.containers();
@@ -233,6 +294,9 @@ namespace XSD {
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
+      if(linkedNode is XSD.Ntype__entity.text_map casted_text_map) {
+        return 0;
+      }
       if(linkedNode is XSD.Ntype__entity.containers casted_containers) {
         return 0;
       }
@@ -240,7 +304,8 @@ namespace XSD {
     }
 
     public bool IsValidChildType(ILinkedNode candidateChild) {
-      return candidateChild is XSD.Ntype__entity.containers
+      return candidateChild is XSD.Ntype__entity.text_map
+      || candidateChild is XSD.Ntype__entity.containers
       || false;
     }
 
@@ -250,7 +315,7 @@ namespace XSD {
             return false;
 
         var other = (type__entity)obj;
-        return Equals(id, other.id) && Equals(entity_rule_ref, other.entity_rule_ref) && Equals(containers, other.containers);
+        return Equals(id, other.id) && Equals(entity_rule_ref, other.entity_rule_ref) && Equals(text_map, other.text_map) && Equals(containers, other.containers);
     }
 
     public override int GetHashCode()
@@ -259,6 +324,7 @@ namespace XSD {
 
         acc = HashCode.Combine(acc, id);
         acc = HashCode.Combine(acc, entity_rule_ref);
+        acc = HashCode.Combine(acc, text_map);
         acc = HashCode.Combine(acc, containers);
         return acc;
     }

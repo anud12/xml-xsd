@@ -2,7 +2,8 @@ package ro.anud.xml_xsd.implementation.middleware.entity;
 
 import lombok.Setter;
 import ro.anud.xml_xsd.implementation.middleware.container.ContainerCreate;
-import ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Container.Container;
+import ro.anud.xml_xsd.implementation.model.Type_entity.TextMap.Text.Text;
+import ro.anud.xml_xsd.implementation.model.Type_entity.TextMap.TextMap;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Actions;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Container_addOnEntity.Container_addOnEntity;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create;
@@ -11,7 +12,6 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entities;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entity.Entity;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.Containers.Containers;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
-import ro.anud.xml_xsd.implementation.service.Middleware;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 import ro.anud.xml_xsd.implementation.service.action.Action;
 import ro.anud.xml_xsd.implementation.service.action.ActionCreate;
@@ -58,10 +58,20 @@ public class EntityCreate implements ActionCreate<Entity, Entity_create, Entitie
                         .container(list)
                         .build());
             });
-
+            var textMap = rule.getTextMap()
+                    .map(strings1 -> TextMap.builder()
+                            .text(strings1.streamText().map(string -> Text.builder()
+                                            .name(string.getName())
+                                            .value(string.getValue())
+                                            .build()
+                                    )
+                                    .toList())
+                            .build()
+                    );
             return Entity.builder()
                     .id(id)
                     .entityRuleRef(Optional.ofNullable(rule.getName()))
+                    .textMap(textMap)
                     .containers(containers)
                     .build();
         }

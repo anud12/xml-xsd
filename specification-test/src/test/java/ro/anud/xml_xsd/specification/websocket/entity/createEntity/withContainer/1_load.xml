@@ -10,9 +10,6 @@
     </randomization_table>
   </world_metadata>
   <rule_group id="rule_group_id">
-    <container_rule>
-      <entry name="container_rule"/>
-    </container_rule>
     <entity_rule>
       <entry name="entity_rule">
         <containers>

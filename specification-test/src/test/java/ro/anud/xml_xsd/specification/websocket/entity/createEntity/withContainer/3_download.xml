@@ -22,9 +22,9 @@
   <actions/>
   <data>
     <entities>
-      <entity entity_rule_ref="entity_rule">
+      <entity id="0.0" entity_rule_ref="entity_rule">
         <containers>
-          <container container_rule_ref="container_rule"/>
+          <container id="0.1" container_rule_ref="container_rule"/>
         </containers>
       </entity>
     </entities>

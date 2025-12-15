@@ -9,6 +9,10 @@ public interface IType_entity<T> extends ro.anud.xml_xsd.implementation.util.Lin
   T setEntityRuleRef(java.util.Optional<String> value);
 
   //Children elements
+  java.util.Optional<ro.anud.xml_xsd.implementation.model.Type_entity.TextMap.TextMap> getTextMap();
+  java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_entity.TextMap.TextMap> streamTextMap();
+  T setTextMap(ro.anud.xml_xsd.implementation.model.Type_entity.TextMap.TextMap value);
+
   java.util.Optional<ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers> getContainers();
   java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers> streamContainers();
   T setContainers(ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers value);
@@ -41,6 +45,34 @@ public interface IType_entity<T> extends ro.anud.xml_xsd.implementation.util.Lin
       },
       "isSingle": true,
       "value": {
+        "text_map": {
+          "metaType": "object",
+          "isSingle": true,
+          "value": {
+            "text": {
+              "metaType": "object",
+              "value": {},
+              "isSingle": false,
+              "isNullable": true,
+              "attributes": {
+                "metaType": "object",
+                "value": {
+                  "name": {
+                    "metaType": "primitive",
+                    "value": "xs:string",
+                    "isNullable": false
+                  },
+                  "value": {
+                    "metaType": "primitive",
+                    "value": "xs:string",
+                    "isNullable": false
+                  }
+                }
+              }
+            }
+          },
+          "isNullable": true
+        },
         "containers": {
           "metaType": "object",
           "isSingle": true,

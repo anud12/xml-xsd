@@ -66,6 +66,8 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
     //Children elements
     @Builder.Default
+    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.TextMap.TextMap> textMap = Optional.empty();
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.Containers.Containers> containers = Optional.empty();
 
     @ToString.Exclude()
@@ -135,6 +137,10 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     }
 
     public void removeChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.TextMap.TextMap) {
+          this.textMap = Optional.empty();
+          notifyChange();
+        }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.Containers.Containers) {
           this.containers = Optional.empty();
           notifyChange();
@@ -142,6 +148,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     }
 
     public int buildIndexForChild(Object object) {
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.TextMap.TextMap) {
+          return 0;
+        }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.Containers.Containers) {
           return 0;
         }
@@ -180,6 +189,7 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
+          this.textMap = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.TextMap.TextMap.fromRawNode(rawNode.getChildrenFirst("text_map"), this);
           this.containers = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.Containers.Containers.fromRawNode(rawNode.getChildrenFirst("containers"), this);
         }
 
@@ -204,6 +214,8 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         try (var innerLogger = logScope("children")) {
 
           //Serialize children
+          innerLogger.log("text_map");
+          rawNode.setChildren("text_map", textMap.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.TextMap.TextMap::serializeIntoRawNode).toList());
           innerLogger.log("containers");
           rawNode.setChildren("containers", containers.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.Containers.Containers::serializeIntoRawNode).toList());
           return rawNode;
@@ -228,6 +240,35 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
       return this;
     }
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.TextMap.TextMap> getTextMap()
+    {
+      return this.textMap;
+    }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.TextMap.TextMap getTextMapOrDefault()
+    {
+      return this.textMap.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.TextMap.TextMap();
+        this.textMap = Optional.of(instance);
+        instance.parentNode(this);
+        return this.textMap.get();
+      });
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.TextMap.TextMap> streamTextMapOrDefault()
+    {
+      return java.util.stream.Stream.of(getTextMapOrDefault());
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.TextMap.TextMap> streamTextMap()
+    {
+      return textMap.stream();
+    }
+    public Entry setTextMap(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.TextMap.TextMap value)
+    {
+      this.textMap = Optional.ofNullable(value);
+      value.parentNode(this);
+      notifyChange();
+      return this;
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.Containers.Containers> getContainers()
     {
       return this.containers;
@@ -262,6 +303,14 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         {
           xpath = xpath.substring(1);
         }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.TextMap.TextMap.nodeName))
+        {
+          if(this.textMap.isEmpty()) {
+            this.textMap = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.TextMap.TextMap());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.TextMap.TextMap.nodeName.length() + 3);
+          return this.textMap.get().deserializeAtPath(childXPath, rawNode);
+        }
         if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.Containers.Containers.nodeName))
         {
           if(this.containers.isEmpty()) {
@@ -279,6 +328,14 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
        if(xpath.startsWith("."))
         {
           xpath = xpath.substring(1);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.TextMap.TextMap.nodeName))
+        {
+          if(this.textMap.isEmpty()) {
+            this.textMap = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.TextMap.TextMap());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.TextMap.TextMap.nodeName.length() + 3);
+          return this.textMap.get().getNodeAtPath(childXPath);
         }
         if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.Containers.Containers.nodeName))
         {
@@ -312,6 +369,34 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         },
         "isSingle": false,
         "value": {
+          "text_map": {
+            "metaType": "object",
+            "isSingle": true,
+            "value": {
+              "text": {
+                "metaType": "object",
+                "value": {},
+                "isSingle": false,
+                "isNullable": true,
+                "attributes": {
+                  "metaType": "object",
+                  "value": {
+                    "name": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
+                    },
+                    "value": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
+                    }
+                  }
+                }
+              }
+            },
+            "isNullable": true
+          },
           "containers": {
             "metaType": "object",
             "isSingle": true,

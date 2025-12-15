@@ -1,0 +1,24 @@
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <entity_rule>
+      <entry name="entity_rule">
+        <text_map>
+          <text name="name" value="value"/>
+        </text_map>
+      </entry>
+    </entity_rule>
+  </rule_group>
+  <actions>
+    <entity.create entity_rule_ref="entity_rule"/>
+  </actions>
+</world_step>

@@ -8,7 +8,7 @@
 <entities/>
 ---
 .world_step[0].data[0].entities[0].entity[0]
-<entity entity_rule_ref="entity_rule" id="0.0"/>
+<entity entity_rule_ref="entity_rule" id="0.0"><text_map><text name="name" value="value"/></text_map></entity>
 ---
 .world_step[0].actions[0]
 <actions/>
