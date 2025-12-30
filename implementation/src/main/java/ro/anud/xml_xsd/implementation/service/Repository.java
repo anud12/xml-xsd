@@ -4,6 +4,4 @@ public interface Repository<T> {
     void index();
 
     void loadData();
-
-    T getOrDefault(T t);
 }

@@ -1,0 +1,61 @@
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="1"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <region_rule>
+      <entry id="region_rule">
+        <limit>
+          <width initial="1"/>
+          <height initial="1"/>
+        </limit>
+      </entry>
+    </region_rule>
+    <zone_rule>
+      <entry id="zone_rule">
+        <starting_region region_rule_ref="region_rule"/>
+      </entry>
+    </zone_rule>
+  </rule_group>
+  <data>
+    <location/>
+    <people/>
+    <entities>
+      <entity id="entity_id"/>
+    </entities>
+    <zone_list>
+      <zone id="zone_id">
+        <region id="region_id">
+          <rule rule_id_ref="region_rule"/>
+          <position rotation="clockwise" x="100" y="1000"/>
+          <limit height="6" width="10"/>
+          <available_portals>
+            <portal id="0.2" portal_rule_ref="" side="bottom" start="4"/>
+          </available_portals>
+          <entity_list/>
+        </region>
+        <region id="0.0">
+          <rule rule_id_ref="region_rule"/>
+          <position rotation="counterclockwise" x="94" y="1001"/>
+          <limit height="6" width="10"/>
+          <available_portals>
+            <portal id="0.1" portal_rule_ref="portal_rule" side="bottom" start="4"/>
+          </available_portals>
+          <entity_list>
+            <entity entity_id_ref="entity_id">
+              <position x="0" y="0"/>
+            </entity>
+          </entity_list>
+        </region>
+      </zone>
+    </zone_list>
+  </data>
+  <actions/>
+</world_step>

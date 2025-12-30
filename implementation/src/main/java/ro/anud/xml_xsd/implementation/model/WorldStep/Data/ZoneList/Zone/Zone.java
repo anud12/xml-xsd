@@ -526,6 +526,52 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
                   }
                 },
                 "isNullable": true
+              },
+              "entity_list": {
+                "metaType": "object",
+                "isSingle": true,
+                "value": {
+                  "entity": {
+                    "metaType": "object",
+                    "attributes": {
+                      "metaType": "object",
+                      "value": {
+                        "entity_id_ref": {
+                          "metaType": "primitive",
+                          "value": "xs:string",
+                          "isNullable": false
+                        }
+                      },
+                      "isNullable": false
+                    },
+                    "isSingle": false,
+                    "value": {
+                      "position": {
+                        "metaType": "object",
+                        "value": {},
+                        "isSingle": true,
+                        "isNullable": false,
+                        "attributes": {
+                          "metaType": "object",
+                          "value": {
+                            "x": {
+                              "metaType": "primitive",
+                              "value": "xs:integer",
+                              "isNullable": false
+                            },
+                            "y": {
+                              "metaType": "primitive",
+                              "value": "xs:integer",
+                              "isNullable": false
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "isNullable": true
+                  }
+                },
+                "isNullable": true
               }
             },
             "isNullable": true

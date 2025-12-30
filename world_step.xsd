@@ -1914,6 +1914,26 @@
                                   </xs:complexType>
                                 </xs:element>
 
+                                <xs:element name="entity_list" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="entity" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="position">
+                                              <xs:complexType>
+                                                <xs:attribute name="x" use="required" type="xs:integer"/>
+                                                <xs:attribute name="y" use="required" type="xs:integer"/>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                          <xs:attribute name="entity_id_ref" type="xs:string" use="required"/>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+
                               </xs:all>
                               <xs:attribute name="id" type="xs:string" use="required">
                                 <xs:annotation>
@@ -2136,6 +2156,15 @@
                 <xs:complexType>
                   <xs:attribute name="zone_id_ref" type="xs:string" use="required"/>
                   <xs:attribute name="region_id_ref" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="region.teleportEntity" minOccurs="0">
+                <xs:complexType>
+                  <xs:attribute name="zone_id_ref" type="xs:string" use="required"/>
+                  <xs:attribute name="region_id_ref" type="xs:string" use="required"/>
+                  <xs:attribute name="entity_id_ref" type="xs:string" use="required"/>
+                  <xs:attribute name="x" type="xs:int" use="required"/>
+                  <xs:attribute name="y" type="xs:int" use="required"/>
                 </xs:complexType>
               </xs:element>
               <xs:element name="entity.create" minOccurs="0">

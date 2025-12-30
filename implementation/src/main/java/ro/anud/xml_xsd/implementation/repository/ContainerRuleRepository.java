@@ -4,16 +4,17 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ContainerRule.Co
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ContainerRule.Entry.Entry;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
-import ro.anud.xml_xsd.implementation.service.Index;
+import ro.anud.xml_xsd.implementation.util.repository.NonNullableIndex;
 import ro.anud.xml_xsd.implementation.service.Repository;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
+import ro.anud.xml_xsd.implementation.util.repository.NullableIndex;
 
 import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class ContainerRuleRepository implements Repository<Entry>  {
     final WorldStepInstance worldStepInstance;
 
-    public final Index<String, Entry> byName = Index.of(Entry.class, Entry::getName);
+    public final NullableIndex<String, Entry, Entry> byName = NullableIndex.ofNullable(Entry.class, Entry::getName);
 
     public ContainerRuleRepository(WorldStepInstance worldStepInstance) {
         this.worldStepInstance = worldStepInstance;
@@ -28,17 +29,12 @@ public class ContainerRuleRepository implements Repository<Entry>  {
                     .flatMap(RuleGroup::streamContainerRule)
                     .flatMap(ContainerRule::streamEntry)
                     .toList();
-            byName.index(ruleList);
+            byName.reIndex(ruleList);
         }
     }
 
     @Override
     public void loadData() {
         byName.addListeners(worldStepInstance);
-    }
-
-    @Override
-    public Entry getOrDefault(Entry entry) {
-        return entry.of();
     }
 }

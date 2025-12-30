@@ -310,6 +310,45 @@ namespace XSD.Nworld_step {
       }
     }
 
+    private XSD.Nworld_step.Nactions.region__teleportEntity? _region__teleportEntity = null;
+    public XSD.Nworld_step.Nactions.region__teleportEntity region__teleportEntityOrCreate
+    {
+      get
+      {
+        if(_region__teleportEntity == null)
+        {
+          _region__teleportEntity = new();
+          _region__teleportEntity.ParentNode = this;
+          NotifyChange();
+        }
+        return _region__teleportEntity;
+      }
+      set
+      {
+        _region__teleportEntity = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nactions.region__teleportEntity? region__teleportEntity
+    {
+      get
+      {
+        return _region__teleportEntity;
+      }
+      set
+      {
+        _region__teleportEntity = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
+
     private XSD.Nworld_step.Nactions.entity__create? _entity__create = null;
     public XSD.Nworld_step.Nactions.entity__create entity__createOrCreate
     {
@@ -507,6 +546,11 @@ namespace XSD.Nworld_step {
         this.region__resolvePortals = region__resolvePortals;
       }
 
+      if(linkedNode is XSD.Nworld_step.Nactions.region__teleportEntity region__teleportEntity)
+      {
+        this.region__teleportEntity = region__teleportEntity;
+      }
+
       if(linkedNode is XSD.Nworld_step.Nactions.entity__create entity__create)
       {
         this.entity__create = entity__create;
@@ -584,6 +628,11 @@ namespace XSD.Nworld_step {
       if(linkedNode is XSD.Nworld_step.Nactions.region__resolvePortals)
       {
         this.region__resolvePortals = null;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nactions.region__teleportEntity)
+      {
+        this.region__teleportEntity = null;
       }
 
       if(linkedNode is XSD.Nworld_step.Nactions.entity__create)
@@ -686,6 +735,8 @@ namespace XSD.Nworld_step {
 
       region__resolvePortals = rawNode.InitializeWithRawNode("region.resolvePortals", region__resolvePortals);
 
+      region__teleportEntity = rawNode.InitializeWithRawNode("region.teleportEntity", region__teleportEntity);
+
       entity__create = rawNode.InitializeWithRawNode("entity.create", entity__create);
 
       container__addOnEntity = rawNode.InitializeWithRawNode("container.addOnEntity", container__addOnEntity);
@@ -718,6 +769,9 @@ namespace XSD.Nworld_step {
       }
       if(region__resolvePortals != null) {
         rawNode.children["region.resolvePortals"] = new List<RawNode> { region__resolvePortals.SerializeIntoRawNode() };
+      }
+      if(region__teleportEntity != null) {
+        rawNode.children["region.teleportEntity"] = new List<RawNode> { region__teleportEntity.SerializeIntoRawNode() };
       }
       if(entity__create != null) {
         rawNode.children["entity.create"] = new List<RawNode> { entity__create.SerializeIntoRawNode() };
@@ -925,6 +979,13 @@ namespace XSD.Nworld_step {
         this.region__resolvePortals.DeserializeAtPath(childXPath, rawNode);
         return;
       }
+      if(xpath.StartsWith(XSD.Nworld_step.Nactions.region__teleportEntity.TagName))
+      {
+        this.region__teleportEntity ??= new XSD.Nworld_step.Nactions.region__teleportEntity();
+        var childXPath = xpath.Substring(XSD.Nworld_step.Nactions.region__teleportEntity.TagName.Length + 3);
+        this.region__teleportEntity.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
       if(xpath.StartsWith(XSD.Nworld_step.Nactions.entity__create.TagName))
       {
         this.entity__create ??= new XSD.Nworld_step.Nactions.entity__create();
@@ -1003,6 +1064,9 @@ namespace XSD.Nworld_step {
       if(linkedNode is XSD.Nworld_step.Nactions.region__resolvePortals casted_region__resolvePortals) {
         return 0;
       }
+      if(linkedNode is XSD.Nworld_step.Nactions.region__teleportEntity casted_region__teleportEntity) {
+        return 0;
+      }
       if(linkedNode is XSD.Nworld_step.Nactions.entity__create casted_entity__create) {
         return 0;
       }
@@ -1028,6 +1092,7 @@ namespace XSD.Nworld_step {
       || candidateChild is XSD.Nworld_step.Nactions.zone__create
       || candidateChild is XSD.Nworld_step.Nactions.region__appendNew
       || candidateChild is XSD.Nworld_step.Nactions.region__resolvePortals
+      || candidateChild is XSD.Nworld_step.Nactions.region__teleportEntity
       || candidateChild is XSD.Nworld_step.Nactions.entity__create
       || candidateChild is XSD.Nworld_step.Nactions.container__addOnEntity
       || candidateChild is XSD.Nworld_step.Nactions.operation__echo
@@ -1040,7 +1105,7 @@ namespace XSD.Nworld_step {
             return false;
 
         var other = (actions)obj;
-        return Equals(by, other.by) && Equals(location_graph__create, other.location_graph__create) && Equals(location_graph__node__create_adjacent, other.location_graph__node__create_adjacent) && Equals(location_graph__node__add_classification, other.location_graph__node__add_classification) && Equals(person__teleport, other.person__teleport) && Equals(person__on_person__property_mutation, other.person__on_person__property_mutation) && Equals(person__create, other.person__create) && Equals(person__move_to, other.person__move_to) && Equals(from_person, other.from_person) && Equals(zone__create, other.zone__create) && Equals(region__appendNew, other.region__appendNew) && Equals(region__resolvePortals, other.region__resolvePortals) && Equals(entity__create, other.entity__create) && Equals(container__addOnEntity, other.container__addOnEntity) && Equals(operation__echo, other.operation__echo);
+        return Equals(by, other.by) && Equals(location_graph__create, other.location_graph__create) && Equals(location_graph__node__create_adjacent, other.location_graph__node__create_adjacent) && Equals(location_graph__node__add_classification, other.location_graph__node__add_classification) && Equals(person__teleport, other.person__teleport) && Equals(person__on_person__property_mutation, other.person__on_person__property_mutation) && Equals(person__create, other.person__create) && Equals(person__move_to, other.person__move_to) && Equals(from_person, other.from_person) && Equals(zone__create, other.zone__create) && Equals(region__appendNew, other.region__appendNew) && Equals(region__resolvePortals, other.region__resolvePortals) && Equals(region__teleportEntity, other.region__teleportEntity) && Equals(entity__create, other.entity__create) && Equals(container__addOnEntity, other.container__addOnEntity) && Equals(operation__echo, other.operation__echo);
     }
 
     public override int GetHashCode()
@@ -1059,6 +1124,7 @@ namespace XSD.Nworld_step {
         acc = HashCode.Combine(acc, zone__create);
         acc = HashCode.Combine(acc, region__appendNew);
         acc = HashCode.Combine(acc, region__resolvePortals);
+        acc = HashCode.Combine(acc, region__teleportEntity);
         acc = HashCode.Combine(acc, entity__create);
         acc = HashCode.Combine(acc, container__addOnEntity);
         acc = HashCode.Combine(acc, operation__echo);
