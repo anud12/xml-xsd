@@ -1,18 +1,12 @@
 package ro.anud.xml_xsd.implementation;
 
 import org.springframework.stereotype.Component;
-import ro.anud.xml_xsd.implementation.middleware.EventsMetadata;
-import ro.anud.xml_xsd.implementation.middleware.PersonAssignClassification;
-import ro.anud.xml_xsd.implementation.middleware.action.FromPersonAction;
-import ro.anud.xml_xsd.implementation.middleware.action.PersonCreateAction;
 import ro.anud.xml_xsd.implementation.middleware.container.ContainerCreate;
 import ro.anud.xml_xsd.implementation.middleware.entity.EntityCreate;
 import ro.anud.xml_xsd.implementation.middleware.locationGraph.LocationGraphAddClassification;
 import ro.anud.xml_xsd.implementation.middleware.locationGraph.LocationGraphCreate;
 import ro.anud.xml_xsd.implementation.middleware.locationGraph.LocationGraphCreateAdjacent;
 import ro.anud.xml_xsd.implementation.middleware.operation.OperationEchoAction;
-import ro.anud.xml_xsd.implementation.middleware.person.PersonMoveTo;
-import ro.anud.xml_xsd.implementation.middleware.person.PersonTeleportTo;
 import ro.anud.xml_xsd.implementation.middleware.region.RegionAppendAction;
 import ro.anud.xml_xsd.implementation.middleware.zone.ZoneCreateAction;
 import ro.anud.xml_xsd.implementation.middleware.zone.ZoneTeleportEntity;
@@ -57,18 +51,12 @@ public class WorldStepRunner {
     public static void runStep(WorldStepInstance worldStepInstance) {
         middlewareList.forEach(middleware -> middleware.apply(worldStepInstance));
         OperationEchoAction.apply(worldStepInstance);
-        FromPersonAction.apply(worldStepInstance);
         ZoneCreateAction.zoneCreateAction(worldStepInstance);
         RegionAppendAction.regionAppendNewAction(worldStepInstance);
-        PersonCreateAction.personCreateAction(worldStepInstance);
         LocationGraphCreate.apply(worldStepInstance);
         LocationGraphCreateAdjacent.apply(worldStepInstance);
-        PersonMoveTo.apply(worldStepInstance);
-        PersonTeleportTo.apply(worldStepInstance);
-        EventsMetadata.apply(worldStepInstance);
         ZoneTeleportEntity.zoneTeleportEntity(worldStepInstance);
         LocationGraphAddClassification.locationGraphAddClassification(worldStepInstance);
-        PersonAssignClassification.apply(worldStepInstance);
         try (var scope = logScope("Applying counter synchronization to WorldStepInstance")) {
             worldStepInstance.getOutInstance()
                     .getWorldStep()

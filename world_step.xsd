@@ -45,132 +45,6 @@
     <xs:attribute name="entity_rule_ref" type="xs:string"/>
   </xs:complexType>
 
-
-  <xs:complexType name="type__property_mutation_on">
-    <xs:complexContent>
-      <xs:extension base="type__property_mutation">
-        <xs:attribute name="on" type="type_person_select"
-                      use="required"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-
-  <xs:complexType name="type__property_mutation">
-    <xs:sequence>
-      <xs:element name="from" maxOccurs="unbounded" minOccurs="1">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="operation" type="type__math_operations"/>
-          </xs:sequence>
-          <xs:attribute name="participant"
-                        type="type_person_select"
-                        use="required"/>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-    <xs:attribute name="property_rule_ref" type="xs:string" use="required"/>
-  </xs:complexType>
-
-
-  <xs:simpleType name="type_person_select">
-    <xs:annotation>
-      <xs:documentation>
-        This type represents either 'self' or 'target'.
-      </xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="self">
-        <xs:annotation>
-          <xs:documentation>
-            Selects the person that initiates the interaction.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="target">
-        <xs:annotation>
-          <xs:documentation>
-            Selects the person that the interaction applies to.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:complexType name="type__person_selection">
-    <xs:annotation>
-      <xs:documentation>
-        Represents the selection of a person with various attributes.
-      </xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="radius" minOccurs="0" type="type__math_operations">
-        <xs:annotation>
-          <xs:documentation>
-            Represents the radius of the selection.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="min" minOccurs="0" type="type__math_operations">
-        <xs:annotation>
-          <xs:documentation>
-            Represents the minimum number of persons to be selected.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="max" minOccurs="0" type="type__math_operations">
-        <xs:annotation>
-          <xs:documentation>
-            Represents the maximum number of persons to be selected.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
-        <xs:complexType>
-          <xs:annotation>
-            <xs:documentation>
-              Represents the properties of the selection.
-            </xs:documentation>
-          </xs:annotation>
-          <xs:sequence>
-            <xs:element name="min" type="type__math_operations" minOccurs="0">
-              <xs:annotation>
-                <xs:documentation>
-                  Represents the minimum value of the property inclusive.
-                </xs:documentation>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="max" type="type__math_operations" minOccurs="0">
-              <xs:annotation>
-                <xs:documentation>
-                  Represents the maximum value of the property inclusive.
-                </xs:documentation>
-              </xs:annotation>
-            </xs:element>
-          </xs:sequence>
-          <xs:attribute name="property_rule_ref" type="xs:string" use="required"/>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="classification" minOccurs="0" maxOccurs="unbounded">
-        <xs:complexType>
-          <xs:attribute name="classification_rule_ref" type="xs:string" use="required"/>
-        </xs:complexType>
-      </xs:element>
-
-    </xs:sequence>
-  </xs:complexType>
-
-
-  <xs:complexType name="type__trigger">
-    <xs:sequence>
-      <xs:element name="person_action_used">
-        <xs:complexType>
-          <xs:attribute name="action_rule_ref" type="xs:string" use="required"/>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-
   <!--############-->
   <!-- Math operations -->
   <!--############-->
@@ -408,75 +282,6 @@
   <!-- Actions -->
   <!--#######-->
 
-  <xs:complexType name="type__action">
-    <xs:annotation>
-      <xs:documentation>
-        Represents an action.
-      </xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="from">
-        <xs:complexType>
-          <xs:annotation>
-            <xs:documentation>
-              Represents the allowed entities that initiates the action, relative to 'on' selection.
-            </xs:documentation>
-          </xs:annotation>
-          <xs:sequence>
-            <xs:element name="person" minOccurs="0">
-              <xs:annotation>
-                <xs:documentation>
-                  Represents an option that a person can initiate the action.
-                </xs:documentation>
-              </xs:annotation>
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="select" minOccurs="0" type="type__person_selection">
-                    <xs:annotation>
-                      <xs:documentation>
-                        Represents the conditions for a person to use the action.
-                      </xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="property_mutation" minOccurs="0" type="type__property_mutation"/>
-                </xs:sequence>
-              </xs:complexType>
-            </xs:element>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="on">
-        <xs:annotation>
-          <xs:documentation>
-            Represents the entity that the action is usable on, relative to 'from' selection.
-          </xs:documentation>
-        </xs:annotation>
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="person" minOccurs="0">
-              <xs:annotation>
-                <xs:documentation>
-                  Represents an option that a person can apply the action to.
-                </xs:documentation>
-              </xs:annotation>
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="select" minOccurs="0" type="type__person_selection">
-                    <xs:annotation>
-                      <xs:documentation>
-                        Represents the conditions for a person to apply the action to.
-                      </xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="property_mutation" minOccurs="0" type="type__property_mutation"/>
-                </xs:sequence>
-              </xs:complexType>
-            </xs:element>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
 
   <!--############-->
   <!-- Location Graph -->
@@ -560,8 +365,6 @@
         <xs:complexType>
           <xs:all>
             <xs:element name="distance_to_progress_multiplier" minOccurs="0"
-                        type="type__math_operations"/>
-            <xs:element name="person_progress_property" minOccurs="0"
                         type="type__math_operations"/>
           </xs:all>
           <xs:attribute name="node_rule_ref" type="xs:string" use="required">
@@ -913,47 +716,6 @@
               </xs:element>
 
 
-              <xs:element name="property_rule" minOccurs="0">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element name="person_default" minOccurs="0">
-                            <xs:complexType>
-                              <xs:complexContent>
-                                <xs:extension base="type__math_operations"/>
-                              </xs:complexContent>
-                            </xs:complexType>
-                          </xs:element>
-                          <xs:element name="item_default" minOccurs="0">
-                            <xs:complexType>
-                              <xs:complexContent>
-                                <xs:extension base="type__math_operations"/>
-                              </xs:complexContent>
-                            </xs:complexType>
-                          </xs:element>
-                          <xs:element name="property-threshold" minOccurs="0"
-                                      maxOccurs="unbounded">
-                            <xs:complexType>
-                              <xs:attribute name="name" type="xs:string"
-                                            use="required"/>
-                              <xs:attribute name="min-value-inclusive"
-                                            type="xs:int"/>
-                              <xs:attribute name="max-value-inclusive"
-                                            type="xs:int"/>
-                            </xs:complexType>
-                          </xs:element>
-                        </xs:sequence>
-                        <xs:attribute name="id" type="xs:string" use="required"/>
-                        <xs:attribute name="units" type="xs:string" use="required"/>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:sequence>
-                </xs:complexType>
-              </xs:element>
-
-
               <xs:element name="classification_rule" minOccurs="0">
                 <xs:complexType>
                   <xs:sequence>
@@ -1021,157 +783,6 @@
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
-
-
-              <xs:element name="action_rule" minOccurs="0">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="from_person" minOccurs="0" maxOccurs="unbounded">
-                      <xs:annotation>
-                        <xs:documentation>
-                          Represents an action rule that originates from a person.
-                        </xs:documentation>
-                      </xs:annotation>
-                      <xs:complexType>
-                        <xs:all>
-                          <xs:element name="selection" minOccurs="0" type="type__person_selection"/>
-                          <xs:element name="mutations" minOccurs="0">
-                            <xs:annotation>
-                              <xs:documentation>
-                                Represents the mutations that can be applied to the properties of the person initiating
-                                the action.
-                              </xs:documentation>
-                            </xs:annotation>
-                            <xs:complexType>
-                              <xs:sequence>
-                                <xs:element name="property_mutation" minOccurs="0" maxOccurs="unbounded"
-                                            type="type__property_mutation"/>
-                              </xs:sequence>
-                            </xs:complexType>
-                          </xs:element>
-                          <xs:element name="on_person" minOccurs="0">
-                            <xs:annotation>
-                              <xs:documentation>
-                                Represents the person on whom the action is applied.
-                              </xs:documentation>
-                            </xs:annotation>
-                            <xs:complexType>
-                              <xs:all>
-                                <xs:element name="selection" minOccurs="0">
-                                  <xs:complexType>
-                                    <xs:complexContent>
-                                      <xs:extension base="type__person_selection">
-                                        <xs:sequence>
-                                          <xs:element name="from_person_same_location_graph_node" minOccurs="0">
-                                            <xs:complexType>
-                                              <xs:attribute name="value" use="required" type="xs:boolean"/>
-                                            </xs:complexType>
-                                          </xs:element>
-                                        </xs:sequence>
-                                      </xs:extension>
-                                    </xs:complexContent>
-                                  </xs:complexType>
-                                </xs:element>
-                                <xs:element name="mutations" minOccurs="0">
-                                  <xs:annotation>
-                                    <xs:documentation>
-                                      Represents the mutations that can be applied to the properties of the person the
-                                      action is applied to.
-                                    </xs:documentation>
-                                  </xs:annotation>
-                                  <xs:complexType>
-                                    <xs:sequence>
-                                      <xs:element name="property_mutation" minOccurs="0"
-                                                  type="type__property_mutation"/>
-                                    </xs:sequence>
-                                  </xs:complexType>
-                                </xs:element>
-                              </xs:all>
-                            </xs:complexType>
-                          </xs:element>
-                        </xs:all>
-                        <xs:attribute name="id" type="xs:string" use="required"/>
-                      </xs:complexType>
-                    </xs:element>
-
-                    <xs:element name="global" minOccurs="0">
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
-                            <xs:complexType>
-                              <xs:complexContent>
-                                <xs:extension base="type__action">
-                                  <xs:attribute name="id" use="required" type="xs:string"/>
-                                </xs:extension>
-                              </xs:complexContent>
-                            </xs:complexType>
-                          </xs:element>
-                        </xs:sequence>
-                      </xs:complexType>
-                    </xs:element>
-
-                  </xs:sequence>
-                </xs:complexType>
-              </xs:element>
-
-
-              <xs:element name="events_rule" minOccurs="0">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element name="when" maxOccurs="unbounded" type="type__trigger"/>
-                          <xs:element name="then" maxOccurs="unbounded">
-                            <xs:complexType>
-                              <xs:sequence>
-                                <xs:element name="select_person" minOccurs="0" maxOccurs="unbounded">
-                                  <xs:complexType>
-                                    <xs:complexContent>
-                                      <xs:extension base="type__person_selection">
-                                        <xs:attribute name="origin" use="required">
-                                          <xs:simpleType>
-                                            <xs:restriction base="xs:string">
-                                              <xs:enumeration value="target"/>
-                                              <xs:enumeration value="self"/>
-                                            </xs:restriction>
-                                          </xs:simpleType>
-                                        </xs:attribute>
-                                      </xs:extension>
-                                    </xs:complexContent>
-                                  </xs:complexType>
-                                </xs:element>
-                                <xs:element name="property_mutation" minOccurs="0">
-                                  <xs:annotation>
-                                    <xs:documentation>
-                                      Represents the value that will be added to the property.
-                                    </xs:documentation>
-                                  </xs:annotation>
-                                  <xs:complexType>
-                                    <xs:complexContent>
-                                      <xs:extension base="type__math_operations">
-                                        <xs:attribute name="property_rule_ref" type="xs:string" use="required">
-                                          <xs:annotation>
-                                            <xs:documentation>
-                                              Represents the reference to a property rule.
-                                            </xs:documentation>
-                                          </xs:annotation>
-                                        </xs:attribute>
-                                      </xs:extension>
-                                    </xs:complexContent>
-                                  </xs:complexType>
-                                </xs:element>
-                              </xs:sequence>
-                            </xs:complexType>
-                          </xs:element>
-                        </xs:sequence>
-                        <xs:attribute name="id" use="required" type="xs:string"/>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:sequence>
-                </xs:complexType>
-              </xs:element>
-
 
               <xs:element name="link_group_rule_list" minOccurs="0">
                 <xs:annotation>
@@ -1297,33 +908,6 @@
                                   </xs:complexType>
                                 </xs:element>
                               </xs:sequence>
-                            </xs:complexType>
-                          </xs:element>
-                          <xs:element name="existing_person" minOccurs="0">
-                            <xs:annotation>
-                              <xs:documentation>
-                                Represents the persons in the node at the moment of creation.
-                              </xs:documentation>
-                            </xs:annotation>
-                            <xs:complexType>
-                              <xs:all>
-                                <xs:element name="person_selection" type="type__person_selection"/>
-                              </xs:all>
-                              <xs:attribute name="min" type="xs:int" use="required">
-                                <xs:annotation>
-                                  <xs:documentation>
-                                    Represents the minimum number of persons that must exist at the moment of creation.
-                                  </xs:documentation>
-                                </xs:annotation>
-                              </xs:attribute>
-                              <xs:attribute name="max" type="xs:int">
-                                <xs:annotation>
-                                  <xs:documentation>
-                                    Represents the maximum number of persons that must exist at the moment of creation.
-                                    If unset it defaults to min value.
-                                  </xs:documentation>
-                                </xs:annotation>
-                              </xs:attribute>
                             </xs:complexType>
                           </xs:element>
                         </xs:all>
@@ -1484,53 +1068,6 @@
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="people" minOccurs="0">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="person" minOccurs="0" maxOccurs="unbounded">
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element name="properties" minOccurs="0">
-                            <xs:complexType>
-                              <xs:sequence>
-                                <xs:element name="property" minOccurs="0"
-                                            maxOccurs="unbounded">
-                                  <xs:complexType>
-                                    <xs:attribute name="property_rule_ref" type="xs:string" use="required"/>
-                                    <xs:attribute name="value"
-                                                  type="xs:int"
-                                                  use="required"/>
-                                  </xs:complexType>
-                                </xs:element>
-                              </xs:sequence>
-                            </xs:complexType>
-                          </xs:element>
-                          <xs:element name="relations" minOccurs="0"
-                                      maxOccurs="unbounded">
-                            <xs:complexType>
-                              <xs:attribute name="with" use="required"/>
-                            </xs:complexType>
-                          </xs:element>
-                          <xs:element name="classifications" minOccurs="0">
-                            <xs:complexType>
-                              <xs:sequence>
-                                <xs:element name="classification" minOccurs="0"
-                                            maxOccurs="unbounded">
-                                  <xs:complexType>
-                                    <xs:attribute name="classification_rule_ref" type="xs:string" use="required"/>
-                                  </xs:complexType>
-                                </xs:element>
-                              </xs:sequence>
-                            </xs:complexType>
-                          </xs:element>
-                        </xs:sequence>
-                        <xs:attribute name="id" use="required" type="xs:string"/>
-                        <xs:attribute name="name" type="xs:string"/>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:sequence>
-                </xs:complexType>
-              </xs:element>
               <xs:element name="location" minOccurs="0">
                 <xs:complexType>
                   <xs:sequence>
@@ -1606,38 +1143,6 @@
                                           </xs:documentation>
                                         </xs:annotation>
                                         <xs:complexType>
-                                          <xs:all>
-                                            <xs:element name="people" minOccurs="0">
-                                              <xs:complexType>
-                                                <xs:sequence>
-                                                  <xs:element name="person" minOccurs="0" maxOccurs="unbounded">
-                                                    <xs:complexType>
-                                                      <xs:attribute name="person_id_ref" type="xs:string"
-                                                                    use="required">
-                                                        <xs:annotation>
-                                                          <xs:documentation>
-                                                            Represents the reference to the person that will be linked
-                                                            to.
-                                                          </xs:documentation>
-                                                        </xs:annotation>
-                                                      </xs:attribute>
-                                                      <xs:attribute name="accumulated_progress" type="xs:int"
-                                                                    use="required">
-                                                        <xs:annotation>
-                                                          <xs:documentation>
-                                                            Represents the accumulated progress of the person in the
-                                                            link.
-                                                          </xs:documentation>
-                                                        </xs:annotation>
-                                                      </xs:attribute>
-                                                    </xs:complexType>
-                                                  </xs:element>
-                                                </xs:sequence>
-                                              </xs:complexType>
-                                            </xs:element>
-                                            <xs:element name="person_progress_property" minOccurs="0"
-                                                        type="type__math_operations"/>
-                                          </xs:all>
                                           <xs:attribute name="node_id_ref" use="required" type="xs:string">
                                             <xs:annotation>
                                               <xs:documentation>
@@ -1649,28 +1154,6 @@
                                             <xs:annotation>
                                               <xs:documentation>
                                                 Represents the invested time to reach the node.
-                                              </xs:documentation>
-                                            </xs:annotation>
-                                          </xs:attribute>
-                                        </xs:complexType>
-                                      </xs:element>
-                                    </xs:sequence>
-                                  </xs:complexType>
-                                </xs:element>
-                                <xs:element name="people" minOccurs="0">
-                                  <xs:annotation>
-                                    <xs:documentation>
-                                      Represents the people in the node.
-                                    </xs:documentation>
-                                  </xs:annotation>
-                                  <xs:complexType>
-                                    <xs:sequence>
-                                      <xs:element name="person" minOccurs="0" maxOccurs="unbounded">
-                                        <xs:complexType>
-                                          <xs:attribute name="person_id_ref" type="xs:string" use="required">
-                                            <xs:annotation>
-                                              <xs:documentation>
-                                                Represents the reference to the person that will be in the node.
                                               </xs:documentation>
                                             </xs:annotation>
                                           </xs:attribute>
@@ -1959,27 +1442,6 @@
         <xs:element name="actions" minOccurs="0">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="by" maxOccurs="unbounded" minOccurs="0">
-                <xs:complexType>
-                  <xs:choice>
-                    <xs:element name="do">
-                      <xs:complexType>
-                        <xs:attribute name="action_rule_ref" type="xs:string"/>
-                        <xs:attribute name="action_ref" type="xs:string"/>
-                        <xs:attribute name="person_ref" type="xs:string" use="required"/>
-                      </xs:complexType>
-                    </xs:element>
-                    <xs:element name="move_towards" minOccurs="0">
-                      <xs:complexType>
-                        <xs:attribute name="layer" type="xs:string"/>
-                        <xs:attribute name="x" type="xs:int" use="required"/>
-                        <xs:attribute name="y" type="xs:int" use="required"/>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:choice>
-                  <xs:attribute name="person_ref" type="xs:string" use="required"/>
-                </xs:complexType>
-              </xs:element>
               <xs:element name="location_graph.create" minOccurs="0" maxOccurs="unbounded">
                 <xs:annotation>
                   <xs:documentation>
@@ -2042,102 +1504,6 @@
                       </xs:complexType>
                     </xs:element>
                   </xs:all>
-                </xs:complexType>
-              </xs:element>
-              <xs:element name="person.teleport" minOccurs="0">
-                <xs:annotation>
-                  <xs:documentation>
-                    Represents the action to teleport a person to a location ignoring checks.
-                  </xs:documentation>
-                </xs:annotation>
-                <xs:complexType>
-                  <xs:choice>
-                    <xs:element name="location_graph" minOccurs="0">
-                      <xs:annotation>
-                        <xs:documentation>
-                          Represents the location graph that will be used to teleport the person.
-                        </xs:documentation>
-                      </xs:annotation>
-                      <xs:complexType>
-                        <xs:attribute name="location_graph_id_ref" type="xs:string" use="required">
-                          <xs:annotation>
-                            <xs:documentation>
-                              Represents the reference to the location group that will be used to teleport the person.
-                            </xs:documentation>
-                          </xs:annotation>
-                        </xs:attribute>
-                        <xs:attribute name="node_id_ref" type="xs:string" use="required">
-                          <xs:annotation>
-                            <xs:documentation>
-                              Represents the reference to the node that will be used to teleport the person.
-                            </xs:documentation>
-                          </xs:annotation>
-                        </xs:attribute>
-                      </xs:complexType>
-                    </xs:element>
-                    <xs:element name="link_to" minOccurs="0">
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element name="selection" type="type__link_to__selection"/>
-                        </xs:sequence>
-                        <xs:attribute name="accumulated_progress" type="xs:int" use="required"/>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:choice>
-                  <xs:attribute name="person_id_ref" type="xs:string" use="required">
-                    <xs:annotation>
-                      <xs:documentation>
-                        Represents the reference to the person that will be teleported.
-                      </xs:documentation>
-                    </xs:annotation>
-                  </xs:attribute>
-                </xs:complexType>
-              </xs:element>
-              <xs:element name="person.on_person.property_mutation" minOccurs="0" maxOccurs="unbounded">
-                <xs:complexType>
-                  <xs:attribute name="person_id_ref" type="xs:string" use="required"/>
-                  <xs:attribute name="target_person_id_ref" type="xs:string" use="required"/>
-                  <xs:attribute name="action_property_mutation_rule_ref" type="xs:string" use="required"/>
-                </xs:complexType>
-              </xs:element>
-              <xs:element name="person.create" minOccurs="0" maxOccurs="unbounded">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="node_graph__selection" type="type__node_graph__selection"/>
-                    <xs:element name="person__selection" type="type__person_selection"/>
-                  </xs:sequence>
-                </xs:complexType>
-              </xs:element>
-              <xs:element name="person.move_to" minOccurs="0" maxOccurs="unbounded">
-                <xs:complexType>
-                  <xs:all>
-                    <xs:element name="find_path_towards" type="type__node_graph__selection" minOccurs="0"/>
-                    <xs:element name="path" minOccurs="0">
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element name="node" maxOccurs="unbounded" minOccurs="0">
-                            <xs:complexType>
-                              <xs:attribute name="node_id_ref" use="required" type="xs:string"/>
-                            </xs:complexType>
-                          </xs:element>
-                        </xs:sequence>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:all>
-                  <xs:attribute name="person_id_ref" type="xs:string" use="required"/>
-                </xs:complexType>
-              </xs:element>
-              <xs:element name="from_person" minOccurs="0" maxOccurs="unbounded">
-                <xs:complexType>
-                  <xs:all>
-                    <xs:element name="on_person">
-                      <xs:complexType>
-                        <xs:attribute name="person_id_ref" use="required" type="xs:string"/>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:all>
-                  <xs:attribute name="person_id_ref" type="xs:string" use="required"/>
-                  <xs:attribute name="from_person_rule_ref" type="xs:string" use="required"/>
                 </xs:complexType>
               </xs:element>
               <xs:element name="zone.create" minOccurs="0">

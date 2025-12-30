@@ -1,6 +1,5 @@
 package ro.anud.xml_xsd.implementation.service.location_graph;
 
-import ro.anud.xml_xsd.implementation.model.Type_linkTo_selection.Type_linkTo_selection;
 import ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location;
@@ -8,7 +7,6 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGrap
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.LinkTo;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.Links;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node;
-import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.People.People;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.Mutation;
 import ro.anud.xml_xsd.implementation.service.location_graph.repository.LinkToRepository;
@@ -52,11 +50,11 @@ public class LocationGraphInstance {
         return CreateLocationGraph.createLocationGraph(worldStepInstance, locationGraphRuleRef);
     }
 
-    public Optional<CreateGraphNode.Result> createGraphNode(final LocationGraph locationGraph, final String startNodeRef) {
+    public Optional<Node> createGraphNode(final LocationGraph locationGraph, final String startNodeRef) {
         return CreateGraphNode.createGraphNode(worldStepInstance, locationGraph, startNodeRef);
     }
 
-    public Optional<CreateGraphNode.Result> createGraphNode(
+    public Optional<Node> createGraphNode(
         WorldStepInstance worldStepInstance,
         LocationGraph locationGraph,
         String startNodeRef,
@@ -88,36 +86,6 @@ public class LocationGraphInstance {
         }
     }
 
-    public void removePerson(final String personIdRef) {
-        try (var scope = logScope("personIdRef:", personIdRef)){
-            worldStepInstance.streamWorldStep()
-                    .flatMap(WorldStep::streamData)
-                    .flatMap(Data::streamLocation)
-                    .flatMap(Location::streamLocationGraph)
-                    .flatMap(LocationGraph::streamNode)
-                    .forEach(node -> {
-                        node.streamPeople()
-                                .flatMap(People::streamPerson)
-                                .filter(person -> person.getPersonIdRef().equals(personIdRef))
-                                .toList()
-                                .forEach(person -> {
-                                    scope.log("removing person", person.buildPath());
-                                    person.removeFromParent();
-                                });
-                        node.streamLinks()
-                                .flatMap(Links::streamLinkTo)
-                                .flatMap(LinkTo::streamPeople)
-                                .flatMap(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People::streamPerson)
-                                .filter(person -> person.getPersonIdRef().equals(personIdRef))
-                                .toList()
-                                .forEach(person -> {
-                                    scope.log("removing person", person.buildPath());
-                                    person.removeFromParent();
-                                });
-                    });
-        }
-
-    }
 
     public List<List<Node>> shortestPathsInGraphExcludeStart(
         final LocationGraph locationGraph,
@@ -129,48 +97,5 @@ public class LocationGraphInstance {
             startNode,
             destinationNode,
             numberOfPaths);
-    }
-
-    public Stream<LinkTo> selectLinkTo(final Type_linkTo_selection selection) {
-        return SelectLinkTo.selectLinkTo(worldStepInstance, selection);
-    }
-
-    public record FindPersonResult(LocationGraph locationGraph, Optional<Node> node, Optional<LinkTo> linkTo) {}
-
-    public List<FindPersonResult> findPersonLocation(String personId) {
-        try (var scope = logScope("personId:", personId)){
-            var locationGraphStream = worldStepInstance.streamWorldStep()
-                    .flatMap(WorldStep::streamData)
-                    .flatMap(Data::streamLocation)
-                    .flatMap(Location::streamLocationGraph);
-
-
-            var result = locationGraphStream
-                    .flatMap(locationGraph -> {
-                        var nodeElement = locationGraph.streamNode()
-                                .filter(node -> node.streamPeople()
-                                        .flatMap(People::streamPerson)
-                                        .anyMatch(innerPerson -> innerPerson.getPersonIdRef().equals(personId)))
-                                .findAny();
-                        if (nodeElement.isPresent()) {
-                            return Stream.of(new FindPersonResult(locationGraph, nodeElement, Optional.empty()));
-                        }
-                        var linkToPerson = locationGraph.streamNode()
-                                .flatMap(Node::streamLinks)
-                                .flatMap(Links::streamLinkTo)
-                                .filter(linkTo -> linkTo.streamPeople()
-                                        .flatMap(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People::streamPerson)
-                                        .anyMatch(innerPerson -> innerPerson.getPersonIdRef().equals(personId))
-                                )
-                                .findAny();
-                        if (linkToPerson.isPresent()) {
-                            return Stream.of(new FindPersonResult(locationGraph, Optional.empty(), linkToPerson));
-                        }
-                        return Stream.empty();
-                    }).toList();
-
-            return scope.logReturn(result);
-        }
-
     }
 }

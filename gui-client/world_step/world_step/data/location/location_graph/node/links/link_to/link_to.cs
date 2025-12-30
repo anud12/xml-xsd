@@ -31,83 +31,6 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks {
     public System.Int32 total_progress { get => _total_progress; set => _total_progress = value; }
 
     //Children elements
-    private XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people? _people = null;
-    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people peopleOrCreate
-    {
-      get
-      {
-        if(_people == null)
-        {
-          _people = new();
-          _people.ParentNode = this;
-          NotifyChange();
-        }
-        return _people;
-      }
-      set
-      {
-        _people = value;
-        if(value != null)
-        {
-          value.ParentNode = this;
-        }
-
-      }
-    }
-    public XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people? people
-    {
-      get
-      {
-        return _people;
-      }
-      set
-      {
-        _people = value;
-        if(value != null)
-        {
-          value.ParentNode = this;
-        }
-      }
-    }
-
-    private type__math_operations? _person_progress_property = null;
-    public type__math_operations person_progress_propertyOrCreate
-    {
-      get
-      {
-        if(_person_progress_property == null)
-        {
-          _person_progress_property = new();
-          _person_progress_property.ParentNode = this;
-          NotifyChange();
-        }
-        return _person_progress_property;
-      }
-      set
-      {
-        _person_progress_property = value;
-        if(value != null)
-        {
-          value.ParentNode = this;
-        }
-
-      }
-    }
-    public type__math_operations? person_progress_property
-    {
-      get
-      {
-        return _person_progress_property;
-      }
-      set
-      {
-        _person_progress_property = value;
-        if(value != null)
-        {
-          value.ParentNode = this;
-        }
-      }
-    }
     public link_to()
     {
     }
@@ -137,30 +60,10 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks {
 
     public void SetChild(dynamic linkedNode)
     {
-      if(linkedNode is XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people people)
-      {
-        this.people = people;
-      }
-
-      if(linkedNode is type__math_operations person_progress_property)
-      {
-        this.person_progress_property = person_progress_property;
-      }
-
     }
 
     public void ClearChild(dynamic linkedNode)
     {
-      if(linkedNode is XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people)
-      {
-        this.people = null;
-      }
-
-      if(linkedNode is type__math_operations)
-      {
-        this.person_progress_property = null;
-      }
-
     }
 
     public Action OnSelfChange(Action<link_to> callback)
@@ -199,9 +102,6 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks {
       }
 
       //Deserialize children
-      people = rawNode.InitializeWithRawNode("people", people);
-
-      person_progress_property = rawNode.InitializeWithRawNode("person_progress_property", person_progress_property);
       NotifyChange();
     }
 
@@ -218,12 +118,6 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks {
       }
 
       //Serialize children
-      if(people != null) {
-        rawNode.children["people"] = new List<RawNode> { people.SerializeIntoRawNode() };
-      }
-      if(person_progress_property != null) {
-        rawNode.children["person_progress_property"] = new List<RawNode> { person_progress_property.SerializeIntoRawNode() };
-      }
       return rawNode;
     }
 
@@ -259,20 +153,6 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks {
       {
         xpath = xpath.Substring(1);
       }
-      if(xpath.StartsWith(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people.TagName))
-      {
-        this.people ??= new XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people();
-        var childXPath = xpath.Substring(XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people.TagName.Length + 3);
-        this.people.DeserializeAtPath(childXPath, rawNode);
-        return;
-      }
-      if(xpath.StartsWith(type__math_operations.TagName))
-      {
-        this.person_progress_property ??= new type__math_operations();
-        var childXPath = xpath.Substring(type__math_operations.TagName.Length + 3);
-        this.person_progress_property.DeserializeAtPath(childXPath, rawNode);
-        return;
-      }
 
       Deserialize(rawNode);
     }
@@ -294,19 +174,11 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks {
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
-      if(linkedNode is XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people casted_people) {
-        return 0;
-      }
-      if(linkedNode is type__math_operations casted_person_progress_property) {
-        return 0;
-      }
       return null;
     }
 
     public bool IsValidChildType(ILinkedNode candidateChild) {
-      return candidateChild is XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks.Nlink_to.people
-      || candidateChild is type__math_operations
-      || false;
+      return false;
     }
 
     public bool Equals(link_to? obj)
@@ -315,7 +187,7 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks {
             return false;
 
         var other = (link_to)obj;
-        return Equals(node_id_ref, other.node_id_ref) && Equals(total_progress, other.total_progress) && Equals(people, other.people) && Equals(person_progress_property, other.person_progress_property);
+        return Equals(node_id_ref, other.node_id_ref) && Equals(total_progress, other.total_progress);
     }
 
     public override int GetHashCode()
@@ -324,8 +196,6 @@ namespace XSD.Nworld_step.Ndata.Nlocation.Nlocation_graph.Nnode.Nlinks {
 
         acc = HashCode.Combine(acc, node_id_ref);
         acc = HashCode.Combine(acc, total_progress);
-        acc = HashCode.Combine(acc, people);
-        acc = HashCode.Combine(acc, person_progress_property);
         return acc;
     }
   }

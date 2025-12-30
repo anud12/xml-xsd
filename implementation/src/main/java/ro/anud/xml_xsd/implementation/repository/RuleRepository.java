@@ -1,10 +1,6 @@
 package ro.anud.xml_xsd.implementation.repository;
 
-import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.ActionRule;
-import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ActionRule.FromPerson.FromPerson;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.ClassificationRule;
-import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.Entry.Entry;
-import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PropertyRule.PropertyRule;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.PropertyInstance;
@@ -22,8 +18,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 public class RuleRepository {
 
 
-    private final HashMap<String, FromPerson> fromPersonHashMapById = new HashMap<>();
-    private final HashMap<String, Entry> propertyRuleHashMap = new HashMap<>();
     private final HashMap<String, ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.Entry.Entry> classificationRulesNoPropertiesMap = new HashMap<>();
     private final HashMap<String, ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.Entry.Entry> classificationRules = new HashMap<>();
     private final WorldStepInstance worldStepInstance;
@@ -67,29 +61,7 @@ public class RuleRepository {
             entityRule.index();
             containerRule.index();
 
-            var actionRule = ruleGroups
-                .stream()
-                .map(RuleGroup::getActionRule)
-                .flatMap(Optional::stream)
-                .toList();
 
-            try (var scope2 = logScope("Extracting fromPerson")){
-                scope2.log("Extracting fromPerson");
-                actionRule
-                    .stream()
-                    .map(ActionRule::getFromPerson)
-                    .flatMap(Collection::stream)
-                    .forEach(fromPeople -> fromPersonHashMapById.put(fromPeople.getId(), fromPeople));
-            }
-
-            try (var scope2 = logScope("Extracting propertyRule")) {
-                ruleGroups.stream()
-                    .map(RuleGroup::getPropertyRule)
-                    .flatMap(Optional::stream)
-                    .map(PropertyRule::getEntry)
-                    .flatMap(Collection::stream)
-                    .forEach(entry -> propertyRuleHashMap.put(entry.getId(), entry));
-            }
             ruleGroups.stream()
                 .flatMap(RuleGroup::streamClassificationRule)
                 .flatMap(ClassificationRule::streamEntry)
@@ -102,18 +74,6 @@ public class RuleRepository {
             return this;
         }
 
-    }
-
-    public Optional<FromPerson> getPersonById(String id) {
-        try (var scope = logScope(id)) {
-            return scope.logReturn(Optional.ofNullable(fromPersonHashMapById.get(id)));
-        }
-    }
-
-    public Optional<Entry> getPropertyById(String id) {
-        try (var scope = logScope(id)) {
-            return scope.logReturn(Optional.of(propertyRuleHashMap.get(id)));
-        }
     }
 
     public Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ClassificationRule.Entry.Entry> streamClassificationRuleEntryByNoProperties() {

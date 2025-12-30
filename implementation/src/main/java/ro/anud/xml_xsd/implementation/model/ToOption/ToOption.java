@@ -73,8 +73,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     //Children elements
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> distanceToProgressMultiplier = Optional.empty();
-    @Builder.Default
-    private Optional<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> personProgressProperty = Optional.empty();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -138,16 +136,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           this.distanceToProgressMultiplier = Optional.empty();
           notifyChange();
         }
-        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations) {
-          this.personProgressProperty = Optional.empty();
-          notifyChange();
-        }
     }
 
     public int buildIndexForChild(Object object) {
-        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations) {
-          return 0;
-        }
         if(object instanceof ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations) {
           return 0;
         }
@@ -206,8 +197,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           //Deserialize children
           innerLogger.log("distance_to_progress_multiplier");
           this.distanceToProgressMultiplier = ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.fromRawNode(rawNode.getChildrenFirst("distance_to_progress_multiplier"), this);
-          innerLogger.log("person_progress_property");
-          this.personProgressProperty = ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.fromRawNode(rawNode.getChildrenFirst("person_progress_property"), this);
         }
 
         if(isDirty) {
@@ -239,8 +228,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           //Serialize children
           innerLogger.log("distance_to_progress_multiplier");
           rawNode.setChildren("distance_to_progress_multiplier", distanceToProgressMultiplier.stream().map(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations::serializeIntoRawNode).toList());
-          innerLogger.log("person_progress_property");
-          rawNode.setChildren("person_progress_property", personProgressProperty.stream().map(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations::serializeIntoRawNode).toList());
           return rawNode;
         }
       }
@@ -322,35 +309,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       return this;
     }
 
-    public Optional<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> getPersonProgressProperty()
-    {
-      return this.personProgressProperty;
-    }
-    public ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations getPersonProgressPropertyOrDefault()
-    {
-      return this.personProgressProperty.orElseGet(() -> {
-        var instance = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
-        this.personProgressProperty = Optional.of(instance);
-        instance.parentNode(this);
-        return this.personProgressProperty.get();
-      });
-    }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamPersonProgressPropertyOrDefault()
-    {
-      return java.util.stream.Stream.of(getPersonProgressPropertyOrDefault());
-    }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamPersonProgressProperty()
-    {
-      return personProgressProperty.stream();
-    }
-    public ToOption setPersonProgressProperty(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations value)
-    {
-      this.personProgressProperty = Optional.ofNullable(value);
-      value.parentNode(this);
-      notifyChange();
-      return this;
-    }
-
     public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
        if(xpath.startsWith("."))
         {
@@ -363,14 +321,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           }
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName.length() + 3);
           return this.distanceToProgressMultiplier.get().deserializeAtPath(childXPath, rawNode);
-        }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName))
-        {
-          if(this.personProgressProperty.isEmpty()) {
-            this.personProgressProperty = Optional.of(new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations());
-          }
-          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName.length() + 3);
-          return this.personProgressProperty.get().deserializeAtPath(childXPath, rawNode);
         }
 
         deserialize(rawNode);
@@ -389,14 +339,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           }
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName.length() + 3);
           return this.distanceToProgressMultiplier.get().getNodeAtPath(childXPath);
-        }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName))
-        {
-          if(this.personProgressProperty.isEmpty()) {
-            this.personProgressProperty = Optional.of(new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations());
-          }
-          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName.length() + 3);
-          return this.personProgressProperty.get().getNodeAtPath(childXPath);
         }
         return Optional.of(this);
     }
@@ -437,12 +379,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         "isSingle": false,
         "value": {
           "distance_to_progress_multiplier": {
-            "metaType": "reference",
-            "value": "type__math_operations",
-            "isSingle": true,
-            "isNullable": true
-          },
-          "person_progress_property": {
             "metaType": "reference",
             "value": "type__math_operations",
             "isSingle": true,

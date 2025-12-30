@@ -1,6 +1,6 @@
 <world_step
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -11,9 +11,9 @@
   </world_metadata>
   <rule_group id="rule_group_id">
   </rule_group>
-  <actions>
-    <from_person person_id_ref="invalidPerson" from_person_rule_ref="action_id">
-      <on_person person_id_ref="invalidPerson"/>
-    </from_person>
-  </actions>
+  <data>
+    <entities>
+      <entity id="id" entity_rule_ref="invalidId"/>
+    </entities>
+  </data>
 </world_step>

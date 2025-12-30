@@ -91,12 +91,6 @@ public interface IType_linkGroup<T> extends ro.anud.xml_xsd.implementation.util.
               "value": "type__math_operations",
               "isSingle": true,
               "isNullable": true
-            },
-            "person_progress_property": {
-              "metaType": "reference",
-              "value": "type__math_operations",
-              "isSingle": true,
-              "isNullable": true
             }
           },
           "isNullable": true

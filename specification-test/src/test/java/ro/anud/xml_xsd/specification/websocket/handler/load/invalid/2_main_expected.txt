@@ -1,2 +1,1 @@
-ValidationError: invalidPerson at //actions[0]/from_person[0]@person_id_ref not in []
-ValidationError: invalidPerson at //actions[0]/from_person[0]/on_person[0]@person_id_ref not in []
+ValidationError: invalidId at //data[0]/entities[0]/entity[0]@entity_rule_ref not in []

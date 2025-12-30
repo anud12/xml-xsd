@@ -5,7 +5,6 @@ import ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Container.Ent
 import ro.anud.xml_xsd.implementation.model.Type_entity.Containers.Containers;
 import ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entity.Entity;
-import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
 import ro.anud.xml_xsd.implementation.model.interfaces.IType_mathOperations.IType_mathOperations;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 import ro.anud.xml_xsd.implementation.util.RawNode;
@@ -19,30 +18,19 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 public class ComputeOperation {
 
 
-    public static Optional<Integer> computeOperation(WorldStepInstance worldStepInstance, IType_mathOperations<?> typeMathOperations, Person person) {
-        return computeOperation(worldStepInstance,typeMathOperations.rawNode(), Optional.of(person), Optional.empty());
-    }
-    public static Optional<Integer> computeOperation(WorldStepInstance worldStepInstance, Type_mathOperations typeMathOperations, Person person) {
-        return computeOperation(worldStepInstance,typeMathOperations.rawNode(), Optional.of(person), Optional.empty());
-    }
-
     public static Optional<Integer> computeOperation(WorldStepInstance worldStepInstance, IType_mathOperations<?> typeMathOperations, Entity entity) {
-        return computeOperation(worldStepInstance,typeMathOperations.rawNode(), Optional.empty(), Optional.of(entity));
-    }
-
-    public static Optional<Integer> computeOperation(WorldStepInstance worldStepInstance, Type_mathOperations typeMathOperations, Entity entity) {
-        return computeOperation(worldStepInstance,typeMathOperations.rawNode(), Optional.empty(), Optional.of(entity));
+        return computeOperation(worldStepInstance,typeMathOperations.rawNode(), Optional.of(entity));
     }
 
     public static Optional<Integer> computeOperation(WorldStepInstance worldStepInstance, Type_mathOperations typeMathOperations) {
-        return computeOperation(worldStepInstance,typeMathOperations.rawNode(), Optional.empty(), Optional.empty());
+        return computeOperation(worldStepInstance,typeMathOperations.rawNode(),  Optional.empty());
     }
 
     public static Optional<Integer> computeOperation(WorldStepInstance worldStepInstance, IType_mathOperations<?> typeMathOperations) {
-        return computeOperation(worldStepInstance,typeMathOperations.rawNode(), Optional.empty(), Optional.empty());
+        return computeOperation(worldStepInstance,typeMathOperations.rawNode(), Optional.empty());
     }
 
-    private static  Optional<Integer> computeOperation(WorldStepInstance worldStepInstance, RawNode rawNode, Optional<Person> person, Optional<Entity> entity) {
+    private static  Optional<Integer> computeOperation(WorldStepInstance worldStepInstance, RawNode rawNode, Optional<Entity> entity) {
 
         try (var scope = logScope()) {
             var initial = rawNode.getAttributeInt("initial").orElse(0);
@@ -56,7 +44,7 @@ public class ComputeOperation {
                     .flatMap(Function.identity())
                     .reduce(
                             initial,
-                            (acc, rawNode1) -> createOperationFromQueryType(worldStepInstance, rawNode1, person, entity).apply(
+                            (acc, rawNode1) -> createOperationFromQueryType(worldStepInstance, rawNode1, entity).apply(
                                     acc),
                             Integer::sum
                     );
@@ -109,22 +97,9 @@ public class ComputeOperation {
     private static Function<Integer, Integer> createOperationFromQueryType(
         WorldStepInstance worldStepInstance,
         RawNode rawNode,
-        Optional<Person> person,
         Optional<Entity> entity) {
         try (var scope = logScope()){
             switch (rawNode.getTag()) {
-                case "add_property": {
-                    try (var innerScope = logScope("add_property")){
-                        if (person.isEmpty()) {
-                            throw new RuntimeException("empty person");
-                        }
-                        var propertyRef = rawNode.getAttribute("property_rule_ref")
-                                .orElseThrow(() -> new RuntimeException("property_rule_ref is undefined"));
-                        var newValue = worldStepInstance.person.getProperty(person.get(), propertyRef).orElseThrow();
-                        innerScope.log("propertyRef:", propertyRef, "newValue:", newValue);
-                        return integer -> innerScope.logReturn(integer + newValue);
-                    }
-                }
                 case "count_entity": {
                     try (var innerScope = logScope("count_entity")) {
                         if (entity.isEmpty()) {

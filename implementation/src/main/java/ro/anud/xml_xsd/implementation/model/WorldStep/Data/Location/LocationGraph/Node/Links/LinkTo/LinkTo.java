@@ -67,10 +67,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     private Integer totalProgress;
 
     //Children elements
-    @Builder.Default
-    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People> people = Optional.empty();
-    @Builder.Default
-    private Optional<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> personProgressProperty = Optional.empty();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -139,23 +135,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     }
 
     public void removeChild(Object object) {
-        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People) {
-          this.people = Optional.empty();
-          notifyChange();
-        }
-        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations) {
-          this.personProgressProperty = Optional.empty();
-          notifyChange();
-        }
     }
 
     public int buildIndexForChild(Object object) {
-        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People) {
-          return 0;
-        }
-        if(object instanceof ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations) {
-          return 0;
-        }
         return 0;
     }
 
@@ -197,9 +179,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         }
         try (var innerLogger = logScope("children")) {
           //Deserialize children
-          this.people = ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People.fromRawNode(rawNode.getChildrenFirst("people"), this);
-          innerLogger.log("person_progress_property");
-          this.personProgressProperty = ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.fromRawNode(rawNode.getChildrenFirst("person_progress_property"), this);
         }
 
         if(isDirty) {
@@ -225,10 +204,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
         try (var innerLogger = logScope("children")) {
 
           //Serialize children
-          innerLogger.log("people");
-          rawNode.setChildren("people", people.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People::serializeIntoRawNode).toList());
-          innerLogger.log("person_progress_property");
-          rawNode.setChildren("person_progress_property", personProgressProperty.stream().map(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations::serializeIntoRawNode).toList());
           return rawNode;
         }
       }
@@ -261,84 +236,11 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       notifyChange();
       return this;
     }
-    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People> getPeople()
-    {
-      return this.people;
-    }
-    public ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People getPeopleOrDefault()
-    {
-      return this.people.orElseGet(() -> {
-        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People();
-        this.people = Optional.of(instance);
-        instance.parentNode(this);
-        return this.people.get();
-      });
-    }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People> streamPeopleOrDefault()
-    {
-      return java.util.stream.Stream.of(getPeopleOrDefault());
-    }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People> streamPeople()
-    {
-      return people.stream();
-    }
-    public LinkTo setPeople(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People value)
-    {
-      this.people = Optional.ofNullable(value);
-      value.parentNode(this);
-      notifyChange();
-      return this;
-    }
-
-    public Optional<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> getPersonProgressProperty()
-    {
-      return this.personProgressProperty;
-    }
-    public ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations getPersonProgressPropertyOrDefault()
-    {
-      return this.personProgressProperty.orElseGet(() -> {
-        var instance = new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations();
-        this.personProgressProperty = Optional.of(instance);
-        instance.parentNode(this);
-        return this.personProgressProperty.get();
-      });
-    }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamPersonProgressPropertyOrDefault()
-    {
-      return java.util.stream.Stream.of(getPersonProgressPropertyOrDefault());
-    }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations> streamPersonProgressProperty()
-    {
-      return personProgressProperty.stream();
-    }
-    public LinkTo setPersonProgressProperty(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations value)
-    {
-      this.personProgressProperty = Optional.ofNullable(value);
-      value.parentNode(this);
-      notifyChange();
-      return this;
-    }
 
     public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
        if(xpath.startsWith("."))
         {
           xpath = xpath.substring(1);
-        }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People.nodeName))
-        {
-          if(this.people.isEmpty()) {
-            this.people = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People());
-          }
-          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People.nodeName.length() + 3);
-          return this.people.get().deserializeAtPath(childXPath, rawNode);
-        }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName))
-        {
-          if(this.personProgressProperty.isEmpty()) {
-            this.personProgressProperty = Optional.of(new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations());
-          }
-          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName.length() + 3);
-          return this.personProgressProperty.get().deserializeAtPath(childXPath, rawNode);
         }
 
         deserialize(rawNode);
@@ -349,22 +251,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
        if(xpath.startsWith("."))
         {
           xpath = xpath.substring(1);
-        }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People.nodeName))
-        {
-          if(this.people.isEmpty()) {
-            this.people = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People());
-          }
-          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.People.People.nodeName.length() + 3);
-          return this.people.get().getNodeAtPath(childXPath);
-        }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName))
-        {
-          if(this.personProgressProperty.isEmpty()) {
-            this.personProgressProperty = Optional.of(new ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations());
-          }
-          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations.nodeName.length() + 3);
-          return this.personProgressProperty.get().getNodeAtPath(childXPath);
         }
         return Optional.of(this);
     }
@@ -377,6 +263,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       "type": "element",
       "value": {
         "metaType": "object",
+        "value": {},
+        "isSingle": false,
+        "isNullable": true,
         "attributes": {
           "metaType": "object",
           "value": {
@@ -391,45 +280,7 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
               "isNullable": false
             }
           }
-        },
-        "isSingle": false,
-        "value": {
-          "people": {
-            "metaType": "object",
-            "isSingle": true,
-            "value": {
-              "person": {
-                "metaType": "object",
-                "value": {},
-                "isSingle": false,
-                "isNullable": true,
-                "attributes": {
-                  "metaType": "object",
-                  "value": {
-                    "person_id_ref": {
-                      "metaType": "primitive",
-                      "value": "xs:string",
-                      "isNullable": false
-                    },
-                    "accumulated_progress": {
-                      "metaType": "primitive",
-                      "value": "xs:int",
-                      "isNullable": false
-                    }
-                  }
-                }
-              }
-            },
-            "isNullable": true
-          },
-          "person_progress_property": {
-            "metaType": "reference",
-            "value": "type__math_operations",
-            "isSingle": true,
-            "isNullable": true
-          }
-        },
-        "isNullable": true
+        }
       },
       "name": "link_to"
     }

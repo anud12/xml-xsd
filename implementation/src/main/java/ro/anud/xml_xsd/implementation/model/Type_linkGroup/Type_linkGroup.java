@@ -422,12 +422,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
                 "value": "type__math_operations",
                 "isSingle": true,
                 "isNullable": true
-              },
-              "person_progress_property": {
-                "metaType": "reference",
-                "value": "type__math_operations",
-                "isSingle": true,
-                "isNullable": true
               }
             },
             "isNullable": true

@@ -47,12 +47,11 @@ public class CreateLocationGraph {
             }
             return Optional.of(Mutation.of(outInstance -> {
 
-                startNodeOptional.get().personList().forEach(outInstance.person.repository::getOrCreate);
                 var outLocationGraph = outInstance.locationGraph.locationGraphRepository.getLocationGraphOrDefault(locationGraph);
 
                 var createdNode = new ArrayList<Node>();
-                outLocationGraph.addNode(startNodeOptional.get().node());
-                createdNode.add(startNodeOptional.get().node());
+                outLocationGraph.addNode(startNodeOptional.get());
+                createdNode.add(startNodeOptional.get());
 
                 while (!isNecessaryNodeSatisfied(rule, createdNode)) {
                     if (createdNode.isEmpty()) {

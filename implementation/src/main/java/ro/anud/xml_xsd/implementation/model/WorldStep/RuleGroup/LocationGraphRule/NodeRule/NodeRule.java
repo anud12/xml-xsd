@@ -71,8 +71,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.Classifications.Classifications> classifications = Optional.empty();
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroupList> linkGroupList = Optional.empty();
-    @Builder.Default
-    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.ExistingPerson.ExistingPerson> existingPerson = Optional.empty();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -153,10 +151,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           this.linkGroupList = Optional.empty();
           notifyChange();
         }
-        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.ExistingPerson.ExistingPerson) {
-          this.existingPerson = Optional.empty();
-          notifyChange();
-        }
     }
 
     public int buildIndexForChild(Object object) {
@@ -167,9 +161,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           return 0;
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroupList) {
-          return 0;
-        }
-        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.ExistingPerson.ExistingPerson) {
           return 0;
         }
         return 0;
@@ -210,7 +201,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           this.name = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.Name.Name.fromRawNode(rawNode.getChildrenFirst("name"), this);
           this.classifications = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.Classifications.Classifications.fromRawNode(rawNode.getChildrenFirst("classifications"), this);
           this.linkGroupList = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroupList.fromRawNode(rawNode.getChildrenFirst("link_group_list"), this);
-          this.existingPerson = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.ExistingPerson.ExistingPerson.fromRawNode(rawNode.getChildrenFirst("existing_person"), this);
         }
 
         if(isDirty) {
@@ -240,8 +230,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           rawNode.setChildren("classifications", classifications.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.Classifications.Classifications::serializeIntoRawNode).toList());
           innerLogger.log("link_group_list");
           rawNode.setChildren("link_group_list", linkGroupList.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroupList::serializeIntoRawNode).toList());
-          innerLogger.log("existing_person");
-          rawNode.setChildren("existing_person", existingPerson.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.ExistingPerson.ExistingPerson::serializeIntoRawNode).toList());
           return rawNode;
         }
       }
@@ -351,35 +339,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       return this;
     }
 
-    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.ExistingPerson.ExistingPerson> getExistingPerson()
-    {
-      return this.existingPerson;
-    }
-    public ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.ExistingPerson.ExistingPerson getExistingPersonOrDefault()
-    {
-      return this.existingPerson.orElseGet(() -> {
-        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.ExistingPerson.ExistingPerson();
-        this.existingPerson = Optional.of(instance);
-        instance.parentNode(this);
-        return this.existingPerson.get();
-      });
-    }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.ExistingPerson.ExistingPerson> streamExistingPersonOrDefault()
-    {
-      return java.util.stream.Stream.of(getExistingPersonOrDefault());
-    }
-    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.ExistingPerson.ExistingPerson> streamExistingPerson()
-    {
-      return existingPerson.stream();
-    }
-    public NodeRule setExistingPerson(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.ExistingPerson.ExistingPerson value)
-    {
-      this.existingPerson = Optional.ofNullable(value);
-      value.parentNode(this);
-      notifyChange();
-      return this;
-    }
-
     public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
        if(xpath.startsWith("."))
         {
@@ -408,14 +367,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           }
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroupList.nodeName.length() + 3);
           return this.linkGroupList.get().deserializeAtPath(childXPath, rawNode);
-        }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.ExistingPerson.ExistingPerson.nodeName))
-        {
-          if(this.existingPerson.isEmpty()) {
-            this.existingPerson = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.ExistingPerson.ExistingPerson());
-          }
-          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.ExistingPerson.ExistingPerson.nodeName.length() + 3);
-          return this.existingPerson.get().deserializeAtPath(childXPath, rawNode);
         }
 
         deserialize(rawNode);
@@ -450,14 +401,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           }
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.LinkGroupList.LinkGroupList.nodeName.length() + 3);
           return this.linkGroupList.get().getNodeAtPath(childXPath);
-        }
-        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.ExistingPerson.ExistingPerson.nodeName))
-        {
-          if(this.existingPerson.isEmpty()) {
-            this.existingPerson = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.ExistingPerson.ExistingPerson());
-          }
-          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.LocationGraphRule.NodeRule.ExistingPerson.ExistingPerson.nodeName.length() + 3);
-          return this.existingPerson.get().getNodeAtPath(childXPath);
         }
         return Optional.of(this);
     }
@@ -561,34 +504,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
                 ],
                 "isSingle": false,
                 "isNullable": true
-              }
-            },
-            "isNullable": true
-          },
-          "existing_person": {
-            "metaType": "object",
-            "attributes": {
-              "metaType": "object",
-              "value": {
-                "min": {
-                  "metaType": "primitive",
-                  "value": "xs:int",
-                  "isNullable": false
-                },
-                "max": {
-                  "metaType": "primitive",
-                  "value": "xs:int",
-                  "isNullable": true
-                }
-              }
-            },
-            "isSingle": true,
-            "value": {
-              "person_selection": {
-                "metaType": "reference",
-                "value": "type__person_selection",
-                "isSingle": true,
-                "isNullable": false
               }
             },
             "isNullable": true
