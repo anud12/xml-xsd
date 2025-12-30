@@ -66,45 +66,6 @@ namespace XSD.Nworld_step {
       }
     }
 
-    private XSD.Nworld_step.Ndata.people? _people = null;
-    public XSD.Nworld_step.Ndata.people peopleOrCreate
-    {
-      get
-      {
-        if(_people == null)
-        {
-          _people = new();
-          _people.ParentNode = this;
-          NotifyChange();
-        }
-        return _people;
-      }
-      set
-      {
-        _people = value;
-        if(value != null)
-        {
-          value.ParentNode = this;
-        }
-
-      }
-    }
-    public XSD.Nworld_step.Ndata.people? people
-    {
-      get
-      {
-        return _people;
-      }
-      set
-      {
-        _people = value;
-        if(value != null)
-        {
-          value.ParentNode = this;
-        }
-      }
-    }
-
     private XSD.Nworld_step.Ndata.location? _location = null;
     public XSD.Nworld_step.Ndata.location locationOrCreate
     {
@@ -208,11 +169,6 @@ namespace XSD.Nworld_step {
         this.entities = entities;
       }
 
-      if(linkedNode is XSD.Nworld_step.Ndata.people people)
-      {
-        this.people = people;
-      }
-
       if(linkedNode is XSD.Nworld_step.Ndata.location location)
       {
         this.location = location;
@@ -230,11 +186,6 @@ namespace XSD.Nworld_step {
       if(linkedNode is XSD.Nworld_step.Ndata.entities)
       {
         this.entities = null;
-      }
-
-      if(linkedNode is XSD.Nworld_step.Ndata.people)
-      {
-        this.people = null;
       }
 
       if(linkedNode is XSD.Nworld_step.Ndata.location)
@@ -277,8 +228,6 @@ namespace XSD.Nworld_step {
       //Deserialize children
       entities = rawNode.InitializeWithRawNode("entities", entities);
 
-      people = rawNode.InitializeWithRawNode("people", people);
-
       location = rawNode.InitializeWithRawNode("location", location);
 
       zone_list = rawNode.InitializeWithRawNode("zone_list", zone_list);
@@ -292,9 +241,6 @@ namespace XSD.Nworld_step {
       //Serialize children
       if(entities != null) {
         rawNode.children["entities"] = new List<RawNode> { entities.SerializeIntoRawNode() };
-      }
-      if(people != null) {
-        rawNode.children["people"] = new List<RawNode> { people.SerializeIntoRawNode() };
       }
       if(location != null) {
         rawNode.children["location"] = new List<RawNode> { location.SerializeIntoRawNode() };
@@ -324,13 +270,6 @@ namespace XSD.Nworld_step {
         this.entities ??= new XSD.Nworld_step.Ndata.entities();
         var childXPath = xpath.Substring(XSD.Nworld_step.Ndata.entities.TagName.Length + 3);
         this.entities.DeserializeAtPath(childXPath, rawNode);
-        return;
-      }
-      if(xpath.StartsWith(XSD.Nworld_step.Ndata.people.TagName))
-      {
-        this.people ??= new XSD.Nworld_step.Ndata.people();
-        var childXPath = xpath.Substring(XSD.Nworld_step.Ndata.people.TagName.Length + 3);
-        this.people.DeserializeAtPath(childXPath, rawNode);
         return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Ndata.location.TagName))
@@ -371,9 +310,6 @@ namespace XSD.Nworld_step {
       if(linkedNode is XSD.Nworld_step.Ndata.entities casted_entities) {
         return 0;
       }
-      if(linkedNode is XSD.Nworld_step.Ndata.people casted_people) {
-        return 0;
-      }
       if(linkedNode is XSD.Nworld_step.Ndata.location casted_location) {
         return 0;
       }
@@ -385,7 +321,6 @@ namespace XSD.Nworld_step {
 
     public bool IsValidChildType(ILinkedNode candidateChild) {
       return candidateChild is XSD.Nworld_step.Ndata.entities
-      || candidateChild is XSD.Nworld_step.Ndata.people
       || candidateChild is XSD.Nworld_step.Ndata.location
       || candidateChild is XSD.Nworld_step.Ndata.zone_list
       || false;
@@ -397,7 +332,7 @@ namespace XSD.Nworld_step {
             return false;
 
         var other = (data)obj;
-        return Equals(entities, other.entities) && Equals(people, other.people) && Equals(location, other.location) && Equals(zone_list, other.zone_list);
+        return Equals(entities, other.entities) && Equals(location, other.location) && Equals(zone_list, other.zone_list);
     }
 
     public override int GetHashCode()
@@ -405,7 +340,6 @@ namespace XSD.Nworld_step {
         var acc = 0;
 
         acc = HashCode.Combine(acc, entities);
-        acc = HashCode.Combine(acc, people);
         acc = HashCode.Combine(acc, location);
         acc = HashCode.Combine(acc, zone_list);
         return acc;

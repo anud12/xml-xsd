@@ -145,45 +145,6 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
         }
       }
     }
-
-    private XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.existing_person? _existing_person = null;
-    public XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.existing_person existing_personOrCreate
-    {
-      get
-      {
-        if(_existing_person == null)
-        {
-          _existing_person = new();
-          _existing_person.ParentNode = this;
-          NotifyChange();
-        }
-        return _existing_person;
-      }
-      set
-      {
-        _existing_person = value;
-        if(value != null)
-        {
-          value.ParentNode = this;
-        }
-
-      }
-    }
-    public XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.existing_person? existing_person
-    {
-      get
-      {
-        return _existing_person;
-      }
-      set
-      {
-        _existing_person = value;
-        if(value != null)
-        {
-          value.ParentNode = this;
-        }
-      }
-    }
     public node_rule()
     {
     }
@@ -224,11 +185,6 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
         this.link_group_list = link_group_list;
       }
 
-      if(linkedNode is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.existing_person existing_person)
-      {
-        this.existing_person = existing_person;
-      }
-
     }
 
     public void ClearChild(dynamic linkedNode)
@@ -246,11 +202,6 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
       if(linkedNode is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.link_group_list)
       {
         this.link_group_list = null;
-      }
-
-      if(linkedNode is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.existing_person)
-      {
-        this.existing_person = null;
       }
 
     }
@@ -291,8 +242,6 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
       classifications = rawNode.InitializeWithRawNode("classifications", classifications);
 
       link_group_list = rawNode.InitializeWithRawNode("link_group_list", link_group_list);
-
-      existing_person = rawNode.InitializeWithRawNode("existing_person", existing_person);
       NotifyChange();
     }
 
@@ -313,9 +262,6 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
       }
       if(link_group_list != null) {
         rawNode.children["link_group_list"] = new List<RawNode> { link_group_list.SerializeIntoRawNode() };
-      }
-      if(existing_person != null) {
-        rawNode.children["existing_person"] = new List<RawNode> { existing_person.SerializeIntoRawNode() };
       }
       return rawNode;
     }
@@ -364,13 +310,6 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
         this.link_group_list.DeserializeAtPath(childXPath, rawNode);
         return;
       }
-      if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.existing_person.TagName))
-      {
-        this.existing_person ??= new XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.existing_person();
-        var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.existing_person.TagName.Length + 3);
-        this.existing_person.DeserializeAtPath(childXPath, rawNode);
-        return;
-      }
 
       Deserialize(rawNode);
     }
@@ -401,9 +340,6 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
       if(linkedNode is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.link_group_list casted_link_group_list) {
         return 0;
       }
-      if(linkedNode is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.existing_person casted_existing_person) {
-        return 0;
-      }
       return null;
     }
 
@@ -411,7 +347,6 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
       return candidateChild is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.name
       || candidateChild is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.classifications
       || candidateChild is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.link_group_list
-      || candidateChild is XSD.Nworld_step.Nrule_group.Nlocation_graph_rule.Nnode_rule.existing_person
       || false;
     }
 
@@ -421,7 +356,7 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
             return false;
 
         var other = (node_rule)obj;
-        return Equals(id, other.id) && Equals(name, other.name) && Equals(classifications, other.classifications) && Equals(link_group_list, other.link_group_list) && Equals(existing_person, other.existing_person);
+        return Equals(id, other.id) && Equals(name, other.name) && Equals(classifications, other.classifications) && Equals(link_group_list, other.link_group_list);
     }
 
     public override int GetHashCode()
@@ -432,7 +367,6 @@ namespace XSD.Nworld_step.Nrule_group.Nlocation_graph_rule {
         acc = HashCode.Combine(acc, name);
         acc = HashCode.Combine(acc, classifications);
         acc = HashCode.Combine(acc, link_group_list);
-        acc = HashCode.Combine(acc, existing_person);
         return acc;
     }
   }

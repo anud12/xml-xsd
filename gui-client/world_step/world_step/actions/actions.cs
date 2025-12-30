@@ -28,22 +28,6 @@ namespace XSD.Nworld_step {
 
     //Children elements
 
-    private LinkedNodeCollection<XSD.Nworld_step.Nactions.by> _by = new();
-    public LinkedNodeCollection<XSD.Nworld_step.Nactions.by> by
-    {
-      get => _by;
-      set
-      {
-        _by = value;
-        value.ForEach(linkedNode => linkedNode.ParentNode = this);
-        _by.OnAdd = (value) =>
-        {
-          value.ParentNode = this;
-          NotifyChange();
-        };
-      }
-    }
-
     private LinkedNodeCollection<XSD.Nworld_step.Nactions.location_graph__create> _location_graph__create = new();
     public LinkedNodeCollection<XSD.Nworld_step.Nactions.location_graph__create> location_graph__create
     {
@@ -85,108 +69,6 @@ namespace XSD.Nworld_step {
         _location_graph__node__add_classification = value;
         value.ForEach(linkedNode => linkedNode.ParentNode = this);
         _location_graph__node__add_classification.OnAdd = (value) =>
-        {
-          value.ParentNode = this;
-          NotifyChange();
-        };
-      }
-    }
-    private XSD.Nworld_step.Nactions.person__teleport? _person__teleport = null;
-    public XSD.Nworld_step.Nactions.person__teleport person__teleportOrCreate
-    {
-      get
-      {
-        if(_person__teleport == null)
-        {
-          _person__teleport = new();
-          _person__teleport.ParentNode = this;
-          NotifyChange();
-        }
-        return _person__teleport;
-      }
-      set
-      {
-        _person__teleport = value;
-        if(value != null)
-        {
-          value.ParentNode = this;
-        }
-
-      }
-    }
-    public XSD.Nworld_step.Nactions.person__teleport? person__teleport
-    {
-      get
-      {
-        return _person__teleport;
-      }
-      set
-      {
-        _person__teleport = value;
-        if(value != null)
-        {
-          value.ParentNode = this;
-        }
-      }
-    }
-
-    private LinkedNodeCollection<XSD.Nworld_step.Nactions.person__on_person__property_mutation> _person__on_person__property_mutation = new();
-    public LinkedNodeCollection<XSD.Nworld_step.Nactions.person__on_person__property_mutation> person__on_person__property_mutation
-    {
-      get => _person__on_person__property_mutation;
-      set
-      {
-        _person__on_person__property_mutation = value;
-        value.ForEach(linkedNode => linkedNode.ParentNode = this);
-        _person__on_person__property_mutation.OnAdd = (value) =>
-        {
-          value.ParentNode = this;
-          NotifyChange();
-        };
-      }
-    }
-
-    private LinkedNodeCollection<XSD.Nworld_step.Nactions.person__create> _person__create = new();
-    public LinkedNodeCollection<XSD.Nworld_step.Nactions.person__create> person__create
-    {
-      get => _person__create;
-      set
-      {
-        _person__create = value;
-        value.ForEach(linkedNode => linkedNode.ParentNode = this);
-        _person__create.OnAdd = (value) =>
-        {
-          value.ParentNode = this;
-          NotifyChange();
-        };
-      }
-    }
-
-    private LinkedNodeCollection<XSD.Nworld_step.Nactions.person__move_to> _person__move_to = new();
-    public LinkedNodeCollection<XSD.Nworld_step.Nactions.person__move_to> person__move_to
-    {
-      get => _person__move_to;
-      set
-      {
-        _person__move_to = value;
-        value.ForEach(linkedNode => linkedNode.ParentNode = this);
-        _person__move_to.OnAdd = (value) =>
-        {
-          value.ParentNode = this;
-          NotifyChange();
-        };
-      }
-    }
-
-    private LinkedNodeCollection<XSD.Nworld_step.Nactions.from_person> _from_person = new();
-    public LinkedNodeCollection<XSD.Nworld_step.Nactions.from_person> from_person
-    {
-      get => _from_person;
-      set
-      {
-        _from_person = value;
-        value.ForEach(linkedNode => linkedNode.ParentNode = this);
-        _from_person.OnAdd = (value) =>
         {
           value.ParentNode = this;
           NotifyChange();
@@ -487,11 +369,6 @@ namespace XSD.Nworld_step {
     public void SetChild(dynamic linkedNode)
     {
 
-      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.by> by)
-      {
-        this.by = by;
-      }
-
       if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.location_graph__create> location_graph__create)
       {
         this.location_graph__create = location_graph__create;
@@ -505,31 +382,6 @@ namespace XSD.Nworld_step {
       if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.location_graph__node__add_classification> location_graph__node__add_classification)
       {
         this.location_graph__node__add_classification = location_graph__node__add_classification;
-      }
-      if(linkedNode is XSD.Nworld_step.Nactions.person__teleport person__teleport)
-      {
-        this.person__teleport = person__teleport;
-      }
-
-
-      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.person__on_person__property_mutation> person__on_person__property_mutation)
-      {
-        this.person__on_person__property_mutation = person__on_person__property_mutation;
-      }
-
-      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.person__create> person__create)
-      {
-        this.person__create = person__create;
-      }
-
-      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.person__move_to> person__move_to)
-      {
-        this.person__move_to = person__move_to;
-      }
-
-      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.from_person> from_person)
-      {
-        this.from_person = from_person;
       }
       if(linkedNode is XSD.Nworld_step.Nactions.zone__create zone__create)
       {
@@ -571,11 +423,6 @@ namespace XSD.Nworld_step {
     public void ClearChild(dynamic linkedNode)
     {
 
-      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.by>)
-      {
-        this.by = null;
-      }
-
       if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.location_graph__create>)
       {
         this.location_graph__create = null;
@@ -589,31 +436,6 @@ namespace XSD.Nworld_step {
       if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.location_graph__node__add_classification>)
       {
         this.location_graph__node__add_classification = null;
-      }
-      if(linkedNode is XSD.Nworld_step.Nactions.person__teleport)
-      {
-        this.person__teleport = null;
-      }
-
-
-      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.person__on_person__property_mutation>)
-      {
-        this.person__on_person__property_mutation = null;
-      }
-
-      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.person__create>)
-      {
-        this.person__create = null;
-      }
-
-      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.person__move_to>)
-      {
-        this.person__move_to = null;
-      }
-
-      if(linkedNode is LinkedNodeCollection<XSD.Nworld_step.Nactions.from_person>)
-      {
-        this.from_person = null;
       }
       if(linkedNode is XSD.Nworld_step.Nactions.zone__create)
       {
@@ -652,7 +474,6 @@ namespace XSD.Nworld_step {
 
     }
 
-
     public Action OnSelfChange(Action<actions> callback)
     {
       _onSelfChangeCallbackList.Add(callback);
@@ -679,12 +500,6 @@ namespace XSD.Nworld_step {
       //Deserialize arguments
 
       //Deserialize children
-      by = rawNode.InitializeWithRawNode("by", by);
-      by.OnAdd = (value) =>
-        {
-          value.ParentNode = this;
-          NotifyChange();
-        };
       location_graph__create = rawNode.InitializeWithRawNode("location_graph.create", location_graph__create);
       location_graph__create.OnAdd = (value) =>
         {
@@ -699,32 +514,6 @@ namespace XSD.Nworld_step {
         };
       location_graph__node__add_classification = rawNode.InitializeWithRawNode("location_graph.node.add_classification", location_graph__node__add_classification);
       location_graph__node__add_classification.OnAdd = (value) =>
-        {
-          value.ParentNode = this;
-          NotifyChange();
-        };
-      person__teleport = rawNode.InitializeWithRawNode("person.teleport", person__teleport);
-
-      person__on_person__property_mutation = rawNode.InitializeWithRawNode("person.on_person.property_mutation", person__on_person__property_mutation);
-      person__on_person__property_mutation.OnAdd = (value) =>
-        {
-          value.ParentNode = this;
-          NotifyChange();
-        };
-      person__create = rawNode.InitializeWithRawNode("person.create", person__create);
-      person__create.OnAdd = (value) =>
-        {
-          value.ParentNode = this;
-          NotifyChange();
-        };
-      person__move_to = rawNode.InitializeWithRawNode("person.move_to", person__move_to);
-      person__move_to.OnAdd = (value) =>
-        {
-          value.ParentNode = this;
-          NotifyChange();
-        };
-      from_person = rawNode.InitializeWithRawNode("from_person", from_person);
-      from_person.OnAdd = (value) =>
         {
           value.ParentNode = this;
           NotifyChange();
@@ -750,17 +539,9 @@ namespace XSD.Nworld_step {
       //Serialize arguments
 
       //Serialize children
-      rawNode.children["by"] = by.Select(x => x.SerializeIntoRawNode()).ToList();
       rawNode.children["location_graph.create"] = location_graph__create.Select(x => x.SerializeIntoRawNode()).ToList();
       rawNode.children["location_graph.node.create_adjacent"] = location_graph__node__create_adjacent.Select(x => x.SerializeIntoRawNode()).ToList();
       rawNode.children["location_graph.node.add_classification"] = location_graph__node__add_classification.Select(x => x.SerializeIntoRawNode()).ToList();
-      if(person__teleport != null) {
-        rawNode.children["person.teleport"] = new List<RawNode> { person__teleport.SerializeIntoRawNode() };
-      }
-      rawNode.children["person.on_person.property_mutation"] = person__on_person__property_mutation.Select(x => x.SerializeIntoRawNode()).ToList();
-      rawNode.children["person.create"] = person__create.Select(x => x.SerializeIntoRawNode()).ToList();
-      rawNode.children["person.move_to"] = person__move_to.Select(x => x.SerializeIntoRawNode()).ToList();
-      rawNode.children["from_person"] = from_person.Select(x => x.SerializeIntoRawNode()).ToList();
       if(zone__create != null) {
         rawNode.children["zone.create"] = new List<RawNode> { zone__create.SerializeIntoRawNode() };
       }
@@ -798,25 +579,6 @@ namespace XSD.Nworld_step {
       if(xpath.StartsWith("."))
       {
         xpath = xpath.Substring(1);
-      }
-      if(xpath.StartsWith(XSD.Nworld_step.Nactions.by.TagName + "["))
-      {
-        var startIndex = (XSD.Nworld_step.Nactions.by.TagName + "[").Length;
-        var startTokens = xpath.Split(XSD.Nworld_step.Nactions.by.TagName + "[");
-        var endToken = startTokens[1].Split("]");
-        var indexString = endToken[0];
-        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Nactions.by.TagName + "[" + indexString + "]", "");
-        var pathIndex = indexString.ToInt();
-        if(this.by.ContainsKey(pathIndex))
-        {
-          this.by[pathIndex].DeserializeAtPath(childXPath, rawNode);
-          return;
-        }
-        var newEntry = new XSD.Nworld_step.Nactions.by();
-        this.by[pathIndex] = newEntry;
-        newEntry.DeserializeAtPath(childXPath, rawNode);
-
-        return;
       }
       if(xpath.StartsWith(XSD.Nworld_step.Nactions.location_graph__create.TagName + "["))
       {
@@ -871,89 +633,6 @@ namespace XSD.Nworld_step {
         }
         var newEntry = new XSD.Nworld_step.Nactions.location_graph__node__add_classification();
         this.location_graph__node__add_classification[pathIndex] = newEntry;
-        newEntry.DeserializeAtPath(childXPath, rawNode);
-
-        return;
-      }
-      if(xpath.StartsWith(XSD.Nworld_step.Nactions.person__teleport.TagName))
-      {
-        this.person__teleport ??= new XSD.Nworld_step.Nactions.person__teleport();
-        var childXPath = xpath.Substring(XSD.Nworld_step.Nactions.person__teleport.TagName.Length + 3);
-        this.person__teleport.DeserializeAtPath(childXPath, rawNode);
-        return;
-      }
-      if(xpath.StartsWith(XSD.Nworld_step.Nactions.person__on_person__property_mutation.TagName + "["))
-      {
-        var startIndex = (XSD.Nworld_step.Nactions.person__on_person__property_mutation.TagName + "[").Length;
-        var startTokens = xpath.Split(XSD.Nworld_step.Nactions.person__on_person__property_mutation.TagName + "[");
-        var endToken = startTokens[1].Split("]");
-        var indexString = endToken[0];
-        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Nactions.person__on_person__property_mutation.TagName + "[" + indexString + "]", "");
-        var pathIndex = indexString.ToInt();
-        if(this.person__on_person__property_mutation.ContainsKey(pathIndex))
-        {
-          this.person__on_person__property_mutation[pathIndex].DeserializeAtPath(childXPath, rawNode);
-          return;
-        }
-        var newEntry = new XSD.Nworld_step.Nactions.person__on_person__property_mutation();
-        this.person__on_person__property_mutation[pathIndex] = newEntry;
-        newEntry.DeserializeAtPath(childXPath, rawNode);
-
-        return;
-      }
-      if(xpath.StartsWith(XSD.Nworld_step.Nactions.person__create.TagName + "["))
-      {
-        var startIndex = (XSD.Nworld_step.Nactions.person__create.TagName + "[").Length;
-        var startTokens = xpath.Split(XSD.Nworld_step.Nactions.person__create.TagName + "[");
-        var endToken = startTokens[1].Split("]");
-        var indexString = endToken[0];
-        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Nactions.person__create.TagName + "[" + indexString + "]", "");
-        var pathIndex = indexString.ToInt();
-        if(this.person__create.ContainsKey(pathIndex))
-        {
-          this.person__create[pathIndex].DeserializeAtPath(childXPath, rawNode);
-          return;
-        }
-        var newEntry = new XSD.Nworld_step.Nactions.person__create();
-        this.person__create[pathIndex] = newEntry;
-        newEntry.DeserializeAtPath(childXPath, rawNode);
-
-        return;
-      }
-      if(xpath.StartsWith(XSD.Nworld_step.Nactions.person__move_to.TagName + "["))
-      {
-        var startIndex = (XSD.Nworld_step.Nactions.person__move_to.TagName + "[").Length;
-        var startTokens = xpath.Split(XSD.Nworld_step.Nactions.person__move_to.TagName + "[");
-        var endToken = startTokens[1].Split("]");
-        var indexString = endToken[0];
-        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Nactions.person__move_to.TagName + "[" + indexString + "]", "");
-        var pathIndex = indexString.ToInt();
-        if(this.person__move_to.ContainsKey(pathIndex))
-        {
-          this.person__move_to[pathIndex].DeserializeAtPath(childXPath, rawNode);
-          return;
-        }
-        var newEntry = new XSD.Nworld_step.Nactions.person__move_to();
-        this.person__move_to[pathIndex] = newEntry;
-        newEntry.DeserializeAtPath(childXPath, rawNode);
-
-        return;
-      }
-      if(xpath.StartsWith(XSD.Nworld_step.Nactions.from_person.TagName + "["))
-      {
-        var startIndex = (XSD.Nworld_step.Nactions.from_person.TagName + "[").Length;
-        var startTokens = xpath.Split(XSD.Nworld_step.Nactions.from_person.TagName + "[");
-        var endToken = startTokens[1].Split("]");
-        var indexString = endToken[0];
-        var childXPath = xpath.ReplaceFirst(XSD.Nworld_step.Nactions.from_person.TagName + "[" + indexString + "]", "");
-        var pathIndex = indexString.ToInt();
-        if(this.from_person.ContainsKey(pathIndex))
-        {
-          this.from_person[pathIndex].DeserializeAtPath(childXPath, rawNode);
-          return;
-        }
-        var newEntry = new XSD.Nworld_step.Nactions.from_person();
-        this.from_person[pathIndex] = newEntry;
         newEntry.DeserializeAtPath(childXPath, rawNode);
 
         return;
@@ -1028,9 +707,6 @@ namespace XSD.Nworld_step {
 
     public int? BuildIndexForChild(ILinkedNode linkedNode)
     {
-      if(linkedNode is XSD.Nworld_step.Nactions.by casted_by) {
-        return this._by.KeyOf(casted_by);
-      }
       if(linkedNode is XSD.Nworld_step.Nactions.location_graph__create casted_location_graph__create) {
         return this._location_graph__create.KeyOf(casted_location_graph__create);
       }
@@ -1039,21 +715,6 @@ namespace XSD.Nworld_step {
       }
       if(linkedNode is XSD.Nworld_step.Nactions.location_graph__node__add_classification casted_location_graph__node__add_classification) {
         return this._location_graph__node__add_classification.KeyOf(casted_location_graph__node__add_classification);
-      }
-      if(linkedNode is XSD.Nworld_step.Nactions.person__teleport casted_person__teleport) {
-        return 0;
-      }
-      if(linkedNode is XSD.Nworld_step.Nactions.person__on_person__property_mutation casted_person__on_person__property_mutation) {
-        return this._person__on_person__property_mutation.KeyOf(casted_person__on_person__property_mutation);
-      }
-      if(linkedNode is XSD.Nworld_step.Nactions.person__create casted_person__create) {
-        return this._person__create.KeyOf(casted_person__create);
-      }
-      if(linkedNode is XSD.Nworld_step.Nactions.person__move_to casted_person__move_to) {
-        return this._person__move_to.KeyOf(casted_person__move_to);
-      }
-      if(linkedNode is XSD.Nworld_step.Nactions.from_person casted_from_person) {
-        return this._from_person.KeyOf(casted_from_person);
       }
       if(linkedNode is XSD.Nworld_step.Nactions.zone__create casted_zone__create) {
         return 0;
@@ -1080,15 +741,9 @@ namespace XSD.Nworld_step {
     }
 
     public bool IsValidChildType(ILinkedNode candidateChild) {
-      return candidateChild is XSD.Nworld_step.Nactions.by
-      || candidateChild is XSD.Nworld_step.Nactions.location_graph__create
+      return candidateChild is XSD.Nworld_step.Nactions.location_graph__create
       || candidateChild is XSD.Nworld_step.Nactions.location_graph__node__create_adjacent
       || candidateChild is XSD.Nworld_step.Nactions.location_graph__node__add_classification
-      || candidateChild is XSD.Nworld_step.Nactions.person__teleport
-      || candidateChild is XSD.Nworld_step.Nactions.person__on_person__property_mutation
-      || candidateChild is XSD.Nworld_step.Nactions.person__create
-      || candidateChild is XSD.Nworld_step.Nactions.person__move_to
-      || candidateChild is XSD.Nworld_step.Nactions.from_person
       || candidateChild is XSD.Nworld_step.Nactions.zone__create
       || candidateChild is XSD.Nworld_step.Nactions.region__appendNew
       || candidateChild is XSD.Nworld_step.Nactions.region__resolvePortals
@@ -1105,22 +760,16 @@ namespace XSD.Nworld_step {
             return false;
 
         var other = (actions)obj;
-        return Equals(by, other.by) && Equals(location_graph__create, other.location_graph__create) && Equals(location_graph__node__create_adjacent, other.location_graph__node__create_adjacent) && Equals(location_graph__node__add_classification, other.location_graph__node__add_classification) && Equals(person__teleport, other.person__teleport) && Equals(person__on_person__property_mutation, other.person__on_person__property_mutation) && Equals(person__create, other.person__create) && Equals(person__move_to, other.person__move_to) && Equals(from_person, other.from_person) && Equals(zone__create, other.zone__create) && Equals(region__appendNew, other.region__appendNew) && Equals(region__resolvePortals, other.region__resolvePortals) && Equals(region__teleportEntity, other.region__teleportEntity) && Equals(entity__create, other.entity__create) && Equals(container__addOnEntity, other.container__addOnEntity) && Equals(operation__echo, other.operation__echo);
+        return Equals(location_graph__create, other.location_graph__create) && Equals(location_graph__node__create_adjacent, other.location_graph__node__create_adjacent) && Equals(location_graph__node__add_classification, other.location_graph__node__add_classification) && Equals(zone__create, other.zone__create) && Equals(region__appendNew, other.region__appendNew) && Equals(region__resolvePortals, other.region__resolvePortals) && Equals(region__teleportEntity, other.region__teleportEntity) && Equals(entity__create, other.entity__create) && Equals(container__addOnEntity, other.container__addOnEntity) && Equals(operation__echo, other.operation__echo);
     }
 
     public override int GetHashCode()
     {
         var acc = 0;
 
-        acc = HashCode.Combine(acc, by);
         acc = HashCode.Combine(acc, location_graph__create);
         acc = HashCode.Combine(acc, location_graph__node__create_adjacent);
         acc = HashCode.Combine(acc, location_graph__node__add_classification);
-        acc = HashCode.Combine(acc, person__teleport);
-        acc = HashCode.Combine(acc, person__on_person__property_mutation);
-        acc = HashCode.Combine(acc, person__create);
-        acc = HashCode.Combine(acc, person__move_to);
-        acc = HashCode.Combine(acc, from_person);
         acc = HashCode.Combine(acc, zone__create);
         acc = HashCode.Combine(acc, region__appendNew);
         acc = HashCode.Combine(acc, region__resolvePortals);

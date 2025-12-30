@@ -463,6 +463,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
                 "value": {
                   "link_to": {
                     "metaType": "object",
+                    "value": {},
+                    "isSingle": false,
+                    "isNullable": true,
                     "attributes": {
                       "metaType": "object",
                       "value": {
@@ -477,68 +480,6 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
                           "isNullable": false
                         }
                       }
-                    },
-                    "isSingle": false,
-                    "value": {
-                      "people": {
-                        "metaType": "object",
-                        "isSingle": true,
-                        "value": {
-                          "person": {
-                            "metaType": "object",
-                            "value": {},
-                            "isSingle": false,
-                            "isNullable": true,
-                            "attributes": {
-                              "metaType": "object",
-                              "value": {
-                                "person_id_ref": {
-                                  "metaType": "primitive",
-                                  "value": "xs:string",
-                                  "isNullable": false
-                                },
-                                "accumulated_progress": {
-                                  "metaType": "primitive",
-                                  "value": "xs:int",
-                                  "isNullable": false
-                                }
-                              }
-                            }
-                          }
-                        },
-                        "isNullable": true
-                      },
-                      "person_progress_property": {
-                        "metaType": "reference",
-                        "value": "type__math_operations",
-                        "isSingle": true,
-                        "isNullable": true
-                      }
-                    },
-                    "isNullable": true
-                  }
-                },
-                "isNullable": true
-              },
-              "people": {
-                "metaType": "object",
-                "isSingle": true,
-                "value": {
-                  "person": {
-                    "metaType": "object",
-                    "value": {},
-                    "isSingle": false,
-                    "isNullable": true,
-                    "attributes": {
-                      "metaType": "object",
-                      "value": {
-                        "person_id_ref": {
-                          "metaType": "primitive",
-                          "value": "xs:string",
-                          "isNullable": false
-                        }
-                      },
-                      "isNullable": false
                     }
                   }
                 },

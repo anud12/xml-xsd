@@ -4,7 +4,6 @@ import lombok.Setter;
 import org.springframework.web.socket.TextMessage;
 import ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entity.Entity;
-import ro.anud.xml_xsd.implementation.model.WorldStep.Data.People.Person.Person;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.Counter.Counter;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.ElapsedTime.ElapsedTime;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.RandomizationTable.Entry.Entry;
@@ -16,7 +15,6 @@ import ro.anud.xml_xsd.implementation.repository.RuleRepository;
 import ro.anud.xml_xsd.implementation.service.entity.EntityInstance;
 import ro.anud.xml_xsd.implementation.service.location_graph.LocationGraphInstance;
 import ro.anud.xml_xsd.implementation.service.name.NameInstance;
-import ro.anud.xml_xsd.implementation.service.person.PersonInstance;
 import ro.anud.xml_xsd.implementation.service.region.RegionInstance;
 import ro.anud.xml_xsd.implementation.service.util.ComputeOperation;
 import ro.anud.xml_xsd.implementation.service.zone.ZoneInstance;
@@ -69,7 +67,6 @@ public class WorldStepInstance {
     private Optional<WorldStep> worldStep = Optional.empty();
     private Optional<WebSocketHandler> webSocketHandler = Optional.empty();
     public final RuleRepository ruleRepository = new RuleRepository(this);
-    public final PersonInstance person = new PersonInstance(this);
     public final PropertyInstance property = new PropertyInstance(this);
     public final LocationGraphInstance locationGraph = new LocationGraphInstance(this);
     public final NameInstance name = new NameInstance(this);
@@ -87,7 +84,6 @@ public class WorldStepInstance {
     public WorldStepInstance index() {
         try (var scope = logScope()) {
             ruleRepository.index();
-            person.index();
             property.index();
             locationGraph.index();
             name.index();
@@ -166,13 +162,6 @@ public class WorldStepInstance {
         return outInstance;
     }
 
-    public <T extends IType_mathOperations<?>> Optional<Integer> computeOperation(
-        T typeMathOperations,
-        Person person) {
-        try (var scope = logScope()) {
-            return scope.logReturn(ComputeOperation.computeOperation(this, typeMathOperations, person));
-        }
-    }
 
     public <T extends IType_mathOperations<?>> Optional<Integer> computeOperation(
             T typeMathOperations,
@@ -181,13 +170,7 @@ public class WorldStepInstance {
             return scope.logReturn(ComputeOperation.computeOperation(this, typeMathOperations, entity));
         }
     }
-    public Optional<Integer> computeOperation(
-            Type_mathOperations typeMathOperations,
-            Person person) {
-        try (var scope = logScope()) {
-            return scope.logReturn(ComputeOperation.computeOperation(this, typeMathOperations, person));
-        }
-    }
+
     public Optional<Integer> computeOperation(Type_mathOperations typeMathOperations) {
         try (var scope = logScope()) {
             return scope.logReturn(ComputeOperation.computeOperation(this, typeMathOperations));

@@ -31,12 +31,6 @@ public class CreateLinkTo {
             var linkTo = new LinkTo()
                     .setNodeIdRef(node.getId())
                     .setTotalProgress((int) totalProgress);
-            logger.log("setting personProgressProperty");
-            var personProgressProperty = toOption.getPersonProgressProperty();
-            if (personProgressProperty.isEmpty()) {
-                logger.log("personProgressProperty is empty");
-            }
-            toOption.getPersonProgressProperty().ifPresent(linkTo::setPersonProgressProperty);
 
             return logger.logReturn(Optional.of(linkTo));
         }

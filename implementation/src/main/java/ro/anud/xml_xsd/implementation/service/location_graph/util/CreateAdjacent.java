@@ -92,7 +92,7 @@ public class CreateAdjacent {
                 return Optional.empty();
             }
             var result = resultOptional.get();
-            var newGraphNode = result.node();
+            var newGraphNode = result;
 
             logger.logTodo("use random between int for distance");
             var adjacentDistanceMin = toOptionElement.getDistance();
@@ -108,8 +108,6 @@ public class CreateAdjacent {
                 try (var outLogger = logScope()) {
                     var outNodeGraphElement = outInstance.locationGraph.nodeRepository.getNodeOrDefault(nodeGraphElement);
                     var outAdjacentNodes = adjacentNodes.stream().map(outInstance.locationGraph.nodeRepository::getNodeOrDefault);
-
-                    result.personList().forEach(outInstance.person.repository::getOrCreate);
 
                     createLinkTo(worldStepInstance, toOptionElement, outNodeGraphElement, newGraphNode)
                             .ifPresent(linkTo -> newGraphNode.getLinksOrDefault().addLinkTo(linkTo));

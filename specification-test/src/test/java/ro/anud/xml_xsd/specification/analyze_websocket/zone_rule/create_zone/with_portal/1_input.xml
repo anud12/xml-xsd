@@ -39,7 +39,6 @@
   </rule_group>
   <data>
     <location/>
-    <people/>
   </data>
   <actions>
     <zone.create zone_rule_ref="zone_rule"/>
