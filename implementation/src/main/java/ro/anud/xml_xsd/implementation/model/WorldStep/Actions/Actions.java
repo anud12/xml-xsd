@@ -88,6 +88,8 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals> region_resolvePortals = Optional.empty();
     @Builder.Default
+    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_teleportEntity.Region_teleportEntity> region_teleportEntity = Optional.empty();
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create> entity_create = Optional.empty();
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Container_addOnEntity.Container_addOnEntity> container_addOnEntity = Optional.empty();
@@ -209,6 +211,10 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           this.region_resolvePortals = Optional.empty();
           notifyChange();
         }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_teleportEntity.Region_teleportEntity) {
+          this.region_teleportEntity = Optional.empty();
+          notifyChange();
+        }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create) {
           this.entity_create = Optional.empty();
           notifyChange();
@@ -258,6 +264,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           return 0;
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals) {
+          return 0;
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_teleportEntity.Region_teleportEntity) {
           return 0;
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create) {
@@ -310,6 +319,7 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           this.zone_create = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Zone_create.Zone_create.fromRawNode(rawNode.getChildrenFirst("zone.create"), this);
           this.region_appendNew = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_appendNew.Region_appendNew.fromRawNode(rawNode.getChildrenFirst("region.appendNew"), this);
           this.region_resolvePortals = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals.fromRawNode(rawNode.getChildrenFirst("region.resolvePortals"), this);
+          this.region_teleportEntity = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_teleportEntity.Region_teleportEntity.fromRawNode(rawNode.getChildrenFirst("region.teleportEntity"), this);
           this.entity_create = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create.fromRawNode(rawNode.getChildrenFirst("entity.create"), this);
           this.container_addOnEntity = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Container_addOnEntity.Container_addOnEntity.fromRawNode(rawNode.getChildrenFirst("container.addOnEntity"), this);
           this.operation_echo = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Operation_echo.Operation_echo.fromRawNode(rawNode.getChildrenFirst("operation.echo"), this);
@@ -358,6 +368,8 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           rawNode.setChildren("region.appendNew", region_appendNew.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_appendNew.Region_appendNew::serializeIntoRawNode).toList());
           innerLogger.log("region.resolvePortals");
           rawNode.setChildren("region.resolvePortals", region_resolvePortals.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals::serializeIntoRawNode).toList());
+          innerLogger.log("region.teleportEntity");
+          rawNode.setChildren("region.teleportEntity", region_teleportEntity.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_teleportEntity.Region_teleportEntity::serializeIntoRawNode).toList());
           innerLogger.log("entity.create");
           rawNode.setChildren("entity.create", entity_create.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create::serializeIntoRawNode).toList());
           innerLogger.log("container.addOnEntity");
@@ -699,6 +711,35 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       return this;
     }
 
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_teleportEntity.Region_teleportEntity> getRegion_teleportEntity()
+    {
+      return this.region_teleportEntity;
+    }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_teleportEntity.Region_teleportEntity getRegion_teleportEntityOrDefault()
+    {
+      return this.region_teleportEntity.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_teleportEntity.Region_teleportEntity();
+        this.region_teleportEntity = Optional.of(instance);
+        instance.parentNode(this);
+        return this.region_teleportEntity.get();
+      });
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_teleportEntity.Region_teleportEntity> streamRegion_teleportEntityOrDefault()
+    {
+      return java.util.stream.Stream.of(getRegion_teleportEntityOrDefault());
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_teleportEntity.Region_teleportEntity> streamRegion_teleportEntity()
+    {
+      return region_teleportEntity.stream();
+    }
+    public Actions setRegion_teleportEntity(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_teleportEntity.Region_teleportEntity value)
+    {
+      this.region_teleportEntity = Optional.ofNullable(value);
+      value.parentNode(this);
+      notifyChange();
+      return this;
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create> getEntity_create()
     {
       return this.entity_create;
@@ -959,6 +1000,14 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals.nodeName.length() + 3);
           return this.region_resolvePortals.get().deserializeAtPath(childXPath, rawNode);
         }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_teleportEntity.Region_teleportEntity.nodeName))
+        {
+          if(this.region_teleportEntity.isEmpty()) {
+            this.region_teleportEntity = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_teleportEntity.Region_teleportEntity());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_teleportEntity.Region_teleportEntity.nodeName.length() + 3);
+          return this.region_teleportEntity.get().deserializeAtPath(childXPath, rawNode);
+        }
         if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create.nodeName))
         {
           if(this.entity_create.isEmpty()) {
@@ -1120,6 +1169,14 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           }
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals.nodeName.length() + 3);
           return this.region_resolvePortals.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_teleportEntity.Region_teleportEntity.nodeName))
+        {
+          if(this.region_teleportEntity.isEmpty()) {
+            this.region_teleportEntity = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_teleportEntity.Region_teleportEntity());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_teleportEntity.Region_teleportEntity.nodeName.length() + 3);
+          return this.region_teleportEntity.get().getNodeAtPath(childXPath);
         }
         if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create.nodeName))
         {
@@ -1596,6 +1653,42 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
                 "region_id_ref": {
                   "metaType": "primitive",
                   "value": "xs:string",
+                  "isNullable": false
+                }
+              }
+            }
+          },
+          "region.teleportEntity": {
+            "metaType": "object",
+            "value": {},
+            "isSingle": true,
+            "isNullable": true,
+            "attributes": {
+              "metaType": "object",
+              "value": {
+                "zone_id_ref": {
+                  "metaType": "primitive",
+                  "value": "xs:string",
+                  "isNullable": false
+                },
+                "region_id_ref": {
+                  "metaType": "primitive",
+                  "value": "xs:string",
+                  "isNullable": false
+                },
+                "entity_id_ref": {
+                  "metaType": "primitive",
+                  "value": "xs:string",
+                  "isNullable": false
+                },
+                "x": {
+                  "metaType": "primitive",
+                  "value": "xs:int",
+                  "isNullable": false
+                },
+                "y": {
+                  "metaType": "primitive",
+                  "value": "xs:int",
                   "isNullable": false
                 }
               }

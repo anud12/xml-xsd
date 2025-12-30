@@ -15,6 +15,7 @@ import ro.anud.xml_xsd.implementation.middleware.person.PersonMoveTo;
 import ro.anud.xml_xsd.implementation.middleware.person.PersonTeleportTo;
 import ro.anud.xml_xsd.implementation.middleware.region.RegionAppendAction;
 import ro.anud.xml_xsd.implementation.middleware.zone.ZoneCreateAction;
+import ro.anud.xml_xsd.implementation.middleware.zone.ZoneTeleportEntity;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.Counter.Counter;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.WorldMetadata;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
@@ -65,6 +66,7 @@ public class WorldStepRunner {
         PersonMoveTo.apply(worldStepInstance);
         PersonTeleportTo.apply(worldStepInstance);
         EventsMetadata.apply(worldStepInstance);
+        ZoneTeleportEntity.zoneTeleportEntity(worldStepInstance);
         LocationGraphAddClassification.locationGraphAddClassification(worldStepInstance);
         PersonAssignClassification.apply(worldStepInstance);
         try (var scope = logScope("Applying counter synchronization to WorldStepInstance")) {

@@ -4,16 +4,17 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entit
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.Entry;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
-import ro.anud.xml_xsd.implementation.service.Index;
+import ro.anud.xml_xsd.implementation.util.repository.NonNullableIndex;
 import ro.anud.xml_xsd.implementation.service.Repository;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
+import ro.anud.xml_xsd.implementation.util.repository.NullableIndex;
 
 import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class EntityRuleRepository implements Repository<Entry> {
     final WorldStepInstance worldStepInstance;
 
-    public final Index<String, Entry> byName = Index.of(Entry.class, Entry::getName);
+    public final NullableIndex<String, Entry, Entry> byName = NullableIndex.ofNullable(Entry.class, Entry::getName);
 
     public EntityRuleRepository(WorldStepInstance worldStepInstance) {
         this.worldStepInstance = worldStepInstance;
@@ -27,7 +28,7 @@ public class EntityRuleRepository implements Repository<Entry> {
                     .flatMap(RuleGroup::streamEntityRule)
                     .flatMap(EntityRule::streamEntry)
                     .toList();
-            byName.index(ruleList);
+            byName.reIndex(ruleList);
         }
     }
 
@@ -36,8 +37,4 @@ public class EntityRuleRepository implements Repository<Entry> {
         byName.addListeners(worldStepInstance);
     }
 
-    @Override
-    public Entry getOrDefault(Entry entry) {
-        return entry.of();
-    }
 }

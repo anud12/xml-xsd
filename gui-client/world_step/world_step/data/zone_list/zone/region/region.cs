@@ -223,6 +223,45 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone {
         }
       }
     }
+
+    private XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.entity_list? _entity_list = null;
+    public XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.entity_list entity_listOrCreate
+    {
+      get
+      {
+        if(_entity_list == null)
+        {
+          _entity_list = new();
+          _entity_list.ParentNode = this;
+          NotifyChange();
+        }
+        return _entity_list;
+      }
+      set
+      {
+        _entity_list = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.entity_list? entity_list
+    {
+      get
+      {
+        return _entity_list;
+      }
+      set
+      {
+        _entity_list = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
     public region()
     {
     }
@@ -273,6 +312,11 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone {
         this.portals = portals;
       }
 
+      if(linkedNode is XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.entity_list entity_list)
+      {
+        this.entity_list = entity_list;
+      }
+
     }
 
     public void ClearChild(dynamic linkedNode)
@@ -300,6 +344,11 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone {
       if(linkedNode is XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.portals)
       {
         this.portals = null;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.entity_list)
+      {
+        this.entity_list = null;
       }
 
     }
@@ -344,6 +393,8 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone {
       available_portals = rawNode.InitializeWithRawNode("available_portals", available_portals);
 
       portals = rawNode.InitializeWithRawNode("portals", portals);
+
+      entity_list = rawNode.InitializeWithRawNode("entity_list", entity_list);
       NotifyChange();
     }
 
@@ -370,6 +421,9 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone {
       }
       if(portals != null) {
         rawNode.children["portals"] = new List<RawNode> { portals.SerializeIntoRawNode() };
+      }
+      if(entity_list != null) {
+        rawNode.children["entity_list"] = new List<RawNode> { entity_list.SerializeIntoRawNode() };
       }
       return rawNode;
     }
@@ -429,6 +483,13 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone {
         this.portals.DeserializeAtPath(childXPath, rawNode);
         return;
       }
+      if(xpath.StartsWith(XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.entity_list.TagName))
+      {
+        this.entity_list ??= new XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.entity_list();
+        var childXPath = xpath.Substring(XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.entity_list.TagName.Length + 3);
+        this.entity_list.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
 
       Deserialize(rawNode);
     }
@@ -465,6 +526,9 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone {
       if(linkedNode is XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.portals casted_portals) {
         return 0;
       }
+      if(linkedNode is XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.entity_list casted_entity_list) {
+        return 0;
+      }
       return null;
     }
 
@@ -474,6 +538,7 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone {
       || candidateChild is XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.limit
       || candidateChild is XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.available_portals
       || candidateChild is XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.portals
+      || candidateChild is XSD.Nworld_step.Ndata.Nzone_list.Nzone.Nregion.entity_list
       || false;
     }
 
@@ -483,7 +548,7 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone {
             return false;
 
         var other = (region)obj;
-        return Equals(id, other.id) && Equals(rule, other.rule) && Equals(position, other.position) && Equals(limit, other.limit) && Equals(available_portals, other.available_portals) && Equals(portals, other.portals);
+        return Equals(id, other.id) && Equals(rule, other.rule) && Equals(position, other.position) && Equals(limit, other.limit) && Equals(available_portals, other.available_portals) && Equals(portals, other.portals) && Equals(entity_list, other.entity_list);
     }
 
     public override int GetHashCode()
@@ -496,6 +561,7 @@ namespace XSD.Nworld_step.Ndata.Nzone_list.Nzone {
         acc = HashCode.Combine(acc, limit);
         acc = HashCode.Combine(acc, available_portals);
         acc = HashCode.Combine(acc, portals);
+        acc = HashCode.Combine(acc, entity_list);
         return acc;
     }
   }

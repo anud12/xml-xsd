@@ -2192,6 +2192,52 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
                               }
                             },
                             "isNullable": true
+                          },
+                          "entity_list": {
+                            "metaType": "object",
+                            "isSingle": true,
+                            "value": {
+                              "entity": {
+                                "metaType": "object",
+                                "attributes": {
+                                  "metaType": "object",
+                                  "value": {
+                                    "entity_id_ref": {
+                                      "metaType": "primitive",
+                                      "value": "xs:string",
+                                      "isNullable": false
+                                    }
+                                  },
+                                  "isNullable": false
+                                },
+                                "isSingle": false,
+                                "value": {
+                                  "position": {
+                                    "metaType": "object",
+                                    "value": {},
+                                    "isSingle": true,
+                                    "isNullable": false,
+                                    "attributes": {
+                                      "metaType": "object",
+                                      "value": {
+                                        "x": {
+                                          "metaType": "primitive",
+                                          "value": "xs:integer",
+                                          "isNullable": false
+                                        },
+                                        "y": {
+                                          "metaType": "primitive",
+                                          "value": "xs:integer",
+                                          "isNullable": false
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "isNullable": true
+                              }
+                            },
+                            "isNullable": true
                           }
                         },
                         "isNullable": true
@@ -2647,6 +2693,42 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
                     "region_id_ref": {
                       "metaType": "primitive",
                       "value": "xs:string",
+                      "isNullable": false
+                    }
+                  }
+                }
+              },
+              "region.teleportEntity": {
+                "metaType": "object",
+                "value": {},
+                "isSingle": true,
+                "isNullable": true,
+                "attributes": {
+                  "metaType": "object",
+                  "value": {
+                    "zone_id_ref": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
+                    },
+                    "region_id_ref": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
+                    },
+                    "entity_id_ref": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
+                    },
+                    "x": {
+                      "metaType": "primitive",
+                      "value": "xs:int",
+                      "isNullable": false
+                    },
+                    "y": {
+                      "metaType": "primitive",
+                      "value": "xs:int",
                       "isNullable": false
                     }
                   }
@@ -4477,6 +4559,52 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
                                 }
                               },
                               "isNullable": true
+                            },
+                            "entity_list": {
+                              "metaType": "object",
+                              "isSingle": true,
+                              "value": {
+                                "entity": {
+                                  "metaType": "object",
+                                  "attributes": {
+                                    "metaType": "object",
+                                    "value": {
+                                      "entity_id_ref": {
+                                        "metaType": "primitive",
+                                        "value": "xs:string",
+                                        "isNullable": false
+                                      }
+                                    },
+                                    "isNullable": false
+                                  },
+                                  "isSingle": false,
+                                  "value": {
+                                    "position": {
+                                      "metaType": "object",
+                                      "value": {},
+                                      "isSingle": true,
+                                      "isNullable": false,
+                                      "attributes": {
+                                        "metaType": "object",
+                                        "value": {
+                                          "x": {
+                                            "metaType": "primitive",
+                                            "value": "xs:integer",
+                                            "isNullable": false
+                                          },
+                                          "y": {
+                                            "metaType": "primitive",
+                                            "value": "xs:integer",
+                                            "isNullable": false
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "isNullable": true
+                                }
+                              },
+                              "isNullable": true
                             }
                           },
                           "isNullable": true
@@ -4932,6 +5060,42 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
                       "region_id_ref": {
                         "metaType": "primitive",
                         "value": "xs:string",
+                        "isNullable": false
+                      }
+                    }
+                  }
+                },
+                "region.teleportEntity": {
+                  "metaType": "object",
+                  "value": {},
+                  "isSingle": true,
+                  "isNullable": true,
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "zone_id_ref": {
+                        "metaType": "primitive",
+                        "value": "xs:string",
+                        "isNullable": false
+                      },
+                      "region_id_ref": {
+                        "metaType": "primitive",
+                        "value": "xs:string",
+                        "isNullable": false
+                      },
+                      "entity_id_ref": {
+                        "metaType": "primitive",
+                        "value": "xs:string",
+                        "isNullable": false
+                      },
+                      "x": {
+                        "metaType": "primitive",
+                        "value": "xs:int",
+                        "isNullable": false
+                      },
+                      "y": {
+                        "metaType": "primitive",
+                        "value": "xs:int",
                         "isNullable": false
                       }
                     }
