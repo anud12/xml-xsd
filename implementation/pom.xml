@@ -28,6 +28,7 @@
   </scm>
   <properties>
     <java.version>21</java.version>
+    <graaljs.version>24.1.0</graaljs.version>
   </properties>
   <dependencies>
     <dependency>
@@ -76,12 +77,19 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-websocket</artifactId>
     </dependency>
-<!--    <dependency>-->
-<!--      <groupId>org.reflections</groupId>-->
-<!--      <artifactId>reflections</artifactId>-->
-<!--      <version>0.10.2</version>-->
-<!--    </dependency>-->
 
+
+    <dependency>
+      <groupId>org.graalvm.polyglot</groupId>
+      <artifactId>polyglot</artifactId>
+      <version>${graaljs.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.graalvm.polyglot</groupId>
+      <artifactId>js</artifactId>
+      <version>${graaljs.version}</version>
+      <type>pom</type>
+    </dependency>
   </dependencies>
   <build>
     <plugins>

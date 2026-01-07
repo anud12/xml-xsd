@@ -86,6 +86,8 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RegionRule.RegionRule> regionRule = Optional.empty();
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ZoneRule.ZoneRule> zoneRule = Optional.empty();
+    @Builder.Default
+    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.Scripts.Scripts> scripts = Optional.empty();
 
     @ToString.Exclude()
     @EqualsAndHashCode.Exclude()
@@ -198,6 +200,10 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           this.zoneRule = Optional.empty();
           notifyChange();
         }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.Scripts.Scripts) {
+          this.scripts = Optional.empty();
+          notifyChange();
+        }
     }
 
     public int buildIndexForChild(Object object) {
@@ -232,6 +238,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           return 0;
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ZoneRule.ZoneRule) {
+          return 0;
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.Scripts.Scripts) {
           return 0;
         }
         return 0;
@@ -274,6 +283,7 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           this.portalRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.PortalRule.PortalRule.fromRawNode(rawNode.getChildrenFirst("portal_rule"), this);
           this.regionRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RegionRule.RegionRule.fromRawNode(rawNode.getChildrenFirst("region_rule"), this);
           this.zoneRule = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ZoneRule.ZoneRule.fromRawNode(rawNode.getChildrenFirst("zone_rule"), this);
+          this.scripts = ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.Scripts.Scripts.fromRawNode(rawNode.getChildrenFirst("scripts"), this);
         }
 
         if(isDirty) {
@@ -317,6 +327,8 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           rawNode.setChildren("region_rule", regionRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RegionRule.RegionRule::serializeIntoRawNode).toList());
           innerLogger.log("zone_rule");
           rawNode.setChildren("zone_rule", zoneRule.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ZoneRule.ZoneRule::serializeIntoRawNode).toList());
+          innerLogger.log("scripts");
+          rawNode.setChildren("scripts", scripts.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.Scripts.Scripts::serializeIntoRawNode).toList());
           return rawNode;
         }
       }
@@ -649,6 +661,35 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       return this;
     }
 
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.Scripts.Scripts> getScripts()
+    {
+      return this.scripts;
+    }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.Scripts.Scripts getScriptsOrDefault()
+    {
+      return this.scripts.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.Scripts.Scripts();
+        this.scripts = Optional.of(instance);
+        instance.parentNode(this);
+        return this.scripts.get();
+      });
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.Scripts.Scripts> streamScriptsOrDefault()
+    {
+      return java.util.stream.Stream.of(getScriptsOrDefault());
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.Scripts.Scripts> streamScripts()
+    {
+      return scripts.stream();
+    }
+    public RuleGroup setScripts(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.Scripts.Scripts value)
+    {
+      this.scripts = Optional.ofNullable(value);
+      value.parentNode(this);
+      notifyChange();
+      return this;
+    }
+
     public ro.anud.xml_xsd.implementation.util.LinkedNode deserializeAtPath(String xpath, RawNode rawNode) {
        if(xpath.startsWith("."))
         {
@@ -741,6 +782,14 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           }
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ZoneRule.ZoneRule.nodeName.length() + 3);
           return this.zoneRule.get().deserializeAtPath(childXPath, rawNode);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.Scripts.Scripts.nodeName))
+        {
+          if(this.scripts.isEmpty()) {
+            this.scripts = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.Scripts.Scripts());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.Scripts.Scripts.nodeName.length() + 3);
+          return this.scripts.get().deserializeAtPath(childXPath, rawNode);
         }
 
         deserialize(rawNode);
@@ -839,6 +888,14 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           }
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.ZoneRule.ZoneRule.nodeName.length() + 3);
           return this.zoneRule.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.Scripts.Scripts.nodeName))
+        {
+          if(this.scripts.isEmpty()) {
+            this.scripts = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.Scripts.Scripts());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.Scripts.Scripts.nodeName.length() + 3);
+          return this.scripts.get().getNodeAtPath(childXPath);
         }
         return Optional.of(this);
     }
@@ -1555,6 +1612,30 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
                   }
                 },
                 "isNullable": true
+              }
+            },
+            "isNullable": true
+          },
+          "scripts": {
+            "metaType": "object",
+            "isSingle": true,
+            "value": {
+              "file": {
+                "metaType": "object",
+                "value": {},
+                "isSingle": false,
+                "isNullable": true,
+                "attributes": {
+                  "metaType": "object",
+                  "value": {
+                    "name": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
+                    }
+                  },
+                  "isNullable": false
+                }
               }
             },
             "isNullable": true

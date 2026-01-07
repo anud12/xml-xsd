@@ -456,6 +456,45 @@ namespace XSD.Nworld_step {
         }
       }
     }
+
+    private XSD.Nworld_step.Nrule_group.scripts? _scripts = null;
+    public XSD.Nworld_step.Nrule_group.scripts scriptsOrCreate
+    {
+      get
+      {
+        if(_scripts == null)
+        {
+          _scripts = new();
+          _scripts.ParentNode = this;
+          NotifyChange();
+        }
+        return _scripts;
+      }
+      set
+      {
+        _scripts = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nrule_group.scripts? scripts
+    {
+      get
+      {
+        return _scripts;
+      }
+      set
+      {
+        _scripts = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
     public rule_group()
     {
     }
@@ -533,6 +572,11 @@ namespace XSD.Nworld_step {
         this.zone_rule = zone_rule;
       }
 
+      if(linkedNode is XSD.Nworld_step.Nrule_group.scripts scripts)
+      {
+        this.scripts = scripts;
+      }
+
     }
 
     public void ClearChild(dynamic linkedNode)
@@ -592,6 +636,11 @@ namespace XSD.Nworld_step {
         this.zone_rule = null;
       }
 
+      if(linkedNode is XSD.Nworld_step.Nrule_group.scripts)
+      {
+        this.scripts = null;
+      }
+
     }
 
     public Action OnSelfChange(Action<rule_group> callback)
@@ -641,6 +690,8 @@ namespace XSD.Nworld_step {
       region_rule = rawNode.InitializeWithRawNode("region_rule", region_rule);
 
       zone_rule = rawNode.InitializeWithRawNode("zone_rule", zone_rule);
+
+      scripts = rawNode.InitializeWithRawNode("scripts", scripts);
       NotifyChange();
     }
 
@@ -681,6 +732,9 @@ namespace XSD.Nworld_step {
       }
       if(zone_rule != null) {
         rawNode.children["zone_rule"] = new List<RawNode> { zone_rule.SerializeIntoRawNode() };
+      }
+      if(scripts != null) {
+        rawNode.children["scripts"] = new List<RawNode> { scripts.SerializeIntoRawNode() };
       }
       return rawNode;
     }
@@ -777,6 +831,13 @@ namespace XSD.Nworld_step {
         this.zone_rule.DeserializeAtPath(childXPath, rawNode);
         return;
       }
+      if(xpath.StartsWith(XSD.Nworld_step.Nrule_group.scripts.TagName))
+      {
+        this.scripts ??= new XSD.Nworld_step.Nrule_group.scripts();
+        var childXPath = xpath.Substring(XSD.Nworld_step.Nrule_group.scripts.TagName.Length + 3);
+        this.scripts.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
 
       Deserialize(rawNode);
     }
@@ -831,6 +892,9 @@ namespace XSD.Nworld_step {
       if(linkedNode is XSD.Nworld_step.Nrule_group.zone_rule casted_zone_rule) {
         return 0;
       }
+      if(linkedNode is XSD.Nworld_step.Nrule_group.scripts casted_scripts) {
+        return 0;
+      }
       return null;
     }
 
@@ -846,6 +910,7 @@ namespace XSD.Nworld_step {
       || candidateChild is XSD.Nworld_step.Nrule_group.portal_rule
       || candidateChild is XSD.Nworld_step.Nrule_group.region_rule
       || candidateChild is XSD.Nworld_step.Nrule_group.zone_rule
+      || candidateChild is XSD.Nworld_step.Nrule_group.scripts
       || false;
     }
 
@@ -855,7 +920,7 @@ namespace XSD.Nworld_step {
             return false;
 
         var other = (rule_group)obj;
-        return Equals(entity_rule, other.entity_rule) && Equals(container_rule, other.container_rule) && Equals(classification_rule, other.classification_rule) && Equals(name_rule, other.name_rule) && Equals(link_group_rule_list, other.link_group_rule_list) && Equals(location_graph_rule, other.location_graph_rule) && Equals(location_classification_rule, other.location_classification_rule) && Equals(node_rule, other.node_rule) && Equals(portal_rule, other.portal_rule) && Equals(region_rule, other.region_rule) && Equals(zone_rule, other.zone_rule);
+        return Equals(entity_rule, other.entity_rule) && Equals(container_rule, other.container_rule) && Equals(classification_rule, other.classification_rule) && Equals(name_rule, other.name_rule) && Equals(link_group_rule_list, other.link_group_rule_list) && Equals(location_graph_rule, other.location_graph_rule) && Equals(location_classification_rule, other.location_classification_rule) && Equals(node_rule, other.node_rule) && Equals(portal_rule, other.portal_rule) && Equals(region_rule, other.region_rule) && Equals(zone_rule, other.zone_rule) && Equals(scripts, other.scripts);
     }
 
     public override int GetHashCode()
@@ -873,6 +938,7 @@ namespace XSD.Nworld_step {
         acc = HashCode.Combine(acc, portal_rule);
         acc = HashCode.Combine(acc, region_rule);
         acc = HashCode.Combine(acc, zone_rule);
+        acc = HashCode.Combine(acc, scripts);
         return acc;
     }
   }
