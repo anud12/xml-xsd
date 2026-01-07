@@ -57,6 +57,7 @@ public class WorldStepRunner {
         LocationGraphCreateAdjacent.apply(worldStepInstance);
         ZoneTeleportEntity.zoneTeleportEntity(worldStepInstance);
         LocationGraphAddClassification.locationGraphAddClassification(worldStepInstance);
+        worldStepInstance.javascriptRunner.onServerTick();
         try (var scope = logScope("Applying counter synchronization to WorldStepInstance")) {
             worldStepInstance.getOutInstance()
                     .getWorldStep()

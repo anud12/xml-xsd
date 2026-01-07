@@ -13,6 +13,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.model.interfaces.IType_mathOperations.IType_mathOperations;
 import ro.anud.xml_xsd.implementation.repository.RuleRepository;
 import ro.anud.xml_xsd.implementation.service.entity.EntityInstance;
+import ro.anud.xml_xsd.implementation.service.javascriptContext.JavascriptRunner;
 import ro.anud.xml_xsd.implementation.service.location_graph.LocationGraphInstance;
 import ro.anud.xml_xsd.implementation.service.name.NameInstance;
 import ro.anud.xml_xsd.implementation.service.region.RegionInstance;
@@ -66,6 +67,7 @@ public class WorldStepInstance {
     private WorldStepInstance outInstance = this;
     private Optional<WorldStep> worldStep = Optional.empty();
     private Optional<WebSocketHandler> webSocketHandler = Optional.empty();
+    public final JavascriptRunner javascriptRunner = new JavascriptRunner(this);
     public final RuleRepository ruleRepository = new RuleRepository(this);
     public final PropertyInstance property = new PropertyInstance(this);
     public final LocationGraphInstance locationGraph = new LocationGraphInstance(this);
@@ -90,6 +92,7 @@ public class WorldStepInstance {
             zone.index();
             region.index();
             entity.repository.index();
+            javascriptRunner.reloadScripts();
             return this;
         }
     }

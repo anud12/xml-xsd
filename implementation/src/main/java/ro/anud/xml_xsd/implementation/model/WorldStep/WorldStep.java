@@ -1277,6 +1277,30 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
                   }
                 },
                 "isNullable": true
+              },
+              "scripts": {
+                "metaType": "object",
+                "isSingle": true,
+                "value": {
+                  "file": {
+                    "metaType": "object",
+                    "value": {},
+                    "isSingle": false,
+                    "isNullable": true,
+                    "attributes": {
+                      "metaType": "object",
+                      "value": {
+                        "name": {
+                          "metaType": "primitive",
+                          "value": "xs:string",
+                          "isNullable": false
+                        }
+                      },
+                      "isNullable": false
+                    }
+                  }
+                },
+                "isNullable": true
               }
             },
             "isNullable": true
@@ -2841,6 +2865,30 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
                         }
                       },
                       "isNullable": true
+                    }
+                  },
+                  "isNullable": true
+                },
+                "scripts": {
+                  "metaType": "object",
+                  "isSingle": true,
+                  "value": {
+                    "file": {
+                      "metaType": "object",
+                      "value": {},
+                      "isSingle": false,
+                      "isNullable": true,
+                      "attributes": {
+                        "metaType": "object",
+                        "value": {
+                          "name": {
+                            "metaType": "primitive",
+                            "value": "xs:string",
+                            "isNullable": false
+                          }
+                        },
+                        "isNullable": false
+                      }
                     }
                   },
                   "isNullable": true

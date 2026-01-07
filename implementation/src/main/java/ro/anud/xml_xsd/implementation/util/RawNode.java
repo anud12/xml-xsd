@@ -38,6 +38,8 @@ public final class RawNode {
     private List<RawNode> childrenList = new ArrayList<>();
     @Builder.Default
     private LinkedHashMap<String, List<RawNode>> childrenMap = new LinkedHashMap<>();
+    @Builder.Default
+    private String textContent = "";
 
     public static String getNodePath(Node node) {
         if (node == null) {
@@ -74,6 +76,9 @@ public final class RawNode {
                     var childRawNode = RawNode.fromNode(item, Optional.of(rawNode));
                     rawNode.addChildren(item.getNodeName(), childRawNode);
                     logger.log("adding child", childRawNode.getPath());
+                    if(rawNode.childrenMap.containsKey("#text")) {
+                        rawNode.textContent = item.getTextContent();
+                    }
                 }
             }
 
@@ -274,6 +279,10 @@ public final class RawNode {
                     element.appendChild(childElement);
                 });
             });
+
+            if(!this.textContent.isBlank()) {
+                element.setTextContent(this.textContent);
+            }
             logger.log("executing", getNodePath(element));
         }
 
@@ -302,4 +311,7 @@ public final class RawNode {
         return this.tag;
     }
 
+    public String getStringBody() {
+        return this.textContent;
+    }
 }

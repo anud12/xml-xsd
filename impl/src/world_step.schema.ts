@@ -187,6 +187,9 @@ export type world_step = JsonQueryType<{}, {
         "starting_region": JsonQueryType<{"region_rule_ref": string;}> & JsonQueryType<{}, {}>;
       }> & JsonQueryType<{}, {}>;
     }> & JsonQueryType<{}, {}>;
+    "scripts": JsonQueryType<{}, {
+      "file": JsonQueryType<{"name": string;}> & JsonQueryType<{}, {}>;
+    }> & JsonQueryType<{}, {}>;
   }> & JsonQueryType<{}, {}>;
   "data": JsonQueryType<{}, {
     "entities": JsonQueryType<{}, {
