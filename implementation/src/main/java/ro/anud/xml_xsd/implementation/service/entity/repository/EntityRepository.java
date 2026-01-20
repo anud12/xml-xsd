@@ -9,6 +9,8 @@ import ro.anud.xml_xsd.implementation.service.Repository;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 import ro.anud.xml_xsd.implementation.util.repository.NullableIndex;
 
+import java.util.Optional;
+
 import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class EntityRepository implements Repository<Entity> {
@@ -38,5 +40,17 @@ public class EntityRepository implements Repository<Entity> {
     public void loadData() {
         byId.addListeners(worldStepInstance);
         byRuleRef.addListeners(worldStepInstance);
+    }
+
+    public Entity getOrDefault(Entity entity) {
+        return byId.get(entity.getId()).orElseGet(() -> {
+            var entityList = worldStepInstance.streamWorldStep()
+                    .flatMap(WorldStep::streamDataOrDefault)
+                    .flatMap(Data::streamEntitiesOrDefault)
+                    .findFirst();
+            var clonedEntity = Entity.fromRawNode(entity.serializeIntoRawNode());
+            entityList.get().addEntity(clonedEntity);
+            return clonedEntity;
+        });
     }
 }

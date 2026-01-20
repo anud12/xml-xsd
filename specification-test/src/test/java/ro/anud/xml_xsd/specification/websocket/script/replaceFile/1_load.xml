@@ -1,0 +1,40 @@
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <entity_rule>
+      <entry name="second_entity__rule_id"/>
+    </entity_rule>
+    <container_rule>
+      <entry name="container_rule"/>
+    </container_rule>
+    <scripts>
+      <file name="main.js">
+        <text>
+          <![CDATA[
+          export const onServerTick = (context) => {
+            context.sendMessageBroadcast("Hello world");
+          }
+          ]]>
+        </text>
+      </file>
+    </scripts>
+  </rule_group>
+  <data>
+    <entities>
+      <entity id="1">
+        <text_map>
+          <text name="name" value="first"/>
+        </text_map>
+      </entity>
+    </entities>
+  </data>
+</world_step>

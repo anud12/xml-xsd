@@ -1,4 +1,4 @@
-package ro.anud.xml_xsd.specification.websocket.script;
+package ro.anud.xml_xsd.specification.websocket.script.replaceFile;
 
 import org.junit.jupiter.api.DynamicNode;
 import org.junit.jupiter.api.TestFactory;
@@ -10,23 +10,25 @@ import ro.anud.xml_xsd.websocket.tests.*;
 import java.util.stream.Stream;
 
 /*description
-# operation.echo
+# script ReplaceFileTest
 ## When
-counting entities in an entity container
-
+- loading a script
+- and executing it
+- load a new version of a script with the same filename
+- and executing it on server tick
 ## It should
-return 1
+first execute the first version
+and on second execution it should execute the second version
  */
 
 /*tags
-  action,entity,entity.create,
+ script, modules
  */
-
 
 
 
 @Execution(ExecutionMode.SAME_THREAD)
-public class ScriptTest {
+public class ReplaceFileTest {
 
 
     @TestFactory
@@ -40,11 +42,10 @@ public class ScriptTest {
                 .and(readUpdates.connect())
                 .and(startStop.send())
                 .and(startStop.waitUntilFinished())
+                .and(LoadStep.runValidated(this.getClass(),"2_load.xml"))
                 .and(startStop.send())
                 .and(startStop.waitUntilFinished())
-                .and(readDebug.assertResponse(this.getClass(), "2_debug.txt", "2_debug.txt"))
-                .and(readUpdates.assertResponse(this.getClass(), "2_update.txt", "2_update.txt"))
-                .and(Download.assertXml(this.getClass(), "3_download.xml"))
+                .and(readDebug.assertResponse(this.getClass(), "3_debug.txt", "3_debug.txt"))
                 .build();
     }
 }
