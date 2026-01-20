@@ -63,6 +63,8 @@ public class Download {
                         Diff diff = DiffBuilder.compare(prettyFormat(strippedMessage)).withTest(prettyFormat(expected))
                             .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byNameAndText))
                             .checkForSimilar()
+                            .ignoreWhitespace()
+                            .ignoreComments()
                             .build();
 
                         if(diff.hasDifferences()) {

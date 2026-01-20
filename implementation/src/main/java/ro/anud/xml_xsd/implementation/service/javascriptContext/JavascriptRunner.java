@@ -9,35 +9,44 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.Scripts.Scripts;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
+import ro.anud.xml_xsd.implementation.service.javascriptContext.mutation.Mutation;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Optional;
+import java.util.*;
 
 import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 
 public class JavascriptRunner {
 
+
+    private Context context = initializeContext();
+
     private final WorldStepInstance worldStepInstance;
-    private static Optional<Context> context = Optional.empty();
     private JavascriptContext javascriptContext;
-    private ProxyObject serverContext;
+    public final JavascriptExecutor executor = new JavascriptExecutor();
+
     public HashMap<String, Runnable> onServerTickMap = new HashMap<>();
 
     public JavascriptRunner(WorldStepInstance worldStepInstance) {
         this.worldStepInstance = worldStepInstance;
-        if (context.isEmpty()) {
-            context = Optional.of(Context.newBuilder("js")
-                    .allowHostAccess(HostAccess.EXPLICIT)
-                    .allowAllAccess(false)
-                    .option("js.esm-eval-returns-exports", "true")
-                    .build());
-        }
-        javascriptContext = new JavascriptContext(worldStepInstance);
+        javascriptContext = new JavascriptContext(worldStepInstance, this);
     }
 
     public void onServerTick() {
         onServerTickMap.values().forEach(Runnable::run);
+        executor.executeMutations(worldStepInstance);
+        executor.clearMutations();
+    }
+
+    private static Context initializeContext() {
+        try (var scope = logScope()) {
+            return Context.newBuilder("js")
+                    .allowHostAccess(HostAccess.EXPLICIT)
+                    .allowAllAccess(false)
+                    .option("engine.WarnInterpreterOnly", "false")
+                    .option("js.esm-eval-returns-exports", "true")
+                    .build();
+        }
     }
 
     public void load(String name, String code) {
@@ -45,8 +54,7 @@ public class JavascriptRunner {
             Source src = Source.newBuilder("js", code, name)
                     .mimeType("application/javascript+module")
                     .build();
-
-            Value module = context.get().eval(src);
+            Value module = context.eval(src);
             onServerTickMap.put(name, () -> {
                 module.getMember("onServerTick").execute(javascriptContext);
             });
@@ -57,12 +65,19 @@ public class JavascriptRunner {
     }
 
     public void reloadScripts() {
-        worldStepInstance.streamWorldStep()
-                .flatMap(WorldStep::streamRuleGroup)
-                .flatMap(RuleGroup::streamScripts)
-                .flatMap(Scripts::streamFile)
-                .forEach(file -> {
-                    load(file.getName(), file.rawNode().getChildrenFirst("text").get().getStringBody());
-                });
+        try (var scope = logScope("reloadScripts")) {
+            scope.log("clear onServerTickMap");
+            onServerTickMap.clear();
+            scope.log("initializing context");
+            context = initializeContext();
+            worldStepInstance.streamWorldStep()
+                    .flatMap(WorldStep::streamRuleGroup)
+                    .flatMap(RuleGroup::streamScripts)
+                    .flatMap(Scripts::streamFile)
+                    .forEach(file -> {
+                        load(file.getName(), file.rawNode().getChildrenFirst("text").get().getStringBody());
+                    });
+            scope.log("onServerTickMap keys: ", onServerTickMap.keySet());
+        }
     }
 }

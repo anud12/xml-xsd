@@ -1,5 +1,5 @@
 <world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:noNamespaceSchemaLocation="../../../../../../../../../../world_step.xsd">
+            xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
   <world_metadata>
     <elapsed_time value="0"/>
     <stepDuration value="0"/>
@@ -17,12 +17,24 @@
     </container_rule>
     <scripts>
       <file name="main.js">
-        <text>
+        <text><![CDATA[
           export const onServerTick = (context) => {
             context.sendMessageBroadcast("Hello world");
+            context.entity.getById("1")
+                    .setText("name", value => value + " with second", (oldValue, newValue)=> newValue)
+                    .setText("name", value => value + " and third");
           }
-        </text>
+          ]]></text>
       </file>
     </scripts>
   </rule_group>
+  <data>
+    <entities>
+      <entity id="1">
+        <text_map>
+          <text name="name" value="first with second and third with second and third"/>
+        </text_map>
+      </entity>
+    </entities>
+  </data>
 </world_step>

@@ -76,8 +76,8 @@ public final class RawNode {
                     var childRawNode = RawNode.fromNode(item, Optional.of(rawNode));
                     rawNode.addChildren(item.getNodeName(), childRawNode);
                     logger.log("adding child", childRawNode.getPath());
-                    if(rawNode.childrenMap.containsKey("#text")) {
-                        rawNode.textContent = item.getTextContent();
+                    if(item.getNodeType() == Node.CDATA_SECTION_NODE) {
+                        rawNode.textContent = item.getNodeValue();
                     }
                 }
             }
@@ -273,6 +273,10 @@ public final class RawNode {
                         logger.log("Ignoring #text child");
                         return;
                     }
+                    if ("#cdata-section".equals(childName)) {
+                        logger.log("Ignoring #cdata-section child");
+                        return;
+                    }
                     logger.log("Creating element with", childName);
                     var childElement = document.createElement(childName);
                     rawNode.populateNode(document, childElement);
@@ -281,7 +285,7 @@ public final class RawNode {
             });
 
             if(!this.textContent.isBlank()) {
-                element.setTextContent(this.textContent);
+                element.appendChild(document.createCDATASection(this.textContent));
             }
             logger.log("executing", getNodePath(element));
         }

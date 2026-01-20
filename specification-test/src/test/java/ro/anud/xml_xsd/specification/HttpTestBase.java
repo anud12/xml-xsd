@@ -1,6 +1,8 @@
 package ro.anud.xml_xsd.specification;
 
 import org.junit.jupiter.api.DynamicTest;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.OutputKeys;
@@ -31,7 +33,13 @@ public class HttpTestBase {
                         <xsl:output omit-xml-declaration="yes"/>
                         <xsl:strip-space elements="*"/>
                         <xsl:output method="xml" encoding="UTF-8"/>
-                    
+                        
+                        <xsl:output
+                                method="xml"
+                                encoding="UTF-8"
+                                omit-xml-declaration="yes"
+                                cdata-section-elements="text"/>
+                        
                         <xsl:template match="@*|node()">
                             <xsl:copy>
                                 <xsl:apply-templates select="@*|node()"/>
@@ -55,6 +63,21 @@ public class HttpTestBase {
         } catch (javax.xml.transform.TransformerException e) {
             return lfInput;
         }
+    }
+
+    private static Node normalizeWhitespace(Node node) {
+        NodeList children = node.getChildNodes();
+        for (int i = children.getLength() - 1; i >= 0; i--) {
+            Node child = children.item(i);
+
+            if (child.getNodeType() == Node.TEXT_NODE &&
+                    child.getTextContent().trim().isEmpty()) {
+                node.removeChild(child);
+            } else if (child.getNodeType() == Node.ELEMENT_NODE) {
+                normalizeWhitespace(child);
+            }
+        }
+        return node;
     }
     static public Optional<String> getInputXmlRelativeToClass(Class<?> clazz) {
         try {
