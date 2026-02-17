@@ -1,4 +1,4 @@
-package ro.anud.xml_xsd.implementation.service.javascriptContext.mutation;
+package ro.anud.xml_xsd.implementation.javascriptContext.operations.mutation;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;

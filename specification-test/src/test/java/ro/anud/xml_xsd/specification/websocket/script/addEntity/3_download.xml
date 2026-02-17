@@ -1,0 +1,50 @@
+<world_step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <entity_rule>
+      <entry name="entity__rule_id"/>
+    </entity_rule>
+    <container_rule>
+      <entry name="container_rule"/>
+    </container_rule>
+    <scripts>
+      <file name="main.js">
+        <text><![CDATA[
+          /// <reference path="/module.d.ts" />
+          export const onServerTick = (context) => {
+            context.entity.getById("1").getAllContainersBy(query => query.byId("containerId"))
+                    .forEach(container => {
+                      container.addEntity(context.entity.getById("2"));
+                    })
+          }
+          ]]></text>
+      </file>
+    </scripts>
+  </rule_group>
+  <data>
+    <entities>
+      <entity id="1">
+        <text_map>
+          <text name="name" value="first"/>
+        </text_map>
+        <containers>
+          <container container_rule_ref="container_rule" id="containerId">
+            <entities>
+              <entity entity_id_ref="1"/>
+              <entity entity_id_ref="2"/>
+            </entities>
+          </container>
+        </containers>
+      </entity>
+      <entity entity_rule_ref="entity__rule_id" id="2"/>
+    </entities>
+  </data>
+</world_step>

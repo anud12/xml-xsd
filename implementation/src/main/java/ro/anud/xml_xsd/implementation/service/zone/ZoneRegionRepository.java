@@ -1,8 +1,6 @@
 package ro.anud.xml_xsd.implementation.service.zone;
 
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data;
-import ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.EntityList.Entity.Entity;
-import ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.EntityList.EntityList;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Region.Region;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.Zone.Zone;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.ZoneList.ZoneList;

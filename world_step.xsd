@@ -1554,6 +1554,13 @@
                   <xs:attribute name="entity_rule_ref" type="xs:string" use="required"/>
                 </xs:complexType>
               </xs:element>
+              <xs:element name="entity.setText" minOccurs="0">
+                <xs:complexType>
+                  <xs:attribute name="entity_id_ref" type="xs:string" use="required"/>
+                  <xs:attribute name="name" type="xs:string" use="required"/>
+                  <xs:attribute name="value" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
               <xs:element name="container.addOnEntity" minOccurs="0">
                 <xs:complexType>
                   <xs:attribute name="container_rule_ref" type="xs:string" use="required"/>

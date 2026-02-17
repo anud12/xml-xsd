@@ -1,11 +1,17 @@
 .world_step[0].data[0].entities[0].entity[0].text_map[0].text[0]
-<text name="name" value="first with second and third"/>
+<text name="name" value="First followed by second."/>
+---
+.world_step[0].data[0].entities[0].entity[0].text_map[0].text[0]
+<text name="name" value="First followed by second.First and third,"/>
 ---
 .world_step[0].world_metadata[0].counter[0]
 <counter value="0"/>
 ---
 .world_step[0].data[0].entities[0].entity[0].text_map[0].text[0]
-<text name="name" value="first with second and third with second and third"/>
+<text name="name" value="First followed by second.First and third, followed by second."/>
+---
+.world_step[0].data[0].entities[0].entity[0].text_map[0].text[0]
+<text name="name" value="First followed by second.First and third, followed by second.First followed by second.First and third, and third,"/>
 ---
 .world_step[0].world_metadata[0].counter[0]
 <counter value="0"/>

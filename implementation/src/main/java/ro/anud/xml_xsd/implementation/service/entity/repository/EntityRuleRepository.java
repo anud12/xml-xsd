@@ -4,7 +4,6 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entit
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.EntityRule.Entry.Entry;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
-import ro.anud.xml_xsd.implementation.util.repository.NonNullableIndex;
 import ro.anud.xml_xsd.implementation.service.Repository;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 import ro.anud.xml_xsd.implementation.util.repository.NullableIndex;

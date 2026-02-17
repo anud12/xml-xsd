@@ -1,0 +1,17 @@
+.world_step[0].world_metadata[0].counter[0]
+<counter value="1"/>
+---
+.world_step[0].data[0]
+<data/>
+---
+.world_step[0].data[0].entities[0]
+<entities/>
+---
+.world_step[0].data[0].entities[0].entity[0]
+<entity entity_rule_ref="entity_rule" id="0.0"/>
+---
+.world_step[0].actions[0]
+<actions/>
+---
+.world_step[0].world_metadata[0].counter[0]
+<counter value="1"/>

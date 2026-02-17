@@ -49,6 +49,7 @@ public class WorldStepRunner {
 
 
     public static void runStep(WorldStepInstance worldStepInstance) {
+        worldStepInstance.startStep();
         middlewareList.forEach(middleware -> middleware.apply(worldStepInstance));
         OperationEchoAction.apply(worldStepInstance);
         ZoneCreateAction.zoneCreateAction(worldStepInstance);
@@ -58,6 +59,7 @@ public class WorldStepRunner {
         ZoneTeleportEntity.zoneTeleportEntity(worldStepInstance);
         LocationGraphAddClassification.locationGraphAddClassification(worldStepInstance);
         worldStepInstance.javascriptRunner.onServerTick();
+        worldStepInstance.endStep();
         try (var scope = logScope("Applying counter synchronization to WorldStepInstance")) {
             worldStepInstance.getOutInstance()
                     .getWorldStep()

@@ -1,15 +1,14 @@
-package ro.anud.xml_xsd.implementation.service.javascriptContext;
+package ro.anud.xml_xsd.implementation.javascriptContext;
 
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.HostAccess;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
-import org.graalvm.polyglot.proxy.ProxyObject;
+import ro.anud.xml_xsd.implementation.javascriptContext.api.JavascriptAPI;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.RuleGroup;
 import ro.anud.xml_xsd.implementation.model.WorldStep.RuleGroup.Scripts.Scripts;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
-import ro.anud.xml_xsd.implementation.service.javascriptContext.mutation.Mutation;
 
 import java.io.IOException;
 import java.util.*;
@@ -22,20 +21,19 @@ public class JavascriptRunner {
     private Context context = initializeContext();
 
     private final WorldStepInstance worldStepInstance;
-    private JavascriptContext javascriptContext;
-    public final JavascriptExecutor executor = new JavascriptExecutor();
+    private JavascriptAPI javascriptContext;
 
     public HashMap<String, Runnable> onServerTickMap = new HashMap<>();
 
     public JavascriptRunner(WorldStepInstance worldStepInstance) {
         this.worldStepInstance = worldStepInstance;
-        javascriptContext = new JavascriptContext(worldStepInstance, this);
+        javascriptContext = new JavascriptAPI(worldStepInstance, this);
     }
 
     public void onServerTick() {
-        onServerTickMap.values().forEach(Runnable::run);
-        executor.executeMutations(worldStepInstance);
-        executor.clearMutations();
+        try (var scope = logScope()) {
+            onServerTickMap.values().forEach(Runnable::run);
+        }
     }
 
     private static Context initializeContext() {
@@ -79,5 +77,9 @@ public class JavascriptRunner {
                     });
             scope.log("onServerTickMap keys: ", onServerTickMap.keySet());
         }
+    }
+
+    public WorldStepInstance getWorldStepInstance() {
+        return worldStepInstance;
     }
 }

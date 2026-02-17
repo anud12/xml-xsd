@@ -1,3 +1,7 @@
-Hello world
+Append 'second' text
 ---
-Hello world
+Append 'third' text
+---
+Append 'second' text
+---
+Append 'third' text

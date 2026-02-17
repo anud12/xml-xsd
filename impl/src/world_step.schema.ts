@@ -249,6 +249,7 @@ export type world_step = JsonQueryType<{}, {
     "region.resolvePortals": JsonQueryType<{"zone_id_ref": string;  "region_id_ref": string;}> & JsonQueryType<{}, {}>;
     "region.teleportEntity": JsonQueryType<{"zone_id_ref": string;  "region_id_ref": string;  "entity_id_ref": string;  "x": string;  "y": string;}> & JsonQueryType<{}, {}>;
     "entity.create": JsonQueryType<{"entity_rule_ref": string;}> & JsonQueryType<{}, {}>;
+    "entity.setText": JsonQueryType<{"entity_id_ref": string;  "name": string;  "value": string;}> & JsonQueryType<{}, {}>;
     "container.addOnEntity": JsonQueryType<{"container_rule_ref": string;  "entity_id": string;}> & JsonQueryType<{}, {}>;
     "operation.echo": JsonQueryType<{"id": string;  "entity_id_ref": string;}>
       & type__math_operations & JsonQueryType<{}, {}>;

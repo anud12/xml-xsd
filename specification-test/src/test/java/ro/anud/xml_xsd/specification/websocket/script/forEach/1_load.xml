@@ -1,0 +1,64 @@
+<world_step
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../../../../../world_step.xsd">
+  <world_metadata>
+    <elapsed_time value="0"/>
+    <stepDuration value="0"/>
+    <counter value="0"/>
+    <randomization_table>
+      <entry value="2"/>
+    </randomization_table>
+  </world_metadata>
+  <rule_group id="rule_group_id">
+    <entity_rule>
+      <entry name="entity__rule_id"/>
+    </entity_rule>
+    <container_rule>
+      <entry name="container_rule"/>
+    </container_rule>
+    <scripts>
+      <file name="main.js">
+        <text><![CDATA[
+          /// <reference path="/module.d.ts" />
+          export const onServerTick = (context) => {
+            context.entity.getById("1")
+                    .getAllEntitiesBy(query => query
+                            .byId("2")
+                            .inContainer(query => query.byId("containerId_2"))
+                    )
+                    .forEach(entity => {
+                      context.sendMessageBroadcast("Found entity: " + entity.toString())
+                    })
+          }
+          ]]></text>
+      </file>
+    </scripts>
+  </rule_group>
+  <data>
+    <entities>
+      <entity id="1">
+        <text_map>
+          <text name="name" value="first"/>
+        </text_map>
+        <containers>
+          <container id="containerId" container_rule_ref="container_rule">
+            <entities>
+              <entity entity_id_ref="1"/>
+              <entity entity_id_ref="2"/>
+              <entity entity_id_ref="2"/>
+              <entity entity_id_ref="2"/>
+            </entities>
+          </container>
+          <container id="containerId_2" container_rule_ref="container_rule">
+            <entities>
+              <entity entity_id_ref="1"/>
+              <entity entity_id_ref="2"/>
+              <entity entity_id_ref="2"/>
+            </entities>
+          </container>
+        </containers>
+      </entity>
+      <entity id="2" entity_rule_ref="entity__rule_id"/>
+    </entities>
+  </data>
+</world_step>

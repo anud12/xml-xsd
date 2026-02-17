@@ -2,8 +2,6 @@ package ro.anud.xml_xsd.implementation.util.repository;
 
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;

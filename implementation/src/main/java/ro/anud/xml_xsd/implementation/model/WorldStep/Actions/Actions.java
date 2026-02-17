@@ -80,6 +80,8 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create> entity_create = Optional.empty();
     @Builder.Default
+    private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_setText.Entity_setText> entity_setText = Optional.empty();
+    @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Container_addOnEntity.Container_addOnEntity> container_addOnEntity = Optional.empty();
     @Builder.Default
     private Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Operation_echo.Operation_echo> operation_echo = Optional.empty();
@@ -183,6 +185,10 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           this.entity_create = Optional.empty();
           notifyChange();
         }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_setText.Entity_setText) {
+          this.entity_setText = Optional.empty();
+          notifyChange();
+        }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Container_addOnEntity.Container_addOnEntity) {
           this.container_addOnEntity = Optional.empty();
           notifyChange();
@@ -216,6 +222,9 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           return 0;
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create) {
+          return 0;
+        }
+        if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_setText.Entity_setText) {
           return 0;
         }
         if(object instanceof ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Container_addOnEntity.Container_addOnEntity) {
@@ -261,6 +270,7 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           this.region_resolvePortals = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_resolvePortals.Region_resolvePortals.fromRawNode(rawNode.getChildrenFirst("region.resolvePortals"), this);
           this.region_teleportEntity = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_teleportEntity.Region_teleportEntity.fromRawNode(rawNode.getChildrenFirst("region.teleportEntity"), this);
           this.entity_create = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create.fromRawNode(rawNode.getChildrenFirst("entity.create"), this);
+          this.entity_setText = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_setText.Entity_setText.fromRawNode(rawNode.getChildrenFirst("entity.setText"), this);
           this.container_addOnEntity = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Container_addOnEntity.Container_addOnEntity.fromRawNode(rawNode.getChildrenFirst("container.addOnEntity"), this);
           this.operation_echo = ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Operation_echo.Operation_echo.fromRawNode(rawNode.getChildrenFirst("operation.echo"), this);
         }
@@ -300,6 +310,8 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           rawNode.setChildren("region.teleportEntity", region_teleportEntity.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Region_teleportEntity.Region_teleportEntity::serializeIntoRawNode).toList());
           innerLogger.log("entity.create");
           rawNode.setChildren("entity.create", entity_create.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create::serializeIntoRawNode).toList());
+          innerLogger.log("entity.setText");
+          rawNode.setChildren("entity.setText", entity_setText.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_setText.Entity_setText::serializeIntoRawNode).toList());
           innerLogger.log("container.addOnEntity");
           rawNode.setChildren("container.addOnEntity", container_addOnEntity.stream().map(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Container_addOnEntity.Container_addOnEntity::serializeIntoRawNode).toList());
           innerLogger.log("operation.echo");
@@ -538,6 +550,35 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
       return this;
     }
 
+    public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_setText.Entity_setText> getEntity_setText()
+    {
+      return this.entity_setText;
+    }
+    public ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_setText.Entity_setText getEntity_setTextOrDefault()
+    {
+      return this.entity_setText.orElseGet(() -> {
+        var instance = new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_setText.Entity_setText();
+        this.entity_setText = Optional.of(instance);
+        instance.parentNode(this);
+        return this.entity_setText.get();
+      });
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_setText.Entity_setText> streamEntity_setTextOrDefault()
+    {
+      return java.util.stream.Stream.of(getEntity_setTextOrDefault());
+    }
+    public java.util.stream.Stream<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_setText.Entity_setText> streamEntity_setText()
+    {
+      return entity_setText.stream();
+    }
+    public Actions setEntity_setText(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_setText.Entity_setText value)
+    {
+      this.entity_setText = Optional.ofNullable(value);
+      value.parentNode(this);
+      notifyChange();
+      return this;
+    }
+
     public Optional<ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Container_addOnEntity.Container_addOnEntity> getContainer_addOnEntity()
     {
       return this.container_addOnEntity;
@@ -692,6 +733,14 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create.nodeName.length() + 3);
           return this.entity_create.get().deserializeAtPath(childXPath, rawNode);
         }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_setText.Entity_setText.nodeName))
+        {
+          if(this.entity_setText.isEmpty()) {
+            this.entity_setText = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_setText.Entity_setText());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_setText.Entity_setText.nodeName.length() + 3);
+          return this.entity_setText.get().deserializeAtPath(childXPath, rawNode);
+        }
         if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Container_addOnEntity.Container_addOnEntity.nodeName))
         {
           if(this.container_addOnEntity.isEmpty()) {
@@ -793,6 +842,14 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
           }
           var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_create.Entity_create.nodeName.length() + 3);
           return this.entity_create.get().getNodeAtPath(childXPath);
+        }
+        if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_setText.Entity_setText.nodeName))
+        {
+          if(this.entity_setText.isEmpty()) {
+            this.entity_setText = Optional.of(new ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_setText.Entity_setText());
+          }
+          var childXPath = xpath.substring(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Entity_setText.Entity_setText.nodeName.length() + 3);
+          return this.entity_setText.get().getNodeAtPath(childXPath);
         }
         if(xpath.startsWith(ro.anud.xml_xsd.implementation.model.WorldStep.Actions.Container_addOnEntity.Container_addOnEntity.nodeName))
         {
@@ -1024,6 +1081,32 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
                 }
               },
               "isNullable": false
+            }
+          },
+          "entity.setText": {
+            "metaType": "object",
+            "value": {},
+            "isSingle": true,
+            "isNullable": true,
+            "attributes": {
+              "metaType": "object",
+              "value": {
+                "entity_id_ref": {
+                  "metaType": "primitive",
+                  "value": "xs:string",
+                  "isNullable": false
+                },
+                "name": {
+                  "metaType": "primitive",
+                  "value": "xs:string",
+                  "isNullable": false
+                },
+                "value": {
+                  "metaType": "primitive",
+                  "value": "xs:string",
+                  "isNullable": false
+                }
+              }
             }
           },
           "container.addOnEntity": {

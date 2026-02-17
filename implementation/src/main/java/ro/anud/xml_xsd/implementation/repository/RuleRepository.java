@@ -8,9 +8,7 @@ import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 import ro.anud.xml_xsd.implementation.service.entity.repository.EntityRepository;
 import ro.anud.xml_xsd.implementation.service.entity.repository.EntityRuleRepository;
 
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;

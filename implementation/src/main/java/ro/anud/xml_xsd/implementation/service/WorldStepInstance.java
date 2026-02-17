@@ -2,6 +2,9 @@ package ro.anud.xml_xsd.implementation.service;
 
 import lombok.Setter;
 import org.springframework.web.socket.TextMessage;
+import ro.anud.xml_xsd.implementation.service.container.ContainerInstance;
+import ro.anud.xml_xsd.implementation.service.worldStepLifecycle.StepEnd;
+import ro.anud.xml_xsd.implementation.service.worldStepLifecycle.StepStart;
 import ro.anud.xml_xsd.implementation.model.Type_mathOperations.Type_mathOperations;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Entities.Entity.Entity;
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldMetadata.Counter.Counter;
@@ -13,7 +16,7 @@ import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.model.interfaces.IType_mathOperations.IType_mathOperations;
 import ro.anud.xml_xsd.implementation.repository.RuleRepository;
 import ro.anud.xml_xsd.implementation.service.entity.EntityInstance;
-import ro.anud.xml_xsd.implementation.service.javascriptContext.JavascriptRunner;
+import ro.anud.xml_xsd.implementation.javascriptContext.JavascriptRunner;
 import ro.anud.xml_xsd.implementation.service.location_graph.LocationGraphInstance;
 import ro.anud.xml_xsd.implementation.service.name.NameInstance;
 import ro.anud.xml_xsd.implementation.service.region.RegionInstance;
@@ -32,7 +35,7 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
 import static ro.anud.xml_xsd.implementation.websocket.Client.ReturnCode.*;
 
 @Setter
-public class WorldStepInstance {
+public class WorldStepInstance implements StepStart, StepEnd {
 
 
     @FunctionalInterface
@@ -75,6 +78,7 @@ public class WorldStepInstance {
     public final ZoneInstance zone = new ZoneInstance(this);
     public final RegionInstance region = new RegionInstance(this);
     public final EntityInstance entity = new EntityInstance(this);
+    public final ContainerInstance container = new ContainerInstance(this);
 
 
     private int counter = 0;
@@ -82,6 +86,22 @@ public class WorldStepInstance {
     public WorldStepInstance() {
         System.out.print("");
     }
+
+    @Override
+    public void startStep() {
+        try (var scope = logScope()){
+
+        }
+    }
+
+    @Override
+    public void endStep() {
+        try (var scope = logScope()){
+            this.entity.textMutations.endStep();
+        }
+
+    }
+
 
     public WorldStepInstance index() {
         try (var scope = logScope()) {
@@ -92,6 +112,7 @@ public class WorldStepInstance {
             zone.index();
             region.index();
             entity.repository.index();
+            container.repository.index();
             javascriptRunner.reloadScripts();
             return this;
         }

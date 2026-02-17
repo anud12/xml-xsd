@@ -21,10 +21,11 @@
         <text>
           <![CDATA[
           export const onServerTick = (context) => {
-            context.sendMessageBroadcast("Hello world");
-            context.entity.getById("1")
-                    .setText("name", value => value + " with second", (oldValue, newValue)=> newValue)
-                    .setText("name", value => value + " and third");
+            var entity = context.entity.getById("1")
+            context.sendMessageBroadcast("Append 'second' text");
+            entity.setText("name", value => value + " followed by second.")
+            context.sendMessageBroadcast("Append 'third' text");
+            entity.setText("name", value => value + " and third,", (oldValue, newValue)=> oldValue + newValue);
           }
           ]]>
         </text>
@@ -35,7 +36,7 @@
     <entities>
       <entity id="1">
         <text_map>
-          <text name="name" value="first"/>
+          <text name="name" value="First"/>
         </text_map>
       </entity>
     </entities>

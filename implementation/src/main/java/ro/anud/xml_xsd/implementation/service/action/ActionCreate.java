@@ -1,7 +1,6 @@
 package ro.anud.xml_xsd.implementation.service.action;
 
 import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
-import ro.anud.xml_xsd.implementation.service.Middleware;
 import ro.anud.xml_xsd.implementation.service.WorldStepInstance;
 import ro.anud.xml_xsd.implementation.util.LinkedNode;
 

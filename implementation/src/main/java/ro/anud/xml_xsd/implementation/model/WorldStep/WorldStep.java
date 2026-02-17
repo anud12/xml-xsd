@@ -1975,6 +1975,32 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
                   "isNullable": false
                 }
               },
+              "entity.setText": {
+                "metaType": "object",
+                "value": {},
+                "isSingle": true,
+                "isNullable": true,
+                "attributes": {
+                  "metaType": "object",
+                  "value": {
+                    "entity_id_ref": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
+                    },
+                    "name": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
+                    },
+                    "value": {
+                      "metaType": "primitive",
+                      "value": "xs:string",
+                      "isNullable": false
+                    }
+                  }
+                }
+              },
               "container.addOnEntity": {
                 "metaType": "object",
                 "value": {},
@@ -3564,6 +3590,32 @@ import static ro.anud.xml_xsd.implementation.util.logging.LogScope.logScope;
                       }
                     },
                     "isNullable": false
+                  }
+                },
+                "entity.setText": {
+                  "metaType": "object",
+                  "value": {},
+                  "isSingle": true,
+                  "isNullable": true,
+                  "attributes": {
+                    "metaType": "object",
+                    "value": {
+                      "entity_id_ref": {
+                        "metaType": "primitive",
+                        "value": "xs:string",
+                        "isNullable": false
+                      },
+                      "name": {
+                        "metaType": "primitive",
+                        "value": "xs:string",
+                        "isNullable": false
+                      },
+                      "value": {
+                        "metaType": "primitive",
+                        "value": "xs:string",
+                        "isNullable": false
+                      }
+                    }
                   }
                 },
                 "container.addOnEntity": {

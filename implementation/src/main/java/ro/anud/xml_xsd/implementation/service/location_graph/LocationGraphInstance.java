@@ -1,13 +1,8 @@
 package ro.anud.xml_xsd.implementation.service.location_graph;
 
 import ro.anud.xml_xsd.implementation.model.Type_nodeGraph_selection.Type_nodeGraph_selection;
-import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Data;
-import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.Location;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.LocationGraph;
-import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.LinkTo.LinkTo;
-import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Links.Links;
 import ro.anud.xml_xsd.implementation.model.WorldStep.Data.Location.LocationGraph.Node.Node;
-import ro.anud.xml_xsd.implementation.model.WorldStep.WorldStep;
 import ro.anud.xml_xsd.implementation.service.Mutation;
 import ro.anud.xml_xsd.implementation.service.location_graph.repository.LinkToRepository;
 import ro.anud.xml_xsd.implementation.service.location_graph.repository.LocationGraphRepository;

@@ -270,6 +270,45 @@ namespace XSD.Nworld_step {
       }
     }
 
+    private XSD.Nworld_step.Nactions.entity__setText? _entity__setText = null;
+    public XSD.Nworld_step.Nactions.entity__setText entity__setTextOrCreate
+    {
+      get
+      {
+        if(_entity__setText == null)
+        {
+          _entity__setText = new();
+          _entity__setText.ParentNode = this;
+          NotifyChange();
+        }
+        return _entity__setText;
+      }
+      set
+      {
+        _entity__setText = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+
+      }
+    }
+    public XSD.Nworld_step.Nactions.entity__setText? entity__setText
+    {
+      get
+      {
+        return _entity__setText;
+      }
+      set
+      {
+        _entity__setText = value;
+        if(value != null)
+        {
+          value.ParentNode = this;
+        }
+      }
+    }
+
     private XSD.Nworld_step.Nactions.container__addOnEntity? _container__addOnEntity = null;
     public XSD.Nworld_step.Nactions.container__addOnEntity container__addOnEntityOrCreate
     {
@@ -408,6 +447,11 @@ namespace XSD.Nworld_step {
         this.entity__create = entity__create;
       }
 
+      if(linkedNode is XSD.Nworld_step.Nactions.entity__setText entity__setText)
+      {
+        this.entity__setText = entity__setText;
+      }
+
       if(linkedNode is XSD.Nworld_step.Nactions.container__addOnEntity container__addOnEntity)
       {
         this.container__addOnEntity = container__addOnEntity;
@@ -460,6 +504,11 @@ namespace XSD.Nworld_step {
       if(linkedNode is XSD.Nworld_step.Nactions.entity__create)
       {
         this.entity__create = null;
+      }
+
+      if(linkedNode is XSD.Nworld_step.Nactions.entity__setText)
+      {
+        this.entity__setText = null;
       }
 
       if(linkedNode is XSD.Nworld_step.Nactions.container__addOnEntity)
@@ -528,6 +577,8 @@ namespace XSD.Nworld_step {
 
       entity__create = rawNode.InitializeWithRawNode("entity.create", entity__create);
 
+      entity__setText = rawNode.InitializeWithRawNode("entity.setText", entity__setText);
+
       container__addOnEntity = rawNode.InitializeWithRawNode("container.addOnEntity", container__addOnEntity);
 
       operation__echo = rawNode.InitializeWithRawNode("operation.echo", operation__echo);
@@ -556,6 +607,9 @@ namespace XSD.Nworld_step {
       }
       if(entity__create != null) {
         rawNode.children["entity.create"] = new List<RawNode> { entity__create.SerializeIntoRawNode() };
+      }
+      if(entity__setText != null) {
+        rawNode.children["entity.setText"] = new List<RawNode> { entity__setText.SerializeIntoRawNode() };
       }
       if(container__addOnEntity != null) {
         rawNode.children["container.addOnEntity"] = new List<RawNode> { container__addOnEntity.SerializeIntoRawNode() };
@@ -672,6 +726,13 @@ namespace XSD.Nworld_step {
         this.entity__create.DeserializeAtPath(childXPath, rawNode);
         return;
       }
+      if(xpath.StartsWith(XSD.Nworld_step.Nactions.entity__setText.TagName))
+      {
+        this.entity__setText ??= new XSD.Nworld_step.Nactions.entity__setText();
+        var childXPath = xpath.Substring(XSD.Nworld_step.Nactions.entity__setText.TagName.Length + 3);
+        this.entity__setText.DeserializeAtPath(childXPath, rawNode);
+        return;
+      }
       if(xpath.StartsWith(XSD.Nworld_step.Nactions.container__addOnEntity.TagName))
       {
         this.container__addOnEntity ??= new XSD.Nworld_step.Nactions.container__addOnEntity();
@@ -731,6 +792,9 @@ namespace XSD.Nworld_step {
       if(linkedNode is XSD.Nworld_step.Nactions.entity__create casted_entity__create) {
         return 0;
       }
+      if(linkedNode is XSD.Nworld_step.Nactions.entity__setText casted_entity__setText) {
+        return 0;
+      }
       if(linkedNode is XSD.Nworld_step.Nactions.container__addOnEntity casted_container__addOnEntity) {
         return 0;
       }
@@ -749,6 +813,7 @@ namespace XSD.Nworld_step {
       || candidateChild is XSD.Nworld_step.Nactions.region__resolvePortals
       || candidateChild is XSD.Nworld_step.Nactions.region__teleportEntity
       || candidateChild is XSD.Nworld_step.Nactions.entity__create
+      || candidateChild is XSD.Nworld_step.Nactions.entity__setText
       || candidateChild is XSD.Nworld_step.Nactions.container__addOnEntity
       || candidateChild is XSD.Nworld_step.Nactions.operation__echo
       || false;
@@ -760,7 +825,7 @@ namespace XSD.Nworld_step {
             return false;
 
         var other = (actions)obj;
-        return Equals(location_graph__create, other.location_graph__create) && Equals(location_graph__node__create_adjacent, other.location_graph__node__create_adjacent) && Equals(location_graph__node__add_classification, other.location_graph__node__add_classification) && Equals(zone__create, other.zone__create) && Equals(region__appendNew, other.region__appendNew) && Equals(region__resolvePortals, other.region__resolvePortals) && Equals(region__teleportEntity, other.region__teleportEntity) && Equals(entity__create, other.entity__create) && Equals(container__addOnEntity, other.container__addOnEntity) && Equals(operation__echo, other.operation__echo);
+        return Equals(location_graph__create, other.location_graph__create) && Equals(location_graph__node__create_adjacent, other.location_graph__node__create_adjacent) && Equals(location_graph__node__add_classification, other.location_graph__node__add_classification) && Equals(zone__create, other.zone__create) && Equals(region__appendNew, other.region__appendNew) && Equals(region__resolvePortals, other.region__resolvePortals) && Equals(region__teleportEntity, other.region__teleportEntity) && Equals(entity__create, other.entity__create) && Equals(entity__setText, other.entity__setText) && Equals(container__addOnEntity, other.container__addOnEntity) && Equals(operation__echo, other.operation__echo);
     }
 
     public override int GetHashCode()
@@ -775,6 +840,7 @@ namespace XSD.Nworld_step {
         acc = HashCode.Combine(acc, region__resolvePortals);
         acc = HashCode.Combine(acc, region__teleportEntity);
         acc = HashCode.Combine(acc, entity__create);
+        acc = HashCode.Combine(acc, entity__setText);
         acc = HashCode.Combine(acc, container__addOnEntity);
         acc = HashCode.Combine(acc, operation__echo);
         return acc;

@@ -1,0 +1,5 @@
+.world_step[0].data[0].entities[0].entity[0].containers[0].container[0].entities[0].entity[1]
+<entity entity_id_ref="2"/>
+---
+.world_step[0].world_metadata[0].counter[0]
+<counter value="0"/>
